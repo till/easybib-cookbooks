@@ -55,15 +55,6 @@ execute "PHP: post install configuration" do
   command %Q{ sed -i "s,memory_limit = 16M,memory_limit = #{node["php-fpm"][:memorylimit]},g" #{phpini} }
   command %Q{ sed -i "s,max_execution_time = 30,max_execution_time = #{node["php-fpm"][:maxexecutiontime]},g" #{phpini} }
 
-  # fix ubuntu fuck ups
-  command %Q{ sed -i "s,magic_quotes_gpc = On,magic_quotes_gpc = Off,g" #{phpini} }
-end
-
-execute "PHP: install pear packages" do
-  command "pear channel-update pear.php.net"
-  command "pear install -f Crypt_HMAC2-beta"
-  command "pear install -f Net_Gearman-alpha"
-  command "pear install -f Services_Amazon_S3-alpha"
 end
 
 service "php-fpm" do
