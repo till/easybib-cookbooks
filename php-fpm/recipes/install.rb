@@ -31,7 +31,7 @@ execute "PHP: make, make install" do
   not_if &php_already_installed
 end
 
-:phpini = "/etc/php5/cgi/php.ini"
+phpini = "/etc/php5/cgi/php.ini"
 execute "PHP: post install configuration" do
 
   # turn on error logging, turn off display of errors
