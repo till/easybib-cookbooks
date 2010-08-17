@@ -1,0 +1,10 @@
+#!/bin/sh
+
+backup_from=<%= node[:couchdb][:datadir] %>
+backup_to=<%= node[:couchdb][:backupdir] %>
+now=`date +'%Y-%m-%d-%H-%M'`
+
+mkdir -p $backup_to/$now
+cp -r $backup_from/db $backup_from/views $backup_to/$now
+
+/usr/local/bin/couchdb_clean_backups
