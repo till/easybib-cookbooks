@@ -4,6 +4,7 @@ default["php-fpm"][:checksum] = "5adf1a537895c2ec933fddd48e78d8a2"
 default["php-fpm"][:logfile] = "/var/log/php.log"
 default["php-fpm"][:displayerrors] = false
 default["php-fpm"][:logerrors] = true
+default["php-fpm"][:maxexecutiontime] = 60
 default["php-fpm"][:memorylimit] = "512M"
 default["php-fpm"][:user] = "www-data"
 default["php-fpm"][:group] = "www-data"
