@@ -5,5 +5,5 @@ description       "Installs and configures PHP with fpm patch."
 version           "0.1"
 recipe            "php-fpm::install", "Installs PHP-fpm"
 recipe            "php-fpm::prepare", "Creates prequesites like user and directories"
-
+recipe            "php-fpm::pear", "Installs required PEAR packages"
 supports 'ubuntu'
