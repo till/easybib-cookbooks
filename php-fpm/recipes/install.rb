@@ -20,7 +20,7 @@ end
 execute "PHP: ./configure" do
   cwd "/tmp/php-#{node["php-fpm"][:version]}"
   environment "HOME" => "/root"
-  command "./configure --with-mysql=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=/usr/local/pear"
+  command "./configure --without-sqlite --without-sqlite3 --with-mysql=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=/usr/local/pear"
   not_if &php_already_installed
 end
 
