@@ -50,7 +50,7 @@ auto_prepend_file =
 auto_append_file =
 default_mimetype = "text/html"
 ;default_charset = "iso-8859-1"
-;include_path = ".:/php/includes"
+include_path = ".:/usr/local/pear"
 doc_root =
 user_dir =
 enable_dl = Off
@@ -65,14 +65,6 @@ default_socket_timeout = 60
 [Date]
 date.timezone = America/New York
 
-[filter]
-
-[iconv]
-
-[intl]
-
-[Pcre]
-
 [Syslog]
 define_syslog_variables  = Off
 
@@ -85,20 +77,6 @@ mail.add_x_header = On
 [SQL]
 ; http://php.net/sql.safe-mode
 sql.safe_mode = Off
-
-[MySQL]
-mysql.allow_local_infile = On
-mysql.allow_persistent = Off
-mysql.cache_size = 2000
-mysql.max_persistent = 0
-mysql.max_links = -1
-mysql.default_port =
-mysql.default_socket =
-mysql.default_host =
-mysql.default_user =
-mysql.default_password =
-mysql.connect_timeout = 60
-mysql.trace_mode = Off
 
 [MySQLi]
 mysqli.max_persistent = 0

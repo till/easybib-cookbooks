@@ -40,6 +40,7 @@ end
 
 execute "copy php-fpm init script" do
   command "cp /tmp/php-#{node["php-fpm"][:version]}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm"
+  command "chmod +x /etc/init.d/php-fpm"
 end
 
 service "php-fpm" do
