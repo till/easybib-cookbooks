@@ -1,20 +1,12 @@
-template "/etc/nginx/sites-available/easybib.com.conf" do
-  source "easybib.com.conf.erb"
-  mode "0755"
-  owner node["nginx-app"][:user]
-  group node["nginx-app"][:group]
-end
+include_recipe "nginx-app::server"
 
-template "/etc/nginx/fastcgi_params" do
-  source "fastcgi_params.erb"
-  mode "0755"
-  owner node["nginx-app"][:user]
-  group node["nginx-app"][:group]
-end
-
-template "/etc/nginx/nginx.conf" do
-  source "nginx.conf.erb"
-  mode "0755"
-  owner node["nginx-app"][:user]
-  group node["nginx-app"][:group]
+node[:deploy].each do |application, deploy|
+  template "/etc/nginx/sites-available/easybib.com.conf" do
+    source "easybib.com.conf.erb"
+    mode "0755"
+    owner node["nginx-app"][:user]
+    group node["nginx-app"][:group]
+    variables :deploy => deploy, :application => application
+    notifies :restart, resources(:service => "nginx"), :delayed
+  end
 end

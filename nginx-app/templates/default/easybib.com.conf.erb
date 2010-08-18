@@ -1,6 +1,6 @@
 server {
     listen   80;
-    server_name  <%= node["nginx-app"][:domain]%>;
+    server_name  <%= @deploy[:domain]%>;
 
     location = /health_check.php {
 
@@ -8,17 +8,17 @@ server {
 
         include /etc/nginx/fastcgi_params;
 
-        fastcgi_pass  unix:/tmp/.fastcgi.<%= node["nginx-app"][:user]%>/socket;
-        fastcgi_param SCRIPT_FILENAME <%= node["nginx-app"][:root]%>/health_check.php;
+        fastcgi_pass  unix:/tmp/.fastcgi.<%= @deploy[:user] %>/socket;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:root] %>/health_check.php;
     }
 
     location = /google8a01a818524239c8.html {
-        root   <%= node["nginx-app"][:root]%>;
+        root   <%= @deploy[:deploy_to] %>;
         access_log   off;
     }
 
     location = /googled16040836651a26a.html {
-        root   <%= node["nginx-app"][:root]%>;
+        root   <%= @deploy[:deploy_to] %>;
         access_log   off;
     }
 
@@ -28,15 +28,15 @@ server {
     }
 
     location /js/ {
-        root   <%= node["nginx-app"][:root]%>;
+        root   <%= @deploy[:deploy_to] %>;
     }
 
     location /css/ {
-        root   <%= node["nginx-app"][:root]%>;
+        root   <%= @deploy[:deploy_to] %>;
     }
 
     location /new-images/ {
-        root   <%= node["nginx-app"][:root]%>;
+        root   <%= @deploy[:deploy_to] %>;
     }
 
     location / {
@@ -44,10 +44,10 @@ server {
 
         include /etc/nginx/fastcgi_params;
 
-        fastcgi_pass  unix:/tmp/.fastcgi.BIB_USER/socket;
+        fastcgi_pass  unix:/tmp/.fastcgi.<%= @deploy[:user] %>/socket;
         fastcgi_index index.php;
 
-        fastcgi_param SCRIPT_FILENAME <%= node["nginx-app"][:root]%>/index.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/index.php;
 
         index  index.php index.html index.htm;
     }
