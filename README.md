@@ -16,3 +16,4 @@
  * PRIO 3: Eine "availability zone" (z.B. East1a) als "default"
  * PRIO 3: Die Recipes anzeigen die bei den vordefinierten Rollen ausgefuehrt werden
  * PRIO 4: Eventuell auch die Standard-Recipes zum Auswaehlen irgendwo bereitstellen
+ * PRIO 4: Instanzdetails syncen - auch wenn nicht gestartet ueber Scalarium
