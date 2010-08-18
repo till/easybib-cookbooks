@@ -1,4 +1,4 @@
-user <%= node["nginx-app"][:user]%>
+user www-data;
 worker_processes 2;
 
 error_log  /dev/null crit;
