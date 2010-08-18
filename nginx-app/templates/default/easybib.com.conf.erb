@@ -1,0 +1,54 @@
+server {
+    listen   80;
+    server_name  <%= node["nginx-app"][:domain]%>;
+
+    location = /health_check.php {
+
+        access_log  off;
+
+        include /etc/nginx/fastcgi_params;
+
+        fastcgi_pass  unix:/tmp/.fastcgi.<%= node["nginx-app"][:user]%>/socket;
+        fastcgi_param SCRIPT_FILENAME <%= node["nginx-app"][:root]%>/health_check.php;
+    }
+
+    location = /google8a01a818524239c8.html {
+        root   <%= node["nginx-app"][:root]%>;
+        access_log   off;
+    }
+
+    location = /googled16040836651a26a.html {
+        root   <%= node["nginx-app"][:root]%>;
+        access_log   off;
+    }
+
+    location /nginx_status {
+        stub_status on;
+        access_log  off;
+    }
+
+    location /js/ {
+        root   <%= node["nginx-app"][:root]%>;
+    }
+
+    location /css/ {
+        root   <%= node["nginx-app"][:root]%>;
+    }
+
+    location /new-images/ {
+        root   <%= node["nginx-app"][:root]%>;
+    }
+
+    location / {
+        error_page 404 /index.php;
+
+        include /etc/nginx/fastcgi_params;
+
+        fastcgi_pass  unix:/tmp/.fastcgi.BIB_USER/socket;
+        fastcgi_index index.php;
+
+        fastcgi_param SCRIPT_FILENAME <%= node["nginx-app"][:root]%>/index.php;
+
+        index  index.php index.html index.htm;
+    }
+}
