@@ -1,6 +1,6 @@
 include_recipe "php-fpm::prepare"
 
-php_installed_version = `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
+php_installed_version = 'foo' # `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
 
 php_already_installed = lambda do
   php_installed_version == node["php-fpm"][:version]
