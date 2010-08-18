@@ -38,6 +38,10 @@ template "/usr/local/lib/php.ini" do
   group "www-data"
 end
 
+execute "copy php-fpm init script" do
+  command "cp /tmp/php-#{node["php-fpm"][:version]}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm"
+end
+
 service "php-fpm" do
   service_name "php-fpm"
   supports [:start, :status, :restart]
