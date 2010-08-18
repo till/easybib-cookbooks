@@ -8,10 +8,6 @@ package "help2man"
 package "autoconf"
 package "automake"
 
-execute "create PHP's logfile" do
-  command "touch #{node["php-fpm"][:logfile]}"
-end
-
 directory node["php-fpm"][:tmpdir] do
   mode "0755"
   owner node["php-fpm"][:user]
