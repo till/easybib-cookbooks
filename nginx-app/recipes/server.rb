@@ -15,7 +15,8 @@ template "/etc/nginx/nginx.conf" do
 end
 
 execute "delete default vhost" do
-  command "rm /etc/nginx/sites-enabled/default"
+  ignore_failure true
+  command "rm -f /etc/nginx/sites-enabled/default"
 end
 
 service "nginx" do
