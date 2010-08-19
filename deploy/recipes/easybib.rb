@@ -28,6 +28,7 @@ node[:deploy].each do |application, deploy|
     scm_provider Chef::Provider::Subversion
     svn_username deploy[:scm][:user]
     svn_password deploy[:scm][:password]
+    svn_arguments "--no-auth-cache"
 
   end
 end
