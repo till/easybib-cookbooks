@@ -13,12 +13,12 @@ server {
     }
 
     location = /google8a01a818524239c8.html {
-        root   <%= @deploy[:deploy_to] %>;
+        root   <%= @deploy[:deploy_to] %>/current/www;
         access_log   off;
     }
 
     location = /googled16040836651a26a.html {
-        root   <%= @deploy[:deploy_to] %>;
+        root   <%= @deploy[:deploy_to] %>/current/www;
         access_log   off;
     }
 
@@ -28,15 +28,15 @@ server {
     }
 
     location /js/ {
-        root   <%= @deploy[:deploy_to] %>;
+        root   <%= @deploy[:deploy_to] %>/current/www;
     }
 
     location /css/ {
-        root   <%= @deploy[:deploy_to] %>;
+        root   <%= @deploy[:deploy_to] %>/current/www;
     }
 
     location /new-images/ {
-        root   <%= @deploy[:deploy_to] %>;
+        root   <%= @deploy[:deploy_to] %>/current/www;
     }
 
     location / {
@@ -47,7 +47,7 @@ server {
         fastcgi_pass  unix:/tmp/fpm-sockets/<%= node["nginx-app"][:user] %>;
         fastcgi_index index.php;
 
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/index.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/www/index.php;
 
         index  index.php index.html index.htm;
     }

@@ -15,9 +15,6 @@
 
 # Todo Till
 
- * fix checkout (not entire repo)
- * fix nginx conf ('current/www' directory missing always)
- * run deploy again
  * add easybib-base::setup to all roles
 
 # Todo Scalarium
