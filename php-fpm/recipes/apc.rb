@@ -1,6 +1,6 @@
 apc_version = "3.1.4"
 
-remote_file "/tmp/APC-#{apc_version}" do
+remote_file "/tmp/APC-#{apc_version}.tgz" do
   source "http://pecl.php.net/get/APC-#{apc_version}.tgz"
   checksum "53d8442e8b7e3804537d14e5776962cfdc5ae4d8"
 end
