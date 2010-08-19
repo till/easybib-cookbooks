@@ -14,6 +14,10 @@ template "/etc/nginx/nginx.conf" do
   group node["nginx-app"][:group]
 end
 
+execute "delete default vhost" do
+  command "rm /etc/nginx/sites-enabled/default"
+end
+
 service "nginx" do
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
