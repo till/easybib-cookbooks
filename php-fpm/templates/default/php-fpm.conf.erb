@@ -27,7 +27,7 @@ daemonize = yes
 
 [www]
 
-listen = unix:/tmp/.fastcgi.<%= node["php-fpm"][:user] %>/socket
+listen = <%= node["php-fpm"][:socketdir] %>/<%= node["php-fpm"][:user] %>
 listen.backlog = -1
  
 listen.owner = <%= node["php-fpm"][:user] %>

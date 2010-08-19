@@ -40,3 +40,9 @@ file node["php-fpm"][:fpmlog] do
   owner node["php-fpm"][:user]
   group node["php-fpm"][:group]
 end
+
+directory node["php-fpm"][:socketdir] do
+  mode "0755"
+  owner node["php-fpm"][:user]
+  group node["php-fpm"][:group]
+end
