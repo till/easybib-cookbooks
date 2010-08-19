@@ -9,7 +9,7 @@ server {
         include /etc/nginx/fastcgi_params;
 
         fastcgi_pass  unix:/tmp/fpm-sockets/<%= node["nginx-app"][:user] %>;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:root] %>/current/www/health_check.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/www/health_check.php;
     }
 
     location = /DARTIframe.html {
