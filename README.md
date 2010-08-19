@@ -1,9 +1,14 @@
 # Cookbooks!
 
  * couchdb (by [Mathias Meyer][meyer]/scalarium)
- * haproxy (overriding scalarium's haproxy config with a custom role) 
  * nginx-app (by [Till Klampaeckel][till])
  * php-fpm (by [Till Klampaeckel][till])
+ * unfuddle-ssl-fix (by [Till Klampaeckel][till])
+
+## Override scalarium
+
+ * deploy
+ * haproxy
 
 [meyer]: http://www.paperplanes.de/
 [till]: http://till.klampaeckel.de/blog/
