@@ -1,0 +1,63 @@
+[global]
+pid = /usr/local/var/run/php-fpm.pid
+error_log = <%= node["php-fpm"][:fpmlog] %>
+log_level = error
+
+; If this number of child processes exit with SIGSEGV or SIGBUS within the time
+; interval set by emergency_restart_interval then FPM will restart. A value
+; of '0' means 'Off'.
+; Default Value: 0
+;emergency_restart_threshold = 0
+
+; Interval of time used by emergency_restart_interval to determine when 
+; a graceful restart will be initiated.  This can be useful to work around
+; accidental corruptions in an accelerator's shared memory.
+; Available Units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+;emergency_restart_interval = 0
+
+; Time limit for child processes to wait for a reaction on signals from master.
+; Available units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+;process_control_timeout = 0
+
+daemonize = yes
+
+[www]
+
+listen = unix:/tmp/.fastcgi.<%= node["php-fpm"][:user] %>/socket
+listen.backlog = -1
+ 
+listen.owner = <%= node["php-fpm"][:user] %>
+listen.group = <%= node["php-fpm"][:group] %>
+listen.mode = 0666
+
+user = <%= node["php-fpm"][:user] %>
+group = <%= node["php-fpm"][:griup] %>
+
+pm = dynamic
+pm.max_children = 50
+pm.start_servers = 20
+pm.min_spare_servers = 5
+pm.max_spare_servers = 35
+pm.max_requests = 500
+pm.status_path = /fpm-status
+
+;ping.path = /ping
+;ping.response = pong
+ 
+;request_terminate_timeout = 0
+;request_slowlog_timeout = 0
+
+slowlog = <%= node["php-fpm"][:slowlog] %>
+ 
+; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
+; the current environment.
+; Default Value: clean env
+;env[HOSTNAME] = $HOSTNAME
+;env[PATH] = /usr/local/bin:/usr/bin:/bin
+;env[TMP] = /tmp
+;env[TMPDIR] = /tmp
+;env[TEMP] = /tmp
