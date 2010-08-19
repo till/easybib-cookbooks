@@ -15,7 +15,8 @@
 
 # Todo Till
 
- * add easybib-base::setup to all roles
+ * create gearman role
+ * create redis role
 
 # Todo Scalarium
 
