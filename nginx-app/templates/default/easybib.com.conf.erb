@@ -9,17 +9,22 @@ server {
         include /etc/nginx/fastcgi_params;
 
         fastcgi_pass  unix:/tmp/fpm-sockets/<%= node["nginx-app"][:user] %>;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:root] %>/health_check.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:root] %>/current/www/health_check.php;
+    }
+
+    location = /DARTIframe.html {
+        root        <%= @deploy[:deploy_to] %>/current/www;
+        access_log  off;
     }
 
     location = /google8a01a818524239c8.html {
-        root   <%= @deploy[:deploy_to] %>/current/www;
-        access_log   off;
+        root        <%= @deploy[:deploy_to] %>/current/www;
+        access_log  off;
     }
 
     location = /googled16040836651a26a.html {
-        root   <%= @deploy[:deploy_to] %>/current/www;
-        access_log   off;
+        root        <%= @deploy[:deploy_to] %>/current/www;
+        access_log  off;
     }
 
     location /nginx_status {
@@ -28,15 +33,18 @@ server {
     }
 
     location /js/ {
-        root   <%= @deploy[:deploy_to] %>/current/www;
+        root        <%= @deploy[:deploy_to] %>/current/www;
+        access_log  off;
     }
 
     location /css/ {
-        root   <%= @deploy[:deploy_to] %>/current/www;
+        root        <%= @deploy[:deploy_to] %>/current/www;
+        access_log  off;
     }
 
     location /new-images/ {
-        root   <%= @deploy[:deploy_to] %>/current/www;
+        root        <%= @deploy[:deploy_to] %>/current/www;
+        access_log  off;
     }
 
     location / {
