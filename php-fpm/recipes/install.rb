@@ -34,8 +34,15 @@ end
 template "/usr/local/lib/php.ini" do
   mode "0755"
   source "php.ini.erb"
-  owner "www-data"
-  group "www-data"
+  owner node["php-fpm"][:user]
+  group node["php-fpm"][:group]
+end
+
+template "/usr/local/etc/php-fpm.conf" do
+  mode "0755"
+  source "php-fpm.conf.erb"
+  owner node["php-fpm"][:user]
+  group node["php-fpm"][:group]
 end
 
 execute "copy php-fpm init script" do
