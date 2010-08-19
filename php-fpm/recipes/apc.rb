@@ -7,6 +7,11 @@ execute "APC: unpack" do
   command "cd /tmp && tar -xzf APC-#{node["php-fpm"][:apc_version]}.tgz"
 end
 
+execute "APC: phpize" do
+  cwd "/tmp/APC-#{node["php-fpm"][:apc_version]}"
+  command "phpize"
+end
+
 execute "APC: ./configure" do
   cwd "/tmp/APC-#{node["php-fpm"][:apc_version]}"
   command "./configure"
