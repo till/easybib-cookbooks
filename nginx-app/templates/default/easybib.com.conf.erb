@@ -1,3 +1,7 @@
+upstream phpfpm {
+    server  unix:/tmp/fpm-sockets/<%= node["nginx-app"][:user] %>;
+}
+
 server {
     listen   80;
     server_name  <%= @deploy[:domains].first %>;
@@ -8,7 +12,7 @@ server {
 
         include /etc/nginx/fastcgi_params;
 
-        fastcgi_pass  unix:/tmp/fpm-sockets/<%= node["nginx-app"][:user] %>;
+        fastcgi_pass  phpfpm;
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/www/health_check.php;
     }
 
@@ -52,7 +56,7 @@ server {
 
         include /etc/nginx/fastcgi_params;
 
-        fastcgi_pass  unix:/tmp/fpm-sockets/<%= node["nginx-app"][:user] %>;
+        fastcgi_pass  phpfpm;
         fastcgi_index index.php;
 
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/www/index.php;
