@@ -8,7 +8,7 @@ server {
 
         include /etc/nginx/fastcgi_params;
 
-        fastcgi_pass  unix:/tmp/.fastcgi.<%= @deploy[:user] %>/socket;
+        fastcgi_pass  unix:/tmp/fpm-sockets/<%= @deploy[:user] %>;
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:root] %>/health_check.php;
     }
 
@@ -44,7 +44,7 @@ server {
 
         include /etc/nginx/fastcgi_params;
 
-        fastcgi_pass  unix:/tmp/.fastcgi.<%= @deploy[:user] %>/socket;
+        fastcgi_pass  unix:/tmp/fpm-sockets/<%= @deploy[:user] %>;
         fastcgi_index index.php;
 
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/index.php;
