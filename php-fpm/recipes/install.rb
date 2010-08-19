@@ -47,6 +47,9 @@ end
 
 execute "copy php-fpm init script" do
   command "cp /tmp/php-#{node["php-fpm"][:version]}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm"
+end
+
+execute "fix permissions on /etc/init.d/php-fpm" do
   command "chmod +x /etc/init.d/php-fpm"
 end
 
