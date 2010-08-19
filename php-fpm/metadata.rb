@@ -6,4 +6,5 @@ version           "0.1"
 recipe            "php-fpm::install", "Installs PHP-fpm"
 recipe            "php-fpm::prepare", "Creates prequesites like user and directories"
 recipe            "php-fpm::pear", "Installs required PEAR packages"
+recipe            "php-fpm::apc", "Installs APC-3.1.4 (beta)"
 supports 'ubuntu'

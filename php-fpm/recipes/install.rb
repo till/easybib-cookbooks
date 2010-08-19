@@ -58,3 +58,5 @@ service "php-fpm" do
   supports [:start, :status, :restart]
   action :restart
 end
+
+include_recipe "php-fpm::apc"
