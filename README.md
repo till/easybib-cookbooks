@@ -1,6 +1,8 @@
 # Cookbooks!
 
+ * easybib-base (by [Till Klampaeckel][till])
  * couchdb (by [Mathias Meyer][meyer]/scalarium)
+ * gearman (by [Till Klampaeckel][till])
  * nginx-app (by [Till Klampaeckel][till])
  * php-fpm (by [Till Klampaeckel][till])
  * unfuddle-ssl-fix (by [Till Klampaeckel][till])
