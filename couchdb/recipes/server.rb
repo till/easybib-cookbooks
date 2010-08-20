@@ -53,6 +53,14 @@ template "/etc/logrotate.d/couchdb" do
   group "root"
 end
 
+if node[:couchdb][:port] == 80
+
+  execute "Running on port 80, we require root" do
+    command "sed -i 's,COUCHDB_USER=couchdb,COUCHDB_USER=root,g' /etc/default/couchdb"
+  end
+
+end
+
 if node[:couchdb][:backup]
   template "/usr/local/bin/couchdb_backup" do
     source "couchdb_backup.erb"
