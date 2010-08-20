@@ -14,6 +14,6 @@ include_sasl = true
 <% if !node["couchdb_admins"].empty? -%>
 [admins]
 <% node["couchdb_admins"].each do |user,pass| %>
-  <%= user %> = <%= pass %>
+  <%= #{user} = #{pass} %>
 <% end %>
 <% end -%>
