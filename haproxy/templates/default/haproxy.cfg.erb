@@ -45,7 +45,7 @@ backend php_app_servers
   option forwardfor
   option httpchk <%= @node[:haproxy][:health_check_method] %> <%= @node[:haproxy][:health_check_url] %>
   <% @node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
-  server <%= name %> <%= backend['private_ip'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= backend['backends'] || 10 %> check inter <%= @node[:haproxy][:check_interval] %>
+  server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= backend['backends'] || 10 %> check inter <%= @node[:haproxy][:check_interval] %>
   <% end -%>  
 <% end -%>
 
