@@ -11,11 +11,9 @@ file = <%= node[:couchdb][:logdir]%>/couch.log
 level = error
 include_sasl = true
 
-<%- if !node["couchdb_admins"].empty? -%>
+<% if !node["couchdb_admins"].empty? -%>
 [admins]
-<%
-node["couchdb_admins"].each do |user,pass|
-  print user + " = " + pass + "\n"
-end
-%>
-<%- end -%>
+<% node["couchdb_admins"].each do |user,pass| %>
+  <%= user %> = <%= pass %>
+<% end %>
+<% end -%>
