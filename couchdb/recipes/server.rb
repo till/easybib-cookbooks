@@ -76,7 +76,7 @@ if node[:couchdb][:backup]
   end
 
   execute "set owner on couchdb backup directory" do
-    command "chown -R couchdb:couchdb #{node[:couchdb][:backup_dir]}"
+    command "chown -R couchdb:couchdb #{node[:couchdb][:backupdir]}"
   end
 
   cron "backup couchdb files" do
