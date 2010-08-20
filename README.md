@@ -17,8 +17,11 @@
 
 # Todo Till
 
- * create gearman role
  * create redis role
+ * logrotate:
+   * gearman
+   * nginx
+   * php-fpm
 
 # Todo Scalarium
 
