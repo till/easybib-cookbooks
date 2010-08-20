@@ -39,6 +39,12 @@ template "/etc/couchdb/local.d/scalarium.ini" do
   mode "0644"
 end
 
+if node[:couchdb][:port] == 80
+  execute "Running on port 80, we require root" do
+    command "sed -i 's,COUCHDB_USER=couchdb,COUCHDB_USER=root,g' /etc/default/couchdb"
+  end
+end
+
 service "couchdb" do
   service_name "couchdb"
   supports [:start, :status, :restart]
@@ -51,14 +57,6 @@ template "/etc/logrotate.d/couchdb" do
   mode "0644"
   owner "root"
   group "root"
-end
-
-if node[:couchdb][:port] == 80
-
-  execute "Running on port 80, we require root" do
-    command "sed -i 's,COUCHDB_USER=couchdb,COUCHDB_USER=root,g' /etc/default/couchdb"
-  end
-
 end
 
 if node[:couchdb][:backup]
