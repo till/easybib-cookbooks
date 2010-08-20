@@ -1,6 +1,6 @@
 include_recipe "php-fpm::prepare"
 
-php_installed_version = 'foo' # `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
+php_installed_version = `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
 
 php_already_installed = lambda do
   php_installed_version == node["php-fpm"][:version]
@@ -20,7 +20,7 @@ end
 execute "PHP: ./configure" do
   cwd "/tmp/php-#{node["php-fpm"][:version]}"
   environment "HOME" => "/root"
-  command "./configure --without-sqlite --without-sqlite3 --with-mysqli=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=/usr/local/pear"
+  command "./configure --with-openssl --disable-posix --without-sqlite --without-sqlite3 --with-mysqli=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=/usr/local/pear"
   not_if &php_already_installed
 end
 
@@ -47,6 +47,7 @@ end
 
 execute "copy php-fpm init script" do
   command "cp /tmp/php-#{node["php-fpm"][:version]}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm"
+  not_if &php_already_installed
 end
 
 execute "fix permissions on /etc/init.d/php-fpm" do
