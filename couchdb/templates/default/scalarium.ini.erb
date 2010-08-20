@@ -10,3 +10,12 @@ bind_address = 0.0.0.0
 file = <%= node[:couchdb][:logdir]%>/couch.log
 level = error
 include_sasl = true
+
+<%- if !node["couchdb_admins"].empty? -%>
+[admins]
+<%
+node["couchdb_admins"].each do |user,pass|
+  print user + " = " + pass + "\n"
+end
+%>
+<%- end -%>
