@@ -9,3 +9,4 @@ default[:couchdb][:backupdir] = '/backup'
 default[:couchdb][:gid] = 2000
 default[:couchdb][:replica] = false
 default[:couchdb][:backup_backlog] = 10
+default[:couchdb][:port] = 5984
