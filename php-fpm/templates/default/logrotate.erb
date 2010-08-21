@@ -1,4 +1,4 @@
-<%= File.directory?("#{node["php-fpm"][:logfile]}/") %>*.log {
+<%= File.directory?("#{node["php-fpm"][:logfile]}") %>/*.log {
        weekly
        rotate 10
        copytruncate
