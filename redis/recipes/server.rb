@@ -58,6 +58,13 @@ template "/etc/redis.conf" do
   notifies :restart, resources(:service => "redis-server"), :immediately
 end
 
+template "/etc/logrotate.d/redis" do
+  source "logrotate.erb"
+  mode "0644"
+  owner "root"
+  group "root"
+end
+
 template "/etc/monit/conf.d/redis.monitrc" do
   source "redis.monit.erb"
   owner "root"
