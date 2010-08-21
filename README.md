@@ -5,6 +5,7 @@
  * gearman (by [Till Klampaeckel][till])
  * nginx-app (by [Till Klampaeckel][till])
  * php-fpm (by [Till Klampaeckel][till])
+ * redis (by [Mathias Meyer][meyer]/scalarium)
  * unfuddle-ssl-fix (by [Till Klampaeckel][till])
 
 ## Override scalarium
