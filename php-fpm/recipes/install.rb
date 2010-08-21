@@ -60,4 +60,11 @@ service "php-fpm" do
   action :restart
 end
 
+template "/etc/logrotate.d/php" do
+  source "logrotate.erb"
+  mode "0644"
+  owner "root"
+  group "root"
+end
+
 include_recipe "php-fpm::apc"
