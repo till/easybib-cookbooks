@@ -1,7 +1,5 @@
 include_recipe "deploy::source"
 
-Chef::Log.info("ohai")
-
 node[:deploy].each do |application, deploy|
 
   # chef bug
