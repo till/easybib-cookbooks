@@ -7,6 +7,10 @@ cookbook_file "/usr/local/bin/aws" do
   group "root"
 end
 
+execute "Create convenience commands." do
+  command "/usr/local/bin/aws --link"
+end
+
 file "/root/.awssecret" do
   source "awssecret.erb"
   mode "0600"
