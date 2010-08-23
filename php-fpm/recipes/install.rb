@@ -52,10 +52,6 @@ template "/etc/init.d/php-fpm" do
   group node["php-fpm"][:group]
 end
 
-execute "fix permissions on /etc/init.d/php-fpm" do
-  command "chmod +x /etc/init.d/php-fpm"
-end
-
 service "php-fpm" do
   service_name "php-fpm"
   supports [:start, :status, :restart]
