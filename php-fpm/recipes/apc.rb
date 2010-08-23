@@ -22,6 +22,7 @@ execute "APC: make, make install" do
   command "make && make install"
 end
 
-execute "add apc.so to php.ini" do
-  command "echo 'extension=apc.so' >> /usr/local/lib/php.ini"
+cookbook_file "#{node["php-fpm"][:prefix]}/etc/php/apc.ini" do
+  source "apc.ini"
+  mode "0644"
 end
