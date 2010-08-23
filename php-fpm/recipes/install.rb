@@ -38,6 +38,13 @@ template "/usr/local/lib/php.ini" do
   group node["php-fpm"][:group]
 end
 
+template "/usr/local/lib/php-cli.ini" do
+  mode "0755"
+  source "php.ini.erb"
+  owner node["php-fpm"][:user]
+  group node["php-fpm"][:group]
+end
+
 template "/usr/local/etc/php-fpm.conf" do
   mode "0755"
   source "php-fpm.conf.erb"
@@ -66,3 +73,4 @@ template "/etc/logrotate.d/php" do
 end
 
 include_recipe "php-fpm::apc"
+include_recipe "php-fpm::xhprof"
