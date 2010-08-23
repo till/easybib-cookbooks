@@ -20,7 +20,7 @@ end
 execute "PHP: ./configure" do
   cwd "/tmp/php-#{node["php-fpm"][:version]}"
   environment "HOME" => "/root"
-  command "./configure --with-openssl --disable-posix --without-sqlite --without-sqlite3 --with-mysqli=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=/usr/local/pear"
+  command "./configure --prefix=#{node["php-fpm"][:prefix]} --with-openssl --disable-posix --without-sqlite --without-sqlite3 --with-mysqli=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=/usr/local/pear"
   not_if &php_already_installed
 end
 
@@ -45,9 +45,11 @@ template "/usr/local/etc/php-fpm.conf" do
   group node["php-fpm"][:group]
 end
 
-execute "copy php-fpm init script" do
-  command "cp /tmp/php-#{node["php-fpm"][:version]}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm"
-  not_if &php_already_installed
+template "/etc/init.d/php-fpm" do
+  mode "0755"
+  source "init.d.php-fpm.erb"
+  owner node["php-fpm"][:user]
+  group node["php-fpm"][:group]
 end
 
 execute "fix permissions on /etc/init.d/php-fpm" do
