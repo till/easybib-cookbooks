@@ -2,6 +2,8 @@ include_recipe "php-fpm::prepare"
 
 php_installed_version = `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
 
+php_prefix = node["php-fpm"][:prefix]
+
 php_already_installed = lambda do
   php_installed_version == node["php-fpm"][:version]
 end
@@ -20,7 +22,7 @@ end
 execute "PHP: ./configure" do
   cwd "/tmp/php-#{node["php-fpm"][:version]}"
   environment "HOME" => "/root"
-  command "./configure --prefix=#{node["php-fpm"][:prefix]} --enable-soap --with-openssl --disable-posix --without-sqlite --without-sqlite3 --with-mysqli=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=#{node["php-fpm"][:prefix]}/pear"
+  command "./configure --with-config-file-path=#{php_prefix}/etc --with-config-file-scan-dir=#{php_prefix}/etc/php --prefix=#{php_prefix} --enable-soap --with-openssl --disable-posix --without-sqlite --without-sqlite3 --with-mysqli=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=#{php_prefix}/pear"
   not_if &php_already_installed
 end
 
@@ -31,14 +33,14 @@ execute "PHP: make, make install" do
   not_if &php_already_installed
 end
 
-template "/usr/local/lib/php.ini" do
+template "#{php_prefix}/etc/php.ini" do
   mode "0755"
   source "php.ini.erb"
   owner node["php-fpm"][:user]
   group node["php-fpm"][:group]
 end
 
-template "/usr/local/lib/php-cli.ini" do
+template "#{php_prefix}/etc/php-cli.ini" do
   mode "0755"
   source "php.ini.erb"
   owner node["php-fpm"][:user]
@@ -51,6 +53,14 @@ template "/usr/local/etc/php-fpm.conf" do
   owner node["php-fpm"][:user]
   group node["php-fpm"][:group]
 end
+
+directory "#{php_prefix}/etc/php" do
+  owner "root"
+  group "root"
+  mode "0755"
+  action :create
+end
+
 
 template "/etc/init.d/php-fpm" do
   mode "0755"
