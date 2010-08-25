@@ -1,0 +1,1 @@
+default[:easybib_solr] = {}
