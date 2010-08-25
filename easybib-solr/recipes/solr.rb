@@ -1,7 +1,7 @@
 include_recipe "easybib-solr::prepare"
 include_recipe "easybib-solr::raid"
 
-ebs_vol=#node["solr"]["working_directory"]
+ebs_vol="#{node[:easybib_solr][:working_directory]}"
 
 subversion "Checkout: Research Importers" do
   repository "#{node["solr"]["deploy_svn"]}/research_importers/#{node["solr"]["research_version"}"
