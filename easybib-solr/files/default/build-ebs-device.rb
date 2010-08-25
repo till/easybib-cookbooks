@@ -11,7 +11,7 @@ options = {}
 
 optparse = OptionParser.new do |opts|
 
-    opts.banner = "Usage: ./build-ebs-device.rb --zone=us-east-1b --size=1 --instance=foo --device=/dev/sdf"
+    opts.banner = "Usage: ./build-ebs-device --zone=us-east-1b --size=1 --instance=foo --device=/dev/sdf"
  
     options[:zone] = ""
     opts.on( '-z', '--zone ZONE', 'Availability Zone' ) do |zone|
