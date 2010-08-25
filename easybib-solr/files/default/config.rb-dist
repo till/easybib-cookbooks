@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+@aws_key    = "YOUR-KEY"
+@aws_secret = "YOUR-SECRET"
