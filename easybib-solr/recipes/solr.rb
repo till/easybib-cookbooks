@@ -1,3 +1,4 @@
+include_recipe "easybib-solr::prepare"
 include_recipe "easybib-solr::raid"
 
 ebs_vol=#node["solr"]["working_directory"]
@@ -20,6 +21,10 @@ end
 
 link "#{ebs_vol}/research_importers/scripts/solr.sh" do
   to "/etc/init.d/solr"
+end
+
+link "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"}-compiled/logs" do
+  to "/var/log/solr"
 end
 
 service "solr" do
