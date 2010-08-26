@@ -5,14 +5,14 @@ package "openjdk-6-jre-lib"
 package "openjdk-6-jre-headless"
 
 # for logs
-directory "/var/log/solr" do
+directory "#{node[:easybib_solr][:log_dir]}" do
   owner "root"
   group "root"
   mode "0755"
   action :create
 end
 
-# for ebs
+# the mount for ebs
 directory "#{node["solr"]["working_directory"] do
   owner "root"
   group "root"
