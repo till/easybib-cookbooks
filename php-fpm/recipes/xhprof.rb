@@ -21,7 +21,7 @@ execute "XHProf: make, make install" do
   command "make && make install"
 end
 
-cookbook_file "#{node["php-fpm"][:prefix]}/etc/php/xhprof.ini" do
+remote_file "#{node["php-fpm"][:prefix]}/etc/php/xhprof.ini" do
   source "xhprof.ini"
   mode "0644"
 end

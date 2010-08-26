@@ -5,7 +5,7 @@ gem_package "fog" do
   action :install
 end
 
-cookbook_file "/usr/local/bin/build-ebs-raid" do
+remote_file "/usr/local/bin/build-ebs-raid" do
   source "build-ebs-raid.rb"
   mode "0755"
   owner "root"

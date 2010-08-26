@@ -1,6 +1,6 @@
 package "curl"
 
-cookbook_file "/usr/local/bin/aws" do
+remote_file "/usr/local/bin/aws" do
   source "aws"
   mode 0755
   owner "root"
