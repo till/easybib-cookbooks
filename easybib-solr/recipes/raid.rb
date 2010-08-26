@@ -18,6 +18,7 @@ raid     = "/dev/md0"
 level    = node[:easybib_solr][:ebs][:raid]
 mount    = node[:easybib_solr][:working_directory]
 zone     = node[:easybib_solr][:ebs][:zone]
+fsystem  = node[:easybib_solr][:ebs][:file_system]
 
 execute "Create first volume: /dev/sdf" do
   command "/usr/local/bin/build-ebs-raid --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdf"
@@ -35,8 +36,8 @@ mdadm "#{raid}" do
   action [ :create, :assemble ]
 end
 
-execute "Format #{mount}" do
-  command "mkfs.xfs #{raid}"
+execute "Format #{mount} with #{fsystem}" do
+  command "mkfs.#{fsystem} #{raid}"
 
   not_if do
 
@@ -57,12 +58,12 @@ execute "Format #{mount}" do
 end
 
 execute "Add #{mount} to /etc/fstab" do
-  command "echo '#{raid} #{mount} xfs noatime 0 0' | sudo tee -a /etc/fstab"
+  command "echo '#{raid} #{mount} #{fsystem} noatime 0 0' | sudo tee -a /etc/fstab"
 end
 
 mount "{mount}" do
   device raid
-  fstype "xfs"
+  fstype fsystem
 end
 
 supports "ubuntu"
