@@ -1,16 +1,18 @@
 include_recipe "easybib-solr::prepare"
 include_recipe "easybib-solr::raid"
 
-ebs_vol="#{node[:easybib_solr][:working_directory]}"
+ebs_vol=node[:easybib_solr][:working_directory]
+
+# node["solr"] is provided by scalarium
 
 subversion "Checkout: Research Importers" do
-  repository "#{node["solr"]["deploy_svn"]}/research_importers/#{node["solr"]["research_version"}"
+  repository "#{node["solr"]["deploy_svn"]}/research_importers/#{node["solr"]["research_version"]}"
   destination "#{ebs_vol}/research_importers"
   action :sync
 end
 
 subversion "Checkout: Solr" do
-  repository "#{node["solr"]["deploy_svn"]}/solr/#{node["solr"]["solr_svn_version"}"
+  repository "#{node["solr"]["deploy_svn"]}/solr/#{node["solr"]["solr_svn_version"]}"
   destination "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"}-compiled"
   action :sync    
 end
@@ -23,8 +25,8 @@ link "#{ebs_vol}/research_importers/scripts/solr.sh" do
   to "/etc/init.d/solr"
 end
 
-link "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"}-compiled/logs" do
-  to "/var/log/solr"
+link "#{node[:easybib_solr][:log_dir]}" do
+  to "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"}-compiled/logs"
 end
 
 remote_file "/etc/logrotate.d/solr" do
