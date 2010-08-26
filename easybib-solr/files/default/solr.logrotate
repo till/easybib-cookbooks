@@ -1,0 +1,8 @@
+/var/log/solr/solr.log {
+    daily
+    rotate 8
+    missingok
+    notifempty
+    compress
+    nocreate
+}

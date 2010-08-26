@@ -27,6 +27,13 @@ link "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"}-compiled/logs" do
   to "/var/log/solr"
 end
 
+remote_file "/etc/logrotate.d/solr" do
+  source "solr.logrotate"
+  chmod "0644"
+  owner "root"
+  group "root"
+end
+
 service "solr" do
   service_name "solr"
   supports [:start, :status, :restart, :stop]
