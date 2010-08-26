@@ -37,6 +37,23 @@ end
 
 execute "Format #{mount}" do
   command "mkfs.xfs #{raid}"
+
+  not_if do
+
+    # wait for the device
+    loop do
+      if File.blockdev?(device)
+        Chef::Log.info("device #{raid} ready")
+        break
+      else
+        Chef::Log.info("device #{raid} not ready - waiting")
+        sleep 10
+      end
+    end
+
+    # check volume filesystem
+    system("blkid -s TYPE -o value #{raid}")
+  end
 end
 
 execute "Add #{mount} to /etc/fstab" do
