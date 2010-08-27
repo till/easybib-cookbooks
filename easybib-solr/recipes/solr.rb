@@ -31,7 +31,7 @@ end
 
 remote_file "/etc/logrotate.d/solr" do
   source "solr.logrotate"
-  chmod "0644"
+  mode "0644"
   owner "root"
   group "root"
 end
