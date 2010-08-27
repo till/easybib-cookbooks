@@ -65,5 +65,3 @@ mount "{mount}" do
   device raid
   fstype fsystem
 end
-
-supports "ubuntu"
