@@ -1,9 +1,7 @@
 package "mdadm"
 package "xfsprogs"
 
-gem_package "fog" do
-  action :install
-end
+include_recipe "easybib-solr::fog"
 
 remote_file "/usr/local/bin/build-ebs-raid" do
   source "build-ebs-raid.rb"

@@ -6,5 +6,6 @@ version           "0.1"
 recipe            "easybib-solr::solr", "Checks out all apps and does some config for solr."
 recipe            "easybib-solr::prepare", "Installs dependencies for Solr, creates directories."
 recipe            "easybib-solr::raid", "Setup a raid of EBS volumes."
+recipe            "easybib-solr::fog", "Install the fog rubygem."
 
 supports 'ubuntu'
