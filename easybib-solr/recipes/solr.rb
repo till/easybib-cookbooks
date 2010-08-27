@@ -13,7 +13,7 @@ end
 
 subversion "Checkout: Solr" do
   repository "#{node["solr"]["deploy_svn"]}/solr/#{node["solr"]["solr_svn_version"]}"
-  destination "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"}-compiled"
+  destination "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"]}-compiled"
   action :sync    
 end
 
@@ -26,7 +26,7 @@ link "#{ebs_vol}/research_importers/scripts/solr.sh" do
 end
 
 link "#{node[:easybib_solr][:log_dir]}" do
-  to "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"}-compiled/logs"
+  to "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"]}-compiled/logs"
 end
 
 remote_file "/etc/logrotate.d/solr" do
