@@ -13,7 +13,7 @@ directory "#{node[:easybib_solr][:log_dir]}" do
 end
 
 # the mount for ebs
-directory "#{node["solr"]["working_directory"] do
+directory "#{node[:easybib_solr][:working_directory]}" do
   owner "root"
   group "root"
   mode "0755"
