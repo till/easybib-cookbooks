@@ -3,8 +3,8 @@ package "xfsprogs"
 
 include_recipe "easybib-solr::fog"
 
-remote_file "/usr/local/bin/build-ebs-raid" do
-  source "build-ebs-raid.rb"
+remote_file "/usr/local/bin/build-ebs-device" do
+  source "build-ebs-device.rb"
   mode "0755"
   owner "root"
   group "root"
@@ -19,11 +19,11 @@ zone     = node[:easybib_solr][:ebs][:zone]
 fsystem  = node[:easybib_solr][:ebs][:file_system]
 
 execute "Create first volume: /dev/sdf" do
-  command "/usr/local/bin/build-ebs-raid --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdf"
+  command "/usr/local/bin/build-ebs-device --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdf"
 end
 
 execute "Create first volume: /dev/sdg" do
-  command "/usr/local/bin/build-ebs-raid --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdg"
+  command "/usr/local/bin/build-ebs-device --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdg"
 end
 
 
