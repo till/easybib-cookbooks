@@ -7,7 +7,7 @@ remote_file "#{node[:ganglia_plugins][:plugin_dir]}/nginx_status.py" do
 end
 
 template "#{node[:ganglia_plugins][:conf_dir]}/nginx_status.pyconf" do
-  source "nginx_status.pyconf"
+  source "nginx_status.pyconf.erb"
   mode "0755"
   owner "root"
   group "root"
