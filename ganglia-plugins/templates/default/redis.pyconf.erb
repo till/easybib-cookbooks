@@ -1,8 +1,16 @@
+<%-
+if !node[:scalarium][:roles][:redis][:instances].nil? 
+    redis_instance = node[:scalarium][:roles][:redis][:instances].first
+    host           = redis_instance[:private_ip]
+else
+    host = node[:ganglia_plugins][:redis][:port]
+end
+%>
 modules {
   module {
     name = "redis"
     language = "python"
-    param host { value = "<%= node[:ganglia_plugins][:redis][:host] %>" }
+    param host { value = "<%= host %>" }
     param port { value = <%= node[:ganglia_plugins][:redis][:port] %> }
   }
 }
