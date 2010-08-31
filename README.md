@@ -18,11 +18,16 @@
 
 # Todo Till
 
- * create redis role
- * logrotate:
-   * gearman
-   * nginx
-   * php-fpm
+ * write cookbooks to install (and customize) ganglia plugins:
+   * [redis][gang-redis]
+   * [nginx][gang-nginx]
+ * figure out deployment of API server
+ * figure out deployment of Solr instances
+ * write cookbook for [CouchDB-Lounge][loung] (update install)
+
+[gang-redis]: http://github.com/csakatoku/ganglia-pymodule_nginx_status/tree/master/python_modules/
+[gang-nginx]: http://github.com/ganglia/gmond_python_modules/tree/master/redis/
+[lounge]: http://github.com/till/ubuntu/tree/master/couchdb/couchdb-lounge/
 
 # Todo Scalarium
 
