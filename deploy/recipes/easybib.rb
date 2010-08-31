@@ -1,6 +1,25 @@
 include_recipe "deploy::source"
 
-node[:deploy].each do |application, deploy|
+
+if node[:scalarium][:instance][:roles].include?('nginxphpapp')
+
+  deploy = node[:deploy][:easybib]
+
+elsif node[:scalarium][:instance][:roles].include?('bibapi')
+
+  deploy = node[:deploy][:easybib_api]
+
+elsif node[:scalarium][:instance][:roles].include?('easybibsolr')
+
+  deploy = nil
+  
+else
+
+  deploy = nil
+
+end
+
+if !deploy.nil?
 
   # chef bug
   directory "#{deploy[:deploy_to]}/shared/cached-copy" do
@@ -29,4 +48,5 @@ node[:deploy].each do |application, deploy|
     svn_arguments "--no-auth-cache"
 
   end
+
 end
