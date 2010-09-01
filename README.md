@@ -22,9 +22,8 @@
 
 # Todo Till
 
- * figure out deployment of API server
  * figure out deployment of Solr instances
- * write cookbook for [CouchDB-Lounge][loung] (update install)
+ * write cookbook for [CouchDB-Lounge][lounge] (update install)
 
 [lounge]: http://github.com/till/ubuntu/tree/master/couchdb/couchdb-lounge/
 
