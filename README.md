@@ -4,6 +4,7 @@
  * couchdb (by [Mathias Meyer][meyer]/scalarium)
  * easybib-base (by [Till Klampaeckel][till])
  * easybib-solr (by [Till Klampaeckel][till])
+ * ezproxy (by [Till Klampaeckel][till])
  * ganglia-plugins (by [Till Klampaeckel][till])
  * gearman (by [Till Klampaeckel][till])
  * nginx-app (by [Till Klampaeckel][till])
