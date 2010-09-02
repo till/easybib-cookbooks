@@ -23,6 +23,6 @@ template "/etc/logrotate.d/gearman-worker" do
 end
 
 cron "Setup worker to run every 5 minutes" do
-  minute "5"
+  minute "*/5"
   command cron_command
 end
