@@ -6,3 +6,4 @@ package "strace"
 
 include_recipe "easybib-base::awscommand"
 include_recipe "easybib-base::nginxstats"
+include_recipe "easybib-base::cron"
