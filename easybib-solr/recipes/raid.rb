@@ -18,13 +18,13 @@ mount    = node[:easybib_solr][:working_directory]
 zone     = node[:easybib_solr][:ebs][:zone]
 fsystem  = node[:easybib_solr][:ebs][:file_system]
 
-execute "Create first volume: /dev/sdf" do
-  command "/usr/local/bin/build-ebs-device --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdf"
-end
+#execute "Create first volume: /dev/sdf" do
+#  command "/usr/local/bin/build-ebs-device --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdf"
+#end
 
-execute "Create first volume: /dev/sdg" do
-  command "/usr/local/bin/build-ebs-device --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdg"
-end
+#execute "Create first volume: /dev/sdg" do
+#  command "/usr/local/bin/build-ebs-device --zone=#{zone} --size=#{size} --instance=#{instance} --device=/dev/sdg"
+#end
 
 
 mdadm "#{raid}" do
