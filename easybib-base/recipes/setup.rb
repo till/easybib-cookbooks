@@ -4,6 +4,7 @@ package "multitail"
 package "apache2-utils"
 package "strace"
 package "rsync"
+package "man"
 
 include_recipe "easybib-base::awscommand"
 include_recipe "easybib-base::nginxstats"
