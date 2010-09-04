@@ -1,6 +1,3 @@
-#include_recipe "easybib-solr::prepare"
-#include_recipe "easybib-solr::raid"
-
 ebs_vol=node[:easybib_solr][:working_directory]
 
 # node["solr"] is provided by scalarium
