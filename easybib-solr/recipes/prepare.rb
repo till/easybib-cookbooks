@@ -3,6 +3,7 @@ package "openjdk-6-jre"
 package "openjdk-6-jdk"
 package "openjdk-6-jre-lib"
 package "openjdk-6-jre-headless"
+package "subversion"
 
 # for logs
 directory "#{node[:easybib_solr][:log_dir]}" do
