@@ -2,13 +2,15 @@ ebs_vol=node[:easybib_solr][:working_directory]
 
 # node["solr"] is provided by scalarium
 
+svn_args="--non-interactive --no-auth-cache"
+
 subversion "Checkout: Research Importers" do
   repository "#{node["solr"]["deploy_svn"]}/research_importers/#{node["solr"]["research_version"]}/"
   destination "#{ebs_vol}/research_importers"
   svn_username node["deploy"]["easybib"]["scm"]["user"]
   svn_password node["deploy"]["easybib"]["scm"]["password"]
-  svn_arguments "--no-auth-cache"
-  action :sync
+  svn_arguments svn_args
+  action :checkout
 end
 
 subversion "Checkout: Solr" do
@@ -16,8 +18,8 @@ subversion "Checkout: Solr" do
   destination "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"]}-compiled"
   svn_username node["deploy"]["easybib"]["scm"]["user"]
   svn_password node["deploy"]["easybib"]["scm"]["password"]
-  svn_arguments "--no-auth-cache"
-  action :sync
+  svn_arguments svn_args
+  action :checkout
 end
 
 link "#{ebs_vol}/research_importers/etc/solr.conf" do
