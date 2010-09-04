@@ -11,11 +11,3 @@ directory "#{node[:easybib_solr][:log_dir]}" do
   mode "0755"
   action :create
 end
-
-# the mount for ebs
-directory "#{node[:easybib_solr][:working_directory]}" do
-  owner "root"
-  group "root"
-  mode "0755"
-  action :create
-end
