@@ -1,5 +1,5 @@
 include_recipe "easybib-solr::prepare"
-include_recipe "easybib-solr::raid"
+#include_recipe "easybib-solr::raid"
 
 ebs_vol=node[:easybib_solr][:working_directory]
 
