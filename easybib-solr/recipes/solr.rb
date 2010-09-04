@@ -1,4 +1,4 @@
-include_recipe "easybib-solr::prepare"
+#include_recipe "easybib-solr::prepare"
 #include_recipe "easybib-solr::raid"
 
 ebs_vol=node[:easybib_solr][:working_directory]
@@ -6,7 +6,7 @@ ebs_vol=node[:easybib_solr][:working_directory]
 # node["solr"] is provided by scalarium
 
 subversion "Checkout: Research Importers" do
-  repository "#{node["solr"]["deploy_svn"]}/research_importers/#{node["solr"]["research_version"]}"
+  repository "#{node["solr"]["deploy_svn"]}/research_importers/#{node["solr"]["research_version"]}/"
   destination "#{ebs_vol}/research_importers"
   action :sync
 end
