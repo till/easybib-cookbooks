@@ -16,12 +16,12 @@ end
 
 link "#{ebs_vol}/research_importers/etc/solr.conf" do
   to "/etc/solr.conf"
-  not_if test -h /etc/solr.conf
+  not_if "test -h /etc/solr.conf"
 end
 
 link "#{ebs_vol}/research_importers/scripts/solr.sh" do
   to "/etc/init.d/solr"
-  not_if test -h /etc/init.d/solr
+  not_if "test -h /etc/init.d/solr"
 end
 
 link "#{node[:easybib_solr][:log_dir]}" do
