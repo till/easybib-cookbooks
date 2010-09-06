@@ -4,7 +4,7 @@ ebs_vol=node[:easybib_solr][:working_directory]
 
 link "#{ebs_vol}/research_importers/etc/solr.conf" do
   to "/etc/solr.conf"
-  not_if "test -h /etc/solr.conf"
+  not_if "test -h /etc/solr.conf && test -d #{ebs_vol}/research_importers/etc/"
 end
 
 link "#{ebs_vol}/research_importers/scripts/solr.sh" do
@@ -27,5 +27,6 @@ end
 service "solr" do
   service_name "solr"
   supports [:start, :status, :restart, :stop]
-  action [ :enable, :start, :restart ]
+  action [ :enable, :start ]
+  only_if "test -h /etc/init.d/solr"
 end
