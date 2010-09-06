@@ -1,7 +1,6 @@
 ebs_vol=node[:easybib_solr][:working_directory]
 
 # The server is deployed and research app are deployed through deploy::easybib.
-# node["solr"] is provided by scalarium.
 
 link "#{ebs_vol}/research_importers/etc/solr.conf" do
   to "/etc/solr.conf"
@@ -14,7 +13,7 @@ link "#{ebs_vol}/research_importers/scripts/solr.sh" do
 end
 
 link "#{node[:easybib_solr][:log_dir]}" do
-  to "#{ebs_vol}/apache-solr-#{node["solr"]["solr_version"]}-compiled/logs"
+  to "#{ebs_vol}/apache-solr-1.4-compiled/logs"
   ignore_failure true
 end
 
