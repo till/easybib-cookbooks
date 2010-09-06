@@ -3,7 +3,7 @@ package "subversion"
 template "/etc/ssl/certs/Equifax_Secure_Certificate_Authority.cer" do
   mode "0777"
   source "Equifax_Secure_Certificate_Authority.cer.erb"
-  create_if_missing :true
+  not_if "test -f /etc/ssl/certs/Equifax_Secure_Certificate_Authority.cer"
 end
 
 remote_file "/root/.subversion/servers" do
