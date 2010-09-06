@@ -5,7 +5,12 @@
 
 deployUser="www-data"
 
+Chef::Log.debug("deploy::easybib - entered.");
+
 node[:deploy].each do |application, deploy|
+
+  Chef::Log.debug("deploy::easybib - #{application}, #{node[:scalarium][:instance][:roles]}")
+
   case application
   when 'easybib'
     next unless node[:scalarium][:instance][:roles].include?('nginxphpapp')
@@ -28,6 +33,8 @@ node[:deploy].each do |application, deploy|
 
     deployUser = "root"
   end
+
+  Chef::Log.debug("deploy::easybib - ABOUT TO DEPLOY FOR REALZ")
   
   # we survived until here - so we are good to actually checkout and deploy
   # done for every app
