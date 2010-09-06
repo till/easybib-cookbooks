@@ -35,6 +35,6 @@ end
 service "solr" do
   service_name "solr"
   supports [:start, :status, :restart, :stop]
-  action [ :enable, :start ]
+  action [ :enable ]
   only_if "test -h /etc/init.d/solr"
 end
