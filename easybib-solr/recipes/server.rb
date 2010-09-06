@@ -2,14 +2,22 @@ ebs_vol=node[:easybib_solr][:working_directory]
 
 # The server is deployed and research app are deployed through deploy::easybib.
 
-link "#{ebs_vol}/research_importers/etc/solr.conf" do
-  to "/etc/solr.conf"
-  not_if "test -h /etc/solr.conf && test -d #{ebs_vol}/research_importers/etc/"
-end
+if File.exists?("/research_importers/etc/solr.conf")
 
-link "#{ebs_vol}/research_importers/scripts/solr.sh" do
-  to "/etc/init.d/solr"
-  not_if "test -h /etc/init.d/solr"
+  link "#{ebs_vol}/research_importers/etc/solr.conf" do
+    to "/etc/solr.conf"
+    not_if "test -h /etc/solr.conf"
+  end
+
+  link "#{ebs_vol}/research_importers/scripts/solr.sh" do
+    to "/etc/init.d/solr"
+    not_if "test -h /etc/init.d/solr"
+  end
+
+else
+
+  Chef::Log.debug('Skip symlinking solr.conf and start script because research_importers needs to be deployed first.')
+
 end
 
 link "#{node[:easybib_solr][:log_dir]}" do
