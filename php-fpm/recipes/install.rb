@@ -83,4 +83,4 @@ template "/etc/logrotate.d/php" do
 end
 
 include_recipe "php-fpm::apc"
-include_recipe "php-fpm::xhprof"
+#include_recipe "php-fpm::xhprof"
