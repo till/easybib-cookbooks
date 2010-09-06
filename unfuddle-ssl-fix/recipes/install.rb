@@ -11,5 +11,4 @@ remote_file "/root/.subversion/servers" do
   mode 0755
   owner "root"
   group "root"
-  create_if_missing :true
 end
