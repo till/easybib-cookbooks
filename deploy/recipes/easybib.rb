@@ -60,7 +60,7 @@ node[:deploy].each do |application, deploy|
     repository deploy[:scm][:repository]
     user deployUser
 
-    if deploy[:scm][:revision].any?
+    if !deploy[:scm][:revision].nil?
       revision deploy[:scm][:revision]
     end
 
