@@ -4,13 +4,13 @@ ebs_vol=node[:easybib_solr][:working_directory]
 
 if File.exists?("/research_importers/current/etc/solr.conf")
 
-  link "#{ebs_vol}/research_importers/current/etc/solr.conf" do
-    to "/etc/solr.conf"
+  link "/etc/solr.conf" do
+    to "#{ebs_vol}/research_importers/current/etc/solr.conf"
     not_if "test -h /etc/solr.conf"
   end
 
-  link "#{ebs_vol}/research_importers/current/scripts/solr.sh" do
-    to "/etc/init.d/solr"
+  link "/etc/init.d/solr" do
+    to "#{ebs_vol}/research_importers/current/scripts/solr.sh"
     not_if "test -h /etc/init.d/solr"
   end
 
@@ -20,8 +20,8 @@ else
 
 end
 
-link "#{node[:easybib_solr][:log_dir]}" do
-  to "#{ebs_vol}/apache-solr-1.4-compiled/current/logs"
+link "#{ebs_vol}/apache-solr-1.4-compiled/current/logs" do
+  to "#{node[:easybib_solr][:log_dir]}"
   ignore_failure true
 end
 
