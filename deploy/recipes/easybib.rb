@@ -11,11 +11,34 @@ elsif node[:scalarium][:instance][:roles].include?('bibapi')
 
 elsif node[:scalarium][:instance][:roles].include?('easybibsolr')
 
-  deploy = nil
-  
+  # -server and -research importers
+  if application == "easybib_solr_research_importers"
+
+    deploy                   = node[:deploy][:easybib_solr_research_importers]
+    deploy[:deploy_to]       = "/solr/research_importers"
+    deploy[:restart_command] = ""
+
+  elsif application == "easybib_solr_server"
+
+    deploy                   = node[:deploy][:easybib_solr_server]
+    deploy[:deploy_to]       = "/solr/apache-solr-1.4-compiled"
+    deploy[:restart_command] = "/etc/init.d/solr restart"
+
+  end
+
 else
 
   deploy = nil
+
+end
+
+# This fixes a Scalarium bug:
+# UI asks for branch or revision but is only able to deal with revisions.
+matches = deploy[:scm][:revision].match(/(r[0-9]{1,})|([0-9]{1,})/)
+if matches.nil? 
+
+  deploy[:scm][:repository] = "#{deploy[:scm][:repository]}/#{deploy[:scm][:revision]}"
+  deploy[:scm][:revision]   = nil
 
 end
 
@@ -33,14 +56,19 @@ if !deploy.nil?
     repository deploy[:scm][:repository]
     user "www-data"
 
-    revision deploy[:scm][:revision]
+    if deploy[:scm][:revision].any?
+      revision deploy[:scm][:revision]
+    end
+
     migrate deploy[:migrate]
     migration_command deploy[:migrate_command]
 
     symlink_before_migrate deploy[:symlink_before_migrate]
     action deploy[:action]
 
-    restart_command "sleep #{deploy[:sleep_before_restart]} && #{deploy[:restart_command]}"
+    if deploy[:restart_command].any?
+      restart_command "sleep #{deploy[:sleep_before_restart]} && #{deploy[:restart_command]}"
+    end
 
     scm_provider Chef::Provider::Subversion
     svn_username deploy[:scm][:user]
