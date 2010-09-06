@@ -26,6 +26,14 @@ node[:deploy].each do |application, deploy|
     deploy[:restart_command] = ""
 
     deployUser = "root"
+
+    directory deploy[:deploy_to] do
+      owner "root"
+      group "root"
+      mode "0755"
+      action :create
+      not_if "test -d #{deploy[:deploy_to]}"
+    end
   when 'easybib_solr_server'
     # not sure on which roles you want to have this app
     next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
@@ -36,6 +44,14 @@ node[:deploy].each do |application, deploy|
     deploy[:restart_command] = "/etc/init.d/solr restart"
 
     deployUser = "root"
+
+    directory deploy[:deploy_to] do
+      owner "root"
+      group "root"
+      mode "0755"
+      action :create
+      not_if "test -d #{deploy[:deploy_to]}"
+    end
   end
 
   Chef::Log.debug("deploy::easybib - ABOUT TO DEPLOY FOR REALZ")
@@ -64,10 +80,12 @@ node[:deploy].each do |application, deploy|
       revision deploy[:scm][:revision]
     end
 
-    migrate deploy[:migrate]
-    migration_command deploy[:migrate_command]
+    unless !node[:scalarium][:instance][:roles].include?('easybibsolr')
+      migrate deploy[:migrate]
+      migration_command deploy[:migrate_command]
+      symlink_before_migrate deploy[:symlink_before_migrate]
+    end
 
-    symlink_before_migrate deploy[:symlink_before_migrate]
     action deploy[:action]
 
     if deploy[:restart_command].any?
