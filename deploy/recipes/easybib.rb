@@ -9,7 +9,7 @@ Chef::Log.debug("deploy::easybib - entered.");
 
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.debug("deploy::easybib - #{application}, #{node[:scalarium][:instance][:roles]}")
+  Chef::Log.debug("deploy::easybib - app: #{application}, role: #{node[:scalarium][:instance][:roles]}")
 
   case application
   when 'easybib'
@@ -18,7 +18,9 @@ node[:deploy].each do |application, deploy|
     next unless node[:scalarium][:instance][:roles].include?('bibapi')
   when 'easybib_solr_research_importers'
     # not sure on which roles you want to have this app
-    next unless node[:scalarium][:instance][:roles].include?('solr')
+    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+
+    Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
     
     deploy[:deploy_to]       = "/solr/research_importers"
     deploy[:restart_command] = ""
@@ -26,8 +28,10 @@ node[:deploy].each do |application, deploy|
     deployUser = "root"
   when 'easybib_solr_server'
     # not sure on which roles you want to have this app
-    next unless node[:scalarium][:instance][:roles].include?('solr')
-    
+    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+
+    Chef::Log.debug('deploy::easybib - Setting deploy for SOLR SERVER')
+
     deploy[:deploy_to]       = "/solr/apache-solr-1.4-compiled"
     deploy[:restart_command] = "/etc/init.d/solr restart"
 
