@@ -11,18 +11,30 @@ elsif node[:scalarium][:instance][:roles].include?('bibapi')
 
 elsif node[:scalarium][:instance][:roles].include?('easybibsolr')
 
-  # -server and -research importers
-  if application == "easybib_solr_research_importers"
+  node[:deploy].each do |application, deployInfo|
 
-    deploy                   = node[:deploy][:easybib_solr_research_importers]
-    deploy[:deploy_to]       = "/solr/research_importers"
-    deploy[:restart_command] = ""
+    # -server and -research importers
+    if application == "easybib_solr_research_importers"
 
-  elsif application == "easybib_solr_server"
+      deploy                   = deployInfo
+      deploy[:deploy_to]       = "/solr/research_importers"
+      deploy[:restart_command] = ""
 
-    deploy                   = node[:deploy][:easybib_solr_server]
-    deploy[:deploy_to]       = "/solr/apache-solr-1.4-compiled"
-    deploy[:restart_command] = "/etc/init.d/solr restart"
+      break
+
+    end
+
+    if application == "easybib_solr_server"
+
+      deploy                   = deployInfo
+      deploy[:deploy_to]       = "/solr/apache-solr-1.4-compiled"
+      deploy[:restart_command] = "/etc/init.d/solr restart"
+
+      break
+
+    end
+
+    Chef::Log.debug("Skipping deploy::easybib because application #{application} doesn't. run on #{node[:scalarium][:instance][:roles]}")
 
   end
 
