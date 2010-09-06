@@ -1,0 +1,5 @@
+[groups]
+
+[global]
+store-passwords = no
+ssl-authority-files = /etc/ssl/certs/Equifax_Secure_Certificate_Authority.cer
