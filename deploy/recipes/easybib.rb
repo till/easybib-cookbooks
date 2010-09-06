@@ -41,7 +41,7 @@ node[:deploy].each do |application, deploy|
     Chef::Log.debug('deploy::easybib - Setting deploy for SOLR SERVER')
 
     deploy[:deploy_to]       = "/solr/apache-solr-1.4-compiled"
-    deploy[:restart_command] = "/etc/init.d/solr restart"
+    deploy[:restart_command] = ""
 
     deployUser = "root"
 

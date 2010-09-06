@@ -27,5 +27,5 @@ end
 service "solr" do
   service_name "solr"
   supports [:start, :status, :restart, :stop]
-  action [ :enable, :start ]
+  action [ :enable, :start, :restart ]
 end
