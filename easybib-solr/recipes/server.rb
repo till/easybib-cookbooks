@@ -1,6 +1,7 @@
 ebs_vol=node[:easybib_solr][:working_directory]
 
-# node["solr"] is provided by scalarium
+# The server is deployed and research app are deployed through deploy::easybib.
+# node["solr"] is provided by scalarium.
 
 link "#{ebs_vol}/research_importers/etc/solr.conf" do
   to "/etc/solr.conf"
