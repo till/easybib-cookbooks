@@ -3,6 +3,8 @@
 # do you really want this?
 #include_recipe "deploy::source"
 
+deployUser="www-data"
+
 node[:deploy].each do |application, deploy|
   case application
   when 'easybib'
@@ -15,12 +17,16 @@ node[:deploy].each do |application, deploy|
     
     deploy[:deploy_to]       = "/solr/research_importers"
     deploy[:restart_command] = ""
+
+    deployUser = "root"
   when 'easybib_solr_server'
     # not sure on which roles you want to have this app
     next unless node[:scalarium][:instance][:roles].include?('solr')
     
     deploy[:deploy_to]       = "/solr/apache-solr-1.4-compiled"
     deploy[:restart_command] = "/etc/init.d/solr restart"
+
+    deployUser = "root"
   end
   
   # we survived until here - so we are good to actually checkout and deploy
@@ -41,7 +47,7 @@ node[:deploy].each do |application, deploy|
   # setup deployment & checkout
   deploy deploy[:deploy_to] do
     repository deploy[:scm][:repository]
-    user "www-data"
+    user deployUser
 
     if deploy[:scm][:revision].any?
       revision deploy[:scm][:revision]
