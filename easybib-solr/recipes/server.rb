@@ -20,7 +20,7 @@ else
 
 end
 
-link "#{ebs_vol}/apache-solr-1.4-compiled/current/logs" do
+link "#{ebs_vol}/apache-solr-1.4.1-compiled/current/logs" do
   to "#{node[:easybib_solr][:log_dir]}"
   ignore_failure true
 end
