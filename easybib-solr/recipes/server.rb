@@ -1,4 +1,5 @@
 ebs_vol=node[:easybib_solr][:working_directory]
+solr_ver="1.4.1"
 
 # The server is deployed and research app are deployed through deploy::easybib.
 
@@ -20,7 +21,19 @@ else
 
 end
 
-link "#{ebs_vol}/apache-solr-1.4.1-compiled/current/logs" do
+directory "#{ebs_vol}/solr-data" do
+  owner "root"
+  group "root"
+  mode "0755"
+  action :create
+end
+
+link "#{ebs_vol}/apache-solr-#{solr_ver}-compiled/current/solr/data" do
+  to "#{ebs_vol}/solr-data"
+  ignore_failure true
+end
+
+link "#{ebs_vol}/apache-solr-#{solr_ver}-compiled/current/logs" do
   to "#{node[:easybib_solr][:log_dir]}"
   ignore_failure true
 end
