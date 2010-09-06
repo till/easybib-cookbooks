@@ -10,6 +10,14 @@ package "php5-cli"
 package "php5-mysql"
 package "php-pear"
 
+execute "Update PEAR" do
+  command "pear upgrade --onlyreqdeps PEAR"
+end
+
+execute "Update installed packages" do
+  command "pear upgrade-all --onlyreqdeps"
+end
+
 # for logs
 directory "#{node[:easybib_solr][:log_dir]}" do
   owner "root"
