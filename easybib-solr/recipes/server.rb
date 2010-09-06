@@ -2,7 +2,7 @@ ebs_vol=node[:easybib_solr][:working_directory]
 
 # The server is deployed and research app are deployed through deploy::easybib.
 
-if File.exists?("#{ebs_solr}/research_importers/current/etc/solr.conf")
+if File.exists?("#{ebs_vol}/research_importers/current/etc/solr.conf")
 
   link "/etc/solr.conf" do
     to "#{ebs_vol}/research_importers/current/etc/solr.conf"
