@@ -1,8 +1,4 @@
-package "openjdk-6-dbg"
-package "openjdk-6-jre"
-package "openjdk-6-jdk"
-package "openjdk-6-jre-lib"
-package "openjdk-6-jre-headless"
+package "sun-java6-jre"
 package "subversion"
 
 # for logs
