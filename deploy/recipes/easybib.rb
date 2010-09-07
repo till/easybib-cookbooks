@@ -25,8 +25,6 @@ node[:deploy].each do |application, deploy|
     deploy[:deploy_to]       = "/solr/research_importers"
     deploy[:restart_command] = ""
 
-    deployUser = "root"
-
     directory deploy[:deploy_to] do
       owner "root"
       group "root"
