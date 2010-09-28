@@ -38,6 +38,8 @@ execute "PHP: ./configure" do
   php_exts << '--disable-posix'
   php_exts << '--disable-phar'
   php_exts << '--disable-pdo'
+  php_exts << '--enable-pcntl'
+  php_exts << '--with-curl'
 
   php_fpm = []
   php_fpm << '--enable-fpm'
@@ -47,7 +49,7 @@ execute "PHP: ./configure" do
   cwd "/tmp/php-#{node["php-fpm"][:version]}"
   environment "HOME" => "/root"
 
-  command "./configure #{php_opts.join(' ')} #{php_exts.join( )} #{php_fom.join(' ')}"
+  command "./configure #{php_opts.join(' ')} #{php_exts.join( )} #{php_fpm.join(' ')}"
 
   not_if &php_already_installed
 end
