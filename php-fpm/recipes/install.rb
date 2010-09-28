@@ -20,9 +20,35 @@ execute "PHP: unpack" do
 end
 
 execute "PHP: ./configure" do
+
+  php_opts = []
+  php_opts << "--with-config-file-path=#{php_prefix}/etc"
+  php_opts << "--with-config-file-scan-dir=#{php_prefix}/etc/php"
+  php_opts << "--prefix=#{php_prefix}"
+  php_opts << "--with-pear=#{php_prefix}/pear"
+
+  php_exts = []
+  php_exts << '--enable-sockets'
+  php_exts << '--enable-soap'
+  php_exts << '--with-openssl'
+  php_exts << '--disable-posix'
+  php_exts << '--without-sqlite'
+  php_exts << '--without-sqlite3'
+  php_exts << '--with-mysqli=mysqlnd'
+  php_exts << '--disable-posix'
+  php_exts << '--disable-phar'
+  php_exts << '--disable-pdo'
+
+  php_fpm = []
+  php_fpm << '--enable-fpm'
+  php_fpm << "--with-fpm-user=#{node["php-fpm"][:user]}"
+  php_fpm << "--with-fpm-group=#{node["php-fpm"][:group]}"
+
   cwd "/tmp/php-#{node["php-fpm"][:version]}"
   environment "HOME" => "/root"
-  command "./configure --with-config-file-path=#{php_prefix}/etc --with-config-file-scan-dir=#{php_prefix}/etc/php --prefix=#{php_prefix} --enable-soap --with-openssl --disable-posix --without-sqlite --without-sqlite3 --with-mysqli=mysqlnd --disable-posix --disable-phar --disable-pdo --enable-fpm --with-fpm-user=#{node["php-fpm"][:user]} --with-fpm-group=#{node["php-fpm"][:group]} --with-pear=#{php_prefix}/pear"
+
+  command "./configure #{php_opts.join(' ')} #{php_exts.join( )} #{php_fom.join(' ')}"
+
   not_if &php_already_installed
 end
 
