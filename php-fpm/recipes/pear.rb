@@ -1,4 +1,5 @@
 execute "PHP: install pear packages" do
+  command "pear config-set auto_discover 1"
   command "pear channel-update pear.php.net"
   command "pear upgrade-all"
   command "pear install -f Crypt_HMAC2-beta"
