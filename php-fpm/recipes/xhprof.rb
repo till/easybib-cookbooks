@@ -1,3 +1,5 @@
+package "graphviz"
+
 remote_file "/tmp/xhprof-#{node["php-fpm"][:xhprof_version]}.tgz" do
   source "http://pecl.php.net/get/xhprof-#{node["php-fpm"][:xhprof_version]}.tgz"
 end
