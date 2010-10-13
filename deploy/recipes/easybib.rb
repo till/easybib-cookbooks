@@ -45,6 +45,7 @@ node[:deploy].each do |application, deploy|
     group "root"
     mode "0755"
     action :create
+    recursive true
     not_if "test -d #{deploy[:deploy_to]}"
   end
 
