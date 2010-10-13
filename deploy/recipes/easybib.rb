@@ -25,13 +25,6 @@ node[:deploy].each do |application, deploy|
     deploy[:deploy_to]       = "/solr/research_importers"
     deploy[:restart_command] = ""
 
-    directory deploy[:deploy_to] do
-      owner "root"
-      group "root"
-      mode "0755"
-      action :create
-      not_if "test -d #{deploy[:deploy_to]}"
-    end
   when 'easybib_solr_server'
     # not sure on which roles you want to have this app
     next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
@@ -43,14 +36,17 @@ node[:deploy].each do |application, deploy|
 
     deployUser = "root"
 
-    directory deploy[:deploy_to] do
-      owner "root"
-      group "root"
-      mode "0755"
-      action :create
-      not_if "test -d #{deploy[:deploy_to]}"
-    end
   end
+
+  Chef::Log.debug("deploy::easybib - CREATE DEPLOY DIR")
+
+  directory deploy[:deploy_to] do
+    owner "root"
+    group "root"
+    mode "0755"
+    action :create
+    not_if "test -d #{deploy[:deploy_to]}"
+ end
 
   Chef::Log.debug("deploy::easybib - ABOUT TO DEPLOY FOR REALZ")
   
