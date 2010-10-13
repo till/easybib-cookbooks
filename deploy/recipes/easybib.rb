@@ -46,7 +46,7 @@ node[:deploy].each do |application, deploy|
     mode "0755"
     action :create
     not_if "test -d #{deploy[:deploy_to]}"
- end
+  end
 
   Chef::Log.debug("deploy::easybib - ABOUT TO DEPLOY FOR REALZ")
   
