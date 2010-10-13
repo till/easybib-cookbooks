@@ -78,6 +78,7 @@ node[:deploy].each do |application, deploy|
     unless !node[:scalarium][:instance][:roles].include?('easybibsolr')
       migrate deploy[:migrate]
       migration_command deploy[:migrate_command]
+      symlink_before_migrate({})
     end
 
     action deploy[:action]
