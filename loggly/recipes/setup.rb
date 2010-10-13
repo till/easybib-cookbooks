@@ -4,6 +4,6 @@ template "/etc/rsyslog.d/10-loggly.conf" do
 end
 
 service "rsyslog" do
-  supports "status => true, :restart => true, :reload => true
+  supports :status => true, :restart => true, :reload => true
   action [ :restart ]
 end
