@@ -1,1 +1,11 @@
+$ModLoad imfile
+
+$InputFileName /var/log/nginx/error.log
+$InputFileTag nginx:
+$InputFileStateFile stat-nginx-error
+$InputFileSeverity error
+$InputRunFileMonitor
+
+$InputFilePollingInterval 10
+
 *.*    @@logs.loggly.com:<%= node["loggly_port"] %>
