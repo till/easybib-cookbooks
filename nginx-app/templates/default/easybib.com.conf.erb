@@ -45,7 +45,7 @@ server {
         access_log  off;
     }
 
-    location /new-images/ {
+    location /images/ {
         root        <%= @deploy[:deploy_to] %>/current/www;
         access_log  off;
     }
