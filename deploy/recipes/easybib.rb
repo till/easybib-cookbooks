@@ -76,10 +76,11 @@ node[:deploy].each do |application, deploy|
     end
 
     symlink_before_migrate({})
-    unless !node[:scalarium][:instance][:roles].include?('easybibsolr')
-      migrate deploy[:migrate]
-      migration_command deploy[:migrate_command]
-    end
+    migrate false
+    #if !node[:scalarium][:instance][:roles].include?('easybibsolr')
+    #  migrate deploy[:migrate]
+    #  migration_command deploy[:migrate_command]
+    #end
 
     action deploy[:action]
 
