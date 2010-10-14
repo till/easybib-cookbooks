@@ -4,7 +4,6 @@ upstream phpfpm {
 
 server {
     listen   80;
-    server_name  <%= @deploy[:domains].first %>;
 
     location = /health_check.php {
 
