@@ -8,8 +8,12 @@ node[:deploy].each do |application, deploy|
     next unless node[:scalarium][:instance][:roles].include?('nginxphpapp')
   when 'easybib_api'
     next unless node[:scalarium][:instance][:roles].include?('bibapi')
+  when 'easybib_solr_research_importers'
+    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+  when 'easybib_solr_server'
+    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
   end
-  
+
   template "/etc/nginx/sites-enabled/easybib.com.conf" do
     source "easybib.com.conf.erb"
     mode "0755"
@@ -18,4 +22,5 @@ node[:deploy].each do |application, deploy|
     variables :deploy => deploy, :application => application
     notifies :restart, resources(:service => "nginx"), :delayed
   end
+
 end
