@@ -54,6 +54,7 @@ execute "PHP: ./configure" do
   not_if &php_already_installed
 end
 
+# run with make -j4 cause we have 4 ec2 compute units
 execute "PHP: make, make install" do
   cwd "/tmp/php-#{node["php-fpm"][:version]}"
   environment "HOME" => "/root"
