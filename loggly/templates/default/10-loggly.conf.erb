@@ -1,11 +1,26 @@
-$ModLoad imfile
+<% if node[:scalarium][:instance][:roles].include?('nginxphpapp') %>
 
+$ModLoad imfile
 $InputFileName /var/log/nginx/error.log
 $InputFileTag nginx:
 $InputFileStateFile stat-nginx-error
 $InputFileSeverity error
 $InputRunFileMonitor
 
+$InputFileName /var/log/php/slow.log
+$InputFileTag slow:
+$InputFileStateFile stat-fpm-slow
+$InputFileSeverity notice
+$InputRunFileMonitor
+
+$InputFileName /var/log/php/fpm.log
+$InputFileTag fpm:
+$InputFileStateFile stat-fpm
+$InputFileSeverity error
+$InputRunFileMonitor
+
 $InputFilePollingInterval 10
+
+<% end %>
 
 *.*    @@logs.loggly.com:<%= node["loggly_port"] %>
