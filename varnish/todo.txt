@@ -1,0 +1,7 @@
+
+ * add config
+ * pass through /haproxy?stats
+ * pass through /list
+ * cache:
+   * /: guest, mybib, mybibpro/admin/school
+   * 
