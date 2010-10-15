@@ -1,6 +1,9 @@
-curl http://repo.varnish-cache.org/debian/GPG-key.txt | apt-key add -
+execute "update keys" do
+  command "curl http://repo.varnish-cache.org/debian/GPG-key.txt | apt-key add -"
+  action :run
+end
 
-remote_file "/etc/apt/sources.list.d/varnish.list do
+remote_file "/etc/apt/sources.list.d/varnish.list" do
   source "varnish.list"
   mode "0644"
   not_if "test -f /etc/apt/sources.list.d/varnish.list"
