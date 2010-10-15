@@ -9,9 +9,9 @@ node[:deploy].each do |application, deploy|
   when 'easybib_api'
     next unless node[:scalarium][:instance][:roles].include?('bibapi')
   when 'easybib_solr_research_importers'
-    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+    next # unless node[:scalarium][:instance][:roles].include?('easybibsolr')
   when 'easybib_solr_server'
-    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+    next # unless node[:scalarium][:instance][:roles].include?('easybibsolr')
   end
 
   template "/etc/nginx/sites-enabled/easybib.com.conf" do
