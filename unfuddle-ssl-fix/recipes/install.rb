@@ -23,12 +23,14 @@ users.each do |user|
     owner user
     mode "0755"
     action :create
+    not_if "test -d #{home_dir}/.subversion"
   end
 
   remote_file "#{home_dir}/.subversion/servers" do
     source "servers"
     mode 0755
     owner user
+    not_if "test -f #{home_dir}/.subversion/servers"
   end
 
 end
