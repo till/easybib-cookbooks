@@ -92,6 +92,7 @@ node[:deploy].each do |application, deploy|
     svn_username deploy[:scm][:user]
     svn_password deploy[:scm][:password]
     svn_arguments "--no-auth-cache --non-interactive"
+    svn_info_args "--no-auth-cache --non-interactive"
   end
   
 end
