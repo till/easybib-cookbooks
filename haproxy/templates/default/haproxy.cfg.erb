@@ -27,10 +27,16 @@ defaults
   stats auth <%= @node[:haproxy][:stats_user] %>:<%= @node[:haproxy][:stats_password] %>
   stats uri <%= @node[:haproxy][:stats_url] %>
   <% end -%>
+
+<%
+# bind haproxy to the following parameters
+haproxy_port = 31337
+haproxy_host = "127.0.0.1"
+%>
         
 # Set up application listeners here.
 <% if @node[:scalarium][:roles][:nginxphpapp][:instances].blank? -%>
-listen application 0.0.0.0:80
+listen application <%= haproxy_host %>:<%= haproxy_port %>
   # configure a fake backend as long as there are no real ones
   # this way HAProxy will not fail on a config check
   balance roundrobin
@@ -50,7 +56,7 @@ backend php_app_servers
 <% end -%>
 
 frontend http-in
-  bind :80
+  bind <%= haproxy_host %>:<%= haproxy_port %>
   
   # all domains of PHP applications
   <% @node[:haproxy][:php_applications].each do |app_name, app_config| -%>
