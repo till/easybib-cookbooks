@@ -44,7 +44,6 @@ Castle-Hill
 Castleton-Corners
 Charleston
 Chelsea
-Chelsea
 Chinatown
 City-Line
 City-Island
@@ -172,7 +171,6 @@ Mott-Haven
 Mount-Eden
 Mount-Hope
 Murray-Hill
-Murray-Hill
 Navy-Yard
 Neponsit
 New-Dorp
@@ -250,7 +248,6 @@ Stapleton
 Starrett-City
 Steinway
 Stuyvesant-Town
-Sunnyside
 Sunnyside
 Sunnyside-Gardens
 Sunset-Park
