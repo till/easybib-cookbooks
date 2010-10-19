@@ -40,6 +40,7 @@ execute "PHP: ./configure" do
   php_exts << "--disable-pdo"
   php_exts << "--enable-pcntl"
   php_exts << "--with-curl"
+  php_exts << "--with-tidy"
 
   php_fpm = []
   php_fpm << "--enable-fpm"
