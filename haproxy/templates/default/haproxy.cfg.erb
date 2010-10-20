@@ -27,13 +27,24 @@ defaults
   stats auth <%= @node[:haproxy][:stats_user] %>:<%= @node[:haproxy][:stats_password] %>
   stats uri <%= @node[:haproxy][:stats_url] %>
   <% end -%>
-
 <%
 # bind haproxy to the following parameters
 haproxy_port = 80 # 31337
 haproxy_host = "" # "127.0.0.1"
-%>
-        
+
+# rise - number of successful checks to determine if the backend is 'up'
+haproxy_rise = 2
+
+# fall - number of failed checks to determine if the backend is down
+haproxy_fall = 3
+
+# in milliseconds - 10 seconds is too slow
+haproxy_check_interval = 3000
+
+# max connections
+haproxy_maxconn = 255
+-%>
+
 # Set up application listeners here.
 <% if @node[:scalarium][:roles][:nginxphpapp][:instances].blank? -%>
 listen application <%= haproxy_host %>:<%= haproxy_port %>
@@ -51,8 +62,8 @@ backend php_app_servers
   option forwardfor
   option httpchk <%= @node[:haproxy][:health_check_method] %> <%= @node[:haproxy][:health_check_url] %>
   <% @node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
-  server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= backend['backends'] || 10 %> check inter <%= @node[:haproxy][:check_interval] %>
-  <% end -%>  
+  server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
+  <% end -%>
 <% end -%>
 
 frontend http-in
