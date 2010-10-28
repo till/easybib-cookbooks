@@ -12,7 +12,7 @@ remote_file "/tmp/tsung_#{tsungver}-#{pkgrev}_all.deb" do
   source "http://tsung.erlang-projects.org/dist/ubuntu/tsung_#{tsungver}-#{pkgrev}_all.deb"
   mode "0644"
   backup false
-  create_if_missing
+  not_if "test -f /tmp/tsung_#{tsungver}-#{pkgrev}_all.deb"
 end
 
 dpkg_package "/tmp/tsung_#{tsungver}-#{pkgrev}_all.deb"
