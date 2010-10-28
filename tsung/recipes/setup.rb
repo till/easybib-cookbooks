@@ -1,5 +1,8 @@
 package "nginx"
 package "gnuplot-nox"
+package "libtemplate-perl"
+package "libhtml-template-perl"
+package "libhtml-template-expr-perl"
 package "erlang-nox"
 
 tsungver="1.3.3"
@@ -35,5 +38,5 @@ service "nginx" do
   action [ :enable, :restart ]
 end
 
-# put rules in ~/.tsung/rules.xml
+# put rules in ~/.tsung/tsung.xml
 # start with tsung start
