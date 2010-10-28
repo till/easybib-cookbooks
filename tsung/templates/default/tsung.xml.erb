@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd"[]>
+<tsung loglevel="notice">
+  <clients>
+    <client host="localhost" use_controller_vm="true"/>
+  </clients>
+
+  <servers>
+    <server host="<%=node["bigcouch_server"]%>" port="80" type="tcp"></server>
+    <server host="<%=node["bigcouch_server"]%>" port="5984" type="tcp"></server>
+  </servers>
+
+  <load>
+
+    <!-- several arrival phases can be set: for each phase,
+         you can set the mean inter-arrival time between
+         new clients and the phaseduration
+    -->
+
+    <arrivalphase phase="1" duration="15" unit="minute">
+      <users interarrival="1" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="2" duration="30" unit="second">
+      <users interarrival="0.125" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="3" duration="25" unit="minute">
+      <users interarrival="1" unit="second"></users>
+    </arrivalphase>
+
+  </load>
+
+  <options>
+
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">easybib/tsung load test</user_agent>
+    </option>
+
+    <options>
+       <option name="file_server" id="listids" value="listids.csv" />
+    </options>
+
+  </options>
+
+  <sessions>
+    <session name="http-get" probability="100" type="ts_http">
+
+      <setdynvars sourcetype="random_number" start="1" end="2000000">
+        <var name="useridint" />
+      </setdynvars>
+
+      <setdynvars sourcetype="file" fileid="listids">
+        <var name="listidstring" />
+      </setdynvars>
+
+      <request>
+        <http url="/" method="GET" version="1.1"></http>
+      </request>
+
+      <request subst="true">
+        <www_authenticate userid="<%=node["bigcouch_user"]%>" passwd="<%=node["bigcouch_pass"]%>"/>
+        <http url="/lists/_design/lists/_view/userid?key=%%_useridint%%&include_docs=true" method="GET" version="1.1"/>
+      </request>
+
+      <thinktime value="5" random="true"/>
+
+      <request subst="true">
+        <www_authenticate userid="<%=node["bigcouch_user"]%>" passwd="<%=node["bigcouch_pass"]%>"/>
+        <http url="/citations/%%_listidstring%%" method="GET" version="1.1"/>
+      </request>
+
+    </session>
+  </sessions>
+</tsung>
