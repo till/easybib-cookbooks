@@ -17,12 +17,28 @@ end
 
 dpkg_package "/tmp/tsung_#{tsungver}-#{pkgrev}_all.deb"
 
-directory "/home/ubuntu/.tsung/log" do
+home_dir="/home/ubuntu"
+
+directory "#{home_dir}/.tsung/log" do
   owner "ubuntu"
   group "ubuntu"
   mode "0755"
   action :create
   recursive true
+end
+
+template "#{home_dir}/.tsung/tsung.xml" do
+  source "tsung.xml.erb"
+  owner "ubuntu"
+  group "ubuntu"
+end
+
+remote_file "#{home_dir}/.tsung/listids.csv" do
+  source "listids.csv"
+  mode "0644"
+  owner "ubuntu"
+  group "ubuntu"
+  action :create
 end
 
 remote_file "/etc/nginx/sites-enabled/default" do
