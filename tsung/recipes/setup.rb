@@ -1,4 +1,5 @@
 package "nginx"
+package "gnuplot-nox"
 package "erlang-nox"
 
 tsungver="1.3.3"
