@@ -57,15 +57,17 @@
       </request>
 
       <request subst="true">
-        <www_authenticate userid="<%=node["bigcouch_user"]%>" passwd="<%=node["bigcouch_pass"]%>"/>
-        <http url="/lists/_design/lists/_view/userid?key=%%_useridint%%&amp;include_docs=true" method="GET" version="1.1"/>
+        <http url="/lists/_design/lists/_view/userid?key=%%_useridint%%&amp;include_docs=true" method="GET" version="1.1">
+          <www_authenticate userid="<%=node["bigcouch_user"]%>" passwd="<%=node["bigcouch_pass"]%>"/>
+        </http>
       </request>
 
       <thinktime value="5" random="true"/>
 
       <request subst="true">
-        <www_authenticate userid="<%=node["bigcouch_user"]%>" passwd="<%=node["bigcouch_pass"]%>"/>
-        <http url="/citations/%%_listidstring%%" method="GET" version="1.1"/>
+        <http url="/citations/%%_listidstring%%" method="GET" version="1.1">
+          <www_authenticate userid="<%=node["bigcouch_user"]%>" passwd="<%=node["bigcouch_pass"]%>"/>
+        </http>
       </request>
 
     </session>
