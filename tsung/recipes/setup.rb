@@ -46,7 +46,7 @@ remote_file "#{home_dir}/.tsung/listids.csv" do
   action :create
 end
 
-remote_file "/etc/nginx/sites-enabled/default" do
+remote_file "/etc/nginx/sites-available/default" do
   source "tsung.host"
   mode "0644"
   owner "www-data"
