@@ -37,9 +37,7 @@
       <user_agent probability="100">easybib/tsung load test</user_agent>
     </option>
 
-    <options>
-       <option name="file_server" id="listids" value="listids.csv" />
-    </options>
+    <option name="file_server" id="listids" value="listids.csv" />
 
   </options>
 
@@ -60,7 +58,7 @@
 
       <request subst="true">
         <www_authenticate userid="<%=node["bigcouch_user"]%>" passwd="<%=node["bigcouch_pass"]%>"/>
-        <http url="/lists/_design/lists/_view/userid?key=%%_useridint%%&include_docs=true" method="GET" version="1.1"/>
+        <http url="/lists/_design/lists/_view/userid?key=%%_useridint%%&amp;include_docs=true" method="GET" version="1.1"/>
       </request>
 
       <thinktime value="5" random="true"/>
