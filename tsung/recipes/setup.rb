@@ -15,7 +15,12 @@ remote_file "/tmp/tsung_#{tsungver}-#{pkgrev}_all.deb" do
   not_if "test -f /tmp/tsung_#{tsungver}-#{pkgrev}_all.deb"
 end
 
-dpkg_package "/tmp/tsung_#{tsungver}-#{pkgrev}_all.deb"
+#dpkg_package "/tmp/tsung_#{tsungver}-#{pkgrev}_all.deb"
+
+execute "Install tsung package" do
+  command "dpkg -i /tmp/tsung_#{tsungver}-#{pkgrev}_all.deb"
+  not_if "test -f /usr/bin/tsung"
+end
 
 home_dir="/home/ubuntu"
 
