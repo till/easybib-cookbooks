@@ -51,16 +51,7 @@
   </options>
 
   <sessions>
-    <session name="http-get" probability="100" type="ts_http">
-
-      <!-- generate a random user id (this will lead to 404s, but that's alright) -->
-      <setdynvars sourcetype="random_number" start="1" end="2000000">
-        <var name="useridint" />
-      </setdynvars>
-
-      <setdynvars sourcetype="file" fileid="listids">
-        <var name="listidstring" />
-      </setdynvars>
+    <session name="cloudant/couchdb reply" probability="10" type="ts_http">
 
       <request>
         <http url="/" method="GET" version="1.1">
@@ -68,7 +59,14 @@
         </http>
       </request>
 
-      <thinktime value="2" random="true"/>
+    </session>
+
+    <session name="lists by user id" probability="50" type="ts_http">
+
+      <!-- generate a random user id (this will lead to 404s, but that's alright) -->
+      <setdynvars sourcetype="random_number" start="1" end="2000000">
+        <var name="useridint" />
+      </setdynvars>
 
       <request subst="true">
         <http url="/lists/_design/lists/_view/userid?key=%%_useridint%%&amp;include_docs=true" method="GET" version="1.1">
@@ -77,7 +75,19 @@
         </http>
       </request>
 
-      <thinktime value="5" random="true"/>
+      <request>
+        <http url="/" method="GET" version="1.1">
+          <http_header name="cache-control" value="no-cache"/>
+        </http>
+      </request>
+
+    </session>
+
+    <session name="get citation by listid [document key]" probability="40" type="ts_http">
+
+      <setdynvars sourcetype="file" fileid="listids">
+        <var name="listidstring" />
+      </setdynvars>
 
       <request subst="true">
         <http url="/citations/%%_listidstring%%" method="GET" version="1.1">
