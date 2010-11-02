@@ -1,0 +1,47 @@
+#!/bin/sh -e
+
+CUSTOMER="<%=node["loggly"]["domain"]%>"
+INPUT=<%=node["loggly"]["input"]%>
+USER="<%=node["loggly"]["user"]%>"
+PASS="<%=node["loggly"]["pass"]%>"
+MASCHINE="<%=node[:scalarium][:instance][:hostname]%>"
+
+ENDPOINT="https://${CUSTOMER}.loggly.com/api/inputs/${INPUT}"
+
+CURL=`which curl`
+
+loggly_start () {
+    local call="${CURL} -X POST -d name='${MASCHINE}' -u ${USER}:${PASS} ${ENDPOINT}/adddevice"
+    loggly_exec "$call"
+}
+
+loggly_stop () {
+    local call="${CURL} -X POST -u ${USER}:${PASS} ${ENDPOINT}/removedevice"
+    loggly_exec "$call"
+}
+
+loggly_exec () {
+    if [ "x$1" = "x" ]; then
+        echo "Missing param."
+        exit 1
+    fi
+
+    $($1)
+
+    if [ "$?" -gt 0 ]; then
+        echo "Errorz!"
+        exit 1
+    fi
+}
+
+case "$1" in
+    start|stop)
+        loggly_$1
+        ;;
+    *)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+esac
+
+exit 0
