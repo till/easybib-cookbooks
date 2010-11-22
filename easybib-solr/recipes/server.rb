@@ -28,15 +28,15 @@ directory "#{ebs_vol}/solr-data" do
   action :create
 end
 
-link "#{ebs_vol}/apache-solr-#{solr_ver}-compiled/current/solr/data" do
-  to "#{ebs_vol}/solr-data"
-  ignore_failure true
-end
+#link "#{ebs_vol}/apache-solr-#{solr_ver}-compiled/current/solr/data" do
+#  to "#{ebs_vol}/solr-data"
+#  ignore_failure true
+#end
 
-link "#{ebs_vol}/apache-solr-#{solr_ver}-compiled/current/logs" do
-  to "#{node[:easybib_solr][:log_dir]}"
-  ignore_failure true
-end
+#link "#{ebs_vol}/apache-solr-#{solr_ver}-compiled/current/logs" do
+#  to "#{node[:easybib_solr][:log_dir]}"
+#  ignore_failure true
+#end
 
 remote_file "/etc/logrotate.d/solr" do
   source "solr.logrotate"
