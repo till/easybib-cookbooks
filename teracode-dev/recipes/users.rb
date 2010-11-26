@@ -1,10 +1,11 @@
-node[:dev][:users].each { |user|
+node[:dev][:users].each do |user|
 
   home_dir = "/home/#{user}"
 
   directory "#{home_dir}" do
-    mode "0755"
+    mode 0755
     recursive true
+    action :create
   end
 
   user "#{user}" do
@@ -14,10 +15,16 @@ node[:dev][:users].each { |user|
     shell "/bin/zsh"
   end
 
+  group "sudo" do
+    members "#{user}"
+    append true
+  end
+
   directory "#{home_dir}/.ssh" do
-    mode "0700"
-    user "#{user}"
-    gid "#{user}"
+    mode 0700
+    owner "#{user}"
+    group "#{user}"
+    action :create
   end
 
   remote_file "/home/#{user}/.ssh/authorized_keys" do
@@ -28,4 +35,4 @@ node[:dev][:users].each { |user|
     action :create
   end
 
-}
+end
