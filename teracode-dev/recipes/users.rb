@@ -2,10 +2,8 @@ node[:dev][:users].each { |user|
 
   home_dir = "/home/#{user}"
 
-  directory "#{home_dir}/.ssh" do
-    mode "0700"
-    owner "#{user}"
-    group "#{user}"
+  directory "#{home_dir}" do
+    mode "0755"
     recursive true
   end
 
@@ -14,6 +12,12 @@ node[:dev][:users].each { |user|
     home "#{home_dir}"
     gid "#{user}"
     shell "/bin/zsh"
+  end
+
+  directory "#{home_dir}/.ssh" do
+    mode "0700"
+    user "#{user}"
+    gid "#{user}"
   end
 
   remote_file "/home/#{user}/.ssh/authorized_keys" do
