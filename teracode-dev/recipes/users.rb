@@ -19,7 +19,7 @@ node[:dev][:users].each do |user|
     shell "/bin/zsh"
   end
 
-  group "sudo" do
+  group "admin" do
     members "#{user}"
     append true
   end
