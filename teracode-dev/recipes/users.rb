@@ -1,7 +1,7 @@
 node[:dev][:users].each { |user|
 
   user "#{user}" do
-    comment "User: #{user}"
+    comment "#{user}"
     home "/home/#{user}"
     gid "sudo"
     shell "/bin/zsh"
