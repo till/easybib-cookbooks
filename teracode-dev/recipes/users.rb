@@ -1,16 +1,19 @@
 node[:dev][:users].each { |user|
 
-  user "#{user}" do
-    comment "#{user}"
-    home "/home/#{user}"
-    gid "sudo"
-    shell "/bin/zsh"
-  end
+  home_dir = "/home/#{user}"
 
-  directory "/home/#{user}/.ssh" do
+  directory "#{home_dir}/.ssh" do
     mode "0700"
     owner "#{user}"
     group "#{user}"
+    recursive true
+  end
+
+  user "#{user}" do
+    comment "#{user}"
+    home "#{home_dir}"
+    gid "#{user}"
+    shell "/bin/zsh"
   end
 
   remote_file "/home/#{user}/.ssh/authorized_keys" do
