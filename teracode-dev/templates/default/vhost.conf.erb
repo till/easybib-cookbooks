@@ -1,9 +1,8 @@
 upstream phpfpm {
-    server  unix:/tmp/fpm-sockets/teracode;
+    server  unix:/tmp/fpm-sockets/www-data;
 }
 
-<% dirs = ['notes','research'] -%>
-<% dirs.each { |dir| -%>
+<% node[:dev][:dirs].each { |dir| -%>
 server {
     listen   80;
 
@@ -11,6 +10,8 @@ server {
         stub_status on;
         access_log  off;
     }
+
+    server_name <%=dir-%>.<%=node['dev_host']%>
 
     location /js/ {
         root        /www/<%=dir%>/current/www;

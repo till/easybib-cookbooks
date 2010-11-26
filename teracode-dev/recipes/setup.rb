@@ -12,9 +12,7 @@ files.each { |script|
   end
 }
 
-dirs = [ 'notes', 'research' ]
-
-dirs.each { |dir|
+node[:dev][:dirs].each { |dir|
   directory "/www/#{dir}/current" do
     mode "0755"
     owner "teracode"

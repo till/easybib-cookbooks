@@ -1,6 +1,4 @@
-users = [ 'till', 'teracode' ]
-
-users.each { |user|
+node[:dev][:users].each { |user|
 
   user "#{user}" do
     comment "User: #{user}"
