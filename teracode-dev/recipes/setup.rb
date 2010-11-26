@@ -12,8 +12,13 @@ files.each { |script|
   end
 }
 
-directory "/www/notes" do
-  mode "0755"
-  owner "teracode"
-  action :create
-end
+dirs = [ 'notes', 'research' ]
+
+dirs.each { |dir|
+  directory "/www/#{dir}/current" do
+    mode "0755"
+    owner "teracode"
+    action :create
+    recursive true
+  end
+}
