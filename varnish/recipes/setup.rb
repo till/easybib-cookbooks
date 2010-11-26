@@ -15,3 +15,5 @@ execute "update" do
 end
 
 package "varnish"
+gem_package "SystemTimer"
+gem_package "thinner"
