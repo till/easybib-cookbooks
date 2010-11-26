@@ -22,3 +22,10 @@ dirs.each { |dir|
     recursive true
   end
 }
+
+template "/etc/nginx/sites-enabled/sites.conf" do
+  source "vhost.conf.erb"
+  mode "0644"
+  owner "www-data"
+  group "www-data"
+end
