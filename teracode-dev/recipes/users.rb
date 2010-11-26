@@ -8,6 +8,10 @@ node[:dev][:users].each do |user|
     action :create
   end
 
+  group "#{user}" do
+    group_name "#{user}"
+  end
+
   user "#{user}" do
     comment "#{user}"
     home "#{home_dir}"
