@@ -19,11 +19,6 @@ node[:dev][:users].each do |user|
     shell "/bin/zsh"
   end
 
-  group "admin" do
-    members "#{user}"
-    append true
-  end
-
   directory "#{home_dir}/.ssh" do
     mode 0700
     owner "#{user}"

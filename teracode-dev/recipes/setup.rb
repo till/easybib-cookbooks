@@ -1,4 +1,6 @@
 include_recipe "teracode-dev::users"
+include_recipe "teracode-dev::sudo"
+include_recipe "teracode-dev::dirfix"
 
 files = [ 'restart_solr141.sh', 'restart_solr_trunk.sh', 'restart_solr.sh', 'update_notes.sh' ]
 
