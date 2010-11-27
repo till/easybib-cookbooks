@@ -1,0 +1,53 @@
+# completion stuff, loads custom completions in ~/.zsh/ too
+fpath=(~/.zsh/functions $fpath)
+autoload -U compinit
+compinit
+
+# gather hostnames for ssh
+typeset -aU hostnames
+hostnames=(
+)
+[[ -f $HOME/.ssh/known_hosts ]] && hostnames+=(
+${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*}
+)
+
+
+# Completion options, oh my!
+zstyle ':completion:*:*:ssh:*:hosts' hosts $hostnames 
+zstyle ':completion:*:*:ftp:*:hosts' hosts $hostnames
+zstyle ':completion:*:hosts' hosts $hostnames
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
+zstyle ':completion:*:descriptions' format "- %d -"
+zstyle ':completion:*:corrections' format "- %d - (errors %e})"
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections true
+zstyle ':completion:*' menu select
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:kill:*:processes' command "ps x"
+
+. ~/.zshaliases
+. ~/.zshfunctions
+
+chpwd
+setopt auto_cd
+
+# environmental stuff
+export HISTSIZE=500
+export HISTFILE=~/.zsh_history
+export SAVEHIST=500
+export PATH=$PATH:/usr/local/bin:/usr/local/sbin
+export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/"
+export PATH=$JAVA_HOME/bin:$PATH
+export LC_CTYPE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LSCOLORS=gxfxcxdxbxgggdabagacad
+export EDITOR='nano'
+export EC2_HOME=~/.ec2
+export PATH=$PATH:$EC2_HOME/bin
+
+if [ ! "$TERM" = "xterm-color" ]
+then
+   export TERM=xterm-color
+fi

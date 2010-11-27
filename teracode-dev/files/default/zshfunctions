@@ -1,0 +1,118 @@
+# Sets the zsh prompt, includes rvm and git status.
+precmd() {
+  rvm=`~/.rvm/bin/rvm-prompt`
+  git=`_git_ps1`
+  if [[ -z $git ]]
+  then
+     PS1="(%*) %n@%B%m%b [$rvm]: %~
+%# "
+  else
+     PS1="(%*) %n@%B%m%b [$rvm]: %~
+$git %# "
+  fi
+}
+
+sshec2() {
+  ssh -i ~/.ssh/id_ec2_personal ubuntu@$1
+}
+
+# Prints the current directory into the terminal title
+chpwd() {
+    [[ -t 1 ]] || return
+    case $TERM in
+      sun-cmd) print -Pn "\e]l%~\e\\"
+        ;;
+      *xterm*|rxvt|(dt|k|E)term) print -Pn "\e]2;%n@%m: %~\a"
+        ;;
+    esac
+}
+
+_git_ps1()
+{
+   # 'git_dir' is absolute path to git repository
+   # 'rel' is path relative to top dir in repository
+   # 'br' is current branch name, or 'HEAD' if we are on detached HEAD
+   local git_dir rel br
+
+   # first call to git-rev-parse also checks if we are inside git
+   # repository; if we are not in git repository, use default prompt,
+   # provided as an argument
+   rel=$(git rev-parse --show-prefix 2>/dev/null) || \
+      { echo "$@" ; return; }
+   rel=${rel%\/}
+
+   # get branch name, strip 'refs/heads/' prefix,
+   # and use 'HEAD' for detached HEAD (no branch name)
+   br=$(git symbolic-ref HEAD 2>/dev/null)
+   br=${br#refs/heads/}
+   br=${br:-HEAD}
+
+   # path to top dir of git repository
+   loc=${PWD%/$rel}
+
+   if current_it_status=$(git status | grep 'added to commit' 2> /dev/null); then
+     git_dirty=" ☠"
+   else
+     git_dirty=""
+   fi
+   # the following code is important only if you use StGit,
+   # to note if you are on StGit controlled branch;
+   # use second part of conditional if you don't use StGit
+   git_dir=$(git rev-parse --git-dir)
+   if [ "$br" -a -e "$git_dir/patches/$br" ]; then
+      echo "$br:${loc/*\/}${rel:+/$rel}${git_dirty}"
+   else 
+      echo "$br:${loc/*\/}${rel:+/$rel}${git_dirty}"
+   fi
+
+}
+
+# Finds out if a particular domain name is running on EC2
+# Usage: on_ec2 scalarium.com
+on_ec2() {
+ (host -t A $1 | awk "{print $4}" | xargs whois | grep ec2 > /dev/null && echo "Runs on EC2") || echo "Not on EC2"
+}
+
+# find a class in all jars within a directory and all its subdirectories
+# $1 a directory or a classname (if the latter is given, the current working
+#    directory is used as search root
+# $2 a classname (only if $1 is a directory)
+# example: finaclass /path/to/some/jars my.class.is.the.Best
+findclass()
+{
+   if [ -n "$1" -a -n "$2" ]
+   then
+      findpath=$1;
+      searchfor=$2;
+   elif [ -n "$1" -a -z "$2" ]
+   then
+      findpath=".";
+      searchfor=$1;
+   else
+      echo "usage:"
+      echo "search for a class in a specified directory (incl. subdirs):"
+      echo "$0 /path/to/search ClassName"
+      echo "or search for a class in the current working directory:"
+      echo "$0 ClassName"
+      return;
+   fi
+   for i in `find $findpath -type f -name \*.\[esrj\]ar`;
+   do
+      next=`unzip -l $i | grep "\.class" | sed "s,.class,," | sed "s,[\/\$],.,g" | sed "s,[0-9 :-]*,,g" | grep $searchfor 2>/dev/null`;
+      if [ -n "$next" ]
+      then
+         echo "in $i:"
+         echo $next
+         echo ""
+      fi
+   done
+}
+
+rename()
+{
+   for i in `eval "ls $1"`
+   do
+      name=`echo $i | grep "$2" | sed "s,$2,,"`
+      [ -n "$name" ] && mv $i $name
+   done
+}

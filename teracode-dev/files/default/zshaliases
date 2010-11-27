@@ -1,0 +1,12 @@
+# command aliases
+alias ls='ls -G'
+alias tailf='tail -f'
+alias gpu="git push origin"
+alias gfo="git fetch origin"
+alias gmo="git merge origin/master"
+alias gfmo="git fetch origin && git merge origin/master"
+alias gpull="git pull --rebase"
+alias httpdump='sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
+alias h='host -t A $1'
+alias sr='screen'
+alias stats='htop'
