@@ -1,0 +1,13 @@
+upstream couchdb {
+    server 127.0.0.1:5984;
+}
+
+server {
+    listen   80;
+
+    server_name couchdb.<%=node['dev_host']%>
+
+    location / {
+        proxy_pass http://couchdb;
+    }
+}
