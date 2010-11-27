@@ -37,10 +37,10 @@ loggly_exec () {
         exit 1
     fi
 
-    $($1)
+    local resp=$($1)
 
     if [ "$?" -gt 0 ]; then
-        echo "Errorz!"
+        echo "Errorz! ${resp}"
         exit 1
     fi
 }
