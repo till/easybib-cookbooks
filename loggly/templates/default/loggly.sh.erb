@@ -1,4 +1,14 @@
 #!/bin/sh -e
+### BEGIN INIT INFO
+# Provides:          loggly integration
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      1
+# Short-Description: Register this server with loggly.
+# Description:       Makes a HTTP call (via curl) to register
+#                    this server as a device on loggly.
+### END INIT INFO
 
 CUSTOMER="<%=node["loggly"]["domain"]%>"
 INPUT=<%=node["loggly"]["input"]%>
@@ -9,14 +19,15 @@ MASCHINE="<%=node[:scalarium][:instance][:hostname]%>"
 ENDPOINT="https://${CUSTOMER}.loggly.com/api/inputs/${INPUT}"
 
 CURL=`which curl`
+CURL_OPT="-S -s -X POST -u ${USER}:${PASS}"
 
 loggly_start () {
-    local call="${CURL} -X POST -d name='${MASCHINE}' -u ${USER}:${PASS} ${ENDPOINT}/adddevice"
+    local call="${CURL} ${CURL_OPT} -d name='${MASCHINE}' ${ENDPOINT}/adddevice"
     loggly_exec "$call"
 }
 
 loggly_stop () {
-    local call="${CURL} -X POST -u ${USER}:${PASS} ${ENDPOINT}/removedevice"
+    local call="${CURL} ${CURL_OPT} ${ENDPOINT}/removedevice"
     loggly_exec "$call"
 }
 
