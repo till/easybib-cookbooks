@@ -1,8 +1,5 @@
-execute "Accept sun's license" do
-  command "echo 'sun-java6-jdk shared/accepted-sun-dlj-v1-1 boolean true' | sudo debconf-set-selections"
-end
+include_recipe "easybib-solr::java"
 
-package "sun-java6-jre"
 package "subversion"
 
 # for logs
