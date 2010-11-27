@@ -12,4 +12,3 @@ execute "Accept sun's license" do
 end
 
 package "sun-java6-jre"
-package "subversion"
