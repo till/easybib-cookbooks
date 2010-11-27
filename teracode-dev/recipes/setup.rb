@@ -31,5 +31,3 @@ template "/etc/nginx/sites-enabled/sites.conf" do
   owner "www-data"
   group "www-data"
 end
-
-include_recipe "couchdb::server"
