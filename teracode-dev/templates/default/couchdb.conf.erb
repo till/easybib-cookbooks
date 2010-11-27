@@ -5,7 +5,7 @@ upstream couchdb {
 server {
     listen   80;
 
-    server_name couchdb.<%=node['dev_host']%>
+    server_name couchdb.<%=node['dev_host']%>;
 
     location / {
         proxy_pass http://couchdb;

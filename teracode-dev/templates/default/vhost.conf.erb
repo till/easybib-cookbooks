@@ -11,7 +11,7 @@ server {
         access_log  off;
     }
 
-    server_name <%=dir-%>.<%=node['dev_host']%>
+    server_name <%=dir-%>.<%=node['dev_host']%>;
 
     location /js/ {
         root        /www/<%=dir%>/current/www;
