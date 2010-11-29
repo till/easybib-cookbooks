@@ -1,4 +1,4 @@
-include_recipe "percona::repository"
+include_recipe "percona-server::repository"
 
 case node[:percona][:version]
   when "5.0"
