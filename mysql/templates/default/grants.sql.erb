@@ -5,5 +5,5 @@ grant all privileges on <%= @settings[:database] %>.* to 'root'@'<%= Resolv.geta
 <%# Remove non-existing servers -%>
 <% (@hosts - @node[:mysql][:clients]).each do |client| -%>
 <% next if client == '%' -%>
-revoke all privileges on <%= @settings[:database] %>.* from root@'<%= Resolv.getaddress(client) %>';
+revoke all privileges on <%= @settings[:database] %>.* from 'root'@'<%= Resolv.getaddress(client) %>';
 <% end -%>
