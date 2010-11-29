@@ -1,2 +1,2 @@
-default[:percona] = {}
-default[:percona][:version] = "5.1"
+default["percona-server"] = {}
+default["percona-server"][:version] = "5.1"
