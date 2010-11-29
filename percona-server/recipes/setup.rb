@@ -11,4 +11,5 @@ case node[:percona][:version]
     package "percona-server-server-5.1"
   else
     # wat?
+    Chef::Log.debug("Unknown version: #{node[:percona][:version]}")
 end
