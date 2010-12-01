@@ -53,7 +53,7 @@ default_mimetype = "text/html"
 include_path = ".:/usr/local/pear"
 doc_root =
 user_dir =
-enable_dl = Off
+enable_dl = <%= @enable_dl %>
 file_uploads = On
 upload_tmp_dir = <%= node["php-fpm"][:tmpdir] %>
 upload_max_filesize = 10M

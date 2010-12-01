@@ -66,6 +66,9 @@ end
 template "#{php_prefix}/etc/php.ini" do
   mode "0755"
   source "php.ini.erb"
+  variables(
+    :enable_dl => "Off"
+  )
   owner node["php-fpm"][:user]
   group node["php-fpm"][:group]
 end
@@ -73,6 +76,9 @@ end
 template "#{php_prefix}/etc/php-cli.ini" do
   mode "0755"
   source "php.ini.erb"
+  variables(
+    :enable_dl => "On"
+  )
   owner node["php-fpm"][:user]
   group node["php-fpm"][:group]
 end
