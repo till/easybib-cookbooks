@@ -1,6 +1,6 @@
 if node["php-fpm"][:source] == "source"
-  etc_cli_dir = "#{php_prefix}/etc"
-  etc_fpm_dir = "#{php_prefix}/etc"
+  etc_cli_dir = "#{node["php-fpm"][:prefix]}/etc"
+  etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
   conf_cli = "php-cli.ini"
   conf_fpm = "php.ini"
 elsif node["php-fpm"][:source] == "ubuntu" 
@@ -41,7 +41,7 @@ template "#{etc_fpm_dir}/php-fpm.conf" do
 end
 
 if node["php-fpm"][:source] == "source"
-  directory "#{php_prefix}/etc/php" do
+  directory "#{node["php-fpm"][:prefix]}/etc/php" do
     owner "root"
     group "root"
     mode "0755"

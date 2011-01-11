@@ -2,8 +2,6 @@ include_recipe "php-fpm::prepare"
 
 php_installed_version = `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
 
-php_prefix = node["php-fpm"][:prefix]
-
 php_already_installed = lambda do
   php_installed_version == node["php-fpm"][:version]
 end
@@ -22,10 +20,10 @@ end
 execute "PHP: ./configure" do
 
   php_opts = []
-  php_opts << "--with-config-file-path=#{php_prefix}/etc"
-  php_opts << "--with-config-file-scan-dir=#{php_prefix}/etc/php"
-  php_opts << "--prefix=#{php_prefix}"
-  php_opts << "--with-pear=#{php_prefix}/pear"
+  php_opts << "--with-config-file-path=#{node["php-fpm"][:prefix]}/etc"
+  php_opts << "--with-config-file-scan-dir=#{node["php-fpm"][:prefix]}/etc/php"
+  php_opts << "--prefix=#{node["php-fpm"][:prefix]}"
+  php_opts << "--with-pear=#{node["php-fpm"][:prefix]}/pear"
 
   php_exts = []
   php_exts << "--enable-sockets"
