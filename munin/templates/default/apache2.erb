@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-  ServerAdmin     <%=node[:munin][:admin]-%>
+  ServerAdmin     <%=node["sysop_email"]%>
   ServerName      munin.monitoring.easybib.com
 
   DocumentRoot /var/www/munin
@@ -8,9 +8,13 @@
   CustomLog       /var/log/apache2/munin_access.log combined
   ErrorLog        /var/log/apache2/munin_error.log
 
-  #<Location />
-  #  AuthName "Munin Server"
-  #</Location>
+  # this assumes munin shares the role with ganglia
+  <Location />
+    AuthUserFile /etc/ganglia-webfrontend/htaccess
+    AuthType Basic
+    AuthName "Password Required"
+    require valid-user
+  </Location>
 
   RewriteEngine On
   RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/
