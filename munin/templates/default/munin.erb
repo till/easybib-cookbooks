@@ -1,0 +1,25 @@
+dbdir   /var/lib/munin
+htmldir /var/www/munin
+logdir  /var/log/munin
+rundir  /var/run/munin
+tmpldir /etc/munin/templates
+
+# Make graphs show values per minute instead of per second
+#graph_period minute
+
+#graph_strategy cgi
+
+# Drop somejuser@fnord.comm and anotheruser@blibb.comm an email everytime
+# something changes (OK -> WARNING, CRITICAL -> OK, etc)
+contact.admins.command mail -s "Munin notification" <%=node["sysop_email"]%>
+
+# a simple host tree
+[monitoring.easybib.com]
+    address 127.0.0.1
+    use_node_name yes
+
+<% @node[:munin][:bigcouch].each do |system| -%>
+[<%= system[:hostname] %>]
+    address <%= system[:ipaddress] %>
+    use_node_name yes
+<% end -%>
