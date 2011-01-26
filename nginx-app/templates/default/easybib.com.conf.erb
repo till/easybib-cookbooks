@@ -37,6 +37,14 @@ server {
         deny        all;
     }
 
+    location ~ ^/(fpm_status|fpm_ping)$ {
+        include       /etc/nginx/fastcgi_params;
+        fastcgi_pass  phpfpm;
+        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+        allow         127.0.0.1;
+        deny          all;
+    }
+
     location /js/ {
         root        <%= @deploy[:deploy_to] %>/current/www;
         access_log  off;
