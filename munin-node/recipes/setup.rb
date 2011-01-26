@@ -7,9 +7,9 @@ ip_munin = ip_munin.gsub(".", "\.")
 
 template "/etc/munin/munin-node.conf" do
   source "munin-node.erb"
-  variables(
+  variables({
     :ip_munin => ip_munin
-  )
+  })
 end
 
 munin_plugins.each do |plugin|
