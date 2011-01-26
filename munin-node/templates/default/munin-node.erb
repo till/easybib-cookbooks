@@ -27,7 +27,7 @@ host_name <%=node["scalarium"]["instance"]["hostname"]-%>
 # may repeat the allow line as many times as you'd like
 
 
-allow ^<%=@ip_munin-%>$
+allow ^<%=@ip_munin.gsub(".", "\.")-%>$
 #allow ^127\.0\.0\.1$
 allow ^184\.73\.165\.110$
 
