@@ -1,8 +1,8 @@
 package "munin-node"
 
-munin_plugins = %w[ nginx_status nginx_requests ]
+munin_plugins = ["nginx_status", "nginx_requests"]
 
-ip_munin = node["scalarium"]["roles"]["monitoring_master"]["instances"]["darth-vader"]["private_dns_name"]
+ip_munin = node[:scalarium][:roles]["monitoring-master"][:instances]["darth-vader"]["private_dns_name"]
 ip_munin = ip_munin.gsub(".", "\.")
 
 template "/etc/munin/munin-node.conf" do
