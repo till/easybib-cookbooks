@@ -12,11 +12,11 @@ template "/etc/munin/munin-node.conf" do
   )
 end
 
-munin_plugins.each { |plugin|
-  link "/etc/munin/plugins/#{plugin}"
+munin_plugins.each do |plugin|
+  link "/etc/munin/plugins/#{plugin}" do
     to "/usr/share/munin/plugins/#{plugin}"
   end
-}
+end
 
 # php_fpm plugins
 # clone from github
