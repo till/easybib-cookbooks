@@ -21,5 +21,6 @@ remote_file "/etc/munin/plugin-conf.d/phpfpm" do
   mode "0755"
   owner "root"
   group "root"
+  backup false
   action :create
 end
