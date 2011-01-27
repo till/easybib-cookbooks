@@ -1,3 +1,5 @@
+package "libwww-perl"
+
 git "/opt/munin-phpfpm" do
   repository "git://github.com/bummercloud/PHP5-FPM-Munin-Plugins.git"
   reference "master"
