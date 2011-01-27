@@ -1,7 +1,7 @@
 package "libwww-perl"
 
 git "/opt/munin-phpfpm" do
-  repository "git://github.com/bummercloud/PHP5-FPM-Munin-Plugins.git"
+  repository "git://github.com/lagged/PHP5-FPM-Munin-Plugins.git"
   reference "master"
   action :sync
 end
@@ -14,4 +14,12 @@ phpfpm_plugins.each do |plugin|
   link "/etc/munin/plugins/#{plugin}" do
     to "/opt/munin-phpfpm/#{plugin}"
   end
+end
+
+remote_file "/etc/munin/plugin-conf.d/phpfpm" do
+  source "plugin.d-phpfpm"
+  mode "0755"
+  owner "root"
+  group "root"
+  action :create
 end
