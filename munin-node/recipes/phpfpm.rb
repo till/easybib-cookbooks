@@ -8,6 +8,9 @@ end
 
 phpfpm_plugins = ["phpfpm_average", "phpfpm_connections", "phpfpm_memory", "phpfpm_status", "phpfpm_processes" ]
 phpfpm_plugins.each do |plugin|
+  execute "fix permission" do
+    command "chmod +x /opt/munin-phpfpm/#{plugin}"
+  end
   link "/etc/munin/plugins/#{plugin}" do
     to "/opt/munin-phpfpm/#{plugin}"
   end
