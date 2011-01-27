@@ -1,22 +1,22 @@
 # prior to 10.04 we have to download them ourselves
-munin_plugins = ["nginx_status", "nginx_requests", "nginx_memory"]
+munin_plugins = ["nginx_status", "nginx_request", "nginx_memory"]
 
 directory "/opt/munin-nginx" do
   mode "0755"
 end
 
 remote_file "/opt/munin-nginx/nginx_memory" do
-  source "http://muninexchange.projects.linpro.no/download.php?phid=626"
+  source "http://exchange.munin-monitoring.org/plugins/nginx_memory/version/1/download"
   mode "0755"
 end
 
 remote_file "/opt/munin-nginx/nginx_status" do
-  source "http://muninexchange.projects.linpro.no/download.php?phid=65"
+  source "http://exchange.munin-monitoring.org/plugins/nginx_status/version/3/download"
   mode "0755"
 end
 
-remote_file "/opt/munin-nginx/nginx_requests" do
-  source "http://muninexchange.projects.linpro.no/download.php?phid=64"
+remote_file "/opt/munin-nginx/nginx_request" do
+  source "http://exchange.munin-monitoring.org/plugins/nginx_request/version/2/download"
   mode "0755"
 end
 
