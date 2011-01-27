@@ -1,9 +1,6 @@
-# php_fpm plugins
-# clone from github
-
 git "/opt/munin-phpfpm" do
   repository "git://github.com/bummercloud/PHP5-FPM-Munin-Plugins.git"
-  reference "39b38262ac0bbdaae9a82fc415518491acb115ea"
+  reference "master"
   action :sync
 end
 
@@ -13,6 +10,3 @@ phpfpm_plugins.each do |plugin|
     to "/opt/munin-phpfpm/#{plugin}"
   end
 end
-
-# symlink
-
