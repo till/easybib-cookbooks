@@ -2,8 +2,6 @@ require 'resolv'
 
 package "munin-node"
 
-munin_plugins = ["nginx_status", "nginx_requests"]
-
 ip_munin = Resolv.getaddress(node[:scalarium][:roles]["monitoring-master"][:instances]["darth-vader"]["private_dns_name"])
 
 template "/etc/munin/munin-node.conf" do
@@ -13,12 +11,7 @@ template "/etc/munin/munin-node.conf" do
   })
 end
 
-munin_plugins.each do |plugin|
-  link "/etc/munin/plugins/#{plugin}" do
-    to "/usr/share/munin/plugins/#{plugin}"
-  end
+if node[:scalarium][:instance][:roles].include?('nginxphpapp')
+  include_recipe "munin-node::nginx"
+  include_recipe "munin-node::phpfpm"
 end
-
-# php_fpm plugins
-# clone from github
-# symlink
