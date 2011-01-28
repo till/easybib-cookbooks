@@ -3,7 +3,7 @@ package "curl"
 package "libssl-dev"
 
 dir_version  = node[:nodejs][:version].gsub('.', '')
-node_prefix  = "/usr/local/node#{version}"
+node_prefix  = "/usr/local/node#{dir_version}"
 node_tmp_dir = "/tmp/node-v#{node[:nodejs][:version]}"
 
 remote_file "/tmp/node-v#{node[:nodejs][:version]}.tar.gz" do
