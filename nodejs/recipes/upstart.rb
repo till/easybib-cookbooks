@@ -1,3 +1,6 @@
+dir_version  = node[:nodejs][:version].gsub('.', '')
+node_prefix  = "/usr/local/node#{dir_version}"
+
 template "/etc/init.d/#{node[:nodejs][:application]}" do
   source "upstart.conf.erb"
   variables({
