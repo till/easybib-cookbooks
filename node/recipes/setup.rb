@@ -1,3 +1,7 @@
+package "g++"
+package "curl"
+package "libssl-dev"
+
 dir_version  = node[:nodejs][:version].gsub('.', '')
 node_prefix  = "/usr/local/node#{version}"
 node_tmp_dir = "/tmp/node-v#{node[:nodejs][:version]}"
