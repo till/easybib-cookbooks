@@ -1,5 +1,6 @@
 user "#{node[:nodejs][:user]}" do
   comment "user to run node"
-  system true
+  home "/var/www"
   shell "/bin/false"
+  action :create
 end
