@@ -27,6 +27,5 @@ end
 
 # todo:
 # setup monit script
-# build /health in node
 # upstart script to start app
 
