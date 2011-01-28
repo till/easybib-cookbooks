@@ -25,7 +25,9 @@ execute "make && make install" do
   cwd node_tmp_dir
 end
 
+include_recipe "nodejs::user"
+include_recipe "nodejs::upstart"
+
 # todo:
 # setup monit script
-# upstart script to start app
 

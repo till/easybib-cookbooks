@@ -1,0 +1,9 @@
+description "#{@application}"
+author      "till"
+
+start on (local-filesystems and net-device-up IFACE=eth0)
+stop on shutdown
+
+respawn
+
+exec sudo -u #{@user} sh -c "#{@prefix}/node /var/www/#{@application}/server.js >> /var/log/#{@application}.log 2>&1"
