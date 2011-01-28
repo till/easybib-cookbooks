@@ -11,7 +11,7 @@ template "/etc/init.d/#{node[:nodejs][:application]}" do
 end
 
 file "/var/log/#{node[:nodejs][:application]}.log" do
-  user "#{node[:nodejs][:user]}"
+  owner "#{node[:nodejs][:user]}"
   mode "0644"
 end
 
