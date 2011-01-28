@@ -25,3 +25,7 @@ munin_plugins.each do |plugin|
     to "/opt/munin-nginx/#{plugin}"
   end
 end
+
+service "munin-node" do
+  action :restart
+end

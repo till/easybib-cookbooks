@@ -23,4 +23,7 @@ remote_file "/etc/munin/plugin-conf.d/phpfpm" do
   group "root"
   backup false
   action :create
+  notifies :restart, "service[munin-node]"
 end
+
+service "munin-node"
