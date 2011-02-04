@@ -36,6 +36,9 @@ node[:deploy].each do |application, deploy|
   when 'realtime'
     next unless node[:scalarium][:instance][:roles].include?('nodejsapp')
 
+    Chef::Log.debug('deploy.easybib >> deploy::scm')
+    include_recipe "deploy::scm"
+
     Chef::Log.debug('deploy::easybib - Setting deploy for node.js')
 
     deploy[:restart_command] = ""
