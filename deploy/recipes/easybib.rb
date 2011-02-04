@@ -36,16 +36,20 @@ node[:deploy].each do |application, deploy|
   when 'realtime'
     next unless node[:scalarium][:instance][:roles].include?('nodejsapp')
 
-    deploy[:user] = "root"
+    deployUser = "root"
 
-    Chef::Log.debug('deploy.easybib >> deploy::scm')
-    include_recipe "deploy::scm"
+    # this is from deploy::scm
+    Chef::Log.debug('deploy.easybib - Prepare for git checkout')
+    prepare_git_checkouts(
+      :user    => deployUser,
+      :group   => deployUser,
+      :home    => "/root",
+      :ssh_key => deploy[:scm][:ssh_key]
+    )
 
     Chef::Log.debug('deploy::easybib - Setting deploy for node.js')
 
-    deploy[:restart_command] = ""
-
-    deployUser = deploy[:user]
+    deploy[:restart_command] = "" # restart realtime
 
   end
 
