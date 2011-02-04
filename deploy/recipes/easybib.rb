@@ -49,7 +49,7 @@ node[:deploy].each do |application, deploy|
 
     Chef::Log.debug('deploy::easybib - Setting deploy for node.js')
 
-    deploy[:restart_command] = "restart realtime"
+    deploy[:restart_command] = "" # restart realtime"
 
   end
 
