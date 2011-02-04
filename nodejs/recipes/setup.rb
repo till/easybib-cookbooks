@@ -25,8 +25,6 @@ execute "make && make install" do
   cwd node_tmp_dir
 end
 
-include_recipe "nodejs::user"
-
 # todo:
 # setup monit script
 
