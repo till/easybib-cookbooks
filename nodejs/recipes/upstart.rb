@@ -16,5 +16,5 @@ file "/var/log/#{node[:nodejs][:application]}.log" do
 end
 
 service "#{node[:nodejs][:application]}" do
-  action [ :enable ]
+  action [ :enable, :start ]
 end
