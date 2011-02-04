@@ -36,7 +36,7 @@ node[:deploy].each do |application, deploy|
   when 'realtime'
     next unless node[:scalarium][:instance][:roles].include?('nodejsapp')
 
-    user = "root"
+    deploy[:user] = "root"
 
     Chef::Log.debug('deploy.easybib >> deploy::scm')
     include_recipe "deploy::scm"
@@ -45,7 +45,7 @@ node[:deploy].each do |application, deploy|
 
     deploy[:restart_command] = ""
 
-    deployUser = "root"
+    deployUser = deploy[:user]
 
   end
 
