@@ -34,7 +34,7 @@ node[:deploy].each do |application, deploy|
     deployUser = "root"
 
   when 'realtime'
-    next unless node[:scalarium][:instance][:roles].include('nodejsapp')
+    next unless node[:scalarium][:instance][:roles].include?('nodejsapp')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for node.js')
 
