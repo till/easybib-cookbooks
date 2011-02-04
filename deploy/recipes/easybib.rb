@@ -1,3 +1,5 @@
+# custom recipe because of: http://support.scalarium.com/discussions/problems/78-app-is-not-deploying
+
 deployUser="www-data"
 
 Chef::Log.debug("deploy::easybib - entered.");
@@ -32,7 +34,13 @@ node[:deploy].each do |application, deploy|
     deployUser = "root"
 
   when 'realtime'
-    next
+    next unless node[:scalarium][:instance][:roles].include('nodejsapp')
+
+    Chef::Log.debug('deploy::easybib - Setting deploy for node.js')
+
+    deploy[:restart_command] = ""
+
+    deployUser = "root"
 
   end
 
@@ -52,12 +60,6 @@ node[:deploy].each do |application, deploy|
   # we survived until here - so we are good to actually checkout and deploy
   # done for every app
   
-  # fix SVN url - have to look into that
-  unless deploy[:scm][:revision].match(/(r[0-9]{1,})|([0-9]{1,})|(HEAD)/)
-    deploy[:scm][:repository] = "#{deploy[:scm][:repository]}/#{deploy[:scm][:revision]}"
-    deploy[:scm][:revision]   = nil
-  end
-  
   # chef bug
   directory "#{deploy[:deploy_to]}/shared/cached-copy" do
     recursive true
@@ -66,6 +68,25 @@ node[:deploy].each do |application, deploy|
   
   # setup deployment & checkout
   deploy deploy[:deploy_to] do
+
+    case deploy[:scm]["scm_type"]
+      when 'git'
+        scm_provider Chef::Provider::Git
+
+      when 'svn'
+        # fix svn url
+        unless deploy[:scm][:revision].match(/(r[0-9]{1,})|([0-9]{1,})|(HEAD)/)
+          deploy[:scm][:repository] = "#{deploy[:scm][:repository]}/#{deploy[:scm][:revision]}"
+          deploy[:scm][:revision]   = nil
+        end
+
+        scm_provider Chef::Provider::Subversion
+        svn_username deploy[:scm][:user]
+        svn_password deploy[:scm][:password]
+        svn_arguments "--no-auth-cache --non-interactive"
+
+    end
+
     repository deploy[:scm][:repository]
     user deployUser
 
@@ -85,13 +106,7 @@ node[:deploy].each do |application, deploy|
     if deploy[:restart_command].any?
       restart_command "sleep #{deploy[:sleep_before_restart]} && #{deploy[:restart_command]}"
     end
-
     
-    scm_provider Chef::Provider::Subversion
-    svn_username deploy[:scm][:user]
-    svn_password deploy[:scm][:password]
-    svn_arguments "--no-auth-cache --non-interactive"
-    #svn_info_args "--no-auth-cache --non-interactive"
   end
   
 end
