@@ -1,4 +1,31 @@
-description "#{@application}"
+#!/bin/sh -e
+# upstart-job
+
+set -e
+
+INITSCRIPT="$(basename "$0")"
+JOB="${INITSCRIPT%.sh}"
+
+if [ "$JOB" = "upstart-job" ]; then
+    if [ -z "$1" ]; then
+        echo "Usage: upstart-job JOB COMMAND" 1>&2
+        exit 1
+    fi
+
+    JOB="$1"
+    INITSCRIPT="$1"
+    shift
+else
+    if [ -z "$1" ]; then
+        echo "Usage: $0 COMMAND" 1>&2
+        exit 1
+    fi
+fi
+
+COMMAND="$1"
+shift
+
+description "<%= @application %>"
 author      "till"
 
 start on (local-filesystems and net-device-up IFACE=eth0)
@@ -6,4 +33,4 @@ stop on shutdown
 
 respawn
 
-exec sudo -u #{@user} sh -c "#{@prefix}/node /var/www/#{@application}/server.js >> /var/log/#{@application}.log 2>&1"
+exec sudo -u <%= @user %> sh -c "<%= @prefix %>/node /var/www/<%= @application %>/server.js >> /var/log/<%= @application %>.log 2>&1"
