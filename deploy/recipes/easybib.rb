@@ -1,8 +1,3 @@
-
-# already checks out the code for every app
-# do you really want this?
-#include_recipe "deploy::source"
-
 deployUser="www-data"
 
 Chef::Log.debug("deploy::easybib - entered.");
@@ -35,6 +30,9 @@ node[:deploy].each do |application, deploy|
     deploy[:restart_command] = ""
 
     deployUser = "root"
+
+  when 'realtime'
+    next
 
   end
 
@@ -88,6 +86,7 @@ node[:deploy].each do |application, deploy|
       restart_command "sleep #{deploy[:sleep_before_restart]} && #{deploy[:restart_command]}"
     end
 
+    
     scm_provider Chef::Provider::Subversion
     svn_username deploy[:scm][:user]
     svn_password deploy[:scm][:password]
