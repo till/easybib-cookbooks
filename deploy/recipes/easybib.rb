@@ -74,7 +74,7 @@ node[:deploy].each do |application, deploy|
   # setup deployment & checkout
   deploy deploy[:deploy_to] do
 
-    case deploy[:scm]["scm_type"]
+    case deploy[:scm][:scm_type]
       when 'git'
         scm_provider Chef::Provider::Git
 
