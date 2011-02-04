@@ -26,7 +26,6 @@ execute "make && make install" do
 end
 
 include_recipe "nodejs::user"
-include_recipe "nodejs::upstart"
 
 # todo:
 # setup monit script
