@@ -26,4 +26,6 @@ remote_file "/etc/munin/plugin-conf.d/phpfpm" do
   notifies :restart, "service[munin-node]"
 end
 
-service "munin-node"
+service "munin-node" do
+  action :restart
+end

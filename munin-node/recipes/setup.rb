@@ -4,7 +4,7 @@ package "munin-node"
 
 service "munin-node" do
   supports :restart => true, :reload => true, :start => true, :stop => true
-  action [ :enable ]
+  action [ :enable, :start ]
 end
 
 ip_munin = Resolv.getaddress(node[:scalarium][:roles]["monitoring-master"][:instances]["darth-vader"]["private_dns_name"])
