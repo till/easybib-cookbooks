@@ -6,4 +6,5 @@ version           "0.1"
 recipe            "munin-node::setup", "Install and configure munin-node"
 recipe            "munin-node::nginx", "Enable plugins for nginx monitoring"
 recipe            "munin-node::phpfpm", "Enable plugins for php-fpm monitoring"
+recipe            "munin-node::service", "Internally used by other recipies"
 supports 'ubuntu'
