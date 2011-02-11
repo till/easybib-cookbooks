@@ -1,4 +1,5 @@
 package "libwww-perl"
+include_recipe "munin-node::service"
 
 git "/opt/munin-phpfpm" do
   repository "git://github.com/lagged/PHP5-FPM-Munin-Plugins.git"
@@ -24,8 +25,4 @@ remote_file "/etc/munin/plugin-conf.d/phpfpm" do
   backup false
   action :create
   notifies :restart, "service[munin-node]"
-end
-
-service "munin-node" do
-  action :restart
 end

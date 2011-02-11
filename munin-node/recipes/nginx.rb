@@ -1,6 +1,8 @@
 # prior to 10.04 we have to download them ourselves
 munin_plugins = ["nginx_status", "nginx_request", "nginx_memory"]
 
+include_recipe "munin-node::service"
+
 directory "/opt/munin-nginx" do
   mode "0755"
 end
