@@ -1,10 +1,5 @@
 package "munin"
 
-template "/etc/munin/munin.conf" do
-  mode "0644"
-  source "munin.erb"
-end
-
 execute "enable mod_rewrite" do
   command "a2enmod rewrite"
 end

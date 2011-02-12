@@ -1,3 +1,4 @@
+<% require 'resolv' -%>
 dbdir   /var/lib/munin
 htmldir /var/www/munin
 logdir  /var/log/munin
@@ -18,8 +19,33 @@ contact.admins.command mail -s "Munin notification" <%=node["sysop_email"]%>
     address 127.0.0.1
     use_node_name yes
 
-<% @node[:munin][:bigcouch].each do |system| -%>
-[<%= system[:hostname] %>]
-    address <%= system[:ipaddress] %>
+<% if !node["munin"].empty? -%>
+<% if !node["munin"]["bigcouch_cluster"].empty? -%>
+# this is the monitoring for our cloudant cluster
+<% node["munin"]["bigcouch_cluster"].each do |name,address| -%>
+[bibcloud.cloudant.com;<%= name %>
+    address <%= address %>
     use_node_name yes
+
+<% end -%>
+<% end -%>
+
+<% if !node["munin"]["dev"].empty? -%>
+# dev servers
+<% node["munin"]["dev"].each do |name,address| -%>
+[<%= name %>]
+   address <%= address %>
+   use_node_name yes
+<% end -%>
+<% end -%>
+
+<% end -%>
+
+# this adds all our nginxphpapp servers - duplicate later for more
+<% if !@node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+  <% @node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
+[nginxphpapp;<%= name %>]
+  address <%= Resolv.getaddress(backend['private_dns_name']) %>
+  use_node_name yes
+  <% end -%>
 <% end -%>
