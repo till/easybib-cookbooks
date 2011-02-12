@@ -23,7 +23,7 @@ contact.admins.command mail -s "Munin notification" <%=node["sysop_email"]%>
 <% if !node["munin"]["bigcouch_cluster"].empty? -%>
 # this is the monitoring for our cloudant cluster
 <% node["munin"]["bigcouch_cluster"].each do |name,address| -%>
-[bibcloud.cloudant.com;<%= name %>
+[bibcloud.cloudant.com;<%= name %>]
     address <%= address %>
     use_node_name yes
 
@@ -47,5 +47,6 @@ contact.admins.command mail -s "Munin notification" <%=node["sysop_email"]%>
 [nginxphpapp;<%= name %>]
   address <%= Resolv.getaddress(backend['private_dns_name']) %>
   use_node_name yes
+
   <% end -%>
 <% end -%>
