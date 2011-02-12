@@ -2,5 +2,5 @@
 
 service "munin-node" do
   supports :restart => true, :reload => true, :start => true, :stop => true
-  action [ :enable, :start ]
+  action [ :enable, :restart ]
 end
