@@ -1,16 +1,19 @@
-if node["php-fpm"][:source] == "source"
+stdInstall = [ "source", "easybib" ]
+if stdInstall.include?(node["php-fpm"][:source])
   etc_cli_dir = "#{node["php-fpm"][:prefix]}/etc"
   etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
   conf_cli = "php-cli.ini"
   conf_fpm = "php.ini"
-elsif node["php-fpm"][:source] == "ubuntu" 
-  etc_cli_dir = "/etc/php5/cli"
-  etc_fpm_dir = "/etc/php5/fpm"
-  conf_cli = "php.ini"
-  conf_fpm = "php.ini"
-else 
-  Chef::Log.error("Unknown source: #{node["php-fpm"][:source]}. Bailed.")
-  return
+else
+  if node["php-fpm"][:source] == "ubuntu" 
+    etc_cli_dir = "/etc/php5/cli"
+    etc_fpm_dir = "/etc/php5/fpm"
+    conf_cli = "php.ini"
+    conf_fpm = "php.ini"
+  else 
+    Chef::Log.error("Unknown source: #{node["php-fpm"][:source]}. Bailed.")
+    return
+  end
 end
 
 template "#{etc_fpm_dir}/#{conf_fpm}" do
