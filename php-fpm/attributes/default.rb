@@ -15,4 +15,4 @@ default["php-fpm"][:tmpdir] = "/tmp/php"
 default["php-fpm"][:socketdir] = "/tmp/fpm-sockets"
 default["php-fpm"][:apc_version] = "3.1.4"
 default["php-fpm"][:xhprof_version] = "0.9.2"
-default["php-fpm"][:source] = "source" # ubuntu
+default["php-fpm"][:source] = "easybib" # source, ubuntu, easybib
