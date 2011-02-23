@@ -1,16 +1,18 @@
-template "/etc/rsyslog.d/10-loggly.conf" do
-  source "10-loggly.conf.erb"
-  mode "0644"
-end
+if node["loggly"]
+  template "/etc/rsyslog.d/10-loggly.conf" do
+    source "10-loggly.conf.erb"
+    mode "0644"
+  end
 
-service "rsyslog" do
-  supports :status => true, :restart => true, :reload => true
-  action [ :restart ]
-end
+  service "rsyslog" do
+    supports :status => true, :restart => true, :reload => true
+    action [ :restart ]
+  end
 
-template "/etc/init.d/loggly" do
-  source "loggly.sh.erb"
-  mode "0755"
+  template "/etc/init.d/loggly" do
+    source "loggly.sh.erb"
+    mode "0755"
+  end
 end
 
 #service "loggly" do
