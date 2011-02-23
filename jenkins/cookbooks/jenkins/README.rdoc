@@ -1,0 +1,14 @@
+= DESCRIPTION:
+
+Jenkins CI 
+
+This is largely based on the hudson package by Ben Mabey <ben@benmabey.com>
+
+= REQUIREMENTS:
+
+This recipie currenly only works with Ubuntu.
+
+= ATTRIBUTES: 
+
+= USAGE:
+
