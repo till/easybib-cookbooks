@@ -1,6 +1,6 @@
 default["php-fpm"] = {}
-default["php-fpm"][:version] = '5.3.3'
-default["php-fpm"][:checksum] = "5adf1a537895c2ec933fddd48e78d8a2"
+default["php-fpm"][:version] = '5.3.5'
+default["php-fpm"][:checksum] = "8aaf20c95e91f25c5b6a591e5d6d61b9"
 default["php-fpm"][:prefix] = "/usr/local"
 default["php-fpm"][:logfile] = "/var/log/php/error.log"
 default["php-fpm"][:slowlog] = "/var/log/php/slow.log"
