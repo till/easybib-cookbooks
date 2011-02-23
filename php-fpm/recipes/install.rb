@@ -6,16 +6,7 @@ php_already_installed = lambda do
   php_installed_version == node["php-fpm"][:version]
 end
 
-remote_file "/tmp/php-#{node["php-fpm"][:version]}.tgz" do
-  source "http://www.php.net/get/php-#{node["php-fpm"][:version]}.tar.gz/from/www.php.net/mirror"
-  checksum node["php-fpm"][:checksum]
-  not_if &php_already_installed
-end
-
-execute "PHP: unpack" do
-  command "cd /tmp && tar -xzf php-#{node["php-fpm"][:version]}.tgz"
-  not_if &php_already_installed
-end
+include_recipe "php-fpm::download"
 
 execute "PHP: ./configure" do
 
