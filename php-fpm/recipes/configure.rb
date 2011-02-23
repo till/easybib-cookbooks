@@ -1,4 +1,7 @@
 stdInstall = [ "source", "easybib" ]
+
+Chef::Log.debug("Source used: #{node["php-fpm"][:source]}")
+
 if stdInstall.include?(node["php-fpm"][:source])
   etc_cli_dir = "#{node["php-fpm"][:prefix]}/etc"
   etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
