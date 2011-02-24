@@ -1,3 +1,5 @@
+include_recipe "php-fpm::prepare"
+
 package "python-software-properties"
 
 ppa="easybib/ppa"

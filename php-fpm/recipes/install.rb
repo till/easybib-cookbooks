@@ -1,3 +1,4 @@
+include_recipe "php-fpm::dependencies"
 include_recipe "php-fpm::prepare"
 
 php_installed_version = `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
