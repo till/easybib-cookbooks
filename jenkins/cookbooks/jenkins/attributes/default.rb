@@ -26,7 +26,11 @@ set_unless[:php_pear][:packages]  =  ["pdepend/PHP_Depend-beta",
                                       "PHPDocumentor",
                                       "PHP_CodeSniffer",
                                       "--alldeps phpunit/PHP_CodeBrowser",
-                                      "--alldeps phpunit/PHPUnit"]
+                                      "--alldeps phpunit/PHPUnit", 
+                                      "Mail", "Mail_Mime", "DB", "MDB2",  #for mail_queue
+                                      #"Net_URL2",
+                                      ]
 
 
-set_unless[:buildconfigs][:configs]  =  ["Mail_Queue"]
+set_unless[:buildconfigs][:configs]  =  ["Mail_Queue",
+                                         "HTTP_Request2"]
