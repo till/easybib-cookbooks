@@ -1,4 +1,4 @@
-%w{ant subversion htop curl php5-curl php5-xdebug php5-cli php-pear}.each do |a_package|
+%w{ant subversion htop curl php5-curl php5-xdebug php5-cli php-mdb2-driver-sqlite php-pear}.each do |a_package|
   package a_package
 end
 
