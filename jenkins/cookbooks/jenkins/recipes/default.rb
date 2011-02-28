@@ -6,7 +6,7 @@ end
 directory "/home/jenkins" do
   recursive true
   owner "jenkins"
-  mode 0700
+  mode 0755
 end
 
 # git requires that a user be set to checkout...
