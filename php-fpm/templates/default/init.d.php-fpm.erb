@@ -77,6 +77,16 @@ case "$1" in
         echo " done"
     ;;
 
+    status)
+        PHPFPMPSCOUNT=$(ps aux|grep [p]hp-fpm|wc -l)
+        if [ $PHPFPMPSCOUNT -gt 0 ]; then
+            echo "php-fpm is running."
+            exit 0
+        fi
+        echo "php-fpm is not running"
+        exit 1
+    ;;
+
     stop)
         echo -n "Gracefully shutting down php-fpm "
 
