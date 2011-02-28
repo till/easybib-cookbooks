@@ -31,9 +31,24 @@
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.tasks.Ant>
-      <targets></targets>
-    </hudson.tasks.Ant>
+    <hudson.tasks.Shell>
+      <command>mkdir -p ./build/api
+	mkdir -p ./build/code-browser
+	mkdir -p ./build/coverage
+	mkdir -p ./build/logs
+	mkdir -p ./build/pdepend
+
+
+	pdepend --jdepend-xml=./build/logs/jdepend.xml --jdepend-chart=./build/pdepend/dependencies.svg --overview-pyramid=./build/pdepend/overview-pyramid.svg .
+	phpunit --coverage-clover ./build/logs/clover.xml --coverage-html ./build/coverage --log-junit build/logs/junit.xml --configuration tests/phpunit.xml
+	phpmd . xml codesize,design,naming,unusedcode --reportfile ./build/logs/pmd.xml
+	phpcpd --log-pmd ./build/logs/pmd-cpd.xml .
+	phploc --log-csv ./build/logs/phploc.csv .
+	phpcs --report=checkstyle --report-file=./build/logs/checkstyle.xml --standard=PEAR .
+	phpdoc --directory . --target ./build/api
+	phpcb --log ./build/logs --output ./build/code-browser
+	</command>
+   </hudson.tasks.Shell>
   </builders>
   <publishers>
     <htmlpublisher.HtmlPublisher>
