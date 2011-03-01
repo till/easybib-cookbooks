@@ -1,3 +1,6 @@
+require_recipe "apt" 
+require_recipe "git"
+
 user "jenkins" do
   home "/home/jenkins"
   shell "/bin/bash"

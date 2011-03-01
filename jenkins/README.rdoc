@@ -1,0 +1,14 @@
+= DESCRIPTION:
+
+Jenkins CI 
+
+This cookbook based on the hudson package by Ben Mabey <ben@benmabey.com>
+
+= REQUIREMENTS:
+
+This recipe currenly only works with Ubuntu.
+
+= ATTRIBUTES: 
+
+= USAGE:
+

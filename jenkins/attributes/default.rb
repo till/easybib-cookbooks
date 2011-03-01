@@ -32,5 +32,6 @@ set_unless[:php_pear][:packages]  =  ["pdepend/PHP_Depend-beta",
                                       ]
 
 
-set_unless[:buildconfigs][:configs]  =  ["Mail_Queue",
-                                         "HTTP_Request2"]
+set_unless[:buildconfigs][:configs]  =  ["Mail_Queue"]
+
+set_unless[:buildconfigs][:from_template]  =  ["Mail_Queue"]
