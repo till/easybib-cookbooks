@@ -1,5 +1,11 @@
-%w{ant subversion htop curl php5-curl php5-xdebug php5-cli php-mdb2-driver-sqlite php-pear}.each do |a_package|
+%w{ant subversion htop curl php5-easybib autoconf}.each do |a_package|
   package a_package
+end
+
+#should be there because of php5-easybib already, but make sure that it exists, otherwise the pear-exitwrapper installation will fail
+directory "/usr/local/bin/" do
+  action :create
+  recursive true
 end
 
 cookbook_file "/usr/local/bin/pear-exitwrapper" do
@@ -24,6 +30,16 @@ end
 
 execute "php-pear: update channel" do
   command "sudo pear-exitwrapper channel-update pear.php.net"
+end
+
+#phploc needs newest pear installer
+execute "php-pear: updating pear" do
+  command "sudo pear upgrade pear"
+end
+
+#phpunit needs newest xdebug
+execute "php5-xdebug: updating xdebug" do
+  command "sudo pecl install xdebug"
 end
 
 packages = node[:php_pear][:packages]

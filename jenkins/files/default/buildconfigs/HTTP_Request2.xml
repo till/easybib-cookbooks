@@ -8,8 +8,8 @@
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>http://svn.php.net/repository/pear/packages/HTTP_Request2/trunk/</remote>
-        <local>.</local>
+        <remote>http://svn.php.net/repository/pear/packages/HTTP_Request2/trunk</remote>
+        <local>HTTP</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -31,9 +31,23 @@
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.tasks.Ant>
-      <targets></targets>
-    </hudson.tasks.Ant>
+    <hudson.tasks.Shell>
+	      <command>mkdir -p ./build/api
+	        mkdir -p ./build/code-browser
+	        mkdir -p ./build/coverage
+	        mkdir -p ./build/logs
+	        mkdir -p ./build/pdepend
+
+
+	        pdepend --jdepend-xml=./build/logs/jdepend.xml --jdepend-chart=./build/pdepend/dependencies.svg --overview-pyramid=./build/pdepend/overview-pyramid.svg .
+	        #phpmd . xml codesize,design,naming,unusedcode --reportfile ./build/logs/pmd.xml
+	        #phpcpd --log-pmd ./build/logs/pmd-cpd.xml .
+	        phploc --log-csv ./build/logs/phploc.csv .
+	        # phpcs --report=checkstyle --report-file=./build/logs/checkstyle.xml --standard=PEAR .
+	        # phpdoc --directory . --target ./build/api
+	        phpunit --coverage-clover ./build/logs/clover.xml --coverage-html ./build/coverage --log-junit build/logs/junit.xml HTTP/tests/AllTests.php
+	  </command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers>
     <htmlpublisher.HtmlPublisher>
