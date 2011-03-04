@@ -1,5 +1,5 @@
 #!/bin/bash
-OUTPUT=$(pear $@ 2>&1)
+OUTPUT=$($@ 2>&1)
 if [ "$?" -eq 1 ]
   then
   if [[ "$OUTPUT" =~ "is already installed and is the same as the released" ]]
