@@ -1,3 +1,6 @@
+require_recipe "apt" 
+require_recipe "git"
+
 user "jenkins" do
   home "/home/jenkins"
   shell "/bin/bash"
@@ -38,7 +41,7 @@ end
 service "jenkins" do
   supports :status => true, :restart => true, :start => true, :stop => true
   status_command "/etc/init.d/jenkins status | grep 'jenkins is running'"
-  action :start
+  action :restart
 end
 
 jenkins_plugin node[:jenkins][:plugins]

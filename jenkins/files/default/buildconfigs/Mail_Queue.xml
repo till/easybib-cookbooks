@@ -40,10 +40,10 @@
 
 
 	pdepend --jdepend-xml=./build/logs/jdepend.xml --jdepend-chart=./build/pdepend/dependencies.svg --overview-pyramid=./build/pdepend/overview-pyramid.svg .
-	phpmd . xml codesize,design,naming,unusedcode --reportfile ./build/logs/pmd.xml
-	phpcpd --log-pmd ./build/logs/pmd-cpd.xml .
+	# phpmd . xml codesize,design,naming,unusedcode --reportfile ./build/logs/pmd.xml
+	# phpcpd --log-pmd ./build/logs/pmd-cpd.xml .
 	phploc --log-csv ./build/logs/phploc.csv .
-	phpcs --report=checkstyle --report-file=./build/logs/checkstyle.xml --standard=PEAR .
+	# phpcs --report=checkstyle --report-file=./build/logs/checkstyle.xml --standard=PEAR .
 	# phpdoc --directory . --target ./build/api
 	# phpcb --log ./build/logs --output ./build/code-browser
 	phpunit --coverage-clover ./build/logs/clover.xml --coverage-html ./build/coverage --log-junit build/logs/junit.xml --configuration tests/phpunit.xml
