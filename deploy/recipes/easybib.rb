@@ -1,21 +1,30 @@
 # custom recipe because of: http://support.scalarium.com/discussions/problems/78-app-is-not-deploying
 
-deployUser="www-data"
+deployUser = "www-data"
+
+instanceRoles = node[:scalarium][:instance][:roles]
 
 Chef::Log.debug("deploy::easybib - entered.");
 
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.debug("deploy::easybib - app: #{application}, role: #{node[:scalarium][:instance][:roles]}")
+  Chef::Log.debug("deploy::easybib - app: #{application}, role: #{instanceRoles}")
 
   case application
   when 'easybib'
-    next unless node[:scalarium][:instance][:roles].include?('nginxphpapp')
+    if instanceRoles.include?('nginxphpapp')
+
+	elsif instanceRoles.include?('testapp')
+
+    else
+      next
+	end
+
   when 'easybib_api'
-    next unless node[:scalarium][:instance][:roles].include?('bibapi')
+    next unless instanceRoles.include?('bibapi')
   when 'easybib_solr_research_importers'
     # not sure on which roles you want to have this app
-    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+    next unless instanceRoles.include?('easybibsolr')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
     
@@ -24,7 +33,7 @@ node[:deploy].each do |application, deploy|
 
   when 'easybib_solr_server'
     # not sure on which roles you want to have this app
-    next unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+    next unless instanceRoles.include?('easybibsolr')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for SOLR SERVER')
 
@@ -34,7 +43,7 @@ node[:deploy].each do |application, deploy|
     deployUser = "root"
 
   when 'realtime'
-    next unless node[:scalarium][:instance][:roles].include?('nodejsapp')
+    next unless instanceRoles.include?('nodejsapp')
 
     deployUser = "node"
 
@@ -105,7 +114,7 @@ node[:deploy].each do |application, deploy|
 
     symlink_before_migrate({})
     migrate false
-    #if !node[:scalarium][:instance][:roles].include?('easybibsolr')
+    #if !instanceRoles.include?('easybibsolr')
     #  migrate deploy[:migrate]
     #  migration_command deploy[:migrate_command]
     #end
