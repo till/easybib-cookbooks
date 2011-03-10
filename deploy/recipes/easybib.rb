@@ -14,12 +14,11 @@ node[:deploy].each do |application, deploy|
   when 'easybib'
     if instanceRoles.include?('nginxphpapp')
 
-	elsif instanceRoles.include?('testapp')
+    elsif instanceRoles.include?('testapp')
 
     else
       next
-	end
-
+    end
   when 'easybib_api'
     next unless instanceRoles.include?('bibapi')
   when 'easybib_solr_research_importers'
