@@ -42,6 +42,10 @@ execute "update sources" do
   command "aptitude update"
 end
 
+package "graphviz"
+
 package "php5-easybib"
+package "php5-easybib-apc"
+package "php5-easybib-xhprof"
 
 include_recipe "php-fpm::configure"
