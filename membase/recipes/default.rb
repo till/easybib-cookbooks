@@ -2,11 +2,11 @@ require_recipe "apt"
 
 case node.platform
 when "ubuntu"
-  membasever="1.6.5"
-  architecture="x86_64"
+  membasever   = node[:membase][:ver]
+  architecture = node[:membase][:arch]
   remote_file "/tmp/membase-server-community_#{architecture}_#{membasever}.deb" do
     #fixme: this .deb should probably be mirrored somewhere at easybib:
-    source "http://c3045942.ltd.cloudfiles.rackspacecloud.com/membase-server-community_#{architecture}_#{membasever}.deb"
+    source "#{node[:membase][:download]}"
     mode "0644"
     backup false
     # not_if "test -f /tmp/membase-server-community_#{architecture}_#{membasever}.deb"
