@@ -47,5 +47,6 @@ package "graphviz"
 package "php5-easybib"
 package "php5-easybib-apc"
 package "php5-easybib-xhprof"
+package "php5-easybib-memcache"
 
 include_recipe "php-fpm::configure"
