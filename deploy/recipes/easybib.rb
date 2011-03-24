@@ -76,7 +76,13 @@ node[:deploy].each do |application, deploy|
   
   # we survived until here - so we are good to actually checkout and deploy
   # done for every app
-  
+
+  scalarium_deploy_dir do
+    user deploy[:user]
+    group deploy[:group]
+    path deploy[:deploy_to]
+  end
+
   # chef bug
   directory "#{deploy[:deploy_to]}/shared/cached-copy" do
     recursive true
