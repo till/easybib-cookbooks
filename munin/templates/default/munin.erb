@@ -42,8 +42,8 @@ contact.admins.command mail -s "Munin notification" <%=node["sysop_email"]%>
 <% end -%>
 
 # this adds all our nginxphpapp servers - duplicate later for more
-<% if !@node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
-  <% @node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
+<% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+  <% node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
 [nginxphpapp;<%= name %>]
   address <%= Resolv.getaddress(backend['private_dns_name']) %>
   use_node_name yes
