@@ -4,17 +4,34 @@ case node.platform
 when "ubuntu"
   membasever   = node[:membase][:ver]
   architecture = node[:membase][:arch]
+  
+#  execute "fh is debugging" do
+#    command "cp /var/cache/apt/archives/membase-server-community_#{architecture}_#{membasever}.deb /tmp"
+#  end
+  
   remote_file "/tmp/membase-server-community_#{architecture}_#{membasever}.deb" do
-    #fixme: this .deb should probably be mirrored somewhere at easybib:
     source "#{node[:membase][:download]}"
     mode "0644"
     backup false
-    # not_if "test -f /tmp/membase-server-community_#{architecture}_#{membasever}.deb"
+    not_if "test -f /tmp/membase-server-community_#{architecture}_#{membasever}.deb"
   end
 
   execute "Install membase package" do
     command "dpkg -i /tmp/membase-server-community_#{architecture}_#{membasever}.deb"
     not_if "test -f /opt/membase/#{membasever}/bin/membase"
+  end
+  
+  service "membase-server" do
+    supports :status => true, :restart => true, :start => true, :stop => true
+    status_command "/etc/init.d/membase-server status | grep 'membase is running'"
+    action :restart
+  end
+  
+  execute "membase-server init script rocks and is totally awesome, so lets sit here and watch it a litte bit longer" do
+    #stupid piece of .. - the membase-script exists too early, while membase not fully running
+    #so a cluster init directly as next step would lead to a connection refused error
+    #lovin' it.
+    command "sleep 5"
   end
   
   execute "Cluster Init" do
