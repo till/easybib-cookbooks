@@ -92,7 +92,7 @@ node[:deploy].each do |application, deploy|
 
       when 'svn'
         # fix svn url
-        unless deploy[:scm][:revision].match(/(r[0-9]{1,})|([0-9]{1,})|(HEAD)/)
+        if deploy[:scm][:revision] && !deploy[:scm][:revision].match(/(r[0-9]{1,})|([0-9]{1,})|(HEAD)/)
           deploy[:scm][:repository] = "#{deploy[:scm][:repository]}/#{deploy[:scm][:revision]}"
           deploy[:scm][:revision]   = nil
         end
