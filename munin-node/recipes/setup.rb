@@ -3,8 +3,14 @@ require 'resolv'
 package "munin-node"
 include_recipe "munin-node::service"
 
-if node[:scalarium][:roles].include?('monitoring-master')
-  ip_munin = Resolv.getaddress(node[:scalarium][:roles]["monitoring-master"][:instances]["darth-vader"]["private_dns_name"])
+clusterInstances = node[:scalarium][:roles]["monitoring-master"][:instances]
+clusterRoles     = node[:scalarium][:roles]
+
+if clusterRoles.include?('monitoring-master') && !clusterInstances.empty?
+
+  # FIXME: assuming one instance called 'darth-vader'
+  logMaster = clusterInstances["darth-vader"]
+  ip_munin  = Resolv.getaddress(logMaster["private_dns_name"])
 
   template "/etc/munin/munin-node.conf" do
     source "munin-node.erb"
@@ -13,8 +19,9 @@ if node[:scalarium][:roles].include?('monitoring-master')
     })
   end
 
-  if node[:scalarium][:instance][:roles].include?('nginxphpapp')
+  if clusterRoles.include?('nginxphpapp')
     include_recipe "munin-node::nginx"
     include_recipe "munin-node::phpfpm"
   end
+
 end
