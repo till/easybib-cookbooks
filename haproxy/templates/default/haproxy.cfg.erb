@@ -23,9 +23,9 @@ defaults
   option          httpclose     # disable keepalive (HAProxy does not yet support the HTTP keep-alive mode)
   option          abortonclose  # enable early dropping of aborted requests from pending queue
   option          httpchk       # enable HTTP protocol to check on servers health
-  <% if @node[:haproxy][:enable_stats] -%>
-  stats auth <%= @node[:haproxy][:stats_user] %>:<%= @node[:haproxy][:stats_password] %>
-  stats uri <%= @node[:haproxy][:stats_url] %>
+  <% if node[:haproxy][:enable_stats] -%>
+  stats auth <%= node[:haproxy][:stats_user] %>:<%= node[:haproxy][:stats_password] %>
+  stats uri <%= node[:haproxy][:stats_url] %>
   <% end -%>
 <%
 # bind haproxy to the following parameters
@@ -46,7 +46,7 @@ haproxy_maxconn = 255
 -%>
 
 # Set up application listeners here.
-<% if @node[:scalarium][:roles][:nginxphpapp][:instances].blank? -%>
+<% if node[:scalarium][:roles][:nginxphpapp][:instances].blank? -%>
 listen application <%= haproxy_host %>:<%= haproxy_port %>
   # configure a fake backend as long as there are no real ones
   # this way HAProxy will not fail on a config check
@@ -54,14 +54,14 @@ listen application <%= haproxy_host %>:<%= haproxy_port %>
   server localhost 127.0.0.1:8080 weight 1 maxconn 5 check
 <% end -%>
 
-<% if !@node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>  
+<% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>  
 backend php_app_servers
   balance roundrobin
   option redispatch
   option httpclose
   option forwardfor
-  option httpchk <%= @node[:haproxy][:health_check_method] %> <%= @node[:haproxy][:health_check_url] %>
-  <% @node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
+  option httpchk <%= node[:haproxy][:health_check_method] %> <%= node[:haproxy][:health_check_url] %>
+  <% node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
   server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
   <% end -%>
 <% end -%>
@@ -70,7 +70,7 @@ frontend http-in
   bind <%= haproxy_host %>:<%= haproxy_port %>
   
   # all domains of PHP applications
-  <% @node[:haproxy][:php_applications].each do |app_name, app_config| -%>
+  <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
     <% app_config['domains'].each do |domain| -%>
   acl php_application_<%= app_name %>_domain_<%= domain %> hdr_end(host) -i <%= domain %>
       <% if app_config['mounted_at'] -%>
@@ -79,8 +79,8 @@ frontend http-in
     <% end -%>
   <% end -%>
   
-  <% unless @node[:haproxy][:php_applications].empty? || @node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
-    <% @node[:haproxy][:php_applications].each do |app_name, app_config| -%>
+  <% unless node[:haproxy][:php_applications].empty? || node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+    <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
       <% app_config['domains'].each do |domain| -%>
         <% if app_config['mounted_at'] -%>
   use_backend php_app_servers if php_application_<%= app_name %>_domain_<%= domain %> php_application_<%= app_name %>_domain_<%= domain %>_path
@@ -91,7 +91,7 @@ frontend http-in
     <% end -%>
   <% end -%>
   
-  <% if !@node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+  <% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
   default_backend php_app_servers
   <% end -%>
   
@@ -100,16 +100,16 @@ frontend http-in
 #  bind :443
   
   # all domains of PHP applications
-#  <% @node[:haproxy][:php_applications].each do |app_name, app_config| -%>
+#  <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
 #    <% app_config['domains'].each do |domain| -%>
 #  acl php_applications_ssl hdr_end(host) -i <%= domain %>
 #    <% end -%>
 #  <% end -%>
   
-#  <% unless @node[:haproxy][:php_applications].empty? || @node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+#  <% unless node[:haproxy][:php_applications].empty? || node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
 #  use_backend php_app_servers_ssl if php_applications_ssl
 #  <% end -%>
   
-#  <% if !@node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+#  <% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
 #  default_backend php_app_servers_ssl
 #  <% end -%>
