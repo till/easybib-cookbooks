@@ -15,6 +15,25 @@ if node["loggly"]
   end
 end
 
+if node[:scalarium][:instance][:roles].include?('loadbalancer')
+
+  template "/etc/rsyslog.d/10-haproxy.conf" do
+    source "10-haproxy.conf.erb"
+    mode "0644"
+  end
+
+  directory "#{node[:syslog][:haproxy][:log_dir]}" do
+    recursive true
+    mode "0755"
+  end
+
+  service "rsyslog" do
+    supports :status => true, :restart => true, :reload => true
+    action [ :restart ]
+  end
+
+end
+
 #service "loggly" do
 #  supports :start => true, :stop => true
 #  running false
