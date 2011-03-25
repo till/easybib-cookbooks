@@ -29,6 +29,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+directory "#{node["php-fpm"][:prefix]}/etc/php/" do
+  action :create
+  recursive true
+  mode "0755"
+end
+
 remote_file "/tmp/APC-#{node["php-fpm"][:apc_version]}.tgz" do
   source "http://pecl.php.net/get/APC-#{node["php-fpm"][:apc_version]}.tgz"
   checksum "53d8442e8b7e3804537d14e5776962cfdc5ae4d8"
@@ -53,7 +59,7 @@ execute "APC: make, make install" do
   command "make && make install"
 end
 
-remote_file "#{node["php-fpm"][:prefix]}/etc/php/apc.ini" do
+cookbook_file "#{node["php-fpm"][:prefix]}/etc/php/apc.ini" do
   source "apc.ini"
   mode "0644"
 end
