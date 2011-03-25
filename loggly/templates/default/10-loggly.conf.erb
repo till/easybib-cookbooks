@@ -1,34 +1,26 @@
 <% if node[:scalarium][:instance][:roles].include?('nginxphpapp') %>
 
 $ModLoad imfile
-$InputFileName /var/log/nginx/error.log
-$InputFileTag nginx:
-$InputFileStateFile stat-nginx-error
-$InputFileSeverity error
-$InputRunFileMonitor
+<%
+node[:syslog][:logfiles].each do|fileName,logSeverity|
+%>
+  $InputFileName <%= fileName %>
+  $InputFileTag <%= File.basename(fileName, '.log') %>
+  $InputFileStateFile stat-<%= File.basename(fileName, '.log') %>
+  $InputFileSeverity <%= logSeverity %>
+  $InputRunFileMonitor
+<%
+end
+%>
 
-$InputFileName /var/log/php/slow.log
-$InputFileTag slow:
-$InputFileStateFile stat-fpm-slow
-$InputFileSeverity notice
-$InputRunFileMonitor
-
-$InputFileName /var/log/php/fpm.log
-$InputFileTag fpm:
-$InputFileStateFile stat-fpm
-$InputFileSeverity error
-$InputRunFileMonitor
-
-$InputFilePollingInterval 10
+$InputFilePollingInterval <%= node[:syslog][:poll] %>
 
 <% end %>
 
-<% if node[:scalarium][:instance][:roles].include?('loadbalancer') %>
-
-local0.*  <%= node[:syslog][:haproxy][:log_dir] %>/haproxy_0.log
-local1.*  <%= node[:syslog][:haproxy][:log_dir] %>/haproxy_1.log
-
-<% else %>
+<%
+if !node[:scalarium][:instance][:roles].include?('loadbalancer')
+    # on loadbalancer we write to local files
+%>
 
 *.*    @@<%= node[:syslog][:host] %>:<%= node["loggly"]["port"] %>
 
