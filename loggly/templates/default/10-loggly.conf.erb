@@ -25,11 +25,11 @@ $InputFilePollingInterval 10
 
 <% if node[:scalarium][:instance][:roles].include?('loadbalancer') %>
 
-local0.*                                                /mnt/logs/haproxy/haproxy_0.log
-local1.*                                                /mnt/logs/haproxy/haproxy_1.log
+local0.*  <%= node[:syslog][:haproxy][:log_dir] %>/haproxy_0.log
+local1.*  <%= node[:syslog][:haproxy][:log_dir] %>/haproxy_1.log
 
 <% else %>
 
-*.*    @@logs.loggly.com:<%= node["loggly"]["port"] %>
+*.*    @@<%= node[:syslog][:host] %>:<%= node["loggly"]["port"] %>
 
 <% end %>
