@@ -1,4 +1,4 @@
-require 'resolv'
+package "nginx"
 
 sites = "/etc/nginx/sites-enabled"
 
@@ -10,6 +10,6 @@ end
 template "#{sites}/membase.conf" do
   source "membase.conf.erb"
   variables({
-    :ip => node[:instance][:ip]
+    :ip => node[:scalarium][:instance][:ip]
   })
 end
