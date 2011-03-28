@@ -4,10 +4,8 @@ case node.platform
 when "ubuntu"
   membasever   = node[:membase][:ver]
   architecture = node[:membase][:arch]
-  
-#  execute "fh is debugging" do
-#    command "cp /var/cache/apt/archives/membase-server-community_#{architecture}_#{membasever}.deb /tmp"
-#  end
+
+  package "sqlite3"
   
   remote_file "/tmp/membase-server-community_#{architecture}_#{membasever}.deb" do
     source "#{node[:membase][:download]}"
