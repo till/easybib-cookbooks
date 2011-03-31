@@ -34,8 +34,8 @@ if node[:scalarium][:instance][:roles].include?('loadbalancer')
 
 end
 
-#service "loggly" do
-#  supports :start => true, :stop => true
-#  running false
-#  action [ :enable, :start ]
-#end
+service "loggly" do
+  supports :start => true, :stop => true
+  running false
+  action [ :enable, :start ]
+end
