@@ -10,10 +10,10 @@
 #                    this server as a device on loggly.
 ### END INIT INFO
 
-CUSTOMER="<%=node["loggly"]["domain"]%>"
-INPUT=<%=node["loggly"]["input"]%>
-USER="<%=node["loggly"]["user"]%>"
-PASS="<%=node["loggly"]["pass"]%>"
+CUSTOMER="<%=node[:loggly][:domain]%>"
+INPUT=<%=node[:loggly][:input]%>
+USER="<%=node[:loggly][:user]%>"
+PASS="<%=node[:loggly][:pass]%>"
 MASCHINE="<%=node[:scalarium][:instance][:hostname]%>"
 IP="<%=node[:scalarium][:instance][:ip]%>"
 
