@@ -17,19 +17,19 @@ PASS="<%=node["loggly"]["pass"]%>"
 MASCHINE="<%=node[:scalarium][:instance][:hostname]%>"
 IP="<%=node[:scalarium][:instance][:ip]%>"
 
-ENDPOINT="https://${CUSTOMER}.loggly.com/api/devices/"
+ENDPOINT="https://${CUSTOMER}.loggly.com/api"
 
 CURL=`which curl`
 CURL_OPT="-S -s -X POST -u ${USER}:${PASS}"
 
 loggly_start () {
-    local call="${CURL} ${CURL_OPT} -d ip=${IP} -d input_id=${INPUT} -d name='${MASCHINE}' ${ENDPOINT}"
+    local call="${CURL} ${CURL_OPT} -d ip=${IP} -d input_id=${INPUT} -d name='${MASCHINE}' ${ENDPOINT}/devices/"
     loggly_exec "$call"
 }
 
 loggly_stop () {
-    #local call="${CURL} -X DELETE ${ENDPOINT}<ID>"
-    #loggly_exec "$call"
+    local call="${CURL} -X DELETE ${ENDPOINT}/inputs/${INPUT}/removedevice/"
+    loggly_exec "$call"
 }
 
 loggly_exec () {
