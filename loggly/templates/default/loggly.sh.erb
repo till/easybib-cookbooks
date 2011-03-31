@@ -28,7 +28,7 @@ loggly_start () {
 }
 
 loggly_stop () {
-    local call="${CURL} -X DELETE ${ENDPOINT}/inputs/${INPUT}/removedevice/"
+    local call="${CURL} ${CURL_OPT} ${ENDPOINT}/inputs/${INPUT}/removedevice/"
     loggly_exec "$call"
 }
 
