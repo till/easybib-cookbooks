@@ -20,7 +20,7 @@ IP="<%=node[:scalarium][:instance][:ip]%>"
 ENDPOINT="https://${CUSTOMER}.loggly.com/api"
 
 CURL=`which curl`
-CURL_OPT="-S -s -X POST -u ${USER}:${PASS}"
+CURL_OPT="-o /dev/null -S -s -L -w \"%{http_code}\" -X POST -u ${USER}:${PASS}"
 
 loggly_start () {
     local call="${CURL} ${CURL_OPT} -d ip=${IP} -d input_id=${INPUT} -d name='${MASCHINE}' ${ENDPOINT}/devices/"
@@ -44,7 +44,7 @@ loggly_exec () {
         echo "Errorz! ${resp}"
         exit 1
     fi
-    echo "Registered '${MASHINE}' with '${IP}' in loggly."
+    echo "Registered '${MASCHINE}' with '${IP}' in loggly."
 }
 
 case "$1" in
