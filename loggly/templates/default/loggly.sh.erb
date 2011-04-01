@@ -17,19 +17,25 @@ PASS="<%=node[:loggly][:pass]%>"
 MASCHINE="<%=node[:scalarium][:instance][:hostname]%>"
 IP="<%=node[:scalarium][:instance][:ip]%>"
 
-ENDPOINT="https://${CUSTOMER}.loggly.com/api"
+ENDPOINT="https://${CUSTOMER}.loggly.com/api/devices/"
 
 CURL=`which curl`
-CURL_OPT="-o /dev/null -S -s -L -w \"%{http_code}\" -X POST -u ${USER}:${PASS}"
+CURL_OPT="-o /dev/null -L -w \"%{http_code}\" -u ${USER}:${PASS}"
+CURL_OPT="${CURL_OPT} -d ip=${IP} -d input_id=${INPUT}"
+CURL_OPT="${CURL_OPT} -S -s"
 
 loggly_start () {
-    local call="${CURL} ${CURL_OPT} -d ip=${IP} -d input_id=${INPUT} -d name='${MASCHINE}' ${ENDPOINT}/devices/"
+    local call="${CURL} -X POST ${CURL_OPT} -d name='${MASCHINE}' ${ENDPOINT}"
     loggly_exec "$call"
+
+    echo "Registered '${MASCHINE}' with '${IP}' in loggly."
 }
 
 loggly_stop () {
-    local call="${CURL} ${CURL_OPT} ${ENDPOINT}/inputs/${INPUT}/removedevice/"
+    local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}"
     loggly_exec "$call"
+
+    echo "Unregistered '${MASCHINE}' in loggly."
 }
 
 loggly_exec () {
@@ -44,7 +50,6 @@ loggly_exec () {
         echo "Errorz! ${resp}"
         exit 1
     fi
-    echo "Registered '${MASCHINE}' with '${IP}' in loggly."
 }
 
 case "$1" in
