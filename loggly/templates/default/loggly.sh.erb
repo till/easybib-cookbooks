@@ -32,7 +32,7 @@ loggly_start () {
 }
 
 loggly_stop () {
-    local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}"
+    local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}?ip=${IP}"
     loggly_exec "$call"
 
     echo "Unregistered '${MASCHINE}' in loggly."
