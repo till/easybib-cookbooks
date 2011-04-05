@@ -61,8 +61,6 @@ server {
     }
 
     location / {
-        error_page 404 /index.php;
-
         include /etc/nginx/fastcgi_params;
 
         fastcgi_pass  phpfpm;
