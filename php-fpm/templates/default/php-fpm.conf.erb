@@ -35,7 +35,7 @@ listen.group = <%= node["php-fpm"][:group] %>
 listen.mode = 0666
 
 user = <%= node["php-fpm"][:user] %>
-group = <%= node["php-fpm"][:griup] %>
+group = <%= node["php-fpm"][:group] %>
 
 pm = dynamic
 pm.max_children = 50
