@@ -47,6 +47,16 @@ case "$1" in
         rm -f $PIDFILE
         ;;
 
+  status)
+        echo -n "$DESC is "
+        REDIS_RESPONSE=$(redis-cli -p <%= node[:redis][:port] %> ECHO FOO)
+        if [ "x${REDIS_RESPONSE}" = "xFOO" ]; then
+            echo "running"
+        else
+            echo "not running"
+        fi
+        ;;
+
   restart|force-reload)
         ${0} stop
         ${0} start
