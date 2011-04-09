@@ -97,14 +97,20 @@ dir <%= node[:redis][:datadir] %>
 # so for example it is possible to configure the slave to save the DB with a
 # different interval, or to listen to another port, and so on.
 #
-# slaveof <masterip> <masterport>
+
+<% if node[:redis][:master][:is_slave] == true -%>
+slaveof <%= node[:redis][:master][:address] %> <%= node[:redis][:master][:node] %>
+<% end -%>
 
 # If the master is password protected (using the "requirepass" configuration
 # directive below) it is possible to tell the slave to authenticate before
 # starting the replication synchronization process, otherwise the master will
 # refuse the slave request.
 #
-# masterauth <master-password>
+
+<% if !node[:redis][:master][:password].empty? -%>
+masterauth <%= node[:redis][:master][:password] %>
+<% end -%>
 
 ################################## SECURITY ###################################
 
