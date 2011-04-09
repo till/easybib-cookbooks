@@ -1,24 +1,35 @@
-remote_file "/tmp/redis-#{node[:redis][:version]}.tar.gz" do
-  source "http://redis.googlecode.com/files/redis-#{node[:redis][:version]}.tar.gz"
+redis_version = node[:redis][:version]
+
+remote_file "/tmp/redis-#{redis_version}.tar.gz" do
+  source "http://redis.googlecode.com/files/redis-#{redis_version}.tar.gz"
+  not_if do File.directory?("/tmp/redis-#{redis_version}") end
 end
 
-execute "tar xvfz /tmp/redis-#{node[:redis][:version]}.tar.gz" do
-  cwd "/tmp"
+execute "tar xvfz /tmp/redis-#{redis_version}.tar.gz" do
+  cwd    "/tmp"
+  not_if do File.directory?("/tmp/redis-#{redis_version}") end
 end
 
 execute "make" do
-  cwd "/tmp/redis-#{node[:redis][:version]}"
+  cwd "/tmp/redis-#{redis_version}"
 end
 
-user "redis" do
-  shell "/bin/zsh"
-  action :create
+execute "make install" do
+  cwd "/tmp/redis-#{redis_version}"
+end
+
+if node[:redis][:user] != 'root'
+  user "#{node[:redis][:user]}" do
+    shell  "/bin/zsh"
+    action :create
+  end
 end
 
 directory node[:redis][:datadir] do
-  owner node[:redis][:user]
-  group 'users'
-  mode '0755'
+  owner     node[:redis][:user]
+  group     "users"
+  mode      "0755"
+  recursive true
 end
 
 directory File.dirname(node[:redis][:log_file]) do
@@ -28,19 +39,15 @@ directory File.dirname(node[:redis][:log_file]) do
   mode '0755'
 end
 
-execute "mv redis-server redis-cli #{node[:redis][:prefix]}/bin" do
-  cwd "/tmp/redis-#{node[:redis][:version]}"
-end
-
 execute "chown #{node[:redis][:user]}:users redis-server redis-cli" do
   cwd "#{node[:redis][:prefix]}/bin"
 end
 
 template "/etc/init.d/redis-server" do
   source "redis.init.erb"
-  owner "root"
-  group "root"
-  mode "0755"
+  owner  "root"
+  group  "root"
+  mode   "0755"
 end
 
 service "redis-server" do
@@ -65,13 +72,7 @@ template "/etc/logrotate.d/redis" do
   group "root"
 end
 
-template "/etc/monit/conf.d/redis.monitrc" do
-  source "redis.monit.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-end
-
-execute "monit reload" do
-  action :run
+# include only when on scalarium
+if node[:scalarium]
+  include_recipe "redis::monit"
 end
