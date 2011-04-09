@@ -13,7 +13,7 @@
 # units are case insensitive so 1GB 1Gb 1gB are all the same.
 
 # By default Redis does not run as a daemon. Use 'yes' if you need it.
-# Note that Redis will write a pid file in /usr/local/brew/var/run/redis.pid when daemonized.
+# Note that Redis will write a pid file in /var/run/redis.pid when daemonized.
 daemonize yes
 
 # When running daemonized, Redis writes a pid file in /usr/local/brew/var/run/redis.pid by
@@ -65,9 +65,11 @@ databases 16
 #
 #   Note: you can disable saving at all commenting all the "save" lines.
 
+<% if node[:redis][:save] == true -%>
 save 900 1
 save 300 10
 save 60 10000
+<% end -%>
 
 # Compress string objects using LZF when dump .rdb databases?
 # For default that's set to 'yes' as it's almost always a win.
