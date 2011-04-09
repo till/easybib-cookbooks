@@ -38,7 +38,7 @@ case "$1" in
         ;;
   stop)
         echo -n "Stopping $DESC: "
-        if echo "shutdown" | nc localhost <%= node[:redis][:port] %>
+        if redis-cli -p <%= node[:redis][:port] %> SHUTDOWN
         then
                 echo "$NAME."
         else
