@@ -1,6 +1,6 @@
 <VirtualHost *:80>
-  ServerAdmin     <%=node["sysop_email"]%>
-  ServerName      munin.monitoring.easybib.com
+  ServerAdmin <%=node[:sysop_email]%>
+  ServerName  munin.monitoring.easybib.com
 
   DocumentRoot /var/www/munin
   Alias /munin /var/www/munin
