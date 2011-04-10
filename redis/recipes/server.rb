@@ -1,5 +1,11 @@
 redis_version = node[:redis][:version]
 
+redis_version_installed = `redis-server -v | awk '{print $4}'`
+
+redis_already_installed = lambda do
+  redis_version_installed == redis_version
+end
+
 remote_file "/tmp/redis-#{redis_version}.tar.gz" do
   source "http://redis.googlecode.com/files/redis-#{redis_version}.tar.gz"
   not_if do File.directory?("/tmp/redis-#{redis_version}") end
@@ -11,11 +17,13 @@ execute "tar xvfz /tmp/redis-#{redis_version}.tar.gz" do
 end
 
 execute "make" do
-  cwd "/tmp/redis-#{redis_version}"
+  cwd    "/tmp/redis-#{redis_version}"
+  not_fi do File.exist?("#{node[:redis][:prefix]}/bin/redis-server") end
 end
 
 execute "make install" do
-  cwd "/tmp/redis-#{redis_version}"
+  cwd    "/tmp/redis-#{redis_version}"
+  not_fi &redis_already_installed
 end
 
 if node[:redis][:user] != 'root'
