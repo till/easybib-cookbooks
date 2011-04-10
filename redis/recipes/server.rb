@@ -12,8 +12,6 @@ def redis_already_installed
   end
 end
 
-Chef::Log.debug("is redis installed? #{redis_already_installed}")
-
 remote_file "/tmp/redis-#{redis_version}.tar.gz" do
   source "http://redis.googlecode.com/files/redis-#{redis_version}.tar.gz"
   not_if do File.directory?("/tmp/redis-#{redis_version}") end
