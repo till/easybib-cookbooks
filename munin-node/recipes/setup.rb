@@ -24,4 +24,8 @@ if clusterRoles.include?('monitoring-master') && !clusterInstances.empty?
     include_recipe "munin-node::phpfpm"
   end
 
+  if clusterRoles.include?('redis')
+    include_recipe "munin-node::redis"
+  end
+
 end

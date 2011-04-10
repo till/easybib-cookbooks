@@ -7,4 +7,5 @@ recipe            "munin-node::setup", "Install and configure munin-node"
 recipe            "munin-node::nginx", "Enable plugins for nginx monitoring"
 recipe            "munin-node::phpfpm", "Enable plugins for php-fpm monitoring"
 recipe            "munin-node::service", "Internally used by other recipies"
+recipe            "munin-node::redis", "Enable plugin for redis"
 supports 'ubuntu'
