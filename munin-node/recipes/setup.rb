@@ -8,8 +8,7 @@ clusterRoles     = node[:scalarium][:roles]
 
 if clusterRoles.include?('monitoring-master') && !clusterInstances.empty?
 
-  # FIXME: assuming one instance called 'darth-vader'
-  logMaster = clusterInstances["darth-vader"]
+  logMaster = clusterInstances[node[:munin_node][:master]]
   ip_munin  = Resolv.getaddress(logMaster["private_dns_name"])
 
   template "/etc/munin/munin-node.conf" do
