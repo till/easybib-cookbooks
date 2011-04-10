@@ -50,3 +50,12 @@ contact.admins.command mail -s "Munin notification" <%=node["sysop_email"]%>
 
   <% end -%>
 <% end -%>
+
+<% if !node[:scalarium][:roles][:redis][:instances].empty? -%>
+  <% node[:scalarium][:roles][:redis][:instances].each do |name,backend| -%>
+[redis;<%= name %>]
+  address <%= Resolv.getaddress(backend['private_dns_name']) %>
+  use_node_name yes
+
+  <% end -%>
+<% end -%>
