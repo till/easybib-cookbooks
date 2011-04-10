@@ -4,14 +4,6 @@ redis_version_installed = `#{node[:redis][:prefix]}/bin/redis-server -v | awk '{
 
 Chef::Log.debug("redis version installed: #{redis_version_installed}")
 
-def redis_already_installed
-  if redis_version_installed == redis_version
-    return true
-  else
-    return false
-  end
-end
-
 remote_file "/tmp/redis-#{redis_version}.tar.gz" do
   source "http://redis.googlecode.com/files/redis-#{redis_version}.tar.gz"
   not_if do File.directory?("/tmp/redis-#{redis_version}") end
@@ -24,12 +16,12 @@ end
 
 execute "make" do
   cwd    "/tmp/redis-#{redis_version}"
-  not_if redis_already_installed
+  not_if do redis_version_installed == redis_version end
 end
 
 execute "make install" do
   cwd    "/tmp/redis-#{redis_version}"
-  not_if redis_already_installed
+  not_if do redis_version_installed == redis_version end
 end
 
 if node[:redis][:user] != 'root'
