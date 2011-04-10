@@ -18,7 +18,7 @@ end
 
 execute "make" do
   cwd    "/tmp/redis-#{redis_version}"
-  not_fi do File.exist?("#{node[:redis][:prefix]}/bin/redis-server") end
+  not_if &redis_already_installed
 end
 
 execute "make install" do
