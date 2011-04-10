@@ -23,7 +23,7 @@ end
 
 execute "make install" do
   cwd    "/tmp/redis-#{redis_version}"
-  not_fi &redis_already_installed
+  not_if &redis_already_installed
 end
 
 if node[:redis][:user] != 'root'
