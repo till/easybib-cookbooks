@@ -1,5 +1,12 @@
 package "libio-all-perl"
 
+directory "/opt" do
+  owner  "root"
+  group  "root"
+  mode   "0755"
+  action :create
+end
+
 cookbook_file "/opt/redis-munin.pl" do
   source "redis-munin.pl"
   mode   "0755"
