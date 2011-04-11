@@ -60,6 +60,11 @@ server {
         access_log  off;
     }
 
+    location /raw/ {
+        root        <%= @deploy[:deploy_to] %>/current/www;
+        access_log  off;
+    }
+
     location / {
         include /etc/nginx/fastcgi_params;
 
