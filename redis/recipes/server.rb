@@ -2,9 +2,9 @@ redis_version = node[:redis][:version]
 
 redis_version_installed = `#{node[:redis][:prefix]}/bin/redis-server -v | awk '{print $4}'`
 
-Chef::Log.debug("redis version installed: #{redis_version_installed}")
-
 redis_already_installed = lambda do
+  Chef::Log.debug("redis version installed: #{redis_version_installed}")
+  Chef::Log.debug("redis version: #{redis_version}")
   redis_version_installed == redis_version
 end
 
