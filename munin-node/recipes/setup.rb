@@ -18,12 +18,15 @@ if clusterRoles.include?('monitoring-master') && !clusterInstances.empty?
     })
   end
 
-  if clusterRoles.include?('nginxphpapp')
+  # this is the instance we are on
+  currentInstance = node[:scalarium][:instance]
+
+  if currentInstance[:roles].include?('nginxphpapp')
     include_recipe "munin-node::nginx"
     include_recipe "munin-node::phpfpm"
   end
 
-  if clusterRoles.include?('redis')
+  if currentInstance[:roles].include?('redis')
     include_recipe "munin-node::redis"
   end
 
