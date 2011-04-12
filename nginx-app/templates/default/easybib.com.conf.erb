@@ -45,25 +45,12 @@ server {
         deny          all;
     }
 
-    location /js/ {
+<% node["nginx-app"][:static_directories].each do |dir| -%>
+    location /<%= dir %>/ {
         root        <%= @deploy[:deploy_to] %>/current/www;
         access_log  off;
     }
-
-    location /css/ {
-        root        <%= @deploy[:deploy_to] %>/current/www;
-        access_log  off;
-    }
-
-    location /images/ {
-        root        <%= @deploy[:deploy_to] %>/current/www;
-        access_log  off;
-    }
-
-    location /raw/ {
-        root        <%= @deploy[:deploy_to] %>/current/www;
-        access_log  off;
-    }
+<% end -%>
 
     location / {
         include /etc/nginx/fastcgi_params;
