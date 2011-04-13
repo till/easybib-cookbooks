@@ -6,9 +6,8 @@ rundir  /var/run/munin
 tmpldir /etc/munin/templates
 
 # Make graphs show values per minute instead of per second
-#graph_period minute
-
-#graph_strategy cgi
+graph_period minute
+graph_strategy cgi
 
 # Drop somejuser@fnord.comm and anotheruser@blibb.comm an email everytime
 # something changes (OK -> WARNING, CRITICAL -> OK, etc)
