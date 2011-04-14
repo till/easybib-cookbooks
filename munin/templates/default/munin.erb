@@ -1,5 +1,5 @@
 <% require 'resolv' -%>
-dbdir   /var/lib/munin
+dbdir   <%= node[:munin][:libdir] %>
 htmldir /var/www/munin
 logdir  /var/log/munin
 rundir  /var/run/munin
