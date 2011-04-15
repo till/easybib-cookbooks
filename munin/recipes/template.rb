@@ -7,6 +7,7 @@ tmpl.each do |template|
     owner  "munin"
     group  "munin"
     mode   "0644"
+    backup false
   end
 end
 
@@ -16,5 +17,6 @@ static.each do |asset|
     owner  "munin"
     group  "munin"
     mode   "0644"
+    backup false
   end
 end
