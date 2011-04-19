@@ -1,6 +1,6 @@
 package "munin"
 
-directory "#{node[:munin][:libdir]}" do
+directory "#{node[:munin][:lib_dir]}" do
   owner     'munin'
   group     'munin'
   mode      '0755'

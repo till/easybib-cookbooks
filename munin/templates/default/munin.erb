@@ -1,17 +1,19 @@
 <% require 'resolv' -%>
-dbdir   <%= node[:munin][:libdir] %>
-htmldir /var/www/munin
-logdir  /var/log/munin
+dbdir   <%= node[:munin][:lib_dir] %>
+htmldir <%= node[:munin][:www_dir] %>
+logdir  <%= node[:munin][:log_dir] %>
 rundir  /var/run/munin
 tmpldir /etc/munin/templates
 
 # Make graphs show values per minute instead of per second
 #graph_period minute
+<% if node[:munin][:graph] == 'cgi' -%>
 graph_strategy cgi
+<% end -%>
 
 # Drop somejuser@fnord.comm and anotheruser@blibb.comm an email everytime
 # something changes (OK -> WARNING, CRITICAL -> OK, etc)
-contact.admins.command mail -s "Munin notification" <%=node["sysop_email"]%>
+contact.admins.command mail -s "Munin notification" <%= node[:sysop_email] %>
 
 # a simple host tree
 [monitoring.easybib.com]
