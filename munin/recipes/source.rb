@@ -84,3 +84,6 @@ installCmds.each do |cmd|
     environment ({'PREFIX' => node[:munin][:prefix]})
   end
 end
+
+include_recipe "munin::template"
+include_recipe "munin::logrotate"
