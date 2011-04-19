@@ -59,7 +59,7 @@ DBDIR      = $(DESTDIR)/vol/ganglia/munin/lib
 PLUGSTATE  = $(DESTDIR)/var/opt/munin/plugin-state
 
 # Where Munin should place its logs.
-LOGDIR     = $(DESTDIR)/mnt/log/munin
+LOGDIR     = $(DESTDIR)<%= node[:munin][:log_dir] %>
 
 # Location of PID files and other statefiles. On the server, must be
 # writable by the user "munin".
