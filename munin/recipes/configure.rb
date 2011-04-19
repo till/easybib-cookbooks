@@ -22,8 +22,8 @@ if node[:munin][:graph] == 'cgi'
 
   # require so the graph cgi can read and write
   execute "chgrp www-data /usr/share/munin/munin-graph"
-  execute "chgrp www-data /var/log/munin #{node[:munin][:log_dir]}/munin-graph.log #{node[:munin][:log_dir]}/munin-cgi-graph.log"
-  execute "chmod g+w /var/log/munin #{node[:munin][:log_dir]}/munin-graph.log #{node[:munin][:log_dir]}/munin-cgi-graph.log"
+  execute "chgrp www-data #{node[:munin][:log_dir]} #{node[:munin][:log_dir]}/munin-graph.log #{node[:munin][:log_dir]}/munin-cgi-graph.log"
+  execute "chmod g+w #{node[:munin][:log_dir]} #{node[:munin][:log_dir]}/munin-graph.log #{node[:munin][:log_dir]}/munin-cgi-graph.log"
   execute "chgrp -R www-data #{node[:munin][:www_dir]}"
   execute "chmod -R g+w #{node[:munin][:www_dir]}"
 end
