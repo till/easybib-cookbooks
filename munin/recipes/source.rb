@@ -47,6 +47,18 @@ perlModules.each do |perlModule|
   end
 end
 
+user node[:munin][:user] do
+  comment "munin"
+  system  true
+  shell   "/bin/false"
+end
+
+directory node[:munin][:log_dir] do
+  owner     node[:munin][:user]
+  group     node[:munin][:group]
+  recursive true
+end
+
 muninVer     = node[:munin][:version]
 tmpDir       = "/tmp/munin-#{muninVer}"
 downloadLink = "http://downloads.sourceforge.net/project/munin/munin%20stable/#{muninVer}/munin-#{muninVer}.tar.gz?r=http%3A%2F%2Fyour.mother"
@@ -63,12 +75,6 @@ end
 
 template "#{tmpDir}/Makefile.config" do
   source "Makefile.config.erb"
-end
-
-user "#{node[:munin][:user]}" do
-  comment "munin"
-  system true
-  shell "/bin/false"
 end
 
 installCmds = ["make", "make install"]
