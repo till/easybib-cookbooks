@@ -15,3 +15,4 @@ else
 end
 
 include_recipe "munin::template"
+include_recipe "munin::logrotate"

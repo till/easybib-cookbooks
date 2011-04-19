@@ -8,4 +8,5 @@ recipe            "munin::configure", "Configure nodes, etc."
 recipe            "munin::source",    "Install munin from source"
 recipe            "munin::apache2",   "Apache2 related configuration setup to display munin stats"
 recipe            "munin::template",  "Install additional template files."
+recipe            "munin::logrotate", "Setup log rotation"
 supports 'ubuntu'
