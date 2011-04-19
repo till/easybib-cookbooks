@@ -1,11 +1,7 @@
 tmpl   = ["munin-domainview.tmpl", "munin-nodeview.tmpl", "munin-overview.tmpl", "munin-serviceview.tmpl"]
 static = ["some.js", "style.css"]
 
-if File.directory('/etc/opt/munin/templates') 
-  tmplDir = '/etc/opt/munin/templates'
-else
-  tmplDir = '/etc/munin/templates'
-end
+tmplDir = '/etc/munin/templates'
 
 tmpl.each do |template|
   cookbook_file "#{tmplDir}/#{template}" do
