@@ -1,7 +1,8 @@
-# This recipe is used to actually configure the munin.conf, e.g. to add in hosts
+# This recipe is used to (re-)configure the munin.conf, e.g. to add in hosts
 # and group them 'nicely'. ;-)
+#
 # This should be run after setup, and for all configure events (when nodes in the
-# cluster change.
+# cluster change).
 
 directory node[:munin][:log_dir] do
   owner  node[:munin][:user]
