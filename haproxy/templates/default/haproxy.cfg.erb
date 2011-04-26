@@ -27,8 +27,8 @@ defaults
   stats auth <%= node[:haproxy][:stats_user] %>:<%= node[:haproxy][:stats_password] %>
   stats uri <%= node[:haproxy][:stats_url] %>
   <% end -%>
-  <% node[:haproxy][:errorloc].each do |code,file| %>
-  errorfile <%= #{code} %> /etc/haproxy/<%= #{file} %>
+  <% node[:haproxy][:errorloc].each do |error_code,error_file| %>
+  errorfile <%= error_code %> /etc/haproxy/<%= error_file %>
   <% end %>
 <%
 # bind haproxy to the following parameters
