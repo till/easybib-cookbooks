@@ -3,3 +3,14 @@ if attribute?(:scalarium_initial_setup)
     "/var/log/haproxy" => "/mnt/var/log/haproxy"
   })
 end
+
+default[:haprox]             = {}
+default[:haproxy][:errorloc] = {
+    "401" => "401.html",
+    "403" => "403.html",
+    "408" => "408.html",
+    "500" => "5xx.html",
+    "502" => "5xx.html",
+    "503" => "5xx.html",
+    "504" => "5xx.html"
+}
