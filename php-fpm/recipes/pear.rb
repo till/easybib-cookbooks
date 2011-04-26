@@ -61,6 +61,6 @@ end
 packages.each do |channel,package|
   execute "PEAR: install #{package} from #{channel}" do
     command "pear install -f #{channel}/#{package}"
-    not_if  &is_installed(package)
+    not_if  do is_installed.call(package) end
   end
 end
