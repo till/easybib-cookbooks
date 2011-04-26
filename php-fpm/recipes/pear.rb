@@ -33,6 +33,23 @@ execute "PEAR: enable auto discover for channels" do
   command "pear config-set auto_discover 1"
 end
 
+def is_installed (package) 
+  cmd = "pear list -c pear.php.net|grep #{package}|wc -l"
+  val = `#{cmd}`
+  if val == 1
+    return true
+  end
+  return false
+end
+
+packages = {
+  "pear.php.net"     => "Crypt_HMAC2-beta",
+  "pear.php.net"     => "Net_Gearman-alpha",
+  "pear.php.net"     => "Services_Amazon_S3-alpha",
+  "pear.php.net"     => "Net_CheckIP2-1.0.0RC3",
+  "htmlpurifier.org" => "HTMLPurifier"
+}
+
 execute "PEAR: update channel" do
   command "pear channel-update pear.php.net"
 end
@@ -41,18 +58,9 @@ execute "PEAR: upgrade all packages" do
   command "pear upgrade-all"
 end
 
-execute "PEAR: install Crypt_HMAC2" do
-  command "pear install -f Crypt_HMAC2-beta"
-end
-
-execute "PEAR: install Net_Gearman" do 
-  command "pear install -f Net_Gearman-alpha"
-end
-
-execute "PEAR: install Services_Amazon_S3" do
-  command "pear install -f Services_Amazon_S3-alpha"
-end
-
-execute "PEAR: install Net_CheckIP2" do
-  command "pear install -f Net_CheckIP2-1.0.0RC3"
+packages.each do |channel,package|
+  execute "PEAR: install #{package} from #{channel}" do
+    command "pear install -f #{channel}/#{package}"
+    not_if  is_installed(package)
+  end
 end
