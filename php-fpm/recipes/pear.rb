@@ -33,7 +33,7 @@ execute "PEAR: enable auto discover for channels" do
   command "pear config-set auto_discover 1"
 end
 
-def is_installed (package) 
+is_installed = lambda do |package|
   cmd = "pear list -c pear.php.net|grep #{package}|wc -l"
   val = `#{cmd}`
   if val == 1
@@ -61,6 +61,6 @@ end
 packages.each do |channel,package|
   execute "PEAR: install #{package} from #{channel}" do
     command "pear install -f #{channel}/#{package}"
-    not_if  do is_installed(package) end
+    not_if  &is_installed(package)
   end
 end
