@@ -25,7 +25,7 @@ test -x $DAEMONBOOTSTRAP || exit 0
 set -e
 
 if [ "x$USER" != "xroot" ]; then
-  echo "Must be root."
+  echo "Must be root: $USER"
   exit 1
 fi
 
