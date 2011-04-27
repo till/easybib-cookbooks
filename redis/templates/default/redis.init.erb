@@ -24,10 +24,10 @@ test -x $DAEMONBOOTSTRAP || exit 0
 
 set -e
 
-if [ "x$USER" != "xroot" ]; then
-  echo "Must be root: $USER"
-  exit 1
-fi
+#if [ "x$USER" != "xroot" ]; then
+#  echo "Must be root: $USER"
+#  exit 1
+#fi
 
 case "$1" in
   start)
