@@ -1,0 +1,3 @@
+<% node[:postfix][:relay].each do |account| -%>
+<%= account["host"] %> <%= account["user"] %>:<%= account["pass"] %>
+<% end %>

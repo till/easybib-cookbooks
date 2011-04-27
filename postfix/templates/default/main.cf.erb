@@ -1,0 +1,17 @@
+relayhost = <%= @relay_host %>
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:<%= @etc_path %>/sasl/passwd
+smtp_sasl_security_options =
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+biff = no
+append_dot_mydomain = no
+readme_directory = no
+myhostname = <%= @my_hostname %>
+mynetworks = <%= @ips.join(', ') %>
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = /etc/mailname
+mydestination =
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = loopback-only
