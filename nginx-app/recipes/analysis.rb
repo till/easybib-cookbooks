@@ -1,3 +1,9 @@
+directory "#{node[:deploy][:deploy_to]}" do
+  owner  node["nginx-app"][:user]
+  group  node["nginx-app"][:group]
+  action :create
+end
+
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
   source "easybib.com.conf.erb"
   mode "0755"
