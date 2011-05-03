@@ -9,6 +9,6 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
   mode "0755"
   owner node["nginx-app"][:user]
   group node["nginx-app"][:group]
-  variables :deploy => deploy, :application => "easybib"
+  variables :deploy => node[:deploy], :application => "easybib"
   notifies :restart, resources(:service => "nginx"), :delayed
 end
