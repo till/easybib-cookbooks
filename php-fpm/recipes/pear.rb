@@ -43,11 +43,12 @@ is_installed = lambda do |package|
 end
 
 packages = {
-  "pear.php.net"     => "Crypt_HMAC2-beta",
-  "pear.php.net"     => "Net_Gearman-alpha",
-  "pear.php.net"     => "Services_Amazon_S3-alpha",
-  "pear.php.net"     => "Net_CheckIP2-1.0.0RC3",
-  "htmlpurifier.org" => "HTMLPurifier"
+  "pear.php.net"           => "Crypt_HMAC2-beta",
+  "pear.php.net"           => "Net_Gearman-alpha",
+  "pear.php.net"           => "Services_Amazon_S3-alpha",
+  "pear.php.net"           => "Net_CheckIP2-1.0.0RC3",
+  "htmlpurifier.org"       => "HTMLPurifier",
+  "pear.geometria-lab.net" => "Rediska-beta"
 }
 
 execute "PEAR: update channel" do
