@@ -12,7 +12,7 @@ end
 directory "#{node[:deploy][:deploy_to]}" do
   mode      "0755"  
   action    :create
-  recursive :true
+  recursive true
 end
 
 link "#{node[:deploy][:deploy_to]}/current" do
