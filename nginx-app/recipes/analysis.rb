@@ -4,6 +4,11 @@
 #  action :create
 #end
 
+if !node[:deploy] do
+  node[:deploy] = {}
+  node[:deploy][:deploy_to] = '/vagrant'
+end
+
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
   source "easybib.com.conf.erb"
   mode "0755"
