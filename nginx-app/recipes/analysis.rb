@@ -6,7 +6,17 @@
 
 if !node[:deploy]
   node[:deploy] = {}
-  node[:deploy][:deploy_to] = '/vagrant_data'
+  node[:deploy][:deploy_to] = '/var/www/citationalysis'
+end
+
+directory "#{node[:deploy][:deploy_to]}" do
+  mode      "0755"  
+  action    :create
+  recursive :true
+end
+
+link "#{node[:deploy][:deploy_to]}/current" do
+  to "/vagrant_data"
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
