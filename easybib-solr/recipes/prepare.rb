@@ -1,4 +1,4 @@
-include_recipe "easybib-solr::java"
+include_recipe "java::default"
 
 package "subversion"
 
