@@ -4,9 +4,9 @@
 #  action :create
 #end
 
-if !node[:deploy] do
+if !node[:deploy]
   node[:deploy] = {}
-  node[:deploy][:deploy_to] = '/vagrant'
+  node[:deploy][:deploy_to] = '/vagrant_data'
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
