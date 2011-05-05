@@ -1,0 +1,5 @@
+server {
+    location /elasticsearch/ {
+        proxy_pass http://localhost:9200;
+    }
+}
