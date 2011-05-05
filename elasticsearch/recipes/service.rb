@@ -20,6 +20,7 @@ end
 
 execute "register as a service" do
   command "#{base_dir}/service/elasticsearch install"
+  not_if  do File.symlink?("/etc/init.d/elasticsearch") end
 end
 
 service "elasticsearch" do
