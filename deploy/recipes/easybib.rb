@@ -59,6 +59,19 @@ node[:deploy].each do |application, deploy|
 
     deploy[:restart_command] = "" # restart realtime"
 
+  when 'citation_anlytics'
+    next unless instanceRoles.include?('elasticsearch')
+
+    deployUser = 'www-data'
+
+    Chef::Log.debug('deploy.easybib - Prepare for git checkout')
+    prepare_git_checkouts(
+      :user    => deployUser,
+      :group   => deployUser,
+      :home    => "/root",
+      :ssh_key => deploy[:scm][:ssh_key]
+    )
+
   end
 
   Chef::Log.debug("deploy::easybib - CREATE DEPLOY DIR")
