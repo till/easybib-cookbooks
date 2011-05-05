@@ -62,13 +62,11 @@ node[:deploy].each do |application, deploy|
   when 'citation_anlytics'
     next unless instanceRoles.include?('elasticsearch')
 
-    deployUser = 'www-data'
-
     Chef::Log.debug('deploy.easybib - Prepare for git checkout')
     prepare_git_checkouts(
       :user    => deployUser,
       :group   => deployUser,
-      :home    => "/root",
+      :home    => "/var/www",
       :ssh_key => deploy[:scm][:ssh_key]
     )
 
