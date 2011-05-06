@@ -43,12 +43,12 @@ is_installed = lambda do |package|
 end
 
 packages = {
-  "pear.php.net"           => "Crypt_HMAC2-beta",
-  "pear.php.net"           => "Net_Gearman-alpha",
-  "pear.php.net"           => "Services_Amazon_S3-alpha",
-  "pear.php.net"           => "Net_CheckIP2-1.0.0RC3",
-  "htmlpurifier.org"       => "HTMLPurifier",
-  "pear.geometria-lab.net" => "Rediska-beta"
+  "Crypt_HMAC2-beta"         => "pear.php.net",
+  "Net_Gearman-alpha"        => "pear.php.net",
+  "Services_Amazon_S3-alpha" => "pear.php.net",
+  "Net_CheckIP2-1.0.0RC3"    => "pear.php.net",
+  "HTMLPurifier"             => "htmlpurifier.org",
+  "Rediska-beta"             => "pear.geometria-lab.net"
 }
 
 execute "PEAR: update channel" do
@@ -59,7 +59,7 @@ execute "PEAR: upgrade all packages" do
   command "pear upgrade-all"
 end
 
-packages.each do |channel,package|
+packages.each do |package,channel|
   execute "PEAR: install #{package} from #{channel}" do
     command "pear install -f #{channel}/#{package}"
     not_if  do is_installed.call(package) end
