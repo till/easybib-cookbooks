@@ -9,6 +9,8 @@ if !node[:deploy]
   node[:deploy][:deploy_to] = '/var/www/citationalysis'
 end
 
+vagrant_dir = "/vagrant_data"
+
 directory "#{node[:deploy][:deploy_to]}" do
   mode      "0755"  
   action    :create
@@ -16,7 +18,7 @@ directory "#{node[:deploy][:deploy_to]}" do
 end
 
 link "#{node[:deploy][:deploy_to]}/current" do
-  to "/vagrant_data"
+  to "#{vagrant_dir}"
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
