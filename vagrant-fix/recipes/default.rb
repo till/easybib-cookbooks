@@ -4,5 +4,5 @@ execute "aptitude update" do
 end
 
 execute "update gems" do
-  command "gem update --no-rdoc --no-test --no-ri"
+  command "gem update -B 10 --no-rdoc --no-test --no-ri"
 end
