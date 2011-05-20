@@ -3,19 +3,27 @@ package "git-core"
 dir      = node[:elasticsearch][:version].gsub('.tar.gz', '')
 base_dir = "/opt/#{dir}/bin"
 
-git "/opt/elasticsearch-service" do
+# this is where we git checkout the servicewrapper to
+service_dir="/opt/elasticsearch-service"
+
+git "#{service_dir}" do
   repository "git://github.com/elasticsearch/elasticsearch-servicewrapper.git"
   reference "master"
   action :sync
 end
 
 link "#{base_dir}/service" do
-  to "/opt/elasticsearch-service/service"
+  to "#{service_dir}/service"
+end
+
+execute "unable ulimit" do
+  command "sed -i 's,#ULIMIT_N=,ULIMIT_N=32000,g' elasticsearch"
+  cwd     "#{service_dir}/service"
 end
 
 execute "patch ES_HOME in start script" do
   command "sed -i 's,ES_HOME=`dirname \"$SCRIPT\"`/../..,ES_HOME=/opt/#{dir},g' elasticsearch"
-  cwd     "/opt/elasticsearch-service/service"
+  cwd     "#{service_dir}/service"
 end
 
 execute "register as a service" do
