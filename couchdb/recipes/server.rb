@@ -8,7 +8,6 @@ end
 
 remote_file "/tmp/apache-couchdb-#{node[:couchdb][:version]}.tgz" do
   source "http://apache.easy-webs.de/couchdb/#{node[:couchdb][:version]}/apache-couchdb-#{node[:couchdb][:version]}.tar.gz"
-  checksum node[:couchdb][:checksum]
   not_if &couchdb_already_installed
 end
 

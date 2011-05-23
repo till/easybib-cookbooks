@@ -22,6 +22,28 @@ user "couchdb" do
   shell "/bin/zsh"
 end
 
+directory node[:couchdb][:datadir] do
+  owner "couchdb"
+  group "couchdb"
+  mode "0755"
+  action :create
+  recursive true
+  only_if do
+    !File.exists?(node[:couchdb][:datadir])
+  end
+end
+
+directory node[:couchdb][:viewdir] do
+  owner "couchdb"
+  group "couchdb"
+  mode "0755"
+  action :create
+  recursive true
+  only_if do
+    !File.exists?(node[:couchdb][:viewdir])
+  end
+end
+
 %w{db views}.each do |dir|
   directory "#{node[:couchdb][:datadir]}/#{dir}" do
     owner "couchdb"
