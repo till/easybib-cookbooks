@@ -16,10 +16,10 @@ link "#{base_dir}/service" do
   to "#{service_dir}/service"
 end
 
-execute "unable ulimit" do
-  command "sed -i 's,#ULIMIT_N=,ULIMIT_N=32000,g' elasticsearch"
-  cwd     "#{service_dir}/service"
-end
+#execute "unable ulimit" do
+#  command "sed -i 's,#ULIMIT_N=,ULIMIT_N=32000,g' elasticsearch"
+#  cwd     "#{service_dir}/service"
+#end
 
 execute "patch ES_HOME in start script" do
   command "sed -i 's,ES_HOME=`dirname \"$SCRIPT\"`/../..,ES_HOME=/opt/#{dir},g' elasticsearch"
