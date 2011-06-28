@@ -1,10 +1,10 @@
 package "git-core"
 
 dir      = node[:elasticsearch][:version].gsub('.tar.gz', '')
-base_dir = "/opt/#{dir}/bin"
+base_dir = "#{node[:elasticsearch][:basedir]}/#{dir}/bin"
 
 # this is where we git checkout the servicewrapper to
-service_dir="/opt/elasticsearch-service"
+service_dir="#{node[:elasticsearch][:basedir]}/elasticsearch-service"
 
 git "#{service_dir}" do
   repository "git://github.com/elasticsearch/elasticsearch-servicewrapper.git"
@@ -22,7 +22,7 @@ end
 #end
 
 execute "patch ES_HOME in start script" do
-  command "sed -i 's,ES_HOME=`dirname \"$SCRIPT\"`/../..,ES_HOME=/opt/#{dir},g' elasticsearch"
+  command "sed -i 's,ES_HOME=`dirname \"$SCRIPT\"`/../..,ES_HOME=#{node[:elasticsearch][:basedir]}/#{dir},g' elasticsearch"
   cwd     "#{service_dir}/service"
 end
 

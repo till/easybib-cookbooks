@@ -1,7 +1,14 @@
 # TODO: https://launchpad.net/~rgl/+archive/elasticsearch
 include_recipe "java::default"
 
-tmp_file = "/opt/#{node[:elasticsearch][:version]}"
+tmp_file = "#{node[:elasticsearch][:basedir]}/#{node[:elasticsearch][:version]}"
+
+directory "#{node[:elasticsearch][:basedir]}" do
+  owner     "root"
+  mode      "0755"
+  action    :create
+  recursive true
+end
 
 remote_file "#{tmp_file}" do
   source "#{node[:elasticsearch][:download]}/#{node[:elasticsearch][:version]}"
@@ -12,5 +19,5 @@ end
 execute "extract #{node[:elasticsearch][:version]}" do
   command "tar -zxvf #{tmp_file}"
   not_if  do !File.exist?(tmp_file) end
-  cwd     "/opt"
+  cwd     "#{node[:elasticsearch][:basedir]}"
 end
