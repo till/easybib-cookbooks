@@ -21,3 +21,5 @@ execute "extract #{node[:elasticsearch][:version]}" do
   not_if  do !File.exist?(tmp_file) end
   cwd     "#{node[:elasticsearch][:basedir]}"
 end
+
+include_recipe "elasticsearch::configure"
