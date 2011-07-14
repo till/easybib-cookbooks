@@ -6,6 +6,11 @@ base_dir = "#{node[:elasticsearch][:basedir]}/#{dir}/bin"
 # this is where we git checkout the servicewrapper to
 service_dir="#{node[:elasticsearch][:basedir]}/elasticsearch-service"
 
+# todo: each time the setup is run, we need to:
+# * determine if elasticsearch is already running, and stop it
+# * delete the servicewrapper checkout
+# * run this recipe
+
 git "#{service_dir}" do
   repository "git://github.com/elasticsearch/elasticsearch-servicewrapper.git"
   reference "master"
