@@ -41,24 +41,6 @@ node[:deploy].each do |application, deploy|
 
     deployUser = "root"
 
-  when 'realtime'
-    next unless instanceRoles.include?('nodejsapp')
-
-    deployUser = "node"
-
-    # this is from deploy::scm
-    Chef::Log.debug('deploy.easybib - Prepare for git checkout')
-    prepare_git_checkouts(
-      :user    => deployUser,
-      :group   => deployUser,
-      :home    => "/root",
-      :ssh_key => deploy[:scm][:ssh_key]
-    )
-
-    Chef::Log.debug('deploy::easybib - Setting deploy for node.js')
-
-    deploy[:restart_command] = "" # restart realtime"
-
   when 'citation_anlytics'
     next unless instanceRoles.include?('elasticsearch')
 
