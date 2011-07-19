@@ -21,7 +21,3 @@ template "#{dir}/config/elasticsearch.yml" do
   owner  "root"
   group  "root"
 end
-
-service "elasticsearch" do
-  action :restart
-end
