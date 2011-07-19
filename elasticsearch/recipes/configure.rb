@@ -1,5 +1,5 @@
 # create data dir
-directory "#{node[:elasticsearch][:basedir]}/elasticsearch-data" do
+directory "#{node[:elasticsearch][:ebsdir]}/elasticsearch-data" do
   owner     "root"
   mode      "0755"
   action    :create
