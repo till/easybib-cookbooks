@@ -23,3 +23,4 @@ execute "extract #{node[:elasticsearch][:version]}" do
 end
 
 include_recipe "elasticsearch::configure"
+include_recipe "elasticsearch::restart"
