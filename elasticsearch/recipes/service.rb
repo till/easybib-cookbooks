@@ -6,10 +6,22 @@ base_dir = "#{node[:elasticsearch][:basedir]}/#{dir}/bin"
 # this is where we git checkout the servicewrapper to
 service_dir="#{node[:elasticsearch][:basedir]}/elasticsearch-service"
 
-# todo: each time the setup is run, we need to:
-# * determine if elasticsearch is already running, and stop it
+# Each time the setup is run, the following happens
+# * determine if the service wrapper is installed and attempt to stop ElasticSearch
+# * delete the symlink
 # * delete the servicewrapper checkout
-# * run this recipe
+if File.exists?('/etc/init.d/elasticsearch')
+  execute "stop ElasticSearch" do
+    command "/etc/init.d/elasticsearch stop"
+  end
+  execute "delete service wrapper's symlink" do
+    command "rm /etc/init.d/elasticsearch"
+  end
+  directory "#{service_dir}" do
+    action    :delete
+    recursive :true
+  end
+end
 
 git "#{service_dir}" do
   repository "git://github.com/elasticsearch/elasticsearch-servicewrapper.git"
@@ -31,7 +43,7 @@ execute "patch ES_HOME in start script" do
   cwd     "#{service_dir}/service"
 end
 
-execute "register as a service" do
+execute "register elasticsearch as a service" do
   command "#{base_dir}/service/elasticsearch install"
   not_if  do File.symlink?("/etc/init.d/elasticsearch") end
 end
