@@ -5,7 +5,4 @@ description      "Installs/Configures memcached"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.2"
 
-%w[apt rvm].each do |cb|
-  depends cb
-end
 supports "ubuntu"

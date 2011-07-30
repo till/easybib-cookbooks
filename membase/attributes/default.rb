@@ -1,8 +1,8 @@
-set_unless[:membase][:clustersize]   = 4000
-set_unless[:membase][:bucketsize]    = 4000
-set_unless[:membase][:bucketname]    = "easybib_sessions"
-set_unless[:membase][:adminuser]     = "admin"
-set_unless[:membase][:adminpassword] = "password"
-set_unless[:membase][:ver]           = "1.6.5"
-set_unless[:membase][:arch]          = "x86_64"
-set_unless[:membase][:download]      = "http://easybibdeployment.s3.amazonaws.com/membase-server-community_x86_64_1.6.5.deb"
+default[:membase][:clustersize]   = 4000
+default[:membase][:bucketsize]    = 4000
+default[:membase][:bucketname]    = "default"
+default[:membase][:adminuser]     = "admin"
+default[:membase][:adminpassword] = "password"
+default[:membase][:ver]           = "1.7.1"
+default[:membase][:download]      = "http://packages.couchbase.com/releases/#{node[:membase][:ver]}/membase-server-community_#{node[:kernel][:machine]}_#{node[:membase][:ver]}.deb"
+default[:membase][:moxidl]        = "http://packages.couchbase.com/releases/#{node[:membase][:ver]}/moxi-server_#{node[:kernel][:machine]}_#{node[:membase][:ver]}.deb"
