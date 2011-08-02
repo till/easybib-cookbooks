@@ -81,7 +81,13 @@ node[:deploy].each do |application, deploy|
     recursive true
     action :delete
   end
-  
+
+  ruby_block "change HOME to #{deploy[:home]} for source checkout" do
+    block do
+      ENV['HOME'] = "#{deploy[:home]}"
+    end
+  end
+
   # setup deployment & checkout
   deploy deploy[:deploy_to] do
 
@@ -124,5 +130,11 @@ node[:deploy].each do |application, deploy|
     end
     
   end
-  
+
+  ruby_block "change HOME back to /root after source checkout" do
+    block do
+      ENV['HOME'] = "/root"
+    end
+  end
+
 end
