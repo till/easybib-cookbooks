@@ -19,7 +19,7 @@ if File.exists?('/etc/init.d/elasticsearch')
   end
   directory "#{service_dir}" do
     action    :delete
-    recursive :true
+    recursive true
   end
 end
 
