@@ -44,3 +44,14 @@ fastcgi_temp_file_write_size 256k;
 
 # do not intercept errors from backend
 fastcgi_intercept_errors     on;
+
+# only execute in scalarium context
+<%
+if node[:scalarium]
+  # only run for 'elasticsearch' app server
+  if node[:scalarium][:instance][:roles].include?('elasticsearch') -%>
+fastcgi_param APPLICATION_ENV production;
+<%
+  end
+end
+-%>
