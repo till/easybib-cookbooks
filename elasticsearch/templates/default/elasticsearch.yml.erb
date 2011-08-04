@@ -4,3 +4,8 @@ cluster:
 path:
   logs: <%=node[:elasticsearch][:basedir] %>/elasticsearch-logs
   data: <%=node[:elasticsearch][:ebsdir] %>/elasticsearch-data
+
+<% if node[:scalarium] -%>
+bootstrap:
+  mlockall: true
+<% end -%>
