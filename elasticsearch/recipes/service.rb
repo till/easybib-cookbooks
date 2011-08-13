@@ -38,6 +38,7 @@ end
 #  cwd     "#{service_dir}/service"
 #end
 
+# todo maybe add this to service-elasticsearch.conf.erb
 execute "patch ES_HOME in start script" do
   command "sed -i 's,ES_HOME=`dirname \"$SCRIPT\"`/../..,ES_HOME=#{node[:elasticsearch][:basedir]}/#{dir},g' elasticsearch"
   cwd     "#{service_dir}/service"
@@ -46,6 +47,13 @@ end
 execute "register elasticsearch as a service" do
   command "#{base_dir}/service/elasticsearch install"
   not_if  do File.symlink?("/etc/init.d/elasticsearch") end
+end
+
+template "#{base_dir}/service/config/elasticsearch.conf" do
+  source "service-elasticsearch.conf.erb"
+  owner  node[:elasticsearch][:user]
+  group  node[:elasticsearch][:group]
+  mode   "0644"
 end
 
 service "elasticsearch" do
