@@ -4,7 +4,8 @@ include_recipe "java::default"
 tmp_file = "#{node[:elasticsearch][:basedir]}/#{node[:elasticsearch][:version]}"
 
 directory "#{node[:elasticsearch][:basedir]}" do
-  owner     "root"
+  owner     node[:elasticsearch][:user]
+  group     node[:elasticsearch][:group]
   mode      "0755"
   action    :create
   recursive true
