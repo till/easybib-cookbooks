@@ -52,7 +52,7 @@ execute "register elasticsearch as a service" do
   not_if  do File.symlink?("/etc/init.d/elasticsearch") end
 end
 
-template "#{base_dir}/service/config/elasticsearch.conf" do
+template "#{service_dir}/service/config/elasticsearch.conf" do
   source "service-elasticsearch.conf.erb"
   owner  node[:elasticsearch][:user]
   group  node[:elasticsearch][:group]
