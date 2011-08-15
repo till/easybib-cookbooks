@@ -1,4 +1,4 @@
-set.default.ES_HOME=<Path to ElasticSearch Home>
+set.default.ES_HOME=<%=node[:elasticsearch][:home] -%>
 set.default.ES_MIN_MEM=<%=node[:elasticsearch][:memory][:min] -%>
 set.default.ES_MAX_MEM=<%=node[:elasticsearch][:memory][:max] -%>
 

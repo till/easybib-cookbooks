@@ -39,8 +39,11 @@ end
 #end
 
 # todo maybe add this to service-elasticsearch.conf.erb
+
+node[:elasticsearch][:home] = "#{node[:elasticsearch][:basedir]}/#{dir}"
+
 execute "patch ES_HOME in start script" do
-  command "sed -i 's,ES_HOME=`dirname \"$SCRIPT\"`/../..,ES_HOME=#{node[:elasticsearch][:basedir]}/#{dir},g' elasticsearch"
+  command "sed -i 's,ES_HOME=`dirname \"$SCRIPT\"`/../..,ES_HOME=#{node[:elasticsearch][:home]},g' elasticsearch"
   cwd     "#{service_dir}/service"
 end
 
