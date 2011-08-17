@@ -1,3 +1,3 @@
 node[:dev] = {}
-node[:dev][:users] = [ 'till', 'teracode' ]
+node[:dev][:users] = [ 'teracode' ]
 node[:dev][:dirs]  = [ 'notes', 'research' ]
