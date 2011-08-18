@@ -19,6 +19,10 @@ node[:dev][:users].each do |user|
     shell "/bin/zsh"
   end
 
+  execute "Fix permissions" do
+    command "chown -R #{user}:#{user} #{home_dir}"
+  end
+
   directory "#{home_dir}/.ssh" do
     mode 0700
     owner "#{user}"
