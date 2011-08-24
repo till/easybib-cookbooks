@@ -44,9 +44,9 @@ end
 
 directory File.dirname(node[:redis][:log_file]) do
   action :create
-  owner node[:redis][:user]
-  group 'root'
-  mode '0755'
+  owner  node[:redis][:user]
+  group  'root'
+  mode   '0755'
 end
 
 execute "chown #{node[:redis][:user]}:users redis-server redis-cli" do
@@ -69,9 +69,9 @@ end
 
 template "/etc/redis.conf" do
   source "redis.conf.erb"
-  owner "root"
-  group "root"
-  mode "0644"
+  owner  "root"
+  group  "root"
+  mode   "0644"
   notifies :restart, resources(:service => "redis-server"), :immediately
 end
 
