@@ -1,6 +1,6 @@
-set.default.ES_HOME=<%=node[:elasticsearch][:home] %>
-set.default.ES_MIN_MEM=<%=node[:elasticsearch][:memory][:min] %>
-set.default.ES_MAX_MEM=<%=node[:elasticsearch][:memory][:max] %>
+set.default.ES_HOME=<%= @es_home %>
+set.default.ES_MIN_MEM=<%= @mem_min %>
+set.default.ES_MAX_MEM=<%= @mem_max %>
 
 #********************************************************************
 # Wrapper Timeout Properties
