@@ -5,7 +5,7 @@ path:
   logs: <%=node[:elasticsearch][:basedir] %>/elasticsearch-logs
   data: <%=node[:elasticsearch][:ebsdir] %>/elasticsearch-data
 
-<% if node[:scalarium] -%>
+<% if node[:ec2] -%>
 bootstrap:
   mlockall: true
 <% end -%>
