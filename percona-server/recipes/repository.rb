@@ -1,5 +1,5 @@
 execute "download key" do
-  command "gpg --keyserver  hkp://keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A"
+  command "gpg --keyserver  hkp://keys.gnupg.net --recv-keys #{node["percona-server"][:key]}"
 end
 
 execute "import key" do
