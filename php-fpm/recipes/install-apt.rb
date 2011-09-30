@@ -53,7 +53,7 @@ aptPackages = {
 
 aptPackages.each do |package,version|
   package "#{package}" do
-    version "#{version}"
+    version #{version}
   end
 end
 
