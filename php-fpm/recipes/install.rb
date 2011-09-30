@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: php-fpm
-# Recipe:: apc
+# Recipe:: install
 #
 # Copyright 2010-2011, Till Klampaeckel
 #
@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe "php-fpm::dependencies"
+include_recipe "php-fpm::php-src-dependencies"
 include_recipe "php-fpm::prepare"
 
 php_installed_version = `which php >> /dev/null && php -v|grep #{node["php-fpm"][:version]}|awk '{ print substr($2,1,5) }'`
@@ -38,7 +38,7 @@ php_already_installed = lambda do
   php_installed_version == node["php-fpm"][:version]
 end
 
-include_recipe "php-fpm::download"
+include_recipe "php-fpm::php-src-download"
 
 execute "PHP: ./configure" do
 
@@ -85,5 +85,5 @@ execute "PHP: make, make install" do
 end
 
 include_recipe "php-fpm::configure"
-include_recipe "php-fpm::apc"
-include_recipe "php-fpm::xhprof"
+include_recipe "php-fpm::php-src-apc"
+include_recipe "php-fpm::php-src-xhprof"
