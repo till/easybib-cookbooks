@@ -44,9 +44,20 @@ end
 
 package "graphviz"
 
-package "php5-easybib"
-package "php5-easybib-apc"
-package "php5-easybib-xhprof"
-package "php5-easybib-memcache"
+package "php5-easybib" do
+  version "5.3.5-0easybib9"
+end
+
+package "php5-easybib-apc" do
+  version "5.3.5-0easybib0"
+end
+
+package "php5-easybib-xhprof" do
+  version "5.3.5.1-easybib0"
+end
+
+package "php5-easybib-memcache" do
+  version "5.3.5-0easybib0"
+end
 
 include_recipe "php-fpm::configure"
