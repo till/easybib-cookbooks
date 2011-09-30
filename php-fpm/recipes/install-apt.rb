@@ -42,22 +42,19 @@ execute "update sources" do
   command "aptitude update"
 end
 
-package "graphviz"
 
-package "php5-easybib" do
-  version "5.3.5-0easybib9"
-end
+aptPackages = {
+    "graphiz"               => nil,
+    "php5-easybib"          => "5.3.5-0easybib9",
+    "php5-easybib-apc"      => "5.3.5-0easybib0",
+    "php5-easybib-xhprof"   => "5.3.5.1-easybib0",
+    "php5-easybib-memcache" => "5.3.5-0easybib0"
+}
 
-package "php5-easybib-apc" do
-  version "5.3.5-0easybib0"
-end
-
-package "php5-easybib-xhprof" do
-  version "5.3.5.1-easybib0"
-end
-
-package "php5-easybib-memcache" do
-  version "5.3.5-0easybib0"
+aptPackages.each do |package,version|
+  package "#{package}" do
+    version "#{version}"
+  end
 end
 
 include_recipe "php-fpm::configure"
