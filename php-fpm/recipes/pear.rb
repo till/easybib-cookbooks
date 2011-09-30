@@ -48,7 +48,8 @@ packages = {
   "Services_Amazon_S3-alpha"     => "pear.php.net",
   "Net_CheckIP2-1.0.0RC3"        => "pear.php.net",
   "HTMLPurifier"                 => "htmlpurifier.org",
-  "Easybib_Form_Decorator-alpha" => "easybib.github.com/pear"
+  "Easybib_Form_Decorator-alpha" => "easybib.github.com/pear",
+  "Lagged_Loader-alpha"          => "easybib.github.com/pear"
 }
 
 # "Rediska-beta"             => "pear.geometria-lab.net"
