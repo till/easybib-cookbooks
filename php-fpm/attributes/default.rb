@@ -17,7 +17,7 @@ default["php-fpm"][:apc_version] = "3.1.4"
 default["php-fpm"][:xhprof_version] = "0.9.2"
 default["php-fpm"][:source] = "easybib" # source, ubuntu, easybib
 
-default["php_fpm"][:packages] = {
+default["php-fpm"][:packages] = {
     "graphviz"              => nil,
     "php5-easybib"          => "5.3.5-0easybib9",
     "php5-easybib-apc"      => "5.3.5-0easybib0",

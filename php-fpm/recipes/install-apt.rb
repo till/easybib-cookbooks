@@ -44,9 +44,11 @@ end
 
 aptPackages = node["php-fpm"][:packages]
 
-aptPackages.each do |package,version|
+aptPackages.each do |package,v|
+  #puts "Package #{package}"
+  #puts "Version #{v}"
   package "#{package}" do
-    version #{version}
+    #version v
   end
 end
 
