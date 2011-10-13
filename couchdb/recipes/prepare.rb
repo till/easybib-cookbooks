@@ -1,27 +1,5 @@
-package "openssl"
-package "libssl-dev"
-package "libmozjs-dev"
-package "libcurl4-openssl-dev"
-package "libicu-dev"
-package "erlang-nox"
-package "erlang-dev"
-package "build-essential"
-package "libtool"
-package "help2man"
-package "autoconf"
-package "automake"
-
-group "couchdb" do
-  gid node[:couchdb][:gid]
-end
-
-user "couchdb" do
-  comment "CouchDB"
-  home node[:couchdb][:datadir]
-  action :create
-  gid node[:couchdb][:gid]
-  shell "/bin/zsh"
-end
+include_recipe "couchdb::deps"
+include_recipe "couchdb::user"
 
 directory node[:couchdb][:datadir] do
   owner "couchdb"

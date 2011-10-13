@@ -5,5 +5,7 @@ description       "Installs and configures CouchDB server with the database runn
 version           "0.1"
 recipe            "couchdb::server", "Installs CouchDB"
 recipe            "couchdb::prepare", "Creates prequesites like user and directories"
+recipe            "couchdb::deps", "Installs required packages"
+recipe            "couchdb::user", "User and group"
 
 supports 'ubuntu'
