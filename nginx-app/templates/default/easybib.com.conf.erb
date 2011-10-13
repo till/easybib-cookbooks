@@ -11,9 +11,9 @@ end
 server {
     listen   80;
 
-    <% if node[:docroot] == "public" -%>
-    sendfile off;
-    <% end -%>
+  <% unless @nginx_extra.nil? -%>
+    <%= @nginx_extra -%>
+  <% end -%>
 
     location = /health_check.php {
 

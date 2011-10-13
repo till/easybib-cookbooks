@@ -1,9 +1,3 @@
-#directory "#{node[:deploy][:deploy_to]}" do
-#  owner  node["nginx-app"][:user]
-#  group  node["nginx-app"][:group]
-#  action :create
-#end
-
 if !node[:deploy]
   node[:deploy] = {}
   node[:deploy][:deploy_to] = '/var/www/easybib'
@@ -26,6 +20,10 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
   mode "0755"
   owner node["nginx-app"][:user]
   group node["nginx-app"][:group]
-  variables :deploy => node[:deploy], :application => "easybib"
+  variables(
+    :deploy      => node[:deploy],
+    :application => "easybib",
+    :nginx_extra => "sendfile off;"
+  )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
