@@ -11,7 +11,7 @@ end
 server {
     listen   80;
 
-  <% unless @nginx_extra.nil? -%>
+  <% if @nginx_extra -%>
     <%= @nginx_extra -%>
   <% end -%>
 
