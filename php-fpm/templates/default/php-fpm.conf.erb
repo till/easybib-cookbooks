@@ -7,7 +7,7 @@ log_level = error
 ; interval set by emergency_restart_interval then FPM will restart. A value
 ; of '0' means 'Off'.
 ; Default Value: 0
-;emergency_restart_threshold = 0
+emergency_restart_threshold = 15
 
 ; Interval of time used by emergency_restart_interval to determine when 
 ; a graceful restart will be initiated.  This can be useful to work around
@@ -15,13 +15,13 @@ log_level = error
 ; Available Units: s(econds), m(inutes), h(ours), or d(ays)
 ; Default Unit: seconds
 ; Default Value: 0
-;emergency_restart_interval = 0
+emergency_restart_interval = 30s
 
 ; Time limit for child processes to wait for a reaction on signals from master.
 ; Available units: s(econds), m(inutes), h(ours), or d(ays)
 ; Default Unit: seconds
 ; Default Value: 0
-;process_control_timeout = 0
+process_control_timeout = 10s
 
 daemonize = yes
 

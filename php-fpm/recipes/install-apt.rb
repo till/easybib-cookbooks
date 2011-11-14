@@ -42,11 +42,14 @@ execute "update sources" do
   command "aptitude update"
 end
 
-package "graphviz"
+aptPackages = node["php-fpm"][:packages]
 
-package "php5-easybib"
-package "php5-easybib-apc"
-package "php5-easybib-xhprof"
-package "php5-easybib-memcache"
+aptPackages.each do |package,v|
+  #puts "Package #{package}"
+  #puts "Version #{v}"
+  package "#{package}" do
+    #version v
+  end
+end
 
 include_recipe "php-fpm::configure"
