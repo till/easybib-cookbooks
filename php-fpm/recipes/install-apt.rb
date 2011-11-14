@@ -53,3 +53,4 @@ aptPackages.each do |package,v|
 end
 
 include_recipe "php-fpm::configure"
+include_recipe "php-fpm::configure-apc"
