@@ -62,12 +62,11 @@ packages = {
 # discover PEAR channels
 channels.each do |channel,shorthand|
   execute "PEAR: discover #{channel} (#{shorthand})" do
-    command        "pear channel-discover #{channel}"
-    ignore_failure true
+    command "pear channel-discover #{channel}"
+    not_if  "pear list-channels|grep #{channel}"
   end
   execute "PEAR: update channel #{channel}" do
-    command        "pear channel-update #{channel}"
-    ignore_failure true
+    command "pear channel-update #{channel}"
   end
 end
 
