@@ -42,29 +42,41 @@ is_installed = lambda do |package|
   return false
 end
 
-packages = {
-  "Crypt_HMAC2-beta"             => "pear.php.net",
-  "Net_Gearman-alpha"            => "pear.php.net",
-  "Services_Amazon_S3-alpha"     => "pear.php.net",
-  "Net_CheckIP2-1.0.0RC3"        => "pear.php.net",
-  "HTMLPurifier"                 => "htmlpurifier.org",
-  "Easybib_Form_Decorator-alpha" => "easybib.github.com/pear",
-  "Lagged_Loader-alpha"          => "easybib.github.com/pear"
+channels = {
+  "pear.php.net"            => "pear",
+  "htmlpurifier.org"        => "hp",
+  "easybib.github.com/pear" => "easybib"
 }
 
-# "Rediska-beta"             => "pear.geometria-lab.net"
+packages = {
+  "Crypt_HMAC2-beta"             => "pear",
+  "Net_Gearman-alpha"            => "pear",
+  "Services_Amazon_S3-alpha"     => "pear",
+  "Net_CheckIP2-1.0.0RC3"        => "pear",
+  "HTMLPurifier"                 => "hp",
+  "Easybib_Form_Decorator-alpha" => "easybib",
+  "Lagged_Loader-alpha"          => "easybib",
+  "Rediska-beta"                 => "easybib"
+}
 
-execute "PEAR: update channel" do
-  command "pear channel-update pear.php.net"
+# discover PEAR channels
+channels.each do |channel,shorthand|
+  execute "PEAR: discover #{channel} (#{shorthand})" do
+    command "pear channel-discover #{channel}"
+    not_if  "pear list-channels|grep #{channel}"
+  end
+  execute "PEAR: update channel #{channel}" do
+    command "pear channel-update #{channel}"
+  end
 end
 
-execute "PEAR: upgrade all packages" do
+execute "PEAR: upgrade all currently installed packages" do
   command "pear upgrade-all"
 end
 
+# install packages
 packages.each do |package,channel|
   execute "PEAR: install #{package} from #{channel}" do
     command "pear install -f #{channel}/#{package}"
-    not_if  do is_installed.call(package) end
   end
 end
