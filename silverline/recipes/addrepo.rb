@@ -1,3 +1,5 @@
+include_recipe "apt::ppa"
+
 case node[:plattform]
   when "ubuntu"
     execute "add-apt-repository" do

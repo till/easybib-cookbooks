@@ -1,3 +1,5 @@
+include_recipe "apt::ppa"
+
 execute "init nodejs launchpad repo" do
   command "add-apt-repository ppa:chris-lea/node.js-devel"
 end

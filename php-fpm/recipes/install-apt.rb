@@ -30,8 +30,7 @@
 #
 
 include_recipe "php-fpm::prepare"
-
-package "python-software-properties"
+include_recipe "apt::ppa"
 
 ppa="easybib/ppa"
 execute "add #{ppa}" do
