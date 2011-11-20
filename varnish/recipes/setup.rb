@@ -10,7 +10,7 @@ remote_file "/etc/apt/sources.list.d/varnish.list" do
 end
 
 execute "update" do
-  command "apt-get update"
+  command "apt-get -y -f -q update"
   action :run
 end
 

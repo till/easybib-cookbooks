@@ -38,7 +38,7 @@ execute "add #{ppa}" do
 end
 
 execute "update sources" do
-  command "aptitude update"
+  command "apt-get -y -f -q update"
 end
 
 aptPackages = node["php-fpm"][:packages]

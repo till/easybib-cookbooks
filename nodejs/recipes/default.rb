@@ -5,7 +5,7 @@ execute "init nodejs launchpad repo" do
 end
 
 execute "update sources.list" do
-  command "apt-get update"
+  command "apt-get -y -f -q update"
 end
 
 package "nodejs"

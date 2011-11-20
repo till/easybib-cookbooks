@@ -13,7 +13,7 @@ execute "add commonjs ppa" do
 end
 
 execute "update" do
-  command "apt-get update"
+  command "apt-get -y -f -q update"
 end
 
 package "libmozjs-1.9.2"
