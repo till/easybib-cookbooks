@@ -10,6 +10,4 @@ execute "update sources" do
   command "apt-get -y -f -m update"
 end
 
-execute "install redis" do
-  command "apt-get install redis"
-end
+package "redis"
