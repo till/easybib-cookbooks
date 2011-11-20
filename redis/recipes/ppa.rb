@@ -7,7 +7,7 @@ execute "add Chris Lea's PPA" do
 end
 
 execute "update sources" do
-  command "apt-get update"
+  command "apt-get -y -f -m update"
 end
 
 execute "install redis" do
