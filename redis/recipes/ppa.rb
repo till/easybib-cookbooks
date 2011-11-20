@@ -1,6 +1,6 @@
 # install redis from a ppa to avoid compiling, etc.
 
-package "python-software-properties"
+include_recipe "apt::ppa"
 
 execute "add Chris Lea's PPA" do
   command "add-apt-repository ppa:chris-lea/redis-server"
