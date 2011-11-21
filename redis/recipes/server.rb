@@ -62,20 +62,7 @@ service "redis-server" do
   action :enable
 end
 
-template "/etc/redis.conf" do
-  source "redis.conf.erb"
-  owner  "root"
-  group  "root"
-  mode   "0644"
-  notifies :restart, resources(:service => "redis-server"), :immediately
-end
-
-template "/etc/logrotate.d/redis" do
-  source "logrotate.erb"
-  mode "0644"
-  owner "root"
-  group "root"
-end
+include_recipe "redis::configure"
 
 # include only when on scalarium
 if node[:scalarium]
