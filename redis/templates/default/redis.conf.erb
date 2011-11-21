@@ -12,36 +12,12 @@
 #
 # units are case insensitive so 1GB 1Gb 1gB are all the same.
 
-# By default Redis does not run as a daemon. Use 'yes' if you need it.
-# Note that Redis will write a pid file in /var/run/redis.pid when daemonized.
 daemonize yes
-
-# When running daemonized, Redis writes a pid file in /usr/local/brew/var/run/redis.pid by
-# default. You can specify a custom pid file location here.
 pidfile <%= node[:redis][:pid_file] %>
-
-# Accept connections on the specified port, default is 6379
 port <%= node[:redis][:port] %>
-
-# If you want you can bind a single interface, if the bind option is not
-# specified all the interfaces will listen for incoming connections.
-#
 bind <%= node[:redis][:bind_address] %>
-
-# Close the connection after a client is idle for N seconds (0 to disable)
 timeout <%= node[:redis][:timeout] %>
-
-# Set server verbosity to 'debug'
-# it can be one of:
-# debug (a lot of information, useful for development/testing)
-# verbose (many rarely useful info, but not a mess like the debug level)
-# notice (moderately verbose, what you want in production probably)
-# warning (only very important / critical messages are logged)
 loglevel <%= node[:redis][:log_level] %>
-
-# Specify the log file name. Also 'stdout' can be used to force
-# Redis to log on the standard output. Note that if you use standard
-# output for logging but daemonize, logs will be sent to /dev/null
 logfile <%= node[:redis][:log_file] %>
 
 # Set the number of databases. The default database is DB 0, you can select
@@ -108,7 +84,7 @@ slaveof <%= node[:redis][:master][:address] %> <%= node[:redis][:master][:node] 
 # refuse the slave request.
 #
 
-<% if !node[:redis][:master][:password].empty? -%>
+<% if node[:redis][:master][:is_slave] == true && !node[:redis][:master][:password].empty? -%>
 masterauth <%= node[:redis][:master][:password] %>
 <% end -%>
 
@@ -205,74 +181,11 @@ appendfsync <%= node[:redis][:appendfsync] %>
 
 ################################ VIRTUAL MEMORY ###############################
 
-# Virtual Memory allows Redis to work with datasets bigger than the actual
-# amount of RAM needed to hold the whole dataset in memory.
-# In order to do so very used keys are taken in memory while the other keys
-# are swapped into a swap file, similarly to what operating systems do
-# with memory pages.
-#
-# To enable VM just set 'vm-enabled' to yes, and set the following three
-# VM parameters accordingly to your needs.
-
 vm-enabled <%= node[:redis][:vm] %>
-# vm-enabled yes
-
-# This is the path of the Redis swap file. As you can guess, swap files
-# can't be shared by different Redis instances, so make sure to use a swap
-# file for every redis process you are running. Redis will complain if the
-# swap file is already in use.
-#
-# The best kind of storage for the Redis swap file (that's accessed at random) 
-# is a Solid State Disk (SSD).
-#
-# *** WARNING *** if you are using a shared hosting the default of putting
-# the swap file under /tmp is not secure. Create a dir with access granted
-# only to Redis user and configure Redis to create the swap file there.
 vm-swap-file /tmp/redis.swap
-
-# vm-max-memory configures the VM to use at max the specified amount of
-# RAM. Everything that deos not fit will be swapped on disk *if* possible, that
-# is, if there is still enough contiguous space in the swap file.
-#
-# With vm-max-memory 0 the system will swap everything it can. Not a good
-# default, just specify the max amount of RAM you can in bytes, but it's
-# better to leave some margin. For instance specify an amount of RAM
-# that's more or less between 60 and 80% of your free RAM.
 vm-max-memory <%= node[:redis][:vm_max_memory] %>
-
-# Redis swap files is split into pages. An object can be saved using multiple
-# contiguous pages, but pages can't be shared between different objects.
-# So if your page is too big, small objects swapped out on disk will waste
-# a lot of space. If you page is too small, there is less space in the swap
-# file (assuming you configured the same number of total swap file pages).
-#
-# If you use a lot of small objects, use a page size of 64 or 32 bytes.
-# If you use a lot of big objects, use a bigger page size.
-# If unsure, use the default :)
 vm-page-size <%= node[:redis][:vm_page_size] %>
-
-# Number of total memory pages in the swap file.
-# Given that the page table (a bitmap of free/used pages) is taken in memory,
-# every 8 pages on disk will consume 1 byte of RAM.
-#
-# The total swap size is vm-page-size * vm-pages
-#
-# With the default of 32-bytes memory pages and 134217728 pages Redis will
-# use a 4 GB swap file, that will use 16 MB of RAM for the page table.
-#
-# It's better to use the smallest acceptable value for your application,
-# but the default is large in order to work in most conditions.
 vm-pages <%= node[:redis][:vm_pages] %>
-
-# Max number of VM I/O threads running at the same time.
-# This threads are used to read/write data from/to swap file, since they
-# also encode and decode objects from disk to memory or the reverse, a bigger
-# number of threads can help with big objects even if they can't help with
-# I/O itself as the physical device may not be able to couple with many
-# reads/writes operations at the same time.
-#
-# The special value of 0 turn off threaded I/O and enables the blocking
-# Virtual Memory implementation.
 vm-max-threads 4
 
 ############################### ADVANCED CONFIG ###############################
