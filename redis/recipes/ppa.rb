@@ -10,4 +10,4 @@ execute "update sources" do
   command "apt-get -y -f -m update"
 end
 
-package "redis"
+package "redis-server"
