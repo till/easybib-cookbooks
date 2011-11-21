@@ -55,11 +55,5 @@ template "/etc/init.d/redis-server" do
   mode   "0755"
 end
 
-service "redis-server" do
-  service_name "redis-server"
-
-  supports :status => false, :restart => true, :reload => false, "force-reload" => true
-  action :enable
-end
-
+include_recipe "redis::service"
 include_recipe "redis::configure"
