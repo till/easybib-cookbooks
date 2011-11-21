@@ -28,12 +28,7 @@ execute "make install" do
   not_if &redis_already_installed
 end
 
-if node[:redis][:user] != 'root'
-  user "#{node[:redis][:user]}" do
-    shell  "/bin/zsh"
-    action :create
-  end
-end
+include_recipe "redis::user"
 
 directory node[:redis][:datadir] do
   owner     node[:redis][:user]
