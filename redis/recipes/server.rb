@@ -63,8 +63,3 @@ service "redis-server" do
 end
 
 include_recipe "redis::configure"
-
-# include only when on scalarium
-if node[:scalarium]
-  include_recipe "redis::monit"
-end
