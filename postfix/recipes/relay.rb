@@ -8,7 +8,7 @@ if node[:scalarium]
 
   my_hostname = node[:scalarium][:instance][:hostname]
 else
-  my_hostname = 'horst'
+  my_hostname = node[:hostname]
 end
 
 relay_host = node[:postfix][:relay][0]["host"]
