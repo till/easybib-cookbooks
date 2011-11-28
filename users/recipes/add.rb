@@ -5,20 +5,11 @@
 #
 node[:users].each do |username,prop|
 
-  group "#{username}" do
-    gid prop[:uid]
-  end
-
   user "#{username}" do
     shell    "/bin/zsh"
     uid      prop[:uid]
     home     "/home/#{username}"
     supports :manage_home => true
-  end
-
-  user "#{username}" do
-    action :modify
-    gid    prop[:uid]
   end
 
   directory "/home/#{username}/.ssh" do
