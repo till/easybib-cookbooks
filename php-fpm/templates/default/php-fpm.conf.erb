@@ -26,7 +26,8 @@ process_control_timeout = 10s
 daemonize = yes
 
 <% if !node[:scalarium] -%>
-include /usr/local/etc/php-fpm/*.conf
+
+include=/usr/local/etc/php-fpm/*.conf
 
 <% else -%>
 
