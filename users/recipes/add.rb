@@ -35,5 +35,11 @@ node[:users].each do |username,prop|
         File.exist?("/home/#{username}/.ssh/authorized_keys")
       end
     end
+  else
+    foo=`date -u`
+    user "#{username}" do
+      action :manage
+      password `echo "default#{foo}password" | makepasswd --clearfrom=- --crypt-md5 |awk '{ print $2 }'`
+    end
   end
 end
