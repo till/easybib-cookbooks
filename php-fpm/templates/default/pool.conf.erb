@@ -1,3 +1,5 @@
+[<%= @user %>]
+
 listen = <%= node["php-fpm"][:socketdir] %>/<%= @user %>
 listen.backlog = -1
 
