@@ -52,6 +52,10 @@ ping.response = p0ng
 ;request_slowlog_timeout = 0
 
 slowlog = <%= node["php-fpm"][:slowlog] %>
+
+<% if !node[:scalarium] -%>
+include /usr/local/etc/php-fpm/*.conf
+<% end -%>
  
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.
