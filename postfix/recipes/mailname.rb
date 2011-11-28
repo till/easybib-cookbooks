@@ -4,7 +4,7 @@ if node[:scalarium]
 else
   # node.json
   if node[:server_name]
-    my_hostanem = node[:server_name]
+    my_hostname = node[:server_name]
   # from 'ohai'
   else
     my_hostname = node[:hostname]
