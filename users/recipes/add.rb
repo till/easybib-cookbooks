@@ -5,10 +5,6 @@
 #
 node[:users].each do |username,prop|
 
-  Chef::Log.debug("Username: #{username}")
-  Chef::Log.debug(prop.inspect)
-  next
-
   group "#{username}" do
     gid    prop[:uid]
     action :create
