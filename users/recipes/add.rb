@@ -1,21 +1,24 @@
 #
-# "users": [{
-#  "johndoe": { "uid": "1", "ssh": "pub-key" }
-# }]
+# "users": {
+#  "johndoe": { "uid": 1, "ssh": "pub-key" }
+# }
 #
 node[:users].each do |username,prop|
 
   group "#{username}" do
-    gid    prop[:uid]
-    action :create
+    gid prop[:uid]
   end
 
   user "#{username}" do
     shell    "/bin/zsh"
-    uid      uid
-    gid      uid
+    uid      prop[:uid]
     home     "/home/#{username}"
     supports :manage_home => true
+  end
+
+  user "#{username}" do
+    action :modify
+    gid    prop[:uid]
   end
 
   directory "/home/#{username}/.ssh" do
