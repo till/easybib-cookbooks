@@ -3,7 +3,14 @@
 #  "johndoe": { "uid": 1, "ssh": "pub-key" }
 # }
 #
+
+# password support
+package "libshadow-ruby1.8"
+
 node[:users].each do |username,prop|
+
+  user_already_exists = `cat /etc/passwd|grep #{username}`
+  Chef::Log.debug("User already exists? #{user_already_exists}")
 
   user "#{username}" do
     shell    "/bin/zsh"
@@ -28,8 +35,9 @@ node[:users].each do |username,prop|
   else
     foo=`date -u`
     user "#{username}" do
-      action :manage
+      action   :manage
       password `echo "default#{foo}password" | makepasswd --clearfrom=- --crypt-md5 |awk '{ print $2 }'`
+      not_if user_already_exists
     end
   end
 end
