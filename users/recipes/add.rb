@@ -3,9 +3,8 @@
 #  "johndoe": { "uid": 1, "ssh": "pub-key" }
 # }
 #
-
-# password support
-package "libshadow-ruby1.8"
+# gem install shadow
+#
 
 node[:users].each do |username,prop|
 
@@ -37,7 +36,7 @@ node[:users].each do |username,prop|
     user "#{username}" do
       action   :manage
       password `echo "default#{foo}password" | makepasswd --clearfrom=- --crypt-md5 |awk '{ print $2 }'`
-      not_if user_already_exists
+      not_if   user_already_exists
     end
   end
 end
