@@ -1,5 +1,9 @@
 if node[:server_name]
   execute "set servername" do
-    command "echo #{node[:server_name] > /etc/hostname"
+    command "echo #{node[:server_name]} > /etc/hostname"
   end
+end
+
+service "hostname" do
+  action :start
 end
