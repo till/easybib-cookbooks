@@ -19,7 +19,7 @@ node[:users].each do |username,prop|
   end
 
   directory "/home/#{username}/.ssh" do
-    mode "0600"
+    mode "0700"
     owner username
     group username
   end
