@@ -1,4 +1,4 @@
-package "subversion"
+include_recipe "subversion"
 
 template "/etc/ssl/certs/Equifax_Secure_Certificate_Authority.cer" do
   mode "0777"
