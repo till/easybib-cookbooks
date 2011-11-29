@@ -11,7 +11,7 @@ end
 
 # ignore failure to make multiple runs painless
 execute "install PHPUnit 3.4" do
-  command "pear install --installroot #{phpunit_location} pear.phpunit.de/PHPUnit-3.4.15"
+  command "pear install -o --installroot #{phpunit_location} pear.phpunit.de/PHPUnit-3.4.15"
   not_if  do
     File.exist?("#{phpunit_location}#{pear_bin}/phpunit")
   end
