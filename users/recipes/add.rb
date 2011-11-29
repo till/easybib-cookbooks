@@ -8,17 +8,16 @@
 
 node[:users].each do |username,prop|
 
-  user_already_exists = `cat /etc/passwd|grep #{username}`
-  Chef::Log.debug("User already exists? #{user_already_exists}")
+  home_dir = "/home/#{username}"
 
   user "#{username}" do
     shell    "/bin/zsh"
     uid      prop[:uid]
-    home     "/home/#{username}"
+    home     home_dir
     supports :manage_home => true
   end
 
-  directory "/home/#{username}/.ssh" do
+  directory "#{home_dir}/.ssh" do
     mode "0700"
     owner username
     group username
@@ -26,14 +25,14 @@ node[:users].each do |username,prop|
 
   if prop[:ssh]
     execute "setup .ssh/authorized_keys" do
-      command "echo #{prop[:ssh]} > /home/#{username}/.ssh/authorized_keys"
+      command "echo #{prop[:ssh]} > #{home_dir}/.ssh/authorized_keys"
       not_if do
-        File.exist?("/home/#{username}/.ssh/authorized_keys")
+        File.exist?("#{home_dir}/.ssh/authorized_keys")
       end
     end
 
     execute "chmod 0600" do
-      command "chmod 0600 /home/#{username}/.ssh/authorized_keys && chown #{username}:#{username} /home/#{username}/.ssh/authorized_keys"
+      command "chmod 0600 #{home_dir}/.ssh/authorized_keys && chown #{username}:#{username} #{home_dir}/.ssh/authorized_keys"
     end
   end
 
