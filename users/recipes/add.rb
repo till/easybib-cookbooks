@@ -26,7 +26,7 @@ node[:users].each do |username,prop|
 
   if prop[:ssh]
     execute "setup .ssh/authorized_keys" do
-      command "echo prop[:ssh] > /home/#{username}/.ssh/authorized_keys"
+      command "echo #{prop[:ssh]} > /home/#{username}/.ssh/authorized_keys"
       not_if do
         File.exist?("/home/#{username}/.ssh/authorized_keys")
       end
