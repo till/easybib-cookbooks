@@ -31,6 +31,10 @@ node[:users].each do |username,prop|
         File.exist?("/home/#{username}/.ssh/authorized_keys")
       end
     end
+
+    execute "chmod 0600" do
+      command "chmod 0600 /home/#{username}/.ssh/authorized_keys && chown #{username}:#{username} /home/#{username}/.ssh/authorized_keys"
+    end
   end
 
 end
