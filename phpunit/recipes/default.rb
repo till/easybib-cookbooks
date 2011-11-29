@@ -1,6 +1,9 @@
-# this cookbook sets up PHPUnit 3.4
+# this cookbook sets up PHPUnit 3.4.15 (or whatever is in attributes/default.rb)
 
-phpunit_location = "/usr/local/phpunit34"
+version = node[:phpunit][:version].split('.')
+major   = "#{version[0]}#{version[1]}"
+
+phpunit_location = "/usr/local/phpunit#{major}"
 
 pear_bin = `pear config-get bin_dir`.strip
 php_dir  = `pear config-get php_dir`.strip
@@ -10,8 +13,8 @@ execute "enable auto_discover" do
 end
 
 # ignore failure to make multiple runs painless
-execute "install PHPUnit 3.4" do
-  command "pear install -o --installroot #{phpunit_location} pear.phpunit.de/PHPUnit-3.4.15"
+execute "install PHPUnit #{node[:phpunit][:version]}" do
+  command "pear install -o --installroot #{phpunit_location} pear.phpunit.de/PHPUnit-#{node[:phpunit][:version]}"
   not_if  do
     File.exist?("#{phpunit_location}#{pear_bin}/phpunit")
   end
@@ -25,6 +28,6 @@ template "#{phpunit_location}#{pear_bin}/phpunit" do
   })
 end
 
-link "#{pear_bin}/phpunit34" do
+link "#{pear_bin}/phpunit#{major}" do
   to "#{phpunit_location}#{pear_bin}/phpunit"
 end
