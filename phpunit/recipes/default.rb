@@ -2,7 +2,7 @@
 
 phpunit_location = "/usr/local/phpunit34"
 
-pear_bin = `pear config-get bin_dir`
+pear_bin = `pear config-get bin_dir`.strip
 
 execute "enable auto_discover" do
   command "pear config-set auto_discover 1"
