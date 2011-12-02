@@ -16,3 +16,7 @@ pm.start_servers = 3
 pm.min_spare_servers = 2
 pm.max_spare_servers = 5
 pm.max_requests = 500
+
+php_admin_flag[log_errors] = on
+php_admin_value[error_log] = /var/log/php/fpm.<%= @user %>.log
+php_admin_value[session.save_path] = /home/<%= @user %>/php_sessions
