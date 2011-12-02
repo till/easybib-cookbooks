@@ -12,6 +12,7 @@ else
 end
 
 template "/etc/mailname" do
+  mode   "0644"
   source "mailname.erb"
   variables(
     :my_hostname => my_hostname
