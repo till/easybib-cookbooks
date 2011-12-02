@@ -9,7 +9,7 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
     action [ :restart ]
   end
   
-  file "/usr/local/bin/deviceid" do
+  cookbook_file "/usr/local/bin/deviceid" do
     source "deviceid"
     mode "0755"
   end
