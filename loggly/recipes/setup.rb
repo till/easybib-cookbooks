@@ -8,6 +8,11 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
     supports :status => true, :restart => true, :reload => true
     action [ :restart ]
   end
+  
+  file "/usr/local/bin/deviceid" do
+    source "deviceid"
+    mode "0755"
+  end
 
   template "/etc/init.d/loggly" do
     source "loggly.sh.erb"
