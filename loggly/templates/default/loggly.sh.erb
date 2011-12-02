@@ -32,7 +32,7 @@ loggly_start () {
 }
 
 loggly_stop () {
-    ID=`deviceid ${USER} ${PASS} ${MASCHINE} ${CUSTOMER}`
+    ID=`/usr/local/bin/deviceid ${USER} ${PASS} ${MASCHINE} ${CUSTOMER}`
     local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}${ID}"
     loggly_exec "$call"
 
