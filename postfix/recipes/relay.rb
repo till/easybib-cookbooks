@@ -17,6 +17,9 @@ etc_path = "/etc/postfix"
 
 # install main.cf
 template "#{etc_path}/main.cf" do
+  owner  "postfix"
+  group  "postfix"
+  mode   "0644"
   source "main.cf.erb"
   variables(
     :etc_path    => etc_path,
