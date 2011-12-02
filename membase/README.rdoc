@@ -10,5 +10,19 @@ This recipe currenly only works with Ubuntu.
 
 = ATTRIBUTES: 
 
+The file attributes/default.rb contains the following:
+
+* clustersize - The amount of memory to dedicate to membase on each node.
+* bucketsize - The amount of memory to dedicate to the default bucket.
+* adminuser / adminpassword - Obvious :)
+* version - The version of membase and/or moxi to install.
+
 = USAGE:
 
+Use a role called "membase_cluster" to set up membase servers, and any other role (I used "moxi") to set up moxi clients.  Could 
+probably determine which role is running automatically (maybe using Chef::Config?) at runtime, which would remove the dependency
+on a role called "membase_cluster" but...meh. :)
+
+* membase_cluster should contain the default recipe in its run list.
+
+* moxi should contain membase::moxi in its run list.
