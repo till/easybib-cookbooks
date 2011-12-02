@@ -32,7 +32,8 @@ loggly_start () {
 }
 
 loggly_stop () {
-    local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}?ip=${IP}"
+    ID=`deviceid ${USER} ${PASS} ${MASCHINE} ${CUSTOMER}`
+    local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}${ID}"
     loggly_exec "$call"
 
     echo "Unregistered '${MASCHINE}' in loggly."
