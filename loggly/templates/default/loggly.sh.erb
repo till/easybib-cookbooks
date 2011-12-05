@@ -25,14 +25,15 @@ CURL_OPT="${CURL_OPT} -d ip=${IP} -d input_id=${INPUT}"
 CURL_OPT="${CURL_OPT} -S -s"
 
 loggly_start () {
-    local call="${CURL} -X POST ${CURL_OPT} -d name='${MASCHINE}' ${ENDPOINT}"
+    local call="${CURL} -X POST ${CURL_OPT} -d name=${MASCHINE} ${ENDPOINT}"
     loggly_exec "$call"
 
     echo "Registered '${MASCHINE}' with '${IP}' in loggly."
 }
 
 loggly_stop () {
-    local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}?ip=${IP}"
+    ID=`/usr/local/bin/deviceid ${USER} ${PASS} ${MASCHINE} ${CUSTOMER}`
+    local call="${CURL} -X DELETE ${CURL_OPT} ${ENDPOINT}${ID}"
     loggly_exec "$call"
 
     echo "Unregistered '${MASCHINE}' in loggly."
