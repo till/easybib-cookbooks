@@ -43,9 +43,10 @@ is_installed = lambda do |package|
 end
 
 channels = {
-  "pear.php.net"            => "pear",
-  "htmlpurifier.org"        => "hp",
-  "easybib.github.com/pear" => "easybib"
+  "pear.php.net"              => "pear",
+  "htmlpurifier.org"          => "hp",
+  "easybib.github.com/pear"   => "easybib",
+  "pear.doctrine-project.org" => "doctrine"
 }
 
 packages = {
