@@ -57,7 +57,9 @@ packages = {
   "HTMLPurifier"                 => "hp",
   "Easybib_Form_Decorator-alpha" => "easybib",
   "Lagged_Loader-alpha"          => "easybib",
-  "Rediska-beta"                 => "easybib"
+  "Rediska-beta"                 => "easybib",
+  "DoctrineDBAL"                 => "doctrine",
+  "DoctrineORM"                  => "doctrine"
 }
 
 # discover PEAR channels
