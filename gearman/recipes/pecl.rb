@@ -1,6 +1,7 @@
 # This recipe is necessary to do a simple `pecl install gearman` on Ubuntu Lucid
 
-deps = ["libgearman-dev", "libgearman-server-dev", "libgearman-server0", "libgearman2", "libuuid1", "uuid-dev", "uuid-runtime"]
+deps = ["libgearman-dev", "libgearman-server-dev", "libgearman-server0",
+  "libgearman2", "libuuid1", "uuid-dev", "uuid-runtime"]
 
 ext_dir = `php -r "echo ini_get('extension_dir');"`.strip
 
