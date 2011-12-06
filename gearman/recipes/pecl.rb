@@ -12,6 +12,7 @@ deps.each do |p|
   only_if node[:lsb][:codename] == 'lucid'
 end
 
+# http://mgribov.blogspot.com/2010/05/gearman-pecl-package-on-ubuntu-lucid.html
 execute "fix #{lib_desc}" do
   command "sed -i \"s/dependency_libs=' -L\/usr\/lib \/usr\/lib\/libuuid.la/dependency_libs=' -L\/usr\/lib -luuid'\" #{lib_desc}"
   only_if !File.exist?("#{ext_dir}/gearman.so") && node[:lsb][:codename] == 'lucid'
