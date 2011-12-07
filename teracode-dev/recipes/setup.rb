@@ -2,7 +2,7 @@ include_recipe "teracode-dev::users"
 include_recipe "teracode-dev::sudo"
 include_recipe "teracode-dev::dirfix"
 include_recipe "teracode-dev::zsh"
-include_recipe "easybib-solr::java"
+include_recipe "java"
 
 files = [ 'restart_solr141.sh', 'restart_solr_trunk.sh', 'restart_solr.sh', 'update_notes.sh' ]
 
