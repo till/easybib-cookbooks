@@ -28,12 +28,7 @@ execute "make install" do
   not_if &redis_already_installed
 end
 
-if node[:redis][:user] != 'root'
-  user "#{node[:redis][:user]}" do
-    shell  "/bin/zsh"
-    action :create
-  end
-end
+include_recipe "redis::user"
 
 directory node[:redis][:datadir] do
   owner     node[:redis][:user]
@@ -60,29 +55,5 @@ template "/etc/init.d/redis-server" do
   mode   "0755"
 end
 
-service "redis-server" do
-  service_name "redis-server"
-
-  supports :status => false, :restart => true, :reload => false, "force-reload" => true
-  action :enable
-end
-
-template "/etc/redis.conf" do
-  source "redis.conf.erb"
-  owner  "root"
-  group  "root"
-  mode   "0644"
-  notifies :restart, resources(:service => "redis-server"), :immediately
-end
-
-template "/etc/logrotate.d/redis" do
-  source "logrotate.erb"
-  mode "0644"
-  owner "root"
-  group "root"
-end
-
-# include only when on scalarium
-if node[:scalarium]
-  include_recipe "redis::monit"
-end
+include_recipe "redis::service"
+include_recipe "redis::configure"

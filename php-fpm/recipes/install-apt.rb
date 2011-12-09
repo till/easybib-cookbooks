@@ -30,8 +30,7 @@
 #
 
 include_recipe "php-fpm::prepare"
-
-package "python-software-properties"
+include_recipe "apt::ppa"
 
 ppa="easybib/ppa"
 execute "add #{ppa}" do
@@ -39,7 +38,7 @@ execute "add #{ppa}" do
 end
 
 execute "update sources" do
-  command "aptitude update"
+  command "apt-get -y -f -q update"
 end
 
 aptPackages = node["php-fpm"][:packages]
@@ -53,3 +52,4 @@ aptPackages.each do |package,v|
 end
 
 include_recipe "php-fpm::configure"
+include_recipe "php-fpm::configure-apc"

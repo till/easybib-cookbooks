@@ -8,7 +8,7 @@ if node[:scalarium]
 
   my_hostname = node[:scalarium][:instance][:hostname]
 else
-  my_hostname = 'horst'
+  my_hostname = node[:hostname]
 end
 
 relay_host = node[:postfix][:relay][0]["host"]
@@ -17,6 +17,9 @@ etc_path = "/etc/postfix"
 
 # install main.cf
 template "#{etc_path}/main.cf" do
+  owner  "postfix"
+  group  "postfix"
+  mode   "0644"
   source "main.cf.erb"
   variables(
     :etc_path    => etc_path,

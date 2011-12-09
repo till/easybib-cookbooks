@@ -1,6 +1,6 @@
 # for some reason, most VMs fail with outdated package lists
 execute "aptitude update" do
-  command "aptitude update"
+  command "apt-get -y -f -q update"
 end
 
 #execute "update gems" do

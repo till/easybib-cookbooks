@@ -12,5 +12,5 @@ template "/etc/apt/sources.list.d/percona.list" do
 end
 
 execute "update apt" do
-  command "apt-get -q update"
+  command "apt-get -y -f -q update"
 end

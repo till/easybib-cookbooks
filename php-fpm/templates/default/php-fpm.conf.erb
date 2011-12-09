@@ -25,6 +25,12 @@ process_control_timeout = 10s
 
 daemonize = yes
 
+<% if !node[:scalarium] && node[:users] -%>
+
+include=/usr/local/etc/php-fpm/*.conf
+
+<% else -%>
+
 [www]
 
 listen = <%= node["php-fpm"][:socketdir] %>/<%= node["php-fpm"][:user] %>
@@ -52,7 +58,9 @@ ping.response = p0ng
 ;request_slowlog_timeout = 0
 
 slowlog = <%= node["php-fpm"][:slowlog] %>
- 
+
+<% end -%>
+
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.
 ; Default Value: clean env

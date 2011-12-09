@@ -1,5 +1,5 @@
 default[:couchdb]                  = {}
-default[:couchdb][:version]        = '1.0.2'
+default[:couchdb][:version]        = '1.0.3'
 default[:couchdb][:datadir]        = '/couchdb/'
 default[:couchdb][:logdir]         = '/mnt/couchdb/log'
 default[:couchdb][:viewdir]        = '/views/'

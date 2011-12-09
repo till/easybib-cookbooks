@@ -1,0 +1,7 @@
+<%
+@users.each do |username,prop|
+  next unless prop[:sudo]
+  next unless prop[:sudo] == "yes"
+-%>
+<%= username %>  ALL=(ALL) NOPASSWD:ALL
+<% end -%>
