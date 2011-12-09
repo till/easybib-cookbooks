@@ -1,3 +1,5 @@
+gem_pagkage "json"
+
 if node[:loggly] && (node[:loggly][:domain] != 'example')
   template "/etc/rsyslog.d/10-loggly.conf" do
     source "10-loggly.conf.erb"
