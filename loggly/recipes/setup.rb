@@ -1,4 +1,4 @@
-gem_pagkage "json"
+gem_package "json"
 
 if node[:loggly] && (node[:loggly][:domain] != 'example')
   template "/etc/rsyslog.d/10-loggly.conf" do
