@@ -6,3 +6,5 @@ default["percona-server"][:key]     = "1C4CBDCDCD2EFD2A"
 set_unless[:mysql]                        = {}
 set_unless[:mysql][:server_root_password] = "plzhax0rme"
 
+set_unless[:xtrabackup]       = {}
+set_unless[:xtrabackup][:dir] = "/var/backups"
