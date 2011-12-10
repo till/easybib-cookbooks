@@ -1,6 +1,6 @@
-include_recipe "percona-server::repository"
+include_recipe "percona::repository"
 
-case node["percona-server"][:version]
+case node[:percona][:version]
   when "5.0"
     package "percona-sql-common"
     package "percona-sql-client-5.0"
@@ -11,5 +11,5 @@ case node["percona-server"][:version]
     package "percona-server-server-5.1"
   else
     # wat?
-    Chef::Log.debug("Unknown version: #{node["percona-server"][:version]}")
+    Chef::Log.debug("Unknown version: #{node[:percona][:version]}")
 end
