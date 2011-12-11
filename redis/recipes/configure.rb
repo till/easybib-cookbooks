@@ -1,4 +1,4 @@
-template "/etc/redis.conf" do
+template "/etc/redis/redis.conf" do
   source "redis.conf.erb"
   owner  "root"
   group  "root"
