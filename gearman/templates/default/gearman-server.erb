@@ -7,7 +7,7 @@
 #
 
 # Additional options that are passed to the Daemon.
-DAEMON_OPTS="-p <%= node[:gearman][:port] %> -d --pidfile=/var/run/gearmand.pid --debug=<%= node[:gearman][:debug] %>"
+DAEMON_OPTS="-p <%= node[:gearman][:port] %> --http-port=<%= node[:gearman][:http] %>"
 
 # Change this to true to enable the germand server
 ENABLED="true"
