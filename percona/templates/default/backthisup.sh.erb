@@ -1,0 +1,42 @@
+#!/bin/sh
+
+STORE=<%= node[:xtrabackup][:dir]} %>
+
+if [ ! -d "$STORE" ] ; then
+    echo "Backup location does not exist."
+    exit 1
+fi
+
+if [ ! -w "$STORE" ]; then
+    echo "Backup location is not writable: $STORE"
+    exit 1
+fi
+
+DIRS=$(cd $STORE && ls -l | egrep '^d' | awk '{ print $8 }')
+
+for d in $DIRS; do
+
+    f="${STORE}/${d}"
+
+    if [ -f "${f}.tar.bz2" ]; then
+        #echo "Already processed: ${f}.tar.bz2"
+        continue
+    fi
+    tar -cf "${f}.tar" "${f}" &
+    echo "Creating tar of backup in ${f}..."
+    wait
+
+    if [ ! -f "${f}.tar" ]; then
+        echo "Tar failed. :("
+        exit 1
+    fi
+    bzip2 --best "${f}.tar" &
+    echo "Compressing tar..."
+    wait
+    if [ "$?" -ne "0" ]; then
+        echo "Failed compressing backup: ${d}"
+        exit 1
+    fi
+done
+
+exit
