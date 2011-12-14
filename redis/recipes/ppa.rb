@@ -1,5 +1,4 @@
 # install redis from a ppa to avoid compiling, etc.
-
 include_recipe "apt::ppa"
 
 execute "add Chris Lea's PPA" do
