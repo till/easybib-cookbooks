@@ -1,4 +1,4 @@
-include_recipe "redis::configure"
+include_recipe "redis::service"
 
 template "/etc/redis/redis.conf" do
   source "redis.conf.erb"
