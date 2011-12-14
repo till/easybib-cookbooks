@@ -1,3 +1,5 @@
+include_recipe "redis::configure"
+
 template "/etc/redis/redis.conf" do
   source "redis.conf.erb"
   owner  "root"

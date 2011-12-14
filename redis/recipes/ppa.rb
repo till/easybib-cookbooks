@@ -12,5 +12,4 @@ end
 package "redis-server"
 
 include_recipe "redis::user"
-include_recipe "redis::service"
 include_recipe "redis::configure"
