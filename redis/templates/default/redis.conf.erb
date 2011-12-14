@@ -138,15 +138,6 @@ appendfilename <%= node[:redis][:aofile] %>
 appendfsync <%= node[:redis][:appendfsync] %>
 # appendfsync no
 
-################################ VIRTUAL MEMORY ###############################
-
-vm-enabled <%= node[:redis][:vm] %>
-vm-swap-file /tmp/redis.swap
-vm-max-memory <%= node[:redis][:vm_max_memory] %>
-vm-page-size <%= node[:redis][:vm_page_size] %>
-vm-pages <%= node[:redis][:vm_pages] %>
-vm-max-threads 4
-
 ############################### ADVANCED CONFIG ###############################
 
 # Glue small output buffers together in order to send small replies in a
