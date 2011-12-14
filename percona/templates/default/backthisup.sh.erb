@@ -1,42 +1,33 @@
-#!/bin/sh
+#!/usr/bin/env python
 
-STORE=<%= node[:xtrabackup][:dir]} %>
+import getpass, glob, os, sys, tarfile
 
-if [ ! -d "$STORE" ] ; then
-    echo "Backup location does not exist."
-    exit 1
-fi
+store='<%= node[:xtrabackup][:dir]} %>'
 
-if [ ! -w "$STORE" ]; then
-    echo "Backup location is not writable: $STORE"
-    exit 1
-fi
+if os.path.exists(store) is False:
+    print "Backup location (%s) does not exist." % store
+    sys.exit(1)
 
-DIRS=$(cd $STORE && ls -l | egrep '^d' | awk '{ print $8 }')
+if os.access(store, os.W_OK) is False:
+    print "Backup location ({0}) is not writable by: {1}".format(store, getpass.getuser())
+    sys.exit(1)
 
-for d in $DIRS; do
+dirs = glob.glob(store + '/*')
 
-    f="${STORE}/${d}"
-
-    if [ -f "${f}.tar.bz2" ]; then
-        #echo "Already processed: ${f}.tar.bz2"
+for d in dirs:
+    if os.path.isdir(d) is False:
         continue
-    fi
-    tar -cf "${f}.tar" "${f}" &
-    echo "Creating tar of backup in ${f}..."
-    wait
 
-    if [ ! -f "${f}.tar" ]; then
-        echo "Tar failed. :("
-        exit 1
-    fi
-    bzip2 --best "${f}.tar" &
-    echo "Compressing tar..."
-    wait
-    if [ "$?" -ne "0" ]; then
-        echo "Failed compressing backup: ${d}"
-        exit 1
-    fi
-done
+    if os.path.exists(d + '.tar.bz2'):
+        print '%s is already processed.' % d
 
-exit
+    if os.path.exists(d + '.tar'):
+        os.remove(d + '.tar')
+
+    tar = tarfile.open(d + '.tar.bz2', 'w:bz2')
+    tar.add(d)
+    tar.close()
+
+    print 'Processed %s' % d
+
+sys.exit(0)
