@@ -34,11 +34,14 @@ bucket = conn.get_bucket(bucket_name)
 k = Key(bucket)
 
 for f in args.files:
+
     print 'Uploading %s to Amazon S3 bucket %s' % \
         (f.name, bucket_name)
 
     k.key = os.path.basename(f.name)
+
     k.set_contents_from_filename(f.name, cb=percent_cb, num_cb=10)
+
 
 print ""
 sys.exit(0)
