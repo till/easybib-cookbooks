@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 
-import boto;
-import argparse;
-import sys;
-import os;
+import boto, argparse, sys, os
 
 AWS_ACCESS_KEY_ID = '<%= node[:xtrabackup][:aws][:key] %>'
 AWS_SECRET_ACCESS_KEY = '<$= node[:xtrabackup][:aws][:secret] %>'
