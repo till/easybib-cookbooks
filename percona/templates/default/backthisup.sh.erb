@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-import getpass, glob, os, sys, tarfile
+import getpass, glob, os, subprocess, sys, tarfile
 
 store='<%= node[:xtrabackup][:dir]} %>'
+uploader='<%= node[:xtrabackup][:uploader] %>'
+bucket='<%= node[:xtrabackup][:s3_bucket]} %>'
 
 if os.path.exists(store) is False:
     print "Backup location (%s) does not exist." % store
@@ -10,6 +12,10 @@ if os.path.exists(store) is False:
 
 if os.access(store, os.W_OK) is False:
     print "Backup location ({0}) is not writable by: {1}".format(store, getpass.getuser())
+    sys.exit(1)
+
+if os.access(uploader, os.X_OK) is False:
+    print "Uploader is not executable: %s" % uploader
     sys.exit(1)
 
 dirs = glob.glob(store + '/*')
@@ -28,6 +34,11 @@ for d in dirs:
     tar.add(d)
     tar.close()
 
-    print 'Processed %s' % d
+    print 'Processed %s' % c
+
+    cmd=uploader + ' --bucket ' + bucket + ' ' + c
+    #print 'Command: %s' % cmd
+
+    subprocess.check_call(cmd, shell=True)
 
 sys.exit(0)
