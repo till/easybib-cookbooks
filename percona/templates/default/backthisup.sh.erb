@@ -24,13 +24,15 @@ for d in dirs:
     if os.path.isdir(d) is False:
         continue
 
-    if os.path.exists(d + '.tar.bz2'):
+    c=d + '.tar.bz2'
+
+    if os.path.exists(c):
         print '%s is already processed.' % d
 
     if os.path.exists(d + '.tar'):
         os.remove(d + '.tar')
 
-    tar = tarfile.open(d + '.tar.bz2', 'w:bz2')
+    tar = tarfile.open(c, 'w:bz2')
     tar.add(d)
     tar.close()
 
