@@ -28,6 +28,7 @@ for d in dirs:
 
     if os.path.exists(c):
         print '%s is already processed.' % d
+        continue
 
     if os.path.exists(d + '.tar'):
         os.remove(d + '.tar')
