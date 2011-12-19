@@ -8,7 +8,7 @@ Membase is a distributed key-value database management system, optimized for sto
 
 This recipe currenly only works with Ubuntu.
 
-= ATTRIBUTES: 
+= ATTRIBUTES:
 
 = USAGE:
 

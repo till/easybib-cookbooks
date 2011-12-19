@@ -6,7 +6,7 @@
 # run 'make' in the source directory.  Modify it to suit your needs.
 
 # DESTDIR is meant only for use when making Munin packages.  Unless
-# you're doing packaging do NOT set it. 
+# you're doing packaging do NOT set it.
 # DESTDIR is empty during building, and optionally set to point to
 # a shadow tree during make install.
 
@@ -16,7 +16,7 @@
 
 #
 # the base of the Munin installation.
-# 
+#
 PREFIX     = $(DESTDIR)/opt/munin
 
 # Where Munin keeps its configurations (server.conf, client.conf, ++)
@@ -78,7 +78,7 @@ RUBY       := /usr/bin/env ruby
 JAVARUN    := /usr/bin/java
 
 # The java library dir to use (used by some plugins)
-# this is needed in order to be able to install 
+# this is needed in order to be able to install
 # java libraries in a custom location. Many distrubutions
 # enforce a spesific location for java libraries.
 JAVALIBDIR:= $(LIBDIR)
@@ -88,7 +88,7 @@ JAVALIBDIR:= $(LIBDIR)
 # other modern stuff is expected.  On a posix-system the expression
 # below will find the right shell.  Most Unixes released the last 10
 # years are POSIX compliant enough for this to work (he said bravely).
-# 
+#
 # On Linux /bin/sh, SunOS/Solaris /usr/xpg4/bin/sh or /bin/ksh
 # In general: bash or ksh will work
 #

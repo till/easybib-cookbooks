@@ -25,7 +25,7 @@ node[:dev][:users].each do |user|
     mode 0755
     owner "#{user}"
     group "#{user}"
-    action :create    
+    action :create
   end
 
 end

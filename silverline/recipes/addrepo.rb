@@ -7,7 +7,7 @@ case node[:plattform]
     end
   end
   when "debian"
-    if !File.exists?("/etc/sources.list.d/silverline.list") 
+    if !File.exists?("/etc/sources.list.d/silverline.list")
 
     end
   end

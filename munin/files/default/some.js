@@ -28,8 +28,8 @@ curhash=curhash.replace(/\#catsection\-/,'');
 		if (children[i].nodeName.toLowerCase() == 'fieldset') {
 			function g_seci() {for (ii=0;ii<children[i].childNodes.length;ii++){
 			    if (children[i].childNodes[ii].className=="graphbox") return children[i].childNodes[ii].id;
-			    }			
-			}	
+			    }
+			}
 			seci=g_seci();
 			if (sec_0=='') {sec_0=seci;}
 			children[i].id = seci;

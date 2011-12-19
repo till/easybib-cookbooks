@@ -13,7 +13,7 @@ ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*}
 
 
 # Completion options, oh my!
-zstyle ':completion:*:*:ssh:*:hosts' hosts $hostnames 
+zstyle ':completion:*:*:ssh:*:hosts' hosts $hostnames
 zstyle ':completion:*:*:ftp:*:hosts' hosts $hostnames
 zstyle ':completion:*:hosts' hosts $hostnames
 zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'

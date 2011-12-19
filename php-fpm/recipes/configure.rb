@@ -39,12 +39,12 @@ if stdInstall.include?(node["php-fpm"][:source])
   conf_cli = "php-cli.ini"
   conf_fpm = "php.ini"
 else
-  if node["php-fpm"][:source] == "ubuntu" 
+  if node["php-fpm"][:source] == "ubuntu"
     etc_cli_dir = "/etc/php5/cli"
     etc_fpm_dir = "/etc/php5/fpm"
     conf_cli = "php.ini"
     conf_fpm = "php.ini"
-  else 
+  else
     Chef::Log.error("Unknown source: #{node["php-fpm"][:source]}. Bailed.")
     return
   end

@@ -26,7 +26,7 @@ define :jenkins_plugin do
         source "http://updates.jenkins-ci.org/latest/#{plugin_name}.hpi"
       else
         source "http://updates.jenkins-ci.org/download/plugins/#{plugin_name}/#{version}/#{plugin_name}.hpi"
-      end  
+      end
     end
   end
 
