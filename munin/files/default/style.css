@@ -1,12 +1,12 @@
-body, h1, h2, h3, p, span, div { 
+body, h1, h2, h3, p, span, div {
   font-family: verdana, helvetica, arial, sans-serif;
   font-size: small;
  }
 
-body { 
+body {
   background-color: #f0fff0;
   color: #00CC00;
-  
+
  }
 
 h3.nobottom {
@@ -14,38 +14,38 @@ h3.nobottom {
     margin-bottom: 0px;
 }
 
-div.logo { 
+div.logo {
   background-image: url(logo.png);
-  background-repeat: no-repeat;  
+  background-repeat: no-repeat;
   width: 80px;
   height: 25px;
-} 
+}
 
-div.lighttext { 
+div.lighttext {
   background-color: #f0fff0;
   color: #777777;
   font-style: italic;
-  
+
  }
 
-.domain { 
+.domain {
   font-size: medium;
   font-weight: bold;
  }
 
-.host { 
+.host {
   font-weight: bold;
  }
 
-.center { 
+.center {
   text-align: center;
 }
 
-.small { 
+.small {
   font-size: smaller;
  }
 
-.noborder { 
+.noborder {
   border-width: 0px;
   border-collapse: collapse;
  }
@@ -162,22 +162,22 @@ td.linkbox {
   height: 2px;
 }
 
-a.meek:link { 
+a.meek:link {
   color: #486aaf;
   font-size: small;
  }
 
-a.meek:visited { 
+a.meek:visited {
   color: #af1a00;
   font-size: small;
  }
 
-a.meek:active { 
+a.meek:active {
   color: #486aaf;
   font-size: small;
  }
 
-a.meek:hover { 
+a.meek:hover {
   color: #999999;
   font-size: small;
  }
@@ -188,15 +188,15 @@ a.warn:visited { color: #cc9900; }
 a.warn:active  { color: #cc9900; }
 a.warn:hover   { color: #cc9900; }
 
-a.crit:link    { color: #cc0000; } 
-a.crit:visited { color: #cc0000; } 
-a.crit:active  { color: #cc0000; } 
-a.crit:hover   { color: #cc0000; } 
+a.crit:link    { color: #cc0000; }
+a.crit:visited { color: #cc0000; }
+a.crit:active  { color: #cc0000; }
+a.crit:hover   { color: #cc0000; }
 
-a:link    { color: #486aaf; } 
-a:visited { color: #486aaf; } 
-a:active  { color: #486aaf; } 
-a:hover   { color: #486aaf; } 
+a:link    { color: #486aaf; }
+a:visited { color: #486aaf; }
+a:active  { color: #486aaf; }
+a:hover   { color: #486aaf; }
 /* Custom style */
 #cattoc {
         margin: 0;

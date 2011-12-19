@@ -23,7 +23,7 @@ root    ALL=(ALL) ALL
 # Members of the admin group may gain root privileges
 %admin ALL=(ALL) ALL
 
-# ubuntu user is default user in ec2-images.  
+# ubuntu user is default user in ec2-images.
 # It needs passwordless sudo functionality.
 ubuntu  ALL=(ALL) NOPASSWD:ALL
 <% (@sudoers || []).each do |sudoer| %>

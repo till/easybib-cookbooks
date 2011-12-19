@@ -68,7 +68,7 @@ $elb_version = "2009-05-15";
 								  ]],
 	["ec2", "cancel-spot-instance-requests cancel csir", CancelSpotInstanceRequests, [
 									   ["", SpotInstanceRequestIdN],
-									   ]],								  
+									   ]],
 	["ec2", "confirm-product-instance", ConfirmProductInstance, [
 								     ["", ProductCode],
 								     ["i", InstanceId],
@@ -85,7 +85,7 @@ $elb_version = "2009-05-15";
 									       ["end", EndTime],
 									       ["instance-type", InstanceType, "m1.small"],
 									       ["description", ProductDescription, "Linux/UNIX"],
-									       ]],									   
+									       ]],
 	["ec2", "create-volume cvol", CreateVolume, [
 						     ["size", Size],
 						     ["zone", AvailabilityZone],
@@ -489,7 +489,7 @@ if (!-e "$home/.awsrc" || $sanity_check)
 	elsif ($isUnix)
 	{
 	    my $stat = (stat $secrets_file)[2] & 0777;
-	    
+
 	    if (($stat & 0477) != 0400)
 	    {
 		my @perm = (qw(x r w)) x 4;
@@ -590,7 +590,7 @@ if (exists $ENV{QUERY_STRING} || $sign)
 if ($install)
 {
     die "Usage: .../aws --install\n" if $install && @argv;
-    
+
     if (-w "/usr/bin")
     {
 	chomp(my $dir = qx[pwd]);
@@ -1701,7 +1701,7 @@ sub load_file_silent
     <$io>;
 }
 
-sub guess_is_unix 
+sub guess_is_unix
 {
     return 1 if $ENV{OS} =~ /windows/i && $ENV{OSTYPE} =~ /cygwin/i;
     return 1 if $ENV{OS} !~ /windows/i;
@@ -1861,8 +1861,8 @@ sub sha1_sha1
     #constants [4.2.1]
     my @K = (0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6);
 
-    # PREPROCESSING 
- 
+    # PREPROCESSING
+
     $msg .= pack(C, 0x80); # add trailing '1' bit to string [5.1.1]
 
     # convert string msg into 512-bit/16-integer blocks arrays of ints [5.2.1]

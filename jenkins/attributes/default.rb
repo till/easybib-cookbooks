@@ -1,16 +1,16 @@
 set_unless[:jenkins][:port]  = 8080
 set_unless[:jenkins][:domain]  = "jenkins.codebox"
 set_unless[:jenkins][:git_user_name]  = "jenkins"
-set_unless[:jenkins][:plugins]  = {"checkstyle" => "latest", 
-                                    "clover" => "latest", 
-                                    "dry" => "latest", 
+set_unless[:jenkins][:plugins]  = {"checkstyle" => "latest",
+                                    "clover" => "latest",
+                                    "dry" => "latest",
                                     "htmlpublisher" => "latest",
-                                    "jdepend" => "latest", 
-                                    "plot" => "latest", 
-                                    "pmd" => "latest", 
-                                    "violations" => "latest", 
+                                    "jdepend" => "latest",
+                                    "plot" => "latest",
+                                    "pmd" => "latest",
+                                    "violations" => "latest",
                                     "xunit" => "latest",
-                                    "git" => "latest", 
+                                    "git" => "latest",
                                     "github" => "latest"}
 set_unless[:jenkins][:apt_repository]  = "jenkins-ci"
 
@@ -26,7 +26,7 @@ set_unless[:php_pear][:packages]  =  ["pdepend/PHP_Depend-beta",
                                       "PHPDocumentor",
                                       "PHP_CodeSniffer",
                                       "--alldeps phpunit/PHP_CodeBrowser",
-                                      "--alldeps phpunit/PHPUnit", 
+                                      "--alldeps phpunit/PHPUnit",
                                       "Mail", "Mail_Mime", "DB", "MDB2",  #for mail_queue
                                       "--force Net_URL2", #for http_request2
                                       ]

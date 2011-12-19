@@ -14,7 +14,7 @@ node[:docroot] = "public"
 vagrant_dir = "/vagrant_data"
 
 directory "#{node[:deploy][:deploy_to]}" do
-  mode      "0755"  
+  mode      "0755"
   action    :create
   recursive true
 end

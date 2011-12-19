@@ -26,7 +26,7 @@ node[:deploy].each do |application, deploy|
     next unless instanceRoles.include?('easybibsolr')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
-    
+
     deploy[:deploy_to]       = "/solr/research_importers"
     deploy[:restart_command] = ""
 
@@ -66,7 +66,7 @@ node[:deploy].each do |application, deploy|
   end
 
   Chef::Log.debug("deploy::easybib - ABOUT TO DEPLOY FOR REALZ")
-  
+
   # we survived until here - so we are good to actually checkout and deploy
   # done for every app
 
@@ -128,7 +128,7 @@ node[:deploy].each do |application, deploy|
     if deploy[:restart_command].any?
       restart_command "sleep #{deploy[:sleep_before_restart]} && #{deploy[:restart_command]}"
     end
-    
+
   end
 
   ruby_block "change HOME back to /root after source checkout" do

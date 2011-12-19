@@ -1,4 +1,4 @@
-require_recipe "apt" 
+require_recipe "apt"
 require_recipe "git"
 
 user "jenkins" do
