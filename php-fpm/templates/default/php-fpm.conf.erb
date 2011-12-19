@@ -9,7 +9,7 @@ log_level = error
 ; Default Value: 0
 emergency_restart_threshold = 15
 
-; Interval of time used by emergency_restart_interval to determine when 
+; Interval of time used by emergency_restart_interval to determine when
 ; a graceful restart will be initiated.  This can be useful to work around
 ; accidental corruptions in an accelerator's shared memory.
 ; Available Units: s(econds), m(inutes), h(ours), or d(ays)
@@ -35,7 +35,7 @@ include=/usr/local/etc/php-fpm/*.conf
 
 listen = <%= node["php-fpm"][:socketdir] %>/<%= node["php-fpm"][:user] %>
 listen.backlog = -1
- 
+
 listen.owner = <%= node["php-fpm"][:user] %>
 listen.group = <%= node["php-fpm"][:group] %>
 listen.mode = 0666
@@ -53,7 +53,7 @@ pm.status_path = /fpm_status
 
 ping.path = /fpm_ping
 ping.response = p0ng
- 
+
 ;request_terminate_timeout = 0
 ;request_slowlog_timeout = 0
 

@@ -7,5 +7,5 @@
    * /: guest, mybib, mybibpro/school & admin
    * /company: guest, mybib, mybibpro/school, & admin
    * /cite/form/* (forms for all sources): guest, mybib, mybibpro/school, & admin
-   
+
 

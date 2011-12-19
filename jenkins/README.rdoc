@@ -1,6 +1,6 @@
 = DESCRIPTION:
 
-Jenkins CI 
+Jenkins CI
 
 This cookbook based on the hudson package by Ben Mabey <ben@benmabey.com>
 
@@ -8,7 +8,7 @@ This cookbook based on the hudson package by Ben Mabey <ben@benmabey.com>
 
 This recipe currenly only works with Ubuntu.
 
-= ATTRIBUTES: 
+= ATTRIBUTES:
 
 = USAGE:
 

@@ -57,7 +57,7 @@ listen application <%= haproxy_host %>:<%= haproxy_port %>
   server localhost 127.0.0.1:8080 weight 1 maxconn 5 check
 <% end -%>
 
-<% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>  
+<% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
 backend php_app_servers
   balance roundrobin
   option redispatch
@@ -71,7 +71,7 @@ backend php_app_servers
 
 frontend http-in
   bind <%= haproxy_host %>:<%= haproxy_port %>
-  
+
   # all domains of PHP applications
   <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
     <% app_config['domains'].each do |domain| -%>
@@ -81,7 +81,7 @@ frontend http-in
       <% end -%>
     <% end -%>
   <% end -%>
-  
+
   <% unless node[:haproxy][:php_applications].empty? || node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
     <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
       <% app_config['domains'].each do |domain| -%>
@@ -93,26 +93,26 @@ frontend http-in
       <% end -%>
     <% end -%>
   <% end -%>
-  
+
   <% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
   default_backend php_app_servers
   <% end -%>
-  
+
 #frontend https-in
 #  mode tcp
 #  bind :443
-  
+
   # all domains of PHP applications
 #  <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
 #    <% app_config['domains'].each do |domain| -%>
 #  acl php_applications_ssl hdr_end(host) -i <%= domain %>
 #    <% end -%>
 #  <% end -%>
-  
+
 #  <% unless node[:haproxy][:php_applications].empty? || node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
 #  use_backend php_app_servers_ssl if php_applications_ssl
 #  <% end -%>
-  
+
 #  <% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
 #  default_backend php_app_servers_ssl
 #  <% end -%>

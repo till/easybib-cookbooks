@@ -49,4 +49,4 @@ end
 
 execute "ensure correct permissions on CouchDB data" do
   command "chown -R couchdb:couchdb #{node[:couchdb][:datadir]}"
-end 
+end

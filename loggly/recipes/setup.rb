@@ -10,7 +10,7 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
     supports :status => true, :restart => true, :reload => true
     action [ :restart ]
   end
-  
+
   cookbook_file "/usr/local/bin/deviceid" do
     source "deviceid"
     mode "0755"

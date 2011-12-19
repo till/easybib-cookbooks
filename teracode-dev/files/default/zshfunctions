@@ -43,7 +43,7 @@ _git_ps1()
    git_dir=$(git rev-parse --git-dir)
    if [ "$br" -a -e "$git_dir/patches/$br" ]; then
       echo "$br:${loc/*\/}${rel:+/$rel}${git_dirty}"
-   else 
+   else
       echo "$br:${loc/*\/}${rel:+/$rel}${git_dirty}"
    fi
 
