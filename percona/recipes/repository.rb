@@ -1,9 +1,10 @@
-execute "download key" do
-  command "gpg --keyserver  hkp://keys.gnupg.net --recv-keys #{node[:percona][:key]}"
+cookbook_file "/tmp/percona.pub" do
+  source "percona.pub"
+  mode   "0644"
 end
 
 execute "import key" do
-  command "gpg -a --export CD2EFD2A | apt-key add -"
+  command "cat /tmp/percona.pub|apt-key -"
 end
 
 template "/etc/apt/sources.list.d/percona.list" do
