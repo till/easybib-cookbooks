@@ -94,11 +94,7 @@ template "/etc/init.d/php-fpm" do
   group node["php-fpm"][:group]
 end
 
-service "php-fpm" do
-  service_name "php-fpm"
-  supports [:start, :status, :restart]
-  action :restart
-end
+include_recipe "php-fpm::service"
 
 template "/etc/logrotate.d/php" do
   source "logrotate.erb"
