@@ -1,0 +1,5 @@
+extension=suhosin.so
+
+[suhosin]
+suhosin.post.max_vars = <%= node[:suhosin][:post][:max_vars] -%>
+suhosin.request.max_vars = <%= node[:suhosin][:request][:max_vars] -%>
