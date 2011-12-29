@@ -1,4 +1,4 @@
-php_ext_dir = `php -r 'ini_get("extension_dir");'`.strip
+php_ext_dir = `php -r 'echo ini_get("extension_dir");'`.strip
 suhosin_ext = "#{php_ext_dir}/suhosin.so"
 suhosin_dl  = "suhosin-#{node[:suhosin][:version]}.tar.gz"
 
