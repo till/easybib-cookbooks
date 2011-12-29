@@ -4,3 +4,5 @@ default[:suhosin][:post]               = {}
 default[:suhosin][:post][:max_vars]    = 1000
 default[:suhosin][:request]            = {}
 default[:suhosin][:request][:max_vars] = 2000
+default[:suhosin][:session]            = {}
+default[:suhosin][:session][:encrypt]  = "Off"
