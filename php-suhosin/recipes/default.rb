@@ -2,6 +2,8 @@ php_ext_dir = `php -r 'ini_get("extension_dir");'`.strip
 suhosin_ext = "#{php_ext_dir}/suhosin.so"
 suhosin_dl  = "suhosin-#{node[:suhosin][:version]}.tar.gz"
 
+Chef::Log.debug("PHP EXT DIR: #{php_ext_dir}, SUHOSIN: #{suhosin_ext}")
+
 remote_file "/tmp/#{suhosin_dl}" do
   source "http://download.suhosin.org/#{suhosin_dl}"
   mode   "0644"
