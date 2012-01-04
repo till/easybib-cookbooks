@@ -4,7 +4,7 @@ cookbook_file "/tmp/percona.pub" do
 end
 
 execute "import key" do
-  command "cat /tmp/percona.pub|apt-key -"
+  command "apt-key add /tmp/percona.pub"
 end
 
 template "/etc/apt/sources.list.d/percona.list" do
