@@ -1,4 +1,7 @@
 <%
+# This is too much logic for a template, but my excuse is that I don't have to override
+# Scalarium in more than one place. ;-)
+
 app_dir   = "#{@deploy[:deploy_to]}/current"
 node_path = "#{app_dir}/node_modules:#{app_dir}"
 
