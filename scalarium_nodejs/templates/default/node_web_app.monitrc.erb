@@ -8,7 +8,7 @@ node_path = "#{app_dir}/node_modules:#{app_dir}"
 case @application_name
   when 'statsd'
     node_port  = node[:librato][:node][:port]
-    node_cmd   = "#{@monitored_script} /etc/statsd/config.js"
+    node_cmd   = "#{app_dir}/stats.js /etc/statsd/config.js"
     node_proto = ""
     node_type  = "type UDP"
   else
