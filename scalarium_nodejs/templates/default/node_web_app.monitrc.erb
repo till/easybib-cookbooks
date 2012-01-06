@@ -2,16 +2,17 @@
 app_dir   = "#{@deploy[:deploy_to]}/current"
 node_path = "#{app_dir}/node_modules:#{app_dir}"
 
-if @deploy[:application] == 'statsd'
-  node_port  = 8125
-  node_cmd   = "#{@monitored_script} /etc/statsd/config.js"
-  node_proto = ""
-  node_type  = "type UDP"
-else
-  node_port  = 80
-  node_cmd   = @monitored_script
-  node_proto = "protocol HTTP"
-  node_type  = ""
+case @application_name
+  when 'statsd'
+    node_port  = node[:librato][:node][:port]
+    node_cmd   = "#{@monitored_script} /etc/statsd/config.js"
+    node_proto = ""
+    node_type  = "type UDP"
+  else
+    node_port  = 80
+    node_cmd   = @monitored_script
+    node_proto = "protocol HTTP"
+    node_type  = ""
 end
 -%>
 check host node_web_app_<%= @application_name %> with address 127.0.0.1
