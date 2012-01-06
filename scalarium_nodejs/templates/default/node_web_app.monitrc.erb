@@ -22,6 +22,8 @@ check host node_web_app_<%= @application_name %> with address 127.0.0.1
   start program = "/bin/sh -c 'cd <%= app_dir %>; /usr/bin/env NODE_PATH=<%= node_path %> /usr/local/bin/node <%= node_cmd %>'"
   stop program  = "/usr/bin/pkill -f 'node <%= node_cmd %>'"
   if failed port <%= node_port %> <%= node_type -%><%= node_proto -%>
+<% if node_port == 80 -%>
     request /
     with timeout 10 seconds
+<% end -%>
     then restart
