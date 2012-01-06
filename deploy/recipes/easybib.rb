@@ -52,6 +52,10 @@ node[:deploy].each do |application, deploy|
       :ssh_key => deploy[:scm][:ssh_key]
     )
 
+  else
+    Chef::Log.debug("deploy::easybib - #{application} skipped")
+    next
+
   end
 
   Chef::Log.debug("deploy::easybib - CREATE DEPLOY DIR")
