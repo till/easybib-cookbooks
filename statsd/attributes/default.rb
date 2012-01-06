@@ -1,7 +1,9 @@
-set_unless[:librato]                     = []
-set_unless[:librato][:node]              = []
-set_unless[:librato][:node][:user]       = 'root'
-set_unless[:librato][:node][:group]      = 'root'
-set_unless[:librato][:metrics]           = []
-set_unless[:librato][:metrics][:email]   = 'foo@example.org'
-set_unless[:librato][:metrics][:api_key] = '123'
+default[:librato]                     = {}
+default[:librato][:node]              = {}
+default[:librato][:node][:user]       = 'root'
+default[:librato][:node][:group]      = 'root'
+default[:librato][:node][:port]       = 8125
+default[:librato][:metrics]           = {}
+default[:librato][:metrics][:email]   = 'foo@example.org'
+default[:librato][:metrics][:api_key] = '123'
+default[:librato][:metrics][:batch]   = 200
