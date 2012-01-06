@@ -1,7 +1,1 @@
-d = ['base64', 'async', 'underscore']
-
-d.each do |dep|
-  execute "Install #{dep}" do
-    command "npm install #{dep}"
-  end
-end
+# empty - deps are installed via package.json
