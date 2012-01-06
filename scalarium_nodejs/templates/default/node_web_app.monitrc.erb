@@ -1,0 +1,19 @@
+<%
+app_dir   = "#{@deploy[:deploy_to]}/current"
+node_path = "#{app_dir}/node_modules:#{app_dir}"
+
+if @deploy[:application] == 'statsd'
+  node_port = 8125
+  node_cmd  = "#{@monitored_script} /etc/statsd/config.js"
+else
+  node_port = 80
+  node_cmd  = @monitored_script
+end
+-%>
+check host node_web_app_<%= @application_name %> with address 127.0.0.1
+  start program = "/bin/sh -c 'cd <%= app_dir; /usr/bin/env NODE_PATH=<%= node_path %> /usr/local/bin/node <%= node_cmd %>'"
+  stop program  = "/usr/bin/pkill -f 'node <%= node_cmd %>'"
+  if failed port <%= node_port %> protocol HTTP
+    request /
+    with timeout 10 seconds
+    then restart
