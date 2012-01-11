@@ -1,14 +1,11 @@
 include_recipe "apt::ppa"
 
-case node[:plattform]
-  when "ubuntu"
-    execute "add-apt-repository" do
+execute "import-silverline-key" do
+  command "curl http://apt.librato.com/packages.librato.key | apt-key add -"
+  action :nothing
+end
 
-    end
-  end
-  when "debian"
-    if !File.exists?("/etc/sources.list.d/silverline.list")
-
-    end
-  end
+template "/etc/apt/sources.list.d/silverline.list" do
+  source "silverline.list.erb"
+  notifies :run, "execute[import-silverline-key]", :immediately
 end
