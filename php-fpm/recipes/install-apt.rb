@@ -31,15 +31,7 @@
 
 include_recipe "php-fpm::prepare"
 include_recipe "apt::ppa"
-
-ppa="easybib/ppa"
-execute "add #{ppa}" do
-  command "add-apt-repository ppa:#{ppa}"
-end
-
-execute "update sources" do
-  command "apt-get -y -f -q update"
-end
+include_recipe "apt::easybib"
 
 aptPackages = node["php-fpm"][:packages]
 
