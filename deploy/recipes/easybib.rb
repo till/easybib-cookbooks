@@ -51,6 +51,8 @@ node[:deploy].each do |application, deploy|
       :home    => "/var/www",
       :ssh_key => deploy[:scm][:ssh_key]
     )
+  when 'gearmanworker'
+    next unless instanceRoles.include?('gearman-worker')
 
   else
     Chef::Log.debug("deploy::easybib - #{application} skipped")
