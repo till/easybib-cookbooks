@@ -1,5 +1,10 @@
 include_recipe "redis::service"
 
+template "/etc/default/redis" do
+  source "default.erb"
+  mode "0644"
+end
+
 template "/etc/redis/redis.conf" do
   source "redis.conf.erb"
   owner  "root"

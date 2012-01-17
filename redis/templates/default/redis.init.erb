@@ -18,6 +18,11 @@ DAEMON_ARGS=/etc/redis.conf
 NAME=redis-server
 DESC=redis-server
 PIDFILE=<%= node[:redis][:pid_file] %>
+#
+# Include defaults if available
+if [ -f /etc/default/redis] ; then
+        . /etc/default/redis
+fi
 
 test -x $DAEMON || exit 0
 test -x $DAEMONBOOTSTRAP || exit 0
