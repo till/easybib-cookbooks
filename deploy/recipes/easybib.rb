@@ -21,6 +21,7 @@ node[:deploy].each do |application, deploy|
     end
   when 'easybib_api'
     next unless instanceRoles.include?('bibapi')
+
   when 'easybib_solr_research_importers'
     # not sure on which roles you want to have this app
     next unless instanceRoles.include?('easybibsolr')
@@ -54,13 +55,16 @@ node[:deploy].each do |application, deploy|
   when 'gearmanworker'
     next unless instanceRoles.include?('gearman-worker')
 
+  when 'sitescraper'
+    next unless instanceRoles.include?('sitescraper')
+
   else
     Chef::Log.debug("deploy::easybib - #{application} skipped")
     next
 
   end
 
-  Chef::Log.debug("deploy::easybib - CREATE DEPLOY DIR")
+  Chef::Log.debug("deploy::easybib - CREATE DEPLOY DIR: #{deploy[:deploy_to]}")
 
   directory deploy[:deploy_to] do
     owner "root"
