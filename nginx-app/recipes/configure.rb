@@ -20,6 +20,10 @@ node[:deploy].each do |application, deploy|
     next # unless node[:scalarium][:instance][:roles].include?('easybibsolr')
   when 'easybib_solr_server'
     next # unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+  when 'sitescraper'
+    next unless instanceRoles.include?('sitescraper')
+  else
+    Chef::Log.debug("Skipping nginx configure for app #{application}");
   end
 
   template "/etc/nginx/sites-enabled/easybib.com.conf" do
