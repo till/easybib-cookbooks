@@ -15,11 +15,11 @@ node[:deploy].each do |application, deploy|
       next
     end
   when 'easybib_api'
-    next unless node[:scalarium][:instance][:roles].include?('bibapi')
+    next unless instanceRoles.include?('bibapi')
   when 'easybib_solr_research_importers'
-    next # unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+    next # unless instanceRoles.include?('easybibsolr')
   when 'easybib_solr_server'
-    next # unless node[:scalarium][:instance][:roles].include?('easybibsolr')
+    next # unless instanceRoles.include?('easybibsolr')
   when 'sitescraper'
     next unless instanceRoles.include?('sitescraper')
   else
