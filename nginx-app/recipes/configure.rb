@@ -23,7 +23,8 @@ node[:deploy].each do |application, deploy|
   when 'sitescraper'
     next unless instanceRoles.include?('sitescraper')
   else
-    Chef::Log.debug("Skipping nginx-app::configure for app #{application}");
+    Chef::Log.debug("Skipping nginx-app::configure for app #{application}")
+    next
   end
 
   template "/etc/nginx/sites-enabled/easybib.com.conf" do
