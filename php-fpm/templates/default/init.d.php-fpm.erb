@@ -10,6 +10,11 @@
 # Description:       starts the PHP FastCGI Process Manager daemon
 ### END INIT INFO
 
+# Include defaults if available
+if [ -f /etc/default/php-fpm] ; then
+        . /etc/default/php-fpm
+fi
+
 prefix=<%= node["php-fpm"][:prefix]%>
 exec_prefix=${prefix}
 

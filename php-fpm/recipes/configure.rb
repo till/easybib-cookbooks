@@ -86,6 +86,10 @@ if node["php-fpm"][:source] == "source"
   end
 end
 
+template "/etc/default/php-fpm" do
+  source "default.erb"
+  mode "0644"
+end
 
 template "/etc/init.d/php-fpm" do
   mode "0755"
