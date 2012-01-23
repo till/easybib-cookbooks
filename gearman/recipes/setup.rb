@@ -1,6 +1,12 @@
+execute "apt-get-update" do
+  command "apt-get update"
+  action :nothing
+end
+
 execute "add-drizzle-ppa" do
   command "add-apt-repository ppa:drizzle-developers/ppa"
   creates "/etc/apt/sources.list.d/drizzle-developers-ppa-lucid.list"
+  notifies :run, "execute[apt-get-update]", :immediately
 end
 
 package "libgearman4"
