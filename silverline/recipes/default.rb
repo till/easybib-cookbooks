@@ -1,4 +1,4 @@
-include_recipe "silverline::add_repo"
+include_recipe "silverline::addrepo"
 
 package "librato-silverline"
 
