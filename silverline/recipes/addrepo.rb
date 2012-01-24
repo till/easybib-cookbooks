@@ -1,7 +1,7 @@
 include_recipe "apt::ppa"
 
 execute "packages_librato_key" do
-  command "curl http://apt.librato.com/packages.librato.key | apt-key add -"
+  command "curl http://apt.librato.com/packages.librato.key | apt-key add - && apt-get update"
   action :nothing
 end
 
