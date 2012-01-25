@@ -1,10 +1,14 @@
 include_recipe "silverline::addrepo"
 
 service "silverline" do
-  start_command "start silverline"
-  stop_command "stop silverline"
-  restart_command "restart silverline"
-  supports :restart => true, :start => true, :stop => true
+  case node[:platform]
+  when "ubuntu"
+    if node[:platform_version].to_f >= 9.10
+      provider Chef::Provider::Service::Upstart
+    end
+  end
+  supports :restart => true, :start => true
+  action [:enable, :start]
 end
 
 package "librato-silverline"
