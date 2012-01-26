@@ -1,5 +1,7 @@
 include_recipe "silverline::addrepo"
 
+package "librato-silverline"
+
 service "silverline" do
   case node[:platform]
   when "ubuntu"
@@ -8,10 +10,8 @@ service "silverline" do
     end
   end
   supports :restart => true, :start => true
-  action [:enable, :start]
+  action [:start]
 end
-
-package "librato-silverline"
 
 template "/etc/load_manager/lmd.conf" do
   source "lmd.conf.erb"
