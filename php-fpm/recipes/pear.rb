@@ -57,10 +57,7 @@ packages = {
   "HTMLPurifier"                 => "hp",
   "Easybib_Form_Decorator-alpha" => "easybib",
   "Lagged_Loader-alpha"          => "easybib",
-  "Rediska-beta"                 => "easybib",
-  "DoctrineCommon-2.1.4"         => "doctrine",
-  "DoctrineDBAL-2.1.6"           => "doctrine",
-  "DoctrineORM-2.1.6"            => "doctrine"
+  "Rediska-beta"                 => "easybib"
 }
 
 # discover PEAR channels
@@ -83,4 +80,16 @@ packages.each do |package,channel|
   execute "PEAR: install #{package} from #{channel}" do
     command "pear install -f #{channel}/#{package}"
   end
+end
+
+execute "PEAR: install DoctrineCommon from doctrine" do
+  command "pear install -f doctrine/DoctrineCommon-2.1.4"
+end
+
+execute "PEAR: install DoctrineDBAL from doctrine" do
+  command "pear install -f doctrine/DoctrineDBAL-2.1.6"
+end
+
+execute "PEAR: install DoctrineORM from doctrine" do
+  command "pear install -f doctrine/DoctrineORM-2.1.6"
 end
