@@ -58,8 +58,8 @@ packages = {
   "Easybib_Form_Decorator-alpha" => "easybib",
   "Lagged_Loader-alpha"          => "easybib",
   "Rediska-beta"                 => "easybib",
-  "DoctrineDBAL"                 => "doctrine",
-  "DoctrineORM"                  => "doctrine"
+  "DoctrineDBAL-2.1.6"           => "doctrine",
+  "DoctrineORM-2.1.6"            => "doctrine"
 }
 
 # discover PEAR channels
