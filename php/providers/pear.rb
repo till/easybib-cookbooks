@@ -1,19 +1,18 @@
 def initialize(*args)
   super(*args)
 
-  # this is still broken, but oh well
-  p = `whereis pear`
+  pear = `which pear`.strip
 
-  if p.empty?
+  if pear.empty?
     raise Chef::Exceptions::ShellCommandFailed, "PEAR is not installed, or not in the path."
   end
 
-  @pear_cmd = p
+  @pear_cmd = pear
 
   Chef::Log.debug("Looks like we found a PEAR installer: #{@pear_cmd}")
 
   execute "PEAR: enable auto discover for channels" do
-    command "#{@pear_cmd} config-set auto_discover 1"
+    command "#{pear} config-set auto_discover 1"
   end
 end
 
