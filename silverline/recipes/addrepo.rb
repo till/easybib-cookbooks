@@ -2,6 +2,7 @@ include_recipe "apt::ppa"
 
 execute "apt_get_update" do
   command "apt-get update"
+  action :nothing
 end
 
 execute "librato_add_key" do
