@@ -26,6 +26,7 @@ whoami=`whoami`
 runas=<%= node["php-fpm"][:user]%>
 
 php_opts="--fpm-config $php_fpm_CONF"
+export SL_NAME=php-fpm
 
 
 wait_for_pid () {
