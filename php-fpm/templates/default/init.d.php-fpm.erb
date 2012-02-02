@@ -27,7 +27,7 @@ runas=<%= node["php-fpm"][:user]%>
 
 php_opts="--fpm-config $php_fpm_CONF"
 export SL_NAME=php-fpm
-export SL_TAG_NAMES=<%= node[:scalarium][:cloud][:name] %>
+export SL_TAG_NAMES=<%= node[:scalarium][:cluster][:name] %>
 
 
 wait_for_pid () {
