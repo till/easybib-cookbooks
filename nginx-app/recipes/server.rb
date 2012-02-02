@@ -3,6 +3,7 @@ package "nginx"
 template "/etc/default/nginx" do
   source "default.erb"
   mode "0644"
+  notifies :restart, resources( :service => "nginx")
 end
 
 template "/etc/nginx/fastcgi_params" do
