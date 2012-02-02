@@ -1,0 +1,6 @@
+<<<<<<< HEAD
+export SL_NAME="nginx_<%= node[:scalarium][:cluster][:name] %>"
+=======
+export SL_NAME="nginx"
+SL_TAG_NAMES=<%= node[:scalarium][:cluster][:name] %>
+>>>>>>> add grouping by cloud name

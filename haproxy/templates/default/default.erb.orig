@@ -1,0 +1,7 @@
+ENABLED=1
+<<<<<<< HEAD
+export SL_NAME="haproxy_<%= node[:scalarium][:cluster][:name] %>"
+=======
+export SL_NAME="haproxy"
+SL_TAG_NAMES=<%= node[:scalarium][:cluster][:name] %>
+>>>>>>> add grouping by cloud name
