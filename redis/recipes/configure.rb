@@ -3,6 +3,7 @@ include_recipe "redis::service"
 template "/etc/default/redis" do
   source "default.erb"
   mode "0644"
+  notifies :restart, resources( :service => "redis-server")
 end
 
 template "/etc/redis/redis.conf" do
