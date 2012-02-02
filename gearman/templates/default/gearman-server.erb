@@ -11,4 +11,4 @@ PARAMS="--port=<%= node[:gearman][:port] %> --http-port=<%= node[:gearman][:http
 
 # Change this to true to enable the germand server
 ENABLED="true"
-export SL_NAME="gearman-job-server"
+export SL_NAME="gearman-job-server_<%= node[:scalarium][:cluster][:name] %>"
