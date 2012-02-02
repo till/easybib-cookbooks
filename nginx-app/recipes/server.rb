@@ -1,5 +1,10 @@
 package "nginx"
 
+service "nginx" do
+  supports :status => true, :restart => true, :reload => true
+  action [ :enable, :start ]
+end
+
 template "/etc/default/nginx" do
   source "default.erb"
   mode "0644"
@@ -25,7 +30,3 @@ execute "delete default vhost" do
   command "rm -f /etc/nginx/sites-enabled/default"
 end
 
-service "nginx" do
-  supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
-end
