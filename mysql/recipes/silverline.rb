@@ -1,7 +1,4 @@
-service "mysql" do
-  supports [:restart]
-  action :nothing
-end
+include_recipe "mysql::service"
 
 template "/etc/mysql/debian-start" do
   source "debian-start.erb"
