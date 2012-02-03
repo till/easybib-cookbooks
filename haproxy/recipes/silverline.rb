@@ -1,4 +1,4 @@
-include_recipe "haproxy"
+include_recipe "haproxy::service"
 
 template "/etc/default/haproxy" do
   source "default.erb"
