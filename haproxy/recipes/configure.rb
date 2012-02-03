@@ -1,3 +1,5 @@
+include_recipe "haproxy"
+
 template "/etc/default/haproxy" do
   source "default.erb"
   mode "0644"
