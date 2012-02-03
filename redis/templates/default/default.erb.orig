@@ -1,6 +1,0 @@
-<<<<<<< HEAD
-export SL_NAME="redis_<%= node[:scalarium][:cluster][:name] %>"
-=======
-export SL_NAME="redis"
-SL_TAG_NAMES=<%= node[:scalarium][:cluster][:name] %>
->>>>>>> add grouping by cloud name
