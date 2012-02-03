@@ -1,3 +1,3 @@
 LM_API_TOKEN="<%= node[:silverline][:api_key] %>"
-LM_SERVER_ID_CMD="echo `hostname`_<%=node[:scalarium][:cluster][:name] %>"
+LM_SERVER_ID_CMD="echo <%=node[:scalarium][:cluster][:name] %>_`hostname` | tr -d [:blank:]"
 LMD_NETWORK_EXCLUDE=dev:all,net:127.0.0.1/8
