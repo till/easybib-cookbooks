@@ -33,6 +33,11 @@ COUCHDB=/usr/local/bin/couchdb
 CONFIGURATION_FILE=/etc/default/couchdb
 RUN_DIR=/usr/local/var/run/couchdb
 LSB_LIBRARY=/lib/lsb/init-functions
+<<<<<<< Updated upstream
+=======
+SL_NAME=<%= node[:silverline][:couchdb] %>
+SL_TAG_NAMES=<%= node[:scalarium][:cluster][:name] %>
+>>>>>>> Stashed changes
 
 if test ! -x $COUCHDB; then
     exit $SCRIPT_ERROR
