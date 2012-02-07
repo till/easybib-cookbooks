@@ -6,7 +6,7 @@ cluster_name   = node[:scalarium][:cluster][:name]
 
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.debug("deploy::easybib - app: #{application}, role: #{instances_roles}")
+  Chef::Log.debug("deploy::easybib - app: #{application}, role: #{instance_roles}")
 
   case application
   when 'easybib'
@@ -14,23 +14,23 @@ node[:deploy].each do |application, deploy|
       next
     end
 
-    if instances_roles.include?('nginxphpapp')
+    if instance_roles.include?('nginxphpapp')
 
-    elsif instances_roles.include?('testapp')
+    elsif instance_roles.include?('testapp')
 
     else
       next
     end
 
   when 'easybib_api'
-    next unless instances_roles.include?('bibapi')
+    next unless instance_roles.include?('bibapi')
 
   when 'easybib_solr_research_importers'
     if cluster_name != 'Research Cloud'
       next
     end
 
-    next unless instances_roles.include?('easybibsolr')
+    next unless instance_roles.include?('easybibsolr')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
 
@@ -42,7 +42,7 @@ node[:deploy].each do |application, deploy|
       next
     end
 
-    next unless instances_roles.include?('easybibsolr')
+    next unless instance_roles.include?('easybibsolr')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for SOLR SERVER')
 
@@ -56,7 +56,7 @@ node[:deploy].each do |application, deploy|
       next
     end
 
-    next unless instances_roles.include?('elasticsearch')
+    next unless instance_roles.include?('elasticsearch')
 
     Chef::Log.debug('deploy.easybib - Prepare for git checkout')
     prepare_git_checkouts(
@@ -67,17 +67,17 @@ node[:deploy].each do |application, deploy|
     )
 
   when 'gearmanworker'
-    next unless instances_roles.include?('gearman-worker')
+    next unless instance_roles.include?('gearman-worker')
 
   when 'sitescraper'
-    next unless instances_roles.include?('sitescraper')
+    next unless instance_roles.include?('sitescraper')
 
   when 'research'
     if cluster_name != 'Research Cloud'
       next
     end
 
-    next unless instances_roles.include?('nginxphpapp')
+    next unless instance_roles.include?('nginxphpapp')
 
   else
     Chef::Log.debug("deploy::easybib - #{application} (in #{cluster_name}) skipped")
