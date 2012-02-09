@@ -38,6 +38,7 @@ template "/etc/couchdb/local.d/scalarium.ini" do
   mode "0644"
 end
 
+# we need to make default a template, also for silverline
 if node[:couchdb][:port] == 80
   execute "Running on port 80, we require root" do
     command "sed -i 's,COUCHDB_USER=couchdb,COUCHDB_USER=root,g' /etc/default/couchdb"
