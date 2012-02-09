@@ -68,12 +68,6 @@ node[:deploy].each do |application, deploy|
     next unless instance_roles.include?('elasticsearch')
 
     Chef::Log.debug('deploy.easybib - Prepare for git checkout')
-    prepare_git_checkouts(
-      :user    => deploy_user,
-      :group   => deploy_user,
-      :home    => "/var/www",
-      :ssh_key => deploy[:scm][:ssh_key]
-    )
 
   when 'gearmanworker'
     next unless instance_roles.include?('gearman-worker')
@@ -128,6 +122,13 @@ node[:deploy].each do |application, deploy|
 
     case deploy[:scm][:scm_type]
       when 'git'
+        prepare_git_checkouts(
+          :user    => deploy_user,
+          :group   => deploy_user,
+          :home    => "/var/www",
+          :ssh_key => deploy[:scm][:ssh_key]
+        )
+
         scm_provider Chef::Provider::Git
 
       when 'svn'
