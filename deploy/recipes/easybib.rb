@@ -13,12 +13,7 @@ node[:deploy].each do |application, deploy|
     if cluster_name != 'EasyBib' && cluster_name != 'EasyBib Playground'
       next
     end
-
-    if instance_roles.include?('nginxphpapp')
-
-    elsif instance_roles.include?('testapp')
-
-    else
+    if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
       next
     end
 
@@ -29,7 +24,6 @@ node[:deploy].each do |application, deploy|
     if cluster_name != 'Research Cloud'
       next
     end
-
     next unless instance_roles.include?('easybibsolr')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
@@ -62,7 +56,6 @@ node[:deploy].each do |application, deploy|
     if cluster_name != 'Citation Analytics'
       next
     end
-
     next unless instance_roles.include?('elasticsearch')
 
     Chef::Log.debug('deploy.easybib - Prepare for git checkout')
