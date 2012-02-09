@@ -61,6 +61,19 @@ node[:deploy].each do |application, deploy|
     end
     next unless instance_roles.include?('backup')
 
+    scalarium_deploy_dir do
+      user  deploy[:user]
+      group deploy[:group]
+      path  deploy[:deploy_to]
+    end
+
+    scalarium_deploy do
+      deploy_data deploy
+      app application
+    end
+    
+    next
+
   when 'citation_anlytics'
     if cluster_name != 'Citation Analytics'
       next
