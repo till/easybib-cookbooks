@@ -17,6 +17,9 @@ node[:deploy].each do |application, deploy|
       next
     end
 
+  when 'admedia'
+    next unless instance_roles.include?('admedia')
+
   when 'easybib_api'
     next unless instance_roles.include?('bibapi')
 
