@@ -51,6 +51,12 @@ node[:deploy].each do |application, deploy|
 
     deploy_user = "root"
 
+  when 'research_app'
+    if cluster_name != 'Research Cloud'
+      next
+    end
+    next unless instance_roles.include?('nginxphpapp')
+
   when 'citation_anlytics'
     if cluster_name != 'Citation Analytics'
       next
