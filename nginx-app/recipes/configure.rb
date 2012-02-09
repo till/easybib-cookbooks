@@ -21,7 +21,11 @@ node[:deploy].each do |application, deploy|
   when 'easybib_solr_server'
     next # unless instanceRoles.include?('easybibsolr')
   when 'sitescraper'
-    next unless instanceRoles.include?('sitescraper')
+    next unless instance_roles.include?('sitescraper')
+
+  when 'admedia'
+    next unless instance_roles.include?('admedia')
+
   else
     Chef::Log.debug("Skipping nginx-app::configure for app #{application}")
     next
