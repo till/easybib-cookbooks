@@ -2,12 +2,6 @@ upstream phpfpm {
     server  unix:/tmp/fpm-sockets/<%= node["nginx-app"][:user] %>;
 }
 
-<%
-if node[:docroot].nil?
-  node[:docroot] = "www"
-end
--%>
-
 server {
     listen   80;
 
@@ -17,7 +11,7 @@ server {
 
     location = /health_check.php {
 
-        access_log  off;
+        access_log <%= @access_log %>;
 
         include /etc/nginx/fastcgi_params;
 
@@ -27,22 +21,22 @@ server {
 
     location = /DARTIframe.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
-        access_log  off;
+        access_log  <%= @access_log %>;
     }
 
     location = /google8a01a818524239c8.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
-        access_log  off;
+        access_log  <%= @access_log %>;
     }
 
     location = /googled16040836651a26a.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
-        access_log  off;
+        access_log  <%= @access_log %>;
     }
 
     location /nginx_status {
         stub_status on;
-        access_log  off;
+        access_log  <%= @access_log %>;
         allow       127.0.0.1;
         deny        all;
     }
@@ -58,11 +52,13 @@ server {
 <% node["nginx-app"][:static_directories].each do |dir| -%>
     location /<%= dir %>/ {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
-        access_log  off;
+        access_log  <%= @access_log %>;
     }
 <% end -%>
 
     location / {
+        access_log <= @access_log %>
+
         include /etc/nginx/fastcgi_params;
 
         fastcgi_pass  phpfpm;

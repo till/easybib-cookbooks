@@ -3,6 +3,8 @@ if !node[:deploy]
   node[:deploy][:deploy_to] = '/var/www/easybib'
 end
 
+node[:docroot] = 'www'
+
 vagrant_dir = "/vagrant_data"
 
 directory "#{node[:deploy][:deploy_to]}" do
