@@ -1,6 +1,5 @@
 # custom recipe because of: http://support.scalarium.com/discussions/problems/78-app-is-not-deploying
 
-deploy[:user]  = "www-data"
 instance_roles = node[:scalarium][:instance][:roles]
 cluster_name   = node[:scalarium][:cluster][:name]
 
