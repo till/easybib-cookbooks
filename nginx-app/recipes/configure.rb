@@ -12,11 +12,8 @@ node[:deploy].each do |application, deploy|
     end
 
   when 'easybib_api'
-    next unless instanceRoles.include?('bibapi')
-  when 'easybib_solr_research_importers'
-    next # unless instanceRoles.include?('easybibsolr')
-  when 'easybib_solr_server'
-    next # unless instanceRoles.include?('easybibsolr')
+    next unless instance_roles.include?('bibapi')
+
   when 'sitescraper'
     next unless instance_roles.include?('sitescraper')
 
