@@ -2,11 +2,15 @@ include_recipe "deploy"
 include_recipe "nginx-app::server"
 
 instance_roles = node[:scalarium][:instance][:roles]
+cluster_name   = node[:scalarium][:cluster][:name]
 
 node[:deploy].each do |application, deploy|
 
   case application
   when 'easybib'
+    if cluster_name != 'EasyBib' && cluster_name != 'EasyBib Playground'
+      next
+    end
     if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
       next
     end
@@ -16,6 +20,12 @@ node[:deploy].each do |application, deploy|
 
   when 'sitescraper'
     next unless instance_roles.include?('sitescraper')
+
+  when 'research_app'
+    if cluster_name != 'Research Cloud'
+      next
+    end
+    next unless instance_roles.include('nginxphpapp')
 
   when 'admedia'
     next unless instance_roles.include?('admedia')
