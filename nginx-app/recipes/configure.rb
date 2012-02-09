@@ -3,6 +3,7 @@ include_recipe "nginx-app::server"
 
 instance_roles = node[:scalarium][:instance][:roles]
 cluster_name   = node[:scalarium][:cluster][:name]
+app_access_log = "off"
 
 node[:deploy].each do |application, deploy|
 
@@ -37,10 +38,14 @@ node[:deploy].each do |application, deploy|
 
   template "/etc/nginx/sites-enabled/easybib.com.conf" do
     source "easybib.com.conf.erb"
-    mode "0755"
-    owner node["nginx-app"][:user]
-    group node["nginx-app"][:group]
-    variables :deploy => deploy, :application => application
+    mode   "0755"
+    owner  node["nginx-app"][:user]
+    group  node["nginx-app"][:group]
+    variables(
+      :access_log  => app_access_log,
+      :deploy      => deploy,
+      :application => application
+    )
     notifies :restart, resources(:service => "nginx"), :delayed
   end
 
