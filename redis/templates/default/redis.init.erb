@@ -18,7 +18,7 @@ DAEMON_ARGS=/etc/redis/redis.conf
 NAME=redis-server
 DESC=redis-server
 PIDFILE=<%= node[:redis][:pid_file] %>
-export SL_NAME=redis_<%= node[:scalarium][:cluster][:name] %>
+export SL_NAME="<%= node[:silverline][:name] %>_<%= node[:silverline][:environment] %>"
 
 #
 # Include defaults if available
