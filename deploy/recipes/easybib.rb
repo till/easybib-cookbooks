@@ -34,6 +34,7 @@ node[:deploy].each do |application, deploy|
 
     Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
 
+    # fix this: deploy to instance storage
     deploy[:deploy_to]       = "/solr/research_importers"
     deploy[:restart_command] = ""
 
@@ -41,11 +42,11 @@ node[:deploy].each do |application, deploy|
     if cluster_name != 'Research Cloud'
       next
     end
-
     next unless instance_roles.include?('easybibsolr')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for SOLR SERVER')
 
+    # fix this: deploy to instance storage
     deploy[:deploy_to]       = "/solr/apache-solr-1.4.1-compiled"
     deploy[:restart_command] = ""
 
