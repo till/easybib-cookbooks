@@ -57,7 +57,7 @@ server {
 <% end -%>
 
     location / {
-        access_log <= @access_log %>;
+        access_log <%= @access_log %>;
 
         include /etc/nginx/fastcgi_params;
 
