@@ -14,7 +14,7 @@ MYCHECK="/usr/bin/mysqlcheck --defaults-file=/etc/mysql/debian.cnf"
 MYCHECK_SUBJECT="WARNING: mysqlcheck has found corrupt tables"
 MYCHECK_PARAMS="--all-databases --fast --silent"
 MYCHECK_RCPT="root"
-SL_NAME="<%= node[:silverline][:mysql_sessions] %>_<%= node[:scalarium][:cluster][:name] %>"
+export SL_NAME="<%= node[:silverline][:name] %>_<%= node[:silverline][:environments] %>"
 
 # The following commands should be run when the server is up but in background
 # where they do not block the server start and in one shell instance so that

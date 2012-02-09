@@ -24,3 +24,11 @@ default["php-fpm"][:packages] = {
     "php5-easybib-xhprof"   => "5.3.5.1-easybib0",
     "php5-easybib-memcache" => "5.3.5-0easybib0"
 }
+
+default[:silverline][:name] = "php-fpm"
+
+if attribute?(:scalarium)
+  default[:silverline][:environment] = node[:scalarium][:cluster][:name]
+else
+  default[:silverline][:environment] = "production"
+end

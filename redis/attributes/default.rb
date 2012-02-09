@@ -19,3 +19,11 @@ set_unless[:redis][:master][:address]  = 'darth-vader'
 set_unless[:redis][:master][:port]     = 6379
 set_unless[:redis][:master][:password] = 'foobar'
 set_unless[:redis][:is_slave]          = false
+
+default[:silverline][:name] = "redis"
+
+if attribute?(:scalarium)
+  default[:silverline][:environment] = node[:scalarium][:cluster][:name]
+else
+  default[:silverline][:environment] = "production"
+end
