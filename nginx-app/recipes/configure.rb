@@ -1,19 +1,16 @@
 include_recipe "deploy"
 include_recipe "nginx-app::server"
 
-instanceRoles = node[:scalarium][:instance][:roles]
+instance_roles = node[:scalarium][:instance][:roles]
 
 node[:deploy].each do |application, deploy|
 
   case application
   when 'easybib'
-    if instanceRoles.include?('nginxphpapp')
-
-    elsif instanceRoles.include?('testapp')
-
-    else
+    if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
       next
     end
+
   when 'easybib_api'
     next unless instanceRoles.include?('bibapi')
   when 'easybib_solr_research_importers'
