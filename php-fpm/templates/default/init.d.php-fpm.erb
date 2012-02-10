@@ -11,8 +11,8 @@
 ### END INIT INFO
 
 # Include defaults if available
-if [ -f /etc/default/php-fpm] ; then
-        . /etc/default/php-fpm
+if [ -f /etc/default/php-fpm ]; then
+    . /etc/default/php-fpm
 fi
 
 prefix=<%= node["php-fpm"][:prefix]%>
@@ -26,7 +26,7 @@ whoami=`whoami`
 runas=<%= node["php-fpm"][:user]%>
 
 php_opts="--fpm-config $php_fpm_CONF"
-export SL_NAME="<%= node[:silverline][:name] %>_<%= node[:silverline][:environment] %>"
+#export SL_NAME="<%= node[:silverline][:name] %>_<%= node[:silverline][:environment] %>"
 
 wait_for_pid () {
     try=0
