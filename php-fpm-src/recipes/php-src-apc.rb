@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: php-fpm
+# Cookbook Name:: php-fpm-src
 # Recipe:: apc
 #
 # Copyright 2010-2011, Till Klampaeckel
@@ -59,4 +59,4 @@ execute "APC: make, make install" do
   command "make && make install"
 end
 
-include_recipe "php-fpm::configure-apc"
+include_recipe "php-apc::configure"
