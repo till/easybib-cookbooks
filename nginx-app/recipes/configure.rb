@@ -29,7 +29,7 @@ node[:deploy].each do |application, deploy|
     if cluster_name != 'Research Cloud'
       next
     end
-    next unless instance_roles.include('nginxphpapp')
+    next unless instance_roles.include?('nginxphpapp')
 
   when 'admedia'
     next unless instance_roles.include?('admedia')
