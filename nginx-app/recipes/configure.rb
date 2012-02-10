@@ -5,6 +5,9 @@ instance_roles = node[:scalarium][:instance][:roles]
 cluster_name   = node[:scalarium][:cluster][:name]
 app_access_log = "off"
 
+# need to do this better
+node[:docroot] = 'www'
+
 node[:deploy].each do |application, deploy|
 
   case application
@@ -56,3 +59,4 @@ service "php-fpm" do
   supports [ :start, :status, :restart ]
   action :restart
 end
+
