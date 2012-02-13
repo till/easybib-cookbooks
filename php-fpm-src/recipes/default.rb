@@ -86,4 +86,4 @@ end
 
 include_recipe "php-fpm::configure"
 include_recipe "php-fpm::php-src-apc"
-include_recipe "php-fpm::php-src-xhprof"
+include_recipe "php-xhprof::source"
