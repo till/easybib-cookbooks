@@ -11,4 +11,6 @@ PARAMS="--port=<%= node[:gearman][:port] %> --http-port=<%= node[:gearman][:http
 
 # Change this to true to enable the germand server
 ENABLED="true"
-export SL_NAME="<%= node[:silverline][:name] %>_<%= node[:silverline][:environment] %>"
+
+export SL_NAME="<%= node[:silverline][:name] %>"
+export SL_TAG_NAMES="<%= node[:silverline][:environment].gsub!(/\s/,'') %>"

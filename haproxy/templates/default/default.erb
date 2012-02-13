@@ -1,2 +1,3 @@
 ENABLED=1
-SL_NAME="<%= node[:silverline][:name] %>_<%= node[:silverline][:environment] %>"
+SL_NAME="<%= node[:silverline][:name] %>"
+export SL_TAG_NAMES="<%= node[:silverline][:environment].gsub!(/\s/,'') %>"
