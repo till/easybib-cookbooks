@@ -3,7 +3,7 @@ directory "/var/run/citation-backup" do
   mode      "0755"
   owner     "www-data"
   group     "www-data"
-  recursive :true
+  recursive true
 end
 
 # symlink start script
