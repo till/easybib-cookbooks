@@ -5,3 +5,8 @@ directory "/var/run/citation-backup" do
   group     "www-data"
   recursive :true
 end
+
+# symlink start script
+link "/srv/www/citationbackup/current/scripts/init.d/redis-importer" do
+  to "/etc/init.d/redis-importer"
+end
