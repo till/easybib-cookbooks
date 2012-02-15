@@ -32,8 +32,8 @@ execute "build phar" do
   end
 end
 
-execute "copy phar" do
-  command "cp modules/phar.so /usr/local/lib/php/extensions/no-debug-non-zts-20090626/"
+execute "copy phar.so" do
+  command "cp modules/phar.so #{php_ext_dir}"
   cwd     "/tmp/php-#{php_version}"
   not_if do
     File.exists?("#{php_ext_dir}/phar.so")
