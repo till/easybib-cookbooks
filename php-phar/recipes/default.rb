@@ -9,8 +9,9 @@ remote_file "/tmp/php-#{php_version}" do
 end
 
 execute "extract tar" do
-  command "tar -zxf php-#{php_version}.tar.gz"
+  command "tar -zxvf php-#{php_version}.tar.gz"
   cwd     "/tmp"
+  creates "/tmp/php-#{php_version}"
   only_if do
     File.exists?("/tmp/php-#{php_version}.tar.gz")
   end
