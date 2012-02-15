@@ -86,8 +86,4 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  if application == 'citationbackup'
-    include_recipe "php-composer::install"
-  end
-
 end
