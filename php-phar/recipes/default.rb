@@ -33,7 +33,7 @@ end
 
 execute "copy phar.so" do
   command "cp modules/phar.so #{php_ext_dir}"
-  cwd     "/tmp/php-#{php_version}"
+  cwd     "/tmp/php-#{php_version}/ext/phar"
   not_if do
     File.exists?("#{php_ext_dir}/phar.so")
   end
