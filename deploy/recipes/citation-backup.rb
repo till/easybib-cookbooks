@@ -7,6 +7,6 @@ directory "/var/run/citation-backup" do
 end
 
 # symlink start script
-link "/srv/www/citationbackup/current/scripts/init.d/redis-importer" do
-  to "/etc/init.d/redis-importer"
+link "/etc/init.d/redis-importer" do
+  to "/srv/www/citationbackup/current/scripts/init.d/redis-importer"
 end
