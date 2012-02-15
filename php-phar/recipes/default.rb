@@ -16,9 +16,16 @@ execute "extract tar" do
   end
 end
 
+execute "phpize" do
+  cwd "/tmp/php-#{php_version}/ext/phar"
+  not_if do
+    File.exists?("/tmp/php-#{php_version}/modules/phar.so")
+  end
+end
+
 execute "build phar" do
-  command "./configure --disable-all --enable-phar=shared && make"
-  cwd     "/tmp/php-#{php_version}"
+  command 'CFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" ./configure --disable-all --enable-phar=shared && make'
+  cwd     "/tmp/php-#{php_version}/ext/phar"
   not_if do
     File.exists?("/tmp/php-#{php_version}/modules/phar.so")
   end
