@@ -3,8 +3,7 @@ php_ext_dir = `php -r 'echo ini_get("extension_dir");'`.strip
 
 package "autoconf"
 
-remote_file "/tmp/php-#{php_version}" do
-  create_if_missing
+remote_file "/tmp/php-#{php_version}.tar.gz" do
   source "http://us.php.net/get/php-#{php_version}.tar.gz/from/us.php.net/mirror"
 end
 
