@@ -1,6 +1,8 @@
 php_version = node[:php_phar][:version]
 php_ext_dir = `php -r 'echo ini_get("extension_dir");'`.strip
 
+package "autoconf"
+
 execute "download PHP" do
   command "wget http://us.php.net/get/php-#{php_version}.tar.gz/from/us.php.net/mirror -O /tmp/php-#{php_version}.tar.gz"
   not_if do
