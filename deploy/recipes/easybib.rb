@@ -86,4 +86,10 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
+  if application == 'citationbackup'
+    php_composer "#{deploy[:deploy_to]}/current" do
+      action :install
+    end
+  end
+
 end
