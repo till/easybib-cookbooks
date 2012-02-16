@@ -9,7 +9,7 @@ end
 
 action :install do
   deploy_to = new_resource.name
-  if File.exists?("#{deploy_to}/composer.phar")
+  if File.exist?("#{deploy_to}/composer.phar")
     execute "install with composer" do
       command "#{@php_cmd} #{deploy_to}/composer.phar install"
       cwd     deploy_to
