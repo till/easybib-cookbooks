@@ -8,6 +8,14 @@ remote_file "/tmp/php-#{php_version}.tar.gz" do
   source "http://us.php.net/get/php-#{php_version}.tar.gz/from/us.php.net/mirror"
 end
 
+execute "test tar" do
+  command "tar -zxvf php-#{php_version}.tar.gz -O > /dev/null"
+  cwd     "/tmp"
+  only_if do
+    File.exists?("/tmp/php-#{php_version}.tar.gz")
+  end
+end
+
 execute "extract tar" do
   command "tar -zxvf php-#{php_version}.tar.gz"
   cwd     "/tmp"
