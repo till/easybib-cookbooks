@@ -55,7 +55,7 @@ ping.path = /fpm_ping
 ping.response = p0ng
 
 ;request_terminate_timeout = 0
-;request_slowlog_timeout = 0
+request_slowlog_timeout = 4
 
 slowlog = <%= node["php-fpm"][:slowlog] %>
 
