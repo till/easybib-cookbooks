@@ -37,27 +37,29 @@ execute "extract tar" do
   end
 end
 
+compile_dir = "/tmp/php-#{php_version}/ext/phar"
+
 execute "phpize" do
-  cwd "/tmp/php-#{php_version}/ext/phar"
+  cwd compile_dir
   not_if do
-    File.exists?("/tmp/php-#{php_version}/modules/phar.so")
+    File.exists?("#{compile_dir}/modules/phar.so")
   end
 end
 
 # the CFLAGS are experimental
 execute "build phar" do
   command 'CFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" ./configure --disable-all --enable-phar=shared && make'
-  cwd     "/tmp/php-#{php_version}/ext/phar"
+  cwd     compile_dir
   not_if do
-    File.exists?("/tmp/php-#{php_version}/modules/phar.so")
+    File.exists?("#{compile_dir}/modules/phar.so")
   end
 end
 
 execute "copy phar.so" do
-  command "cp modules/phar.so #{php_ext_dir}"
-  cwd     "/tmp/php-#{php_version}/ext/phar"
+  command "cp modules/phar.so #{node[:php_phar][:php_ext_dir]}"
+  cwd     compile_dir
   not_if do
-    File.exists?("#{php_ext_dir}/phar.so")
+    File.exists?("#{node[:php_phar][:php_ext_dir]}/phar.so")
   end
 end
 
