@@ -4,7 +4,7 @@ ruby_block "determine PHP environment" do
   current_node = node
   block do
     current_node[:php_phar][:php_cmd]     = `which php`.strip
-    current_node[:php_phar][:php_ext_dir] = `#{node[:php_phar][:php_cmd]} -r 'echo ini_get("extension_dir");'`.strip
+    current_node[:php_phar][:php_ext_dir] = `#{current_node[:php_phar][:php_cmd]} -r 'echo ini_get("extension_dir");'`.strip
 
     if current_node[:php_phar][:php_ext_dir].empty?
       raise "Could not determine PHP's extension_dir"
