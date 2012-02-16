@@ -1,22 +1,12 @@
 php_version = node[:php_phar][:version]
 
-ruby_block "determine PHP environment" do
-  current_node = node
-  block do
-    current_node[:php_phar][:php_cmd]     = `which php`.strip
-    current_node[:php_phar][:php_ext_dir] = `#{current_node[:php_phar][:php_cmd]} -r 'echo ini_get("extension_dir");'`.strip
-
-    if current_node[:php_phar][:php_ext_dir].empty?
-      raise "Could not determine PHP's extension_dir"
-    end
-    #Chef::Log.debug(node[:php_phar][:php_ext_dir])
-  end
-end
-
 package "autoconf"
 
 remote_file "/tmp/php-#{php_version}.tar.gz" do
   source "http://us.php.net/get/php-#{php_version}.tar.gz/from/us.php.net/mirror"
+  only_if do
+    !File.exists?("/tmp/php-#{php_version}.tar.gz") || !File.directory?("/tmp/php-#{php_version}")
+  end
 end
 
 execute "extract tar" do
@@ -46,12 +36,13 @@ execute "build phar" do
   end
 end
 
-execute "copy phar.so" do
-  command "cp modules/phar.so #{node[:php_phar][:php_ext_dir]}"
-  cwd     compile_dir
-  not_if do
-    File.exists?("#{node[:php_phar][:php_ext_dir]}/phar.so")
-  end
+script "copy phar.so into extension_dir" do
+  interpreter "bash"
+  cwd         compile_dir
+  code <<-EOH
+  EXT_DIR=`/usr/local/bin/php -r 'echo ini_get("extension_dir");'`
+  cp -vf modules/phar.so $EXT_DIR
+  EOH
 end
 
 include_recipe "php-phar::configure"
