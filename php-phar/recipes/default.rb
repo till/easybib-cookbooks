@@ -40,7 +40,8 @@ script "copy phar.so into extension_dir" do
   interpreter "bash"
   cwd         compile_dir
   code <<-EOH
-  EXT_DIR=`/usr/local/bin/php -r 'echo ini_get("extension_dir");'`
+  PHP_CMD=$(which php)
+  EXT_DIR=$($PHP_CMD -r 'echo ini_get("extension_dir");')
   cp -vf modules/phar.so $EXT_DIR
   EOH
 end
