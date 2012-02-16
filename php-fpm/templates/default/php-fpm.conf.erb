@@ -44,10 +44,10 @@ user = <%= node["php-fpm"][:user] %>
 group = <%= node["php-fpm"][:group] %>
 
 pm = dynamic
-pm.max_children = 50
-pm.start_servers = 20
-pm.min_spare_servers = 5
-pm.max_spare_servers = 35
+pm.max_children = 100
+pm.start_servers = 30
+pm.min_spare_servers = 10
+pm.max_spare_servers = 100
 pm.max_requests = 500
 pm.status_path = /fpm_status
 
