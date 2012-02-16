@@ -2,6 +2,10 @@ php_version = node[:php_phar][:version]
 php_cmd     = "/usr/local/bin/php"
 php_ext_dir = `#{php_cmd} -r 'echo ini_get("extension_dir");'`.strip
 
+if php_ext_dir.empty?
+  raise "Could not determine PHP's extension_dir"
+end
+
 package "autoconf"
 
 remote_file "/tmp/php-#{php_version}.tar.gz" do
@@ -32,6 +36,7 @@ execute "phpize" do
   end
 end
 
+# the CFLAGS are experimental
 execute "build phar" do
   command 'CFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" ./configure --disable-all --enable-phar=shared && make'
   cwd     "/tmp/php-#{php_version}/ext/phar"
