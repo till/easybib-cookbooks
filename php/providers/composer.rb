@@ -11,7 +11,7 @@ action :install do
       user        "www-data"
       code <<-EOH
       PHP_CMD=$(which php)
-      $(PHP_CMD composer.phar install)
+      $($PHP_CMD composer.phar install)
       EOH
     end
   end
