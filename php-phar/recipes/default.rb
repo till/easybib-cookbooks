@@ -1,5 +1,6 @@
 php_version = node[:php_phar][:version]
-php_ext_dir = `php -r 'echo ini_get("extension_dir");'`.strip
+php_cmd     = `which php`.strip
+php_ext_dir = `#{php_cmd} -r 'echo ini_get("extension_dir");'`.strip
 
 package "autoconf"
 
