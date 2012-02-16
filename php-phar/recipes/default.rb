@@ -1,13 +1,12 @@
 php_version = node[:php_phar][:version]
 
 ruby_block "determine PHP environment" do
+  current_node = node
   block do
-    node[:php_phar] = Mash.new unless node[:php_phar]
+    current_node[:php_phar][:php_cmd]     = `which php`.strip
+    current_node[:php_phar][:php_ext_dir] = `#{node[:php_phar][:php_cmd]} -r 'echo ini_get("extension_dir");'`.strip
 
-    node[:php_phar][:php_cmd]     = `which php`.strip
-    node[:php_phar][:php_ext_dir] = `#{node[:php_phar][:php_cmd]} -r 'echo ini_get("extension_dir");'`.strip
-
-    if node[:php_phar][:php_ext_dir].empty?
+    if current_node[:php_phar][:php_ext_dir].empty?
       raise "Could not determine PHP's extension_dir"
     end
     #Chef::Log.debug(node[:php_phar][:php_ext_dir])
