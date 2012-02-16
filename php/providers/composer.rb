@@ -11,7 +11,8 @@ action :install do
       user        "www-data"
       code <<-EOH
       PHP_CMD=$(which php)
-      $($PHP_CMD composer.phar install)
+      COMPOSER="${PHP_CMD} composer.phar --quiet --no-interaction install"
+      $($COMPOSER)
       EOH
     end
   end
