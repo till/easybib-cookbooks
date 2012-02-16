@@ -1,18 +1,18 @@
 def initialize(*args)
   super(*args)
-
-  @php_cmd = `which php`.strip
-  if @php_cmd.empty?
-    raise Chef::Exceptions::ShellCommandFailed, "PHP's CLI is not installed, or not in the path."
-  end
 end
 
 action :install do
   deploy_to = new_resource.name
   if ::File.exists?("#{deploy_to}/composer.phar")
-    execute "install with composer" do
-      command "#{@php_cmd} #{deploy_to}/composer.phar install"
-      cwd     deploy_to
+    script "install dependencies with composer" do
+      interpreter "bash"
+      cwd         deploy_to
+      user        "www-data"
+      code <<-EOH
+      PHP_CMD=$(which php)
+      $(PHP_CMD composer.phar install)
+      EOH
     end
   end
 end
