@@ -1,2 +1,2 @@
-export SL_NAME="<%= node[:silverline][:name] %>"
-export SL_TAG_NAMES="<%= node[:silverline][:environment].gsub!(/\s/,'') %>"
+export SL_NAME="<%= node[:silverline][:php_fpm_name] %>"
+export SL_TAG_NAMES="<%= node[:silverline][:environment] %>"
