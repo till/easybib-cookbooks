@@ -34,8 +34,8 @@ CONFIGURATION_FILE=/etc/default/couchdb
 RUN_DIR=/usr/local/var/run/couchdb
 LSB_LIBRARY=/lib/lsb/init-functions
 
-SL_NAME="<%= node[:silverline][:couchdb] %>"
-SL_TAG_NAMES="<%= node[:silverline][:environment].gsub!(/\s/,'') %>"
+export SL_NAME="<%= node[:silverline][:couchdb_name] %>"
+export SL_TAG_NAMES="<%= node[:silverline][:environment] %>"
 
 if test ! -x $COUCHDB; then
     exit $SCRIPT_ERROR
