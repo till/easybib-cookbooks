@@ -18,8 +18,6 @@ DAEMON_ARGS=/etc/redis/redis.conf
 NAME=redis-server
 DESC=redis-server
 PIDFILE=<%= node[:redis][:pid_file] %>
-export SL_NAME="<%= node[:silverline][:name] %>"
-export SL_TAG_NAMES="<%= node[:silverline][:environment].gsub!(/\s/,'') %>"
 
 #
 # Include defaults if available

@@ -15,10 +15,10 @@ default[:haproxy][:errorloc] = {
     "504" => "5xx.html"
 }
 
-default[:silverline][:name] = "haproxy"
+default[:silverline][:haproxy_name] = "haproxy"
 
 if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name]
+  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub!(/\s/,'')
 else
   default[:silverline][:environment] = "production"
 end

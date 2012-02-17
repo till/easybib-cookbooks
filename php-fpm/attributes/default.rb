@@ -25,10 +25,10 @@ default["php-fpm"][:packages] = {
     "php5-easybib-memcache" => "5.3.5-0easybib0"
 }
 
-default[:silverline][:name] = "php-fpm"
+default[:silverline][:php_fpm_name] = "php-fpm"
 
 if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name]
+  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub!(/\s/,'')
 else
   default[:silverline][:environment] = "production"
 end

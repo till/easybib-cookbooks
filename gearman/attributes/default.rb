@@ -4,10 +4,10 @@ default[:gearman][:debug] = "1"
 default[:gearman][:pecl]  = '0.8.0'
 default[:gearman][:http]  = 80
 
-default[:silverline][:name] = "gearman-job-server"
+default[:silverline][:gearman_name] = "gearman-job-server"
 
 if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name]
+  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub!(/\s/,'')
 else
   default[:silverline][:environment] = "production"
 end
