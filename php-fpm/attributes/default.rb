@@ -28,7 +28,7 @@ default["php-fpm"][:packages] = {
 default[:silverline][:php_fpm_name] = "php-fpm"
 
 if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub!(/\s/,'')
+  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
 else
   default[:silverline][:environment] = "production"
 end

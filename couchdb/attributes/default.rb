@@ -18,7 +18,7 @@ set_unless[:couchdb_admins] = {}
 default[:silverline][:couchdb_name] = "couchdb"
 
 if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub!(/\s/,'')
+  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
 else
   default[:silverline][:environment] = "production"
 end
