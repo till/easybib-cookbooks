@@ -2,7 +2,7 @@ include_recipe "dnsmasq::service"
 
 template "/etc/dnsmasq.d/local.conf" do
   mode   "0644"
-  source "local.erb"
+  source "local.conf.erb"
   variables(
     :dnsmasq => node[:dnsmasq]
   )
