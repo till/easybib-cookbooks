@@ -3,23 +3,14 @@ Vagrant::Config.run do |config|
 
   #config.vm.boot_mode = :gui
 
-  config.vm.network "33.33.33.124"
-
-  config.vm.customize do |vm|
-    vm.name = "EasyBib"
-    vm.memory_size = 1024
-  end
+  config.vm.network :hostonly, "33.33.33.124"
 
   config.vm.share_folder("v-data", "/vagrant_data", "./../")
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
 
-    chef.add_recipe "nginx-app::server"
-    chef.add_recipe "php-fpm"
-    chef.add_recipe "php-phar"
-
-    chef.add_recipe "nginx-app::projectsharing"
+    chef.add_recipe "dnsmasq"
 
     chef.log_level = :debug
   end
