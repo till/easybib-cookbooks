@@ -18,5 +18,5 @@ end
 
 cron "run backup to s3" do
   minute  "*/5"
-  command "/usr/local/bin/redis-backup -e production -b"
+  command "/usr/local/bin/php /usr/local/bin/redis-backup -e production -b"
 end
