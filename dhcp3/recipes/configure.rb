@@ -7,5 +7,5 @@ template "/etc/dhcp3/dhclient.conf" do
   owner     "root"
   group     "root"
   variables :dns_server => '127.0.0.1'
-  notifies  :restart, "service[dhcp3]"
+  notifies  :restart, "service[networking]"
 end
