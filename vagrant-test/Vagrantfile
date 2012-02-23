@@ -12,6 +12,7 @@ Vagrant::Config.run do |config|
 
     chef.add_recipe "dnsmasq"
     chef.add_recipe "dhcp3::configure"
+    chef.add_recipe "php-fpm::install-apt"
 
     chef.log_level = :debug
   end
