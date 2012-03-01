@@ -1,5 +1,6 @@
 Vagrant::Config.run do |config|
-  config.vm.box = "karmic-nfs_0.3_4.1.8"
+  config.vm.box = "lucid64"
+  #cconfig.vm.
 
   #config.vm.boot_mode = :gui
 
@@ -10,9 +11,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
 
-    chef.add_recipe "dnsmasq"
-    chef.add_recipe "dhcp3::configure"
-    chef.add_recipe "php-fpm::install-apt"
+    chef.add_recipe "gearmand"
 
     chef.log_level = :debug
   end
