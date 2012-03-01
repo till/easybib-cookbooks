@@ -52,8 +52,7 @@ status()
 start()
 {
   log_daemon_msg "Starting Gearman Server" "${NAME}"
-  if ! test -d ${PIDDIR}
-  then
+  if [ ! -d ${PIDDIR} ]; then
     mkdir ${PIDDIR}
     chown ${GEARMANUSER} ${PIDDIR}
   fi
