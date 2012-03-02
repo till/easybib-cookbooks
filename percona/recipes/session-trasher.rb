@@ -1,6 +1,10 @@
 root_dir = "/opt/easybib"
 php_bin  = `which php`.strip
 
+if php_bin.empty?
+  raise "No PHP found/installed."
+end
+
 directory "#{root_dir}" do
   owner "root"
   group "root"
