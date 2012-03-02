@@ -21,9 +21,11 @@ if !node[:scalarium] || !node[:mysql]
   raise "This relies on the password being send from Scalarium"
 end
 
+mysql_password = node[:mysql][:server_root_password]
+
 # cron starts at 10 AM UTC (~4 AM EST depending on DST)
 cron "#{root_dir}" do
   hour "10"
   minute "0"
-  command "#{php_bin} #{root_dir}/session-trasher/script.php -p=#{node[:mysql][:server_root_password]}"
+  command "#{php_bin} #{root_dir}/session-trasher/script.php -p=#{mysql_password}"
 end
