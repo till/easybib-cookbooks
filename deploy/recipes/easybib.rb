@@ -92,4 +92,14 @@ node[:deploy].each do |application, deploy|
     end
   end
 
+  if application == 'research_app'
+    php_composer "#{deploy[:deploy_to]}/current" do
+      action :install
+    end
+
+    php_composer "#{deploy[:deploy_to]}/current/app/modules/admin" do
+      action :install
+    end
+  end
+
 end
