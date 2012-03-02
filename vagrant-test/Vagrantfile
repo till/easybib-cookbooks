@@ -1,20 +1,22 @@
 Vagrant::Config.run do |config|
-  config.vm.box = "lucid64"
-  #cconfig.vm.
+  config.vm.box = "lucid-nfs_0.1_4.1.0"
 
   #config.vm.boot_mode = :gui
 
   config.vm.network :hostonly, "33.33.33.124"
 
-  config.vm.share_folder("v-data", "/vagrant_data", "./../")
+  #Vagrant::Config.run do |config|
+  #  config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
+  #end
+  #config.vm.share_folder("v-data", "/vagrant_data", "./../")
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
 
     chef.add_recipe "vagrant-fix"
-    chef.add_recipe "gearmand"
-    chef.add_recipe "php-fpm"
-    chef.add_recipe "php-gearman"
+    #chef.add_recipe "gearmand"
+    #chef.add_recipe "php-fpm"
+    #chef.add_recipe "php-gearman"
 
     chef.log_level = :debug
   end
