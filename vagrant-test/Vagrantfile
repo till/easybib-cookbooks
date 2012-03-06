@@ -14,9 +14,7 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = "./../"
 
     chef.add_recipe "vagrant-fix"
-    #chef.add_recipe "gearmand"
-    #chef.add_recipe "php-fpm"
-    #chef.add_recipe "php-gearman"
+    chef.add_recipe "php-fpm"
 
     chef.log_level = :debug
   end
