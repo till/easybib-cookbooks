@@ -1,14 +1,12 @@
 description "Apache Solr <%=@solr_version%>"
  
-# Make sure the file system and network devices have started before
-# we begin the daemon
 start on (filesystem and net-device-up IFACE!=lo)
  
-# Stop the event daemon on system shutdown
 stop on shutdown
  
-# Respawn the process on unexpected termination
 respawn
 
-# The meat and potatoes
-exec /usr/bin/java -Xms128m -Xmx256m -Dsolr.solr.home=<%=@solr_install%>/solr -Djetty.home=<%=@solr_install%> -jar <%=@solr_install%>/start.jar >> /var/log/apache-solr.log 2>&1
+exec /usr/bin/java -Xms128m -Xmx256m \
+-Dsolr.solr.home=<%=@solr_install%>/solr \
+-Djetty.home=<%=@solr_install%> \
+-jar <%=@solr_install%>/start.jar >> /var/log/apache-solr.log 2>&1
