@@ -5,3 +5,4 @@ default[:apache_solr][:group]    = "root"
 default[:apache_solr][:base_dir] = "/opt/apache"
 
 set_unless[:apache_solr][:mirror] = "http://apache.imsam.info/lucene/solr"
+set_unless[:apache_solr][:app]    = "example"
