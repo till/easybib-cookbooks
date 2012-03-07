@@ -25,3 +25,5 @@ link "#{base_dir}/apache-solr" do
   group node[:apache_solr][:group]
   to    "#{base_dir}/apache-solr-#{apache_solr_version}"
 end
+
+include_recipe "apache-solr::service"
