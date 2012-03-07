@@ -1,4 +1,5 @@
 include_recipe "apache-solr::prepare"
+include_recipe "apache-solr::service"
 
 apache_solr_version = node[:apache_solr][:version]
 apache_solr_release = "apache-solr-#{apache_solr_version}.zip"
@@ -21,9 +22,8 @@ execute "unzip the #{apache_solr_release} file" do
 end
 
 link "#{base_dir}/apache-solr" do
-  owner node[:apache_solr][:user]
-  group node[:apache_solr][:group]
-  to    "#{base_dir}/apache-solr-#{apache_solr_version}"
+  owner    node[:apache_solr][:user]
+  group    node[:apache_solr][:group]
+  to       "#{base_dir}/apache-solr-#{apache_solr_version}"
+  notifies :start, "service[apache-solr]"
 end
-
-include_recipe "apache-solr::service"
