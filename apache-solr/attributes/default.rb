@@ -6,7 +6,7 @@ default[:apache_solr][:base_dir] = "/opt/apache"
 default[:apache_solr][:log_file] = "/var/log/apache-solr.log"
 
 set_unless[:apache_solr][:mirror] = "http://apache.imsam.info/lucene/solr"
-set_unless[:apache_solr][:app]    = "example"
+set_unless[:apache_solr][:app]    = "easybib-test"
 
 set_unless[:apache_solr][:memory]       = {}
 set_unless[:apache_solr][:memory][:min] = '128m'
