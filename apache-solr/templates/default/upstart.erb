@@ -1,0 +1,12 @@
+description "Apache Solr <%=@solr_version%>"
+ 
+start on (filesystem and net-device-up IFACE!=lo)
+ 
+stop on shutdown
+ 
+respawn
+
+exec /usr/bin/java -Xms<%=@solr_mem_min%> -Xmx<%=@solr_mem_max%> \
+-Dsolr.solr.home=<%=@solr_install%>/solr \
+-Djetty.home=<%=@solr_install%> \
+-jar <%=@solr_install%>/start.jar >> <%=@solr_log%> 2>&1

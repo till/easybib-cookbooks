@@ -24,12 +24,10 @@ node[:deploy].each do |application, deploy|
 
   when 'easybib_solr_research_importers'
     next unless cluster_name == 'Research Cloud'
-    next unless instance_roles.include?('easybibsolr')
+    next unless instance_roles.include?('researchimporter')
 
     Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
 
-    # fix this: deploy to instance storage
-    deploy[:deploy_to]       = "/solr/research_importers"
     deploy[:restart_command] = ""
 
   when 'easybib_solr_server'
@@ -86,8 +84,18 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  if application == 'citationbackup'
+  if application == 'citationbackup' || application == 'easybib_solr_research_importers'
     php_composer "#{deploy[:deploy_to]}/current" do
+      action :install
+    end
+  end
+
+  if application == 'research_app'
+    php_composer "#{deploy[:deploy_to]}/current" do
+      action :install
+    end
+
+    php_composer "#{deploy[:deploy_to]}/current/app/modules/admin" do
       action :install
     end
   end

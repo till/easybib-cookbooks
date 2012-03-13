@@ -4,4 +4,3 @@ check process redis
   stop program = "/etc/init.d/redis-server stop"
   if failed host <%= node[:redis][:bind_address] %> port <%= node[:redis][:port] %> then restart
   if 5 restarts within 5 cycles then timeout
-

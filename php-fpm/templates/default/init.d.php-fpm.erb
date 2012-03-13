@@ -27,6 +27,16 @@ runas=<%= node["php-fpm"][:user]%>
 
 php_opts="--fpm-config $php_fpm_CONF"
 
+# prepare function
+# todo doesn't work with pools (currently)
+php_fpm_prepare () {
+    local SOCKET_DIR=`dirname $(cat $php_fpm_CONF|grep 'listen ='|awk '{print $3}')`
+    if [ "x${SOCKET_DIR}" != "x" ]; then
+        mkdir -p "${SOCKET_DIR}"
+        chown -R $runas:$runas $SOCKET_DIR
+    fi
+}
+
 wait_for_pid () {
     try=0
 
@@ -58,6 +68,9 @@ wait_for_pid () {
 
 case "$1" in
     start)
+
+        php_fpm_prepare
+
         echo -n "Starting php-fpm "
 
         $php_fpm_BIN $php_opts
