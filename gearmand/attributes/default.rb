@@ -11,9 +11,3 @@ default[:gearmand][:source][:flags]   = "--disable-libpq --disable-libmemcached 
 
 # these are for silverline
 default[:silverline][:gearmand_name] = "gearmand"
-
-if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
-else
-  default[:silverline][:environment] = "production"
-end
