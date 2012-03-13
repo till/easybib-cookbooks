@@ -16,9 +16,3 @@ default[:couchbase][:dl] = "http://packages.couchbase.com/releases/couch/1.1.2/c
 set_unless[:couchdb_admins] = {}
 
 default[:silverline][:couchdb_name] = "couchdb"
-
-if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
-else
-  default[:silverline][:environment] = "production"
-end

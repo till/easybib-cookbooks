@@ -21,9 +21,3 @@ set_unless[:redis][:master][:password] = 'foobar'
 set_unless[:redis][:is_slave]          = false
 
 default[:silverline][:redis_name] = "redis"
-
-if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
-else
-  default[:silverline][:environment] = "production"
-end

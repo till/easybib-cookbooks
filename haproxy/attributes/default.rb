@@ -4,7 +4,7 @@ if attribute?(:scalarium_initial_setup)
   })
 end
 
-default[:haprox]             = {}
+default[:haproxy]             = {}
 default[:haproxy][:errorloc] = {
     "401" => "401.html",
     "403" => "403.html",
@@ -16,9 +16,3 @@ default[:haproxy][:errorloc] = {
 }
 
 default[:silverline][:haproxy_name] = "haproxy"
-
-if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
-else
-  default[:silverline][:environment] = "production"
-end
