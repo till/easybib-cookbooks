@@ -25,5 +25,4 @@ link "#{base_dir}/apache-solr" do
   owner    node[:apache_solr][:user]
   group    node[:apache_solr][:group]
   to       "#{base_dir}/apache-solr-#{apache_solr_version}"
-  notifies :start, "service[apache-solr]"
 end
