@@ -35,7 +35,7 @@ RUN_DIR=/usr/local/var/run/couchdb
 LSB_LIBRARY=/lib/lsb/init-functions
 
 export SL_NAME="<%= node[:silverline][:couchdb_name] %>"
-export SL_TAG_NAMES="<%= node[:silverline][:environment] %>"
+export SL_TAG_NAMES="<%= node[:silverline][:sl_tag_names] %>"
 
 if test ! -x $COUCHDB; then
     exit $SCRIPT_ERROR

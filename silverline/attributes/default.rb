@@ -1,5 +1,3 @@
-default[:silverline][:name] = "mysql-sessions"
-
 if attribute?(:scalarium)
   default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
   default[:silverline][:roles] = node[:scalarium][:instance][:roles]
