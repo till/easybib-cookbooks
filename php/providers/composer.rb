@@ -15,6 +15,9 @@ action :install do
       cwd         deploy_to
       user        "www-data"
       code <<-EOH
+      PATH=$PATH:/usr/bin:/usr/local/bin
+      export PATH
+
       PHP_CMD=$(which php)
       COMPOSER="${PHP_CMD} composer.phar --quiet --no-interaction install"
       $($COMPOSER)
