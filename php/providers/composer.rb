@@ -19,6 +19,12 @@ action :install do
       export PATH
 
       PHP_CMD=$(which php)
+
+      HAS_PHAR=$(php -m|grep Phar|wc -l)
+      if [ $HAS_PHAR -eq 0 ]; then
+        echo "No phar installed."
+        exit 1        
+      fi
       COMPOSER="${PHP_CMD} composer.phar --quiet --no-interaction install"
       $($COMPOSER)
       EOH
