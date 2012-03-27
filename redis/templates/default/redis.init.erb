@@ -21,7 +21,7 @@ PIDFILE=<%= node[:redis][:pid_file] %>
 
 #
 # Include defaults if available
-if [ -f /etc/default/redis] ; then
+if [ -f /etc/default/redis ]; then
         . /etc/default/redis
 fi
 
