@@ -42,6 +42,12 @@ node[:deploy].each do |application, deploy|
 
     deploy[:user] = "root"
 
+  when 'ebim2':
+    next unless cluster_name == 'Research Cloud'
+    next unless instance_roles.include?('easybibsolr')
+
+    deploy[:restart_command] = ""
+
   when 'research_app'
     next unless cluster_name == 'Research Cloud'
     next unless instance_roles.include?('nginxphpapp')
