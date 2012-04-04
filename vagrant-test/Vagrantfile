@@ -7,8 +7,8 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = "./../"
 
     chef.add_recipe "vagrant-fix"
-    chef.add_recipe "apache-solr"
-    chef.add_recipe "apache-solr::setup"
+    chef.add_recipe "php-fpm::install-apt"
+    chef.add_recipe "php-xdebug"
 
     chef.log_level = :debug
   end
