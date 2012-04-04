@@ -27,9 +27,18 @@ execute "phpize" do
   end
 end
 
-# the CFLAGS are experimental
+case node[:lsb][:codename]
+when 'lucid'
+  # the CFLAGS are experimental
+  build_cmd = 'CFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" ./configure --disable-all --enable-phar=shared && make'
+when 'karmic'
+  build_cmd = './configure --disable-all --enable-phar=shared && make'
+else
+  raise "Unsupported platform #{node[:lsb][:codename]}"
+end
+
 execute "build phar" do
-  command 'CFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" ./configure --disable-all --enable-phar=shared && make'
+  command build_cmd
   cwd     compile_dir
   not_if do
     File.exists?("#{compile_dir}/modules/phar.so")
