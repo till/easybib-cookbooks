@@ -4,8 +4,6 @@ else
   xdebug_version = "-#{node[:xdebug][:version]}"
 end
 
-execute "install xdebug" do
-  command "pecl install xdebug#{xdebug_version}"
-end
+php_pecl "xdebug#{xdebug_version}"
 
 include_recipe "php-xdebug::configure"
