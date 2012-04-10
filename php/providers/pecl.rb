@@ -1,5 +1,6 @@
 action :install do
-  command "pecl install #{new_resource.name}"
+  # TODO: new_resource.version
+  execute "pecl install #{new_resource.name}"
 end
 
 action :setup do
