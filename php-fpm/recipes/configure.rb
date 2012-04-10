@@ -54,7 +54,9 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
   mode "0755"
   source "php.ini.erb"
   variables(
-    :enable_dl => "Off"
+    :enable_dl      => 'Off',
+    :memory_limit   => node["php-fpm"][:memorylimit],
+    :display_errors => 'Off'
   )
   owner node["php-fpm"][:user]
   group node["php-fpm"][:group]
@@ -64,7 +66,9 @@ template "#{etc_cli_dir}/#{conf_cli}" do
   mode "0755"
   source "php.ini.erb"
   variables(
-    :enable_dl => "On"
+    :enable_dl      => "On",
+    :memory_limit   => '1024M',
+    :display_errors => 'On'
   )
   owner node["php-fpm"][:user]
   group node["php-fpm"][:group]

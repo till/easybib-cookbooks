@@ -24,9 +24,9 @@ realpath_cache_ttl = 3600
 expose_php = Off
 max_execution_time = <%= node["php-fpm"][:maxexecutiontime] %>
 max_input_time = 60
-memory_limit = <%= node["php-fpm"][:memorylimit] %>
+memory_limit = <%= @memory_limit %>
 error_reporting = E_ALL & ~E_DEPRECATED
-display_errors = Off
+display_errors = <%= @display_errors %>
 display_startup_errors = Off
 log_errors = On
 log_errors_max_len = 1024
