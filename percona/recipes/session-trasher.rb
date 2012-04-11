@@ -1,9 +1,12 @@
 package "php5-cli"
 
 root_dir = "/opt/easybib"
-php_bin  = `which php`.strip
 
-if php_bin.empty?
+if File.exists?("/usr/bin/php")
+  php_bin = "/usr/bin/php"
+elsif File.exists?("/usr/local/bin/php")
+  php_bin = "/usr/local/bin/php"
+else
   raise "No PHP found/installed."
 end
 
