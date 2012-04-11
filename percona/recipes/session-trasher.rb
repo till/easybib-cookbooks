@@ -1,3 +1,5 @@
+package "php5-cli"
+
 root_dir = "/opt/easybib"
 php_bin  = `which php`.strip
 
