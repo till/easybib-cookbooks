@@ -2,13 +2,7 @@ package "php5-cli"
 
 root_dir = "/opt/easybib"
 
-if File.exists?("/usr/bin/php")
-  php_bin = "/usr/bin/php"
-elsif File.exists?("/usr/local/bin/php")
-  php_bin = "/usr/local/bin/php"
-else
-  raise "No PHP found/installed."
-end
+php_bin = "/usr/bin/php"
 
 directory "#{root_dir}" do
   owner "root"
