@@ -1,5 +1,5 @@
 default[:percona]           = {}
-default[:percona][:version] = "5.1"
+default[:percona][:version] = "5.5"
 default[:percona][:key]     = "1C4CBDCDCD2EFD2A"
 
 # set if scalarium is not available
