@@ -50,15 +50,16 @@ channels = {
 }
 
 packages = {
-  "Crypt_HMAC2-beta"             => "pear",
-  "Net_Gearman-alpha"            => "pear",
-  "Services_Amazon_S3-alpha"     => "pear",
-  "Net_CheckIP2-1.0.0RC3"        => "pear",
-  "HTMLPurifier"                 => "hp",
-  "Easybib_Form_Decorator-0.2.0" => "easybib",
-  "Lagged_Loader-alpha"          => "easybib",
-  "Rediska-beta"                 => "easybib",
-  "StatsD-alpha"                 => "easybib"
+  "Crypt_HMAC2-beta"                          => "pear",
+  "Net_Gearman-alpha"                         => "pear",
+  "Services_Amazon_S3-alpha"                  => "pear",
+  "Net_CheckIP2-1.0.0RC3"                     => "pear",
+  "HTMLPurifier"                              => "hp",
+  "Easybib_Form_Decorator-0.2.0"              => "easybib",
+  "Lagged_Loader-alpha"                       => "easybib",
+  "Rediska-beta"                              => "easybib",
+  "StatsD-alpha"                              => "easybib",
+  "Lagged_Session_SaveHandler_Memcache-0.5.0" => "easybib"
 }
 
 # discover PEAR channels
