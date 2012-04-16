@@ -7,6 +7,8 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = "./../"
 
     chef.add_recipe "vagrant-fix"
+    chef.add_recipe "nginx-app::server"
+    chef.add_recipe "nginx-app::research"
     chef.add_recipe "php-fpm::install-apt"
     chef.add_recipe "php-enchant"
 
