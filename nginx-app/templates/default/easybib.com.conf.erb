@@ -57,14 +57,14 @@ server {
 <% end -%>
 
 <% @img_alias.each do |www_alias,www_dir| -%>
-    location /js/<%=www_alias%>/ {
+    location /images/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
     }
 <% end -%>
 
 <% @css_alias.each do |www_alias,www_dir| -%>
-    location /js/<%=www_alias%>/ {
+    location /css/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
     }
