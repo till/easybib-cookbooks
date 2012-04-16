@@ -1,6 +1,8 @@
 action :install do
   # TODO: new_resource.version
-  execute "pecl install #{new_resource.name}"
+  execute "pecl install #{new_resource.name}" do
+    ignore_failure true
+  end
 end
 
 action :setup do
