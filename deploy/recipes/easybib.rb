@@ -9,7 +9,7 @@ node[:deploy].each do |application, deploy|
 
   case application
   when 'easybib'
-    if cluster_name != 'EasyBib' && cluster_name != 'EasyBib Playground'
+    if cluster_name != 'EasyBib' && cluster_name != 'EasyBib Playground' && cluster_name != 'Pearson'
       next
     end
     if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
