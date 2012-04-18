@@ -8,5 +8,5 @@ end
 template "/etc/init.d/haproxy" do
   source "haproxy.init.erb"
   mode "0755"
-  notifies :restart, "service[haproxy]"
+  notifies :restart, resources(:service => 'haproxy')
 end
