@@ -1,4 +1,0 @@
-Defaults    env_reset
-root    ALL=(ALL) ALL
-%sudo ALL=NOPASSWD: ALL
-ubuntu  ALL=(ALL) NOPASSWD:ALL
