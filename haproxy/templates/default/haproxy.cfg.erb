@@ -32,8 +32,8 @@ defaults
   <% end %>
 <%
 # bind haproxy to the following parameters
-haproxy_port = 80 # 31337
-haproxy_host = "" # "127.0.0.1"
+haproxy_port = 80
+haproxy_host = ""
 
 # rise - number of successful checks to determine if the backend is 'up'
 haproxy_rise = 2
@@ -97,22 +97,3 @@ frontend http-in
   <% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
   default_backend php_app_servers
   <% end -%>
-
-#frontend https-in
-#  mode tcp
-#  bind :443
-
-  # all domains of PHP applications
-#  <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
-#    <% app_config['domains'].each do |domain| -%>
-#  acl php_applications_ssl hdr_end(host) -i <%= domain %>
-#    <% end -%>
-#  <% end -%>
-
-#  <% unless node[:haproxy][:php_applications].empty? || node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
-#  use_backend php_app_servers_ssl if php_applications_ssl
-#  <% end -%>
-
-#  <% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
-#  default_backend php_app_servers_ssl
-#  <% end -%>
