@@ -29,7 +29,8 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :css_alias   => node["nginx-app"][:css_modules],
     :deploy      => node[:deploy],
     :application => "easybib",
-    :access_log  => 'off'
+    :access_log  => 'off',
+    :nginx_extra => 'sendfile  off;'
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
