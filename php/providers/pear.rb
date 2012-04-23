@@ -33,8 +33,6 @@ def pear_cmd(pear, action, package, force, channel, version)
 
   # get the alias - BUT Y U NEED ALIAS?! - because when the channel is 'foo.example.org/pear' it screws up pear install
   command_alias = "#{pear} channel-info #{channel}|grep -a Alias|awk '{print $2}'"
-  Chef::Log.debug("Alias of the PEAR channel: #{command_alias}")
-
   channel_alias = pear_run(command_alias)
   if channel_alias.empty?
     raise "Could not find alias for #{channel}"
