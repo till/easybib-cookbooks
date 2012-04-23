@@ -29,24 +29,23 @@ def pear_run(cmd)
   return out
 end
 
-def is_discovered(pear, channel)
-  command = "#{pear} channel-info #{channel}|wc -l"
+def discovered?(pear, channel)
+  command = "#{pear} channel-info #{channel}"
   cmd     = Chef::ShellOut.new(command)
 
   cmd.run_command
 
-  count = cmd.stdout
-  if Integer(count) > 1
-    return true
-  else
+  if cmd.exitstatus > 0
     return false
+  else
+    return true
   end
 
 end
 
 def pear_cmd(pear, action, package, force, channel, version)
 
-  if is_discovered(pear, channel) == false
+  if not discovered?(pear, channel)
     discover = Chef::ShellOut.new("#{pear} channel-discover #{channel}")
     discover.run_command
   end
