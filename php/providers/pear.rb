@@ -81,7 +81,6 @@ def pear_cmd(pear, action, package, force, channel, version)
   end
 
   complete_command = "#{pear} #{action}#{f_param} #{channel_alias}/#{package}#{version_str}"
-  Chef::Log.debug(complete_command)
   execute "PEAR: run #{action}: #{complete_command}" do
     command complete_command
   end
