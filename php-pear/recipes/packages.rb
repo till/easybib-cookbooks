@@ -52,7 +52,7 @@ packages.each do |package,channel|
     version = ""
   end
 
-  puts "PACKAGE: #{package}, Version: #{version}"
+  Chef::Log.info("PACKAGE: #{package}, Version: #{version}, Channel: #{channel}")
 
   php_pear "#{package}" do
     action  :install_if_missing
