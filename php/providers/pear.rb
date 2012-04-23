@@ -10,15 +10,18 @@ def initialize(*args)
   @pear_cmd = pear
 
   Chef::Log.debug("Looks like we found a PEAR installer: #{@pear_cmd}")
+  pear_run("#{@pear_cmd} config-set auto_discover 1")
+  Chef::Log.debug("Enabled auto_discover")
 
-  execute "PEAR: enable auto discover for channels" do
-    command "#{@pear_cmd} config-set auto_discover 1"
-  end
 end
 
 def pear_run(cmd)
   cmd = Chef::ShellOut.new(cmd)
-  return cmd.run_command.stdout.strip
+  out = cmd.run_command.stdout.strip
+  #Chef::Log.debug("Command '#{cmd.command}' ran with exit status: #{cmd.exitstatus}")
+  #Chef::Log.debug("StdOut: #{cmd.stdout}")
+  #Chef::Log.debug("StdErr: #{cmd.stderr}")
+  return out
 end
 
 def pear_cmd(pear, action, package, force, channel, version)
@@ -29,8 +32,8 @@ def pear_cmd(pear, action, package, force, channel, version)
   end
 
   # get the alias - BUT Y U NEED ALIAS?! - because when the channel is 'foo.example.org/pear' it screws up pear install
-  command_alias = "#{pear} channel-info #{channel}|grep Alias|awk '{print $2}'"
-  Chef::Log.debug("Trying to get alias of the PEAR channel: #{command_alias}")
+  command_alias = "#{pear} channel-info #{channel}|grep -a Alias|awk '{print $2}'"
+  Chef::Log.debug("Alias of the PEAR channel: #{command_alias}")
 
   channel_alias = pear_run(command_alias)
   Chef::Log.debug("Channel: #{channel}, Alias: #{channel_alias}")
