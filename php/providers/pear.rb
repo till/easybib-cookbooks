@@ -26,16 +26,19 @@ end
 
 def pear_cmd(pear, action, package, force, channel, version)
 
-  execute "PEAR: discover #{channel}" do
-    command "#{pear} channel-discover #{channel}"
-    not_if  "#{pear} list-channels|grep #{channel}"
-  end
+  # always discover!
+  # TODO: is there a more elegant solution?
+  discover = Chef::ShellOut.new("#{pear} channel-discover #{channel}")
+  discover.run_command
 
   # get the alias - BUT Y U NEED ALIAS?! - because when the channel is 'foo.example.org/pear' it screws up pear install
   command_alias = "#{pear} channel-info #{channel}|grep -a Alias|awk '{print $2}'"
   Chef::Log.debug("Alias of the PEAR channel: #{command_alias}")
 
   channel_alias = pear_run(command_alias)
+  if channel_alias.empty?
+    raise "Could not find alias for #{channel}"
+  end
   Chef::Log.debug("Channel: #{channel}, Alias: #{channel_alias}")
 
   # avoid roundtrip to channel if it's installed
