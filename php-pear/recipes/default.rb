@@ -29,5 +29,4 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-#include_recipe "php-pear::channels"
 include_recipe "php-pear::packages"
