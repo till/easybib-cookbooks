@@ -21,6 +21,11 @@ def pear_run(cmd)
   #Chef::Log.debug("Command '#{cmd.command}' ran with exit status: #{cmd.exitstatus}")
   #Chef::Log.debug("StdOut: #{cmd.stdout}")
   #Chef::Log.debug("StdErr: #{cmd.stderr}")
+
+  if cmd.exitstatus > 0
+    raise "Failed: #{cmd.command}, StdOut: #{cmd.stdout}, StdErr: #{cmd.stderr}"
+  end
+
   return out
 end
 
