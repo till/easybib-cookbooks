@@ -1,7 +1,7 @@
 def initialize(*args)
   super(*args)
 
-  pear = `which pear`.strip
+  pear = pear_run("which pear").strip
 
   if pear.empty?
     raise Chef::Exceptions::ShellCommandFailed, "PEAR is not installed, or not in the path."
@@ -12,22 +12,32 @@ def initialize(*args)
   Chef::Log.debug("Looks like we found a PEAR installer: #{@pear_cmd}")
 
   execute "PEAR: enable auto discover for channels" do
-    command "#{pear} config-set auto_discover 1"
+    command "#{@pear_cmd} config-set auto_discover 1"
   end
 end
 
+def pear_run(cmd)
+  cmd = Chef::ShellOut.new(cmd)
+  return cmd.run_command.stdout.strip
+end
+
 def pear_cmd(pear, cmd, p, f, c, v)
+
   execute "PEAR: discover #{c}" do
     command "#{pear} channel-discover #{c}"
     not_if  "#{pear} list-channels|grep #{c}"
   end
 
   # get the alias - BUT Y U NEED ALIAS?! - because when the channel is 'foo.example.org/pear' it screws up pear install
-  c_alias = `pear list-channels|grep #{c}|awk '{print $2}'`.strip
+  command_alias = "#{pear} channel-info #{c}|grep Alias|awk '{print $2}'"
+  Chef::Log.debug("Trying to get alias of the PEAR channel: #{command_alias}")
+
+  c_alias = pear_run(command_alias)
+  Chef::Log.debug("Channel: #{c}, Alias: #{c_alias}")
 
   # avoid roundtrip to channel if it's installed
   if cmd == 'install_if_missing'
-    p_count = `#{pear} list -c #{c_alias}|grep #{p}|wc -l`.strip
+    p_count = pear_run("#{pear} list -c #{c_alias}|grep #{p}|wc -l")
     if Integer(p_count) > 0
       Chef::Log.debug("PEAR package #{p} is already installed.")
       return
@@ -47,9 +57,10 @@ def pear_cmd(pear, cmd, p, f, c, v)
     v_str = "-#{v}"
   end
 
-  e = "#{pear} #{cmd}#{f_param} #{c_alias}/#{p}#{v_str}"
-  execute "PEAR: run #{cmd}" do
-    command e
+  complete_command = "#{pear} #{cmd}#{f_param} #{c_alias}/#{p}#{v_str}"
+  Chef::Log.debug(complete_command)
+  execute "PEAR: run #{cmd}: #{complete_command}" do
+    command complete_command
   end
 end
 
