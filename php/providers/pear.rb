@@ -21,45 +21,45 @@ def pear_run(cmd)
   return cmd.run_command.stdout.strip
 end
 
-def pear_cmd(pear, cmd, p, f, c, v)
+def pear_cmd(pear, action, package, force, channel, version)
 
-  execute "PEAR: discover #{c}" do
-    command "#{pear} channel-discover #{c}"
-    not_if  "#{pear} list-channels|grep #{c}"
+  execute "PEAR: discover #{channel}" do
+    command "#{pear} channel-discover #{channel}"
+    not_if  "#{pear} list-channels|grep #{channel}"
   end
 
   # get the alias - BUT Y U NEED ALIAS?! - because when the channel is 'foo.example.org/pear' it screws up pear install
-  command_alias = "#{pear} channel-info #{c}|grep Alias|awk '{print $2}'"
+  command_alias = "#{pear} channel-info #{channel}|grep Alias|awk '{print $2}'"
   Chef::Log.debug("Trying to get alias of the PEAR channel: #{command_alias}")
 
-  c_alias = pear_run(command_alias)
-  Chef::Log.debug("Channel: #{c}, Alias: #{c_alias}")
+  channel_alias = pear_run(command_alias)
+  Chef::Log.debug("Channel: #{channel}, Alias: #{channel_alias}")
 
   # avoid roundtrip to channel if it's installed
-  if cmd == 'install_if_missing'
-    p_count = pear_run("#{pear} list -c #{c_alias}|grep #{p}|wc -l")
+  if action == 'install_if_missing'
+    p_count = pear_run("#{pear} list -c #{channel_alias}|grep #{package}|wc -l")
     if Integer(p_count) > 0
-      Chef::Log.debug("PEAR package #{p} is already installed.")
+      Chef::Log.debug("PEAR package #{package} is already installed.")
       return
     end
-    cmd = "install"
+    action = "install"
   end
 
   # force whatever comes next (probably a good idea)
   f_param = ""
-  if f == true
+  if force == true
     f_param = " -f"
   end
 
   # version string
-  v_str = ""
-  if v 
-    v_str = "-#{v}"
+  version_str = ""
+  if version
+    version_str = "-#{version}"
   end
 
-  complete_command = "#{pear} #{cmd}#{f_param} #{c_alias}/#{p}#{v_str}"
+  complete_command = "#{pear} #{action}#{f_param} #{channel_alias}/#{package}#{version_str}"
   Chef::Log.debug(complete_command)
-  execute "PEAR: run #{cmd}: #{complete_command}" do
+  execute "PEAR: run #{action}: #{complete_command}" do
     command complete_command
   end
 end
