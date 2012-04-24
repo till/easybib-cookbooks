@@ -61,7 +61,7 @@ def pear_cmd(pear, action, package, force, channel, version)
   # avoid roundtrip to channel if it's installed
   if action == 'install_if_missing'
     p_count = pear_run("#{pear} list -c #{channel_alias}|grep -a #{package}|wc -l")
-    if Integer(p_count) > 0
+    if p_count.to_i > 0
       Chef::Log.debug("PEAR package #{package} is already installed.")
       return
     end
