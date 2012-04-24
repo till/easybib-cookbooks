@@ -1,6 +1,8 @@
-default[:percona]           = {}
-default[:percona][:version] = "5.5"
-default[:percona][:key]     = "1C4CBDCDCD2EFD2A"
+default[:percona]            = {}
+default[:percona][:version]  = "5.5"
+default[:percona][:key]      = "1C4CBDCDCD2EFD2A"
+default[:percona][:user]     = "root"
+default[:percona][:password] = ""
 
 # set if scalarium is not available
 set_unless[:mysql]                        = {}
