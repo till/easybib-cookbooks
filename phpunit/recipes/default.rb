@@ -3,18 +3,25 @@
 version = node[:phpunit][:version].split('.')
 major   = "#{version[0]}#{version[1]}"
 
-phpunit_location = "/usr/local/phpunit#{major}"
-
-pear_bin = `pear config-get bin_dir`.strip
-php_dir  = `pear config-get php_dir`.strip
-
-execute "enable auto_discover" do
-  command "pear config-set auto_discover 1"
+ohai "reload_php_easybib" do
+  action :reload
+  plugin "php_easybib"
 end
 
-# ignore failure to make multiple runs painless
+phpunit_location = "/usr/local/phpunit#{major}"
+
+Chef::Log.debug("HELLO: #{node[:php_easybib][:php_bin]}")
+
+pear     = node[:php_easybib][:pear_bin]
+pear_bin = node[:php_easybib][:pear][:bin_dir]
+php_dir  = node[:php_easybib][:pear][:php_dir]
+
+execute "enable auto_discover" do
+  command "#{pear} config-set auto_discover 1"
+end
+
 execute "install PHPUnit #{node[:phpunit][:version]}" do
-  command "pear install -o --installroot #{phpunit_location} pear.phpunit.de/PHPUnit-#{node[:phpunit][:version]}"
+  command "#{pear} install -o --installroot #{phpunit_location} pear.phpunit.de/PHPUnit-#{node[:phpunit][:version]}"
   not_if  do
     File.exist?("#{phpunit_location}#{pear_bin}/phpunit")
   end
