@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: php-pear
-# Recipe:: packages
+# Cookbook Name:: php-doctrine
+# Recipe:: default
 #
 # Copyright 2010-2012, Till Klampaeckel
 #
@@ -29,37 +29,20 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-packages = {
-  "Crypt_HMAC2-beta"                          => "pear.php.net",
-  "Net_Gearman-alpha"                         => "pear.php.net",
-  "Services_Amazon_S3-alpha"                  => "pear.php.net",
-  "Net_CheckIP2-1.0.0RC3"                     => "pear.php.net",
-  "HTMLPurifier"                              => "htmlpurifier.org",
-  "Easybib_Form_Decorator-0.2.0"              => "easybib.github.com/pear",
-  "Lagged_Loader-alpha"                       => "easybib.github.com/pear",
-  "StatsD-alpha"                              => "easybib.github.com/pear",
-  "Lagged_Session_SaveHandler_Memcache-0.5.0" => "easybib.github.com/pear",
-  "Rediska-0.5.6"                             => "easybib.github.com/pear"
-}
-
-# install packages
-packages.each do |package,channel|
-
-  if !package.index('-').nil? 
-    attrs = package.split('-')
-    package, version = attrs
-  else
-    version = ""
-  end
-
-  #Chef::Log.info("PACKAGE: #{package}, Version: #{version}, Channel: #{channel}")
-
-  php_pear "#{package}" do
-    action  :install_if_missing
-    channel "#{channel}"
-    force   true
-    version "#{version}"
-  end
+php_pear "DoctrineCommon" do
+  action  :install_if_missing
+  channel node[:php_doctrine][:channel]
+  version node[:php_doctrine][:common]
 end
 
-include_recipe "php-doctrine::default"
+php_pear "DoctrineDBAL" do
+  action  :install_if_missing
+  channel node[:php_doctrine][:channel]
+  version node[:php_doctrine][:dbal]
+end
+
+php_pear "DoctrineORM" do
+  action  :install_if_missing
+  channel node[:php_doctrine][:channel]
+  version node[:php_doctrine][:orm]
+end
