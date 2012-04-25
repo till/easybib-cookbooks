@@ -19,6 +19,11 @@ if not php_easybib[:php_bin].empty?
 end
 
 if not php_easybib[:pear_bin].empty?
+
+  php_easybib[:pear] = {}
+  php_easybib[:pear][:bin_dir] = `#{php_easybib[:pear_bin]} config-get bin_dir`.strip
+  php_easybib[:pear][:php_dir] = `#{php_easybib[:pear_bin]} config-get php_dir`.strip
+
   channel_out = `#{php_easybib[:pear_bin]} list-channels`.split("\n")
 
   channel_out.shift
