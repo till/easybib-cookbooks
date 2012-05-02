@@ -92,7 +92,7 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  if application == 'citationbackup' || application == 'easybib_solr_research_importers'
+  if application == 'citationbackup' || application == 'easybib_solr_research_importers' || application == 'ebim2'
     php_composer "#{deploy[:deploy_to]}/current" do
       action :install
     end
