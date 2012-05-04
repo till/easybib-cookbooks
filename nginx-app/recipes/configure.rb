@@ -12,7 +12,7 @@ node[:deploy].each do |application, deploy|
 
   case application
   when 'easybib'
-    if cluster_name != 'EasyBib' && cluster_name != 'EasyBib Playground' && cluster_name != 'Fruitkid'
+    if !['EasyBib', 'EasyBib Playground', 'Fruitkid'].include?(cluster_name)
       next
     end
     if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
@@ -26,13 +26,8 @@ node[:deploy].each do |application, deploy|
     next unless instance_roles.include?('sitescraper')
 
   when 'research_app'
-    if cluster_name != 'Research Cloud'
-      next
-    end
+    next unless cluster_name == 'Research Cloud'
     next unless instance_roles.include?('nginxphpapp')
-
-  when 'admedia'
-    next unless instance_roles.include?('admedia')
 
   else
     Chef::Log.debug("Skipping nginx-app::configure for app #{application}")
@@ -57,9 +52,4 @@ node[:deploy].each do |application, deploy|
 
 end
 
-service "php-fpm" do
-  service_name "php-fpm"
-  supports [ :start, :status, :restart ]
-  action :restart
-end
-
+include_recipe "php-fpm::service"
