@@ -9,26 +9,15 @@ node[:deploy].each do |application, deploy|
 
   case application
   when 'easybib'
-    if cluster_name != 'EasyBib' && cluster_name != 'EasyBib Playground' && cluster_name != 'Fruitkid'
+    if !['EasyBib', 'EasyBib Playground', 'Fruitkid'].include?(cluster_name)
       next
     end
     if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
       next
     end
 
-  when 'admedia'
-    next unless instance_roles.include?('admedia')
-
   when 'easybib_api'
     next unless instance_roles.include?('bibapi')
-
-  when 'easybib_solr_research_importers'
-    next unless cluster_name == 'Research Cloud'
-    next unless instance_roles.include?('researchimporter')
-
-    Chef::Log.debug('deploy::easybib - Setting deploy for RESEARCH IMPORTERS')
-
-    deploy[:restart_command] = ""
 
   when 'easybib_solr_server'
     next unless cluster_name == 'Research Cloud'
@@ -92,7 +81,7 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  if application == 'citationbackup' || application == 'easybib_solr_research_importers'
+  if ['citationbackup', 'easybib_solr_research_importers', 'ebim2'].include?
     php_composer "#{deploy[:deploy_to]}/current" do
       action :install
     end
