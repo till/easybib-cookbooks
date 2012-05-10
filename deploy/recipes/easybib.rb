@@ -88,6 +88,7 @@ node[:deploy].each do |application, deploy|
   end
 
   if application == 'ebim2'
+    include_recipe "deploy::ebim2"
     include_recipe "deploy::gearmanmanager"
   end
 
