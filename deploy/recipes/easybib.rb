@@ -87,6 +87,10 @@ node[:deploy].each do |application, deploy|
     end
   end
 
+  if application == 'ebim2'
+    include_recipe "deploy::gearmanmanager"
+  end
+
   #if application == 'research_app'
   #  php_composer "#{deploy[:deploy_to]}/current" do
   #    action :install
