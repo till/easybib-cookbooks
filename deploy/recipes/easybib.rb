@@ -81,7 +81,7 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  if ['citationbackup', 'ebim2'].include?
+  if ['citationbackup', 'ebim2'].include?(application)
     php_composer "#{deploy[:deploy_to]}/current" do
       action :install
     end
