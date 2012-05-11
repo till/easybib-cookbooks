@@ -1,3 +1,7 @@
+# Do you like what you see?
+
+If you want to work with us, please get in touch: [claudia@imagineeasy.com](mailto:claudia@imagineeasy.com)!
+
 # Cookbooks!
 
 All these cookbooks are [BSD Licensed][bsd], so feel free to use and abuse.
@@ -38,17 +42,6 @@ Questions, comments? Feel free to [get in touch][touch]!
 
 # Todo Till
 
- * finish bigcouch recipe
  * finish varnish recipe
  * test loggly
- * write cookbook for [CouchDB-Lounge][lounge] (update install)
-
-[lounge]: http://github.com/till/ubuntu/tree/master/couchdb/couchdb-lounge/
-
-# Todo Scalarium
-
- * PRIO 1: Unter dem Account weitere user (sozusagen "sub accounts")
- * PRIO 3: Eine "availability zone" (z.B. East1a) als "default"
- * PRIO 3: Die Recipes anzeigen die bei den vordefinierten Rollen ausgefuehrt werden
- * PRIO 4: Eventuell auch die Standard-Recipes zum Auswaehlen irgendwo bereitstellen
- * PRIO 4: Instanzdetails syncen - auch wenn nicht gestartet ueber Scalarium
+ * document cookbooks (readme, etc.)
