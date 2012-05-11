@@ -1,7 +1,3 @@
-if !deploy
-  raise "This recipe has to run from a deployment cycle."
-end
-
 if !deploy[:deploy_to]
   raise "Could not find directory where application is deployed to."
 end
