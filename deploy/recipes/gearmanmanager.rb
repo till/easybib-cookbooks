@@ -1,8 +1,8 @@
-if !node[:deploy]
+if !deploy
   raise "This recipe has to run from a deployment cycle."
 end
 
-if !node[:deploy][:deploy_to]
+if !deploy[:deploy_to]
   raise "Could not find directory where application is deployed to."
 end
 
