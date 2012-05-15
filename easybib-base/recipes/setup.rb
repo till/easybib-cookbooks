@@ -7,6 +7,8 @@ package "rsync"
 package "manpages"
 package "manpages-dev"
 package "nscd"
+package "subversion"
+package "git-core"
 
 include_recipe "easybib-base::awscommand"
 include_recipe "easybib-base::nginxstats"
