@@ -16,7 +16,7 @@ action :install do
       user        "www-data"
       code <<-EOH
       PATH=$PATH:/usr/bin:/usr/local/bin
-      export PATH
+      export $PATH
 
       PHP_CMD=$(which php)
 
