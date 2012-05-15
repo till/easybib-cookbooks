@@ -15,16 +15,17 @@ action :install do
       cwd         deploy_to
       user        "www-data"
       code <<-EOH
-      PATH=$PATH:/usr/bin:/usr/local/bin
-      export $PATH
-
+      set +x
+      export PATH=$PATH:/usr/bin:/usr/local/bin
+      hash -r
       PHP_CMD=$(which php)
 
-      HAS_PHAR=$(php -m|grep Phar|wc -l)
+      HAS_PHAR=$($PHP_CMD -m|grep Phar|wc -l)
       if [ $HAS_PHAR -eq 0 ]; then
         echo "No phar installed."
         exit 1        
       fi
+
       COMPOSER="${PHP_CMD} composer.phar --quiet --no-interaction install"
       $($COMPOSER)
       EOH
