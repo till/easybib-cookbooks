@@ -1,7 +1,13 @@
 action :install do
+
+  extension = new_resource.name
+  so_file   = "/usr/local/lib/php/extensions/no-debug-non-zts-20090626/#{extension}.so"
+
   # TODO: new_resource.version
-  execute "pecl install #{new_resource.name}" do
-    ignore_failure true
+  execute "pecl install #{extension}" do
+    not_if do
+      ::File.exists?(so_file)
+    end
   end
 end
 
