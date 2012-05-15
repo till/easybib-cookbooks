@@ -1,10 +1,5 @@
-if !deploy[:deploy_to]
-  raise "Could not find directory where application is deployed to."
-end
-
-base_dir = deploy[:deploy_to]
-app_dir  = "#{base_dir}/vendor/GearmanManager"
-etc_dir  = "#{base_dir}/etc/gearman"
+app_dir = "#{base_dir}/vendor/GearmanManager"
+etc_dir = "#{base_dir}/etc/gearman"
 
 link "/usr/local/bin/gearman-manager" do
   to "#{app_dir}/#{node[:gearman-manager][:type]}-manager.php"
