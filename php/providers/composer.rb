@@ -26,8 +26,13 @@ action :install do
         exit 1        
       fi
 
-      COMPOSER="${PHP_CMD} composer.phar --quiet --no-interaction install"
-      $($COMPOSER)
+      QUIET="--quiet"
+      QUIET=""
+
+      COMPOSER="${PHP_CMD} composer.phar $QUIET --no-interaction install"
+      echo $COMPOSER
+
+      `$COMPOSER`
       EOH
     end
   end
