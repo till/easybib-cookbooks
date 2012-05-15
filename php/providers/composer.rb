@@ -26,13 +26,18 @@ action :install do
         exit 1        
       fi
 
+      SVN_CMD=$(which svn)
+
       QUIET="--quiet"
-      QUIET=""
 
       COMPOSER="${PHP_CMD} composer.phar $QUIET --no-interaction install"
-      echo $COMPOSER
 
-      `$COMPOSER`
+      echo ""
+      echo "DEBUG: ${PHP_CMD}, ${SVN_CMD}, ${COMPOSER}"
+      echo ""
+
+      $($COMPOSER)
+
       EOH
     end
   end
