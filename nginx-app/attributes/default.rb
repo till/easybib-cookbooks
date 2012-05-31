@@ -24,7 +24,8 @@ default["nginx-app"][:css_modules] = {
     "cms"          => "cms",
     "bibanalytics" => "bibanalytics",
     "sharing"      => "sharing",
-    "kb"           => "kb"
+    "kb"           => "kb",
+    "content"      => "content"
 }
 
 # Silverline attribs
