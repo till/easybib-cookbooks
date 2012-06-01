@@ -102,8 +102,4 @@ node[:deploy].each do |application, deploy|
 
   end
 
-  php_composer "#{deploy[:deploy_to]}/current" do
-     action :install
-  end
-
 end
