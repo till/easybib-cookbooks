@@ -81,12 +81,6 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  if ['citationbackup', 'ebim2'].include?(application)
-    php_composer "#{deploy[:deploy_to]}/current" do
-      action :install
-    end
-  end
-
   if application == 'ebim2'
     include_recipe "deploy::ebim2"
 
@@ -108,14 +102,8 @@ node[:deploy].each do |application, deploy|
 
   end
 
-  #if application == 'research_app'
-  #  php_composer "#{deploy[:deploy_to]}/current" do
-  #    action :install
-  #  end
-  #
-  #  php_composer "#{deploy[:deploy_to]}/current/app/modules/admin" do
-  #    action :install
-  #  end
-  #end
+  php_composer "#{deploy[:deploy_to]}/current" do
+     action :install
+  end
 
 end
