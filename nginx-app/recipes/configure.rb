@@ -9,6 +9,25 @@ nginx_config_dir = "/etc/nginx"
 # need to do this better
 node[:docroot] = 'www'
 
+# password protect?
+if cluster_name == 'Fruitkid'
+  password_protected = true
+
+  template "#{nginx_config_dir}/htpasswd" do
+    source "htpasswd.erb"
+    mode   "0640"
+    user   "root"
+    group  node["nginx-app"][:group]
+    variables(
+      :user => default["nginx-app"][:user],
+      :pass => node[:mysql][:server_root_password].crypt(cluster_name)
+    )
+  end
+
+else
+  password_protected = false
+end
+
 node[:deploy].each do |application, deploy|
 
   case application
