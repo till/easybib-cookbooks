@@ -19,7 +19,7 @@ if cluster_name == 'Fruitkid'
     owner  "root"
     group  node["nginx-app"][:group]
     variables(
-      :user => default["nginx-app"][:user],
+      :user => node["nginx-app"][:user],
       :pass => node[:mysql][:server_root_password].crypt(cluster_name)
     )
   end
