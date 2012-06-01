@@ -4,7 +4,7 @@ include_recipe "nginx-app::server"
 instance_roles   = node[:scalarium][:instance][:roles]
 cluster_name     = node[:scalarium][:cluster][:name]
 app_access_log   = "off"
-nginx_config_dir = "/etc/nginx"
+nginx_config_dir = node["nginx-app"][:config_dir]
 
 # need to do this better
 node[:docroot] = 'www'
