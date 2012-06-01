@@ -9,13 +9,6 @@ server {
     <%= @nginx_extra -%>
   <% end -%>
 
-  <% if @password_protected && @password_protected.to_s == "true" -%>
-    location  /  {
-        auth_basic            "Restricted";
-        auth_basic_user_file  /etc/nginx/htpasswd;
-    }
-  <% end -%>
-
     location = /health_check.php {
 
         access_log <%= @access_log %>;
@@ -85,6 +78,12 @@ server {
 <% end -%>
 
     location / {
+
+    <% if @password_protected && @password_protected.to_s == "true" -%>
+        auth_basic            "Restricted";
+        auth_basic_user_file  /etc/nginx/htpasswd;
+    <% end -%>
+
         access_log <%= @access_log %>;
 
         include /etc/nginx/fastcgi_params;
