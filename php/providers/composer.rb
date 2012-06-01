@@ -2,6 +2,22 @@ def initialize(*args)
   super(*args)
 end
 
+def check_target(dir)
+  if !::File.directory?(dir)
+    raise "#{dir} is not a directory"
+  end
+end
+
+action :setup do
+  target = new_resource.name
+  check_target(target)
+
+  execute "install composer" do
+    command "curl -s http://getcomposer.org/installer | php"
+    cwd     target
+  end
+end
+
 action :install do
   deploy_to = new_resource.name
   check_target(deploy_to)
