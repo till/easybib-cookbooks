@@ -2,6 +2,7 @@ default["nginx-app"]                      = {}
 default["nginx-app"][:user]               = "www-data"
 default["nginx-app"][:group]              = "www-data"
 default["nginx-app"][:static_directories] = ["js", "css", "images", "raw"]
+default["nginx-app"][:config_dir]         = "/etc/nginx"
 
 # module specific configuration for assets
 default["nginx-app"][:js_modules] = {
