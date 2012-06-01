@@ -1,9 +1,10 @@
 include_recipe "deploy"
 include_recipe "nginx-app::server"
 
-instance_roles = node[:scalarium][:instance][:roles]
-cluster_name   = node[:scalarium][:cluster][:name]
-app_access_log = "off"
+instance_roles   = node[:scalarium][:instance][:roles]
+cluster_name     = node[:scalarium][:cluster][:name]
+app_access_log   = "off"
+nginx_config_dir = "/etc/nginx"
 
 # need to do this better
 node[:docroot] = 'www'
@@ -34,18 +35,20 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  template "/etc/nginx/sites-enabled/easybib.com.conf" do
+  template "#{nginx_config_dir}/sites-enabled/easybib.com.conf" do
     source "easybib.com.conf.erb"
     mode   "0755"
     owner  node["nginx-app"][:user]
     group  node["nginx-app"][:group]
     variables(
-      :js_alias    => node["nginx-app"][:js_modules],
-      :img_alias   => node["nginx-app"][:img_modules],
-      :css_alias   => node["nginx-app"][:css_modules],
-      :access_log  => app_access_log,
-      :deploy      => deploy,
-      :application => application
+      :js_alias           => node["nginx-app"][:js_modules],
+      :img_alias          => node["nginx-app"][:img_modules],
+      :css_alias          => node["nginx-app"][:css_modules],
+      :access_log         => app_access_log,
+      :deploy             => deploy,
+      :application        => application,
+      :password_protected => password_protected,
+      :config_dir         => nginx_config_dir
     )
     notifies :restart, resources(:service => "nginx"), :delayed
   end
