@@ -16,7 +16,7 @@ if cluster_name == 'Fruitkid'
   template "#{nginx_config_dir}/htpasswd" do
     source "htpasswd.erb"
     mode   "0640"
-    user   "root"
+    owner  "root"
     group  node["nginx-app"][:group]
     variables(
       :user => default["nginx-app"][:user],
