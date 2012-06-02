@@ -50,7 +50,7 @@ action :setup do
   end
 
   execute "install composer" do
-    command "php installer"
+    command "#{@php_bin} installer"
     cwd     target
     only_if do
       ::File.exists?("#{target}/installer")
