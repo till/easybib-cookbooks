@@ -39,7 +39,7 @@ action :setup do
   deploy_to = new_resource.name
   check_target(deploy_to)
   find_php()
-  haz_phar?
+  has_phar?
 
   remote_file "#{target}/installer" do
     source "http://getcomposer.org/installer"
