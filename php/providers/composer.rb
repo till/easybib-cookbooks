@@ -60,6 +60,7 @@ action :setup do
 end
 
 action :install do
+
   deploy_to = new_resource.name
   check_target(deploy_to)
   find_php()
