@@ -9,6 +9,9 @@ def check_target(dir)
 end
 
 def shell_out(cmd)
+
+  Chef::Log.debug("Executing command #{cmd}")
+
   shell = ::Chef::ShellOut.new(cmd)
   shell.run_command
   shell.error!
