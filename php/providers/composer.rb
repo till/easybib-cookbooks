@@ -12,10 +12,22 @@ action :setup do
   target = new_resource.name
   check_target(target)
 
-  execute "install composer" do
-    command "curl -s http://getcomposer.org/installer | php"
-    cwd     target
+  remote_file "#{target}/installer" do
+    source "http://getcomposer.org/installer"
+    mode   "0644"
+    only_if do
+      !::File.exist?("#{target}/composer.phar")
+    end
   end
+
+  execute "install composer" do
+    command "php installer"
+    cwd     target
+    only_if do
+      ::File.exists?("#{target}/installer")
+    end
+  end
+
 end
 
 action :install do
