@@ -41,19 +41,19 @@ action :setup do
   find_php()
   has_phar?
 
-  remote_file "#{target}/installer" do
+  remote_file "#{deploy_to}/installer" do
     source "http://getcomposer.org/installer"
     mode   "0644"
     only_if do
-      !::File.exist?("#{target}/composer.phar")
+      !::File.exist?("#{deploy_to}/composer.phar")
     end
   end
 
   execute "install composer" do
     command "#{@php_bin} installer"
-    cwd     target
+    cwd     deploy_to
     only_if do
-      ::File.exists?("#{target}/installer")
+      ::File.exists?("#{deploy_to}/installer") && ::!File.exits?("#{deploy_to}/composer.phar")
     end
   end
 
