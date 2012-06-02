@@ -8,6 +8,32 @@ def check_target(dir)
   end
 end
 
+def shell_out(cmd)
+  shell = ::Chef::ShellOut.new(cmd)
+  shell.run_command
+  shell.error!
+
+  return shell.stdout
+end
+
+def find_php
+  ret = shell_out("which php")
+
+  @php_bin = ret.strip
+  if @php_bin.empty?
+    raise "PHP was not found."
+  end
+end
+
+def has_phar?
+  ret = shell_out("#{@php_bin} -m|grep Phar|wc -l")
+
+  count = ret.strip.to_i
+  if count == 0
+    raise "ext/phar is not installed"
+  end
+end
+
 action :setup do
   target = new_resource.name
   check_target(target)
