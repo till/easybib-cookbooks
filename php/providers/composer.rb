@@ -75,7 +75,7 @@ action :install do
 
     composer = ::Chef::ShellOut.new(
       "#{@php_bin} ./composer.phar --no-interaction install",
-      :env  => { 'PATH' => '/usr/bin:/usr/local/bin' },
+      :env  => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
       :cwd  => deploy_to
     )
 
