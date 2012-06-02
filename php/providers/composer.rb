@@ -79,6 +79,14 @@ action :install do
     )
 
     composer.run_command
+
+    Chef::Log.debug("StdErr: #{composer.stderr}")
+    Chef::Log.debug("StdOut: #{composer.stdout}")
+    Chef::Log.debug("Environment: #{composer.environment}")
+    Chef::Log.debug("User: #{composer.user}")
+    Chef::Log.debug("Status: #{composer.status}")
+    Chef::Log.debug("CWD: #{composer.cwd}")
+
     composer.error!
 
   end
