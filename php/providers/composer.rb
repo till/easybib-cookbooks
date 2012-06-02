@@ -62,6 +62,8 @@ end
 action :install do
   deploy_to = new_resource.name
   check_target(deploy_to)
+  find_php()
+  has_phar?
 
   if !::File.exists?("#{deploy_to}/composer.phar")
     Chef::Log.info("Could not find 'composer.phar' in #{deploy_to}: silently skipping.")
