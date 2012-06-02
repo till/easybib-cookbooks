@@ -71,9 +71,7 @@ action :install do
   else
 
     composer = ::Chef::ShellOut.new(
-      "#{@php_bin}",
-      " composer.phar --quiet --no-interaction install",
-      :user => nil,
+      "#{@php_bin} ./composer.phar --no-interaction install",
       :env  => { 'PATH' => '/usr/bin:/usr/local/bin' },
       :cwd  => deploy_to
     )
