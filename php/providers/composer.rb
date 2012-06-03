@@ -8,7 +8,7 @@ def check_target(dir)
   end
 end
 
-def shell_out(cmd)
+def shell_out(cmd, cwd)
 
   Chef::Log.debug("Executing command #{cmd}")
 
@@ -20,26 +20,23 @@ def shell_out(cmd)
   Chef::Log.debug("StdOut: #{shell.stdout}")
   Chef::Log.debug("StdErr: #{shell.stderr}")
   Chef::Log.debug("Status: #{shell.status}")
-  Chef::Log.debug("CWD"    #{shell.cwd}")
+  Chef::Log.debug("CWD:    #{shell.cwd}")
 
   shell.error!
 
-  return shell.stdout
+  return shell.stdout.strip
 end
 
 def find_php
-  ret = shell_out("which php")
-
-  @php_bin = ret.strip
+  @php_bin = shell_out("which php", nil)
   if @php_bin.empty?
     raise "PHP was not found."
   end
 end
 
 def has_phar?
-  ret = shell_out("#{@php_bin} -m|grep Phar|wc -l")
-
-  count = ret.strip.to_i
+  count = shell_out("#{@php_bin} -m|grep Phar|wc -l", nil)
+  count = count.to_i
   if count == 0
     raise "ext/phar is not installed"
   end
