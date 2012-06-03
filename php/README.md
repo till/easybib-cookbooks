@@ -1,6 +1,8 @@
 # php_composer
 
  * actions: `:setup`, `:install`
+ * `:install`: runs `php composer.phar install`
+ * `:setup`: installs the `composer.phar`
 
 ## Example
 
