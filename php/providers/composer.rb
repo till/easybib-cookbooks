@@ -46,25 +46,22 @@ action :setup do
 
   deploy_to = new_resource.name
   check_target(deploy_to)
+
   find_php()
   has_phar?
 
-  remote_file "#{deploy_to}/installer" do
-    source "http://getcomposer.org/installer"
-    mode   "0644"
-    only_if do
-      !::File.exist?("#{deploy_to}/composer.phar")
-    end
-  end
+  if ::File.exists?("#{deploy_to}/composer.phar")
+    Chef::Log.debug("The composer.phar is already in #{deploy_to} - skipping.")
+  else
 
-  execute "install composer" do
-    command "#{@php_bin} installer"
-    cwd     deploy_to
-    only_if do
-      ::File.exists?("#{deploy_to}/installer") && ::!File.exits?("#{deploy_to}/composer.phar")
-    end
-  end
+    shell_out("curl http://getcomposer.org/installer --silent --output #{deploy_to}/installer", deploy_to)
 
+    if !::File.exists?("#{deploy_to}/installer")
+      raise "Does not exist?"
+    end
+
+    shell_out("#{@php_bin} installer", deploy_to)
+  end
 end
 
 action :install do
