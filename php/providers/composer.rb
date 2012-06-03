@@ -75,7 +75,7 @@ action :install do
     Chef::Log.info("Could not find 'composer.phar' in #{deploy_to}: silently skipping.")
   else
 
-    composer = ::Chef::ShellOut.new(
+    composer = Chef::ShellOut.new(
       "#{@php_bin} ./composer.phar --no-interaction install",
       :env  => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
       :cwd  => deploy_to
