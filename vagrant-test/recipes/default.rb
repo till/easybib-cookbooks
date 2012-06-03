@@ -2,6 +2,7 @@
 
 package "git-core"
 package "unzip"
+package "curl"
 
 cookbook_file "/tmp/composer.json" do
   mode   "0644"
