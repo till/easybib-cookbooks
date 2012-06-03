@@ -3,6 +3,8 @@ Vagrant::Config.run do |config|
 
   config.vm.network :hostonly, "33.33.33.124"
 
+  config.vm.provision :shell, :path => "./update-mirrors.sh"
+
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
 
