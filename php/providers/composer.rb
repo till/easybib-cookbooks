@@ -12,8 +12,16 @@ def shell_out(cmd)
 
   Chef::Log.debug("Executing command #{cmd}")
 
-  shell = ::Chef::ShellOut.new(cmd)
+  shell = Chef::ShellOut.new(cmd, :env => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, :cwd => cwd)
   shell.run_command
+
+  Chef::Log.debug("Executing command: #{cmd}")
+
+  Chef::Log.debug("StdOut: #{shell.stdout}")
+  Chef::Log.debug("StdErr: #{shell.stderr}")
+  Chef::Log.debug("Status: #{shell.status}")
+  Chef::Log.debug("CWD"    #{shell.cwd}")
+
   shell.error!
 
   return shell.stdout
