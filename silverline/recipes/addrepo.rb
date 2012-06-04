@@ -11,6 +11,7 @@ execute "librato_add_key" do
 end
 
 template "/etc/apt/sources.list.d/silverline.list" do
+  mode   "0644"
   source "silverline.list.erb"
   notifies :run, resources(:execute => "apt_get_update"), :immediately
 end
