@@ -30,13 +30,7 @@ execute "Compile and install CouchDB" do
   not_if &couchdb_already_installed
 end
 
-
-template "/etc/couchdb/local.d/scalarium.ini" do
-  source "scalarium.ini.erb"
-  owner "couchdb"
-  group "couchdb"
-  mode "0644"
-end
+include_recipe "couchdb::configure"
 
 # we need to make default a template, also for silverline
 if node[:couchdb][:port] == 80
