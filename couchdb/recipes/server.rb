@@ -1,3 +1,5 @@
+include_recipe "couchdb::user"
+include_recipe "couchdb::deps"
 include_recipe "couchdb::prepare"
 
 couchdb_installed_version = `which couchdb > /dev/null && couchdb -V | grep #{node[:couchdb][:version]}`.strip.gsub(/^.+([0-9.]{5,5})$/, '\1')

@@ -1,6 +1,3 @@
-include_recipe "couchdb::deps"
-include_recipe "couchdb::user"
-
 directory node[:couchdb][:datadir] do
   owner "couchdb"
   group "couchdb"
