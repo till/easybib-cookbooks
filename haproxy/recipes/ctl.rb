@@ -4,6 +4,6 @@ git "/usr/share/haproxyctl" do
   action :sync
 end
 
-link "/usr/share/haproxyctl/bin/haproxyctl" do
-  to "/etc/init.d/haproxyctl"
+link "/etc/init.d/haproxyctl" do
+  to "/usr/share/haproxyctl/bin/haproxyctl"
 end
