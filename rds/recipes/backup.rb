@@ -11,8 +11,8 @@ cookbook_file "/usr/local/bin/s3uploadfix.sh" do
   mode "0755"
 end
 
-#cron "rdsbackup" do
-#  hour "*"
-#  minute "9"
-#  command "/usr/local/bin/rdsbackup.sh"
-#end
+cron "rdsbackup" do
+  hour "15"
+  minute "51"
+  command "/usr/local/bin/rdsbackup.sh"
+end
