@@ -4,7 +4,7 @@ if attribute?(:scalarium_initial_setup)
   })
 end
 
-default[:haproxy]             = {}
+default[:haproxy]            = {}
 default[:haproxy][:errorloc] = {
     "401" => "401.html",
     "403" => "403.html",
@@ -15,4 +15,6 @@ default[:haproxy][:errorloc] = {
     "504" => "5xx.html"
 }
 
+default[:haproxy][:ctl][:base_path] = "/usr/local/share"
 default[:silverline][:haproxy_name] = "haproxy"
+
