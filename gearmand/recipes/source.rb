@@ -1,3 +1,12 @@
+template "/etc/init.d/gearmand" do
+  mode   "0755"
+  source "gearmand.initd.erb"
+  variables(
+    :prefix => node[:gearmand][:prefix],
+    :user   => node[:gearmand][:user]
+  )
+end
+
 gearmand_d = [
   "g++",
   "libevent-dev",
