@@ -2,7 +2,7 @@
 
 This can do backups of several systems at once, so you set up data in the attributes like this:
 
-  default["rdsbackup"] = [ { "jobname" => "first server", "sqlhost" => "x", "sqluser" => "x", "sqlpass" => "x",
+    default["rdsbackup"] = [ { "jobname" => "first server", "sqlhost" => "x", "sqluser" => "x", "sqlpass" => "x",
                              "s3bucket" => "x", "s3accesskeyid" => "x", "s3secretaccesskey" => "x",
                              "cronminute" => "x", "cronhour" => "x", "cronweekday" => "x" } ,
                            { "jobname" => "second server", "sqlhost" => "x", "sqluser" => "x", "sqlpass" => "x",
