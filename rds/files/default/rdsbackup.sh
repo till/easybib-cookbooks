@@ -8,7 +8,8 @@ SQLPASS="$3"
 S3BUCKET="$4"
 S3ACCESSKEYID="$5"
 S3SECRETACCESSKEY="$6"
-BACKUPFILE="sqlback-`date '+%Y%m%d%H%M'`.sql"
+PREFIX="$7"
+BACKUPFILE="${PREFIX}-`date '+%Y%m%d%H%M'`.sql"
 
 cd /tmp
 logger -t rdsbackup "Started running mysqldump for $SQLHOST"

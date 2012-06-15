@@ -13,6 +13,7 @@ end
 
 node["rdsbackup"].each do |p|
   jobname = p["jobname"]
+  prefix = p["prefix"]
   sqlhost = p["sqlhost"]
   sqluser = p["sqluser"]
   sqlpass = p["sqlpass"]
@@ -27,7 +28,7 @@ node["rdsbackup"].each do |p|
     minute cronminute
     hour cronhour
     weekday cronweekday
-    cmd = sprintf "/usr/local/bin/rdsbackup.sh '%s' '%s' '%s' '%s' '%s' '%s'", sqlhost, sqluser, sqlpass, s3bucket, s3accesskeyid, s3secretaccesskey
+    cmd = sprintf "/usr/local/bin/rdsbackup.sh '%s' '%s' '%s' '%s' '%s' '%s' '%s'", sqlhost, sqluser, sqlpass, s3bucket, s3accesskeyid, s3secretaccesskey, prefix
     command cmd
   end
 end
