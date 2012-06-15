@@ -1,5 +1,6 @@
-include_recipe "gearmand::service"
-include_recipe "gearmand::user"
-include_recipe "gearmand::source"
-include_recipe "gearmand::configure"
+include_recipe "apt::ppa"
+include_recipe "apt::easybib"
 
+package node[:gearmand][:name]
+
+include_recipe "gearmand::configure"
