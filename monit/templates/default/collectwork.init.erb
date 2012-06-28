@@ -78,6 +78,9 @@ stop()
   if [ -n "$G_PID" ]; then
     kill -TERM -$G_PID
     # kill the whole process group
+    sleep 2
+    kill -KILL -$G_PID
+    sleep 2
   fi
   log_end_msg 0
   rm -f $PIDFILE
