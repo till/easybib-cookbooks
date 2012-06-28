@@ -5,4 +5,4 @@ $pid = posix_getpid();
 $processGroup = posix_getpgid($pid);
 file_put_contents('<%= @pid_file %>', "$pid\n$processGroup\n");
 
-system("php <%= @cmd %> 2>&1 | logger -t <%= @name %>");
+system("/usr/local/bin/php <%= @cmd %> 2>&1 | logger -t <%= @name %>");
