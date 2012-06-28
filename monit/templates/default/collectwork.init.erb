@@ -74,12 +74,12 @@ start()
 stop()
 {
   log_daemon_msg "Stopping collectwork" "${NAME}"
-  G_PID=$(cat $PIDFILE | tail -n1)
+  G_PID=$(cat $PIDFILE 2>/dev/null | tail -n1)
   if [ -n "$G_PID" ]; then
-    kill -TERM -$G_PID
+    kill -TERM -$G_PID 2>/dev/null
     # kill the whole process group
     sleep 2
-    kill -KILL -$G_PID
+    kill -KILL -$G_PID 2>/dev/null
     sleep 2
   fi
   log_end_msg 0
