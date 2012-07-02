@@ -1,0 +1,7 @@
+default["monit"]["collectwork"]["pid_file"]      = "/var/run/collectwork/collectwork.pid"
+default["monit"]["collectwork"]["pid_dir"]       = "/var/run/collectwork"
+default["monit"]["collectwork"]["name"]          = "collectwork"
+default["monit"]["collectwork"]["start_script"]  = "/etc/init.d/collectwork"
+default["monit"]["collectwork"]["helper_script"] = "/usr/local/bin/collectwork"
+default["monit"]["collectwork"]["user"]          = "www-data"
+default["monit"]["collectwork"]["command"]       = "/srv/www/ebim2/current/bin/ebim2 cron-collect-work"

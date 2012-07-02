@@ -1,14 +1,13 @@
 # installs the monitrc for our collectwork processes
 include_recipe "monit::service"
 
-# configure me
-thepidfile="/var/run/collectwork/collectwork.pid"
-thepiddir="/var/run/collectwork"
-thename="collectwork"
-thestartscript="/etc/init.d/collectwork"
-thehelperscript="/usr/local/bin/collectwork"
-theuser="www-data"
-thecmd="/srv/www/ebim2/current/bin/ebim2 cron-collect-work"
+thepidfile=node["monit"]["collectwork"]["pid_file"]
+thepiddir=node["monit"]["collectwork"]["pid_dir"]
+thename=node["monit"]["collectwork"]["name"]
+thestartscript=node["monit"]["collectwork"]["start_script"]
+thehelperscript=node["monit"]["collectwork"]["helper_script"]
+theuser=node["monit"]["collectwork"]["user"]
+thecmd=node["monit"]["collectwork"]["command"]
 
 template thestartscript do
   source "collectwork.init.erb"
