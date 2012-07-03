@@ -1,6 +1,12 @@
 if !node[:deploy]
-  raise Chef::Exceptions::ConfigurationError, "node[:deploy] needs to be set."
+  node[:deploy]    = {}
 end
+
+if !node[:deploy][:deploy_to]
+  node[:deploy][:deploy_to] = "/var/www/easybib"
+end
+
+Chef::Log.debug("deploy: #{node[:deploy][:deploy_to]}")
 
 if !node[:docroot]
   node[:docroot] = 'www'
