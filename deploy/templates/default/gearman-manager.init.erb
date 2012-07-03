@@ -17,7 +17,7 @@ DAEMON=<%= @daemon %>
 PIDDIR=<%= @pid_dir %>
 PIDFILE=${PIDDIR}/gearman-manager.pid
 CONFIGFILE=<%= @config_file %>
-WORKERCLASS=<%= @worker_class %>
+WORKERCLASS='<%= @worker_class %>'
 
 GEARMANUSER="gearman"
 LOGFILE=syslog
@@ -60,7 +60,7 @@ stop()
   if start-stop-daemon \
     --stop \
     --oknodo \
-    --retry 20 \
+    --retry 10 \
     --pidfile $PIDFILE
   then
     log_end_msg 0
@@ -68,6 +68,10 @@ stop()
     log_end_msg 1
     exit 1
   fi
+  kill `ps aux | egrep 'gearm[a]n-manager -P ' | awk '{ print $2 }'` 2>/dev/null
+  sleep 2
+  kill -KILL `ps aux | egrep 'gearm[a]n-manager -P ' | awk '{ print $2 }'` 2>/dev/null
+  sleep 2
 }
 
 case "$1" in
