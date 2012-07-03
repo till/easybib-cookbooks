@@ -17,7 +17,7 @@ DAEMON=<%= @daemon %>
 PIDDIR=<%= @pid_dir %>
 PIDFILE=${PIDDIR}/gearman-manager.pid
 CONFIGFILE=<%= @config_file %>
-WORKERCLASS=<%= @worker_class %>
+WORKERCLASS='<%= @worker_class %>'
 
 GEARMANUSER="gearman"
 LOGFILE=syslog
@@ -60,7 +60,7 @@ stop()
   if start-stop-daemon \
     --stop \
     --oknodo \
-    --retry 20 \
+    --retry 25 \
     --pidfile $PIDFILE
   then
     log_end_msg 0
