@@ -22,3 +22,8 @@ template "/etc/init.d/gearman-manager" do
     'worker_class' => worker_class
   )
 end
+
+service "gearman-manager" do
+  supports :status => true, :restart => true, :reload => true
+  action [ :enable, :start ]
+end
