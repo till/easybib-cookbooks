@@ -1,5 +1,6 @@
 {
   port: <%= node[:librato][:node][:port] %>,
+  mgmt_address: '127.0.0.1',
   backends: ['statsd-librato-backend'],
   librato: {
     email: '<%= node[:librato][:metrics][:email] -%>',
