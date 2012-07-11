@@ -1,8 +1,10 @@
 {
-  graphService: "librato-metrics"
-  , libratoUser: "<%= node[:librato][:metrics][:email] -%>"
-  , libratoApiKey: "<%= node[:librato][:metrics][:api_key] -%>"
-  , libratoSource: "<%= node[:scalarium][:cluster][:name] -%>"
-  , batch: <%= node[:librato][:metrics][:batch] %>
-  , port: <%= node[:librato][:node][:port] %>
+  port: <%= node[:librato][:node][:port] %>,
+  backends: ['statsd-librato-backend'],
+  librato: {
+    email: '<%= node[:librato][:metrics][:email] -%>',
+    token: '<%= node[:librato][:metrics][:api_key] -%>',
+    source: '<%= node[:scalarium][:cluster][:name] -%>',
+    batchSize: <%= node[:librato][:metrics][:batch] %>
+  }
 }
