@@ -36,14 +36,14 @@ node[:deploy].each do |application, deploy|
     if !instance_roles.include?('easybibsolr') && !instance_roles.include?('ebim2')
       next
     end
-
     deploy[:restart_command] = ""
   
   when 'ebim2_research_importer'
     next unless cluster_name == 'Research Cloud'
-    if !instance_roles.include?('ebim2')
+    if !instance_roles.include?('ebim2') && !instance_roles.include?('easybibsolr')
       next
     end
+    deploy[:restart_command] = ""
       
   when 'research_app'
     next unless cluster_name == 'Research Cloud'
