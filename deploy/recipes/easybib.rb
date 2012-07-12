@@ -38,7 +38,13 @@ node[:deploy].each do |application, deploy|
     end
 
     deploy[:restart_command] = ""
-
+  
+  when 'ebim2_research_importer'
+    next unless cluster_name == 'Research Cloud'
+    if !instance_roles.include?('ebim2')
+      next
+    end
+      
   when 'research_app'
     next unless cluster_name == 'Research Cloud'
     next unless instance_roles.include?('nginxphpapp')
