@@ -20,3 +20,9 @@ include_recipe "easybib-base::cron"
 package "landscape-client" do
   action :purge
 end
+
+# scalarium installs this but we don't need it
+# http://support.scalarium.com/discussions/problems/503-ganglia-issues
+package "ganglia-monitor" do
+  action :purge
+end
