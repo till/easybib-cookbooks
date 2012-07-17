@@ -1,5 +1,6 @@
 include_recipe "apt::ppa"
 include_recipe "apt::easybib"
 
-package "php5-easybib-posix"
-
+if node[:lsb][:codename] == 'lucid'
+  package "php5-easybib-posix"
+end
