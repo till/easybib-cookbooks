@@ -12,12 +12,14 @@ default["nginx-app"][:js_modules] = {
     "bibanalytics" => "bibanalytics",
     "sharing"      => "sharing",
     "kb"           => "kb",
-    "content"      => "content"
+    "content"      => "content",
+    "infolit"      => "infolit"
 }
 default["nginx-app"][:img_modules] = {
     "notes"     => "notebook",
     "outline"   => "notebook",
-    "paperlink" => "paperlink"
+    "paperlink" => "paperlink",
+    "infolit"   => "infolit"
 }
 default["nginx-app"][:css_modules] = {
     "debugger"     => "debugger",
@@ -26,7 +28,8 @@ default["nginx-app"][:css_modules] = {
     "bibanalytics" => "bibanalytics",
     "sharing"      => "sharing",
     "kb"           => "kb",
-    "content"      => "content"
+    "content"      => "content",
+    "infolit"      => "infolit"
 }
 
 # Silverline attribs
