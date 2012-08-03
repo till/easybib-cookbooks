@@ -1,0 +1,10 @@
+PIDFILE=/var/run/bprobe.pid
+TLS_KEY=<%= @node[:boundary][:bprobe][:etc][:path] %>/key.pem
+TLS_CA=<%= @node[:boundary][:bprobe][:etc][:path] %>/ca.pem
+TLS_CERT=<%= @node[:boundary][:bprobe][:etc][:path] %>/cert.pem
+
+## WARNING: Do not modify the values below unless
+## you know what you are doing!
+COLLECTOR=tls://<%= @node[:boundary][:bprobe][:collector][:hostname] %>:<%= @node[:boundary][:bprobe][:collector][:port] %>
+FLOW_MAP_SIZE=1048576
+FLOW_PAUSE=0
