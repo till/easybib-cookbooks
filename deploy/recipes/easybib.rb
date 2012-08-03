@@ -37,6 +37,10 @@ node[:deploy].each do |application, deploy|
       next
     end
     deploy[:restart_command] = ""
+
+  when 'infolit'
+    next unless cluster_name == 'InfoLit'
+    next unless instance_roles.include?('nginxphpapp')
   
   when 'ebim2_research_importer'
     next unless cluster_name == 'Research Cloud'
