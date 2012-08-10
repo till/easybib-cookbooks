@@ -1,7 +1,7 @@
 extension=suhosin.so
 
 [suhosin]
-suhosin.post.max_vars = <%= node[:suhosin][:post][:max_vars] %>
-suhosin.request.max_vars = <%= node[:suhosin][:request][:max_vars] %>
-suhosin.session.encrypt = <%= node[:suhosin][:session][:encrypt] %>
+suhosin.post.max_vars = <%= node["suhosin"]["post"]["max_vars"] %>
+suhosin.request.max_vars = <%= node["suhosin"]["request"]["max_vars"] %>
+suhosin.session.encrypt = <%= node["suhosin"]["session"]["encrypt"] %>
 suhosin.executor.include.whitelist = phar
