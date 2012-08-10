@@ -62,4 +62,3 @@ packages.each do |package,channel|
   end
 end
 
-include_recipe "php-doctrine::default"
