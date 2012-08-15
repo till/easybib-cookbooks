@@ -6,14 +6,15 @@ default["nginx-app"][:config_dir]         = "/etc/nginx"
 
 # module specific configuration for assets
 default["nginx-app"][:js_modules] = {
-    "debugger"     => "debugger",
-    "notes"        => "notebook",
-    "cms"          => "cms",
-    "bibanalytics" => "bibanalytics",
-    "sharing"      => "sharing",
-    "kb"           => "kb",
-    "content"      => "content",
-    "infolit"      => "infolit"
+    "debugger"        => "debugger",
+    "notes"           => "notebook",
+    "cms"             => "cms",
+    "bibanalytics"    => "bibanalytics",
+    "sharing"         => "sharing",
+    "kb"              => "kb",
+    "content"         => "content",
+    "infolit"         => "infolit",
+    "schoolanalytics" => "schoolanalytics"
 }
 default["nginx-app"][:img_modules] = {
     "notes"     => "notebook",
@@ -22,14 +23,15 @@ default["nginx-app"][:img_modules] = {
     "infolit"   => "infolit"
 }
 default["nginx-app"][:css_modules] = {
-    "debugger"     => "debugger",
-    "notes"        => "notebook",
-    "cms"          => "cms",
-    "bibanalytics" => "bibanalytics",
-    "sharing"      => "sharing",
-    "kb"           => "kb",
-    "content"      => "content",
-    "infolit"      => "infolit"
+    "debugger"        => "debugger",
+    "notes"           => "notebook",
+    "cms"             => "cms",
+    "bibanalytics"    => "bibanalytics",
+    "sharing"         => "sharing",
+    "kb"              => "kb",
+    "content"         => "content",
+    "infolit"         => "infolit",
+    "schoolanalytics" => "schoolanalytics"
 }
 
 # Silverline attribs
