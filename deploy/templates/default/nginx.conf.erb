@@ -1,9 +1,9 @@
 server {
-  listen 443 ssl;
+  listen 443;
+  ssl on;
   ssl_certificate <%= @ssl_dir %>/cert.pem;
   ssl_certificate_key <%= @ssl_dir %>/cert.key;
   ssl_ciphers ALL:!kEDH:-ADH:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP;
-  ssl_protocols: SSLv3 TLSv1;
   access_log /var/log/nginx/ssl.access.log;
   error_log /var/log/nginx/ssl.error.log;
   keepalive_timeout 60;
