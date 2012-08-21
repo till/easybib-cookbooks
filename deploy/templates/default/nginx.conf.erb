@@ -3,7 +3,8 @@ server {
   ssl on;
   ssl_certificate <%= @ssl_dir %>/cert.pem;
   ssl_certificate_key <%= @ssl_dir %>/cert.key;
-  ssl_ciphers ALL:!kEDH:-ADH:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP;
+  ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+  ssl_prefer_server_ciphers on;
   access_log /var/log/nginx/ssl.access.log;
   error_log /var/log/nginx/ssl.error.log;
   keepalive_timeout 60;
