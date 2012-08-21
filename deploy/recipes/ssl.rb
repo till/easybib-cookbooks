@@ -9,7 +9,20 @@ cluster_name = node[:scalarium][:cluster][:name]
 package 'nginx'
 
 node[:deploy].each do |application, deploy|
-  if instance_roles.to_s == right_role and cluster_name.to_s == right_cluster and deploy.has_key?('ssl_certificate') and deploy.has_key?('ssl_certificate_key')
+
+  if application != "ssl"
+    next
+  end
+
+  if instance_roles.to_s != right_role
+    next
+  end
+  if cluster_name.to_s != right_cluster
+    next
+  end
+
+  if deploy.has_key?('ssl_certificate') and deploy.has_key?('ssl_certificate_key')
+
     ssl_certificate = deploy['ssl_certificate'].chomp
     ssl_certificate_key = deploy['ssl_certificate_key'].chomp
 
@@ -32,7 +45,9 @@ node[:deploy].each do |application, deploy|
         'ssl_key' => ssl_certificate_key
       )
     end
+
   end
+
 end
 
 template ssl_dir + '/sites-enabled/default' do
