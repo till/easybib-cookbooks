@@ -9,4 +9,5 @@ default["deploy"]["gearmanmanager"]["worker_class"] = "Ebim2\\Gearman\\Worker\\"
 
 default["deploy"]["ssl"]["role"]    = "lb"
 default["deploy"]["ssl"]["cluster"] = "EasyBib Playground"
-default["deploy"]["ssl"]["dir"]     = "/tmp"
+default["deploy"]["ssl"]["dir"]     = "/etc/nginx"
+default["deploy"]["ssl"]["int_ip"]  = "10.193.126.134"
