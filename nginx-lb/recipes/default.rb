@@ -33,7 +33,7 @@ node[:deploy].each do |application, deploy|
       variables(
         "ssl_key" => ssl_certificate
       )
-      notifies :restart, "service[nginx]"
+      notifies :restart, resources(:service => "nginx")
     end
 
     template ssl_dir + "/cert.key" do
@@ -44,7 +44,7 @@ node[:deploy].each do |application, deploy|
       variables(
         "ssl_key" => ssl_certificate_key
       )
-      notifies :restart, "service[nginx]"
+      notifies :restart, resources(:service => "nginx")
     end
 
   end
@@ -60,7 +60,7 @@ template ssl_dir + "/sites-enabled/easybib-ssl.conf" do
     "ssl_dir" => ssl_dir,
     "int_ip"  => int_ip
   )
-  notifies :restart, "service[nginx]"
+  notifies :restart, resources(:service => "nginx")
 end
 
 file ssl_dir + "/sites-enabled/default" do
