@@ -6,6 +6,8 @@ int_ip = node["nginx-lb"]["int_ip"]
 instance_roles = node[:scalarium][:instance][:roles]
 cluster_name = node[:scalarium][:cluster][:name]
 
+stored_certificate = false
+
 node[:deploy].each do |application, deploy|
 
   if application != "ssl"
@@ -79,4 +81,13 @@ node[:deploy].each do |application, deploy|
     action :delete
   end
 
+  stored_certificate = true
+
+end
+
+if !stored_certificate
+  service "nginx" do
+    supports "status" => true, "restart" => true
+    action :stop
+  end
 end
