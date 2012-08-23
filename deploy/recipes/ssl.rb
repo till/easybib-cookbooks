@@ -1,13 +1,13 @@
 include_recipe 'nginx-lb::service'
 include_recipe 'nginx-lb::default'
 
-right_role = node["nginx-lb"]["role"]
+right_role    = node["nginx-lb"]["role"]
 right_cluster = node["nginx-lb"]["cluster"]
-ssl_dir = node["nginx-lb"]["dir"]
-int_ip = node["nginx-lb"]["int_ip"]
+ssl_dir       = node["nginx-lb"]["dir"]
+int_ip        = node["nginx-lb"]["int_ip"]
 
 instance_roles = node[:scalarium][:instance][:roles]
-cluster_name = node[:scalarium][:cluster][:name]
+cluster_name   = node[:scalarium][:cluster][:name]
 
 stored_certificate = false
 
