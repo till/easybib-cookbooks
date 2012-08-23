@@ -1,4 +1,4 @@
-maintainer        "Till Klampaeckel"
+maintainer        "Till Klampaeckel, Ulf Harnhammar"
 maintainer_email  "till@php.net"
 license           "BSD License"
 description       "Deploys easybib"

@@ -1,5 +1,5 @@
-include_recipe 'nginx-lb::service'
 include_recipe 'nginx-lb::default'
+include_recipe 'nginx-lb::service'
 
 right_role    = node["nginx-lb"]["role"]
 right_cluster = node["nginx-lb"]["cluster"]
