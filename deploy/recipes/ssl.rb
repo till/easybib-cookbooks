@@ -7,8 +7,14 @@ nginx_dir     = node["nginx-lb"]["dir"]
 ssl_dir       = nginx_dir + "/ssl"
 int_ip        = node["nginx-lb"]["int_ip"]
 
-instance_roles = node[:scalarium][:instance][:roles]
-cluster_name   = node[:scalarium][:cluster][:name]
+if node.attribute?(:scalarium)
+  instance_roles = node[:scalarium][:instance][:roles]
+  cluster_name   = node[:scalarium][:cluster][:name]
+else
+  Chef::Log.debug("Not running in scalarium, setting defaults.")
+  instance_roles = ""
+  cluster_name   = ""
+end
 
 stored_certificate = false
 
@@ -101,6 +107,7 @@ node[:deploy].each do |application, deploy|
 end
 
 if !stored_certificate
+  Chef::Log.debug("No certificates were installed, we'll stop nginx.")
   service "nginx" do
     supports "status" => true, "restart" => true
     action :stop
