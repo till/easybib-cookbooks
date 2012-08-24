@@ -1,7 +1,7 @@
 {
     "deploy": {
         "ssl": {
-            "ssl_certificate": "",
+            "ssl_certificate": "THIS IS A FANCY CERT",
             "ssl_certificate_key": ""
         }
     },
