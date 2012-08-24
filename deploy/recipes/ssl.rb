@@ -3,7 +3,8 @@ include_recipe 'nginx-lb::service'
 
 right_role    = node["nginx-lb"]["role"]
 right_cluster = node["nginx-lb"]["cluster"]
-ssl_dir       = node["nginx-lb"]["dir"]
+nginx_dir     = node["nginx-lb"]["dir"]
+ssl_dir       = nginx_dir + "/ssl"
 int_ip        = node["nginx-lb"]["int_ip"]
 
 instance_roles = node[:scalarium][:instance][:roles]
@@ -35,17 +36,24 @@ node[:deploy].each do |application, deploy|
   end
 
   if deploy["ssl_certificate"].empty?
-    Chef::Log.debug("ssl_certificate is empty")
+    Chef::Log.error("ssl_certificate is empty")
     next
   end
 
   if deploy["ssl_certificate_key"].empty?
-    Chef::Log.debug("ssl_certificate_key is empty")
+    Chef::Log.error("ssl_certificate_key is empty")
     next
   end
 
   ssl_certificate = deploy["ssl_certificate"].chomp
   ssl_certificate_key = deploy["ssl_certificate_key"].chomp
+
+  directory ssl_dir do
+    mode      "0750"
+    owner     "root"
+    group     "www-data"
+    recursive true
+  end
 
   template ssl_dir + "/cert.pem" do
     source "ssl_key.erb"
@@ -69,7 +77,7 @@ node[:deploy].each do |application, deploy|
     notifies :restart, resources(:service => "nginx")
   end
 
-  template ssl_dir + "/sites-enabled/easybib-ssl.conf" do
+  template nginx_dir + "/sites-enabled/easybib-ssl.conf" do
     source "nginx.conf.erb"
     mode   "0644"
     owner  "root"
@@ -81,8 +89,11 @@ node[:deploy].each do |application, deploy|
     notifies :restart, resources(:service => "nginx")
   end
 
-  file ssl_dir + "/sites-enabled/default" do
+  file nginx_dir + "/sites-enabled/default" do
     action :delete
+    only_if do
+      File.exists?(ssl_dir + "/sites-enabled/default")
+    end
   end
 
   stored_certificate = true
