@@ -5,9 +5,11 @@ server {
   ssl_certificate_key <%= @ssl_dir %>/cert.key;
   ssl_ciphers RC4:HIGH:!aNULL:!MD5;
   ssl_prefer_server_ciphers on;
-  access_log /var/log/nginx/ssl.access.log;
+
+  access_log off;
   error_log /var/log/nginx/ssl.error.log;
-  keepalive_timeout 60;
+
+  keepalive_timeout 10;
 
   server_name <%= @domains.join(' ') %>;
 
