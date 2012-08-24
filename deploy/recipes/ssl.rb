@@ -17,11 +17,12 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  if instance_roles.to_s != right_role
+  if !instance_roles.include?(right_role)
     next
   end
 
-  if cluster_name.to_s != right_cluster
+  if !right_cluster.include?(cluster_name.to_s)
+    Chef::Log.info("Will not deploy to: " + cluster_name.to_s)
     next
   end
 

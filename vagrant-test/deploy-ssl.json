@@ -1,0 +1,27 @@
+{
+    "deploy": {
+        "ssl": {
+            "ssl_certificate": "",
+            "ssl_certificate_key": ""
+        }
+    },
+    "scalarium": {
+        "activity": "deploy",
+        "applications": [
+            {
+                "name": "SSL",
+                "slug_name": "ssl",
+                "application_type": "other"
+            }
+        ],
+        "cluster": {
+            "name": "EasyBib Playground"
+        },
+        "instance": {
+            "id": 1,
+            "roles": [
+                "lb"
+            ]
+        }
+    }
+}
