@@ -90,7 +90,8 @@ node[:deploy].each do |application, deploy|
     group  "root"
     variables(
       "ssl_dir" => ssl_dir,
-      "int_ip"  => int_ip
+      "int_ip"  => int_ip,
+      "domains" => deploy["domains"]
     )
     notifies :restart, resources(:service => "nginx")
   end

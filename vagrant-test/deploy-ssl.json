@@ -1,8 +1,12 @@
 {
     "deploy": {
         "ssl": {
-            "ssl_certificate": "THIS IS A FANCY CERT",
-            "ssl_certificate_key": ""
+            "ssl_certificate": "",
+            "ssl_certificate_key": "",
+            "domains": [
+                "vagrant.local",
+                "ssl"
+            ]
         }
     },
     "scalarium": {
