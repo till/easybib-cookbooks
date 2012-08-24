@@ -84,7 +84,7 @@ node[:deploy].each do |application, deploy|
   end
 
   template nginx_dir + "/sites-enabled/easybib-ssl.conf" do
-    source "nginx.conf.erb"
+    source "nginx-ssl.conf.erb"
     mode   "0644"
     owner  "root"
     group  "root"
