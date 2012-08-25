@@ -15,6 +15,9 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
+    chef.add_recipe "php-fpm"
+    chef.add_recipe "php-xdebug"
+
     chef.log_level = :debug
   end
 end
