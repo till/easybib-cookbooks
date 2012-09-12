@@ -1,5 +1,5 @@
 ppa="easybib/ppa"
-if node[:scalarium][:cluster][:name] == "EasyBib Playground"
+if node.attribute?(:scalarium) && node[:scalarium][:cluster][:name] == "EasyBib Playground"
   ppa="easybib/test"
 end
 
