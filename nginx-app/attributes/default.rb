@@ -31,7 +31,8 @@ default["nginx-app"][:css_modules] = {
     "kb"              => "kb",
     "content"         => "content",
     "infolit"         => "infolit",
-    "schoolanalytics" => "schoolanalytics"
+    "schoolanalytics" => "schoolanalytics",
+    "braintree"       => "braintree"
 }
 
 # Silverline attribs
