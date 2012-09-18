@@ -91,6 +91,10 @@ server {
         fastcgi_pass  phpfpm;
         fastcgi_index index.php;
 
+    <% if node[:scalarium] -%>
+        fastcgi_param BIB_ENV "<%=node[:scalarium][:cluster][:name]%>"
+    <% end -%>
+
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
 
         index  index.php index.html index.htm;
