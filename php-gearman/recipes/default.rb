@@ -4,3 +4,7 @@ include_recipe "apt::easybib"
 package "php5-easybib-gearman"
 
 include_recipe "php-fpm::service"
+
+service "php-fpm" do
+  action :restart
+end

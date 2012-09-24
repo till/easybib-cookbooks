@@ -33,6 +33,8 @@ stdInstall = [ "source", "easybib" ]
 
 Chef::Log.debug("Source used: #{node["php-fpm"][:source]}")
 
+include_recipe "php-fpm::service"
+
 if stdInstall.include?(node["php-fpm"][:source])
   etc_cli_dir = "#{node["php-fpm"][:prefix]}/etc"
   etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
@@ -51,15 +53,16 @@ else
 end
 
 template "#{etc_fpm_dir}/#{conf_fpm}" do
-  mode "0755"
-  source "php.ini.erb"
+  mode     "0755"
+  source   "php.ini.erb"
   variables(
     :enable_dl      => 'Off',
     :memory_limit   => node["php-fpm"][:memorylimit],
     :display_errors => 'Off'
   )
-  owner node["php-fpm"][:user]
-  group node["php-fpm"][:group]
+  owner    node["php-fpm"][:user]
+  group    node["php-fpm"][:group]
+  notifies :restart, resources(:service => "php-fpm"), :delayed
 end
 
 template "#{etc_cli_dir}/#{conf_cli}" do
@@ -75,10 +78,11 @@ template "#{etc_cli_dir}/#{conf_cli}" do
 end
 
 template "#{etc_fpm_dir}/php-fpm.conf" do
-  mode "0755"
-  source "php-fpm.conf.erb"
-  owner node["php-fpm"][:user]
-  group node["php-fpm"][:group]
+  mode     "0755"
+  source   "php-fpm.conf.erb"
+  owner    node["php-fpm"][:user]
+  group    node["php-fpm"][:group]
+  notifies :restart, resources(:service => "php-fpm"), :delayed
 end
 
 if node["php-fpm"][:source] == "source"
@@ -91,18 +95,18 @@ if node["php-fpm"][:source] == "source"
 end
 
 template "/etc/default/php-fpm" do
-  source "default.erb"
-  mode "0644"
+  source   "default.erb"
+  mode     "0644"
+  notifies :restart, resources(:service => "php-fpm"), :delayed
 end
 
 template "/etc/init.d/php-fpm" do
-  mode "0755"
-  source "init.d.php-fpm.erb"
-  owner node["php-fpm"][:user]
-  group node["php-fpm"][:group]
+  mode     "0755"
+  source   "init.d.php-fpm.erb"
+  owner    node["php-fpm"][:user]
+  group    node["php-fpm"][:group]
+  notifies :restart, resources(:service => "php-fpm"), :delayed
 end
-
-include_recipe "php-fpm::service"
 
 template "/etc/logrotate.d/php" do
   source "logrotate.erb"

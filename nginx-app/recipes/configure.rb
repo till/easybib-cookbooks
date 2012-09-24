@@ -1,5 +1,6 @@
 include_recipe "deploy"
 include_recipe "nginx-app::server"
+include_recipe "php-fpm::service"
 
 instance_roles   = node[:scalarium][:instance][:roles]
 cluster_name     = node[:scalarium][:cluster][:name]
@@ -61,9 +62,8 @@ node[:deploy].each do |application, deploy|
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir
     )
-    notifies :restart, resources(:service => "nginx"), :delayed
+    notifies :restart, resources(:service => "nginx", :service => "php-fpm"), :delayed
   end
 
 end
 
-include_recipe "php-fpm::service"

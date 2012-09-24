@@ -5,3 +5,7 @@ execute "ensure extension is loaded" do
 end
 
 include_recipe "php-fpm::service"
+
+service "php-fpm" do
+  action :restart
+end
