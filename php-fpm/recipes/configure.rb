@@ -29,28 +29,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-stdInstall = [ "source", "easybib" ]
-
-Chef::Log.debug("Source used: #{node["php-fpm"][:source]}")
-
 include_recipe "php-fpm::service"
 
-if stdInstall.include?(node["php-fpm"][:source])
-  etc_cli_dir = "#{node["php-fpm"][:prefix]}/etc"
-  etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
-  conf_cli = "php-cli.ini"
-  conf_fpm = "php.ini"
-else
-  if node["php-fpm"][:source] == "ubuntu"
-    etc_cli_dir = "/etc/php5/cli"
-    etc_fpm_dir = "/etc/php5/fpm"
-    conf_cli = "php.ini"
-    conf_fpm = "php.ini"
-  else
-    Chef::Log.error("Unknown source: #{node["php-fpm"][:source]}. Bailed.")
-    return
-  end
-end
+etc_cli_dir = "#{node["php-fpm"][:prefix]}/etc"
+etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
+conf_cli    = "php-cli.ini"
+conf_fpm    = "php.ini"
 
 template "#{etc_fpm_dir}/#{conf_fpm}" do
   mode     "0755"
@@ -85,13 +69,8 @@ template "#{etc_fpm_dir}/php-fpm.conf" do
   notifies :restart, resources(:service => "php-fpm"), :delayed
 end
 
-if node["php-fpm"][:source] == "source"
-  directory "#{node["php-fpm"][:prefix]}/etc/php" do
-    owner "root"
-    group "root"
-    mode "0755"
-    action :create
-  end
+service "php-fpm" do
+  action :enable
 end
 
 template "/etc/logrotate.d/php" do
