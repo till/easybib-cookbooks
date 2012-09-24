@@ -70,7 +70,7 @@ template "#{etc_fpm_dir}/php-fpm.conf" do
 end
 
 service "php-fpm" do
-  action :enable, :start
+  action [ :enable, :start ]
 end
 
 template "/etc/logrotate.d/php" do
