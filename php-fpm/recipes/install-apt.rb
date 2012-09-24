@@ -31,7 +31,7 @@
 
 include_recipe "php-fpm::prepare"
 include_recipe "apt::ppa"
-include_recipe "apt::easybib_different_ppa"
+include_recipe "apt::easybib"
 
 aptPackages = node["php-fpm"][:packages]
 
