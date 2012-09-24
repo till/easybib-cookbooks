@@ -36,11 +36,7 @@ include_recipe "apt::easybib"
 aptPackages = node["php-fpm"][:packages]
 
 aptPackages.each do |package,v|
-  #puts "Package #{package}"
-  #puts "Version #{v}"
-  package "#{package}" do
-    #version v
-  end
+  package "#{package}"
 end
 
 include_recipe "php-fpm::configure"
