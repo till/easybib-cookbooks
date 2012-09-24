@@ -3,5 +3,5 @@ include_recipe "php-fpm::service"
 
 execute "ensure extension is loaded" do
   command  "cat 'extension=mysqlnd_uh.so' > /usr/local/etc/php/mysqlnd_uh.ini"
-  notifies :restart, resources( :service => "php-fpm" ), :delayed
+  notifies :reload, resources( :service => "php-fpm" ), :delayed
 end
