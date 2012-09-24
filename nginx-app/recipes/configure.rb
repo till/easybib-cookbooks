@@ -62,7 +62,7 @@ node[:deploy].each do |application, deploy|
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir
     )
-    notifies :restart, resources(:service => "nginx", :service => "php-fpm"), :delayed
+    notifies :restart, resources(:service => "nginx"), :delayed
   end
 
 end
