@@ -37,6 +37,15 @@ php_fpm_prepare () {
     fi
 }
 
+php_fpm_is_running () {
+    PHPFPMPSCOUNT=$(ps aux|grep [p]hp-fpm|wc -l)
+    if [ $PHPFPMPSCOUNT -gt 0 ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 wait_for_pid () {
     try=0
 
@@ -95,8 +104,7 @@ case "$1" in
     ;;
 
     status)
-        PHPFPMPSCOUNT=$(ps aux|grep [p]hp-fpm|wc -l)
-        if [ $PHPFPMPSCOUNT -gt 0 ]; then
+        if php_fpm_is_running; then
             echo "php-fpm is running."
             exit 0
         fi
@@ -145,7 +153,9 @@ case "$1" in
     ;;
 
     restart)
-        $0 stop
+        if php_fpm_is_running; then
+            $0 stop
+        fi
         $0 start
     ;;
 
