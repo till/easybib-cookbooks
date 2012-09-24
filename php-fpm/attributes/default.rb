@@ -20,7 +20,6 @@ default["php-fpm"][:source] = "easybib" # source, ubuntu, easybib
 default["php-fpm"][:packages] = {
     "graphviz"              => nil,
     "php5-easybib"          => "5.3.5-0easybib9",
-    "php5-easybib-apc"      => "5.3.5-0easybib0",
     "php5-easybib-xhprof"   => "5.3.5.1-easybib0",
     "php5-easybib-memcache" => "5.3.5-0easybib0"
 }
