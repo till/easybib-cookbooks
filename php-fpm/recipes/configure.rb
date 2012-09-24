@@ -94,20 +94,6 @@ if node["php-fpm"][:source] == "source"
   end
 end
 
-template "/etc/default/php-fpm" do
-  source   "default.erb"
-  mode     "0644"
-  notifies :restart, resources(:service => "php-fpm"), :delayed
-end
-
-template "/etc/init.d/php-fpm" do
-  mode     "0755"
-  source   "init.d.php-fpm.erb"
-  owner    node["php-fpm"][:user]
-  group    node["php-fpm"][:group]
-  notifies :restart, resources(:service => "php-fpm"), :delayed
-end
-
 template "/etc/logrotate.d/php" do
   source "logrotate.erb"
   mode "0644"
