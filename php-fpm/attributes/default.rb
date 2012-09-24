@@ -13,7 +13,7 @@ default["php-fpm"][:tmpdir] = "/tmp/php"
 default["php-fpm"][:socketdir] = "/var/run/php-fpm"
 
 default["php-fpm"][:packages] = {
-    "graphviz"              => nil
+    "graphviz"              => nil,
     "php5-easybib"          => nil,
     "php5-easybib-xhprof"   => nil,
     "php5-easybib-memcache" => nil
