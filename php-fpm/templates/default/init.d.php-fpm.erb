@@ -40,9 +40,9 @@ php_fpm_prepare () {
 php_fpm_is_running () {
     PHPFPMPSCOUNT=$(ps aux|grep [p]hp-fpm|wc -l)
     if [ $PHPFPMPSCOUNT -gt 0 ]; then
-        return 1
-    else
         return 0
+    else
+        return 1
     fi
 }
 
