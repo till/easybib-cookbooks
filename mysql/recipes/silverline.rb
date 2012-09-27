@@ -5,9 +5,3 @@ template "/etc/init.d/mysql" do
   mode "0755"
   notifies :restart, resources( :service => "mysql")
 end
-
-template "/etc/init/mysql.conf" do
-  source "mysql.conf.erb"
-  mode "0644"
-  notifies :restart, resources( :service => "mysql")
-end
