@@ -76,6 +76,11 @@ wait_for_pid () {
 }
 
 case "$1" in
+    configtest)
+        echo -n "Testing php-fpm configuration "
+        $php_fpm_BIN -y $php_fpm_CONF -t
+    ;;
+
     start)
 
         php_fpm_prepare
@@ -174,7 +179,7 @@ case "$1" in
     ;;
 
     *)
-        echo "Usage: $0 {start|stop|force-quit|restart|reload}"
+        echo "Usage: $0 {start|stop|force-quit|restart|reload|configtest}"
         exit 1
     ;;
 
