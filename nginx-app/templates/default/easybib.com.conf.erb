@@ -24,6 +24,11 @@ server {
         access_log  <%= @access_log %>;
     }
 
+    location = /doubleclick/adx_iframe.html {
+        root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
+        access_log  <%= @access_log %>;
+    }
+
     location = /google8a01a818524239c8.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
         access_log  <%= @access_log %>;
