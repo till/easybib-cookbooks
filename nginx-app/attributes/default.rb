@@ -14,7 +14,8 @@ default["nginx-app"][:js_modules] = {
     "kb"              => "kb",
     "content"         => "content",
     "infolit"         => "infolit",
-    "schoolanalytics" => "schoolanalytics"
+    "schoolanalytics" => "schoolanalytics",
+    "students"		  => "students"
 }
 default["nginx-app"][:img_modules] = {
     "notes"     => "notebook",
