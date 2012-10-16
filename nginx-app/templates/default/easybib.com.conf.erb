@@ -24,7 +24,7 @@ server {
         access_log  <%= @access_log %>;
     }
 
-    location = /doubleclick/adx_iframe.html {
+    location ~ /(doubleclick|eyeblaster|eyewonder|pointroll|unicast)/*\.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
         access_log  <%= @access_log %>;
     }
