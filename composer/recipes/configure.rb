@@ -1,7 +1,5 @@
-# Configure composer json
-users = ["root", "www-data"]
-
-users.each do |user|
+# Configure ~/.composer/config.json
+node["composer"]["users"].each do |user|
 
   home = `echo ~#{user}`.strip
 
