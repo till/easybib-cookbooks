@@ -5,7 +5,7 @@ node["composer"]["users"].each do |user|
 
   directory "#{home}/.composer" do
     owner user
-    mode  "0700"
+    mode  "0701"
   end
 
   template "#{home}/.composer/config.json" do
@@ -17,4 +17,3 @@ node["composer"]["users"].each do |user|
     )
   end
 end
-
