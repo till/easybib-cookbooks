@@ -3,7 +3,7 @@ Vagrant::Config.run do |config|
 
   config.vm.network :hostonly, "33.33.33.124"
 
-  config.vbguest.auto_update = true
+  config.vbguest.auto_update = false
 
     config.vm.customize [
         "modifyvm", :id,
@@ -16,5 +16,12 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
     chef.log_level = :debug
+    chef.add_recipe "nginx-app::server"
+    chef.add_recipe "php-fpm"
+    chef.add_recipe "php-phar"
+    chef.add_recipe "php-fpm::pear"
+    chef.add_recipe "composer::configure"
+    chef.add_recipe "php-suhosin"
+    chef.add_recipe "php-gearman"
   end
 end
