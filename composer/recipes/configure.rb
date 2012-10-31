@@ -5,13 +5,13 @@ node["composer"]["users"].each do |user|
 
   directory "#{home}/.composer" do
     owner user
-    mode  "0701"
+    mode  "0750"
   end
 
   template "#{home}/.composer/config.json" do
     owner  user
     source "composer.config.json.erb"
-    mode   "0600"
+    mode   "0640"
     variables(
       :oauth_key => node["composer"]["oauth_key"]
     )
