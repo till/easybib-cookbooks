@@ -7,6 +7,9 @@ node[:deploy].each do |application, deploy|
 
   Chef::Log.debug("deploy::easybib - app: #{application}, role: #{instance_roles}")
 
+  # default restart command
+  deploy[:restart_command] = "/etc/init.d/php-fpm reload"
+
   case application
   when 'easybib'
     if !['EasyBib', 'EasyBib Playground', 'Fruitkid'].include?(cluster_name)
