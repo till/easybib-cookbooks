@@ -6,9 +6,7 @@ cluster_name   = node[:scalarium][:cluster][:name]
 node[:deploy].each do |application, deploy|
 
   Chef::Log.debug("deploy::easybib - app: #{application}, role: #{instance_roles}")
-
-  # default restart command
-  deploy[:restart_command] = "/etc/init.d/php-fpm reload"
+  Chef::Log.debug("Deploying as user: #{deploy[:user]}")
 
   case application
   when 'easybib'

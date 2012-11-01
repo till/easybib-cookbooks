@@ -4,6 +4,6 @@ unless node[:deploy].nil?
     node[:deploy][application][:group]           = 'www-data'
     node[:deploy][application][:shell]           = '/bin/sh'
     node[:deploy][application][:home]            = '/var/www'
-    node[:deploy][application][:restart_command] = '/etc/init.d/php-fpm restart'
+    node[:deploy][application][:restart_command] = '/etc/init.d/php-fpm reload'
   end
 end
