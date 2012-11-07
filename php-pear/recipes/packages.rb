@@ -38,7 +38,7 @@ packages = {
   "Easybib_Form_Decorator-0.3.2"              => "easybib.github.com/pear",
   "Lagged_Loader-alpha"                       => "easybib.github.com/pear",
   "StatsD-alpha"                              => "easybib.github.com/pear",
-  "Lagged_Session_SaveHandler_Memcache-0.6.0" => "easybib.github.com/pear",
+  "Lagged_Session_SaveHandler_Memcache-0.7.0" => "easybib.github.com/pear",
   "Rediska-0.5.6"                             => "easybib.github.com/pear"
 }
 
