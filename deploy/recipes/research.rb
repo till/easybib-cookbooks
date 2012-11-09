@@ -17,8 +17,7 @@ node[:deploy].each do |application, deploy|
     Chef::Log.debug('deploy::research - Setting deploy for SOLR SERVER')
 
     # fix this: deploy to instance storage
-    deploy[:deploy_to]       = "/solr/apache-solr-1.4.1-compiled"
-    deploy[:restart_command] = ""
+    deploy[:deploy_to] = "/solr/apache-solr-1.4.1-compiled"
 
     deploy[:user] = "root"
 
@@ -26,13 +25,11 @@ node[:deploy].each do |application, deploy|
     if !instance_roles.include?('easybibsolr') && !instance_roles.include?('ebim2')
       next
     end
-    deploy[:restart_command] = ""
 
   when 'ebim2_research_importer'
     if !instance_roles.include?('ebim2') && !instance_roles.include?('easybibsolr')
       next
     end
-    deploy[:restart_command] = ""
       
   when 'research_app'
     next unless instance_roles.include?('nginxphpapp')
