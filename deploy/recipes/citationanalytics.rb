@@ -1,4 +1,4 @@
-# custom recipe because of: http://support.scalarium.com/discussions/problems/78-app-is-not-deploying
+include_recipe "php-fpm::service"
 
 instance_roles = node[:scalarium][:instance][:roles]
 
@@ -28,6 +28,10 @@ node[:deploy].each do |application, deploy|
   scalarium_deploy do
     deploy_data deploy
     app application
+  end
+
+  service "php-fpm" do
+    action :reload
   end
 
 end

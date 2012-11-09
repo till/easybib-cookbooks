@@ -1,3 +1,5 @@
+include_recipe "php-fpm::service"
+
 instance_roles = node[:scalarium][:instance][:roles]
 
 node[:deploy].each do |application, deploy|
@@ -77,7 +79,12 @@ node[:deploy].each do |application, deploy|
     link "/etc/init.d/gearman-manager" do
       to "#{base_dir}/bin/gearman-manager.initd"
     end
+  end
 
+  if application == 'research_app'
+    service "php-fpm" do
+      action :reload
+    end
   end
 
 end
