@@ -41,9 +41,6 @@ node[:deploy].each do |application, deploy|
   when 'gearmanworker'
     next unless instance_roles.include?('gearman-worker')
 
-  when 'research'
-    next unless instance_roles.include?('nginxphpapp')
-
   else
     Chef::Log.debug("deploy::research - #{application} (in #{node[:scalarium][:cluster][:name]}) skipped")
     next
