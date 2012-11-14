@@ -3,7 +3,7 @@ directory "/home/#{node[:scalarium][:deploy_user][:user]}/.composer" do
   mode  "0750"
 end
 
-template "#{home}/.composer/config.json" do
+template "/home/#{node[:scalarium][:deploy_user][:user]}/.composer/config.json" do
   owner  node[:scalarium][:deploy_user][:user]
   group  node[:scalarium][:deploy_user][:group]
   source "composer.config.json.erb"
