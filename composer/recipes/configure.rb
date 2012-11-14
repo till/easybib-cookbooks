@@ -1,5 +1,6 @@
 directory "/home/#{node[:scalarium][:deploy_user][:user]}/.composer" do
   owner node[:scalarium][:deploy_user][:user]
+  group node[:scalarium][:deploy_user][:group]
   mode  "0750"
 end
 
