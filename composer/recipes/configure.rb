@@ -1,7 +1,8 @@
 directory "/home/#{node[:scalarium][:deploy_user][:user]}/.composer" do
-  owner node[:scalarium][:deploy_user][:user]
-  group node[:scalarium][:deploy_user][:group]
-  mode  "0750"
+  owner     node[:scalarium][:deploy_user][:user]
+  group     node[:scalarium][:deploy_user][:group]
+  mode      "0750"
+  recursive true
 end
 
 template "/home/#{node[:scalarium][:deploy_user][:user]}/.composer/config.json" do
