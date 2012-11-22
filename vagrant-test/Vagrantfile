@@ -1,5 +1,6 @@
 Vagrant::Config.run do |config|
-  config.vm.box = "lucid-nfs_0.1_4.1.0"
+
+  config.vm.box = "easybib-ubuntu-10.04.4_vbox-4.1.8"
 
   config.vm.network :hostonly, "33.33.33.124"
 
@@ -11,8 +12,6 @@ Vagrant::Config.run do |config|
         "--memory", "256"
     ]
 
-  config.vm.provision :shell, :path => "./update-mirrors.sh"
-
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
     chef.log_level = :debug
@@ -23,5 +22,7 @@ Vagrant::Config.run do |config|
     chef.add_recipe "composer::configure"
     chef.add_recipe "php-suhosin"
     chef.add_recipe "php-gearman"
+
+    chef.json = JSON.parse(File.read("./deploy.json"))
   end
 end

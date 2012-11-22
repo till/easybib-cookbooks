@@ -1,0 +1,35 @@
+{
+    "deploy": {
+        "ssl": {
+            "ssl_certificate": "",
+            "ssl_certificate_key": "",
+            "domains": [
+                "vagrant.local",
+                "ssl"
+            ]
+        }
+    },
+    "scalarium": {
+        "deploy_user": {
+            "user": "deploy",
+            "group": "www-data"
+        },
+        "activity": "deploy",
+        "applications": [
+            {
+                "name": "SSL",
+                "slug_name": "ssl",
+                "application_type": "other"
+            }
+        ],
+        "cluster": {
+            "name": "EasyBib Playground"
+        },
+        "instance": {
+            "id": 1,
+            "roles": [
+                "lb"
+            ]
+        }
+    }
+}
