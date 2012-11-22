@@ -6,7 +6,7 @@ cluster_name   = node[:scalarium][:cluster][:name]
 node[:deploy].each do |application, deploy|
 
   Chef::Log.debug("deploy::easybib - app: #{application}, role: #{instance_roles}")
-  Chef::Log.debug("Deploying as user: #{deploy[:user]}")
+  Chef::Log.debug("Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
   case application
   when 'easybib'
