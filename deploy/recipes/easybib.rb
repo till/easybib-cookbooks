@@ -6,7 +6,6 @@ cluster_name   = node[:scalarium][:cluster][:name]
 node[:deploy].each do |application, deploy|
 
   Chef::Log.info("deploy::easybib - app: #{application}, role: #{instance_roles}")
-  Chef::Log.info("Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
   case application
   when 'easybib'
@@ -24,12 +23,6 @@ node[:deploy].each do |application, deploy|
     next unless cluster_name == 'InfoLit'
     next unless instance_roles.include?('nginxphpapp')
   
-  when 'citation_anlytics'
-    next unless cluster_name == 'Citation Analytics'
-    next unless instance_roles.include?('elasticsearch')
-
-    Chef::Log.debug('deploy.easybib - Prepare for git checkout')
-
   when 'gearmanworker'
     next unless instance_roles.include?('gearman-worker')
 
@@ -42,6 +35,7 @@ node[:deploy].each do |application, deploy|
   end
 
   Chef::Log.info("deploy::easybib - Deployment started.")
+  Chef::Log.info("deploy::easybib - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
   scalarium_deploy_dir do
     user  deploy[:user]
