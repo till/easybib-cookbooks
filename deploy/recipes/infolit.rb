@@ -1,18 +1,15 @@
-instance_roles = node[:scalarium][:instance][:roles]
-cluster_name   = node[:scalarium][:cluster][:name]
-
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.info("deploy::infolit - app: #{application}, role: #{instance_roles}")
+  Chef::Log.info("deploy::infolit - app: #{application}, role: #{node[:scalarium][:instance][:roles]}")
 
-  next unless cluster_name == 'InfoLit'
+  next unless node[:scalarium][:cluster][:name] == 'InfoLit'
 
   case application
   when 'infolit'
-    next unless instance_roles.include?('nginxphpapp')
+    next unless node[:scalarium][:instance][:roles].include?('nginxphpapp')
   
   else
-    Chef::Log.info("deploy::infolit - #{application} (in #{cluster_name}) skipped")
+    Chef::Log.info("deploy::infolit - #{application} (in #{node[:scalarium][:cluster][:name]}) skipped")
     next
   end
 
