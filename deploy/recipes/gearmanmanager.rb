@@ -1,10 +1,10 @@
 # installs start script for gearman-manager
 
-daemon = node["deploy"]["gearmanmanager"]["daemon"]
-real_daemon = node["deploy"]["gearmanmanager"]["real_daemon"]
-pid_dir = node["deploy"]["gearmanmanager"]["pid_dir"]
-config_file = node["deploy"]["gearmanmanager"]["config_file"]
-worker_class = node["deploy"]["gearmanmanager"]["worker_class"]
+daemon       = node["gearmanmanager"]["daemon"]
+real_daemon  = node["gearmanmanager"]["real_daemon"]
+pid_dir      = node["gearmanmanager"]["pid_dir"]
+config_file  = node["gearmanmanager"]["config_file"]
+worker_class = node["gearmanmanager"]["worker_class"]
 
 link daemon do
   to real_daemon
