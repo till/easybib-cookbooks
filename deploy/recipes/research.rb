@@ -1,3 +1,5 @@
+include_recipe "php-fpm::service"
+
 instance_roles = node[:scalarium][:instance][:roles]
 cluster_name   = node[:scalarium][:cluster][:name]
 
@@ -44,10 +46,6 @@ node[:deploy].each do |application, deploy|
   when 'gearmanworker'
     next unless instance_roles.include?('gearman-worker')
 
-  when 'research'
-    next unless cluster_name == 'Research Cloud'
-    next unless instance_roles.include?('nginxphpapp')
-
   else
     Chef::Log.info("deploy::research - #{application} (in #{cluster_name}) skipped")
     next
@@ -64,6 +62,12 @@ node[:deploy].each do |application, deploy|
   scalarium_deploy do
     deploy_data deploy
     app application
+  end
+
+  if application == 'research_app'
+    service "php-fpm" do
+      action :reload
+    end
   end
 
   if application == 'ebim2'
