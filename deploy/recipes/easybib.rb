@@ -19,10 +19,6 @@ node[:deploy].each do |application, deploy|
   when 'easybib_api'
     next unless instance_roles.include?('bibapi')
 
-  when 'infolit'
-    next unless cluster_name == 'InfoLit'
-    next unless instance_roles.include?('nginxphpapp')
-  
   when 'gearmanworker'
     next unless instance_roles.include?('gearman-worker')
 
