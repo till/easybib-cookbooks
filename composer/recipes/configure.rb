@@ -4,22 +4,14 @@ if node[:scalarium]
   deploy_group    = node[:scalarium][:deploy_user][:group]
 
   # this is an assumption, so sue me
-  #home_dir = "/home/#{deploy_username}"
-
-  # copied this from scalarium's deploy/definition/scalarium_deploy_user.rb
-  #user deploy_username do
-  #  action   :create
-  #  comment  "deploy user"
-  #  gid      deploy_group
-  #  supports :manage_home => true
-  #  shell    node[:scalarium][:deploy_user][:shell]
-  #  home     home_dir
-  #  not_if do
-  #    existing_usernames = []
-  #    Etc.passwd {|user| existing_usernames << user['name']}
-  #    existing_usernames.include?(deploy_username)
-  #  end
-  #end
+  case deploy_username
+  when 'root'
+    home_dir = '/root'
+  when 'www-data'
+    home_dir = '/var/www'
+  else
+    home_dir = "/home/#{deploy_username}"
+  end
 
   directory "#{home_dir}/.composer" do
     owner     deploy_username
