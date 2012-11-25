@@ -34,7 +34,6 @@ packages = {
   "Net_Gearman-alpha"                           => "pear.php.net",
   "Services_Amazon_S3-0.4.0"                    => "pear.php.net",
   "Net_CheckIP2-1.0.0RC3"                       => "pear.php.net",
-  "HTMLPurifier"                                => "htmlpurifier.org",
   "Easybib_Form_Decorator-0.3.2"                => "easybib.github.com/pear",
   "Lagged_Loader-alpha"                         => "easybib.github.com/pear",
   "StatsD-alpha"                                => "easybib.github.com/pear",
