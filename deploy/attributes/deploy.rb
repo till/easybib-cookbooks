@@ -6,15 +6,15 @@ unless node[:deploy].nil?
     next unless node[:scalarium]
 
     # there's absolutely no need for zsh
-    node[:deploy][application][:shell] = '/bin/sh'
+    set[:deploy][application][:shell] = '/bin/sh'
 
     case node[:scalarium][:deploy_user][:user]
     when 'www-data'
-      node[:deploy][application][:home] = '/var/www'
+      set[:deploy][application][:home] = '/var/www'
     when 'root'
-      node[:deploy][application][:home] = '/root'
+      set[:deploy][application][:home] = '/root'
     else
-      node[:deploy][application][:home] = "/home/#{node[:scalarium][:deploy_user][:user]}"
+      set[:deploy][application][:home] = "/home/#{node[:scalarium][:deploy_user][:user]}"
     end
 
     Chef::Log.info("User: #{node[:scalarium][:deploy_user][:user]}, Home: #{node[:deploy][application][:home]}")
