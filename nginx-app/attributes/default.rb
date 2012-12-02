@@ -15,7 +15,7 @@ default["nginx-app"][:js_modules] = {
     "content"         => "content",
     "infolit"         => "infolit",
     "schoolanalytics" => "schoolanalytics",
-    "students"		  => "students",
+    "students"        => "students",
     "pearson"         => "pearson"
 }
 default["nginx-app"][:img_modules] = {
