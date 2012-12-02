@@ -15,13 +15,15 @@ default["nginx-app"][:js_modules] = {
     "content"         => "content",
     "infolit"         => "infolit",
     "schoolanalytics" => "schoolanalytics",
-    "students"		  => "students"
+    "students"		  => "students",
+    "pearson"         => "pearson"
 }
 default["nginx-app"][:img_modules] = {
     "notes"     => "notebook",
     "outline"   => "notebook",
     "paperlink" => "paperlink",
-    "infolit"   => "infolit"
+    "infolit"   => "infolit",
+    "pearson"   => "pearson"
 }
 default["nginx-app"][:css_modules] = {
     "debugger"        => "debugger",
@@ -33,7 +35,8 @@ default["nginx-app"][:css_modules] = {
     "content"         => "content",
     "infolit"         => "infolit",
     "schoolanalytics" => "schoolanalytics",
-    "braintree"       => "braintree"
+    "braintree"       => "braintree",
+    "pearson"         => "pearson"
 }
 
 # Silverline attribs
