@@ -35,6 +35,11 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("deploy::easybib - Deployment started.")
   Chef::Log.info("deploy::easybib - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
+  scalarium_deploy_user do
+    deploy_data deploy
+    app application
+  end
+
   scalarium_deploy_dir do
     user  deploy[:user]
     group deploy[:group]
