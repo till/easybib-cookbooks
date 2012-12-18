@@ -11,11 +11,7 @@ nginx_config_dir = node["nginx-app"][:config_dir]
 node[:docroot] = 'www'
 
 # password protect?
-if cluster_name == 'Fruitkid'
-  password_protected = true
-else
-  password_protected = false
-end
+password_protected = false
 
 node[:deploy].each do |application, deploy|
 
