@@ -23,5 +23,7 @@ http {
     gzip  on;
     gzip_disable "MSIE [1-6]\.(?!.*SV1)";
 
+    ssl_session_cache  shared:SSL:10m;
+
     include /etc/nginx/sites-enabled/*;
 }
