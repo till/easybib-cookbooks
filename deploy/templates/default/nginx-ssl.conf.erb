@@ -1,5 +1,5 @@
 server {
-  listen 443;
+  listen 443 ssl default_server;
   ssl on;
   ssl_certificate <%= @ssl_dir %>/cert.pem;
   ssl_certificate_key <%= @ssl_dir %>/cert.key;
