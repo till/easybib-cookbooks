@@ -1,4 +1,4 @@
-vagrant_dir = "/vagrant_data"
+vagrant_dir = "/vagrant_data/web/"
 
 template "/etc/nginx/sites-enabled/silex.conf" do
   source "silex.conf.erb"
