@@ -1,0 +1,25 @@
+upstream phpfpm {
+    server  unix:/var/run/php-fpm/<%= @php_user %>;
+}
+
+server {
+    listen 80;
+
+    location = / {
+        try_files @site @site;
+    }
+
+    #all other locations try other files first and go to our front controller if none of them exists
+    location / {
+        try_files $uri $uri/ @site;
+    }
+
+    root <%= @doc_root%>;
+    index index_dev.php;
+
+    location @site {
+        fastcgi_pass  phpfpm;
+        include       fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/index_dev.php;
+    }
+}
