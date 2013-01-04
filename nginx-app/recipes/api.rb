@@ -6,7 +6,7 @@ template "/etc/nginx/sites-enabled/silex.conf" do
   owner  node["nginx-app"][:user]
   group  node["nginx-app"][:group]
   variables(
-    :php_user    => node["nginx-app"][:user],
+    :php_user    => node["php-fpm"][:user],
     :doc_root    => vagrant_dir,
     :access_log  => 'off',
     :nginx_extra => 'sendfile  off;'
