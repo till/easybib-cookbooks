@@ -17,6 +17,14 @@ server {
     root <%= @doc_root%>;
     index index_dev.php;
 
+    location ~* \.php$ {
+        fastcgi_index index.php;
+        fastcgi_pass  phpfpm;
+        include       fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+    }
+
     location @site {
         fastcgi_pass  phpfpm;
         include       fastcgi_params;
