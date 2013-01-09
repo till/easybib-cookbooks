@@ -34,10 +34,12 @@ node[:deploy].each do |application, deploy|
   end
 
   if !deploy.has_key?("ssl_certificate")
+    Chef::Log.info("No ssl_certificate 'key'")
     next
   end
 
   if !deploy.has_key?("ssl_certificate_key")
+    Chef::Log.info("No ssl_certificate_key 'key'")
     next
   end
 
@@ -51,7 +53,7 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  ssl_certificate = deploy["ssl_certificate"].chomp
+  ssl_certificate     = deploy["ssl_certificate"].chomp
   ssl_certificate_key = deploy["ssl_certificate_key"].chomp
 
   directory ssl_dir do
