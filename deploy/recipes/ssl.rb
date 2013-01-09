@@ -99,7 +99,7 @@ node[:deploy].each do |application, deploy|
   file nginx_dir + "/sites-enabled/default" do
     action :delete
     only_if do
-      File.exists?(ssl_dir + "/sites-enabled/default")
+      File.exists?(nginx_dir + "/sites-enabled/default")
     end
   end
 
