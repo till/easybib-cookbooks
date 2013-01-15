@@ -33,11 +33,12 @@ include_recipe "php-fpm::prepare"
 include_recipe "apt::ppa"
 include_recipe "apt::easybib"
 
-aptPackages = node["php-fpm"][:packages]
+aptPackages = node["php-fpm"][:packages].split(',')
 
-aptPackages.each do |package,v|
+aptPackages.each do |package|
   package "#{package}"
 end
 
 include_recipe "php-fpm::configure"
 include_recipe "php-apc::default"
+
