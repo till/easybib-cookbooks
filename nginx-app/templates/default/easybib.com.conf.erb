@@ -1,5 +1,5 @@
 upstream phpfpm {
-    server  unix:/var/run/php-fpm/<%= node["nginx-app"][:user] %>;
+    server  unix:/var/run/php-fpm/<%= node["php-fpm"][:user] %>;
 }
 
 server {

@@ -6,4 +6,6 @@ version           "0.1"
 recipe            "nginx::server", "Installs Nginx"
 recipe            "nginx::configure", "Configures virtualhost, etc."
 
+depends "php-fpm"
+
 supports 'ubuntu'
