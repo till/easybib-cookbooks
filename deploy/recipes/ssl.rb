@@ -109,6 +109,12 @@ node[:deploy].each do |application, deploy|
 
 end
 
+["/cert.pem", "/cert.key"].each do |f|
+  if File.exists?(ssl_dir + f)
+    stored_certificate = true
+  end
+end
+
 if !stored_certificate
   Chef::Log.debug("No certificates were installed, we'll stop nginx.")
   service "nginx" do
