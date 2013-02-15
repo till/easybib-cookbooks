@@ -34,6 +34,11 @@ server {
         access_log  <%= @access_log %>;
     }
 
+    location = /bsm-xd.html {
+        root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
+        access_log  <%= @access_log %>;
+    }
+
     location /nginx_status {
         stub_status on;
         access_log  <%= @access_log %>;
