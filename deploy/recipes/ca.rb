@@ -1,5 +1,5 @@
-instance_roles = node[:opsworks][:instance][:layers]
-cluster_name   = node[:opsworks][:stack][:name]
+instance_roles = get_instance_roles()
+cluster_name   = get_cluster_name()
 
 node[:deploy].each do |application, deploy|
 

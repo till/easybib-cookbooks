@@ -17,9 +17,14 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
     mode "0755"
   end
 
-  template "/etc/init.d/loggly" do
-    source "loggly.sh.erb"
-    mode "0755"
+  if is_aws()
+    template "/etc/init.d/loggly" do
+      source "loggly.sh.erb"
+      mode "0755"
+      variables({
+        :instance => get_instance()
+      })
+    end
   end
 end
 

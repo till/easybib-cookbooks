@@ -1,8 +1,8 @@
 default[:silverline][:name] = "mysql-sessions"
 
-if attribute?(:opsworks)
-  default[:silverline][:environment] = node[:opsworks][:stack][:name].gsub(/\s/,'')
-  default[:silverline][:roles] = node[:opsworks][:instance][:layers]
+if is_aws()
+  default[:silverline][:environment] = get_cluster_name().gsub(/\s/,'')
+  default[:silverline][:roles]       = get_instance_roles()
 else
   default[:silverline][:environment] = "production"
   default[:silverline][:roles] = ["default"]

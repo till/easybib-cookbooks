@@ -3,9 +3,10 @@ unless node[:deploy].nil?
   deploy.each do |application, deploy|
 
     # if there's no opsworks
-    next unless node[:opsworks]
+    next unless is_aws() == true
 
-    user = node[:opsworks][:deploy_user][:user]
+    deploy_user = get_deploy_user()
+    user        = deploy_user[:user]
 
     # there's absolutely no need for zsh
     set[:deploy][application][:shell] = '/bin/sh'

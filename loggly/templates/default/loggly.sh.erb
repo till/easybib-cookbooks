@@ -14,8 +14,8 @@ CUSTOMER="<%=node[:loggly][:domain]%>"
 INPUT=<%=node[:loggly][:input]%>
 USER="<%=node[:loggly][:user]%>"
 PASS="<%=node[:loggly][:pass]%>"
-MASCHINE="<%=node[:opsworks][:instance][:hostname]%>"
-IP="<%=node[:opsworks][:instance][:ip]%>"
+MASCHINE="<%=@instance[:hostname]%>"
+IP="<%=@instance[:ip]%>"
 
 ENDPOINT="https://${CUSTOMER}.loggly.com/api/devices/"
 

@@ -1,9 +1,9 @@
-if attribute?(:opsworks)
-  default[:silverline][:environment] = node[:opsworks][:stack][:name].gsub(/\s/,'')
-  default[:silverline][:roles] = node[:opsworks][:instance][:layers]
+if is_aws()
+  default[:silverline][:environment] = get_cluster_name().gsub(/\s/,'')
+  default[:silverline][:roles]       = get_instance_roles()
 else
   default[:silverline][:environment] = "production"
-  default[:silverline][:roles] = ["default"]
+  default[:silverline][:roles]       = ["default"]
 end
 # set first 4 bytes of sl_tag_names value and terminate with a colon
 sl_tag_names = "env-#{default[:silverline][:environment]}:"

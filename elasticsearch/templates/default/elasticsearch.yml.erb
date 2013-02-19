@@ -13,7 +13,7 @@ bootstrap:
   mlockall: true
 <% end -%>
 
-<% if node[:opsworks] -%>
+<% if is_aws() -%>
 #discovery.zen.ping.unicast:
 #  hosts:
 <% end -%>

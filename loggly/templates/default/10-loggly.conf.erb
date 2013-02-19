@@ -1,4 +1,4 @@
-<% if node[:opsworks][:instance][:layers].include?('nginxphpapp') %>
+<% if get_instance_roles().include?('nginxphpapp') %>
 
 $ModLoad imfile
 <%
@@ -18,7 +18,7 @@ $InputFilePollingInterval <%= node[:syslog][:poll] %>
 <% end %>
 
 <%
-if !node[:opsworks][:instance][:layers].include?('loadbalancer')
+if !get_instance_roles().include?('loadbalancer')
     # on loadbalancer we write to local files
 %>
 

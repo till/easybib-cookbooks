@@ -2,11 +2,14 @@ require 'resolv'
 
 ips = ['127.0.0.0/8']
 
-if node[:opsworks]
-  ips.push(node[:opsworks][:instance][:ip])
-  ips.push(Resolv.getaddress(node[:opsworks][:instance][:private_dns_name]))
+if !get_cluster_name().empty?
 
-  my_hostname = node[:opsworks][:instance][:hostname]
+  instance = get_instance()
+
+  ips.push(instance[:ip])
+  ips.push(Resolv.getaddress(instance[:private_dns_name]))
+
+  my_hostname = instance[:hostname]
 else
   my_hostname = node[:hostname]
 end

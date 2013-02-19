@@ -45,11 +45,11 @@ fastcgi_temp_file_write_size 256k;
 # do not intercept errors from backend
 fastcgi_intercept_errors     on;
 
-# only execute in opsworks context
+# only execute in aws context
 <%
-if node[:opsworks]
+if is_aws()
   # only run for 'elasticsearch' app server
-  if node[:opsworks][:instance][:layers].include?('elasticsearch') -%>
+  if get_instance_roles().include?('elasticsearch') -%>
 fastcgi_param APPLICATION_ENV production;
 <%
   end

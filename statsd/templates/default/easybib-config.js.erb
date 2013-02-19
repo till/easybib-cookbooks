@@ -5,7 +5,7 @@
   librato: {
     email: '<%= node[:librato][:metrics][:email] -%>',
     token: '<%= node[:librato][:metrics][:api_key] -%>',
-    source: '<%= node[:opsworks][:stack][:name] -%>',
+    source: '<%= get_cluster_name() -%>',
     batchSize: <%= node[:librato][:metrics][:batch] %>
   }
 }

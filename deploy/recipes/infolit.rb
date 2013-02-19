@@ -1,17 +1,20 @@
 include_recipe "php-fpm::service"
 
+cluster_name   = get_cluster_name()
+instance_roles = get_instance_roles()
+
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.info("deploy::infolit - app: #{application}, role: #{node[:opsworks][:instance][:layers]}")
+  Chef::Log.info("deploy::infolit - app: #{application}, role: #{instance_roles}")
 
-  next unless node[:opsworks][:stack][:name] == 'InfoLit'
+  next unless cluster_name == 'InfoLit'
 
   case application
   when 'infolit'
-    next unless node[:opsworks][:instance][:layers].include?('nginxphpapp')
+    next unless instance_roles.include?('nginxphpapp')
   
   else
-    Chef::Log.info("deploy::infolit - #{application} (in #{node[:opsworks][:stack][:name]}) skipped")
+    Chef::Log.info("deploy::infolit - #{application} (in #{cluster_name}) skipped")
     next
   end
 

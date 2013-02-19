@@ -7,11 +7,11 @@ nginx_dir     = node["nginx-lb"]["dir"]
 ssl_dir       = nginx_dir + "/ssl"
 int_ip        = node["nginx-lb"]["int_ip"]
 
-if node.attribute?(:opsworks)
-  instance_roles = node[:opsworks][:instance][:layers]
-  cluster_name   = node[:opsworks][:stack][:name]
+if is_aws()
+  instance_roles = get_instance_roles()
+  cluster_name   = get_cluster_name()
 else
-  Chef::Log.debug("Not running on opsworks, setting defaults.")
+  Chef::Log.debug("Not running on AWS, setting defaults.")
   instance_roles = ""
   cluster_name   = ""
 end

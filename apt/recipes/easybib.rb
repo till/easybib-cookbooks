@@ -1,5 +1,5 @@
 ppa="easybib/ppa"
-if node.attribute?(:opsworks) && node[:opsworks][:stack][:name] == "EasyBib Playground"
+if get_cluster_name() == "EasyBib Playground"
   ppa="easybib/test"
 end
 
