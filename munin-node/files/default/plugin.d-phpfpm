@@ -1,4 +1,0 @@
-[phpfpm*]
-env.munin_phpbin php-fpm
-env.munin_phpfpm_url http://127.0.0.1/fpm_status
-env.munin_phpfpm_ports 80

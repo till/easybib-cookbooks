@@ -1,8 +1,0 @@
-<%= node[:munin][:log_dir] %>/*.log {
-        daily
-        missingok
-        rotate 4
-        compress
-        notifempty
-        create 640 <%= node[:munin][:user] %> <%= node[:munin][:www_user] %>
-}
