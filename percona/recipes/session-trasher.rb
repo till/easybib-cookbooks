@@ -16,8 +16,8 @@ git "#{root_dir}/session-trasher" do
   action :sync
 end
 
-if !node[:scalarium] || !node[:mysql]
-  raise "This relies on the password being send from Scalarium"
+if !node[:opsworks] || !node[:mysql]
+  raise "This relies on the password being send from OpsWorks"
 end
 
 mysql_password = node[:mysql][:server_root_password]

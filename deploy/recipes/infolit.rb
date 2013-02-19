@@ -2,16 +2,16 @@ include_recipe "php-fpm::service"
 
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.info("deploy::infolit - app: #{application}, role: #{node[:scalarium][:instance][:roles]}")
+  Chef::Log.info("deploy::infolit - app: #{application}, role: #{node[:opsworks][:instance][:layers]}")
 
-  next unless node[:scalarium][:cluster][:name] == 'InfoLit'
+  next unless node[:opsworks][:stack][:name] == 'InfoLit'
 
   case application
   when 'infolit'
-    next unless node[:scalarium][:instance][:roles].include?('nginxphpapp')
+    next unless node[:opsworks][:instance][:layers].include?('nginxphpapp')
   
   else
-    Chef::Log.info("deploy::infolit - #{application} (in #{node[:scalarium][:cluster][:name]}) skipped")
+    Chef::Log.info("deploy::infolit - #{application} (in #{node[:opsworks][:stack][:name]}) skipped")
     next
   end
 

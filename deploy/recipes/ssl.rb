@@ -7,11 +7,11 @@ nginx_dir     = node["nginx-lb"]["dir"]
 ssl_dir       = nginx_dir + "/ssl"
 int_ip        = node["nginx-lb"]["int_ip"]
 
-if node.attribute?(:scalarium)
-  instance_roles = node[:scalarium][:instance][:roles]
-  cluster_name   = node[:scalarium][:cluster][:name]
+if node.attribute?(:opsworks)
+  instance_roles = node[:opsworks][:instance][:layers]
+  cluster_name   = node[:opsworks][:stack][:name]
 else
-  Chef::Log.debug("Not running in scalarium, setting defaults.")
+  Chef::Log.debug("Not running on opsworks, setting defaults.")
   instance_roles = ""
   cluster_name   = ""
 end

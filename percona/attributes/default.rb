@@ -4,7 +4,7 @@ default[:percona][:key]      = "1C4CBDCDCD2EFD2A"
 default[:percona][:user]     = "root"
 default[:percona][:password] = ""
 
-# set if scalarium is not available
+# set if opsworks is not available
 set_unless[:mysql]                        = {}
 set_unless[:mysql][:server_root_password] = "plzhax0rme"
 

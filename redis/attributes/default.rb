@@ -13,7 +13,7 @@ default[:redis][:appendonly]    = 'no'
 default[:redis][:aofile]        = 'appendonly.aof'
 default[:redis][:appendfsync]   = 'no'
 
-# master-slave configuration, allow overriding from scalarium/upstream
+# master-slave configuration, allow overriding from opsworks/upstream
 set_unless[:redis][:master]            = {}
 set_unless[:redis][:master][:address]  = 'darth-vader'
 set_unless[:redis][:master][:port]     = 6379

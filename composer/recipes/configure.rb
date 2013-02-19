@@ -1,7 +1,7 @@
-if node[:scalarium]
+if node[:opsworks]
 
-  deploy_username = node[:scalarium][:deploy_user][:user]
-  deploy_group    = node[:scalarium][:deploy_user][:group]
+  deploy_username = node[:opsworks][:deploy_user][:user]
+  deploy_group    = node[:opsworks][:deploy_user][:group]
 
   # this is an assumption, so sue me
   case deploy_username
@@ -35,5 +35,5 @@ if node[:scalarium]
   end
 
 else
-  Chef::Log.debug("Recipe requires `scalarium` to be present.")
+  Chef::Log.debug("Recipe requires `opsworks` to be present.")
 end

@@ -49,7 +49,7 @@ haproxy_maxconn = 255
 -%>
 
 # Set up application listeners here.
-<% if node[:scalarium][:roles][:nginxphpapp][:instances].blank? -%>
+<% if node[:opsworks][:layers][:nginxphpapp][:instances].blank? -%>
 listen application <%= haproxy_host %>:<%= haproxy_port %>
   # configure a fake backend as long as there are no real ones
   # this way HAProxy will not fail on a config check
@@ -57,14 +57,14 @@ listen application <%= haproxy_host %>:<%= haproxy_port %>
   server localhost 127.0.0.1:8080 weight 1 maxconn 5 check
 <% end -%>
 
-<% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+<% if !node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
 backend php_app_servers
   balance roundrobin
   option redispatch
   option httpclose
   option forwardfor
   option httpchk <%= node[:haproxy][:health_check_method] %> <%= node[:haproxy][:health_check_url] %>
-  <% node[:scalarium][:roles][:nginxphpapp][:instances].each do |name,backend| -%>
+  <% node[:opsworks][:layers][:nginxphpapp][:instances].each do |name,backend| -%>
   server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
   <% end -%>
 <% end -%>
@@ -82,7 +82,7 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% unless node[:haproxy][:php_applications].empty? || node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+  <% unless node[:haproxy][:php_applications].empty? || node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
     <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
       <% app_config['domains'].each do |domain| -%>
         <% if app_config['mounted_at'] -%>
@@ -94,6 +94,6 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !node[:scalarium][:roles][:nginxphpapp][:instances].empty? -%>
+  <% if !node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
   default_backend php_app_servers
   <% end -%>

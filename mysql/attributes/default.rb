@@ -1,8 +1,8 @@
 default[:silverline][:name] = "mysql-sessions"
 
-if attribute?(:scalarium)
-  default[:silverline][:environment] = node[:scalarium][:cluster][:name].gsub(/\s/,'')
-  default[:silverline][:roles] = node[:scalarium][:instance][:roles]
+if attribute?(:opsworks)
+  default[:silverline][:environment] = node[:opsworks][:stack][:name].gsub(/\s/,'')
+  default[:silverline][:roles] = node[:opsworks][:instance][:layers]
 else
   default[:silverline][:environment] = "production"
   default[:silverline][:roles] = ["default"]

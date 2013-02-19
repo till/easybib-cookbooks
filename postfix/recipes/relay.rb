@@ -2,11 +2,11 @@ require 'resolv'
 
 ips = ['127.0.0.0/8']
 
-if node[:scalarium]
-  ips.push(node[:scalarium][:instance][:ip])
-  ips.push(Resolv.getaddress(node[:scalarium][:instance][:private_dns_name]))
+if node[:opsworks]
+  ips.push(node[:opsworks][:instance][:ip])
+  ips.push(Resolv.getaddress(node[:opsworks][:instance][:private_dns_name]))
 
-  my_hostname = node[:scalarium][:instance][:hostname]
+  my_hostname = node[:opsworks][:instance][:hostname]
 else
   my_hostname = node[:hostname]
 end

@@ -1,8 +1,8 @@
-if attribute?(:scalarium_initial_setup)
-  set[:scalarium_initial_setup][:bind_mounts][:mounts] = scalarium_initial_setup[:bind_mounts][:mounts].update({
-    "/var/log/haproxy" => "/mnt/var/log/haproxy"
-  })
-end
+#if attribute?(:scalarium_initial_setup)
+#  set[:scalarium_initial_setup][:bind_mounts][:mounts] = scalarium_initial_setup[:bind_mounts][:mounts].update({
+#    "/var/log/haproxy" => "/mnt/var/log/haproxy"
+#  })
+#end
 
 default[:haproxy]            = {}
 default[:haproxy][:errorloc] = {
@@ -17,4 +17,3 @@ default[:haproxy][:errorloc] = {
 
 default[:haproxy][:ctl][:base_path] = "/usr/local/share"
 default[:silverline][:haproxy_name] = "haproxy"
-

@@ -1,6 +1,6 @@
 # fix this for Ubuntu
-if node[:scalarium]
-  my_hostname = node[:scalarium][:instance][:hostname]
+if node[:opsworks]
+  my_hostname = node[:opsworks][:instance][:hostname]
 else
   # node.json
   if node[:server_name]

@@ -1,6 +1,6 @@
-if node[:scalarium]
+if node[:opsworks]
 
-  cluster_name = node[:scalarium][:cluster][:name]
+  cluster_name = node[:opsworks][:stack][:name]
 
   if cluster_name == 'Fruitkid'
     template "#{node["nginx-app"][:config_dir]}/htpasswd" do

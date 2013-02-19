@@ -21,8 +21,7 @@ package "landscape-client" do
   action :purge
 end
 
-# scalarium installs this but we don't need it
-# http://support.scalarium.com/discussions/problems/503-ganglia-issues
+# opsworks installs this but we don't need it
 package "ganglia-monitor" do
   action :purge
 end

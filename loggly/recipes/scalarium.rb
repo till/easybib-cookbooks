@@ -1,6 +1,6 @@
 # this is specific to our setup and is only triggered on scalarium
-if node[:scalarium]
-  if node[:scalarium][:instance][:roles].include?('loadbalancer')
+if node[:opsworks]
+  if node[:opsworks][:instance][:layers].include?('loadbalancer')
 
     template "/etc/rsyslog.d/10-haproxy.conf" do
       source "10-haproxy.conf.erb"

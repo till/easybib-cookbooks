@@ -32,16 +32,3 @@ if node[:couchdb][:backup]
     path "/usr/bin:/usr/local/bin:/bin:/sbin:/usr/sbin"
   end
 end
-
-if node[:couchdb][:replica]
-  http_request nil do
-    action :post
-    url "http://localhost:5984/_replicate"
-    message({
-      "source" => "http://#{node[:scalarium][:datastore_dns]}:5984/scalarium",
-      "target" => "scalarium",
-      "continuous" => true,
-      "create_target" => true
-    })
-  end
-end

@@ -1,9 +1,7 @@
 include_recipe "php-fpm::service"
 
-# custom recipe because of: http://support.scalarium.com/discussions/problems/78-app-is-not-deploying
-
-instance_roles = node[:scalarium][:instance][:roles]
-cluster_name   = node[:scalarium][:cluster][:name]
+instance_roles = node[:opsworks][:instance][:layers]
+cluster_name   = node[:opsworks][:stack][:name]
 
 node[:deploy].each do |application, deploy|
 

@@ -9,7 +9,7 @@
             ]
         }
     },
-    "scalarium": {
+    "opsworks": {
         "activity": "deploy",
         "applications": [
             {
@@ -18,12 +18,12 @@
                 "application_type": "other"
             }
         ],
-        "cluster": {
+        "stack": {
             "name": "EasyBib Playground"
         },
         "instance": {
             "id": 1,
-            "roles": [
+            "layers": [
                 "lb"
             ]
         }

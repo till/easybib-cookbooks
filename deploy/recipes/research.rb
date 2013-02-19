@@ -1,7 +1,7 @@
 include_recipe "php-fpm::service"
 
-instance_roles = node[:scalarium][:instance][:roles]
-cluster_name   = node[:scalarium][:cluster][:name]
+instance_roles = node[:opsworks][:instance][:layers]
+cluster_name   = node[:opsworks][:stack][:name]
 
 node[:deploy].each do |application, deploy|
 

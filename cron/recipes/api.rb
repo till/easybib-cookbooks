@@ -1,6 +1,6 @@
 # install a cronjob to run every 5 minutes
 
-if node[:scalarium][:instance][:roles].include?('bibapi')
+if node[:opsworks][:instance][:layers].include?('bibapi')
   cron "stats from redis to mysql" do
     mailto node[:sysop_email]
     minute "*/5"

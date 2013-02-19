@@ -24,9 +24,9 @@ default[:boundary][:bprobe][:etc][:path] = "/etc/bprobe"
 default[:boundary][:bprobe][:collector][:hostname] = "collector.boundary.com"
 default[:boundary][:bprobe][:collector][:port] = "4740"
 
-if attribute?(:scalarium)
-  default[:boundary][:bprobe][:tags] = [ node[:scalarium][:cluster][:name].gsub(/\s/,'') ]
-  default[:boundary][:bprobe][:tags] += node[:scalarium][:instance][:roles]
+if attribute?(:opsworks)
+  default[:boundary][:bprobe][:tags] = [ node[:opsworks][:stack][:name].gsub(/\s/,'') ]
+  default[:boundary][:bprobe][:tags] += node[:opsworks][:instance][:layers]
 else
   default[:boundary][:bprobe][:tags] = []
 end

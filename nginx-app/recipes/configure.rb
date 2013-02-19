@@ -2,8 +2,8 @@ include_recipe "deploy"
 include_recipe "nginx-app::server"
 include_recipe "php-fpm::service"
 
-instance_roles   = node[:scalarium][:instance][:roles]
-cluster_name     = node[:scalarium][:cluster][:name]
+instance_roles   = node[:opsworks][:instance][:layers]
+cluster_name     = node[:opsworks][:stack][:name]
 app_access_log   = "off"
 nginx_config_dir = node["nginx-app"][:config_dir]
 
