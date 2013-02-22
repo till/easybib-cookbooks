@@ -23,6 +23,7 @@ default["nginx-app"][:img_modules] = {
     "outline"   => "notebook",
     "paperlink" => "paperlink",
     "infolit"   => "infolit",
+    "braintree" => "braintree",
     "pearson"   => "pearson"
 }
 default["nginx-app"][:css_modules] = {
