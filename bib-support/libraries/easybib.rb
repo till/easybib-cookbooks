@@ -1,7 +1,7 @@
 Chef::Log.info("HELLO LIBS")
 
 module EasyBib
-  def get_cluster_name
+  def get_cluster_name(node = self.node)
     if node[:scalarium]
       return node[:scalarium][:cluster][:name]
     end
@@ -11,7 +11,7 @@ module EasyBib
     ::Chef::Log.debug("Unknown environment.")
   end
 
-  def get_deploy_user
+  def get_deploy_user(node = self.node)
     if node[:scalarium]
       return node[:scalarium][:deploy_user]
     end
@@ -21,7 +21,7 @@ module EasyBib
     ::Chef::Log.debug("Unknown environment.")
   end
 
-  def get_instance_roles
+  def get_instance_roles(node = self.node)
     if node[:scalarium]
       return node[:scalarium][:instance][:roles]
     end
@@ -31,7 +31,7 @@ module EasyBib
     ::Chef::Log.debug("Unknown environment.")
   end
 
-  def get_instance
+  def get_instance(node = self.node)
     if node[:scalarium]
       return node[:scalarium][:instance]
     end
@@ -41,7 +41,7 @@ module EasyBib
     ::Chef::Log.debug("Unknown environment.")
   end
 
-  def is_aws
+  def is_aws(node = self.node)
     if node[:scalarium]
       return true
     end
