@@ -29,16 +29,31 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe "php-fpm::prepare"
-include_recipe "apt::ppa"
-include_recipe "apt::easybib"
+case node[:lsb][:codename]
+when 'lucid'
 
-aptPackages = node["php-fpm"][:packages].split(',')
+  include_recipe "php-fpm::prepare"
+  include_recipe "apt::ppa"
+  include_recipe "apt::easybib"
 
-aptPackages.each do |package|
-  package "#{package}"
+  aptPackages = node["php-fpm"][:packages].split(',')
+  aptPackages.each do |package|
+    package "#{package}"
+  end
+
+  include_recipe "php-fpm::configure"
+  include_recipe "php-apc::default"
+
+when 'precise'
+
+  include_recipe "apt"
+
+  aptPackages = node["php-fpm"][:packages].split(',')
+  aptPackages.each do |package|
+    package "#{package}"
+  end
+
+else
+  Chef::Log.debug("Unknown release #{node[:lsb][:codename]}")
 end
-
-include_recipe "php-fpm::configure"
-include_recipe "php-apc::default"
 

@@ -29,4 +29,11 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+case node[:lsb][:codename]
+when 'precise'
+  package "php-pear"
+  execute "pear upgrade PEAR"
+  execute "pear upgrade-all"
+end
+
 include_recipe "php-pear::packages"
