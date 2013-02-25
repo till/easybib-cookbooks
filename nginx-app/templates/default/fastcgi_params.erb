@@ -47,9 +47,9 @@ fastcgi_intercept_errors     on;
 
 # only execute in aws context
 <%
-if is_aws()
+if ::EasyBib.is_aws(node)
   # only run for 'elasticsearch' app server
-  if get_instance_roles().include?('elasticsearch') -%>
+  if ::EasyBib.get_instance_roles(node).include?('elasticsearch') -%>
 fastcgi_param APPLICATION_ENV production;
 <%
   end

@@ -13,7 +13,7 @@ bootstrap:
   mlockall: true
 <% end -%>
 
-<% if is_aws() -%>
+<% if ::EasyBib.is_aws(node) -%>
 #discovery.zen.ping.unicast:
 #  hosts:
 <% end -%>

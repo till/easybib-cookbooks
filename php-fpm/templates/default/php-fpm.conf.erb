@@ -25,7 +25,7 @@ process_control_timeout = 10s
 
 daemonize = yes
 
-<% if !is_aws() && node[:users] -%>
+<% if !::EasyBib.is_aws(node) && node[:users] -%>
 
 include=/usr/local/etc/php-fpm/*.conf
 
