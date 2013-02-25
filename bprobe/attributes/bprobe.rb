@@ -24,7 +24,7 @@ default[:boundary][:bprobe][:etc][:path] = "/etc/bprobe"
 default[:boundary][:bprobe][:collector][:hostname] = "collector.boundary.com"
 default[:boundary][:bprobe][:collector][:port] = "4740"
 
-if ::EasyBib.is_aws()
+if is_aws
   default[:boundary][:bprobe][:tags] = [ get_cluster_name().gsub(/\s/,'') ]
   default[:boundary][:bprobe][:tags] += get_instance_roles()
 else

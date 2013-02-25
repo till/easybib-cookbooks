@@ -1,3 +1,5 @@
+Chef::Log.info("HELLO LIBS")
+
 module EasyBib
   def get_cluster_name
     if node[:scalarium]
@@ -48,6 +50,8 @@ module EasyBib
     end
     return false
   end
+
+  extend self
 end
 
 class Chef::Recipe

@@ -3,7 +3,7 @@ unless node[:deploy].nil?
   deploy.each do |application, deploy|
 
     # if there's no opsworks
-    next unless ::EasyBib.is_aws() == true
+    next unless is_aws
 
     deploy_user = get_deploy_user()
     user        = deploy_user[:user]
