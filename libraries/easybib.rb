@@ -1,4 +1,4 @@
-module Easybib
+module EasyBib
   def get_cluster_name
     if node[:scalarium]
       return node[:scalarium][:cluster][:name]
@@ -39,7 +39,7 @@ module Easybib
     ::Chef::Log.debug("Unknown environment.")
   end
 
-  def is_aws()
+  def is_aws
     if node[:scalarium]
       return true
     end

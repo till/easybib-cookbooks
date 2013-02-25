@@ -1,6 +1,6 @@
 default[:silverline][:name] = "mysql-sessions"
 
-if is_aws()
+if ::EasyBib.is_aws()
   default[:silverline][:environment] = get_cluster_name().gsub(/\s/,'')
   default[:silverline][:roles]       = get_instance_roles()
 else
