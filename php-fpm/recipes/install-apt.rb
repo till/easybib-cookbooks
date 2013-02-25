@@ -29,15 +29,17 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+include_recipe "apt::ppa"
+include_recipe "apt::easybib"
+
+apt_packages = node["php-fpm"][:packages].split(',')
+
 case node[:lsb][:codename]
 when 'lucid'
 
   include_recipe "php-fpm::prepare"
-  include_recipe "apt::ppa"
-  include_recipe "apt::easybib"
 
-  aptPackages = node["php-fpm"][:packages].split(',')
-  aptPackages.each do |package|
+  apt_packages.each do |package|
     package "#{package}"
   end
 
@@ -46,10 +48,7 @@ when 'lucid'
 
 when 'precise'
 
-  include_recipe "apt"
-
-  aptPackages = node["php-fpm"][:packages].split(',')
-  aptPackages.each do |package|
+  apt_packages.each do |package|
     package "#{package}"
   end
 
