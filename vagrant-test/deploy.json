@@ -11,8 +11,8 @@
     },
     "opsworks": {
         "deploy_user": {
-            "user": "deploy",
-            "group": "www-data"
+            "user": "vagrant",
+            "group": "vagrant"
         },
         "activity": "deploy",
         "applications": [

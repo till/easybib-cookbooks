@@ -1,6 +1,7 @@
 Vagrant::Config.run do |config|
 
-  config.vm.box = "easybib-ubuntu-10.04.4_vbox-4.1.8"
+  config.vm.box = "precise64"
+  config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
 
   config.vm.network :hostonly, "33.33.33.124"
 
@@ -14,7 +15,7 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../"
-    chef.log_level = :debug
+    chef.log_level = :info
     chef.add_recipe "nginx-app::server"
     chef.add_recipe "php-fpm"
     chef.add_recipe "php-phar"
