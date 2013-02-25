@@ -3,9 +3,9 @@ unless node[:deploy].nil?
   deploy.each do |application, deploy|
 
     # if there's no opsworks
-    next unless is_aws
+    next unless ::EasyBib.is_aws(node)
 
-    deploy_user = get_deploy_user()
+    deploy_user = ::EasyBib.get_deploy_user(node)
     user        = deploy_user[:user]
 
     # there's absolutely no need for zsh
