@@ -52,6 +52,21 @@ when 'precise'
     package "#{package}"
   end
 
+  # this is a hack because that's where our own php recides
+  directory "/usr/local/bin" do
+    mode      "0755"
+    owner     "root"
+    group     "root"
+    recursive true
+  end
+
+  link "/usr/local/bin/php" do
+    to "/usr/bin/php"
+    only_if do
+      File.exists("/usr/bin/php")
+    end
+  end
+
 else
   Chef::Log.debug("Unknown release #{node[:lsb][:codename]}")
 end
