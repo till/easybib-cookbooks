@@ -68,7 +68,7 @@ when 'precise'
   link "/usr/local/bin/php" do
     to "/usr/bin/php"
     only_if do
-      File.exists("/usr/bin/php")
+      File.exists?("/usr/bin/php")
     end
   end
 
