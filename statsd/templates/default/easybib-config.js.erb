@@ -5,7 +5,7 @@
   librato: {
     email: '<%= node[:librato][:metrics][:email] -%>',
     token: '<%= node[:librato][:metrics][:api_key] -%>',
-    source: '<%= get_cluster_name() -%>',
+    source: '<%= ::EasyBib.get_cluster_name(node) -%>',
     batchSize: <%= node[:librato][:metrics][:batch] %>
   }
 }
