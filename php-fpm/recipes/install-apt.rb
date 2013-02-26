@@ -49,6 +49,7 @@ when 'lucid'
 when 'precise'
 
   apt_packages.each do |package|
+    Chef::Log.debug("Installing #{package}")
     package "#{package}"
   end
 
