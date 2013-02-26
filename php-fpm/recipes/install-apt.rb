@@ -39,8 +39,10 @@ when 'lucid'
 
   include_recipe "php-fpm::prepare"
 
-  apt_packages.each do |package|
-    package "#{package}"
+  apt_packages.each do |p|
+    package p do
+      action :install
+    end
   end
 
   include_recipe "php-fpm::configure"
@@ -48,9 +50,11 @@ when 'lucid'
 
 when 'precise'
 
-  apt_packages.each do |package|
-    Chef::Log.debug("Installing #{package}")
-    package "#{package}"
+  apt_packages.each do |p|
+    Chef::Log.debug("Installing #{p}")
+    package p do
+      action :install
+    end
   end
 
   # this is a hack because that's where our own php recides
