@@ -70,9 +70,11 @@ template "/etc/default/php-fpm" do
   mode   "0644"
 end
 
-template "/etc/init.d/php-fpm" do
-  mode   "0755"
-  source "init.d.php-fpm.erb"
-  owner  node["php-fpm"][:user]
-  group  node["php-fpm"][:group]
+if node[:lsb][:codename] == 'lucid'
+  template "/etc/init.d/php-fpm" do
+    mode   "0755"
+    source "init.d.php-fpm.erb"
+    owner  node["php-fpm"][:user]
+    group  node["php-fpm"][:group]
+  end
 end
