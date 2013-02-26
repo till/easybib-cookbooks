@@ -18,11 +18,14 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
   end
 
   if is_aws()
+
+    instance = get_instance()
+
     template "/etc/init.d/loggly" do
       source "loggly.sh.erb"
       mode "0755"
       variables({
-        :instance => get_instance()
+        :instance => instance
       })
     end
   end
