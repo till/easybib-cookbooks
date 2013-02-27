@@ -1,11 +1,11 @@
 Vagrant::Config.run do |config|
 
-  config.vm.box = "precise64"
-  config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
+    config.vm.box = "precise64"
+    config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
 
-  config.vm.network :hostonly, "33.33.33.124"
+    config.vm.network :hostonly, "33.33.33.124"
 
-  config.vbguest.auto_update = false
+    config.vbguest.auto_update = false
 
     config.vm.customize [
         "modifyvm", :id,
@@ -13,16 +13,7 @@ Vagrant::Config.run do |config|
         "--memory", "256"
     ]
 
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = "./../"
-    chef.log_level = :info
-    chef.add_recipe "nginx-app::server"
-    chef.add_recipe "php-fpm"
-    chef.add_recipe "php-phar"
-    chef.add_recipe "php-fpm::pear"
-    chef.add_recipe "composer::configure"
-    chef.add_recipe "php-suhosin"
-    chef.add_recipe "php-gearman"
+    config.vm.provision :shell, :inline => "apt-get update"
 
     chef.json = JSON.parse(File.read("./deploy.json"))
   end
