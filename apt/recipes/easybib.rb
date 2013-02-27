@@ -5,6 +5,8 @@ when 'lucid'
     ppa="easybib/test"
   end
 
+  Chef::Log.debug("Discover ppa: #{ppa}")
+
   execute "add #{ppa}" do
     command "add-apt-repository ppa:#{ppa}"
   end
@@ -13,6 +15,8 @@ when 'lucid'
     command "apt-get -y -f -q update"
   end
 when 'precise'
+
+  Chef::Log.debug("Discover dotdeb")
 
   apt_repository "php53.dotdeb.org" do
     keyserver    "keys.gnupg.net"
