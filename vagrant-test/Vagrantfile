@@ -15,6 +15,17 @@ Vagrant::Config.run do |config|
 
     config.vm.provision :shell, :inline => "apt-get update"
 
-    chef.json = JSON.parse(File.read("./deploy.json"))
-  end
+    config.vm.provision :chef_solo do |chef|
+        chef.cookbooks_path = "./../"
+        chef.log_level = :info
+        chef.add_recipe "nginx-app::server"
+        chef.add_recipe "php-fpm"
+        chef.add_recipe "php-phar"
+        chef.add_recipe "php-fpm::pear"
+        chef.add_recipe "composer::configure"
+        chef.add_recipe "php-suhosin"
+        chef.add_recipe "php-gearman"
+
+        chef.json = JSON.parse(File.read("./deploy.json"))
+    end
 end
