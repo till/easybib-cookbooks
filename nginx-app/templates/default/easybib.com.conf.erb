@@ -96,8 +96,8 @@ server {
         fastcgi_pass  phpfpm;
         fastcgi_index index.php;
 
-    <% if !get_cluster_name().empty? -%>
-        fastcgi_param BIB_ENV "<%=get_cluster_name()%>";
+    <% if !::EasyBib.get_cluster_name().empty? -%>
+        fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name()%>";
     <% end -%>
 
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
