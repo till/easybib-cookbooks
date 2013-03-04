@@ -24,6 +24,7 @@ Vagrant::Config.run do |config|
         chef.add_recipe "php-fpm::pear"
         chef.add_recipe "composer::configure"
         chef.add_recipe "php-suhosin"
+        chef.add_recipe "gearmand"
         chef.add_recipe "php-gearman"
 
         chef.json = JSON.parse(File.read("./deploy.json"))
