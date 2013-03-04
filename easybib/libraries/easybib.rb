@@ -1,6 +1,14 @@
 Chef::Log.info("HELLO LIBS")
 
 module EasyBib
+
+  def amd64?(node = self.node)
+    if node[:kernel][:machine] == "x86_64"
+      return true
+    end
+    return false
+  end
+
   def get_cluster_name(node = self.node)
     if node[:scalarium]
       return node[:scalarium][:cluster][:name]

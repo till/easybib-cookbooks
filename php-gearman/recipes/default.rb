@@ -7,13 +7,19 @@ case node[:lsb][:codename]
 when 'lucid'
   p = "php5-easybib-gearman"
 when 'precise'
-  remote_file "/tmp/libgearman4_0.13-1_amd64.deb" do
-    source "http://ftp.de.debian.org/debian/pool/main/g/gearmand/libgearman4_0.13-1_amd64.deb"
+
+  arch = "i386"
+  if amd64?
+    arch = "amd64"
+  end
+
+  remote_file "/tmp/libgearman4_0.13-1_#{arch}.deb" do
+    source "http://ftp.de.debian.org/debian/pool/main/g/gearmand/libgearman4_0.13-1_#{arch}.deb"
   end
 
   package "libgearman4" do
     action   :install
-    source   "/tmp/libgearman4_0.13-1_amd64.deb"
+    source   "/tmp/libgearman4_0.13-1_#{arch}.deb"
     provider Chef::Provider::Package::Dpkg
   end
 
