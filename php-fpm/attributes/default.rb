@@ -23,7 +23,7 @@ case node[:lsb][:codename]
 when 'lucid'
   default["php-fpm"][:packages] = "graphviz,php5-easybib,php5-easybib-xhprof,php5-easybib-memcache"
 when 'precise'
-  default["php-fpm"][:packages] = "graphviz,php5-fpm,php5-cli,php5-xhprof,php5-memcache"
+  default["php-fpm"][:packages] = "graphviz,php5-fpm,php5-cli,php5-curl,php5-xhprof,php5-memcache"
 end
 
 default[:silverline][:php_fpm_name] = "php-fpm"
