@@ -43,6 +43,13 @@ node[:deploy].each do |application, deploy|
     next
   end
 
+  case node[:lsb][:codename]
+  when 'lucid':
+    php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"][:user]}"
+  when 'precise':
+    php_upstream = "127.0.0.1:9000"
+  end
+
   template "#{nginx_config_dir}/sites-enabled/easybib.com.conf" do
     source "easybib.com.conf.erb"
     mode   "0755"
@@ -56,7 +63,8 @@ node[:deploy].each do |application, deploy|
       :deploy             => deploy,
       :application        => application,
       :password_protected => password_protected,
-      :config_dir         => nginx_config_dir
+      :config_dir         => nginx_config_dir,
+      :php_upstream       => php_upstream
     )
     notifies :restart, resources(:service => "nginx"), :delayed
   end
