@@ -12,11 +12,11 @@ default["nginx-app"][:js_modules] = {
     "bibanalytics"    => "bibanalytics",
     "sharing"         => "sharing",
     "kb"              => "kb",
-    "content"         => "content",
     "infolit"         => "infolit",
     "schoolanalytics" => "schoolanalytics",
     "students"        => "students",
-    "pearson"         => "pearson"
+    "pearson"         => "pearson",
+    "folders"         => "folders"
 }
 default["nginx-app"][:img_modules] = {
     "notes"     => "notebook",
@@ -24,7 +24,8 @@ default["nginx-app"][:img_modules] = {
     "paperlink" => "paperlink",
     "infolit"   => "infolit",
     "braintree" => "braintree",
-    "pearson"   => "pearson"
+    "pearson"   => "pearson",
+    "folders"   => "folders"
 }
 default["nginx-app"][:css_modules] = {
     "debugger"        => "debugger",
@@ -33,11 +34,11 @@ default["nginx-app"][:css_modules] = {
     "bibanalytics"    => "bibanalytics",
     "sharing"         => "sharing",
     "kb"              => "kb",
-    "content"         => "content",
     "infolit"         => "infolit",
     "schoolanalytics" => "schoolanalytics",
     "braintree"       => "braintree",
-    "pearson"         => "pearson"
+    "pearson"         => "pearson",
+    "folders"         => "folders"
 }
 
 # Silverline attribs
