@@ -1,0 +1,65 @@
+upstream phpfpm {
+    server  unix:/var/run/php-fpm/<%= node["php-fpm"][:user] %>;
+}
+
+server {
+    listen   80;
+
+  <% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+  <% end -%>
+
+    location = /health_check.php {
+
+        access_log <%= @access_log %>;
+
+        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+
+        fastcgi_pass  phpfpm;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/health_check.php;
+    }
+
+    location /nginx_status {
+        stub_status on;
+        access_log  <%= @access_log %>;
+        allow       127.0.0.1;
+        deny        all;
+    }
+
+    location ~ ^/(fpm_status|fpm_ping)$ {
+        include       <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        fastcgi_pass  phpfpm;
+        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+        allow         127.0.0.1;
+        deny          all;
+    }
+
+    location /js/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        access_log <%= @access_log %>;
+    }
+
+    location /images/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        access_log <%= @access_log %>;
+    }
+
+    location /css/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        access_log <%= @access_log %>;
+    }
+
+    location / {
+
+        access_log <%= @access_log %>;
+
+        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+
+        fastcgi_pass  phpfpm;
+        fastcgi_index index.php;
+
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
+
+        index  index.php index.html index.htm;
+    }
+}
