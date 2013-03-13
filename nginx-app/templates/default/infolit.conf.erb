@@ -49,6 +49,10 @@ server {
         access_log <%= @access_log %>;
     }
 
+    location /static/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+    }
+
     location / {
 
         access_log <%= @access_log %>;
