@@ -34,6 +34,8 @@ server {
         deny          all;
     }
 
+    rewrite ^(/favicon.ico)$ /static/images/favicon.ico;
+
     location /js/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
         access_log <%= @access_log %>;
