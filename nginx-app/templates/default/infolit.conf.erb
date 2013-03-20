@@ -50,7 +50,13 @@ server {
     }
 
     location /static/ {
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-src;
+        access_log <%= @access_log %>;
+    }
+
+    location /static-prod/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-build;
+        access_log <%= @access_log %>;
     }
 
     location / {
