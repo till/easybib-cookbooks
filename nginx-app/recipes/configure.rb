@@ -13,6 +13,9 @@ node[:docroot] = 'www'
 # password protect?
 password_protected = false
 
+# put this in attributes
+nginx_config = "easybib.com.conf.erb"
+
 node[:deploy].each do |application, deploy|
 
   case application
@@ -30,6 +33,7 @@ node[:deploy].each do |application, deploy|
   when 'infolit'
     next unless cluster_name == 'InfoLit'
     next unless instance_roles.include?('nginxphpapp')
+    nginx_config = "infolit.conf.erb"
 
   when 'sitescraper'
     next unless instance_roles.include?('sitescraper')
@@ -44,7 +48,7 @@ node[:deploy].each do |application, deploy|
   end
 
   template "#{nginx_config_dir}/sites-enabled/easybib.com.conf" do
-    source "easybib.com.conf.erb"
+    source nginx_config
     mode   "0755"
     owner  node["nginx-app"][:user]
     group  node["nginx-app"][:group]
