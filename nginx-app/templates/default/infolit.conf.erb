@@ -57,6 +57,9 @@ server {
     }
 
     location /static-prod/ {
+        expires    30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
         root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-build;
         access_log <%= @access_log %>;
     }
