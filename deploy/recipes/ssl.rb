@@ -4,7 +4,7 @@ include_recipe 'nginx-lb::service'
 right_role    = node["nginx-lb"]["role"]
 right_cluster = node["nginx-lb"]["cluster"]
 nginx_dir     = node["nginx-lb"]["dir"]
-ssl_dir       = nginx_dir + "/ssl"
+ssl_dir       = node["ssl-deploy"]["directory"]
 int_ip        = node["nginx-lb"]["int_ip"]
 
 if node.attribute?(:scalarium)

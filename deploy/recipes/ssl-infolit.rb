@@ -1,7 +1,6 @@
 right_role    = "nginxphpapp"
 right_cluster = "InfoLit"
-nginx_dir     = "/etc/nginx"
-ssl_dir       = nginx_dir + "/ssl"
+ssl_dir       = node["ssl-deploy"]["directory"] 
 
 if node.attribute?(:scalarium)
   instance_roles = node[:scalarium][:instance][:roles]
