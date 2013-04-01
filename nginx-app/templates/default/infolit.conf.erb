@@ -2,12 +2,32 @@ upstream phpfpm {
     server  unix:/var/run/php-fpm/<%= node["php-fpm"][:user] %>;
 }
 
-server {
-    listen   80;
+<% if node[:scalarium] -%>
 
-  <% if @nginx_extra -%>
+server {
+    listen 80;
+    return 301 https://<%=node[:infolit][:domain]%>$request_uri
+}
+
+<% end -%>
+
+server {
+
+<% if !node[:scalarium] -%>
+    listen 80;
+<% else -%>
+    listen 443;
+
+    ssl                       on;
+    ssl_certificate           /etc/nginx/ssl/cert.pem;
+    ssl_certificate_key       /etc/nginx/ssl/cert.key;
+    ssl_ciphers               RC4:HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+<% end -%>
+
+<% if @nginx_extra -%>
     <%= @nginx_extra -%>
-  <% end -%>
+<% end -%>
 
     location = /health_check.php {
 
