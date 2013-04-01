@@ -9,7 +9,7 @@ node[:deploy].each do |application, deploy|
   case application
   when 'infolit'
     next unless node[:scalarium][:instance][:roles].include?('nginxphpapp')
-  
+
   else
     Chef::Log.info("deploy::infolit - #{application} (in #{node[:scalarium][:cluster][:name]}) skipped")
     next
