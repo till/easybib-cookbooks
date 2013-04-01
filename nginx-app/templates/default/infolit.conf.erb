@@ -6,7 +6,7 @@ upstream phpfpm {
 
 server {
     listen 80;
-    return 301 https://<%=node[:infolit][:domain]%>$request_uri
+    return 301 https://<%=node[:infolit][:domain]%>$request_uri;
 }
 
 <% end -%>
