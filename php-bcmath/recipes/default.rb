@@ -1,9 +1,7 @@
+include_recipe "php-bcmath::dependencies"
+
 php_source = "/tmp/php-#{node["php-bcmath"]["version"]}"
 php_archive = "#{php_source}.tar.gz"
-
-include_recipe "php-fpm"
-
-package "autoconf"
 
 remote_file "#{php_archive}" do
  checksum node["php-bcmath"]["checksum"]
