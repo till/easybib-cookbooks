@@ -37,3 +37,13 @@ execute "import schema" do
   command "mysql -h #{node["xhprof.io"]["host"]} -u #{node["xhprof.io"]["username"]} #{node["xhprof.io"]["dbname"]} < setup/database.sql"
   cwd node["xhprof.io"]["root"]
 end
+
+remote_file "#{node["xhprof.io"]["root"]}/composer.phar" do
+  source "http://getcomposer.org/composer.phar"
+  mode "0755"
+end
+
+execute "generate autoload" do
+  command "./composer.phar install"
+  cwd node["xhprof.io"]["root"]
+end
