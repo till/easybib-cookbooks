@@ -84,6 +84,7 @@ server {
     }
 
     location /search/ {
+
         access_log off;
         include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
 
