@@ -83,6 +83,19 @@ server {
         access_log <%= @access_log %>;
     }
 
+    location /search/ {
+
+        access_log off;
+        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+
+        fastcgi_pass  phpfpm;
+        fastcgi_index search.php;
+        
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/search.php;
+        
+        index  search.php;
+    }
+	
     location / {
 
         access_log <%= @access_log %>;
