@@ -5,6 +5,25 @@ upstream phpfpm {
 server {
     listen 80;
 
+    index index_dev.php index.php;
+
+    location /xhprof {
+        # drop location to serve assets
+        alias <%=node["xhprof.io"]["root"] %>;
+
+        # serve PHP files from xhprof.io
+        location ~* \.php$ {
+            root          <%=node["xhprof.io"]["root"] %>/;
+            fastcgi_index index.php;
+            fastcgi_pass  phpfpm;
+            include       fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME <%=node["xhprof.io"]["root"] %>/index.php;
+            fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+            fastcgi_param PHP_ADMIN_VALUE "short_open_tag=On";
+        }
+    }
+
+
     location = / {
         try_files @site @site;
     }
@@ -15,7 +34,6 @@ server {
     }
 
     root <%= @doc_root%>;
-    index index_dev.php;
 
     location ~* \.php$ {
         fastcgi_index index.php;
