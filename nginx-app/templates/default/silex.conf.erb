@@ -41,11 +41,19 @@ server {
         include       fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+
+        set $php_value "auto_prepend_file=<%=node["xhprof.io"]["root"] %>/inc/prepend.php";
+        set $php_value "$php_value \n auto_append_file=<%=node["xhprof.io"]["root"] %>/inc/append.php";
+        fastcgi_param PHP_VALUE $php_value;
     }
 
     location @site {
-        fastcgi_pass  phpfpm;
-        include       fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root/index_dev.php;
+            fastcgi_pass  phpfpm;
+            include       fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root/index_dev.php;
+
+            set $php_value "auto_prepend_file=<%=node["xhprof.io"]["root"] %>/inc/prepend.php";
+            set $php_value "$php_value \n auto_append_file=<%=node["xhprof.io"]["root"] %>/inc/append.php";
+            fastcgi_param PHP_VALUE $php_value;
     }
 }
