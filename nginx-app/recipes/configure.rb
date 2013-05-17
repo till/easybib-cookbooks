@@ -47,12 +47,7 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  case node[:lsb][:codename]
-  when 'lucid':
-    php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"][:user]}"
-  when 'precise':
-    php_upstream = "127.0.0.1:9000"
-  end
+  php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"][:user]}"
 
   template "#{nginx_config_dir}/sites-enabled/easybib.com.conf" do
     source nginx_config
@@ -74,4 +69,3 @@ node[:deploy].each do |application, deploy|
   end
 
 end
-
