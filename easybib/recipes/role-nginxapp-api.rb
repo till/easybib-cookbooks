@@ -1,4 +1,4 @@
-# EasyBib
+# API
 
 include_recipe "easybib::setup"
 include_recipe "loggly::setup"
@@ -11,5 +11,5 @@ include_recipe "php-gearman"
 include_recipe "unfuddle-ssl-fix::install"
 include_recipe "composer::configure"
 include_recipe "deploy::easybib"
-include_recipe "nginx-app::configure"
+include_recipe "nginx-app::api"
 include_recipe "silverline"
