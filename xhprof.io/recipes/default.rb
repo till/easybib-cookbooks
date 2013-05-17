@@ -29,13 +29,19 @@ template "#{node["xhprof.io"]["root"]}/xhprof/includes/config.inc.php" do
   )
 end
 
+mysql_command = "mysql -h #{node["xhprof.io"]["host"]} -u #{node["xhprof.io"]["username"]}"
+if !node["xhprof.io"]["password"].empty?
+  mysql_command = "#{mysql_command} -p #{node["xhprof.io"]["password"]}"
+end
+
 execute "create database" do
-  command "mysql -h #{node["xhprof.io"]["host"]} -u #{node["xhprof.io"]["username"]} -e \"create database if not exists #{node["xhprof.io"]["dbname"]}\""
+  command "#{mysql_command} -e \"CREATE DATABASE IF NOT EXISTS #{node["xhprof.io"]["dbname"]}\""
 end
 
 execute "import schema" do
-  command "mysql -h #{node["xhprof.io"]["host"]} -u #{node["xhprof.io"]["username"]} #{node["xhprof.io"]["dbname"]} < setup/database.sql"
+  command "#{mysql_command} #{node["xhprof.io"]["dbname"]} < setup/database.sql"
   cwd node["xhprof.io"]["root"]
+  not_if "#{mysql_command} -e \"SELECT * FROM `calls`\""
 end
 
 remote_file "#{node["xhprof.io"]["root"]}/composer.phar" do
