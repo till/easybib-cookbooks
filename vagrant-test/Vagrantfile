@@ -5,8 +5,6 @@ Vagrant::Config.run do |config|
 
     config.vm.network :hostonly, "33.33.33.124"
 
-    config.vbguest.auto_update = false
-
     config.vm.customize [
         "modifyvm", :id,
         "--name", "Vagrant Cookbook Testbox",
@@ -16,14 +14,7 @@ Vagrant::Config.run do |config|
     config.vm.provision :chef_solo do |chef|
         chef.cookbooks_path = "./../"
         chef.log_level = :info
-        chef.add_recipe "nginx-app::server"
-        chef.add_recipe "php-fpm"
-        chef.add_recipe "php-phar"
-        chef.add_recipe "php-fpm::pear"
-        chef.add_recipe "composer::configure"
-        chef.add_recipe "php-suhosin"
-        chef.add_recipe "gearmand"
-        chef.add_recipe "php-gearman"
+        chef.add_recipe "easybib::role-nginxapp-api"
 
         chef.json = JSON.parse(File.read("./deploy.json"))
     end
