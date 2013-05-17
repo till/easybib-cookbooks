@@ -1,11 +1,6 @@
 default["php-fpm"] = {}
 
-case node[:lsb][:codename]
-when 'lucid'
-  default["php-fpm"][:prefix] = "/usr/local"
-when 'precise'
-  default["php-fpm"][:prefix] = ""
-end
+default["php-fpm"][:prefix] = "/opt/easybib"
 
 default["php-fpm"][:logfile] = "/var/log/php/error.log"
 default["php-fpm"][:slowlog] = "/var/log/php/slow.log"
@@ -19,11 +14,5 @@ default["php-fpm"][:group] = "www-data"
 default["php-fpm"][:tmpdir] = "/tmp/php"
 default["php-fpm"][:socketdir] = "/var/run/php-fpm"
 
-case node[:lsb][:codename]
-when 'lucid'
-  default["php-fpm"][:packages] = "graphviz,php5-easybib,php5-easybib-mbstring,php5-easybib-xhprof,php5-easybib-memcache"
-when 'precise'
-  default["php-fpm"][:packages] = "graphviz,php5-fpm,php5-cli,php5-curl,php5-xhprof,php5-memcache,php5-mysql"
-end
-
+default["php-fpm"][:packages] = "graphviz,php5-easybib,php5-easybib-mbstring,php5-easybib-xhprof,php5-easybib-memcache"
 default[:silverline][:php_fpm_name] = "php-fpm"

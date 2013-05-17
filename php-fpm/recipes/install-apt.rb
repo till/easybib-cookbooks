@@ -34,45 +34,24 @@ include_recipe "apt::easybib"
 
 apt_packages = node["php-fpm"][:packages].split(',')
 
-case node[:lsb][:codename]
-when 'lucid'
+include_recipe "php-fpm::prepare"
 
-  include_recipe "php-fpm::prepare"
-
-  apt_packages.each do |p|
-    package p do
-      action :install
-    end
+apt_packages.each do |p|
+  package p do
+    action :install
   end
-
-  include_recipe "php-fpm::configure"
-  include_recipe "php-apc::default"
-
-when 'precise'
-
-  apt_packages.each do |p|
-    Chef::Log.debug("Installing #{p}")
-    package p do
-      action :install
-    end
-  end
-
-  # this is a hack because that's where our own php recides
-  directory "/usr/local/bin" do
-    mode      "0755"
-    owner     "root"
-    group     "root"
-    recursive true
-  end
-
-  link "/usr/local/bin/php" do
-    to "/usr/bin/php"
-    only_if do
-      File.exists?("/usr/bin/php")
-    end
-  end
-
-else
-  Chef::Log.debug("Unknown release #{node[:lsb][:codename]}")
 end
 
+include_recipe "php-fpm::configure"
+include_recipe "php-apc::default"
+
+phps = ["/usr/bin/php", "/usr/local/bin/php"]
+
+phps.each do |php_bin|
+  link php_bin do
+    to "#{node["php-fpm"][:prefix]}/bin/php"
+    only_if do
+      File.exists?("#{node["php-fpm"][:prefix]}/bin/php")
+    end
+  end
+end

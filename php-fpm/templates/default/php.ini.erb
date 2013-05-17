@@ -50,7 +50,7 @@ auto_prepend_file =
 auto_append_file =
 default_mimetype = "text/html"
 default_charset = "utf-8"
-include_path = ".:/usr/local/pear"
+include_path = ".:<%= node["php-fpm"][:prefix] %>/pear"
 doc_root =
 user_dir =
 enable_dl = <%= @enable_dl %>
@@ -128,7 +128,7 @@ session.hash_bits_per_character = 5
 url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=fakeentry"
 
 [Tidy]
-;tidy.default_config = /usr/local/lib/php/default.tcfg
+;tidy.default_config = <%= node["php-fpm"][:prefix] %>/lib/php/default.tcfg
 tidy.clean_output = Off
 
 [soap]
