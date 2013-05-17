@@ -36,13 +36,19 @@ etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
 conf_cli    = "php-cli.ini"
 conf_fpm    = "php.ini"
 
+if node["php-fpm"][:user] == "vagrant"
+  display_errors = "On"
+else
+  display_errors = "Off"
+end
+
 template "#{etc_fpm_dir}/#{conf_fpm}" do
   mode     "0755"
   source   "php.ini.erb"
   variables(
     :enable_dl      => 'Off',
     :memory_limit   => node["php-fpm"][:memorylimit],
-    :display_errors => 'Off'
+    :display_errors => display_errors
   )
   owner    node["php-fpm"][:user]
   group    node["php-fpm"][:group]

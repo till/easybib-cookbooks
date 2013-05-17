@@ -13,8 +13,6 @@ Vagrant::Config.run do |config|
         "--memory", "256"
     ]
 
-    config.vm.provision :shell, :inline => "apt-get update"
-
     config.vm.provision :chef_solo do |chef|
         chef.cookbooks_path = "./../"
         chef.log_level = :info

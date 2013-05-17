@@ -1,3 +1,5 @@
+include_recipe "nginx-app::ppa"
+
 package "nginx"
 
 service "nginx" do

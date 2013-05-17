@@ -21,7 +21,7 @@ default["php-fpm"][:socketdir] = "/var/run/php-fpm"
 
 case node[:lsb][:codename]
 when 'lucid'
-  default["php-fpm"][:packages] = "graphviz,php5-easybib,php5-easybib-xhprof,php5-easybib-memcache"
+  default["php-fpm"][:packages] = "graphviz,php5-easybib,php5-easybib-mbstring,php5-easybib-xhprof,php5-easybib-memcache"
 when 'precise'
   default["php-fpm"][:packages] = "graphviz,php5-fpm,php5-cli,php5-curl,php5-xhprof,php5-memcache,php5-mysql"
 end

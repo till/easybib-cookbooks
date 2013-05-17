@@ -1,0 +1,112 @@
+upstream phpfpm {
+    server  unix:/var/run/php-fpm/<%= node["php-fpm"][:user] %>;
+}
+
+<% if node[:scalarium] -%>
+
+server {
+    listen 80;
+    return 301 https://<%=node[:infolit][:domain]%>$request_uri;
+}
+
+<% end -%>
+
+server {
+
+<% if !node[:scalarium] -%>
+    listen 80;
+<% else -%>
+    listen 443;
+
+    ssl                       on;
+    ssl_certificate           /etc/nginx/ssl/cert.pem;
+    ssl_certificate_key       /etc/nginx/ssl/cert.key;
+    ssl_ciphers               RC4:HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+<% end -%>
+
+<% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+<% end -%>
+
+    location = /health_check.php {
+
+        access_log <%= @access_log %>;
+
+        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+
+        fastcgi_pass  phpfpm;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/health_check.php;
+    }
+
+    location /nginx_status {
+        stub_status on;
+        access_log  <%= @access_log %>;
+        allow       127.0.0.1;
+        deny        all;
+    }
+
+    location ~ ^/(fpm_status|fpm_ping)$ {
+        include       <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        fastcgi_pass  phpfpm;
+        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+        allow         127.0.0.1;
+        deny          all;
+    }
+
+    rewrite ^(/favicon.ico)$ /static/images/favicon.ico;
+
+    location /js/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        access_log <%= @access_log %>;
+    }
+
+    location /images/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        access_log <%= @access_log %>;
+    }
+
+    location /css/ {
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        access_log <%= @access_log %>;
+    }
+
+    location /static/ {
+    <% if node[:scalarium] -%>
+        expires    30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-build;
+    <% else -%>
+        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-src;
+    <% end -%>
+        access_log <%= @access_log %>;
+    }
+
+    location /search/ {
+
+        access_log off;
+        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+
+        fastcgi_pass  phpfpm;
+        fastcgi_index search.php;
+        
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/search.php;
+        
+        index  search.php;
+    }
+	
+    location / {
+
+        access_log <%= @access_log %>;
+
+        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+
+        fastcgi_pass  phpfpm;
+        fastcgi_index index.php;
+
+        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
+
+        index  index.php index.html index.htm;
+    }
+}

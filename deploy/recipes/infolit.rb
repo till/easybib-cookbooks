@@ -12,7 +12,6 @@ node[:deploy].each do |application, deploy|
   case application
   when 'infolit'
     next unless instance_roles.include?('nginxphpapp')
-  
   else
     Chef::Log.info("deploy::infolit - #{application} (in #{cluster_name}) skipped")
     next
