@@ -1,9 +1,4 @@
-case node[:lsb][:codename]
-when 'lucid'
-  service_name = "php-fpm"
-when 'precise'
-  service_name = "php5-fpm"
-end
+service_name = "php-fpm"
 
 service "php-fpm" do
   service_name service_name

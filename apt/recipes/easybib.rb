@@ -1,7 +1,7 @@
 ppa="ppa:easybib/test-opt"
 
 execute "add #{ppa}" do
-  command "add-apt-repository ppa:#{ppa}"
+  command "add-apt-repository #{ppa}"
 end
 
 execute "update sources" do
