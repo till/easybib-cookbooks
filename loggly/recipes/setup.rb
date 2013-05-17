@@ -29,7 +29,8 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
       })
     end
   end
-end
 
-include_recipe "loggly::scalarium"
-include_recipe "loggly::service"
+  include_recipe "loggly::scalarium"
+  include_recipe "loggly::service"
+
+end
