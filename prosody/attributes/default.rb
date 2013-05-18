@@ -8,4 +8,5 @@ default["prosody"]["db"] = {
     "password" => "",
     "hostname" => "127.0.0.1"
 }
+default["prosody"]["domains"] = []
 default["prosody"]["admins"] = ["john@example.org"]

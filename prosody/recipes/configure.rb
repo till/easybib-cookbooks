@@ -30,7 +30,8 @@ template "#{cfg_dir}/prosody.cfg.lua" do
   variables(
     :admins => node["prosody"]["admins"],
     :storage => node["prosody"]["storage"],
-    :db => node["prosody"]["db"]
+    :db => node["prosody"]["db"],
+    :domains => node["prosody"]["domains"]
   )
-  notifies :restart, "service[prosody]"
+  notifies :reload, "service[prosody]"
 end

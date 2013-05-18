@@ -150,7 +150,8 @@ pidfile = "/var/run/prosody/prosody.pid";
 
 VirtualHost "localhost"
 
-VirtualHost "<%= @domain %>"
+<% @domains.each do |domain| -%>
+VirtualHost "<%= domain %>"
     enabled = true -- Remove this line to enable this host
 
     -- Assign this host a certificate for TLS, otherwise it would use the one
@@ -158,9 +159,10 @@ VirtualHost "<%= @domain %>"
     -- Note that old-style SSL on port 5223 only supports one certificate, and will always
     -- use the global one.
     ssl = {
-        key = "/etc/prosody/certs/example.com.key";
-        certificate = "/etc/prosody/certs/example.com.crt";
+        key = "/etc/prosody/certs/<%= domain %>.key";
+        certificate = "/etc/prosody/certs/<%= domain %>.crt";
     }
+<% end %>
 
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
