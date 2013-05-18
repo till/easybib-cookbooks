@@ -112,6 +112,7 @@ authentication = "internal_plain"
 
 storage = "<%= @storage -%>" -- Default is "internal"
 
+<% if @storage == 'sql' -%>
 -- For the "sql" backend, you can uncomment *one* of the below to configure:
 --sql = { driver = "SQLite3", database = "prosody.sqlite" } -- Default. 'database' is the filename.
 sql = {
@@ -122,6 +123,7 @@ sql = {
     host = "<%= @db["hostname"] -%>"
 }
 --sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
+<% end -%>
 
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
