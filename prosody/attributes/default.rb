@@ -1,4 +1,5 @@
 default["prosody"] = {}
+default["prosody"]["admins"] = []
 default["prosody"]["storage"] = "sql"
 default["prosody"]["db"] = {
     "driver" => "MySQL",
