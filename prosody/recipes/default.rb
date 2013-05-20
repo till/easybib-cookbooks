@@ -1,9 +1,9 @@
 case node[:platform]
 when "debian"
 when "ubuntu"
+  include_recipe "prosody::apt"
   package "lua-event"
   package "liblua5.1-sec1"
-  include_recipe "prosody::apt"
   package_name = "prosody"
 when "freebsd"
 when "gentoo"
