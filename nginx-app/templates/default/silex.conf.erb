@@ -1,7 +1,3 @@
-<%
-xhprof_url = ::XHProf.get_url
--%>
-
 upstream phpfpm {
     server  unix:/var/run/php-fpm/<%= @php_user %>;
 }
@@ -12,7 +8,7 @@ server {
     index <%=@default_router%>;
 
 <% if @xhprof_enable -%>
-    location <%=xhprof_url%> {
+    location <%=::XHProf.get_path(node)%> {
         # drop location to serve assets
         alias <%=@xhprof_root%>;
 
