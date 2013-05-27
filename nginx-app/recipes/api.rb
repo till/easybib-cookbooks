@@ -26,7 +26,8 @@ template "/etc/nginx/sites-enabled/silex.conf" do
     :access_log  => 'off',
     :nginx_extra => nginx_extras,
     :default_router => default_router,
-    :xhprof_enable => xhprof_enable
+    :xhprof_enable => xhprof_enable,
+    :xhprof_root => node["xhprof.io"]["root"]
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
