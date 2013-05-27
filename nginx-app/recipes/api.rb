@@ -1,9 +1,15 @@
 if is_aws()
   deploy_dir = "/srv/api/current"
   nginx_extras = ""
+  if get_cluster_name() == "API Staging"
+    default_router = "index_staging.php"
+  else
+    default_router = "index.php"
+  end
 else
  deploy_dir = "/vagrant_data/web/"
  nginx_extras = "sendfile off;"
+ default_router = "index_dev.php"
 end
 
 template "/etc/nginx/sites-enabled/silex.conf" do
@@ -15,7 +21,8 @@ template "/etc/nginx/sites-enabled/silex.conf" do
     :php_user    => node["php-fpm"][:user],
     :doc_root    => deploy_dir,
     :access_log  => 'off',
-    :nginx_extra => nginx_extras
+    :nginx_extra => nginx_extras,
+    :default_router => default_router
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end

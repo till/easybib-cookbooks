@@ -5,7 +5,7 @@ upstream phpfpm {
 server {
     listen 80;
 
-    index index_dev.php index.php;
+    index <%=@default_router%>;
 
     location /xhprof {
         # drop location to serve assets
@@ -22,7 +22,6 @@ server {
             fastcgi_param PHP_ADMIN_VALUE "short_open_tag=On";
         }
     }
-
 
     location = / {
         try_files @site @site;
@@ -50,7 +49,7 @@ server {
     location @site {
             fastcgi_pass  phpfpm;
             include       fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root/index_dev.php;
+            fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
 
             set $php_value "auto_prepend_file=<%=node["xhprof.io"]["root"] %>/inc/prepend.php";
             set $php_value "$php_value \n auto_append_file=<%=node["xhprof.io"]["root"] %>/inc/append.php";
