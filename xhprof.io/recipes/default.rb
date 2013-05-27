@@ -1,4 +1,4 @@
-owner = "vagrant"
+owner = node["xhprof.io"]["owner"]
 
 package "mysql-client"
 
