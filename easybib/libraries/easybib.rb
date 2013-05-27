@@ -1,5 +1,3 @@
-Chef::Log.info("HELLO LIBS")
-
 module EasyBib
 
   def amd64?(node = self.node)
