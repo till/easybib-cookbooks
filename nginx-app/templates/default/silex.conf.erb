@@ -7,6 +7,7 @@ server {
 
     index <%=@default_router%>;
 
+<% if @xhprof_enable -%>
     location /xhprof {
         # drop location to serve assets
         alias <%=node["xhprof.io"]["root"] %>;
@@ -22,6 +23,7 @@ server {
             fastcgi_param PHP_ADMIN_VALUE "short_open_tag=On";
         }
     }
+<%- end %>
 
     location = / {
         try_files @site @site;
@@ -41,9 +43,11 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
 
+<% if @xhprof_enable -%>
         set $php_value "auto_prepend_file=<%=node["xhprof.io"]["root"] %>/inc/prepend.php";
         set $php_value "$php_value \n auto_append_file=<%=node["xhprof.io"]["root"] %>/inc/append.php";
         fastcgi_param PHP_VALUE $php_value;
+<% end -%>
     }
 
     location @site {

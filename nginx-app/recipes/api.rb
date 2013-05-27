@@ -6,10 +6,12 @@ if is_aws()
   else
     default_router = "index.php"
   end
+  xhprof_enable = false
 else
  deploy_dir = "/vagrant_data/web/"
  nginx_extras = "sendfile off;"
  default_router = "index_dev.php"
+ xhprof_enable = true
 end
 
 template "/etc/nginx/sites-enabled/silex.conf" do
@@ -22,7 +24,8 @@ template "/etc/nginx/sites-enabled/silex.conf" do
     :doc_root    => deploy_dir,
     :access_log  => 'off',
     :nginx_extra => nginx_extras,
-    :default_router => default_router
+    :default_router => default_router,
+    :xhprof_enable => xhprof_enable
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
