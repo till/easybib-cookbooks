@@ -1,12 +1,13 @@
 if is_aws()
   deploy_dir = "/srv/www/api/current/web"
   nginx_extras = ""
+  xhprof_enable = false
   if get_cluster_name() == "API Staging"
     default_router = "index_staging.php"
+    xhprof_enable = true
   else
     default_router = "index.php"
   end
-  xhprof_enable = false
 else
  deploy_dir = "/vagrant_data/web/"
  nginx_extras = "sendfile off;"
