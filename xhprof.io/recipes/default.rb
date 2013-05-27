@@ -33,7 +33,7 @@ end
 
 mysql_command = "mysql -h #{node["xhprof.io"]["host"]} -u #{node["xhprof.io"]["username"]}"
 if !node["xhprof.io"]["password"].empty?
-  mysql_command = "#{mysql_command} -p #{node["xhprof.io"]["password"]}"
+  mysql_command = "#{mysql_command} -p#{node["xhprof.io"]["password"]}"
 end
 
 execute "create database" do
