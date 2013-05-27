@@ -16,6 +16,8 @@ git node["xhprof.io"]["root"] do
   action :sync
 end
 
+xhprof_dsn = get_dsn()
+
 template "#{node["xhprof.io"]["root"]}/xhprof/includes/config.inc.php" do
   owner owner
   group owner
@@ -23,7 +25,7 @@ template "#{node["xhprof.io"]["root"]}/xhprof/includes/config.inc.php" do
   source "config.inc.php.erb"
   variables(
     :url => node["xhprof.io"]["url"],
-    :dsn => node["xhprof.io"]["dsn"],
+    :dsn => xhprof_dsn,
     :username => node["xhprof.io"]["username"],
     :password => node["xhprof.io"]["password"]
   )
