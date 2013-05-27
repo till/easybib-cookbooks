@@ -1,5 +1,5 @@
 if is_aws()
-  deploy_dir = "/srv/api/current"
+  deploy_dir = "/srv/www/api/current"
   nginx_extras = ""
   if get_cluster_name() == "API Staging"
     default_router = "index_staging.php"
