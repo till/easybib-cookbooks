@@ -10,7 +10,7 @@ module XHProf
 
   def get_dsn(node = self.node)
     conf = node["xhprof.io"]
-    return "mysql:dbname=#{conf["dbname"]};host=#{conf["hostname"]}"
+    return "mysql:dbname=#{conf["dbname"]};host=#{conf["host"]}"
   end
 
   extend self
