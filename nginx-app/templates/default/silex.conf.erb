@@ -12,6 +12,8 @@ server {
         # drop location to serve assets
         alias <%=@xhprof_root%>;
 
+        index index.php;
+
         # serve PHP files from xhprof.io
         location ~* \.php$ {
             root          <%=@xhprof_root%>/;
