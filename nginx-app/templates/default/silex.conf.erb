@@ -5,7 +5,7 @@ upstream phpfpm {
 server {
     listen 80;
 
-    index <%=@default_router%>;
+    index <%=@default_router%> index.php;
 
 <% if @xhprof_enable -%>
     location <%=::XHProf.get_path(node)%> {
