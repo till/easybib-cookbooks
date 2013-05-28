@@ -3,7 +3,7 @@ module XHProf
   def get_path(node = self.node)
     if node["xhprof.io"]
       uri = URI(node["xhprof.io"]["url"])
-      return uri.path
+      return uri.path.gsub(/[#{Regexp.escape("/")}]+$/, '')
     end
     return "/xhprof"
   end
