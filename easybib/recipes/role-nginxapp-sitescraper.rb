@@ -1,5 +1,6 @@
 include_recipe "easybib::setup"
 include_recipe "loggly::setup"
+include_recipe "dnsmasq"
 include_recipe "nginx-app::server"
 include_recipe "php-fpm"
 include_recipe "php-phar"
