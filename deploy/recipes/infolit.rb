@@ -7,7 +7,7 @@ node[:deploy].each do |application, deploy|
 
   Chef::Log.info("deploy::infolit - app: #{application}, role: #{instance_roles}")
 
-  next unless cluster_name == 'InfoLit'
+  next unless cluster_name == node["easybib"]["cluster_name"]
 
   case application
   when 'infolit'
