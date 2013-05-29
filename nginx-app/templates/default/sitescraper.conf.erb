@@ -1,0 +1,55 @@
+upstream phpfpm_sitescraper {
+    server  <%= @php_upstream %>;
+}
+
+server {
+    listen   80;
+
+  <% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+  <% end -%>
+
+    root <%= @doc_root %>;
+
+    location /nginx_status {
+        stub_status on;
+        access_log  <%= @access_log %>;
+        allow       127.0.0.1;
+        deny        all;
+    }
+
+    location ~ ^/(fpm_status|fpm_ping)$ {
+        include       <%= @nginx_conf %>/fastcgi_params;
+        fastcgi_pass  phpfpm_sitescraper;
+        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+        allow         127.0.0.1;
+        deny          all;
+    }
+
+    location ~ /(<%= @routes_enabled.join('|') %>) {
+
+        access_log <%= @access_log %>;
+
+        include <%= @nginx_conf %>/fastcgi_params;
+
+        fastcgi_pass  phpfpm_sitescraper;
+        fastcgi_index index.php;
+
+    <% if !::EasyBib.get_cluster_name(node).empty? -%>
+        fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
+    <% end -%>
+
+        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+
+        index  index.php index.html index.htm;
+    }
+
+    location / {
+        deny all;
+    }
+    <% if !@routes_denied.empty? -%>
+    location ~ /(<%= @routes_denied.join('|') %>) {
+        deny all;
+    }
+    <% end -%>
+}
