@@ -1,4 +1,4 @@
-ppa="ppa:easybib/test-opt"
+ppa = node["apt"]["easybib"]["ppa"]
 
 execute "add #{ppa}" do
   command "add-apt-repository #{ppa}"
