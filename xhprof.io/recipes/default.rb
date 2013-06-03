@@ -43,7 +43,7 @@ end
 execute "import schema" do
   command "#{mysql_command} #{node["xhprof.io"]["dbname"]} < setup/database.sql"
   cwd node["xhprof.io"]["root"]
-  not_if "#{mysql_command} -e \"SELECT * FROM `#{node["xhprof.io"]["dbname"]}`.`calls`\""
+  not_if "#{mysql_command} -e 'SHOW FIELDS FROM `#{node["xhprof.io"]["dbname"]}`.`calls`'"
 end
 
 remote_file "#{node["xhprof.io"]["root"]}/composer.phar" do
