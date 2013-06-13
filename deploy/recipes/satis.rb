@@ -18,6 +18,15 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("deploy::satis- Deployment started.")
   Chef::Log.info("deploy::satis - Deploying as user: #{deploy[:user]} and #{deploy[:group]} to #{deploy[:deploy_to]}")
 
+  execute "creating empty gitconfig for #{deploy[:user]} with correct access rights" do
+    command "touch ~#{deploy[:user]}/.gitconfig && chown #{deploy[:user]} ~#{deploy[:user]}/.gitconfig"
+  end
+
+  execute "adding github oauth token to #{deploy[:user]}'s git config" do
+    user  deploy[:user]
+    command "git config --add github.accesstoken #{node[:composer][:oauth_key]}"
+  end
+
   opsworks_deploy_dir do
     user  deploy[:user]
     group deploy[:group]
