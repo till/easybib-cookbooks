@@ -5,7 +5,7 @@ instance_roles = get_instance_roles()
 
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.info("deploy::infolit - app: #{application}, role: #{instance_roles}")
+  Chef::Log.info("deploy::api - app: #{application}, role: #{instance_roles}")
 
   next unless cluster_name == node["easybib"]["cluster_name"]
 
