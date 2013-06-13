@@ -29,6 +29,12 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
+  execute "composer install" do
+    cwd "#{deploy[:deploy_to]}/current"
+    command "php composer.phar install"
+  end
+  
+  
   #cronjob
   #initial run
 
