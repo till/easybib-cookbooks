@@ -16,7 +16,7 @@ node[:deploy].each do |application, deploy|
   end
 
   Chef::Log.info("deploy::satis- Deployment started.")
-  Chef::Log.info("deploy::satis - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+  Chef::Log.info("deploy::satis - Deploying as user: #{deploy[:user]} and #{deploy[:group]} to #{deploy[:deploy_to]}")
 
   opsworks_deploy_dir do
     user  deploy[:user]
@@ -28,5 +28,8 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
+  
+  #cronjob
+  #initial run
 
 end
