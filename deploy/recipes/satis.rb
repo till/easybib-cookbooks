@@ -29,6 +29,14 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
+  directory "/srv/www/satis-output/" do
+    recursive true
+    owner "www-data"
+    group "www-data"
+    mode  0755
+    action :create
+  end
+  
   cron "satis run in cron" do
     minute "*/10"
     command "cd #{deploy[:deploy_to]}/current/ && sh update-dist.sh"
