@@ -29,12 +29,6 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
-  execute "running satis" do
-    user  deploy[:user]
-    cwd "#{deploy[:deploy_to]}/current"
-    command "sh update-dist.sh"
-  end
-   
   cron "satis run in cron" do
     minute "*/10"
     command "cd #{deploy[:deploy_to]}/current/ && sh update-dist.sh"
