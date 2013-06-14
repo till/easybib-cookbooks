@@ -38,7 +38,7 @@ node[:deploy].each do |application, deploy|
   end
   
   cron "satis run in cron" do
-    minute "*/10"
+    minute "*/30"
     command "cd #{deploy[:deploy_to]}/current/ && sh update-dist.sh"
     user "www-data"
   end
