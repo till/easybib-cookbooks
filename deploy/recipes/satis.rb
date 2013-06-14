@@ -29,7 +29,7 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
-  directory "/srv/www/satis-output/" do
+  directory "/mnt/satis-output/" do
     recursive true
     owner "www-data"
     group "www-data"
