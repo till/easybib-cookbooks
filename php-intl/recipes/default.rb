@@ -2,6 +2,7 @@ include_recipe "php-fpm::service"
 
 require "open-uri"
 package "libicu-dev"
+package "autoconf"
 
 version = open("http://pecl.php.net/rest/r/intl/latest.txt").read
 release = "intl-#{version}.tgz"
