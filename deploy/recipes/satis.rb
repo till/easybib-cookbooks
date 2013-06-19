@@ -37,6 +37,14 @@ node[:deploy].each do |application, deploy|
     action :create
   end
   
+  directory "/mnt/composer-tmp/" do
+    recursive true
+    owner "www-data"
+    group "www-data"
+    mode  0755
+    action :create
+  end
+  
   cron "satis run in cron" do
     minute "*/30"
     command "cd #{deploy[:deploy_to]}/current/ && sh update-dist.sh"
