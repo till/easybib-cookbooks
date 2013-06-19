@@ -100,6 +100,19 @@ server {
         fastcgi_param BIB_ENV "<%=node[:scalarium][:cluster][:name]%>";
     <% end -%>
 
+
+<%
+if @database && !@database.empty?
+  @database.each do |connection_id,connection_config|
+    connection_config.each do |connection_config_key,connection_config_value|
+-%>
+        fastcgi_param <%=connection_id.upcase%>_<%=connection_config_key.upcase%> "<%=connection_config_value%>";
+<%
+    end
+  end
+end
+-%>
+
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
 
         index  index.php index.html index.htm;

@@ -24,6 +24,11 @@ link "#{node[:deploy][:deploy_to]}/current" do
   to "#{vagrant_dir}"
 end
 
+database_credentials = []
+if node["gocourse"]["database"]
+  database_credentials = node["gocourse"]["database"]
+end
+
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
   source "easybib.com.conf.erb"
   mode   "0755"
@@ -36,7 +41,8 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :deploy      => node[:deploy],
     :application => "easybib",
     :access_log  => 'off',
-    :nginx_extra => 'sendfile  off;'
+    :nginx_extra => 'sendfile  off;',
+    :database    => database_credentials
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
