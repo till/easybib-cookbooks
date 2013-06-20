@@ -45,6 +45,27 @@ node[:deploy].each do |application, deploy|
     action :create
   end
   
+  directory "/mnt/srv/www/s3-syncer/" do
+    recursive true
+    owner "www-data"
+    group "www-data"
+    mode  0755
+    action :create
+  end
+  
+  execute "Fetching S3 Syncer" do
+    not_if do
+      ::File.exists?("/mnt/srv/www/s3-syncer/bin/syncer"
+    end
+    user "www-data"
+    cwd "/mnt/srv/www/s3-syncer"
+    code <<-SYNCER_EOM
+    wget https://github.com/easybiblabs/s3-syncer/archive/master.tar.gz
+    tar xf master.tar.gz --strip 1
+    `which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader
+    SYNCER_EOM
+  end
+  
   cron "satis run in cron" do
     minute "*/30"
     command "cd #{deploy[:deploy_to]}/current/ && sh update-dist.sh"
