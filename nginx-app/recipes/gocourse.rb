@@ -9,4 +9,5 @@ if !node[:docroot]
   node[:docroot] = 'public'
 end
 
+include_recipe "php-intl"
 include_recipe "nginx-app::vagrant"
