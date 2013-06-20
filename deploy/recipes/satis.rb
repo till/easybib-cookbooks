@@ -59,7 +59,7 @@ node[:deploy].each do |application, deploy|
     end
     user "www-data"
     cwd "/mnt/srv/www/s3-syncer"
-    code <<-SYNCER_EOM
+    command <<-SYNCER_EOM
     wget https://github.com/easybiblabs/s3-syncer/archive/master.tar.gz
     tar xf master.tar.gz --strip 1
     `which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader
