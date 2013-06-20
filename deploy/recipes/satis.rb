@@ -55,7 +55,7 @@ node[:deploy].each do |application, deploy|
   
   execute "Fetching S3 Syncer" do
     not_if do
-      ::File.exists?("/mnt/srv/www/s3-syncer/bin/syncer"
+      ::File.exists?("/mnt/srv/www/s3-syncer/bin/syncer")
     end
     user "www-data"
     cwd "/mnt/srv/www/s3-syncer"
