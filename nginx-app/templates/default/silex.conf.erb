@@ -7,6 +7,10 @@ server {
 
     index <%=@default_router%> index.php;
 
+<% if !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% end -%>
+
 <% if @xhprof_enable -%>
     location <%=::XHProf.get_path(node)%> {
         # drop location to serve assets
