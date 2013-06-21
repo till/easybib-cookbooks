@@ -45,13 +45,31 @@ end
 include_recipe "php-fpm::configure"
 include_recipe "php-apc::default"
 
-phps = ["/usr/bin/php", "/usr/local/bin/php"]
+expected_prefix = "/usr/local/bin"
+install_prefix = node["php-fpm"][:prefix]
+
+phps = ["/usr/bin/php", "#{expected_prefix}/php"]
 
 phps.each do |php_bin|
   link php_bin do
-    to "#{node["php-fpm"][:prefix]}/bin/php"
+    to "#{install_prefix}/bin/php"
     only_if do
-      File.exists?("#{node["php-fpm"][:prefix]}/bin/php")
+      File.exists?("#{install_prefix}/bin/php")
     end
   end
+end
+
+bins = ["pear", "peardev", "pecl", "phar", "phar.phar", "php-config", "phpize"]
+
+bins.each do |bin|
+
+  real_bin = "#{install_prefix}/#{bin}"
+
+  link "#{expected_prefix}/#{bin}" do
+    to real_bin
+    only_if do
+      File.exists?(real_bin)
+    end
+  end
+
 end
