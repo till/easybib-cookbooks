@@ -6,7 +6,7 @@ package "autoconf"
 
 version = open("http://pecl.php.net/rest/r/intl/latest.txt").read
 release = "intl-#{version}.tgz"
-so_file = "/usr/local/lib/php/extensions/no-debug-non-zts-20090626/intl.so"
+so_file = "#{node["php-fpm"][:prefix]}/lib/php/extensions/no-debug-non-zts-20090626/intl.so"
 
 remote_file "/tmp/#{release}" do
   source "http://pecl.php.net/get/#{release}"
