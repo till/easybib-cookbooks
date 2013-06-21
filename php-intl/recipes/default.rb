@@ -26,7 +26,8 @@ commands = [
   "phpize",
   "./configure",
   "make",
-  "cp ./modules/intl.so #{so_file}"
+  "cp ./modules/intl.so #{so_file}",
+  "echo 'extension=intl.so' >> #{node["php-fpm"][:prefix]}/etc/php/intl.ini"
 ]
 
 commands.each do |command|
@@ -36,10 +37,6 @@ commands.each do |command|
       File.exists?(so_file)
     end
   end
-end
-
-php_pecl "intl" do
-  action :setup
 end
 
 service "php-fpm" do
