@@ -8,6 +8,8 @@ else
   nginx_extras = "sendfile off;"
 end
 
+default_router = "index.php"
+
 template "/etc/nginx/sites-enabled/api.conf" do
   source "silex.conf.erb"
   mode   "0755"
