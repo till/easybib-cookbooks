@@ -1,4 +1,4 @@
-upstream phpfpm {
+upstream <%=@upstream%>_phpfpm {
     server  unix:/var/run/php-fpm/<%= @php_user %>;
 }
 
@@ -22,7 +22,7 @@ server {
         location ~* \.php$ {
             root          <%=@xhprof_root%>/;
             fastcgi_index index.php;
-            fastcgi_pass  phpfpm;
+            fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME <%=@xhprof_root%>/index.php;
             fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
@@ -44,7 +44,7 @@ server {
 
     location ~* \.php$ {
         fastcgi_index index.php;
-        fastcgi_pass  phpfpm;
+        fastcgi_pass  <%=@upstream%>_phpfpm;
         include       fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
@@ -57,7 +57,7 @@ server {
     }
 
     location @site {
-            fastcgi_pass  phpfpm;
+            fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
 <% if @xhprof_enable -%>

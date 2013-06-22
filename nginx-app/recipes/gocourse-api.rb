@@ -9,8 +9,9 @@ else
 end
 
 default_router = "index.php"
+config = "api"
 
-template "/etc/nginx/sites-enabled/api.conf" do
+template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
   mode   "0755"
   owner  node["nginx-app"][:user]
@@ -23,7 +24,7 @@ template "/etc/nginx/sites-enabled/api.conf" do
     :nginx_extra => nginx_extras,
     :default_router => default_router,
     :xhprof_enable => false,
-    :xhprof_root => node["xhprof.io"]["root"]
+    :upstream => config
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end

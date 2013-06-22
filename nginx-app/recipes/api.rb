@@ -15,7 +15,9 @@ else
  xhprof_enable = true
 end
 
-template "/etc/nginx/sites-enabled/silex.conf" do
+config = "easybib_api"
+
+template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
   mode   "0755"
   owner  node["nginx-app"][:user]
@@ -27,7 +29,8 @@ template "/etc/nginx/sites-enabled/silex.conf" do
     :nginx_extra => nginx_extras,
     :default_router => default_router,
     :xhprof_enable => xhprof_enable,
-    :xhprof_root => node["xhprof.io"]["root"]
+    :xhprof_root => node["xhprof.io"]["root"],
+    :upstream => config
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
