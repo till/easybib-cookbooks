@@ -2,6 +2,22 @@ upstream <%=@upstream%>_phpfpm {
     server  unix:/var/run/php-fpm/<%= @php_user %>;
 }
 
+<%
+# a partial would be nice right now :-)
+db_conf = ""
+
+if @database && !@database.empty?
+  @database.each do |connection_id,connection_config|
+    connection_config.each do |connection_config_key,connection_config_value|
+      db_conf + "fastcgi_param"
+      db_conf + " #{connection_id.upcase}_#{connection_config_key.upcase}"
+      db_conf + " \"#{connection_config_value}\";"
+      db_conf + "\n"
+   end
+ end
+end
+-%>
+
 server {
     listen 80;
 
@@ -48,6 +64,7 @@ server {
         include       fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+        <%=db_conf-%>
 
 <% if @xhprof_enable -%>
         set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
@@ -60,6 +77,7 @@ server {
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+            <%=db_conf-%>
 <% if @xhprof_enable -%>
             set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
             set $php_value "$php_value \n auto_append_file=<%=@xhprof_root%>/inc/append.php";

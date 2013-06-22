@@ -25,7 +25,8 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :nginx_extra => nginx_extras,
     :default_router => default_router,
     :xhprof_enable => false,
-    :upstream => config
+    :upstream => config,
+    :database => node["gocourse"]["database"]
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
