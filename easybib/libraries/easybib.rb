@@ -20,8 +20,18 @@ module EasyBib
       return db_conf
     end
 
-    env_config["database"].each do |connection_id,connection_config|
+    database = env_config["database"]
+
+    database.each do |connection_id,connection_nil|
+
+      connection_config = database[connection_id]
+
+      p connection_config
+
       connection_config.each do |connection_config_key,connection_config_value|
+
+        connection_value = connection_config[connection_config_key]
+
         db_conf << "fastcgi_param"
         db_conf << " #{connection_id.upcase}_#{connection_config_key.upcase}"
         db_conf << " \"#{connection_config_value}\";"
