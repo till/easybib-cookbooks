@@ -9,6 +9,25 @@
             ]
         }
     },
+    "gocourse": {
+        "domain": {
+            "api": "api.local"
+        },
+        "database": {
+            "api": {
+                "hostname": "127.0.0.1",
+                "username": "root",
+                "password": "test123",
+                "database": "api_stage"
+            },
+            "management": {
+                "hostname": "127.0.0.1",
+                "username": "root",
+                "password": "",
+                "database": "management_stage"
+            }
+        }
+    },
     "opsworks": {
         "deploy_user": {
             "user": "vagrant",
