@@ -26,11 +26,9 @@ module EasyBib
 
       connection_config = database[connection_id]
 
-      p connection_config
-
       connection_config.each do |connection_config_key,connection_config_value|
 
-        connection_value = connection_config[connection_config_key]
+        connection_config_value = connection_config[connection_config_key]
 
         db_conf << "fastcgi_param"
         db_conf << " #{connection_id.upcase}_#{connection_config_key.upcase}"
