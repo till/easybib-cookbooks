@@ -12,6 +12,8 @@ end
 
 default_router = "index.php"
 
+db_conf = get_db_conf("gocourse")
+
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
   mode   "0755"
@@ -26,7 +28,7 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :default_router => default_router,
     :xhprof_enable => false,
     :upstream => config,
-    :db_conf => get_db_conf("gocourse")
+    :db_conf => db_conf
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
