@@ -7,9 +7,5 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
-    location / {
-        try_files $uri $uri/;
-    }
-
     root <%= @doc_root%>;
 }
