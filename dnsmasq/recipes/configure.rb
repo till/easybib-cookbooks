@@ -6,5 +6,5 @@ template "/etc/dnsmasq.d/local.conf" do
   variables(
     :dnsmasq => node[:dnsmasq]
   )
-  notifies :restart, "service[dnsmasq]", :delayed
+  notifies :restart, { resources("service[dnsmasq]") => [:delayed] }
 end
