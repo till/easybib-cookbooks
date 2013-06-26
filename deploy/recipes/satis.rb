@@ -29,48 +29,42 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
-  directory "/mnt/satis-output/" do
-    recursive true
-    owner "www-data"
-    group "www-data"
-    mode  0755
-    action :create
-  end
-  
-  directory "/mnt/composer-tmp/" do
-    recursive true
-    owner "www-data"
-    group "www-data"
-    mode  0755
-    action :create
-  end
-  
-  not_if {File.exists?("#{node['s3-syncer']['path']}/bin/syncer") } do
-    
-    directory node['s3-syncer']['path'] do
+  %w{"/mnt/satis-output/" "/mnt/composer-tmp/"}.each do |dir|
+    directory dir do
       recursive true
       owner "www-data"
       group "www-data"
       mode  0755
       action :create
     end
-
-    remote_file "#{node['s3-syncer']['path']}/syncer.tar.gz" do
-      source node['s3-syncer']['source']
-    end
+  end
+  
+  if File.exists?("#{node['s3-syncer']['path']}/bin/syncer")
+    next
+  end 
     
-    execute "Extracting S3 Syncer" do
-      user "www-data"
-      cwd node['s3-syncer']['path']
-      command "tar xf syncer.tar.gz --strip 1"
-    end
+  directory node['s3-syncer']['path'] do
+    recursive true
+    owner "www-data"
+    group "www-data"
+    mode  0755
+    action :create
+  end
 
-    execute "Installing S3 Syncer" do
-      user "www-data"
-      cwd node['s3-syncer']['path']
-      command "`which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader"
-    end
-    
+  remote_file "#{node['s3-syncer']['path']}/syncer.tar.gz" do
+    source node['s3-syncer']['source']
+  end
+
+  execute "Extracting S3 Syncer" do
+    user "www-data"
+    cwd node['s3-syncer']['path']
+    command "tar xf syncer.tar.gz --strip 1"
+  end
+
+  execute "Installing S3 Syncer" do
+    user "www-data"
+    cwd node['s3-syncer']['path']
+    command "`which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader"
   end
   
   cron "satis run in cron" do
