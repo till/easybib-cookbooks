@@ -5,7 +5,9 @@ node[:deploy].each do |application, deploy|
 
   case application
   when 'signup'
-    next unless instance_roles.include?('api-server')
+    next unless instance_roles.include?('signup-server')
+  when 'domainadmin'
+    next unless instance_roles.include?('domainadmin-server')
   else
     next
   end
