@@ -1,5 +1,5 @@
 if is_aws()
-  deploy_dir = "/srv/www/signup/current/src/"
+  deploy_dir = "/srv/www/domainadmin/current/src/"
   nginx_extras = ""
   domain_name = node["gocourse"]["domain"]["domainadmin"]
 else
