@@ -29,41 +29,42 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
-  directory "/mnt/satis-output/" do
-    recursive true
-    owner "www-data"
-    group "www-data"
-    mode  0755
-    action :create
-  end
-  
-  directory "/mnt/composer-tmp/" do
-    recursive true
-    owner "www-data"
-    group "www-data"
-    mode  0755
-    action :create
-  end
-  
-  directory "/mnt/srv/www/s3-syncer/" do
-    recursive true
-    owner "www-data"
-    group "www-data"
-    mode  0755
-    action :create
-  end
-  
-  execute "Fetching S3 Syncer" do
-    not_if do
-      ::File.exists?("/mnt/srv/www/s3-syncer/bin/syncer")
+  %w{"/mnt/satis-output/" "/mnt/composer-tmp/"}.each do |dir|
+    directory dir do
+      recursive true
+      owner "www-data"
+      group "www-data"
+      mode  0755
+      action :create
     end
+  end
+  
+  if File.exists?("#{node['s3-syncer']['path']}/bin/syncer")
+    next
+  end 
+    
+  directory node['s3-syncer']['path'] do
+    recursive true
+    owner "www-data"
+    group "www-data"
+    mode  0755
+    action :create
+  end
+
+  remote_file "#{node['s3-syncer']['path']}/syncer.tar.gz" do
+    source node['s3-syncer']['source']
+  end
+
+  execute "Extracting S3 Syncer" do
     user "www-data"
-    cwd "/mnt/srv/www/s3-syncer"
-    command <<-SYNCER_EOM
-    wget https://github.com/easybiblabs/s3-syncer/archive/master.tar.gz
-    tar xf master.tar.gz --strip 1
-    `which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader
-    SYNCER_EOM
+    cwd node['s3-syncer']['path']
+    command "tar xf syncer.tar.gz --strip 1"
+  end
+
+  execute "Installing S3 Syncer" do
+    user "www-data"
+    cwd node['s3-syncer']['path']
+    command "`which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader"
   end
   
   cron "satis run in cron" do
@@ -71,5 +72,5 @@ node[:deploy].each do |application, deploy|
     command "cd #{deploy[:deploy_to]}/current/ && sh update-dist.sh"
     user "www-data"
   end
-  
+
 end
