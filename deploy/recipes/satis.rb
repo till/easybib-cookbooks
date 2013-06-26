@@ -29,7 +29,7 @@ node[:deploy].each do |application, deploy|
     app application
   end
   
-  %w{"/mnt/satis-output/" "/mnt/composer-tmp/"}.each do |dir|
+  %w{"/mnt/satis-output/" "/mnt/composer-tmp/" node['s3-syncer']['path']}.each do |dir|
     directory dir do
       recursive true
       owner "www-data"
@@ -43,14 +43,6 @@ node[:deploy].each do |application, deploy|
     next
   end 
     
-  directory node['s3-syncer']['path'] do
-    recursive true
-    owner "www-data"
-    group "www-data"
-    mode  0755
-    action :create
-  end
-
   remote_file "#{node['s3-syncer']['path']}/syncer.tar.gz" do
     source node['s3-syncer']['source']
   end
