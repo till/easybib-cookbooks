@@ -14,7 +14,7 @@ module_source = "#{php_source}/ext/pdo_sqlite"
 ext_dir = `php -r 'echo ini_get("extension_dir");'`.strip
 
 commands = [
-  "phpsize",
+  "phpize",
   "./configure",
   "make",
   "cp modules/pdo_sqlite.so #{ext_dir}",
