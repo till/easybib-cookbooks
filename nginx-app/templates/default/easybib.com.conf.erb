@@ -111,7 +111,7 @@ if @database && !@database.empty?
     end
   end
 end
-if @domain && !domain.empty?
+if @domain && !@domain.empty?
   @domain.each do |app_name,app_host|
     fastcgi_param <%="DOMAIN_#{app_name.upcase}"%> "<%=app_host%>";
  end
