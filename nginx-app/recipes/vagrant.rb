@@ -29,9 +29,9 @@ if node["gocourse"]["database"]
   database_credentials = node["gocourse"]["database"]
 end
 
-domains = []
+domain = []
 if node["gocourse"]["domain"]
-  domains = node["gocourse"]["domain"]
+  domain = node["gocourse"]["domain"]
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
