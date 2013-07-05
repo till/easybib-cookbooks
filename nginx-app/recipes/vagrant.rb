@@ -29,6 +29,11 @@ if node["gocourse"]["database"]
   database_credentials = node["gocourse"]["database"]
 end
 
+domains = []
+if node["gocourse"]["domain"]
+  domains = node["gocourse"]["domain"]
+end
+
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
   source "easybib.com.conf.erb"
   mode   "0755"
@@ -42,7 +47,8 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :application => "easybib",
     :access_log  => 'off',
     :nginx_extra => 'sendfile  off;',
-    :database    => database_credentials
+    :database    => database_credentials,
+    :domain      => domain
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
