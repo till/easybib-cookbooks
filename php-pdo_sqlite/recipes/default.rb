@@ -1,3 +1,6 @@
+package "libsqlite3-dev"
+package "autoconf"
+
 php_source = "/tmp/php-#{node["php-pdo_sqlite"]["version"]}"
 php_archive = "#{php_source}.tar.gz"
 
