@@ -5,9 +5,12 @@ languages[:php] = Mash.new unless languages[:php]
 
 php_bin = `which php`.strip
 
-if not php_bin.empty?
+Ohai::Log.debug("Found PHP? Maybe: #{php_bin}")
+
+if !php_bin.empty?
 
   languages[:php][:php_bin] = php_bin
+  languages[:php][:extension_dir] = `#{php_bin} -r 'echo ini_get("extension_dir");'`.strip
 
   pear_bin = `which pear`.strip
 
@@ -28,10 +31,10 @@ if not php_bin.empty?
 
   end
 else
-  Ohai::Log.info("No PHP on this server.")
+  Ohai::Log.error("No PHP on this server.")
 end
 
-if not languages[:php][:pear_bin].nil?
+if !languages[:php][:pear_bin].nil?
 
   languages[:php][:pear] = {}
   languages[:php][:pear][:bin_dir] = `#{languages[:php][:pear_bin]} config-get bin_dir`.strip
