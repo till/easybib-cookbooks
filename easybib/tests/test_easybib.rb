@@ -21,4 +21,17 @@ class TestEasyBib < Test::Unit::TestCase
       "fastcgi_param APP_HOSTNAME \"127.0.0.1\";\nfastcgi_param APP_USERNAME \"root\";\nfastcgi_param APP_PASSWORD \"test123\";\nfastcgi_param APP_DATABASE \"app_stage\";\n"
     )
   end
+
+  def test_get_domain_conf
+    fake_node = Chef::Node.new
+    fake_node.set["env"]["domain"] = {
+      "api" => "api.local"
+    }
+
+    assert_equal(
+      get_domain_conf("env", fake_node),
+      "fastcgi_param DOMAIN_API \"api.local\";\n"
+    )
+  end
+
 end

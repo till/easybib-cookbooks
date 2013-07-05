@@ -8,6 +8,14 @@ module EasyBib
   end
 
   def get_db_conf(node_attribute, node = self.node)
+    return get_conf_from_env(node_attribute, "database", node)
+  end
+
+  def get_domain_conf(node_attribute, node = self.node)
+    return get_conf_from_env(node_attribute, "domain", node)
+  end
+
+  def get_conf_from_env(node_attribute, node_key, node)
 
     db_conf = ""
 
@@ -16,11 +24,24 @@ module EasyBib
     end
 
     env_config = node[node_attribute]
-    if env_config["database"].nil? || env_config["database"].empty?
+    if env_config[node_key].nil? || env_config[node_key].empty?
       return db_conf
     end
 
-    database = env_config["database"]
+    config = env_config[node_key]
+
+    if (node_key == 'domain')
+      domain = config
+      domain.each do |app_name, app_host|
+        db_conf << "fastcgi_param"
+        db_conf << " DOMAIN_#{app_name.upcase} \"#{app_host}\";"
+        db_conf << "\n"
+      end
+
+      return db_conf
+    end
+
+    database = config
 
     database.each do |connection_id,connection_nil|
 

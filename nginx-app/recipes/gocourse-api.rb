@@ -12,6 +12,7 @@ default_router = "index.php"
 config = "api"
 
 db_conf = get_db_conf("gocourse")
+domain_conf = get_domain_conf("gocourse")
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
