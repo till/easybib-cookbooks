@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+  - 1.8.7
+
+branches:
+  only:
+    - refactor/opsworks
+
+script:
+  - rake test
