@@ -7,7 +7,7 @@ server {
 
     index <%=@default_router%> index.php;
 
-<% if !@domain_name.empty? -%>
+<% if !@domain_name.nil? && !@domain_name.empty? -%>
     server_name <%=@domain_name%>;
 <% end -%>
 
