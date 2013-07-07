@@ -9,4 +9,5 @@ branches:
     - refactor/opsworks
 
 script:
+  - find . -name "*.rb" -exec ruby -c {} \;
   - rake test
