@@ -24,7 +24,7 @@ node[:deploy].each do |application, deploy|
   end
   
   execute "ls" do
-    user "www-data"
+    user deploy[:user]
     cwd "#{deploy[:deploy_to]}/current"
     command "ls -laR"
   end
