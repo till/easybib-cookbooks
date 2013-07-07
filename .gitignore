@@ -6,3 +6,4 @@ easybib-solr/files/default/config.rb
 vagrant-test/.vagrant
 *.box
 .project
+Gemfile.lock
