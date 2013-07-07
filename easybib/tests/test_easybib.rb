@@ -5,7 +5,7 @@ require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 class TestEasyBib < Test::Unit::TestCase
   include EasyBib
 
-  def test_get_db_conf
+  def test_build_nginx_config
 
     fake_node = Chef::Node.new
     fake_node.set["env"]["database"] = {
@@ -24,6 +24,7 @@ class TestEasyBib < Test::Unit::TestCase
       )
     end
 
+  def test_get_db_conf
     # breaks on ruby 1.8
     #assert_equal(
     #  get_db_conf("env", fake_node),
