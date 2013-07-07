@@ -23,6 +23,7 @@ class TestEasyBib < Test::Unit::TestCase
         "fastcgi_param APP_#{k.upcase} \"#{v}\";\n"
       )
     end
+  end
 
   def test_get_db_conf
     # breaks on ruby 1.8
