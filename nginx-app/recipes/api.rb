@@ -31,7 +31,8 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :xhprof_enable => xhprof_enable,
     :xhprof_root => node["xhprof.io"]["root"],
     :upstream => config,
-    :db_conf => ""
+    :db_conf => "",
+    :domain_conf => ""
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end

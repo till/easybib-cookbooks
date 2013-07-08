@@ -49,6 +49,7 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
         <%=@db_conf-%>
+        <%=@domain_conf-%>
 
 <% if @xhprof_enable -%>
         set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
@@ -62,6 +63,8 @@ server {
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
             <%=@db_conf-%>
+            <%=@domain_conf-%>
+
 <% if @xhprof_enable -%>
             set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
             set $php_value "$php_value \n auto_append_file=<%=@xhprof_root%>/inc/append.php";
