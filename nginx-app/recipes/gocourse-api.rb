@@ -29,7 +29,7 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :xhprof_enable => false,
     :upstream => config,
     :db_conf => db_conf,
-    :domain_conf => db_conf
+    :domain_conf => domain_conf
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end

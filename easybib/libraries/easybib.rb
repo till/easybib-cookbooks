@@ -33,6 +33,7 @@ module EasyBib
     if (node_key == 'domain')
       domain = config
       domain.each do |app_name, app_host|
+        app_host = domain[app_name]
         db_conf << build_nginx_config("DOMAIN_#{app_name}", app_host)
       end
 
