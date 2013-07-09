@@ -10,7 +10,10 @@ commands = [
 ]
 
 commands.each do |cmd|
-  execute "#{cmd}"
+  execute "Running: #{cmd}" do
+    command cmd
+    environment({"NR_INSTALL_SILENT" => "", "NR_INSTALL_KEY" => node["newrelic"]["license"]})
+  end
 end
 
 service "php-fpm" do
