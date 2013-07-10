@@ -8,5 +8,7 @@ include_recipe "php-suhosin"
 include_recipe "composer::configure"
 include_recipe "deploy::gocourse-management"
 include_recipe "nginx-app::gocourse-management"
-include_recipe "silverline"
+if is_aws()
+  include_recipe "silverline"
+end
 include_recipe "bash::configure"

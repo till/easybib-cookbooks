@@ -3,4 +3,7 @@ include_recipe "loggly::setup"
 include_recipe "nginx-app::server"
 include_recipe "deploy::gocourse-static"
 include_recipe "nginx-app::gocourse-domainadmin"
-include_recipe "silverline"
+
+if is_aws()
+  include_recipe "silverline"
+end
