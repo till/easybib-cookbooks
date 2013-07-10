@@ -2,7 +2,7 @@ upstream phpfpm {
     server  unix:/var/run/php-fpm/<%= node["php-fpm"][:user] %>;
 }
 
-<% if node[:scalarium] -%>
+<% if node[:opsworks] -%>
 
 server {
     listen 80;
@@ -13,7 +13,7 @@ server {
 
 server {
 
-<% if !node[:scalarium] -%>
+<% if !node[:opsworks] -%>
     listen 80;
 <% else -%>
     listen 443;
@@ -72,7 +72,7 @@ server {
     }
 
     location /static/ {
-    <% if node[:scalarium] -%>
+    <% if node[:opsworks] -%>
         expires    30d;
         add_header Pragma public;
         add_header Cache-Control "public";
@@ -90,12 +90,10 @@ server {
 
         fastcgi_pass  phpfpm;
         fastcgi_index search.php;
-        
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/search.php;
-        
         index  search.php;
     }
-	
+
     location / {
 
         access_log <%= @access_log %>;

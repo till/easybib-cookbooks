@@ -7,11 +7,11 @@ nginx_dir     = node["nginx-lb"]["dir"]
 ssl_dir       = node["ssl-deploy"]["directory"]
 int_ip        = node["nginx-lb"]["int_ip"]
 
-if node.attribute?(:scalarium)
-  instance_roles = node[:scalarium][:instance][:roles]
-  cluster_name   = node[:scalarium][:cluster][:name]
+if is_aws()
+  instance_roles = get_instance_roles()
+  cluster_name   = get_cluster_name()
 else
-  Chef::Log.debug("Not running in scalarium, setting defaults.")
+  Chef::Log.debug("Not running on AWS, setting defaults.")
   instance_roles = ""
   cluster_name   = ""
 end

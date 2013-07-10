@@ -1,9 +1,7 @@
 include_recipe "php-fpm::service"
 
-# custom recipe because of: http://support.scalarium.com/discussions/problems/78-app-is-not-deploying
-
-instance_roles = node[:scalarium][:instance][:roles]
-cluster_name   = node[:scalarium][:cluster][:name]
+instance_roles = get_instance_roles()
+cluster_name   = get_cluster_name()
 
 node[:deploy].each do |application, deploy|
 
@@ -11,7 +9,7 @@ node[:deploy].each do |application, deploy|
 
   case application
   when 'easybib'
-    if !['EasyBib', 'EasyBib Playground', 'Fruitkid'].include?(cluster_name)
+    if !['EasyBib', 'EasyBib Playground', 'Fruitkid', 'Fruitkid Playground'].include?(cluster_name)
       next
     end
     if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
@@ -35,18 +33,18 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("deploy::easybib - Deployment started.")
   Chef::Log.info("deploy::easybib - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
-  scalarium_deploy_user do
+  opsworks_deploy_user do
     deploy_data deploy
     app application
   end
 
-  scalarium_deploy_dir do
+  opsworks_deploy_dir do
     user  deploy[:user]
     group deploy[:group]
     path  deploy[:deploy_to]
   end
 
-  scalarium_deploy do
+  opsworks_deploy do
     deploy_data deploy
     app application
   end

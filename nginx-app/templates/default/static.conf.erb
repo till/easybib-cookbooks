@@ -1,0 +1,11 @@
+server {
+    listen 80;
+
+    index <%=@default_router%> index.php;
+
+<% if !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% end -%>
+
+    root <%= @doc_root%>;
+}

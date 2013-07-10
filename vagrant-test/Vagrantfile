@@ -1,10 +1,9 @@
 Vagrant::Config.run do |config|
 
-  config.vm.box = "easybib-ubuntu-10.04.4_vbox-4.1.8"
+    config.vm.box = "precise64"
+    config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
 
-  config.vm.network :hostonly, "33.33.33.124"
-
-  config.vbguest.auto_update = false
+    config.vm.network :hostonly, "33.33.33.124"
 
     config.vm.customize [
         "modifyvm", :id,
@@ -12,18 +11,13 @@ Vagrant::Config.run do |config|
         "--memory", "256"
     ]
 
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = "./../"
-    chef.log_level = :debug
-    #chef.add_recipe "nginx-app::server"
-    #chef.add_recipe "php-fpm"
-    #chef.add_recipe "php-phar"
-    #chef.add_recipe "php-fpm::pear"
-    #chef.add_recipe "composer::configure"
-    #chef.add_recipe "php-suhosin"
-    #chef.add_recipe "php-gearman"
-    chef.add_recipe "php-bcmath"
+    #config.vm.provision :shell, :inline => "apt-get update -y"
 
-    chef.json = JSON.parse(File.read("./deploy.json"))
-  end
+    config.vm.provision :chef_solo do |chef|
+        chef.cookbooks_path = "./../"
+        chef.log_level = :info
+        chef.add_recipe "easybib::role-gocourse-api"
+
+        chef.json = JSON.parse(File.read("./deploy.json"))
+    end
 end

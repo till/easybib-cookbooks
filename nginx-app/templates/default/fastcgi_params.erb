@@ -45,11 +45,11 @@ fastcgi_temp_file_write_size 256k;
 # do not intercept errors from backend
 fastcgi_intercept_errors     on;
 
-# only execute in scalarium context
+# only execute in aws context
 <%
-if node[:scalarium]
+if ::EasyBib.is_aws(node)
   # only run for 'elasticsearch' app server
-  if node[:scalarium][:instance][:roles].include?('elasticsearch') -%>
+  if ::EasyBib.get_instance_roles(node).include?('elasticsearch') -%>
 fastcgi_param APPLICATION_ENV production;
 <%
   end

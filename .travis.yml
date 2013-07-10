@@ -2,9 +2,12 @@ language: ruby
 rvm:
   - 1.8.7
 
+before_install: gem update --system 1.8.25 # Chef is not yet Ruby 2.0 compatible
+
 branches:
   only:
-    - refactor/opsworks
+    - master
 
 script:
+  - find . -name "*.rb" -exec ruby -c {} \;
   - rake test

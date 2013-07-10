@@ -1,7 +1,8 @@
-if node[:scalarium]
+if is_aws()
 
-  deploy_username = node[:scalarium][:deploy_user][:user]
-  deploy_group    = node[:scalarium][:deploy_user][:group]
+  deploy_user     = get_deploy_user()
+  deploy_username = deploy_user[:user]
+  deploy_group    = deploy_user[:group]
 
   # this is an assumption, so sue me
   case deploy_username
@@ -35,5 +36,5 @@ if node[:scalarium]
   end
 
 else
-  Chef::Log.debug("Recipe requires `scalarium` to be present.")
+  Chef::Log.debug("Recipe requires `aws` to be present.")
 end

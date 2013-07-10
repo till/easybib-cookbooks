@@ -17,11 +17,20 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
     mode "0755"
   end
 
-  template "/etc/init.d/loggly" do
-    source "loggly.sh.erb"
-    mode "0755"
-  end
-end
+  if is_aws()
 
-include_recipe "loggly::scalarium"
-include_recipe "loggly::service"
+    instance = get_instance()
+
+    template "/etc/init.d/loggly" do
+      source "loggly.sh.erb"
+      mode "0755"
+      variables({
+        :instance => instance
+      })
+    end
+  end
+
+  include_recipe "loggly::scalarium"
+  include_recipe "loggly::service"
+
+end

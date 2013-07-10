@@ -14,6 +14,7 @@ node["subversion"]["users"].each do |user|
     mode "0755"
     action :create
     not_if "test -d #{home_dir}/.subversion"
+    recursive true
   end
 
   cookbook_file "#{home_dir}/.subversion/servers" do

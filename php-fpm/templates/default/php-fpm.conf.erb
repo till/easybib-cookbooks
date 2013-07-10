@@ -1,5 +1,5 @@
 [global]
-pid = /usr/local/var/run/php-fpm.pid
+pid = <%= node["php-fpm"][:prefix] %>/var/run/php-fpm.pid
 error_log = <%= node["php-fpm"][:fpmlog] %>
 log_level = notice
 
@@ -25,9 +25,9 @@ process_control_timeout = 10s
 
 daemonize = yes
 
-<% if !node[:scalarium] && node[:users] -%>
+<% if !::EasyBib.is_aws(node) && node[:users] -%>
 
-include=/usr/local/etc/php-fpm/*.conf
+include=<%= node["php-fpm"][:prefix] %>/etc/php-fpm/*.conf
 
 <% else -%>
 

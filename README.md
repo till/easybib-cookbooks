@@ -18,8 +18,7 @@ Questions, comments? Feel free to [get in touch][touch]!
 
  * bigcouch (by [Till Klampaeckel][till])
  * couchdb (by [Mathias Meyer][meyer]/scalarium)
- * easybib-base (by [Till Klampaeckel][till])
- * easybib-gearman (by [Till Klampaeckel][till])
+ * easybib (by [Till Klampaeckel][till])
  * easybib-solr (by [Till Klampaeckel][till])
  * ezproxy (by [Till Klampaeckel][till])
  * ganglia-plugins (by [Till Klampaeckel][till])

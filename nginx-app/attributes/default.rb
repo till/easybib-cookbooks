@@ -43,3 +43,7 @@ default["nginx-app"][:css_modules] = {
 
 # Silverline attribs
 default[:silverline][:nginx_name] = "nginx"
+
+default["nginx-app"]["sitescraper"] = {}
+default["nginx-app"]["sitescraper"]["routes_enabled"] = {}
+default["nginx-app"]["sitescraper"]["routes_denied"] = {}

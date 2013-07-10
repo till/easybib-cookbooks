@@ -1,4 +1,4 @@
-<% if node[:scalarium][:instance][:roles].include?('nginxphpapp') %>
+<% if ::EasyBib.get_instance_roles(node).include?('nginxphpapp') %>
 
 $ModLoad imfile
 <%
@@ -18,7 +18,7 @@ $InputFilePollingInterval <%= node[:syslog][:poll] %>
 <% end %>
 
 <%
-if !node[:scalarium][:instance][:roles].include?('loadbalancer')
+if !::EasyBib.get_instance_roles(node).include?('loadbalancer')
     # on loadbalancer we write to local files
 %>
 

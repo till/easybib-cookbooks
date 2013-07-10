@@ -1,4 +1,4 @@
-owner = "vagrant"
+owner = node["xhprof.io"]["owner"]
 
 package "mysql-client"
 
@@ -16,6 +16,8 @@ git node["xhprof.io"]["root"] do
   action :sync
 end
 
+xhprof_dsn = get_dsn()
+
 template "#{node["xhprof.io"]["root"]}/xhprof/includes/config.inc.php" do
   owner owner
   group owner
@@ -23,7 +25,7 @@ template "#{node["xhprof.io"]["root"]}/xhprof/includes/config.inc.php" do
   source "config.inc.php.erb"
   variables(
     :url => node["xhprof.io"]["url"],
-    :dsn => node["xhprof.io"]["dsn"],
+    :dsn => xhprof_dsn,
     :username => node["xhprof.io"]["username"],
     :password => node["xhprof.io"]["password"]
   )
@@ -31,7 +33,7 @@ end
 
 mysql_command = "mysql -h #{node["xhprof.io"]["host"]} -u #{node["xhprof.io"]["username"]}"
 if !node["xhprof.io"]["password"].empty?
-  mysql_command = "#{mysql_command} -p #{node["xhprof.io"]["password"]}"
+  mysql_command = "#{mysql_command} -p#{node["xhprof.io"]["password"]}"
 end
 
 execute "create database" do
@@ -41,7 +43,7 @@ end
 execute "import schema" do
   command "#{mysql_command} #{node["xhprof.io"]["dbname"]} < setup/database.sql"
   cwd node["xhprof.io"]["root"]
-  not_if "#{mysql_command} -e \"SELECT * FROM `calls`\""
+  not_if "#{mysql_command} -e 'SHOW FIELDS FROM `#{node["xhprof.io"]["dbname"]}`.`calls`'"
 end
 
 remote_file "#{node["xhprof.io"]["root"]}/composer.phar" do
