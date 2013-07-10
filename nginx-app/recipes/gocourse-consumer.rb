@@ -1,7 +1,7 @@
 if is_aws()
   deploy_dir = "/srv/www/consumer/current/src/"
   nginx_extras = ""
-  domain_name = node["gocourse"]["domain"]["consumer"]
+  domain_name = "#{node["gocourse"]["domain"]["consumer"]} *.#{node["gocourse"]["domain"]["consumer"]}"
 else
   deploy_dir = "/vagrant_data/src/"
   domain_name = ""
