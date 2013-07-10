@@ -4,6 +4,8 @@ instance_roles = get_instance_roles()
 node[:deploy].each do |application, deploy|
 
   case application
+  when 'consumer'
+    next unless instance_roles.include?('consumer-server')
   when 'signup'
     next unless instance_roles.include?('signup-server')
   when 'domainadmin'
