@@ -4,7 +4,6 @@ if is_aws()
   xhprof_enable = false
   if get_cluster_name() == "API Staging"
     default_router = "index_staging.php"
-    xhprof_enable = true
   else
     default_router = "index.php"
   end
