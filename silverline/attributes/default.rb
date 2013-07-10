@@ -5,6 +5,7 @@ else
   default[:silverline][:environment] = "production"
   default[:silverline][:roles]       = ["default"]
 end
+
 # set first 4 bytes of sl_tag_names value and terminate with a colon
 sl_tag_names = "env-#{default[:silverline][:environment]}:"
 # loop over roles and append characters into sl_tag_names to complete string with all tags

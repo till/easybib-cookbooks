@@ -33,9 +33,8 @@ module EasyBib
     if (node_key == 'domain')
       domain = config
       domain.each do |app_name, app_host|
-        db_conf << "fastcgi_param"
-        db_conf << " DOMAIN_#{app_name.upcase} \"#{app_host}\";"
-        db_conf << "\n"
+        app_host = domain[app_name]
+        db_conf << build_nginx_config("DOMAIN_#{app_name}", app_host)
       end
 
       return db_conf
@@ -51,14 +50,18 @@ module EasyBib
 
         connection_config_value = connection_config[connection_config_key]
 
-        db_conf << "fastcgi_param"
-        db_conf << " #{connection_id.upcase}_#{connection_config_key.upcase}"
-        db_conf << " \"#{connection_config_value}\";"
-        db_conf << "\n"
+        db_conf << build_nginx_config(
+          "#{connection_id}_#{connection_config_key}",
+          connection_config_value
+        )
       end
     end
 
     return db_conf
+  end
+
+  def build_nginx_config(key, value)
+    return "fastcgi_param #{key.upcase} \"#{value}\";\n"
   end
 
   def get_cluster_name(node = self.node)

@@ -1,4 +1,3 @@
-include_recipe "deploy"
 include_recipe "nginx-app::server"
 include_recipe "php-fpm::service"
 
