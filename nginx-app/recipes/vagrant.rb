@@ -25,13 +25,19 @@ link "#{node[:deploy][:deploy_to]}/current" do
 end
 
 database_credentials = []
-if node["gocourse"]["database"]
-  database_credentials = node["gocourse"]["database"]
-end
-
 domain = []
-if node["gocourse"]["domain"]
-  domain = node["gocourse"]["domain"]
+
+if node["gocourse"]
+
+  gocourse_config = node["gocourse"]
+  if gocourse_confif["database"]
+    database_credentials = gocourse_config["database"]
+  end
+
+  if gocourse_config["domain"]
+    domain = gocourse_config["domain"]
+  end
+
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
