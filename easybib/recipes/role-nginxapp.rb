@@ -11,5 +11,14 @@ include_recipe "php-gearman"
 include_recipe "unfuddle-ssl-fix::install"
 include_recipe "composer::configure"
 include_recipe "deploy::easybib"
-include_recipe "nginx-app::configure"
-include_recipe "silverline"
+
+if is_aws()
+  include_recipe "nginx-app::configure"
+else
+  include_recipe "memcache"
+  include_recipe "nginx-app::vagrant"
+end
+
+if is_aws()
+  include_recipe "silverline"
+end
