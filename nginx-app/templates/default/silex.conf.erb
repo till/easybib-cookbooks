@@ -11,7 +11,7 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
-<% if @xhprof_enable -%>
+<% if @xhprof_enable && @xhprof_enable == true -%>
     location <%=::XHProf.get_path(node)%> {
         # drop location to serve assets
         alias <%=@xhprof_root%>;
@@ -51,7 +51,7 @@ server {
         <%=@db_conf-%>
         <%=@domain_conf-%>
 
-<% if @xhprof_enable -%>
+<% if @xhprof_enable && @xhprof_enable == true -%>
         set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
         set $php_value "$php_value \n auto_append_file=<%=@xhprof_root%>/inc/append.php";
         fastcgi_param PHP_VALUE $php_value;
@@ -65,7 +65,7 @@ server {
             <%=@db_conf-%>
             <%=@domain_conf-%>
 
-<% if @xhprof_enable -%>
+<% if @xhprof_enable && @xhprof_enable == true -%>
             set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
             set $php_value "$php_value \n auto_append_file=<%=@xhprof_root%>/inc/append.php";
             fastcgi_param PHP_VALUE $php_value;
