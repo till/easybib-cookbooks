@@ -22,6 +22,8 @@ package "landscape-client" do
 end
 
 # opsworks installs this but we don't need it
-package "ganglia-monitor" do
-  action :purge
+["ganglia-monitor", "libganglia1"].each do |p|
+  package "#{p}" do
+    action :purge
+  end
 end
