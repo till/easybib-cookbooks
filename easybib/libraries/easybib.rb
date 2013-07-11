@@ -71,7 +71,10 @@ module EasyBib
     if node[:opsworks]
       return node[:opsworks][:stack][:name]
     end
-    ::Chef::Log.debug("Unknown environment.")
+    if node[:easybib] && node[:easybib][:cluster_name]
+      return node[:easybib][:cluster_name]
+    end
+    ::Chef::Log.error("Unknown environment.")
   end
 
   def get_deploy_user(node = self.node)
