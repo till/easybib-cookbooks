@@ -1,5 +1,5 @@
 if !node[:deploy]
-  node[:deploy]    = {}
+  node[:deploy] = {}
 end
 
 if !node[:deploy][:deploy_to]
