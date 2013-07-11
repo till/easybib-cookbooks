@@ -46,15 +46,16 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
   owner  node["nginx-app"][:user]
   group  node["nginx-app"][:group]
   variables(
-    :js_alias    => node["nginx-app"][:js_modules],
-    :img_alias   => node["nginx-app"][:img_modules],
-    :css_alias   => node["nginx-app"][:css_modules],
-    :deploy      => node[:deploy],
-    :application => "easybib",
-    :access_log  => 'off',
-    :nginx_extra => 'sendfile  off;',
-    :database    => database_credentials,
-    :domain      => domain
+    :js_alias     => node["nginx-app"][:js_modules],
+    :img_alias    => node["nginx-app"][:img_modules],
+    :css_alias    => node["nginx-app"][:css_modules],
+    :deploy       => node[:deploy],
+    :application  => "easybib",
+    :access_log   => 'off',
+    :nginx_extra  => 'sendfile  off;',
+    :database     => database_credentials,
+    :domain       => domain,
+    :php_upstream => "unix:/var/run/php-fpm/#{node["php-fpm"][:user]}"
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
