@@ -68,13 +68,16 @@ module EasyBib
     if node[:scalarium]
       return node[:scalarium][:cluster][:name]
     end
-    if node[:opsworks]
+    if node[:opsworks] && node[:opsworks][:stack]
       return node[:opsworks][:stack][:name]
     end
     if node[:easybib] && node[:easybib][:cluster_name]
       return node[:easybib][:cluster_name]
     end
     ::Chef::Log.error("Unknown environment.")
+
+    return ""
+
   end
 
   def get_deploy_user(node = self.node)
