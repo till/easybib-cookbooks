@@ -1,0 +1,119 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:       docker
+# Required-Start:
+# Required-Stop:
+# Default-Start:  2 3 4 5
+# Default-Stop:   0 1 6
+# Description:    docker startup
+### END INIT INFO
+
+#set -x
+
+PROCESS=$(basename $0)
+PID_FILE="/var/run/${PROCESS}.pid"
+LOG_DIR="/var/log/${PROCESS}"
+COMMAND="docker -d 2>> ${LOG_DIR}/error.log 1>> ${LOG_DIR}/output.log"
+
+# Get lsb functions
+. /lib/lsb/init-functions
+
+check_root_id ()
+{
+    if [ "$(id -u)" != "0" ]; then
+        log_failure_msg "Docker must be run as root";
+        exit 1
+    fi
+}
+
+docker_prep()
+{
+    mkdir -p $LOG_DIR
+}
+
+docker_pid()
+{
+    echo $(cat "$PID_FILE")
+}
+
+docker_running()
+{
+    if  ! test -r "$PID_FILE"; then
+        return 1
+    fi
+
+    local pid=$(docker_pid)
+
+    kill -0 $pid
+
+    if [ "$?" -eq "0" ]; then
+        return 0
+    fi
+
+    return 1
+}
+
+docker_start()
+{
+    check_root_id;
+    if docker_running; then
+        log_failure_msg "Docker is currently running";
+        exit 1
+    fi
+    docker_prep;
+    $COMMAND &
+}
+
+docker_stop()
+{
+    check_root_id;
+    log_begin_msg "Stopping Docker"
+    if docker_running; then
+        local pid=$(docker_pid)
+        kill $pid
+        log_end_msg $?
+    else
+        log_failure_msg "Docker is not currently running";
+        exit 1;
+    fi
+}
+
+docker_restart()
+{
+    check_root_id;
+    if docker_running; then
+        docker_stop
+    fi
+    docker_start;
+}
+
+docker_status()
+{
+    check_root_id;
+    if docker_running; then
+        log_begin_msg "Docker is currently running."
+    else
+        log_failure_msg "Docker is not currently running."
+    fi
+}
+
+case "$1" in
+start)
+    docker_start
+    ;;
+stop)
+    docker_stop
+    ;;
+restart)
+    docker_restart
+    ;;
+status)
+    docker_status
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+esac
+
+exit
