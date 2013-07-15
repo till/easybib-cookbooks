@@ -11,13 +11,13 @@ Vagrant::Config.run do |config|
         "--memory", "256"
     ]
 
-    #config.vm.provision :shell, :inline => "apt-get update -y"
+    config.vm.provision :shell, :inline => "apt-get update -y"
 
     config.vm.provision :chef_solo do |chef|
         chef.cookbooks_path = "./../"
-        chef.log_level = :info
-        chef.add_recipe "easybib::role-gocourse-api"
+        chef.log_level = :debug
+        chef.add_recipe "docker"
 
-        chef.json = JSON.parse(File.read("./deploy.json"))
+        chef.json = JSON.parse(File.read("./docker.json"))
     end
 end
