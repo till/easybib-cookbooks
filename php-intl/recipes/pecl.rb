@@ -27,7 +27,6 @@ commands = [
   "./configure",
   "make",
   "cp ./modules/intl.so #{so_file}",
-  "echo 'extension=intl.so' >> #{node["php-fpm"][:prefix]}/etc/php/intl.ini"
 ]
 
 commands.each do |command|
@@ -36,6 +35,13 @@ commands.each do |command|
     not_if do
       File.exists?(so_file)
     end
+  end
+end
+
+execute "load .so" do
+  command "echo 'extension=intl.so' >> #{node["php-fpm"][:prefix]}/etc/php/intl.ini"
+  not_if do
+    File.exists?("#{node["php-fpm"][:prefix]}/etc/php/intl.ini")
   end
 end
 
