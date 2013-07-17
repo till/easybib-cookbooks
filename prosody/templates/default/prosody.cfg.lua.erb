@@ -102,12 +102,7 @@ ssl = {
 --c2s_require_encryption = false
 --s2s_require_encryption = false
 
--- Select the storage backend to use. By default Prosody uses flat files
--- in its configured data directory, but it also supports more backends
--- through modules. An "sql" backend is included by default, but requires
--- additional dependencies. See http://prosody.im/doc/storage for more info.
-
-storage = "<%= @storage -%>" -- Default is "internal"
+storage = "<%= @storage -%>"
 
 <%
 Chef::Log.info("DRIVER DRIVER -- #{@db["driver"]}")
@@ -155,16 +150,14 @@ pidfile = "/var/run/prosody/prosody.pid";
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
+<% if @domains.empty? -%>
 VirtualHost "localhost"
+<% end %>
 
 <% @domains.each do |domain| -%>
 VirtualHost "<%= domain %>"
-    enabled = true -- Remove this line to enable this host
+    enabled = true
 
-    -- Assign this host a certificate for TLS, otherwise it would use the one
-    -- set in the global section (if any).
-    -- Note that old-style SSL on port 5223 only supports one certificate, and will always
-    -- use the global one.
     ssl = {
         key = "/etc/prosody/certs/<%= domain %>.key";
         certificate = "/etc/prosody/certs/<%= domain %>.crt";
@@ -177,16 +170,9 @@ VirtualHost "<%= domain %>"
 -- For more information on components, see http://prosody.im/doc/components
 
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
---Component "conference.example.com" "muc"
+<% @domains.each do |domain| -%>
+"conference.<%= domain %>" "muc"
+<% end -%>
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
 --Component "proxy.example.com" "proxy65"
-
----Set up an external component (default component port is 5347)
---
--- External components allow adding various services, such as gateways/
--- transports to other networks like ICQ, MSN and Yahoo. For more info
--- see: http://prosody.im/doc/components#adding_an_external_component
---
---Component "gateway.example.com"
---  component_secret = "password"

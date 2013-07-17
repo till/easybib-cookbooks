@@ -10,3 +10,5 @@ default["prosody"]["db"] = {
 }
 default["prosody"]["domains"] = []
 default["prosody"]["admins"] = ["john@example.org"]
+default["prosody"]["users"] = {
+}

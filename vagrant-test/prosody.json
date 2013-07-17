@@ -1,0 +1,13 @@
+{
+    "prosody": {
+        "admins": [
+            "till@example.org"
+        ],
+        "domains": [
+            "example.org"
+        ],
+        "users": {
+            "till@example.org": "test123"
+        }
+    }
+}
