@@ -7,7 +7,12 @@ include_recipe "php-suhosin"
 include_recipe "php-fpm::pear"
 include_recipe "unfuddle-ssl-fix::install"
 include_recipe "composer::configure"
-include_recipe "deploy::ssl-infolit"
-include_recipe "deploy::infolit"
-include_recipe "nginx-app::configure"
-include_recipe "silverline"
+
+if is_aws()
+  include_recipe "deploy::ssl-infolit"
+  include_recipe "deploy::infolit"
+  include_recipe "nginx-app::configure"
+  include_recipe "silverline"
+else
+  include_recipe "nginx-app::vagrant"
+end
