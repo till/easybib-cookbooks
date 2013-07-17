@@ -41,7 +41,7 @@ if node["gocourse"]
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
-  source "easybib.com.conf.erb"
+  source node["nginx-app"]["conf_file"]
   mode   "0755"
   owner  node["nginx-app"][:user]
   group  node["nginx-app"][:group]
