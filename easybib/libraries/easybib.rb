@@ -7,6 +7,10 @@ module EasyBib
     return false
   end
 
+  def get_aws_conf(node_attribute, node = self.node)
+    return get_conf_from_env(node_attribute, "aws", node)
+  end
+
   def get_db_conf(node_attribute, node = self.node)
     return get_conf_from_env(node_attribute, "database", node)
   end
@@ -30,11 +34,11 @@ module EasyBib
 
     config = env_config[node_key]
 
-    if (node_key == 'domain')
+    if ['domain', 'aws'].include?(node_key)
       domain = config
       domain.each do |app_name, app_host|
         app_host = domain[app_name]
-        db_conf << build_nginx_config("DOMAIN_#{app_name}", app_host)
+        db_conf << build_nginx_config("#{node_key.upcase}_#{app_name}", app_host)
       end
 
       return db_conf
