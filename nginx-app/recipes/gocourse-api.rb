@@ -13,6 +13,7 @@ config = "api"
 
 db_conf = get_db_conf("gocourse")
 domain_conf = get_domain_conf("gocourse")
+aws_conf = get_aws_conf("gocourse")
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
@@ -29,7 +30,8 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :xhprof_enable => false,
     :upstream => config,
     :db_conf => db_conf,
-    :domain_conf => domain_conf
+    :domain_conf => domain_conf,
+    :aws_conf => aws_conf
   )
   notifies :restart, resources(:service => "nginx"), :delayed
 end
