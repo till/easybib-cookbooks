@@ -10,3 +10,8 @@ if database_credentials && !database_credentials.empty?
       variables :vars => database_credentials
   end
 end
+
+cookbook_file "/etc/profile.d/bib-alias.sh" do
+  source "alias.sh"
+  mode   "0755"
+end
