@@ -1,11 +1,25 @@
+require "bibcd"
+
 instance_roles = get_instance_roles()
 cluster_name   = get_cluster_name()
 
 node[:deploy].each do |application, deploy|
 
   Chef::Log.info("deploy::bibcd - app: #{application}, role: #{instance_roles}")
+
+  next unless cluster_name == node["easybib"]["cluster_name"]
+
+  case application
+  when 'bibcd'
+    next unless instance_roles.include?('bibcd')
+  else
+    Chef::Log.info("deploy::bibcd - #{application} (in #{cluster_name}) skipped")
+    next
+  end
+
   Chef::Log.info("deploy::bibcd - Deployment started.")
   Chef::Log.info("deploy::bibcd - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+
 
   opsworks_deploy_user do
     deploy_data deploy
@@ -22,5 +36,12 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
-
+  
+  node['bibcd']['apps'].each do |appname, config|
+    bibcd_app "adding bibcd app #{appname}" do
+      action :add
+      app_name appname
+      config config
+    end
+  end
 end
