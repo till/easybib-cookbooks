@@ -5,7 +5,7 @@ cluster_name   = get_cluster_name()
 
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.info("deploy::bibcd - app: #{application}, role: #{instance_roles}")
+  Chef::Log.info("deploy::bibcd - request to deploy app: #{application}, role: #{instance_roles} in #{cluster_name}")
 
   next unless cluster_name == node["easybib"]["cluster_name"]
 
