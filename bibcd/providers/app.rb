@@ -9,7 +9,7 @@ action :add do
       mode   0644
       #This is an ugly quick hack: Ruby Yaml adds !map:Mash which the Symfony Yaml parser doesnt like. So lets remove it.
       #maybe file an issue with symfony yaml later? 
-      variables :content => new_resource.config.to_yaml
+      variables :content => new_resource.config.to_hash.to_yaml
       source "app.yml.erb"
     end
     
