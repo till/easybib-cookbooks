@@ -7,7 +7,9 @@ action :add do
     template "#{new_resource.path}/config/apps/#{new_resource.app_name}.yml" do
       cookbook "bibcd" #if we dont set this, the template cmd would search in the calling cookbook
       mode   0644
-      variables :content => YAML::dump(new_resource.config.to_hash)
+      #This is an ugly quick hack: Ruby Yaml adds !map:Mash which the Symfony Yaml parser doesnt like. So lets remove it.
+      #maybe file an issue with symfony yaml later? 
+      variables :content => YAML::dump(new_resource.config.to_hash).delete "!map:Mash"
       source "app.yml.erb"
     end
     
