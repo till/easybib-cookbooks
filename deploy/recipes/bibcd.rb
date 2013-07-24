@@ -38,6 +38,7 @@ node[:deploy].each do |application, deploy|
   node['bibcd']['apps'].each do |appname, config|
     bibcd_app "adding bibcd app #{appname}" do
       action :add
+      path deploy[:deploy_to]
       app_name appname
       config config
     end
