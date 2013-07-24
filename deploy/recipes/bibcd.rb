@@ -1,5 +1,3 @@
-require "bibcd"
-
 instance_roles = get_instance_roles()
 cluster_name   = get_cluster_name()
 
