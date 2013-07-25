@@ -10,4 +10,5 @@ branches:
 
 script:
   - find . -name "*.rb" -exec ruby -c {} \;
+  - find . -maxdepth 1 -type d -not -name ".git" -not -name "." -not -name "bprobe" -not -name "scalarium*" -not -name "vagrant-test" -exec foodcritic -C {} \;
   - rake test
