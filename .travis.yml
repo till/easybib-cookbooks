@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 1.9.1
+  - 1.9.3
 
 before_install: gem update --system 1.8.25 # Chef is not yet Ruby 2.0 compatible
 
