@@ -1,3 +1,4 @@
+name              "apache-solr"
 maintainer        "Till Klampaeckel"
 maintainer_email  "till@php.net"
 license           "BSD License"

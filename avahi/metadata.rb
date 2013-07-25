@@ -1,3 +1,4 @@
+name              "avahi"
 maintainer        "Leander Damme, Till Klampaeckel"
 maintainer_email  "leander@wesrc.com"
 license           "BSD License"

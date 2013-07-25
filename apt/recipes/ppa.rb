@@ -1,4 +1,4 @@
-case node[:platform]
+case node["platform"]
 when "ubuntu"
   package "python-software-properties"
 when "debian"
