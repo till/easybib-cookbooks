@@ -171,7 +171,7 @@ VirtualHost "<%= domain %>"
 
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
 <% @domains.each do |domain| -%>
-"conference.<%= domain %>" "muc"
+Component "conference.<%= domain %>" "muc"
 <% end -%>
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
