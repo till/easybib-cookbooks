@@ -43,7 +43,7 @@ modules_enabled = {
     -- Not essential, but recommended
         "private"; -- Private XML storage (for room bookmarks, etc.)
         "vcard"; -- Allow users to set vCards
-        --"privacy"; -- Support privacy lists
+        "privacy"; -- Support privacy lists
         --"compression"; -- Stream compression
 
     -- Nice to have
@@ -65,7 +65,7 @@ modules_enabled = {
         "posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
         --"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
         --"httpserver"; -- Serve static files from a directory over HTTP
-        --"groups"; -- Shared roster support
+        "groups"; -- Shared roster support
         "announce"; -- Send announcement to all online users
         "welcome"; -- Welcome users who register accounts
         "watchregistrations"; -- Alert admins of registrations
@@ -88,10 +88,10 @@ allow_registration = false;
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
-ssl = {
-    key = "/etc/prosody/certs/localhost.key";
-    certificate = "/etc/prosody/certs/localhost.cert";
-}
+-- ssl = {
+--    key = "/etc/prosody/certs/localhost.key";
+--    certificate = "/etc/prosody/certs/localhost.cert";
+-- }
 
 -- Only allow encrypted streams? Encryption is already used when
 -- available. These options will cause Prosody to deny connections that
@@ -99,7 +99,7 @@ ssl = {
 -- encryption or have it disabled, including gmail.com and Google Apps
 -- domains.
 
---c2s_require_encryption = false
+c2s_require_encryption = true
 --s2s_require_encryption = false
 
 storage = "<%= @storage -%>"
@@ -136,7 +136,7 @@ end
 -- to update the logrotate config at /etc/logrotate.d/prosody
 log = {
         -- Log all error messages to prosody.err
-    error = "/var/log/prosody/prosody.err";
+        error = "/var/log/prosody/prosody.err";
         -- Log everything of level "info" and higher (that is, all except "debug" messages)
         -- to prosody.log
         info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for more verbose logging
@@ -169,10 +169,8 @@ VirtualHost "<%= domain %>"
 -- like multi-user conferences, and transports.
 -- For more information on components, see http://prosody.im/doc/components
 
----Set up a MUC (multi-user chat) room server on conference.example.com:
+---Set up a MUC (multi-user chat) room server and proxy65:
 <% @domains.each do |domain| -%>
 Component "conference.<%= domain %>" "muc"
+Component "proxy.<%= domain %>" "proxy65"
 <% end -%>
-
--- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
---Component "proxy.example.com" "proxy65"
