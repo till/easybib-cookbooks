@@ -36,18 +36,11 @@ node[:deploy].each do |application, deploy|
   ssl_certificate     = deploy["ssl_certificate"].chomp
   ssl_certificate_key = deploy["ssl_certificate_key"].chomp
 
-  directory ssl_dir do
-    mode      "0750"
-    owner     "root"
-    group     "www-data"
-    recursive true
-  end
-
   template ssl_dir + "/cert.pem" do
     source "ssl_key.erb"
     mode   "0640"
     owner  "root"
-    group  "www-data"
+    group  "prosody
     variables(
       "ssl_key" => ssl_certificate
     )
@@ -58,7 +51,7 @@ node[:deploy].each do |application, deploy|
     source "ssl_key.erb"
     mode   "0640"
     owner  "root"
-    group  "www-data"
+    group  "prosody"
     variables(
       "ssl_key" => ssl_certificate_key
     )
