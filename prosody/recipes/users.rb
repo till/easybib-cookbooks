@@ -30,8 +30,31 @@ if node["prosody"]["storage"] == "sql"
       mysql_command += " -p #{db_conf["password"]}"
     end
 
-    execute "delete other accounts" do
-      command "#{mysql_command} -e \"DELETE FROM ... WHERE"
+    if !node["prosody"]["users"].empty?
+      
+      userstatement = " NOT "
+            
+      node["prosody"]["users"].each do |email,passwd|
+
+        Chef::Log.debug("Email: #{email}")
+
+        account = email.split("@")[0]
+        domain  = email.split("@")[1]
+        
+        userstatement += " ( host='#{domain}' AND user='#{account}') OR "
+
+      end
+      
+      Chef::Log.debug("precut: #{userstatement} ")
+      
+      userstatement = userstatement[0..-4] #cut the last OR
+
+      Chef::Log.debug("I am going to delete prosody users where: #{userstatement} ")
+      
+      execute "delete other accounts" do
+        command "#{mysql_command} -e \"DELETE FROM #{db_conf["database"]}.prosody WHERE #{userstatement} \""
+      end
+
     end
 
   else
