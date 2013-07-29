@@ -32,8 +32,7 @@ if node["prosody"]["storage"] == "sql"
 
     if !node["prosody"]["users"].empty?
       
-      userstatement = " NOT "
-            
+      userstatement = " NOT "      
       node["prosody"]["users"].each do |email,passwd|
 
         Chef::Log.debug("Email: #{email}")
@@ -43,10 +42,7 @@ if node["prosody"]["storage"] == "sql"
         
         userstatement += " ( host='#{domain}' AND user='#{account}') OR "
 
-      end
-      
-      Chef::Log.debug("precut: #{userstatement} ")
-      
+      end            
       userstatement = userstatement[0..-4] #cut the last OR
 
       Chef::Log.debug("I am going to delete prosody users where: #{userstatement} ")
