@@ -1,6 +1,6 @@
 package "ia32-libs"
 
-directory "#{node[:ezproxy][:install_dir]}" do
+directory node[:ezproxy][:install_dir] do
   action :create
 end
 

@@ -5,10 +5,11 @@ if node["gocourse"]["database"]
   database_credentials = node["gocourse"]["database"]
 end
 
-if database_credentials && !database_credentials.empty?
-  template "/etc/zsh/zprofile" do
-      source "zprofile.erb"
-      mode   "0755"
-      variables :vars => database_credentials
+template "/etc/zsh/zprofile" do
+  source "zprofile.erb"
+  mode   "0755"
+  variables :vars => database_credentials
+  not_if do
+    database_credentials.empty?
   end
 end

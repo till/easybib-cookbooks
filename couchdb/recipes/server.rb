@@ -35,9 +35,10 @@ end
 include_recipe "couchdb::configure"
 
 # we need to make default a template, also for silverline
-if node[:couchdb][:port] == 80
-  execute "Running on port 80, we require root" do
-    command "sed -i 's,COUCHDB_USER=couchdb,COUCHDB_USER=root,g' /etc/default/couchdb"
+execute "Running on port 80, we require root" do
+  command "sed -i 's,COUCHDB_USER=couchdb,COUCHDB_USER=root,g' /etc/default/couchdb"
+  only_if do
+    node["couchdb"]["port"] == 80
   end
 end
 
