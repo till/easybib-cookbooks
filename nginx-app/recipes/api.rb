@@ -8,10 +8,10 @@ if is_aws()
     default_router = "index.php"
   end
 else
- deploy_dir = "/vagrant_data/web/"
- nginx_extras = "sendfile off;"
- default_router = "index_dev.php"
- xhprof_enable = true
+  deploy_dir = "/vagrant_data/web/"
+  nginx_extras = "sendfile off;"
+  default_router = "index_dev.php"
+  xhprof_enable = true
 end
 
 config = "easybib_api"

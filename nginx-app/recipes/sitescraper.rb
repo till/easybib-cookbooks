@@ -2,8 +2,8 @@ if is_aws()
   deploy_dir = "/srv/www/sitescraper/current/www"
   nginx_extras = ""
 else
- deploy_dir = "/vagrant_data/www"
- nginx_extras = "sendfile off;"
+  deploy_dir = "/vagrant_data/www"
+  nginx_extras = "sendfile off;"
 end
 
 template "/etc/nginx/sites-enabled/sitescraper.conf" do
