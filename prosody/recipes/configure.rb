@@ -23,4 +23,5 @@ template "#{cfg_dir}/prosody.cfg.lua" do
   notifies :reload, "service[prosody]"
 end
 
+include_recipe "prosody::ssl"
 include_recipe "prosody::users"
