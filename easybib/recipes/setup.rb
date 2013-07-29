@@ -1,15 +1,13 @@
-package "htop"
-package "jwhois"
-package "multitail"
-package "apache2-utils"
-package "strace"
-package "rsync"
-package "manpages"
-package "manpages-dev"
-package "nscd"
-package "subversion"
-package "git-core"
-package "unzip"
+base_packages = [
+  "htop", "jwhois", "multitail",
+  "apache2-utils", "strace", "rsync",
+  "manpages", "manpages-dev", "nscd",
+  "subversion", "git-core", "unzip"
+]
+
+base_packages.each do |p|
+  package p
+end
 
 include_recipe "easybib::awscommand"
 include_recipe "easybib::nginxstats"
@@ -23,7 +21,7 @@ end
 
 # opsworks installs this but we don't need it
 ["ganglia-monitor", "libganglia1"].each do |p|
-  package "#{p}" do
+  package p do
     action :purge
   end
 end

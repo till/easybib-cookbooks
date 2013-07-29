@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-packages = {
+pear_packages = {
   "Crypt_HMAC2-beta"                            => "pear.php.net",
   "Net_Gearman-alpha"                           => "pear.php.net",
   "Services_Amazon_S3-0.4.0"                    => "pear.php.net",
@@ -42,22 +42,21 @@ packages = {
 }
 
 # install packages
-packages.each do |package,channel|
+pear_packages.each do |pear_package,pear_channel|
 
-  if !package.index('-').nil? 
-    attrs = package.split('-')
-    package, version = attrs
-  else
-    version = ""
+  version = ""
+  if !pear_package.index('-').nil?
+    attrs = pear_package.split('-')
+    pear_package, pear_version = attrs
   end
 
   #Chef::Log.info("PACKAGE: #{package}, Version: #{version}, Channel: #{channel}")
 
-  php_pear "#{package}" do
+  php_pear pear_package do
     action  :install_if_missing
-    channel "#{channel}"
+    channel pear_channel
     force   true
-    version "#{version}"
+    version pear_version
   end
 end
 
