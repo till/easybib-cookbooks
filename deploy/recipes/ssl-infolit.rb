@@ -1,10 +1,9 @@
-right_role    = "nginxphpapp"
-right_cluster = "InfoLit"
-ssl_dir       = node["ssl-deploy"]["directory"] 
+right_role = "nginxphpapp"
+ssl_dir    = node["ssl-deploy"]["directory"]
 
-if node.attribute?(:scalarium)
-  instance_roles = node[:scalarium][:instance][:roles]
-  cluster_name   = node[:scalarium][:cluster][:name]
+if is_aws
+  instance_roles = get_instance_roles()
+  cluster_name   = get_cluster_name()
 else
   Chef::Log.debug("Not running in scalarium, setting defaults.")
   instance_roles = ""
@@ -15,16 +14,15 @@ stored_certificate = false
 
 node[:deploy].each do |application, deploy|
 
+  if cluster_name != node["easybib"]["cluster_name"]
+    next
+  end
+
   if application != "ssl"
     next
   end
 
   if !instance_roles.include?(right_role)
-    next
-  end
-
-  if !right_cluster.include?(cluster_name.to_s)
-    Chef::Log.info("Will not deploy to: " + cluster_name.to_s)
     next
   end
 

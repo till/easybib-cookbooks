@@ -1,4 +1,9 @@
 include_recipe "apt::ppa"
 include_recipe "apt::easybib"
 
-package "php5-easybib-posix"
+case node[:lsb][:codename]
+when 'lucid'
+  package "php5-easybib-posix"
+else
+  Chef::Log.debug("ext/posix is not available or included")
+end

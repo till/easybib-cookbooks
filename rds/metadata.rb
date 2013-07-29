@@ -1,4 +1,4 @@
-maintainer        "Ulf Härnhammar"
+maintainer        "Ulf Harnhammar"
 maintainer_email  "ulfharn@gmail.com"
 license           "New BSD License"
 description       "Performs backups from Amazon RDS to Amazon S3"

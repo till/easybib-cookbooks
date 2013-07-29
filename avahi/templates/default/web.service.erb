@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+    <name replace-wildcards="yes"> <%= @description %> <%= @cname %> (%h)</name>
+    <service>
+        <type>_http._tcp</type>
+        <subtype>_cname._http._tcp</subtype>
+        <domain-name><%= @cname %>.local</domain-name>
+        <host-name>vagrant.local</host-name>
+        <port><%= @port %></port>
+    </service>
+</service-group>

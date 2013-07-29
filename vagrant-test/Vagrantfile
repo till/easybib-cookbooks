@@ -1,10 +1,9 @@
 Vagrant::Config.run do |config|
 
-  config.vm.box = "easybib-ubuntu-10.04.4_vbox-4.2.6_0.4.1"
+    config.vm.box = "precise64"
+    config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
 
-  config.vm.network :hostonly, "33.33.33.124"
-
-  config.vbguest.auto_update = false
+    config.vm.network :hostonly, "33.33.33.124"
 
     config.vm.customize [
         "modifyvm", :id,
@@ -12,12 +11,14 @@ Vagrant::Config.run do |config|
         "--memory", "256"
     ]
 
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = "./../"
-    chef.log_level = :debug
-    chef.add_recipe "percona::server"
-    chef.add_recipe "prosody"
+    config.vm.provision :shell, :inline => "apt-get update -y"
 
-    chef.json = JSON.parse(File.read("./prosody.json"))
-  end
+    config.vm.provision :chef_solo do |chef|
+        chef.cookbooks_path = "./../"
+        chef.log_level = :debug
+        chef.add_recipe "percona::server"
+        chef.add_recipe "prosody"
+
+        chef.json = JSON.parse(File.read("./prosody.json"))
+    end
 end

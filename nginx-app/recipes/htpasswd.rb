@@ -1,6 +1,6 @@
-if node[:scalarium]
+if is_aws()
 
-  cluster_name = node[:scalarium][:cluster][:name]
+  cluster_name = get_cluster_name()
 
   if cluster_name == 'Fruitkid'
     template "#{node["nginx-app"][:config_dir]}/htpasswd" do

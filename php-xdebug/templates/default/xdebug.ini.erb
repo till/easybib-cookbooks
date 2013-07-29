@@ -1,4 +1,4 @@
-zend_extension="/usr/local/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so"
+zend_extension="<%=@prefix%>/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so"
 
 <% @config.each do |var,val| -%>
 xdebug.<%=var%> = <%=val%>

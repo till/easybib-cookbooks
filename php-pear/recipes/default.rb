@@ -29,4 +29,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+pears = ["/usr/local/bin/pear", "/usr/bin/pear"]
+
+pears.each do |pear|
+  link pear do
+    to "#{node["php-fpm"][:prefix]}/bin/pear"
+  end
+end
+
 include_recipe "php-pear::packages"

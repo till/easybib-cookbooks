@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+  - 1.9.3
+
+before_install: gem update --system 1.8.25 # Chef is not yet Ruby 2.0 compatible
+
+branches:
+  only:
+    - master
+
+script:
+  - find . -name "*.rb" -exec ruby -c {} \;
+  - find . -maxdepth 1 -type d -not -name ".git" -not -name "." -not -name "bprobe" -not -name "scalarium*" -not -name "vagrant-test" -exec foodcritic -C {} \;
+  - rake test

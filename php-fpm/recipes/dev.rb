@@ -1,5 +1,5 @@
 # this assumes our prefix
-pool_config_dir = "/usr/local/etc/php-fpm"
+pool_config_dir = "#{node["php-fpm"][:prefix]}/etc/php-fpm"
 
 directory "#{pool_config_dir}" do
   mode      "0755"

@@ -1,0 +1,5 @@
+<% @vars.each do |connection_id,connection_config| %>
+  <% connection_config.each do |connection_config_key,connection_config_value| %>
+    export <%= connection_id.upcase %>_<%= connection_config_key.upcase %>="<%= connection_config_value %>"
+  <% end %>
+<% end %>

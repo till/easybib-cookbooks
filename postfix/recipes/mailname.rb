@@ -1,6 +1,7 @@
 # fix this for Ubuntu
-if node[:scalarium]
-  my_hostname = node[:scalarium][:instance][:hostname]
+if !get_cluster_name.empty?
+  instance    = get_instance()
+  my_hostname = instance[:hostname]
 else
   # node.json
   if node[:server_name]

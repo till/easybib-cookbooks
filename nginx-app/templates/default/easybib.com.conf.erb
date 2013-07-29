@@ -1,5 +1,5 @@
 upstream phpfpm {
-    server  unix:/var/run/php-fpm/<%= node["php-fpm"][:user] %>;
+    server  <%= @php_upstream %>;
 }
 
 server {
@@ -96,9 +96,29 @@ server {
         fastcgi_pass  phpfpm;
         fastcgi_index index.php;
 
-    <% if node[:scalarium] -%>
-        fastcgi_param BIB_ENV "<%=node[:scalarium][:cluster][:name]%>";
+    <% if !::EasyBib.get_cluster_name(node).empty? -%>
+        fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
     <% end -%>
+
+
+<%
+if @database && !@database.empty?
+  @database.each do |connection_id,connection_config|
+    connection_config.each do |connection_config_key,connection_config_value|
+-%>
+        fastcgi_param <%=connection_id.upcase%>_<%=connection_config_key.upcase%> "<%=connection_config_value%>";
+<%
+    end
+  end
+end
+if @domain && !@domain.empty?
+  @domain.each do |app_name,app_host|
+-%>
+    fastcgi_param <%="DOMAIN_#{app_name.upcase}"%> "<%=app_host%>";
+<%
+ end
+end
+-%>
 
         fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
 

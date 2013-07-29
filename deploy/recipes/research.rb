@@ -1,7 +1,7 @@
 include_recipe "php-fpm::service"
 
-instance_roles = node[:scalarium][:instance][:roles]
-cluster_name   = node[:scalarium][:cluster][:name]
+instance_roles = get_instance_roles()
+cluster_name   = get_cluster_name()
 
 node[:deploy].each do |application, deploy|
 
@@ -53,13 +53,13 @@ node[:deploy].each do |application, deploy|
 
   Chef::Log.info("deploy::research - Deployment started.")
 
-  scalarium_deploy_dir do
+  opsworks_deploy_dir do
     user  deploy[:user]
     group deploy[:group]
     path  deploy[:deploy_to]
   end
 
-  scalarium_deploy do
+  opsworks_deploy do
     deploy_data deploy
     app application
   end

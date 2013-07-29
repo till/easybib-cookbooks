@@ -9,10 +9,29 @@
             ]
         }
     },
-    "scalarium": {
+    "gocourse": {
+        "domain": {
+            "api": "api.local"
+        },
+        "database": {
+            "api": {
+                "hostname": "127.0.0.1",
+                "username": "root",
+                "password": "test123",
+                "database": "api_stage"
+            },
+            "management": {
+                "hostname": "127.0.0.1",
+                "username": "root",
+                "password": "",
+                "database": "management_stage"
+            }
+        }
+    },
+    "opsworks": {
         "deploy_user": {
-            "user": "deploy",
-            "group": "www-data"
+            "user": "vagrant",
+            "group": "vagrant"
         },
         "activity": "deploy",
         "applications": [
@@ -22,14 +41,17 @@
                 "application_type": "other"
             }
         ],
-        "cluster": {
+        "stack": {
             "name": "EasyBib Playground"
         },
         "instance": {
             "id": 1,
-            "roles": [
+            "layers": [
                 "lb"
             ]
         }
+    },
+    "newrelic": {
+        "license": ""
     }
 }

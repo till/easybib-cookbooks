@@ -1,9 +1,8 @@
-include_recipe "deploy"
 include_recipe "nginx-app::server"
 include_recipe "php-fpm::service"
 
-instance_roles   = node[:scalarium][:instance][:roles]
-cluster_name     = node[:scalarium][:cluster][:name]
+instance_roles   = get_instance_roles()
+cluster_name     = get_cluster_name()
 app_access_log   = "off"
 nginx_config_dir = node["nginx-app"][:config_dir]
 
@@ -20,7 +19,7 @@ node[:deploy].each do |application, deploy|
 
   case application
   when 'easybib'
-    if !['EasyBib', 'EasyBib Playground', 'Fruitkid'].include?(cluster_name)
+    if !node["nginx-lb"]["cluster"].include?(cluster_name)
       next
     end
     if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
@@ -47,6 +46,8 @@ node[:deploy].each do |application, deploy|
     next
   end
 
+  php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"][:user]}"
+
   template "#{nginx_config_dir}/sites-enabled/easybib.com.conf" do
     source nginx_config
     mode   "0755"
@@ -60,10 +61,10 @@ node[:deploy].each do |application, deploy|
       :deploy             => deploy,
       :application        => application,
       :password_protected => password_protected,
-      :config_dir         => nginx_config_dir
+      :config_dir         => nginx_config_dir,
+      :php_upstream       => php_upstream
     )
     notifies :restart, resources(:service => "nginx"), :delayed
   end
 
 end
-

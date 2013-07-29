@@ -7,5 +7,5 @@ template "/etc/default/#{node[:gearmand][:name]}" do
     :port => node[:gearmand][:port],
     :log  => node[:gearmand][:log]
   )
-  notifies :restart, resources( :service => node[:gearmand][:name])
+  notifies :reload, resources( :service => node[:gearmand][:name])
 end

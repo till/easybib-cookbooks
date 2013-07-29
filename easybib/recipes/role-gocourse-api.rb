@@ -1,0 +1,14 @@
+include_recipe "easybib::setup"
+include_recipe "loggly::setup"
+include_recipe "nginx-app::server"
+include_recipe "php-fpm"
+include_recipe "php-phar"
+include_recipe "php-intl"
+include_recipe "php-suhosin"
+include_recipe "composer::configure"
+include_recipe "deploy::gocourse-api"
+include_recipe "nginx-app::gocourse-api"
+if is_aws()
+  include_recipe "silverline"
+end
+include_recipe "bash::configure"

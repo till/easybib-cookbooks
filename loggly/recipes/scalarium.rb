@@ -1,6 +1,7 @@
-# this is specific to our setup and is only triggered on scalarium
-if node[:scalarium]
-  if node[:scalarium][:instance][:roles].include?('loadbalancer')
+# this is specific to our setup and is only triggered on scalarium/opsworks
+if !get_cluster_name().empty?
+
+  if get_instance_roles().include?('loadbalancer')
 
     template "/etc/rsyslog.d/10-haproxy.conf" do
       source "10-haproxy.conf.erb"
