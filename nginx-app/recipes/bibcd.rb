@@ -1,20 +1,14 @@
 if is_aws()
-  deploy_dir = "/srv/www/api/current/web"
+  deploy_dir = "/srv/www/bibcd/current/web"
   nginx_extras = ""
-  xhprof_enable = false
-  if get_cluster_name() == "API Staging"
-    default_router = "index_staging.php"
-  else
-    default_router = "index.php"
-  end
+  default_router = "index.php"
 else
   deploy_dir = "/vagrant_data/web/"
   nginx_extras = "sendfile off;"
   default_router = "index_dev.php"
-  xhprof_enable = true
 end
 
-config = "easybib_api"
+config = "bibcd"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
@@ -27,8 +21,6 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :access_log  => 'off',
     :nginx_extra => nginx_extras,
     :default_router => default_router,
-    :xhprof_enable => xhprof_enable,
-    :xhprof_root => node["xhprof.io"]["root"],
     :upstream => config,
     :db_conf => "",
     :domain_conf => ""
