@@ -1,3 +1,4 @@
+name              "ezproxy"
 maintainer        "Till Klampaeckel"
 maintainer_email  "till@lagged.biz"
 license           "BSD License"
