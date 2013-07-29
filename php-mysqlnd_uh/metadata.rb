@@ -1,3 +1,4 @@
+name              "php-mysqlnd_uh"
 maintainer        "Till Klampaeckel"
 maintainer_email  "till@php.net"
 license           "BSD License"

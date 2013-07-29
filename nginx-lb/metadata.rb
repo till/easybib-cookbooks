@@ -1,3 +1,4 @@
+name              "nginx-lb"
 maintainer        "Ulf Harnhammar"
 maintainer_email  "ulfharn@gmail.com"
 license           "BSD License"

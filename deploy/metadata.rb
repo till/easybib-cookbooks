@@ -1,3 +1,4 @@
+name              "deploy"
 maintainer        "Till Klampaeckel, Ulf Harnhammar"
 maintainer_email  "till@php.net"
 license           "BSD License"

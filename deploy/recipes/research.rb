@@ -34,7 +34,7 @@ node[:deploy].each do |application, deploy|
       next
     end
     deploy[:restart_command] = ""
-      
+
   when 'research_app'
     next unless cluster_name == 'Research Cloud'
     next unless instance_roles.include?('nginxphpapp')
@@ -70,25 +70,24 @@ node[:deploy].each do |application, deploy|
     end
   end
 
-  if application == 'ebim2'
-    include_recipe "deploy::ebim2"
+  next unless application == 'ebim2'
 
-    base_dir = deploy[:deploy_to]
-    app_dir  = "#{base_dir}/vendor/GearmanManager"
-    etc_dir  = "#{base_dir}/etc/gearman"
+  include_recipe "deploy::ebim2"
 
-    link "/usr/local/bin/gearman-manager" do
-      to "#{app_dir}/pecl-manager.php"
-    end
+  base_dir = deploy[:deploy_to]
+  app_dir  = "#{base_dir}/vendor/GearmanManager"
+  etc_dir  = "#{base_dir}/etc/gearman"
 
-    link "/etc/gearman-manager" do
-      to etc_dir
-    end
+  link "/usr/local/bin/gearman-manager" do
+    to "#{app_dir}/pecl-manager.php"
+  end
 
-    link "/etc/init.d/gearman-manager" do
-      to "#{base_dir}/bin/gearman-manager.initd"
-    end
+  link "/etc/gearman-manager" do
+    to etc_dir
+  end
 
+  link "/etc/init.d/gearman-manager" do
+    to "#{base_dir}/bin/gearman-manager.initd"
   end
 
 end

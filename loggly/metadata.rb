@@ -1,3 +1,4 @@
+name              "loggly"
 maintainer        "Till Klampaeckel"
 maintainer_email  "till@php.net"
 license           "BSD License"

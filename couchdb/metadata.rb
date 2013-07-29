@@ -1,3 +1,4 @@
+name              "couchdb"
 maintainer        "Peritor GmbH"
 maintainer_email  "scalarium@peritor.com"
 license           "Apache 2.0"

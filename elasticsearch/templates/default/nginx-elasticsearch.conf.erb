@@ -1,8 +1,0 @@
-server {
-    listen 8983; # solr standard port, sorry elasticsearch :D
-
-    location /elasticsearch/ {
-        rewrite    ^/elasticsearch/(.*)$  /$1  break;
-        proxy_pass http://127.0.0.1:9200;
-    }
-}
