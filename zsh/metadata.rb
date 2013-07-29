@@ -1,3 +1,4 @@
+name              "zsh"
 maintainer        "Leander Damme"
 maintainer_email  "leander@wesrc.com"
 license           "BSD License"

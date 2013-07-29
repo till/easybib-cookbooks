@@ -1,3 +1,0 @@
-# config
-
-# register service & start

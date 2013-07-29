@@ -1,3 +1,4 @@
+name              "rds"
 maintainer        "Ulf Harnhammar"
 maintainer_email  "ulfharn@gmail.com"
 license           "New BSD License"
