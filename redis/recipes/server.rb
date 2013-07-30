@@ -8,23 +8,23 @@ redis_already_installed = lambda do
   redis_version_installed == redis_version
 end
 
-remote_file "/tmp/redis-#{redis_version}.tar.gz" do
+remote_file "#{Chef::Config[:file_cache_path]}/redis-#{redis_version}.tar.gz" do
   source "http://redis.googlecode.com/files/redis-#{redis_version}.tar.gz"
-  not_if do File.directory?("/tmp/redis-#{redis_version}") end
+  not_if do File.directory?("#{Chef::Config[:file_cache_path]}/redis-#{redis_version}") end
 end
 
-execute "tar xvfz /tmp/redis-#{redis_version}.tar.gz" do
-  cwd    "/tmp"
-  not_if do File.directory?("/tmp/redis-#{redis_version}") end
+execute "tar xvfz #{Chef::Config[:file_cache_path]}/redis-#{redis_version}.tar.gz" do
+  cwd    Chef::Config[:file_cache_path]
+  not_if do File.directory?("#{Chef::Config[:file_cache_path]}/redis-#{redis_version}") end
 end
 
 execute "make" do
-  cwd    "/tmp/redis-#{redis_version}"
+  cwd    "#{Chef::Config[:file_cache_path]}/redis-#{redis_version}"
   not_if &redis_already_installed
 end
 
 execute "make install" do
-  cwd    "/tmp/redis-#{redis_version}"
+  cwd    "#{Chef::Config[:file_cache_path]}/redis-#{redis_version}"
   not_if &redis_already_installed
 end
 

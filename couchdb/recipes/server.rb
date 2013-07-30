@@ -8,25 +8,26 @@ couchdb_already_installed = lambda do
   couchdb_installed_version == node[:couchdb][:version]
 end
 
-remote_file "/tmp/apache-couchdb-#{node[:couchdb][:version]}.tgz" do
+remote_file "#{Chef::Config[:file_cache_path]}/apache-couchdb-#{node[:couchdb][:version]}.tgz" do
   source "http://apache.easy-webs.de/couchdb/#{node[:couchdb][:version]}/apache-couchdb-#{node[:couchdb][:version]}.tar.gz"
   not_if &couchdb_already_installed
 end
 
 execute "unpack CouchDB" do
-  command "cd /tmp && tar -xzf apache-couchdb-#{node[:couchdb][:version]}.tgz"
+  command "tar -xzf apache-couchdb-#{node[:couchdb][:version]}.tgz"
   not_if &couchdb_already_installed
+  cwd "#{Chef::Config[:file_cache_path]}"
 end
 
 execute "Configure CouchDB" do
-  cwd "/tmp/apache-couchdb-#{node[:couchdb][:version]}"
+  cwd "#{Chef::Config[:file_cache_path]}/apache-couchdb-#{node[:couchdb][:version]}"
   environment "HOME" => "/root"
   command "./configure --sysconfdir=/etc"
   not_if &couchdb_already_installed
 end
 
 execute "Compile and install CouchDB" do
-  cwd "/tmp/apache-couchdb-#{node[:couchdb][:version]}"
+  cwd "#{Chef::Config[:file_cache_path]}/apache-couchdb-#{node[:couchdb][:version]}"
   environment "HOME" => "/root"
   command "make && make install"
   not_if &couchdb_already_installed

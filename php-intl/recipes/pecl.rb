@@ -9,17 +9,17 @@ version = open("http://pecl.php.net/rest/r/intl/latest.txt").read
 release = "intl-#{version}.tgz"
 so_file = "#{node["php-fpm"][:prefix]}/lib/php/extensions/no-debug-non-zts-20090626/intl.so"
 
-remote_file "/tmp/#{release}" do
+remote_file "#{Chef::Config[:file_cache_path]}/#{release}" do
   source "http://pecl.php.net/get/#{release}"
   not_if do
     File.exists?(so_file)
   end
 end
 
-execute "tar -zxf /tmp/#{release}"do
-  cwd "/tmp"
+execute "tar -zxf #{Chef::Config[:file_cache_path]}/#{release}"do
+  cwd Chef::Config[:file_cache_path]
   only_if do
-    File.exists?("/tmp/#{release}")
+    File.exists?("#{Chef::Config[:file_cache_path]}/#{release}")
   end
 end
 
@@ -32,7 +32,7 @@ commands = [
 
 commands.each do |command|
   execute command do
-    cwd "/tmp/intl-#{version}"
+    cwd "#{Chef::Config[:file_cache_path]}/intl-#{version}"
     not_if do
       File.exists?(so_file)
     end
