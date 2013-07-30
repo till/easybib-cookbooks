@@ -12,5 +12,4 @@ recipe            "couchdb::couchbase", "Install CouchBase Single via dep"
 
 supports 'ubuntu'
 
-depends "apt::ppa"
-depends "apt::easybib"
+depends "apt"

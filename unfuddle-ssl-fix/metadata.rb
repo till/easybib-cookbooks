@@ -7,3 +7,4 @@ version           "0.1"
 recipe            "unfuddle-ssl-fix::install", "Install SSL cert and add it to subversion's config"
 
 supports 'ubuntu'
+depends "subversion"

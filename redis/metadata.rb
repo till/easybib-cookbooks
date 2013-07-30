@@ -8,3 +8,5 @@ recipe            "redis::server", "Installs redis from source"
 recipe            "redis::monit", "Installs related to monitor redis through monit"
 
 supports 'ubuntu'
+
+depends "apt"

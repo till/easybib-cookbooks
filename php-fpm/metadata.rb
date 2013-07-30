@@ -14,3 +14,6 @@ recipe            "php-fpm::xhprof", "Installs Facebook's xhprof"
 recipe            "php-fpm::pspell", "Install the pspell PHP extension"
 recipe            "php-fpm::mbstring", "Install the mbstring PHP extension"
 supports 'ubuntu'
+
+depends "apt"
+depends "php-apc"
