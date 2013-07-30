@@ -4,7 +4,7 @@ include_recipe "percona::xtrabackup"
 
 # tar & compress the backup
 template node[:xtrabacku][:processor] do
-  source "backthisup.sh.rb"
+  source "backthisup.sh.erb"
   mode   "0755"
 end
 
