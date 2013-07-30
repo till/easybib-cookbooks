@@ -16,7 +16,7 @@ end
 execute "unpack CouchDB" do
   command "tar -xzf apache-couchdb-#{node[:couchdb][:version]}.tgz"
   not_if &couchdb_already_installed
-  cwd "#{Chef::Config[:file_cache_path]}"
+  cwd Chef::Config[:file_cache_path]
 end
 
 execute "Configure CouchDB" do
