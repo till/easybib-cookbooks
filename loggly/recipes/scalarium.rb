@@ -18,6 +18,6 @@ directory node["syslog"]["haproxy"]["log_dir"] do
   recursive true
   mode "0755"
   only_if do
-    roles().include?('loadbalancer')
+    roles.include?('loadbalancer')
   end
 end
