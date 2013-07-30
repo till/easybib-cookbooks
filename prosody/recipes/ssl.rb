@@ -1,4 +1,4 @@
-ssl_dir       = "/etc/prosody/"
+ssl_dir       = "/etc/prosody/certs/"
 
 if is_aws()
   instance_roles = get_instance_roles()
@@ -36,11 +36,18 @@ node[:deploy].each do |application, deploy|
   ssl_certificate     = deploy["ssl_certificate"].chomp
   ssl_certificate_key = deploy["ssl_certificate_key"].chomp
 
+  directory ssl_dir do
+    mode      "0750"
+    owner     "root"
+    group     "prosody"
+    recursive true
+  end
+  
   template ssl_dir + "/cert.pem" do
     source "ssl_key.erb"
     mode   "0640"
     owner  "root"
-    group  "prosody
+    group  "prosody"
     variables(
       "ssl_key" => ssl_certificate
     )
