@@ -27,7 +27,7 @@ FoodCritic::Rake::LintTask.new do |t|
   t.files = cookbooks
   t.options = {
     :tags => %w( ~readme ),
-    :fail_tags => %w( ~FC002 ~FC003 ~FC004 ~FC005 ~FC013 ~FC014 ~FC015 ~FC016 ~FC017 ~FC023 ~FC024 ~FC033 ~FC045 )
-    # ignored: FC19, FC043
+    :fail_tags => %w( ~FC002 ~FC003 ~FC004 ~FC005 ~FC013 ~FC014 ~FC015 ~FC023 ~FC024 ~FC033 ~FC045 )
+    # ignored: FC016, FC017, FC19, FC043
   }
 end
