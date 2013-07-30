@@ -1,5 +1,5 @@
 database_credentials = []
-if node["gocourse"]["database"]
+if node["gocourse"] && node["gocourse"]["database"]
   database_credentials = node["gocourse"]["database"]
 end
 
