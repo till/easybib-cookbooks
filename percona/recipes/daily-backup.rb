@@ -5,7 +5,7 @@ include_recipe "percona::xtrabackup"
 # tar & compress the backup
 template node[:xtrabacku][:processor] do
   source "backthisup.sh.rb"
-  mod    "0755"
+  mode   "0755"
 end
 
 # script to store backups in s3
