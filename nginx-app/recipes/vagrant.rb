@@ -14,14 +14,14 @@ end
 
 vagrant_dir = "/vagrant_data"
 
-directory "#{node[:deploy][:deploy_to]}" do
+directory node[:deploy][:deploy_to] do
   mode      "0755"
   action    :create
   recursive true
 end
 
 link "#{node[:deploy][:deploy_to]}/current" do
-  to "#{vagrant_dir}"
+  to vagrant_dir
 end
 
 database_credentials = []

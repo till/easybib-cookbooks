@@ -1,4 +1,4 @@
-user "#{node[:redis][:user]}" do
+user node[:redis][:user] do
   shell  "/bin/zsh"
   action :create
   only_if do

@@ -1,6 +1,7 @@
 include_recipe "php-fpm::service"
 
 require "open-uri"
+
 package "libicu-dev"
 package "autoconf"
 
@@ -30,7 +31,7 @@ commands = [
 ]
 
 commands.each do |command|
-  execute "#{command}" do
+  execute command do
     cwd "/tmp/intl-#{version}"
     not_if do
       File.exists?(so_file)

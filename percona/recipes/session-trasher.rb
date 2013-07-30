@@ -4,7 +4,7 @@ root_dir = "/opt/easybib"
 
 php_bin = "/usr/bin/php"
 
-directory "#{root_dir}" do
+directory root_dir do
   owner "root"
   group "root"
   action :create
@@ -23,7 +23,7 @@ end
 mysql_password = node[:mysql][:server_root_password]
 
 # cron starts at 10 AM UTC (~4 AM EST depending on DST)
-cron "#{root_dir}" do
+cron root_dir do
   hour "10"
   minute "0"
   command "#{php_bin} #{root_dir}/session-trasher/script.php -p=#{mysql_password}"

@@ -5,6 +5,6 @@ packages.each do |p|
     action  :install_if_missing
     channel "pear.phpunit.de"
     force   true
-    version "#{version}"
+    version version
   end
 end
