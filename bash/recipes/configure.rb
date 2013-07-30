@@ -5,11 +5,11 @@ end
 
 template "/etc/profile.d/gocourse.sh" do
   source "profile.erb"
-  mode   "0755"
+  mode "0755"
   variables :vars => database_credentials
 
   not_if do
-    database_credentials.empy?
+    database_credentials.empty?
   end
 end
 
