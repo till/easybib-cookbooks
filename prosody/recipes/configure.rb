@@ -20,7 +20,7 @@ template "#{cfg_dir}/prosody.cfg.lua" do
     :db => node["prosody"]["db"],
     :domains => node["prosody"]["domains"]
   )
-  notifies :reload, "service[prosody]"
+  notifies :restart, resources( :service => "prosody")
 end
 
 include_recipe "prosody::ssl"
