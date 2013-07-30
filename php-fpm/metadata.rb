@@ -16,4 +16,5 @@ recipe            "php-fpm::mbstring", "Install the mbstring PHP extension"
 supports 'ubuntu'
 
 depends "apt"
+depends "php-pear"
 depends "php-apc"
