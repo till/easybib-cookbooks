@@ -2,6 +2,15 @@ ssl_dir = "/etc/prosody/certs/"
 
 stored_certificate = false
 
+if is_aws()
+  instance_roles = get_instance_roles()
+  cluster_name   = get_cluster_name()
+else
+  Chef::Log.debug("Not running on AWS, setting defaults.")
+  instance_roles = ""
+  cluster_name   = ""
+end
+
 node["deploy"].each do |application, deploy|
 
   Chef::Log.info("prosody::ssl - request to deploy for: #{application}, role: #{instance_roles} in #{cluster_name}")
@@ -16,8 +25,8 @@ node["deploy"].each do |application, deploy|
     next
   end
 
-  Chef::Log.info("prosody::ssl - ssl key installation started") 
-   
+  Chef::Log.info("prosody::ssl - ssl key installation started")
+
   if !deploy.has_key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
     next

@@ -61,7 +61,10 @@ action :setup do
     end
 
     shell_out("#{@php_bin} installer", deploy_to)
+
+    new_resource.updated_by_last_action(true)
   end
+
 end
 
 action :install do
@@ -91,6 +94,8 @@ action :install do
     Chef::Log.debug("CWD: #{composer.cwd}")
 
     composer.error!
+
+    new_resource.updated_by_last_action(true)
 
   end
 end

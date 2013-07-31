@@ -32,7 +32,7 @@
 include_recipe "apt::ppa"
 include_recipe "apt::easybib"
 
-apt_packages = node["php-fpm"][:packages].split(',')
+apt_packages = node["php-fpm"]["packages"].split(',')
 
 include_recipe "php-fpm::prepare"
 
@@ -46,7 +46,7 @@ include_recipe "php-fpm::configure"
 include_recipe "php-apc::default"
 
 expected_prefix = "/usr/local/bin"
-install_prefix = "#{node["php-fpm"][:prefix]}/bin"
+install_prefix = "#{node["php-fpm"]["prefix"]}/bin"
 
 phps = ["/usr/bin/php", "#{expected_prefix}/php"]
 

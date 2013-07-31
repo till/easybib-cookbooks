@@ -9,6 +9,9 @@ action :install do
       ::File.exists?(so_file)
     end
   end
+
+  new_resource.updated_by_last_action(true)
+
 end
 
 action :setup do
@@ -25,5 +28,8 @@ action :setup do
         ::File.exists?(ini_file)
       end
     end
+
+    new_resource.updated_by_last_action(true)
+
   end
 end
