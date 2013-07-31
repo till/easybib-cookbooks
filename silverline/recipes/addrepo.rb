@@ -5,8 +5,14 @@ execute "apt_get_update" do
   action :nothing
 end
 
+key_file = "#{Chef::Config[:file_cache_path]}/packages.librato.key"
+
+remote_file key_file do
+  source "http://apt.librato.com/packages.librato.key"
+end
+
 execute "librato_add_key" do
-  command "curl http://apt.librato.com/packages.librato.key | apt-key add -"
+  command "cat #{key_file} | apt-key add -"
   action :run
 end
 
