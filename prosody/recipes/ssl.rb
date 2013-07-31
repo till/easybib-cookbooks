@@ -13,8 +13,20 @@ stored_certificate = false
 
 node[:deploy].each do |application, deploy|
 
-  Chef::Log.debug("deploy env data for ssl is " + deploy.inspect)
-  
+  Chef::Log.info("prosody::ssl - request to deploy for: #{application}, role: #{instance_roles} in #{cluster_name}")
+
+  next unless cluster_name == node["easybib"]["cluster_name"]
+
+  case application
+  when 'jabber'
+    next unless instance_roles.include?('jabber')
+  else
+    Chef::Log.info("prosody::ssl - #{application} (in #{cluster_name}) skipped, is not application jabber")
+    next
+  end
+
+  Chef::Log.info("prosody::ssl - ssl key installation started") 
+   
   if !deploy.has_key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
     next
