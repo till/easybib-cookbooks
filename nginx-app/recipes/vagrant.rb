@@ -1,7 +1,3 @@
-if !node[:deploy]
-  node[:deploy] = {}
-end
-
 if !node[:deploy][:deploy_to]
   node[:deploy][:deploy_to] = "/var/www/easybib"
 end
@@ -9,7 +5,7 @@ end
 Chef::Log.debug("deploy: #{node[:deploy][:deploy_to]}")
 
 if !node[:docroot]
-  node[:docroot] = 'www'
+  node.set["docroot"] = 'www'
 end
 
 vagrant_dir = "/vagrant_data"
