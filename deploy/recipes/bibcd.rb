@@ -17,6 +17,7 @@ node[:deploy].each do |application, deploy|
 
   Chef::Log.info("deploy::bibcd - Deployment started.")
   Chef::Log.info("deploy::bibcd - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+  Chef::Log.debug("depoy::bibcd - deploy resource: " + deploy.inspect)
 
 
   opsworks_deploy_user do
