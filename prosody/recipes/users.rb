@@ -27,7 +27,7 @@ if node["prosody"]["storage"] == "sql"
   when "mysql"
     mysql_command = "mysql -u %s -h %s" % [ db_conf["username"], db_conf["hostname"] ]
     if !db_conf["password"].empty?
-      mysql_command += " -p #{db_conf["password"]}"
+      mysql_command += " -p#{db_conf["password"]}"
     end
 
     if !node["prosody"]["users"].empty?
