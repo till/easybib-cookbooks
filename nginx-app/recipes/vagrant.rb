@@ -1,7 +1,3 @@
-if !node[:deploy]
-  node[:deploy] = {}
-end
-
 if !node[:deploy][:deploy_to]
   node[:deploy][:deploy_to] = "/var/www/easybib"
 end
@@ -9,19 +5,19 @@ end
 Chef::Log.debug("deploy: #{node[:deploy][:deploy_to]}")
 
 if !node[:docroot]
-  node[:docroot] = 'www'
+  node.set["docroot"] = 'www'
 end
 
 vagrant_dir = "/vagrant_data"
 
-directory "#{node[:deploy][:deploy_to]}" do
+directory node[:deploy][:deploy_to] do
   mode      "0755"
   action    :create
   recursive true
 end
 
 link "#{node[:deploy][:deploy_to]}/current" do
-  to "#{vagrant_dir}"
+  to vagrant_dir
 end
 
 database_credentials = []

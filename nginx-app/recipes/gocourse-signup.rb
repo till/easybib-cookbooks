@@ -1,9 +1,9 @@
 if is_aws()
-  deploy_dir = "/srv/www/signup/current/public/"
+  deploy_dir = "/srv/www/signup/current/src/"
   nginx_extras = ""
   domain_name = node["gocourse"]["domain"]["signup"]
 else
-  deploy_dir = "/vagrant_data/public/"
+  deploy_dir = "/vagrant_data/src/"
   domain_name = ""
   nginx_extras = "sendfile off;"
 end

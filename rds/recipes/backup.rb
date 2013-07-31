@@ -24,11 +24,15 @@ node["rdsbackup"].each do |p|
   cronhour = p["cronhour"]
   cronweekday = p["cronweekday"]
 
+  cron_command = sprintf(
+    "/usr/local/bin/rdsbackup.sh '%s' '%s' '%s' '%s' '%s' '%s' '%s'",
+    sqlhost, sqluser, sqlpass, s3bucket, s3accesskeyid, s3secretaccesskey, prefix
+  )
+
   cron jobname do
     minute cronminute
     hour cronhour
     weekday cronweekday
-    cmd = sprintf "/usr/local/bin/rdsbackup.sh '%s' '%s' '%s' '%s' '%s' '%s' '%s'", sqlhost, sqluser, sqlpass, s3bucket, s3accesskeyid, s3secretaccesskey, prefix
-    command cmd
+    command cron_command
   end
 end

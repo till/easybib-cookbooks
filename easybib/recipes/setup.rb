@@ -9,7 +9,6 @@ base_packages.each do |p|
   package p
 end
 
-include_recipe "easybib::awscommand"
 include_recipe "easybib::nginxstats"
 include_recipe "easybib::cron"
 

@@ -4,7 +4,7 @@ commands = [
 ]
 
 commands.each do |cmd|
-  execute "#{cmd}"
+  execute cmd
 end
 
 include_recipe "newrelic::service"

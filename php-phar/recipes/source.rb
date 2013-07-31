@@ -2,23 +2,23 @@ php_version = node[:php_phar][:version]
 
 package "autoconf"
 
-remote_file "/tmp/php-#{php_version}.tar.gz" do
+remote_file "#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz" do
   source "http://us.php.net/get/php-#{php_version}.tar.gz/from/us.php.net/mirror"
   only_if do
-    !File.exists?("/tmp/php-#{php_version}.tar.gz") || !File.directory?("/tmp/php-#{php_version}")
+    !File.exists?("#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz") || !File.directory?("#{Chef::Config[:file_cache_path]}/php-#{php_version}")
   end
 end
 
 execute "extract tar" do
   command "tar -zxvf php-#{php_version}.tar.gz"
-  cwd     "/tmp"
-  creates "/tmp/php-#{php_version}"
+  cwd     Chef::Config[:file_cache_path]
+  creates "#{Chef::Config[:file_cache_path]}/php-#{php_version}"
   only_if do
-    File.exists?("/tmp/php-#{php_version}.tar.gz")
+    File.exists?("#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz")
   end
 end
 
-compile_dir = "/tmp/php-#{php_version}/ext/phar"
+compile_dir = "#{Chef::Config[:file_cache_path]}/php-#{php_version}/ext/phar"
 
 execute "phpize" do
   cwd compile_dir

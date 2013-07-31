@@ -64,9 +64,10 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  if application == 'research_app'
-    service "php-fpm" do
-      action :reload
+  service "php-fpm" do
+    action :reload
+    only_if do
+      application == 'research_app'
     end
   end
 

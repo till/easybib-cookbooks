@@ -23,7 +23,7 @@ end
 gearmand_v = node[:gearmand][:source][:version]
 gearmand_f = "gearmand-#{gearmand_v}.tar.gz"
 
-remote_file "/tmp/gearmand-#{gearmand_v}.tar.gz" do
+remote_file "#{Chef::Config[:file_cache_path]}/gearmand-#{gearmand_v}.tar.gz" do
   source "https://launchpad.net/gearmand/trunk/#{gearmand_v}/+download/#{gearmand_f}"
   not_if do
     File.exists?("#{node[:gearmand][:prefix]}/sbin/gearmand")
@@ -33,7 +33,7 @@ end
 
 execute "extract" do
   command "tar -zxf #{gearmand_f}"
-  cwd "/tmp"
+  cwd Chef::Config[:file_cache_path]
   not_if do
     File.exists?("#{node[:gearmand][:prefix]}/sbin/gearmand")
   end

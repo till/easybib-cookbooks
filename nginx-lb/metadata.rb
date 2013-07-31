@@ -8,3 +8,5 @@ recipe            "nginx-lb::default", "Installs nginx"
 recipe            "nginx-lb::service", "Sets nginx up as a service"
 
 supports "ubuntu"
+
+depends "nginx-app"

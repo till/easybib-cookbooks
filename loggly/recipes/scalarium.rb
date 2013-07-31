@@ -1,21 +1,23 @@
-# this is specific to our setup and is only triggered on scalarium/opsworks
-if !get_cluster_name().empty?
+roles = get_instance_roles()
 
-  if get_instance_roles().include?('loadbalancer')
+service "rsyslog" do
+  supports :status => true, :restart => true, :reload => true
+  action :nothing
+end
 
-    template "/etc/rsyslog.d/10-haproxy.conf" do
-      source "10-haproxy.conf.erb"
-      mode "0644"
-    end
+template "/etc/rsyslog.d/10-haproxy.conf" do
+  source "10-haproxy.conf.erb"
+  mode "0644"
+  only_if do
+    roles.include?('loadbalancer')
+  end
+  notifies :restart, resources( :service => "rsyslog" )
+end
 
-    directory "#{node[:syslog][:haproxy][:log_dir]}" do
-      recursive true
-      mode "0755"
-    end
-
-    service "rsyslog" do
-      supports :status => true, :restart => true, :reload => true
-      action [ :restart ]
-    end
+directory node["syslog"]["haproxy"]["log_dir"] do
+  recursive true
+  mode "0755"
+  only_if do
+    roles.include?('loadbalancer')
   end
 end

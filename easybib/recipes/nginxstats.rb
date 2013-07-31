@@ -1,4 +1,4 @@
-remote_file "/usr/local/bin/nginxstats" do
+cookbook_file "/usr/local/bin/nginxstats" do
   source "nginxstats.py"
   mode 0755
   owner "root"

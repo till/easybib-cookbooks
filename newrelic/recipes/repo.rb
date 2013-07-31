@@ -5,5 +5,5 @@ commands = [
 ]
 
 commands.each do |cmd|
-  execute "#{cmd}"
+  execute cmd
 end

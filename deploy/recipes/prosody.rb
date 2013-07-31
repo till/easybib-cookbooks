@@ -18,5 +18,5 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("deploy::jabber - Deployment started.")
 
   include_recipe "prosody::default"
-  
+
 end
