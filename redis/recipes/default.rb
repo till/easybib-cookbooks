@@ -1,19 +1,15 @@
-# install redis from a ppa to avoid compiling, etc.
 include_recipe "apt::ppa"
 
 case node[:lsb][:codename]
-when "karmic"
-  Chef::Log.error("Recipe does not support karmic.")
-when "lucid"
-when "maverick"
-when "natty"
-when "oneiric"
-  execute "add Chris Lea's PPA" do
-    command "add-apt-repository ppa:chris-lea/redis-server"
-  end
+when "lucid", "maverick", "natty", "oneiric"
 
-  execute "update sources" do
-    command "apt-get -y -f -m update"
+  [
+    "add-apt-repository #{node["redis"]["ppa"]}",
+    "apt-get -y -f -m update"
+  ].each do |cmd|
+    execute "Running #{cmd}" do
+      command cmd
+    end
   end
 
   package "redis-server"

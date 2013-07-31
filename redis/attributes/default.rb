@@ -13,6 +13,8 @@ default[:redis][:appendonly]    = 'no'
 default[:redis][:aofile]        = 'appendonly.aof'
 default[:redis][:appendfsync]   = 'no'
 
+default[:redis][:ppa] = 'ppa:chris-lea/redis-server'
+
 # master-slave configuration, allow overriding from opsworks/upstream
 set_unless[:redis][:master]            = {}
 set_unless[:redis][:master][:address]  = 'darth-vader'

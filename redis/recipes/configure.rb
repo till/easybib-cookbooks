@@ -6,10 +6,14 @@ template "/etc/default/redis" do
   notifies :restart, resources( :service => "redis-server")
 end
 
+directory "/etc/redis" do
+  user node["redis"]["user"]
+  mode "0755"
+end
+
 template "/etc/redis/redis.conf" do
   source "redis.conf.erb"
-  owner  "root"
-  group  "root"
+  owner  node["redis"]["user"]
   mode   "0644"
   notifies :restart, resources(:service => "redis-server"), :immediately
 end
