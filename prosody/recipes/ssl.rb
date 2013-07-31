@@ -1,17 +1,8 @@
-ssl_dir       = "/etc/prosody/certs/"
-
-if is_aws()
-  instance_roles = get_instance_roles()
-  cluster_name   = get_cluster_name()
-else
-  Chef::Log.debug("Not running on AWS, setting defaults.")
-  instance_roles = ""
-  cluster_name   = ""
-end
+ssl_dir = "/etc/prosody/certs/"
 
 stored_certificate = false
 
-node[:deploy].each do |application, deploy|
+node["deploy"].each do |application, deploy|
 
   if !deploy.has_key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
@@ -42,7 +33,7 @@ node[:deploy].each do |application, deploy|
     group     "prosody"
     recursive true
   end
-  
+
   template ssl_dir + "/cert.pem" do
     source "ssl_key.erb"
     mode   "0640"
@@ -64,7 +55,7 @@ node[:deploy].each do |application, deploy|
     )
     notifies :restart, resources(:service => "prosody")
   end
-  
+
   stored_certificate = true
 
 end
