@@ -9,10 +9,10 @@ end
 template "/etc/nginx/sites-enabled/sitescraper.conf" do
   source "sitescraper.conf.erb"
   mode   "0755"
-  owner  node["nginx-app"][:user]
-  group  node["nginx-app"][:group]
+  owner  node["nginx-app"]["user"]
+  group  node["nginx-app"]["group"]
   variables(
-    :php_upstream   => "unix:/var/run/php-fpm/#{node["php-fpm"][:user]}",
+    :php_upstream   => "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}",
     :doc_root       => deploy_dir,
     :access_log     => 'off',
     :nginx_conf     => node["nginx-app"][:config_dir],

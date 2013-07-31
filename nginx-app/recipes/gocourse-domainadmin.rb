@@ -14,8 +14,8 @@ config = "domainadmin"
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "static.conf.erb"
   mode   "0755"
-  owner  node["nginx-app"][:user]
-  group  node["nginx-app"][:group]
+  owner  node["nginx-app"]["user"]
+  group  node["nginx-app"]["group"]
   variables(
     :doc_root    => deploy_dir,
     :domain_name => domain_name,

@@ -19,10 +19,10 @@ config = "easybib_api"
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
   mode   "0755"
-  owner  node["nginx-app"][:user]
-  group  node["nginx-app"][:group]
+  owner  node["nginx-app"]["user"]
+  group  node["nginx-app"]["group"]
   variables(
-    :php_user    => node["php-fpm"][:user],
+    :php_user    => node["php-fpm"]["user"],
     :doc_root    => deploy_dir,
     :access_log  => 'off',
     :nginx_extra => nginx_extras,

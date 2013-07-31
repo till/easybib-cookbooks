@@ -4,10 +4,10 @@ include_recipe "php-fpm::service"
 instance_roles   = get_instance_roles()
 cluster_name     = get_cluster_name()
 app_access_log   = "off"
-nginx_config_dir = node["nginx-app"][:config_dir]
+nginx_config_dir = node["nginx-app"]["config_dir"]
 
 # need to do this better
-node[:docroot] = 'www'
+node["docroot"] = 'www'
 
 # password protect?
 password_protected = false
@@ -15,7 +15,7 @@ password_protected = false
 # put this in attributes
 nginx_config = "easybib.com.conf.erb"
 
-node[:deploy].each do |application, deploy|
+node["deploy"].each do |application, deploy|
 
   case application
   when 'easybib'
@@ -46,17 +46,17 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"][:user]}"
+  php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
 
   template "#{nginx_config_dir}/sites-enabled/easybib.com.conf" do
     source nginx_config
     mode   "0755"
-    owner  node["nginx-app"][:user]
-    group  node["nginx-app"][:group]
+    owner  node["nginx-app"]["user"]
+    group  node["nginx-app"]["group"]
     variables(
-      :js_alias           => node["nginx-app"][:js_modules],
-      :img_alias          => node["nginx-app"][:img_modules],
-      :css_alias          => node["nginx-app"][:css_modules],
+      :js_alias           => node["nginx-app"]["js_modules"],
+      :img_alias          => node["nginx-app"]["img_modules"],
+      :css_alias          => node["nginx-app"]["css_modules"],
       :access_log         => app_access_log,
       :deploy             => deploy,
       :application        => application,

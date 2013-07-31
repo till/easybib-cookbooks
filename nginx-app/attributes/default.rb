@@ -1,12 +1,12 @@
-default["nginx-app"]                      = {}
-default["nginx-app"][:user]               = "www-data"
-default["nginx-app"][:group]              = "www-data"
-default["nginx-app"][:static_directories] = ["js", "css", "images", "raw"]
-default["nginx-app"][:config_dir]         = "/etc/nginx"
-default["nginx-app"]["conf_file"]         = "easybib.com.conf.erb"
+default["nginx-app"]                       = {}
+default["nginx-app"]["user"]               = "www-data"
+default["nginx-app"]["group"]              = "www-data"
+default["nginx-app"]["static_directories"] = ["js", "css", "images", "raw"]
+default["nginx-app"]["config_dir"]         = "/etc/nginx"
+default["nginx-app"]["conf_file"]          = "easybib.com.conf.erb"
 
 # module specific configuration for assets
-default["nginx-app"][:js_modules] = {
+default["nginx-app"]["js_modules"] = {
     "debugger"        => "debugger",
     "notes"           => "notebook",
     "cms"             => "cms",
@@ -19,7 +19,7 @@ default["nginx-app"][:js_modules] = {
     "pearson"         => "pearson",
     "folders"         => "folders"
 }
-default["nginx-app"][:img_modules] = {
+default["nginx-app"]["img_modules"] = {
     "notes"     => "notebook",
     "outline"   => "notebook",
     "paperlink" => "paperlink",
@@ -28,7 +28,7 @@ default["nginx-app"][:img_modules] = {
     "pearson"   => "pearson",
     "folders"   => "folders"
 }
-default["nginx-app"][:css_modules] = {
+default["nginx-app"]["css_modules"] = {
     "debugger"        => "debugger",
     "notes"           => "notebook",
     "cms"             => "cms",
@@ -43,7 +43,7 @@ default["nginx-app"][:css_modules] = {
 }
 
 # Silverline attribs
-default[:silverline][:nginx_name] = "nginx"
+default["silverline"]["nginx_name"] = "nginx"
 
 default["nginx-app"]["sitescraper"] = {}
 default["nginx-app"]["sitescraper"]["routes_enabled"] = {}
