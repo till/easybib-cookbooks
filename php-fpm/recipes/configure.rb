@@ -31,12 +31,12 @@
 
 include_recipe "php-fpm::service"
 
-etc_cli_dir = "#{node["php-fpm"][:prefix]}/etc"
-etc_fpm_dir = "#{node["php-fpm"][:prefix]}/etc"
+etc_cli_dir = "#{node["php-fpm"]["prefix"]}/etc"
+etc_fpm_dir = "#{node["php-fpm"]["prefix"]}/etc"
 conf_cli    = "php-cli.ini"
 conf_fpm    = "php.ini"
 
-if node["php-fpm"][:user] == "vagrant"
+if node["php-fpm"]["user"] == "vagrant"
   display_errors = "On"
 else
   display_errors = "Off"
@@ -47,11 +47,11 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
   source   "php.ini.erb"
   variables(
     :enable_dl      => 'Off',
-    :memory_limit   => node["php-fpm"][:memorylimit],
+    :memory_limit   => node["php-fpm"]["memorylimit"],
     :display_errors => display_errors
   )
-  owner    node["php-fpm"][:user]
-  group    node["php-fpm"][:group]
+  owner    node["php-fpm"]["user"]
+  group    node["php-fpm"]["group"]
   notifies :reload, resources(:service => "php-fpm"), :delayed
 end
 
@@ -63,15 +63,15 @@ template "#{etc_cli_dir}/#{conf_cli}" do
     :memory_limit   => '1024M',
     :display_errors => 'On'
   )
-  owner node["php-fpm"][:user]
-  group node["php-fpm"][:group]
+  owner node["php-fpm"]["user"]
+  group node["php-fpm"]["group"]
 end
 
 template "#{etc_fpm_dir}/php-fpm.conf" do
   mode     "0755"
   source   "php-fpm.conf.erb"
-  owner    node["php-fpm"][:user]
-  group    node["php-fpm"][:group]
+  owner    node["php-fpm"]["user"]
+  group    node["php-fpm"]["group"]
   notifies :reload, resources(:service => "php-fpm"), :delayed
 end
 
