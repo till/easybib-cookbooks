@@ -18,6 +18,8 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("deploy::bibcd - Deployment started.")
   Chef::Log.info("deploy::bibcd - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
+#  To debug empty user/group problem with chef 11:
+#  Chef::Log.debug("depoy::bibcd - deploy resource: " + deploy.inspect)
 
   opsworks_deploy_user do
     deploy_data deploy
