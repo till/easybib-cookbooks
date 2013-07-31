@@ -13,6 +13,8 @@ stored_certificate = false
 
 node[:deploy].each do |application, deploy|
 
+  Chef::Log.debug("deploy env data for ssl is " + deploy.inspect)
+  
   if !deploy.has_key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
     next
