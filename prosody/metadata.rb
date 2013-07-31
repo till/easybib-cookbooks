@@ -4,3 +4,5 @@ maintainer_email  'till@php.net'
 
 supports 'ubuntu'
 supports 'freebsd'
+
+depends "easybib"

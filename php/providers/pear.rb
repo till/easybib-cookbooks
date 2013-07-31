@@ -88,16 +88,20 @@ end
 
 action :install do
   pear_cmd(@pear_cmd, "install", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  new_resource.updated_by_last_action(true)
 end
- 
+
 action :uninstall do
   pear_cmd(@pear_cmd, "uninstall", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  new_resource.updated_by_last_action(true)
 end
 
 action :upgrade do
   pear_cmd(@pear_cmd, "upgrade", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  new_resource.updated_by_last_action(true)
 end
 
 action :install_if_missing do
   pear_cmd(@pear_cmd, "install_if_missing", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  new_resource.updated_by_last_action(true)
 end
