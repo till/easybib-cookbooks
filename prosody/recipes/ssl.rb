@@ -23,6 +23,16 @@ node[:deploy].each do |application, deploy|
     next
   end
 
+  if deploy["ssl_certificate"].nil?
+    Chef::Log.error("ssl_certificate is nil")
+    next
+  end
+
+  if deploy["ssl_certificate_key"].nil?
+    Chef::Log.error("ssl_certificate_key is nil")
+    next
+  end
+
   if deploy["ssl_certificate"].empty?
     Chef::Log.error("ssl_certificate is empty")
     next
