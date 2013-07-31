@@ -41,9 +41,12 @@ def prepare_foodcritic_sandbox(sandbox, cookbook)
 
   files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
 
-  rm_rf sandbox
-  mkdir_p sandbox
-  cp_r Dir.glob("#{cookbook}/{#{files.join(',')}}"), sandbox
+  opts = {:verbose => false}
+
+  rm_rf sandbox, opts
+  mkdir_p sandbox, opts
+  cp_r Dir.glob("#{cookbook}/{#{files.join(',')}}"), sandbox, opts
+
   puts "\n\n"
 end
 
