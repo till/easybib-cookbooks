@@ -1,8 +1,7 @@
 include_recipe "prosody::service"
 
 case node["platform"]
-when "debian"
-when "ubuntu"
+when "debian", "ubuntu"
   cfg_dir = "/etc/prosody/conf.d"
 else
   Chef::Log.error("Not supported: #{node["lsb"]["name"]}")
