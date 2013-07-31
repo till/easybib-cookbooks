@@ -7,3 +7,4 @@ vagrant-test/.vagrant
 *.box
 .project
 Gemfile.lock
+fc_sandbox
