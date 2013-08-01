@@ -1,7 +1,7 @@
 cluster_name   = get_cluster_name()
 instance_roles = get_instance_roles()
 
-node[:deploy].each do |application, deploy|
+node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::satis - app: #{application}, role: #{instance_roles}")
 
@@ -15,20 +15,19 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  Chef::Log.info("deploy::satis- Deployment started.")
-  Chef::Log.info("deploy::satis - Deploying as user: #{deploy[:user]} and #{deploy[:group]} to #{deploy[:deploy_to]}")
+  Chef::Log.info("deploy::satis - Deploying as user: #{deploy["user"]} and #{deploy["group"]} to #{deploy["deploy_to"]}")
 
   opsworks_deploy_dir do
-    user  deploy[:user]
-    group deploy[:group]
-    path  deploy[:deploy_to]
+    user  deploy["user"]
+    group deploy["group"]
+    path  deploy["deploy_to"]
   end
 
   opsworks_deploy do
     deploy_data deploy
     app application
   end
-  
+
   %w{"/mnt/satis-output/" "/mnt/composer-tmp/" node['s3-syncer']['path']}.each do |dir|
     directory dir do
       recursive true
@@ -38,11 +37,11 @@ node[:deploy].each do |application, deploy|
       action :create
     end
   end
-  
+
   if File.exists?("#{node['s3-syncer']['path']}/bin/syncer")
     next
-  end 
-    
+  end
+
   remote_file "#{node['s3-syncer']['path']}/syncer.tar.gz" do
     source node['s3-syncer']['source']
   end
@@ -58,10 +57,10 @@ node[:deploy].each do |application, deploy|
     cwd node['s3-syncer']['path']
     command "`which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader"
   end
-  
+
   cron "satis run in cron" do
     minute "*/30"
-    command "cd #{deploy[:deploy_to]}/current/ && sh update-dist.sh"
+    command "cd #{deploy["deploy_to"]}/current/ && sh update-dist.sh"
     user "www-data"
   end
 

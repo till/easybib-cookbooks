@@ -3,10 +3,10 @@ include_recipe "php-fpm::service"
 instance_roles = get_instance_roles()
 cluster_name   = get_cluster_name()
 
-node[:deploy].each do |application, deploy|
+node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::research - app: #{application}, role: #{instance_roles}")
-  Chef::Log.info("Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+  Chef::Log.info("Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
   case application
   when 'easybib_solr_server'
@@ -16,24 +16,24 @@ node[:deploy].each do |application, deploy|
     Chef::Log.debug('deploy::research - Setting deploy for SOLR SERVER')
 
     # fix this: deploy to instance storage
-    deploy[:deploy_to]       = "/solr/apache-solr-1.4.1-compiled"
-    deploy[:restart_command] = ""
+    deploy["deploy_to"]       = "/solr/apache-solr-1.4.1-compiled"
+    deploy["restart_command"] = ""
 
-    deploy[:user] = "root"
+    deploy["user"] = "root"
 
   when 'ebim2'
     next unless cluster_name == 'Research Cloud'
     if !instance_roles.include?('easybibsolr') && !instance_roles.include?('ebim2')
       next
     end
-    deploy[:restart_command] = ""
+    deploy["restart_command"] = ""
 
   when 'ebim2_research_importer'
     next unless cluster_name == 'Research Cloud'
     if !instance_roles.include?('ebim2') && !instance_roles.include?('easybibsolr')
       next
     end
-    deploy[:restart_command] = ""
+    deploy["restart_command"] = ""
 
   when 'research_app'
     next unless cluster_name == 'Research Cloud'
@@ -54,9 +54,9 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("deploy::research - Deployment started.")
 
   opsworks_deploy_dir do
-    user  deploy[:user]
-    group deploy[:group]
-    path  deploy[:deploy_to]
+    user  deploy["user"]
+    group deploy["group"]
+    path  deploy["deploy_to"]
   end
 
   opsworks_deploy do
@@ -75,7 +75,7 @@ node[:deploy].each do |application, deploy|
 
   include_recipe "deploy::ebim2"
 
-  base_dir = deploy[:deploy_to]
+  base_dir = deploy["deploy_to"]
   app_dir  = "#{base_dir}/vendor/GearmanManager"
   etc_dir  = "#{base_dir}/etc/gearman"
 
