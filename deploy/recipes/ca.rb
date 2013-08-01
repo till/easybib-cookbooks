@@ -1,7 +1,7 @@
 instance_roles = get_instance_roles()
 cluster_name   = get_cluster_name()
 
-node[:deploy].each do |application, deploy|
+node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::ca - app: #{application}, role: #{instance_roles}")
 
@@ -16,12 +16,12 @@ node[:deploy].each do |application, deploy|
   end
 
   Chef::Log.info("deploy::ca - Deployment started.")
-  Chef::Log.info("deploy::ca - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+  Chef::Log.info("deploy::ca - Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
   opsworks_deploy_dir do
-    user  deploy[:user]
-    group deploy[:group]
-    path  deploy[:deploy_to]
+    user  deploy["user"]
+    group deploy["group"]
+    path  deploy["deploy_to"]
   end
 
   opsworks_deploy do

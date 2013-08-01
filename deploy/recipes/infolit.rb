@@ -3,9 +3,7 @@ include_recipe "php-fpm::service"
 cluster_name   = get_cluster_name()
 instance_roles = get_instance_roles()
 
-node[:deploy].each do |application, deploy|
-
-  Chef::Log.info("deploy::infolit - app: #{application}, role: #{instance_roles}")
+node["deploy"].each do |application, deploy|
 
   next unless cluster_name == node["easybib"]["cluster_name"]
 
@@ -18,12 +16,12 @@ node[:deploy].each do |application, deploy|
   end
 
   Chef::Log.info("deploy::infolit - Deployment started.")
-  Chef::Log.info("deploy::infolit - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+  Chef::Log.info("deploy::infolit - Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
   opsworks_deploy_dir do
-    user  deploy[:user]
-    group deploy[:group]
-    path  deploy[:deploy_to]
+    user  deploy["user"]
+    group deploy["group"]
+    path  deploy["deploy_to"]
   end
 
   opsworks_deploy do

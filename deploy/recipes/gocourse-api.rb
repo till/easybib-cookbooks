@@ -3,7 +3,7 @@ include_recipe "php-fpm::service"
 cluster_name   = get_cluster_name()
 instance_roles = get_instance_roles()
 
-node[:deploy].each do |application, deploy|
+node["deploy"].each do |application, deploy|
 
   case application
   when 'api'
@@ -13,9 +13,9 @@ node[:deploy].each do |application, deploy|
   end
 
   opsworks_deploy_dir do
-    user  deploy[:user]
-    group deploy[:group]
-    path  deploy[:deploy_to]
+    user  deploy["user"]
+    group deploy["group"]
+    path  deploy["deploy_to"]
   end
 
   opsworks_deploy do
