@@ -1,7 +1,7 @@
 instance_roles = get_instance_roles()
 cluster_name   = get_cluster_name()
 
-node[:deploy].each do |application, deploy|
+node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::jabber - request to deploy app: #{application}, role: #{instance_roles} in #{cluster_name}")
 

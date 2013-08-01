@@ -1,4 +1,4 @@
-unless node[:deploy].nil?
+unless node["deploy"].nil?
 
   deploy.each do |application, deploy|
 
@@ -6,21 +6,21 @@ unless node[:deploy].nil?
     next unless ::EasyBib.is_aws(node)
 
     deploy_user = ::EasyBib.get_deploy_user(node)
-    user        = deploy_user[:user]
+    user        = deploy_user["user"]
 
     # there's absolutely no need for zsh
-    set[:deploy][application][:shell] = '/bin/sh'
+    set["deploy"][application]["shell"] = '/bin/sh'
 
     case user
     when 'www-data'
-      set[:deploy][application][:home] = '/var/www'
+      set["deploy"][application]["home"] = '/var/www'
     when 'root'
-      set[:deploy][application][:home] = '/root'
+      set["deploy"][application]["home"] = '/root'
     else
-      set[:deploy][application][:home] = "/home/#{user}"
+      set["deploy"][application]["home"] = "/home/#{user}"
     end
 
-    Chef::Log.info("User: #{user}, Home: #{node[:deploy][application][:home]}") 
+    Chef::Log.info("User: #{user}, Home: #{node["deploy"][application]["home"]}") 
 
 
   end
