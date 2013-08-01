@@ -20,8 +20,7 @@ unless node["deploy"].nil?
       set["deploy"][application]["home"] = "/home/#{user}"
     end
 
-    Chef::Log.info("User: #{user}, Home: #{node["deploy"][application]["home"]}") 
-
+    Chef::Log.info("User: #{user}, Home: #{node["deploy"][application]["home"]}")
 
   end
 end
