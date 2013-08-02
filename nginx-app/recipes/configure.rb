@@ -7,7 +7,9 @@ app_access_log   = "off"
 nginx_config_dir = node["nginx-app"]["config_dir"]
 
 # need to do this better
-node["docroot"] = 'www'
+if !node.attribute?("docroot") || node["docroot"].empty?
+  node.set["docroot"] = 'www'
+end
 
 # password protect?
 password_protected = false
