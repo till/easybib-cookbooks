@@ -6,5 +6,6 @@ description       "Installs ext/apc for PHP"
 version           "0.1"
 
 depends "php-fpm"
+depends "easybib"
 
 supports 'ubuntu'
