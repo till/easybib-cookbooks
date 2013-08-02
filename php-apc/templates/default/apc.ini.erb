@@ -1,0 +1,10 @@
+extension=apc.so
+apc.ttl=0
+apc.mmap_file_mask=/dev/zero
+apc.shm_size=<%= @shm_size %>
+
+<%- if @is_cloud == true -%>
+apc.stat=<%= @stat %>
+apc.slam_defense=<%= @slam_defense %>
+apc.max_file_size=<%= @max_file_size %>
+<%- end -%>
