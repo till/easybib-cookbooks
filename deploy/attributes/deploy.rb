@@ -10,6 +10,7 @@ unless node["deploy"].nil?
 
     # there's absolutely no need for zsh
     set["deploy"][application]["shell"] = '/bin/sh'
+    set["deploy"][application]["environment"] = {}
 
     case user
     when 'www-data'
