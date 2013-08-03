@@ -8,4 +8,7 @@ include_recipe "php-gearman"
 include_recipe "php-phar"
 include_recipe "php-posix"
 include_recipe "deploy::easybib"
-include_recipe "silverline"
+
+if is_aws()
+  include_recipe "silverline"
+end
