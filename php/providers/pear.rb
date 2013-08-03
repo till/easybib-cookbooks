@@ -16,7 +16,7 @@ def initialize(*args)
 end
 
 def pear_run(cmd)
-  cmd = Chef::ShellOut.new(cmd)
+  cmd = Mixlib::ShellOut.new(cmd)
   out = cmd.run_command.stdout.strip
   #Chef::Log.debug("Command '#{cmd.command}' ran with exit status: #{cmd.exitstatus}")
   #Chef::Log.debug("StdOut: #{cmd.stdout}")
@@ -31,7 +31,7 @@ end
 
 def discovered?(pear, channel)
   command = "#{pear} channel-info #{channel}"
-  cmd     = Chef::ShellOut.new(command)
+  cmd     = Mixlib::ShellOut.new(command)
 
   cmd.run_command
 
@@ -46,7 +46,7 @@ end
 def pear_cmd(pear, action, package, force, channel, version)
 
   if not discovered?(pear, channel)
-    discover = Chef::ShellOut.new("#{pear} channel-discover #{channel}")
+    discover = Mixlib::ShellOut.new("#{pear} channel-discover #{channel}")
     discover.run_command
   end
 

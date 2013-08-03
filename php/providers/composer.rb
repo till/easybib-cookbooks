@@ -12,7 +12,7 @@ def shell_out(cmd, cwd)
 
   Chef::Log.debug("Executing command #{cmd}")
 
-  shell = Chef::ShellOut.new(cmd, :env => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, :cwd => cwd)
+  shell = Mixlib::ShellOut.new(cmd, :env => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, :cwd => cwd)
   shell.run_command
 
   Chef::Log.debug("Executing command: #{cmd}")
@@ -78,7 +78,7 @@ action :install do
     Chef::Log.info("Could not find 'composer.phar' in #{deploy_to}: silently skipping.")
   else
 
-    composer = Chef::ShellOut.new(
+    composer = Mixlib::ShellOut.new(
       "#{@php_bin} ./composer.phar --no-interaction install",
       :env  => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
       :cwd  => deploy_to
