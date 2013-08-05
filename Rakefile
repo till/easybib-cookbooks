@@ -7,11 +7,21 @@ require 'rake/testtask'
 
 Bundler.setup
 
-task :default => 'tests'
+task :default => [
+  :lint,
+  :test,
+  :chefspec,
+  :foodcritic
+]
 
 desc "Run tests"
 Rake::TestTask.new do |t|
   t.pattern = '**/**/tests/test_*.rb'
+end
+
+desc "WIP: Ruby lint (too slow)"
+task :lint do
+  system 'find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;'
 end
 
 desc "ChefSpec"
