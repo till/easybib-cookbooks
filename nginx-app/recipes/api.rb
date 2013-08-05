@@ -28,7 +28,6 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :nginx_extra => nginx_extras,
     :default_router => default_router,
     :xhprof_enable => xhprof_enable,
-    :xhprof_root => node["xhprof.io"]["root"],
     :upstream => config,
     :db_conf => "",
     :domain_conf => ""
