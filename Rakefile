@@ -14,6 +14,11 @@ Rake::TestTask.new do |t|
   t.pattern = '**/**/tests/test_*.rb'
 end
 
+desc "ChefSpec"
+task :chefspec do
+  sh 'find . -type d -maxdepth 2 -name "spec" -exec bundle exec rspec {} \;'
+end
+
 desc "Runs foodcritic linter"
 task :foodcritic do
   if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)

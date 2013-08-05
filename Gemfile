@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
-gem 'chef', '~>0.9'
+gem 'chef', '~>11'
 gem 'rake', '10.1'
 gem 'foodcritic'
+gem 'chefspec', '~>1.3'
