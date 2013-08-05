@@ -5,7 +5,7 @@ rvm:
 before_install: gem update --system 1.8.25 # Chef is not yet Ruby 2.0 compatible
 
 script:
-  - find . -name "*.rb" -exec ruby -c {} \;
+  - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
   - rake test
   - rake foodcritic
   - rake chefspec
