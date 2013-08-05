@@ -1,6 +1,13 @@
 include_recipe "nginx-app::ppa"
 
-package "nginx"
+ohai "reload_passwd" do
+  action :nothing
+  plugin "passwd"
+end
+
+package "nginx" do
+  notifies :reload, "ohai[reload_passwd]", :immediately
+end
 
 service "nginx" do
   supports :status => true, :restart => true, :reload => true
