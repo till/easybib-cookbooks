@@ -2,8 +2,8 @@ template "/etc/init.d/gearmand" do
   mode   "0755"
   source "gearmand.initd.erb"
   variables(
-    :prefix => node[:gearmand][:prefix],
-    :user   => node[:gearmand][:user]
+    :prefix => node['gearmand']['prefix'],
+    :user   => node['gearmand']['user']
   )
 end
 
@@ -16,17 +16,17 @@ gearmand_d = [
   "libboost-thread-dev"
 ]
 
-gearmand_d.each do |p| 
+gearmand_d.each do |p|
   package p
 end
 
-gearmand_v = node[:gearmand][:source][:version]
+gearmand_v = node['gearmand']['source']['version']
 gearmand_f = "gearmand-#{gearmand_v}.tar.gz"
 
 remote_file "#{Chef::Config[:file_cache_path]}/gearmand-#{gearmand_v}.tar.gz" do
   source "https://launchpad.net/gearmand/trunk/#{gearmand_v}/+download/#{gearmand_f}"
   not_if do
-    File.exists?("#{node[:gearmand][:prefix]}/sbin/gearmand")
+    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
   end
   action :create_if_missing
 end
@@ -35,15 +35,15 @@ execute "extract" do
   command "tar -zxf #{gearmand_f}"
   cwd Chef::Config[:file_cache_path]
   not_if do
-    File.exists?("#{node[:gearmand][:prefix]}/sbin/gearmand")
+    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
   end
 end
 
 execute "gearmand: configure" do
-  command "./configure --prefix=#{node[:gearmand][:prefix]}" #{node[:gearmand][:source][:flags]}"
+  command "./configure --prefix=#{node['gearmand']['prefix']}" #{node['gearmand']['source']['flags']}"
   cwd "/tmp/gearmand-#{gearmand_v}"
   not_if do
-    File.exists?("#{node[:gearmand][:prefix]}/sbin/gearmand")
+    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
   end
 end
 
@@ -51,6 +51,6 @@ execute "gearmand: make install" do
   command "make install"
   cwd "/tmp/gearmand-#{gearmand_v}"
   not_if do
-    File.exists?("#{node[:gearmand][:prefix]}/sbin/gearmand")
+    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
   end
 end
