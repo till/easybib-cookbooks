@@ -7,7 +7,7 @@ node["redirector"]["domains"].each do |domain_name, new_domain_name|
     group  node["nginx-app"]["group"]
     variables(
       :domain_name => domain_name,
-      :new_domain_name => new_domain_name,
+      :new_domain_name => new_domain_name
     )
     notifies :restart, resources(:service => "nginx"), :delayed
   end
