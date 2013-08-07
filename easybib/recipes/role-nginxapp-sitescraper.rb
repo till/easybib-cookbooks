@@ -9,4 +9,8 @@ include_recipe "php-suhosin"
 include_recipe "composer::configure"
 include_recipe "deploy::easybib"
 include_recipe "nginx-app::sitescraper"
-include_recipe "silverline"
+
+if is_aws()
+  include_recipe "newrelic"
+  include_recipe "silverline"
+end

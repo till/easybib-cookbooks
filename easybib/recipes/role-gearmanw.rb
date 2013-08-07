@@ -9,5 +9,6 @@ include_recipe "php-posix"
 include_recipe "deploy::easybib"
 
 if is_aws()
+  include_recipe "newrelic"
   include_recipe "silverline"
 end

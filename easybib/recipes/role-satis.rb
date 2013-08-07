@@ -6,4 +6,8 @@ include_recipe "php-phar"
 include_recipe "php-posix"
 include_recipe "composer::configure"
 include_recipe "deploy::satis"
-include_recipe "silverline"
+
+if is_aws()
+  include_recipe "newrelic"
+  include_recipe "silverline"
+end
