@@ -27,4 +27,13 @@ node["deploy"].each do |application, deploy|
     action :reload
   end
 
+  cron "clean-up changes" do
+    minute "0"
+    hour "0"
+    weekday "1"
+    user deploy["user"]
+    home node["deploy"][application]["home"]
+    mailto node["sysop_email"]
+    command "cd /srv/www/#{application}/current && ./bin/gocourse cleanup changes"
+  end
 end
