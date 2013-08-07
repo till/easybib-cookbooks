@@ -16,7 +16,7 @@ commands.each do |cmd|
   end
 end
 
-template "#{node["php-fpm"][:prefix]}/etc/php/newrelic.ini" do
+template "#{node["php-fpm"]["prefix"]}/etc/php/newrelic.ini" do
   source "newrelic.ini.erb"
   owner node["php-fpm"]["user"]
   group node["php-fpm"]["group"]
