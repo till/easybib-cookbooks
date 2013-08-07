@@ -10,6 +10,7 @@ recipe            "deploy::ssl", "Deploys nginx as an SSL termination reverse pr
 
 supports 'ubuntu'
 
+depends "bibcd"
 depends "php-fpm"
 depends "prosody"
 depends "nginx-lb"
