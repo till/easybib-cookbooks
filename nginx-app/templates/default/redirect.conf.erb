@@ -1,0 +1,10 @@
+server {
+    listen 80;
+<% if !@domain_name.nil? && !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% if !@new_domain_name.nil? && !@new_domain_name.empty? -%>
+	rewrite ^ http://<%=@new_domain_name%>$request_uri? permanent;
+<% end -%>
+<% end -%>
+    }
+}
