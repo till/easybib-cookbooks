@@ -24,8 +24,5 @@ template "#{node["php-fpm"]["prefix"]}/etc/php/newrelic.ini" do
   variables(
     :license => node["newrelic"]["license"]
   )
-end
-
-service "php-fpm" do
-  action :reload
+  notifies :reload, "service[php-fpm]", :immediately
 end
