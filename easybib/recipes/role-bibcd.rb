@@ -8,3 +8,7 @@ include_recipe "composer::configure"
 include_recipe "deploy::bibcd"
 include_recipe "nginx-app::server"
 include_recipe "nginx-app::bibcd"
+
+if is_aws()
+  include_recipe "newrelic"
+end

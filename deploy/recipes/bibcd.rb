@@ -46,4 +46,8 @@ node["deploy"].each do |application, deploy|
     end
   end
 
+  service "php-fpm" do
+    action :reload
+  end
+
 end
