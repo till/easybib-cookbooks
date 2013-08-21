@@ -32,7 +32,7 @@ if node["prosody"]["storage"] == "sql"
 
     if !node["prosody"]["users"].empty?
       
-      userstatement = " NOT "      
+      userstatement = " NOT ("      
       node["prosody"]["users"].each do |email,passwd|
 
         Chef::Log.debug("Email: #{email}")
@@ -48,7 +48,7 @@ if node["prosody"]["storage"] == "sql"
       Chef::Log.debug("I am going to delete prosody users where: #{userstatement} ")
       
       execute "delete other accounts" do
-        command "#{mysql_command} -e \"DELETE FROM #{db_conf["database"]}.prosody WHERE #{userstatement} \""
+        command "#{mysql_command} -e \"DELETE FROM #{db_conf["database"]}.prosody WHERE #{userstatement}) \""
       end
 
     end
