@@ -10,9 +10,19 @@ if !node["prosody"]["users"].empty?
       Chef::Log.error("Domain for #{email} is not managed by this server.")
       next
     end
+    
+    package "expect"
 
     execute "add user: #{email}" do
-      command "prosodyctl register #{email.split("@")[0]} #{email.split("@")[1]} #{passwd}"
+      #prosodyctl register would overwrite an existing user, while 
+      #prosodyctl adduser does not accept the password as a param.
+      #Using expect as a workaround.
+      command "expect -c 'spawn /usr/bin/prosodyctl adduser #{email}
+       expect \"Enter new password:\"
+       send \"#{passwd}\\r\"
+       expect \"Retype new password:\" 
+       send \"#{passwd}\\r\"
+       expect eof'"
     end
 
   end
