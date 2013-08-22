@@ -58,7 +58,7 @@ if node["prosody"]["storage"] == "sql"
       Chef::Log.debug("I am going to delete prosody users where: #{userstatement} ")
       
       execute "delete other accounts" do
-        command "#{mysql_command} -e \"DELETE FROM #{db_conf["database"]}.prosody WHERE #{userstatement}) \""
+        command "#{mysql_command} -e \"DELETE FROM #{db_conf["database"]}.prosody WHERE store='accounts' AND #{userstatement}) \""
       end
 
     end
