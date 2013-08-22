@@ -1,4 +1,20 @@
+include_recipe "gearmand::user"
 include_recipe "gearmand::service"
+
+
+[
+  "/var/run/#{node['gearmand']['name']}",
+  "#{node["gearmand"]["prefix"]}/#{node['gearmand']['source']['version']}/var/log"
+].each do |dir|
+
+  directory dir do
+    recursive true
+    mode "0755"
+    owner node['gearmand']['user']
+    group node['gearmand']['user']
+  end
+
+end
 
 template "/etc/default/#{node['gearmand']['name']}" do
   mode   "0644"

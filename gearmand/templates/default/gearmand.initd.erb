@@ -24,7 +24,7 @@
 prefix=<%=@prefix%>
 exec_prefix=${prefix}
 DAEMON=${exec_prefix}/sbin/gearmand
-NAME=gearmand
+NAME=<%=@name%>
 PIDDIR=/var/run/$NAME
 PIDFILE=${PIDDIR}/$NAME.pid
 GEARMANUSER="<%=@user%>"
