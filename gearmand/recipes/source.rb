@@ -1,56 +1,40 @@
-template "/etc/init.d/gearmand" do
-  mode   "0755"
-  source "gearmand.initd.erb"
-  variables(
-    :prefix => node['gearmand']['prefix'],
-    :user   => node['gearmand']['user']
-  )
+# WIP to document source install of gearmand
+
+prefix = node['gearmand']['prefix']
+version = node['gearmand']['source']['version']
+
+directory prefix do
+  mode "0755"
 end
 
-gearmand_d = [
-  "g++",
-  "libevent-dev",
-  "uuid-dev",
-  "libboost-dev",
-  "libboost-program-options-dev",
-  "libboost-thread-dev"
+["libboost-all-dev", "gperf", "libevent1-dev", "libcloog-ppl0", "make"].each do |dep|
+  package dep
+end
+
+remote_file "/tmp/gearmand-#{version}.tar.gz" do
+  source node['gearmand']['source']['link']
+  checksum node['gearmand']['source']['hash']
+end
+
+execute "tar -zxvf /tmp/gearmand-#{version}.tar.gz" do
+  cwd "/tmp"
+end
+
+
+commands = [
+  "./configure --prefix=#{prefix}/#{version} #{node['gearmand']['source']['flags']}",
+  "make",
+  "make install"
 ]
 
-gearmand_d.each do |p|
-  package p
-end
-
-gearmand_v = node['gearmand']['source']['version']
-gearmand_f = "gearmand-#{gearmand_v}.tar.gz"
-
-remote_file "#{Chef::Config[:file_cache_path]}/gearmand-#{gearmand_v}.tar.gz" do
-  source "https://launchpad.net/gearmand/trunk/#{gearmand_v}/+download/#{gearmand_f}"
-  not_if do
-    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
-  end
-  action :create_if_missing
-end
-
-execute "extract" do
-  command "tar -zxf #{gearmand_f}"
-  cwd Chef::Config[:file_cache_path]
-  not_if do
-    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
+commands.each do |command|
+  execute "Running #{command}" do
+    command command
+    cwd "/tmp/gearmand-#{version}/"
+    not_if do
+      File.exists?("#{prefix}/#{version}/sbin/gearmand")
+    end
   end
 end
 
-execute "gearmand: configure" do
-  command "./configure --prefix=#{node['gearmand']['prefix']}" #{node['gearmand']['source']['flags']}"
-  cwd "/tmp/gearmand-#{gearmand_v}"
-  not_if do
-    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
-  end
-end
-
-execute "gearmand: make install" do
-  command "make install"
-  cwd "/tmp/gearmand-#{gearmand_v}"
-  not_if do
-    File.exists?("#{node['gearmand']['prefix']}/sbin/gearmand")
-  end
-end
+include_recipe "gearmand::configure"
