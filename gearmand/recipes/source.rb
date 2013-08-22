@@ -1,5 +1,9 @@
 # WIP to document source install of gearmand
 
+package "gearman-job-server" do
+  action :purge
+end
+
 prefix = node['gearmand']['prefix']
 version = node['gearmand']['source']['version']
 
