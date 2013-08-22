@@ -2,7 +2,8 @@ include_recipe "prosody::service"
 
 case node["platform"]
 when "debian", "ubuntu"
-  cfg_dir = "/etc/prosody/conf.d"
+  cfg_partial_dir = "/etc/prosody/conf.d"
+  cfg_dir = "/etc/prosody"
 else
   Chef::Log.error("Not supported: #{node["lsb"]["name"]}")
 end
@@ -10,6 +11,16 @@ end
 include_recipe "prosody::storage"
 
 template "#{cfg_dir}/prosody.cfg.lua" do
+  owner "prosody"
+  group "prosody"
+  source "prosody.cfg.main.lua.erb"
+  variables(
+    :include_files => "#{cfg_partial_dir}/*.cfg.lua"
+  )
+  notifies :restart, resources( :service => "prosody")
+end
+
+template "#{cfg_partial_dir}/prosody.cfg.lua" do
   owner "prosody"
   group "prosody"
   source "prosody.cfg.lua.erb"
