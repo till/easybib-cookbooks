@@ -44,7 +44,7 @@ modules_enabled = {
         "private"; -- Private XML storage (for room bookmarks, etc.)
         "vcard"; -- Allow users to set vCards
         "privacy"; -- Support privacy lists
-        --"compression"; -- Stream compression
+        "compression"; -- Stream compression
 
     -- Nice to have
         "legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
@@ -57,9 +57,9 @@ modules_enabled = {
         "adhoc"; -- Support for "ad-hoc commands" that can be executed with an XMPP client
 
     -- Admin interfaces
-        --"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
+        "admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
         "admin_telnet"; -- Opens telnet console interface on localhost port 5582
-        "admin_web";
+        --"admin_web";
 
     -- Other specific functionality
         "posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
@@ -67,9 +67,9 @@ modules_enabled = {
         --"httpserver"; -- Serve static files from a directory over HTTP
         "groups"; -- Shared roster support
         "announce"; -- Send announcement to all online users
-        "welcome"; -- Welcome users who register accounts
-        "watchregistrations"; -- Alert admins of registrations
-        "motd"; -- Send a message to users when they log in
+        --"welcome"; -- Welcome users who register accounts
+        --"watchregistrations"; -- Alert admins of registrations
+        --"motd"; -- Send a message to users when they log in
 };
 
 -- These modules are auto-loaded, should you
@@ -140,6 +140,7 @@ log = {
         -- Log everything of level "info" and higher (that is, all except "debug" messages)
         -- to prosody.log
         info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for more verbose logging
+        debug = "/var/log/prosody/prosody.dbg"; 
         --"*syslog"; -- Uncomment this for logging to syslog
 }
 
