@@ -58,6 +58,7 @@ server {
     location /js/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
 
@@ -65,6 +66,7 @@ server {
     location /images/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
 
@@ -72,13 +74,15 @@ server {
     location /css/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
 
 <% node["nginx-app"][:static_directories].each do |dir| -%>
     location /<%=dir%>/ {
-        root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
-        access_log  <%= @access_log %>;
+        root       <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
+        access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
 

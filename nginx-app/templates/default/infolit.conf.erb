@@ -59,16 +59,19 @@ server {
     location /js/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 
     location /images/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 
     location /css/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 
     location /static/ {
@@ -81,6 +84,7 @@ server {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-src;
     <% end -%>
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 
     location /search/ {

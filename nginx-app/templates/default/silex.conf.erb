@@ -60,6 +60,10 @@ server {
 <% end -%>
     }
 
+    location ~* \.(eot|ttf|woff)$ {
+        add_header Access-Control-Allow-Origin *;
+    }
+
     location @site {
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
