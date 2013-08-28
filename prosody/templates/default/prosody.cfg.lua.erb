@@ -168,5 +168,13 @@ VirtualHost "<%= domain %>"
 ---Set up a MUC (multi-user chat) room server and proxy65:
 <% @domains.each do |domain| -%>
 Component "conference.<%= domain %>" "muc"
+    name = "The Chatrooms for <%= domain %>"
+    restrict_room_creation = "local"
+
+-- mod_proxy65 implements XEP-0065: SOCKS5 Bytestreams as a component. It allows the server to proxy 
+-- file transfers between 2 clients that are behind NAT routers or firewalls, and otherwise wouldn't 
+-- be able to transfer files.
+
 Component "proxy.<%= domain %>" "proxy65"
+    proxy65_acl = {"<%= domain %>"}
 <% end -%>
