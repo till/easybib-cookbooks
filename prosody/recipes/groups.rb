@@ -1,11 +1,3 @@
-include_recipe "prosody::service"
-
-directory "/var/prosody" do
-  owner "prosody"
-  group "prosody"
-  mode "0755"
-end
-
 groups_cfg = "/etc/prosody/conf.d/prosody_groups.lua"
 
 execute "load sharedgroups" do
