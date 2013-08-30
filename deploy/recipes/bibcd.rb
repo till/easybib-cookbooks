@@ -7,7 +7,7 @@ node["deploy"].each do |application, deploy|
 
   next unless deploy["deploying_user"]
   next unless cluster_name == node["easybib"]["cluster_name"]
-  
+
   case application
   when 'bibcd'
     next unless instance_roles.include?('bibcd')
