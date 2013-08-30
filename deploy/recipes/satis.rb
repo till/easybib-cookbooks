@@ -5,6 +5,7 @@ node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::satis - app: #{application}, role: #{instance_roles}")
 
+  next unless deploy["deploying_user"]
   next unless cluster_name == node["easybib"]["cluster_name"]
 
   case application

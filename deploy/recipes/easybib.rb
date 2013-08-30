@@ -7,6 +7,8 @@ node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::easybib - app: #{application}, role: #{instance_roles}")
 
+  next unless deploy["deploying_user"]
+
   case application
   when 'easybib'
     if !['EasyBib', 'EasyBib Playground', 'Fruitkid', 'Fruitkid Playground'].include?(cluster_name)

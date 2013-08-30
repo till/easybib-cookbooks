@@ -20,6 +20,8 @@ stored_certificate = false
 
 node["deploy"].each do |application, deploy|
 
+  next unless deploy["deploying_user"]
+
   if application != "ssl"
     next
   end
