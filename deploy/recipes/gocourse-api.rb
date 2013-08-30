@@ -5,6 +5,8 @@ instance_roles = get_instance_roles()
 
 node["deploy"].each do |application, deploy|
 
+  next unless deploy["deploying_user"]
+
   case application
   when 'api'
     next unless instance_roles.include?('api-server')
