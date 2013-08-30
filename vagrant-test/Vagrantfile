@@ -19,6 +19,8 @@ Vagrant::Config.run do |config|
         chef.cookbooks_path = "./../"
         chef.log_level = :debug
         chef.add_recipe "easybib::setup"
+        chef.add_recipe "percona::server"
+        chef.add_recipe "prosody"
         chef.json = JSON.parse(File.read("./prosody.json"))
     end
 end

@@ -20,3 +20,4 @@ package "installing prosody" do
 end
 
 include_recipe "prosody::configure"
+include_recipe "prosody::groups"
