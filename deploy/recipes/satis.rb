@@ -5,15 +5,12 @@ node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::satis - app: #{application}, role: #{instance_roles}")
 
+  next unless deploy["deploying_user"]
   next unless cluster_name == node["easybib"]["cluster_name"]
 
   case application
   when 'satis'
     next unless instance_roles.include?('satis')
-    # quick fix for https://github.com/till/easybib-cookbooks/issues/72
-    # since we set deploy["home"] for all apps, all apps are set, so we
-    # have to check for sth else to make sure we are deploying the right app
-    next unless deploy["deploying_user"]
   else
     Chef::Log.info("deploy::satis - #{application} (in #{cluster_name}) skipped")
     next

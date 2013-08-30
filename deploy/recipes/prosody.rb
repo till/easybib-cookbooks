@@ -5,6 +5,7 @@ node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::jabber - request to deploy app: #{application}, role: #{instance_roles} in #{cluster_name}")
 
+  next unless deploy["deploying_user"]
   next unless cluster_name == node["easybib"]["cluster_name"]
 
   case application
