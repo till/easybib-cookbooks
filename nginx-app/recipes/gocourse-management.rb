@@ -2,15 +2,11 @@ config = "management"
 
 if is_aws()
   deploy_dir = "/srv/www/#{config}/current/public/"
-  nginx_extras = ""
   domain_name = node["gocourse"]["domain"]["management"]
 else
-  deploy_dir = "/vagrant_data/public/"
+  deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
   domain_name = ""
-  nginx_extras = "sendfile off;"
 end
-
-default_router = "index.php"
 
 db_conf = get_db_conf("gocourse")
 domain_conf = get_domain_conf("gocourse")
@@ -25,8 +21,8 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :doc_root => deploy_dir,
     :domain_name => domain_name,
     :access_log => 'off',
-    :nginx_extra => nginx_extras,
-    :default_router => default_router,
+    :nginx_extra => node["nginx-app"]["extras"],
+    :default_router => node["nginx-app"]["default_router"],
     :xhprof_enable => false,
     :upstream => config,
     :db_conf => db_conf,
