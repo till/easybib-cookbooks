@@ -1,17 +1,7 @@
 if is_aws()
   deploy_dir = "/srv/www/api/current/web"
-  nginx_extras = ""
-  xhprof_enable = false
-  if get_cluster_name() == "API Staging"
-    default_router = "index_staging.php"
-  else
-    default_router = "index.php"
-  end
 else
-  deploy_dir = "/vagrant_data/web/"
-  nginx_extras = "sendfile off;"
-  default_router = "index_dev.php"
-  xhprof_enable = true
+  deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
 end
 
 config = "easybib_api"
@@ -25,9 +15,9 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :php_user    => node["php-fpm"]["user"],
     :doc_root    => deploy_dir,
     :access_log  => 'off',
-    :nginx_extra => nginx_extras,
-    :default_router => default_router,
-    :xhprof_enable => xhprof_enable,
+    :nginx_extra => node["nginx-app"]["extras"],
+    :default_router => node["nginx-app"]["default_router"],
+    :xhprof_enable => node["nginx-app"]["xhprof"]["enable"],
     :upstream => config,
     :db_conf => "",
     :domain_conf => ""

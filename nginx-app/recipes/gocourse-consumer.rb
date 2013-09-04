@@ -1,11 +1,9 @@
 if is_aws()
   deploy_dir = "/srv/www/consumer/current/build/"
-  nginx_extras = ""
   domain_name = "#{node["gocourse"]["domain"]["consumer"]} *.#{node["gocourse"]["domain"]["consumer"]}"
 else
-  deploy_dir = "/vagrant_data/build/"
+  deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
   domain_name = ""
-  nginx_extras = "sendfile off;"
 end
 
 default_router = "index.html"
@@ -20,7 +18,7 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :doc_root    => deploy_dir,
     :domain_name => domain_name,
     :access_log  => 'off',
-    :nginx_extra => nginx_extras,
+    :nginx_extra => node["nginx-app"]["extras"],
     :default_router => default_router
   )
   notifies :restart, resources(:service => "nginx"), :delayed
