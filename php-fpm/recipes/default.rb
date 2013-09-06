@@ -32,13 +32,15 @@
 include_recipe "apt::ppa"
 include_recipe "apt::easybib"
 
-apt_packages = node["php-fpm"]["packages"].split(',')
-
 include_recipe "php-fpm::prepare"
 
-apt_packages.each do |p|
-  package p do
-    action :install
+if !node["php-fpm"]["packages"].empty?
+  apt_packages = node["php-fpm"]["packages"].split(',')
+
+  apt_packages.each do |p|
+    package p do
+      action :install
+    end
   end
 end
 

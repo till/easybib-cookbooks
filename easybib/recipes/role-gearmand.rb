@@ -1,4 +1,8 @@
 include_recipe "easybib::setup"
 include_recipe "loggly::setup"
-include_recipe "gearmand::source"
+if node[:lsb][:codename] == 'lucid'
+  include_recipe "gearmand"
+else
+  include_recipe "gearmand::source"
+end
 include_recipe "silverline"
