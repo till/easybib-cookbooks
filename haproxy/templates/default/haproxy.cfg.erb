@@ -28,7 +28,7 @@ defaults
   stats uri <%= node[:haproxy][:stats_url] %>
   <% end -%>
   <% node[:haproxy][:errorloc].each do |error_code,error_file| %>
-  errorfile <%= error_code %> /etc/haproxy/<%= error_file %>
+  errorfile <%= error_code %> /etc/haproxy/errors/<%= error_file %>
   <% end %>
 <%
 # bind haproxy to the following parameters
