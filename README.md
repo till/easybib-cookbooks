@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/till/easybib-cookbooks.png?branch=master)](https://travis-ci.org/till/easybib-cookbooks)
+
 # Do you like what you see?
 
 If you want to work with us, please get in touch: [claudia@imagineeasy.com](mailto:claudia@imagineeasy.com)!
