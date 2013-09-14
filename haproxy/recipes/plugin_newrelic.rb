@@ -12,10 +12,12 @@ if !backends.empty? && !frontends.empty?
   cookbook_file "/etc/init.d/newrelic-haproxy" do
     source "newrelic-haproxy"
     mode "0755"
+    action :create
   end
 
   service "newrelic-haproxy" do
     supports [:start, :stop, :restart]
+    action :nothing
   end
 
   template "/etc/newrelic/newrelic_haproxy_agent.yml" do
