@@ -15,13 +15,13 @@ end
   package dep
 end
 
-remote_file "/tmp/gearmand-#{version}.tar.gz" do
+remote_file "#{Chef::Config[:file_cache_path]}/gearmand-#{version}.tar.gz" do
   source node['gearmand']['source']['link']
   checksum node['gearmand']['source']['hash']
 end
 
-execute "tar -zxvf /tmp/gearmand-#{version}.tar.gz" do
-  cwd "/tmp"
+execute "tar -zxvf #{Chef::Config[:file_cache_path]}/gearmand-#{version}.tar.gz" do
+  cwd Chef::Config[:file_cache_path]
 end
 
 
@@ -34,7 +34,7 @@ commands = [
 commands.each do |command|
   execute "Running #{command}" do
     command command
-    cwd "/tmp/gearmand-#{version}/"
+    cwd "#{Chef::Config[:file_cache_path]}/gearmand-#{version}/"
     not_if do
       File.exists?("#{prefix}/#{version}/sbin/gearmand")
     end
