@@ -5,4 +5,3 @@ if node[:lsb][:codename] == 'lucid'
 else
   include_recipe "gearmand::source"
 end
-include_recipe "silverline"

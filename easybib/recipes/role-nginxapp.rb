@@ -21,5 +21,4 @@ end
 
 if is_aws()
   include_recipe "newrelic"
-  include_recipe "silverline"
 end

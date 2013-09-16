@@ -1,4 +1,4 @@
-if node[:couchdb][:backup]
+if node["couchdb"]["backup"]
   template "/usr/local/bin/couchdb_backup" do
     source "couchdb_backup.erb"
     mode "0755"
@@ -13,7 +13,7 @@ if node[:couchdb][:backup]
     group "root"
   end
 
-  directory node[:couchdb][:backupdir] do
+  directory node["couchdb"]["backupdir"] do
     mode "0755"
     owner "root"
     owner "root"
@@ -21,7 +21,7 @@ if node[:couchdb][:backup]
   end
 
   execute "set owner on couchdb backup directory" do
-    command "chown -R couchdb:couchdb #{node[:couchdb][:backupdir]}"
+    command "chown -R couchdb:couchdb #{node["couchdb"]["backupdir"]}"
   end
 
   cron "backup couchdb files" do

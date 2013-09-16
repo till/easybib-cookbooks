@@ -7,7 +7,7 @@ package "autoconf"
 
 version = open("http://pecl.php.net/rest/r/intl/latest.txt").read
 release = "intl-#{version}.tgz"
-so_file = "#{node["php-fpm"][:prefix]}/lib/php/extensions/no-debug-non-zts-20090626/intl.so"
+so_file = "#{node["php-fpm"]["prefix"]}/lib/php/extensions/no-debug-non-zts-20090626/intl.so"
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{release}" do
   source "http://pecl.php.net/get/#{release}"
@@ -40,9 +40,9 @@ commands.each do |command|
 end
 
 execute "load .so" do
-  command "echo 'extension=intl.so' >> #{node["php-fpm"][:prefix]}/etc/php/intl.ini"
+  command "echo 'extension=intl.so' >> #{node["php-fpm"]["prefix"]}/etc/php/intl.ini"
   not_if do
-    File.exists?("#{node["php-fpm"][:prefix]}/etc/php/intl.ini")
+    File.exists?("#{node["php-fpm"]["prefix"]}/etc/php/intl.ini")
   end
 end
 

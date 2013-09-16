@@ -1,8 +1,8 @@
 include_recipe "nginx-lb::service"
 
 # leave one for haproxy
-if node[:cpu][:total] > 1
-  processes = (node[:cpu][:total])-1
+if node["cpu"]["total"] > 1
+  processes = (node["cpu"]["total"])-1
 else
   processes = 1
 end
@@ -24,5 +24,5 @@ template "#{node["nginx-lb"]["dir"]}/nginx.conf" do
   variables(
     "processes" => processes
   )
-  notifies :stop, resources(:service => "nginx")
+  notifies :stop, "service[nginx]"
 end

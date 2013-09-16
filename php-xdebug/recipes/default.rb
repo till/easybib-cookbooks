@@ -1,7 +1,7 @@
-if node[:xdebug][:version] == 'latest'
+if node["xdebug"]["version"] == 'latest'
   xdebug_version = ""
 else
-  xdebug_version = "-#{node[:xdebug][:version]}"
+  xdebug_version = "-#{node["xdebug"]["version"]}"
 end
 
 package "autoconf"

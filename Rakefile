@@ -39,8 +39,19 @@ task :foodcritic do
     cookbooks = find_cookbooks('.')
 
     cookbooks.each do |cb|
+
       prepare_foodcritic_sandbox(sandbox, cb)
-      sh "foodcritic --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
+
+      verbose(false)
+      fc_command = "foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
+
+      sh fc_command do |ok, res|
+        if !ok
+          puts "Cookbook: #{cb}"
+          puts "Command failed: #{fc_command}"
+          puts res
+        end
+      end
     end
 
   else
@@ -51,9 +62,6 @@ end
 private
 def prepare_foodcritic_sandbox(sandbox, cookbook)
 
-  puts cookbook
-  puts "\n"
-
   files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
 
   opts = {:verbose => false}
@@ -61,8 +69,6 @@ def prepare_foodcritic_sandbox(sandbox, cookbook)
   rm_rf sandbox, opts
   mkdir_p sandbox, opts
   cp_r Dir.glob("#{cookbook}/{#{files.join(',')}}"), sandbox, opts
-
-  puts "\n\n"
 end
 
 private

@@ -53,5 +53,5 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :domain       => domain,
     :php_upstream => "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
   )
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end
