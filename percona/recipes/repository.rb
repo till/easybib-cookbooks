@@ -7,11 +7,14 @@ execute "import key" do
   command "apt-key add /tmp/percona.pub"
 end
 
+execute "update-percona-apt" do
+  command "apt-get -y -f -q update"
+  action :nothing
+end
+
+
 template "/etc/apt/sources.list.d/percona.list" do
   source "percona.list.erb"
   mode 0644
-end
-
-execute "update apt" do
-  command "apt-get -y -f -q update"
+  notifies :run, "execute[update-percona-apt]", :immediately
 end

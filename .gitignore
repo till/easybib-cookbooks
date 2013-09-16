@@ -1,9 +1,8 @@
-./Vagrantfile
 aptcache
 .DS_Store
 easybib-solr/files/default/config.rb
 *.swp
-vagrant-test/.vagrant
+.vagrant
 *.box
 .project
 Gemfile.lock
