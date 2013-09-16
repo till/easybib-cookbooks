@@ -38,20 +38,20 @@ action :compile do
   end
 
   commands = [
-      "phpize",
-      configure,
-      "make",
-      "cp modules/#{extension}.so #{new_resource.ext_dir}",
-    ]
+    "phpize",
+    configure,
+    "make",
+    "cp modules/#{extension}.so #{new_resource.ext_dir}",
+  ]
 
-    commands.each do |command|
-      Chef::Log.debug("Running #{command} in #{source_dir}")
-      cmd = ::Mixlib::ShellOut.new(command, :cwd => source_dir)
-      cmd.run_command
-      cmd.error!
-    end
+  commands.each do |command|
+    Chef::Log.debug("Running #{command} in #{source_dir}")
+    cmd = ::Mixlib::ShellOut.new(command, :cwd => source_dir)
+    cmd.run_command
+    cmd.error!
+  end
 
-    new_resource.updated_by_last_action(true)
+  new_resource.updated_by_last_action(true)
 
 end
 
