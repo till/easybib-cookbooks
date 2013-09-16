@@ -26,7 +26,7 @@ end
 
 desc "ChefSpec"
 task :chefspec do
-  sh 'find . -type d -maxdepth 2 -name "spec" -exec bundle exec rspec {} \;'
+  sh 'find . -maxdepth 2 -type d -name "spec" -exec bundle exec rspec {} \;'
 end
 
 desc "Runs foodcritic linter"
