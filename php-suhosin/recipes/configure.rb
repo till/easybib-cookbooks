@@ -1,6 +1,6 @@
 include_recipe "php-fpm::service"
 
-etc_dir = "#{node["php-fpm"][:prefix]}/etc/php"
+etc_dir = "#{node["php-fpm"]["prefix"]}/etc/php"
 
 template "#{etc_dir}/suhosin.ini" do
   source   "suhosin.ini.erb"

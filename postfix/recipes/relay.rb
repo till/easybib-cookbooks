@@ -6,15 +6,15 @@ if !get_cluster_name().empty?
 
   instance = get_instance()
 
-  ips.push(instance[:ip])
-  ips.push(Resolv.getaddress(instance[:private_dns_name]))
+  ips.push(instance["ip"])
+  ips.push(Resolv.getaddress(instance["private_dns_name"]))
 
-  my_hostname = instance[:hostname]
+  my_hostname = instance["hostname"]
 else
-  my_hostname = node[:hostname]
+  my_hostname = node["hostname"]
 end
 
-relay_host = node[:postfix][:relay][0]["host"]
+relay_host = node["postfix"]["relay"][0]["host"]
 
 etc_path = "/etc/postfix"
 

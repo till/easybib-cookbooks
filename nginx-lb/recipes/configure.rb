@@ -1,8 +1,8 @@
 include_recipe "nginx-lb::service"
 
 # leave one for haproxy
-if node[:cpu][:total] > 1
-  processes = (node[:cpu][:total])-1
+if node["cpu"]["total"] > 1
+  processes = (node["cpu"]["total"])-1
 else
   processes = 1
 end

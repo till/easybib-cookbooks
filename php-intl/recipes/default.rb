@@ -1,4 +1,4 @@
-if node[:lsb][:codename] == 'lucid'
+if node["lsb"]["codename"] == 'lucid'
   include_recipe "php-intl::pecl"
 else
   include_recipe "php-fpm::service"
