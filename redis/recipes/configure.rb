@@ -1,11 +1,5 @@
 include_recipe "redis::service"
 
-template "/etc/default/redis" do
-  source "default.erb"
-  mode "0644"
-  notifies :restart, "service[redis-server]"
-end
-
 directory "/etc/redis" do
   user node["redis"]["user"]
   mode "0755"

@@ -6,5 +6,4 @@ include_recipe "nginx-app::gocourse-signup"
 
 if is_aws()
   include_recipe "newrelic"
-  include_recipe "silverline"
 end
