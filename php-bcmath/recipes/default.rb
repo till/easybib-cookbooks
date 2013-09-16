@@ -16,11 +16,6 @@ execute "tar -zxf #{php_archive}" do
   cwd "/tmp"
 end
 
-ohai "reload_php" do
-  action :reload
-  plugin "php_fpm"
-end
-
 php_pecl "bcmath" do
   action [ :compile, :setup]
   source_dir "#{php_source}/ext/bcmath"
