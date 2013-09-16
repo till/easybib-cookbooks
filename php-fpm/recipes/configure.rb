@@ -75,13 +75,11 @@ template "#{etc_fpm_dir}/php-fpm.conf" do
   notifies :reload, "service[php-fpm]", :delayed
 end
 
-service "php-fpm" do
-  action [ :enable, :start ]
-end
-
 template "/etc/logrotate.d/php" do
   source "logrotate.erb"
   mode "0644"
   owner "root"
   group "root"
+  notifies :enable, "service[php-fpm]"
+  notifies :start, "service[php-fpm]"
 end
