@@ -1,0 +1,57 @@
+{
+    "deploy": {
+        "ssl": {
+            "ssl_certificate": "",
+            "ssl_certificate_key": "",
+            "domains": [
+                "vagrant.local",
+                "ssl"
+            ]
+        }
+    },
+    "gocourse": {
+        "domain": {
+            "api": "api.local"
+        },
+        "database": {
+            "api": {
+                "hostname": "127.0.0.1",
+                "username": "root",
+                "password": "test123",
+                "database": "api_stage"
+            },
+            "management": {
+                "hostname": "127.0.0.1",
+                "username": "root",
+                "password": "",
+                "database": "management_stage"
+            }
+        }
+    },
+    "opsworks": {
+        "deploy_user": {
+            "user": "vagrant",
+            "group": "vagrant"
+        },
+        "activity": "deploy",
+        "applications": [
+            {
+                "name": "SSL",
+                "slug_name": "ssl",
+                "application_type": "other"
+            }
+        ],
+        "stack": {
+            "name": "EasyBib Playground"
+        },
+        "instance": {
+            "id": 1,
+            "layers": [
+                "lb"
+            ]
+        }
+    },
+    "newrelic": {
+        "license": ""
+    }
+}
