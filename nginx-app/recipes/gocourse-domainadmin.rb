@@ -21,5 +21,5 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :nginx_extra => node["nginx-app"]["extras"],
     :default_router => default_router
   )
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end

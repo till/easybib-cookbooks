@@ -6,5 +6,5 @@ include_recipe "apt::easybib"
 p = "php5-easybib-gearman"
 
 package p do
-  notifies :reload, resources(:service => "php-fpm"), :delayed
+  notifies :reload, "service[php-fpm]", :delayed
 end

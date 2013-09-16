@@ -32,7 +32,7 @@ if !backends.empty? && !frontends.empty?
       :license_key  => node["newrelic"]["license"],
       :url          => node["haproxy"]["stats_url"]
     )
-    notifies :restart, resources(:service => "newrelic-haproxy")
+    notifies :restart, "service[newrelic-haproxy]"
   end
 
 end

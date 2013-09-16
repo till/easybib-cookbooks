@@ -33,7 +33,7 @@ test "$ENABLED" != "0" || exit 0
 
 haproxy_start()
 {
-	export SL_NAME=$SL_NAME && start-stop-daemon --start --pidfile "$PIDFILE" \
+	start-stop-daemon --start --pidfile "$PIDFILE" \
 		--exec $HAPROXY -- -f "$CONFIG" -D -p "$PIDFILE" \
 		$EXTRAOPTS || return 2
 	return 0

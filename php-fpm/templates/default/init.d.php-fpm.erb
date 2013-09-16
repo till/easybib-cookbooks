@@ -15,7 +15,7 @@ if [ -f /etc/default/php-fpm ]; then
     . /etc/default/php-fpm
 fi
 
-prefix=<%= node["php-fpm"][:prefix]%>
+prefix=<%= node["php-fpm"]["prefix"]%>
 exec_prefix=${prefix}
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
@@ -23,7 +23,7 @@ php_fpm_CONF=${prefix}/etc/php-fpm.conf
 php_fpm_PID=${prefix}/var/run/php-fpm.pid
 
 whoami=`whoami`
-runas=<%= node["php-fpm"][:user]%>
+runas=<%= node["php-fpm"]["user"]%>
 
 php_opts="--fpm-config $php_fpm_CONF"
 

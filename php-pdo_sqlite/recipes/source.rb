@@ -24,8 +24,8 @@ commands = [
   "phpize",
   "./configure",
   "make",
-  "cp modules/pdo_sqlite.so #{node[:languages][:php_fpm][:extension_dir]}",
-  "echo 'extension=pdo_sqlite.so' >> #{node["php-fpm"][:prefix]}/etc/php/pdo_sqlite.ini"
+  "cp modules/pdo_sqlite.so #{node["languages"]["php_fpm"]["extension_dir"]}",
+  "echo 'extension=pdo_sqlite.so' >> #{node["php-fpm"]["prefix"]}/etc/php/pdo_sqlite.ini"
 ]
 
 commands.each do |command|

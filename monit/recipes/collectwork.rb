@@ -45,5 +45,5 @@ template "/etc/monit/conf.d/collectwork.monitrc" do
     'init'     => thestartscript,
     'pid_file' => thepidfile
   )
-  notifies :restart, resources(:service => "monit")
+  notifies :restart, "service[monit]"
 end
