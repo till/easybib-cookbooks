@@ -3,7 +3,7 @@ include_recipe "redis::service"
 template "/etc/default/redis" do
   source "default.erb"
   mode "0644"
-  notifies :restart, resources( :service => "redis-server")
+  notifies :restart, "service[redis-server]"
 end
 
 directory "/etc/redis" do
@@ -15,7 +15,7 @@ template "/etc/redis/redis.conf" do
   source "redis.conf.erb"
   owner  node["redis"]["user"]
   mode   "0644"
-  notifies :restart, resources(:service => "redis-server"), :immediately
+  notifies :restart, "service[redis-server]", :immediately
 end
 
 template "/etc/logrotate.d/redis" do

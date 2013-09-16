@@ -12,5 +12,5 @@ template "#{node["php-fpm"][:prefix]}/etc/php/apc.ini" do
     :shm_size      => node["php-apc"]["shm_size"],
     :max_file_size => node["php-apc"]["max_file_size"]
   })
-  notifies :reload, resources(:service => "php-fpm"), :delayed
+  notifies :reload, "service[php-fpm]", :delayed
 end

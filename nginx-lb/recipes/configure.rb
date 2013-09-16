@@ -24,5 +24,5 @@ template "#{node["nginx-lb"]["dir"]}/nginx.conf" do
   variables(
     "processes" => processes
   )
-  notifies :stop, resources(:service => "nginx")
+  notifies :stop, "service[nginx]"
 end

@@ -52,7 +52,7 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
   )
   owner    node["php-fpm"]["user"]
   group    node["php-fpm"]["group"]
-  notifies :reload, resources(:service => "php-fpm"), :delayed
+  notifies :reload, "service[php-fpm]", :delayed
 end
 
 template "#{etc_cli_dir}/#{conf_cli}" do
@@ -72,7 +72,7 @@ template "#{etc_fpm_dir}/php-fpm.conf" do
   source   "php-fpm.conf.erb"
   owner    node["php-fpm"]["user"]
   group    node["php-fpm"]["group"]
-  notifies :reload, resources(:service => "php-fpm"), :delayed
+  notifies :reload, "service[php-fpm]", :delayed
 end
 
 service "php-fpm" do

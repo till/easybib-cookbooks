@@ -9,6 +9,6 @@ else
   p = "php5-easybib-intl"
 
   package p do
-    notifies :reload, resources(:service => "php-fpm"), :delayed
+    notifies :reload, "service[php-fpm]", :delayed
   end
 end

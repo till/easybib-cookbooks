@@ -66,7 +66,7 @@ node["deploy"].each do |application, deploy|
       :config_dir         => nginx_config_dir,
       :php_upstream       => php_upstream
     )
-    notifies :restart, resources(:service => "nginx"), :delayed
+    notifies :restart, "service[nginx]", :delayed
   end
 
 end
