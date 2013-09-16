@@ -3,7 +3,12 @@ include_recipe "couchdb::deps"
 include_recipe "couchdb::prepare"
 
 couchdb_version = node["couchdb"]["version"]
-couchdb_installed_version = `which couchdb > /dev/null && couchdb -V | grep #{couchdb_version}`.strip.gsub(/^.+([0-9.]{5,5})$/, '\1')
+
+guess_version = Mixlib::ShellOut.new("which couchdb > /dev/null && couchdb -V | grep #{couchdb_version}")
+guess_version.run_command
+guess_version.error!
+
+couchdb_installed_version = guess_version.stdout.strip.gsub(/^.+([0-9.]{5,5})$/, '\1')
 
 couchdb_already_installed = lambda do
   couchdb_installed_version == couchdb_version
