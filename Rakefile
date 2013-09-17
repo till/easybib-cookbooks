@@ -34,7 +34,7 @@ task :foodcritic do
   if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
     sandbox = File.join(File.dirname(__FILE__), 'fc_sandbox')
 
-    epic_fail = %w{ ~FC002 ~FC003 ~FC004 ~FC005 ~FC013 ~FC014 ~FC015 ~FC016 ~FC017 ~FC019 ~FC022 ~FC023 ~FC024 ~FC033 ~FC034 ~FC043 ~FC045 }
+    epic_fail = %w{ ~FC019 ~FC023 ~FC024 ~FC034 ~FC045 }
 
     cookbooks = find_cookbooks('.')
 
@@ -88,11 +88,3 @@ def find_cookbooks(all_your_base)
 
   return cookbooks
 end
-
-#  t.files = cookbooks
-#  t.options = {
-#    :tags => %w( ~readme ),
-#    :fail_tags => %w( ~FC002 ~FC003 ~FC004 ~FC005 ~FC013 ~FC014 ~FC015 ~FC023 ~FC024 ~FC033 ~FC045 )
-#    # ignored: FC016, FC017, FC19, FC043
-#  }
-#end
