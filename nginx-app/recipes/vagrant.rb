@@ -1,11 +1,11 @@
 if !node["deploy"]["deploy_to"]
-  node.deploy["deploy_to"] = "/var/www/easybib"
+  node.normal.deploy["deploy_to"] = "/var/www/easybib"
 end
 
 Chef::Log.debug("deploy: #{node["deploy"]["deploy_to"]}")
 
 if !node.attribute?("docroot")
-  node.set["docroot"] = 'www'
+  node.normal.docroot = 'www'
 end
 
 vagrant_dir = "/vagrant_data"
@@ -53,5 +53,5 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :domain       => domain,
     :php_upstream => "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
   )
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end

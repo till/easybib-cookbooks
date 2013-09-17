@@ -1,4 +1,4 @@
-if node[:lsb][:codename] == 'lucid'
+if node["lsb"]["codename"] == 'lucid'
   include_recipe "php-intl::pecl"
 else
   include_recipe "php-fpm::service"
@@ -9,6 +9,6 @@ else
   p = "php5-easybib-intl"
 
   package p do
-    notifies :reload, resources(:service => "php-fpm"), :delayed
+    notifies :reload, "service[php-fpm]", :delayed
   end
 end

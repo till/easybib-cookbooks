@@ -10,6 +10,5 @@ include_recipe "deploy::gocourse-management"
 include_recipe "nginx-app::gocourse-management"
 if is_aws()
   include_recipe "newrelic"
-  include_recipe "silverline"
 end
 include_recipe "bash::configure"

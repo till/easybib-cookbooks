@@ -1,6 +1,6 @@
 include_recipe "apt::ppa"
 
-case node[:lsb][:codename]
+case node["lsb"]["codename"]
 when "lucid", "maverick", "natty", "oneiric"
 
   [
@@ -17,5 +17,5 @@ when "lucid", "maverick", "natty", "oneiric"
   include_recipe "redis::user"
   include_recipe "redis::configure"
 else
-  Chef::Log.error("Unsupported platform: #{node[:lsb][:codename]}")
+  Chef::Log.error("Unsupported platform: #{node["lsb"]["codename"]}")
 end

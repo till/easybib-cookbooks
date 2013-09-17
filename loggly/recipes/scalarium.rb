@@ -11,7 +11,7 @@ template "/etc/rsyslog.d/10-haproxy.conf" do
   only_if do
     roles.include?('loadbalancer')
   end
-  notifies :restart, resources( :service => "rsyslog" )
+  notifies :restart, "service[rsyslog]"
 end
 
 directory node["syslog"]["haproxy"]["log_dir"] do

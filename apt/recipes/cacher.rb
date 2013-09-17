@@ -30,7 +30,7 @@ cookbook_file "/etc/apt-cacher/apt-cacher.conf" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, resources(:service => "apt-cacher")
+  notifies :restart, "service[apt-cacher]"
 end
 
 cookbook_file "/etc/default/apt-cacher" do
@@ -38,5 +38,5 @@ cookbook_file "/etc/default/apt-cacher" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, resources(:service => "apt-cacher")
+  notifies :restart, "service[apt-cacher]"
 end

@@ -3,6 +3,8 @@ server {
 
     index <%=@default_router%> index.php;
 
+    access_log <%=@access_log%>;
+
 <% if @nginx_extra && !@nginx_extra.empty? -%>
     <%=@nginx_extra%>
 <% end -%>
