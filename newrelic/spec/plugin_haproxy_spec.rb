@@ -18,8 +18,21 @@ describe 'haproxy::plugin_newrelic' do
       }
     }
 
+    newrelic_node = {
+      'haproxy' => {
+        'backends' => [
+          {'name' => 'backend1', 'proxy' => 'my_app_servers'}
+        ],
+        'frontends' => [
+          {'name' => 'frontend1', 'proxy' => 'http-in'}
+        ]
+      }
+    }
+
     chef_run.node.set['haproxy'] = haproxy_node
-    chef_run.converge 'haproxy::plugin_newrelic'
+    chef_run.node.set['newrelic'] = newrelic_node
+
+    chef_run.converge 'newrelic::plugin_haproxy'
     expect(chef_run).to install_gem_package 'bundler'
     expect(chef_run).to install_gem_package 'fastercsv'
     expect(chef_run).to install_gem_package 'newrelic_haproxy_agent'

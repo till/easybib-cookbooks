@@ -15,10 +15,6 @@ default["haproxy"]["errorloc"] = {
     "504" => "504.http"
 }
 
-default["haproxy"]["newrelic"] = {}
-default["haproxy"]["newrelic"]["frontends"] = {}
-default["haproxy"]["newrelic"]["backends"] = {}
-
 default["haproxy"]["ctl"] = {}
 default["haproxy"]["ctl"]["version"] = "1.1.0"
 default["haproxy"]["ctl"]["base_path"] = "/usr/local/share"

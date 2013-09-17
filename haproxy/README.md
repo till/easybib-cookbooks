@@ -3,7 +3,6 @@
 ## Recipes
 
  * `haproxy::ctl` installs https://github.com/flores/haproxyctl
- * `haproxy::plugin_newrelic` installs https://github.com/railsware/newrelic_platform_plugins
  * `haproxy::down` is a WIP
 
 ## Attributes

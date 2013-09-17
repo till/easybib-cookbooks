@@ -4,8 +4,8 @@ gems.each do |gem|
   gem_package gem
 end
 
-backends = node["haproxy"]["newrelic"]["backends"]
-frontends = node["haproxy"]["newrelic"]["frontends"]
+backends = node["newrelic"]["haproxy"]["backends"]
+frontends = node["newrelic"]["haproxy"]["frontends"]
 
 if !backends.empty? && !frontends.empty?
 

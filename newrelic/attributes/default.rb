@@ -8,3 +8,7 @@ default["newrelic"]["sysmond"]["log"]["level"] = "info"
 
 default["newrelic"]["plugins"] = {}
 default["newrelic"]["plugins"]["verbose"] = 0
+
+default["newrelic"]["haproxy"] = {}
+default["newrelic"]["haproxy"]["frontends"] = {}
+default["newrelic"]["haproxy"]["backends"] = {}
