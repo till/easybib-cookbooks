@@ -43,13 +43,14 @@ task :foodcritic do
       prepare_foodcritic_sandbox(sandbox, cb)
 
       verbose(false)
-      fc_command = "foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
+      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
 
       sh fc_command do |ok, res|
         if !ok
           puts "Cookbook: #{cb}"
           puts "Command failed: #{fc_command}"
           puts res
+          exit 1
         end
       end
     end
