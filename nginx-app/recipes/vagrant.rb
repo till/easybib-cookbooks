@@ -1,11 +1,11 @@
 if !node["deploy"]["deploy_to"]
-  node.deploy["deploy_to"] = "/var/www/easybib"
+  node.normal.deploy["deploy_to"] = "/var/www/easybib"
 end
 
 Chef::Log.debug("deploy: #{node["deploy"]["deploy_to"]}")
 
 if !node.attribute?("docroot")
-  node.set["docroot"] = 'www'
+  node.normal.docroot = 'www'
 end
 
 vagrant_dir = "/vagrant_data"
