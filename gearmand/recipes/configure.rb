@@ -23,5 +23,5 @@ template "/etc/default/#{node['gearmand']['name']}" do
     :port => node['gearmand']['port'],
     :log  => node['gearmand']['log']
   )
-  notifies :reload, resources( :service => node['gearmand']['name'])
+  notifies :reload, "service[#{node['gearmand']['name']}]"
 end

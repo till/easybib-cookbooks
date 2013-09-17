@@ -30,5 +30,5 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :domain_conf => domain_conf,
     :aws_conf => aws_conf
   )
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end

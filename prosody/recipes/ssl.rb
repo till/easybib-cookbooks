@@ -75,7 +75,7 @@ node["deploy"].each do |application, deploy|
     variables(
       "ssl_key" => ssl_certificate
     )
-    notifies :restart, resources(:service => "prosody")
+    notifies :restart, "service[prosody]"
   end
 
   template ssl_dir + "/cert.key" do
@@ -86,7 +86,7 @@ node["deploy"].each do |application, deploy|
     variables(
       "ssl_key" => ssl_certificate_key
     )
-    notifies :restart, resources(:service => "prosody")
+    notifies :restart, "service[prosody]"
   end
 
   stored_certificate = true

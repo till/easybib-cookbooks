@@ -4,8 +4,8 @@
 #  })
 #end
 
-default[:haproxy]            = {}
-default[:haproxy][:errorloc] = {
+default["haproxy"]             = {}
+default["haproxy"]["errorloc"] = {
     "400" => "400.http",
     "403" => "403.http",
     "408" => "408.http",
@@ -15,5 +15,6 @@ default[:haproxy][:errorloc] = {
     "504" => "504.http"
 }
 
-default[:haproxy][:ctl][:base_path] = "/usr/local/share"
-default[:silverline][:haproxy_name] = "haproxy"
+default["haproxy"]["ctl"] = {}
+default["haproxy"]["ctl"]["version"] = "1.1.0"
+default["haproxy"]["ctl"]["base_path"] = "/usr/local/share"

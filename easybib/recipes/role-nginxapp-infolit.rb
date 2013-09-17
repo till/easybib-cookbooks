@@ -13,7 +13,6 @@ if is_aws()
   include_recipe "deploy::infolit"
   include_recipe "nginx-app::configure"
   include_recipe "newrelic"
-  include_recipe "silverline"
 else
   include_recipe "nginx-app::vagrant"
 end

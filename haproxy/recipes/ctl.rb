@@ -1,4 +1,4 @@
-base_path = node[:haproxy][:ctl][:base_path]
+base_path = node["haproxy"]["ctl"]["base_path"]
 
 # ensure directory exists
 directory base_path do

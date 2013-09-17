@@ -67,7 +67,9 @@ node["deploy"].each do |application, deploy|
     app application
   end
 
-  service "php-fpm" do
+  service "php-fpm-#{application}" do
+    service_name "php-fpm"
+    supports :reload => true
     action :reload
     only_if do
       application == 'research_app'

@@ -12,5 +12,5 @@ template "/etc/monit/conf.d/citationbackup-redis.monitrc" do
     'group'    => 'www-data',
     'init'     => '/etc/init.d/redis-importer'
   )
-  notifies :restart, resources(:service => "monit")
+  notifies :restart, "service[monit]"
 end

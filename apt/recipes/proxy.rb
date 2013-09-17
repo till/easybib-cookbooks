@@ -30,5 +30,5 @@ cookbook_file "/etc/apt-proxy/apt-proxy-v2.conf" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, resources(:service => "apt-proxy")
+  notifies :restart, "service[apt-proxy]"
 end

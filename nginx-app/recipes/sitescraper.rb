@@ -20,5 +20,5 @@ template "/etc/nginx/sites-enabled/sitescraper.conf" do
     :routes_enabled => node["nginx-app"]["sitescraper"]["routes_enabled"],
     :routes_denied  => node["nginx-app"]["sitescraper"]["routes_denied"]
   )
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end

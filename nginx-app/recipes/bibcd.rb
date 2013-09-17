@@ -21,5 +21,5 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :db_conf => "",
     :domain_conf => ""
   )
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end
