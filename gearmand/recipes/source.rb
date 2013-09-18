@@ -11,7 +11,18 @@ directory prefix do
   mode "0755"
 end
 
-["libboost-all-dev", "gperf", "libevent1-dev", "libcloog-ppl0", "make"].each do |dep|
+build_deps = ["libboost-all-dev", "gperf", "libcloog-ppl0", "make"]
+
+case node["lsb"]["codename"]
+when 'lucid'
+  build_deps.push('libevent-dev')
+when 'precise'
+  build_deps.push('libevent1-dev')
+else
+  Chef::Log.fatal!("Unsupported platform: #{node["lsb"]["codename"]}")
+end
+
+build_deps.each do |dep|
   package dep
 end
 
