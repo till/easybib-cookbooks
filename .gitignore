@@ -7,3 +7,5 @@ easybib-solr/files/default/config.rb
 .project
 Gemfile.lock
 fc_sandbox
+.kitchen/
+.kitchen.local.yml
