@@ -1,0 +1,17 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+platforms:
+- name: ubuntu-12.04
+  driver_config:
+    box: precise64
+- name: ubuntu-10.04
+  driver_config:
+    box: easybib-ubuntu-10.04.4_vbox-4.2.6_0.4.1
+
+suites:
+- name: default
+  run_list: []
+  attributes: {}

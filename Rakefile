@@ -77,7 +77,7 @@ def find_cookbooks(all_your_base)
   cookbooks = []
 
   # ignore the following - mostly third party
-  skip = [ 'bprobe', 'git', 'scalarium_nodejs', 'vagrant-test', 'ohai' ]
+  skip = [ 'bprobe', 'git', 'scalarium_nodejs', 'vagrant-test', 'ohai', 'test' ]
   Dir.entries(all_your_base).select do |entry|
     next unless File.directory?(File.join(all_your_base, entry))
     next unless !(entry[0, 1] == '.')
@@ -88,4 +88,13 @@ def find_cookbooks(all_your_base)
   end
 
   return cookbooks
+end
+
+if !ENV['TRAVIS']
+  begin
+    require 'kitchen/rake_tasks'
+    Kitchen::RakeTasks.new
+  rescue LoadError
+    puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
+  end
 end
