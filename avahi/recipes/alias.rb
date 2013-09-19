@@ -7,5 +7,5 @@ execute "update pip" do
 end
 
 execute "install python-avahi" do
-  command "pip install #{node["avahi"]["alias"]["package"]}"
+  command "pip install --force-reinstall #{node["avahi"]["alias"]["package"]}"
 end
