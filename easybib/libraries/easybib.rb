@@ -36,21 +36,21 @@ module EasyBib
 
     if ['domain', 'aws'].include?(node_key)
       domain = config
-      domain.each do |app_name, app_host|
+      domain.each_key do |app_name|
+
         app_host = domain[app_name]
+
         db_conf << build_nginx_config("#{node_key.upcase}_#{app_name}", app_host)
       end
 
       return db_conf
     end
 
-    database = config
+    config.each_key do |connection_id|
 
-    database.each do |connection_id,connection_nil|
+      connection_config = config[connection_id]
 
-      connection_config = database[connection_id]
-
-      connection_config.each do |connection_config_key,connection_config_value|
+      connection_config.each_key do |connection_config_key|
 
         connection_config_value = connection_config[connection_config_key]
 
