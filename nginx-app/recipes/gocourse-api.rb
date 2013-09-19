@@ -1,13 +1,16 @@
-if is_aws()
-  deploy_dir = "/srv/www/api/current/public/"
-  domain_name = node["gocourse"]["domain"]["api"]
-else
-  deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
-  domain_name = ""
-end
-
 config = "api"
 
+if is_aws()
+  deploy_dir = "/srv/www/#{config}/current/public/"
+else
+  if node["vagrant"]["combined"] == true
+    deploy_dir = "/vagrant_#{config}/public"
+  else
+    deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+  end
+end
+
+domain_name = node["gocourse"]["domain"]["api"]
 db_conf = get_db_conf("gocourse")
 domain_conf = get_domain_conf("gocourse")
 aws_conf = get_aws_conf("gocourse")

@@ -1,13 +1,17 @@
+config = "domainadmin"
+
 if is_aws()
-  deploy_dir = "/srv/www/domainadmin/current/build/"
-  domain_name = node["gocourse"]["domain"]["domainadmin"]
+  deploy_dir = "/srv/www/#{config}/current/build/"
 else
-  deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
-  domain_name = ""
+  if node["vagrant"]["combined"] == true
+    deploy_dir = "/vagrant_#{config}/src/"
+  else
+    deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+  end
 end
 
+domain_name = node["gocourse"]["domain"]["domainadmin"]
 default_router = "index.html"
-config = "domainadmin"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "static.conf.erb"
