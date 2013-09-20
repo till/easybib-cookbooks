@@ -4,7 +4,7 @@ if is_aws()
   deploy_dir = "/srv/www/#{config}/current/build/"
 else
   if node["vagrant"]["combined"] == true
-    deploy_dir = "/vagrant_#{config}/src/"
+    deploy_dir = node["vagrant"]["deploy_to"][config]
   else
     deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
   end
