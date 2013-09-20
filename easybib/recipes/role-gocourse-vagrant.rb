@@ -4,8 +4,6 @@ service "avahi-aliases" do
   provider Chef::Provider::Service::Upstart
 end
 
-Chef::Log.debug(node["gocourse"]["domain"])
-
 template "/etc/avahi/aliases.d/gocourse" do
   source "gocourse-alias.erb"
   mode "0644"
