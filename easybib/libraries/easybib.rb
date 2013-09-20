@@ -1,7 +1,7 @@
 module EasyBib
 
   def amd64?(node = self.node)
-    if node[:kernel][:machine] == "x86_64"
+    if node["kernel"]["machine"] == "x86_64"
       return true
     end
     return false
@@ -36,21 +36,21 @@ module EasyBib
 
     if ['domain', 'aws'].include?(node_key)
       domain = config
-      domain.each do |app_name, app_host|
+      domain.each_key do |app_name|
+
         app_host = domain[app_name]
+
         db_conf << build_nginx_config("#{node_key.upcase}_#{app_name}", app_host)
       end
 
       return db_conf
     end
 
-    database = config
+    config.each_key do |connection_id|
 
-    database.each do |connection_id,connection_nil|
+      connection_config = config[connection_id]
 
-      connection_config = database[connection_id]
-
-      connection_config.each do |connection_config_key,connection_config_value|
+      connection_config.each_key do |connection_config_key|
 
         connection_config_value = connection_config[connection_config_key]
 
@@ -69,14 +69,14 @@ module EasyBib
   end
 
   def get_cluster_name(node = self.node)
-    if node[:scalarium]
-      return node[:scalarium][:cluster][:name]
+    if node["scalarium"]
+      return node["scalarium"]["cluster"]["name"]
     end
-    if node[:opsworks] && node[:opsworks][:stack]
-      return node[:opsworks][:stack][:name]
+    if node["opsworks"] && node["opsworks"]["stack"]
+      return node["opsworks"]["stack"]["name"]
     end
-    if node[:easybib] && node[:easybib][:cluster_name]
-      return node[:easybib][:cluster_name]
+    if node["easybib"] && node["easybib"]["cluster_name"]
+      return node["easybib"]["cluster_name"]
     end
     ::Chef::Log.error("Unknown environment.")
 
@@ -85,40 +85,40 @@ module EasyBib
   end
 
   def get_deploy_user(node = self.node)
-    if node[:scalarium]
-      return node[:scalarium][:deploy_user]
+    if node["scalarium"]
+      return node["scalarium"]["deploy_user"]
     end
-    if node[:opsworks]
-      return node[:opsworks][:deploy_user]
+    if node["opsworks"]
+      return node["opsworks"]["deploy_user"]
     end
     ::Chef::Log.debug("Unknown environment.")
   end
 
   def get_instance_roles(node = self.node)
-    if node[:scalarium]
-      return node[:scalarium][:instance][:roles]
+    if node["scalarium"]
+      return node["scalarium"]["instance"]["roles"]
     end
-    if node[:opsworks]
-      return node[:opsworks][:instance][:layers]
+    if node["opsworks"]
+      return node["opsworks"]["instance"]["layers"]
     end
     ::Chef::Log.debug("Unknown environment.")
   end
 
   def get_instance(node = self.node)
-    if node[:scalarium]
-      return node[:scalarium][:instance]
+    if node["scalarium"]
+      return node["scalarium"]["instance"]
     end
-    if node[:opsworks]
-      return node[:opsworks][:instance]
+    if node["opsworks"]
+      return node["opsworks"]["instance"]
     end
     ::Chef::Log.debug("Unknown environment.")
   end
 
   def is_aws(node = self.node)
-    if node[:scalarium]
+    if node["scalarium"]
       return true
     end
-    if node[:opsworks]
+    if node["opsworks"]
       return true
     end
     return false

@@ -1,13 +1,17 @@
+config = "signup"
+
 if is_aws()
-  deploy_dir = "/srv/www/signup/current/build/"
-  domain_name = node["gocourse"]["domain"]["signup"]
+  deploy_dir = "/srv/www/#{config}/current/build/"
 else
-  deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
-  domain_name = ""
+  if node["vagrant"]["combined"] == true
+    deploy_dir = node["vagrant"]["deploy_to"][config]
+  else
+    deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+  end
 end
 
+domain_name = node["gocourse"]["domain"]["signup"]
 default_router = "index.html"
-config = "signup"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "static.conf.erb"
