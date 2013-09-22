@@ -1,11 +1,11 @@
 {
-  port: <%= node[:librato][:node][:port] %>,
+  port: <%= @statsd["port"] %>,
   mgmt_address: '127.0.0.1',
   backends: ['statsd-librato-backend'],
   librato: {
-    email: '<%= node[:librato][:metrics][:email] -%>',
-    token: '<%= node[:librato][:metrics][:api_key] -%>',
-    source: '<%= ::EasyBib.get_cluster_name(node) -%>',
-    batchSize: <%= node[:librato][:metrics][:batch] %>
+    email: '<%= @metrics["email"] -%>',
+    token: '<%= @metrics["api_key"] -%>',
+    source: '<%= @cluster_name -%>',
+    batchSize: <%= @metrics["batch"] %>
   }
 }
