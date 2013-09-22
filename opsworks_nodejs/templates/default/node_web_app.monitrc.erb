@@ -7,8 +7,8 @@ node_path = "#{app_dir}/node_modules:#{app_dir}"
 
 case @application_name
   when 'statsd'
-    node_port  = node["librato"]["statsd"]["port"]
-    node_cmd   = "#{app_dir}/stats.js #{node["librato"]["statsd"]["etc_dir"]}/config.js"
+    node_port  = 8125 #node["librato"]["statsd"]["port"]
+    node_cmd   = "#{app_dir}/stats.js /etc/statsd/config.js"
     node_proto = ""
     node_type  = "type UDP"
   else
