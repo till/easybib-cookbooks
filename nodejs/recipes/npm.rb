@@ -1,3 +1,5 @@
+package "curl"
+
 remote_file "#{Chef::Config[:file_cache_path]}/install-npm.sh" do
   source "http://npmjs.org/install.sh"
   mode "0755"
