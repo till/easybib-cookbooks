@@ -1,3 +1,9 @@
+service node['gearmand']['name'] do
+  supports       [:start, :stop, :restart, :status, :reload]
+  action         :nothing
+  reload_command "/etc/init.d/#{node['gearmand']['name']} force-reload"
+end
+
 template "/etc/init.d/#{node['gearmand']['name']}" do
   mode "0755"
   source "gearmand.initd.erb"
@@ -6,10 +12,4 @@ template "/etc/init.d/#{node['gearmand']['name']}" do
     :name => node['gearmand']['name'],
     :user => node['gearmand']['user']
   )
-end
-
-service node['gearmand']['name'] do
-  supports       [:start, :stop, :restart, :status, :reload]
-  action         :nothing
-  reload_command "/etc/init.d/#{node['gearmand']['name']} force-reload"
 end
