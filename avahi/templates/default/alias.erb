@@ -1,3 +1,15 @@
-<% @domains.each_pair do |app, domain| -%>
+<%
+if !@domains.kind_of?(Array)
+  @domains.each_pair do |app, domain|
+-%>
 <%= domain %>
-<% end -%>
+<%
+  end
+else
+  @domains.each do |domain|
+-%>
+<%= domain %>
+<%
+  end
+end
+-%>
