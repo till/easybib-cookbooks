@@ -1,11 +1,8 @@
-service "avahi-aliases" do
-  supports [:start, :stop, :restart]
-  action :nothing
-  provider Chef::Provider::Service::Upstart
-end
+include_recipe "avahi::alias-service"
 
 template "/etc/avahi/aliases.d/gocourse" do
-  source "gocourse-alias.erb"
+  cookbook "avahi"
+  source "alias.erb"
   mode "0644"
   variables({
     :domains => node["gocourse"]["domain"]
