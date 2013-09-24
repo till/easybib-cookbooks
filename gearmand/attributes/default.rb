@@ -1,5 +1,5 @@
 default['gearmand']         = {}
-default['gearmand']['name'] = 'easybib-gearman'
+default['gearmand']['name'] = 'gearmand-easybib'
 default['gearmand']['user'] = 'gearman'
 default['gearmand']['port'] = 31337
 default['gearmand']['log']  = '--syslog' #or --logfile=/path/to/whatever
