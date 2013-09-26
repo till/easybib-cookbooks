@@ -1,7 +1,3 @@
-package "autoconf"
-
-php_pecl "zip"
-
 php_pecl "zip" do
-  action :setup
+  action [ :install, :setup ]
 end
