@@ -1,20 +1,16 @@
 if node.attribute?("gocourse")
 
-  database_credentials = []
-
-  if node["gocourse"]["database"]
-    database_credentials = node["gocourse"]["database"]
-  end
+  env_conf = get_env_for_shell("gocourse")
 
   template "/etc/profile.d/gocourse.sh" do
     source "profile.erb"
     mode "0755"
-    variables :vars => database_credentials
-
+    variables :env => env_conf
     not_if do
-      database_credentials.empty?
+      env_conf.empty?
     end
   end
+
 end
 
 cookbook_file "/etc/profile.d/bib-alias.sh" do
