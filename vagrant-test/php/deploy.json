@@ -13,18 +13,24 @@
         "domain": {
             "api": "api.local"
         },
-        "database": {
-            "api": {
-                "hostname": "127.0.0.1",
-                "username": "root",
-                "password": "test123",
-                "database": "api_stage"
+        "env": {
+            "database": {
+                "api": {
+                    "hostname": "127.0.0.1",
+                    "username": "root",
+                    "password": "test123",
+                    "database": "api_stage"
+                },
+                "management": {
+                    "hostname": "127.0.0.1",
+                    "username": "root",
+                    "password": "",
+                    "database": "management_stage"
+                }
             },
-            "management": {
-                "hostname": "127.0.0.1",
-                "username": "root",
-                "password": "",
-                "database": "management_stage"
+            "aws": {
+                "key": "super-key",
+                "secret": "super-duper-secret"
             }
         }
     },

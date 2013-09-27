@@ -1,8 +1,8 @@
 Vagrant::Config.run do |config|
 
   config.vm.boot_mode = :gui
-  config.vm.box = "precise64"
-  config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
+  config.vm.box = "easybib-ubuntu-10.04.4_vbox-4.2.6_0.4.1" #"precise64"
+  #config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
 
   config.vm.network :hostonly, "33.33.33.124"
 
@@ -14,14 +14,11 @@ Vagrant::Config.run do |config|
 
   #config.vm.provision :shell, :path => "./../update-mirrors.sh"
 
+  config.vm.provision :shell, :inline => "apt-get update -y"
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
-    chef.add_recipe "php-fpm"
-    chef.add_recipe "php-bcmath"
-    chef.add_recipe "php-intl::pecl"
-    chef.add_recipe "php-pdo_sqlite::source"
-    chef.add_recipe "php-mysqlnd_uh::compile"
-    chef.add_recipe "php-xdebug"
+    chef.add_recipe "easybib::role-gocourse-api"
+    chef.add_recipe "zsh::configure"
     chef.json = JSON.parse(File.read("./deploy.json"))
 
     chef.log_level = :debug

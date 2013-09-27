@@ -48,10 +48,8 @@ server {
         include       fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
-        <%=@db_conf-%>
-        <%=@domain_conf-%>
-<% if @aws_conf -%>
-        <%=@aws_conf-%>
+<% if @env_conf -%>
+        <%=@env_conf-%>
 <% end -%>
 <% if @xhprof_enable && @xhprof_enable == true -%>
         set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
@@ -68,10 +66,8 @@ server {
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
-            <%=@db_conf-%>
-            <%=@domain_conf-%>
-<% if @aws_conf -%>
-            <%=@aws_conf%>
+<% if @env_conf -%>
+            <%=@env_conf%>
 <% end -%>
 <% if @xhprof_enable && @xhprof_enable == true -%>
             set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
