@@ -1,0 +1,16 @@
+#!/bin/sh
+
+alias taillog='sudo tail -f /var/log/syslog'
+alias ..='cd ..;'
+alias ...='cd ../..;'
+
+alias go='cd /srv/www/api/current/;'
+alias go='cd /vagrant_data/;'
+
+# staging will be replaced
+if [ "$color_prompt" = yes ]; then
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@staging\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+  PS1='${debian_chroot:+($debian_chroot)}\u@staging:\w\$ '
+fi
+
