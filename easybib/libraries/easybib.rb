@@ -41,7 +41,7 @@ module EasyBib
         end
         config_value.each_pair do |sub_key, sub_value|
           var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
-          config << build_nginx_config(var, config_value)
+          config << build_nginx_config(var, sub_value)
         end
       end
     end
