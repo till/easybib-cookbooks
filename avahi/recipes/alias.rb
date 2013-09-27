@@ -12,13 +12,14 @@ execute "install python-avahi" do
   command "pip install --force-reinstall #{node["avahi"]["alias"]["package"]}"
 end
 
-if !node["avahi"]["alias"]["domains"].empty?
-  template "/etc/avahi/aliases.d/domains" do
-    mode "0644"
-    source "alias.erb"
-    variables({
-      :domains => node["avahi"]["alias"]["domains"]
-    })
-    notifies :restart, "service[avahi-aliases]"
+template "/etc/avahi/aliases.d/domains" do
+  mode "0644"
+  source "alias.erb"
+  variables({
+    :domains => node["avahi"]["alias"]["domains"]
+  })
+  notifies :restart, "service[avahi-aliases]"
+  not_if do
+    node["avahi"]["alias"]["domains"].empty?
   end
 end
