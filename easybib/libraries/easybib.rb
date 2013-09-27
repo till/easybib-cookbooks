@@ -9,7 +9,7 @@ module EasyBib
 
   def has_env?(app, node = self.node)
 
-    if node.attribute?(app)
+    if !node.attribute?(app)
       return false
     end
 
@@ -28,7 +28,7 @@ module EasyBib
       return config
     end
 
-    if node[app]["dev"].nil?
+    if node[app]["env"].nil?
       raise "Attribute not defined!"
     end
 
