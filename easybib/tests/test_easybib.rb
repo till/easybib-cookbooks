@@ -20,7 +20,7 @@ class TestEasyBib < Test::Unit::TestCase
     fake_node["env"]["database"]["app"].each do |k,v|
       assert_equal(
         build_nginx_config("app_#{k}", v),
-        "fastcgi_param APP_#{k.upcase} \"#{v}\";\n"
+        "fastcgi_param APP_#{k} \"#{v}\";\n"
       )
     end
   end
