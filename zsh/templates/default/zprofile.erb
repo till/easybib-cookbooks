@@ -16,20 +16,4 @@ if [[ -z "$PATH" || "$PATH" == "/bin:/usr/bin" ]]
 then
 	export PATH="/usr/local/bin:/usr/bin:/bin:/usr/games"
 fi
-<%
-@vars.each_pair do |section,data|
-  data.each_pair do |config_key,config_value|
-    if config_value.dup.is_a?(String)
--%>
-export <%= sprintf('%s_%s="%s"', section.upcase, config_key.upcase, config_value) %>
-<%
-      next
-    end
-    config_value.each_pair do |sub_key, sub_value|
--%>
-export <%= sprintf('%s_%s_%s="%s"', section.upcase, config_key.upcase, sub_key.upcase, sub_value) %>
-<%
-    end
-  end
-end
--%>
+<%= @env %>
