@@ -11,8 +11,12 @@ else
 end
 
 domain_name = node["gocourse"]["domain"]["management"]
-db_conf = get_db_conf("gocourse")
 domain_conf = get_domain_conf("gocourse")
+
+env_conf = ""
+if has_env?("gocourse")
+  env_conf = get_env_for_nginx("gocourse")
+end
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
@@ -28,7 +32,7 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :default_router => node["nginx-app"]["default_router"],
     :xhprof_enable => false,
     :upstream => config,
-    :db_conf => db_conf,
+    :env_conf => env_conf,
     :domain_conf => domain_conf
   )
   notifies :restart, "service[nginx]", :delayed

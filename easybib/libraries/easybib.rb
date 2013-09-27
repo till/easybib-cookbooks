@@ -7,12 +7,47 @@ module EasyBib
     return false
   end
 
-  def get_aws_conf(node_attribute, node = self.node)
-    return get_conf_from_env(node_attribute, "aws", node)
+  def has_env?(app, node = self.node)
+
+    if node.attribute?(app)
+      return false
+    end
+
+    if node[app]["env"]
+      return true
+    end
+
+    return false
   end
 
-  def get_db_conf(node_attribute, node = self.node)
-    return get_conf_from_env(node_attribute, "database", node)
+  def get_env_for_nginx(app, node = self.node)
+
+    config = ""
+
+    if !node.attribute?(app)
+      return config
+    end
+
+    if node[app]["dev"].nil?
+      raise "Attribute not defined!"
+    end
+
+    node[app]["env"].each_pair do |section, data|
+      data.each_pair do |config_key, config_value|
+        if config_value.is_a?(String)
+          var = sprintf('%s_%s', section.upcase, config_key.upcase)
+          config << build_nginx_config(var, config_value)
+          next
+        end
+        config_value.each_pair do |sub_key, sub_value|
+          var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
+          config << build_nginx_config(var, config_value)
+        end
+      end
+    end
+
+    return config
+
   end
 
   def get_domain_conf(node_attribute, node = self.node)
