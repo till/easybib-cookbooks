@@ -1,15 +1,19 @@
-database_credentials = []
-if node["gocourse"] && node["gocourse"]["database"]
-  database_credentials = node["gocourse"]["database"]
-end
+if node.attribute?("gocourse")
 
-template "/etc/profile.d/gocourse.sh" do
-  source "profile.erb"
-  mode "0755"
-  variables :vars => database_credentials
+  database_credentials = []
 
-  not_if do
-    database_credentials.empty?
+  if node["gocourse"]["database"]
+    database_credentials = node["gocourse"]["database"]
+  end
+
+  template "/etc/profile.d/gocourse.sh" do
+    source "profile.erb"
+    mode "0755"
+    variables :vars => database_credentials
+
+    not_if do
+      database_credentials.empty?
+    end
   end
 end
 
