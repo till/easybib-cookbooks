@@ -1,5 +1,4 @@
-compile_deps = ["build-essential", "autoconf", "make"]
-compile_deps.each do |dep|
+["build-essential", "autoconf", "make"].each do |dep|
   package dep do
     action :install
   end
