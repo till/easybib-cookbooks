@@ -9,6 +9,8 @@ server {
     <%= @nginx_extra -%>
   <% end -%>
 
+    client_max_body_size 5m;
+
     location = /health_check.php {
 
         access_log <%= @access_log %>;
