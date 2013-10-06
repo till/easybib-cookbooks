@@ -1,3 +1,5 @@
+include_recipe "nginx-app::service"
+
 node["redirector"]["domains"].each do |domain_name, new_domain_name|
 
   template "/etc/nginx/sites-enabled/redir-#{domain_name}.conf" do
@@ -9,7 +11,7 @@ node["redirector"]["domains"].each do |domain_name, new_domain_name|
       :domain_name => domain_name,
       :new_domain_name => new_domain_name
     )
-    notifies :restart, resources(:service => "nginx"), :delayed
+    notifies :restart, "service[nginx]", :delayed
   end
 
 end
