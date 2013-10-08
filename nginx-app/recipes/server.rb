@@ -1,4 +1,5 @@
 include_recipe "nginx-app::ppa"
+include_recipe "nginx-app::service"
 
 ohai "reload_passwd" do
   action :nothing
@@ -7,11 +8,8 @@ end
 
 package "nginx" do
   notifies :reload, "ohai[reload_passwd]", :immediately
-end
-
-service "nginx" do
-  supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
+  notifies :enable, "service[nginx]"
+  notifies :start, "service[nginx]"
 end
 
 template "/etc/nginx/fastcgi_params" do
