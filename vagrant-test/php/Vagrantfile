@@ -17,8 +17,8 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => "apt-get update -y"
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
-    chef.add_recipe "easybib::role-gocourse-api"
-    chef.add_recipe "zsh::configure"
+    chef.add_recipe "php-fpm"
+    chef.add_recipe "php-intl"
     chef.json = JSON.parse(File.read("./deploy.json"))
 
     chef.log_level = :debug

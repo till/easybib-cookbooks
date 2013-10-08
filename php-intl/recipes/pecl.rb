@@ -23,10 +23,11 @@ execute "tar -zxf #{Chef::Config[:file_cache_path]}/#{release}"do
   end
 end
 
-if !File.exists?(so_file)
-  php_pecl "intl" do
-    action [ :compile, :setup ]
-    source_dir "#{Chef::Config[:file_cache_path]}/intl-#{version}"
-    notifies :reload, "service[php-fpm]"
+php_pecl "intl" do
+  action [ :compile, :setup ]
+  source_dir "#{Chef::Config[:file_cache_path]}/intl-#{version}"
+  notifies :reload, "service[php-fpm]"
+  not_if do
+    File.exists?(so_file)
   end
 end
