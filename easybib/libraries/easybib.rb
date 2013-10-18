@@ -36,11 +36,11 @@ module EasyBib
     end
 
     if node[app]["env"].nil?
-      raise "Attribute not defined!"
+      raise "Attribute 'env' for application '#{app}' is not defined!"
     end
 
     if !["nginx", "shell"].include?(config_type)
-      raise "Unknown config type: #{config_type}"
+      raise "Unknown configuration type: #{config_type}."
     end
 
     node[app]["env"].each_pair do |section, data|
