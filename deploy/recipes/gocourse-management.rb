@@ -5,8 +5,6 @@ instance_roles = get_instance_roles()
 
 node["deploy"].each do |application, deploy|
 
-  next unless deploy["deploying_user"]
-
   case application
   when 'management'
     next unless instance_roles.include?('management-server')

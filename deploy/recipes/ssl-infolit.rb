@@ -14,8 +14,6 @@ stored_certificate = false
 
 node["deploy"].each do |application, deploy|
 
-  next unless deploy["deploying_user"]
-
   if cluster_name != node["easybib"]["cluster_name"]
     next
   end

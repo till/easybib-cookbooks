@@ -5,7 +5,9 @@ node['deploy'].each do |application, deploy|
 
   Chef::Log.info("deploy::bibcd - request to deploy app: #{application}, role: #{instance_roles} in #{cluster_name}")
 
-  next unless deploy["deploying_user"]
+  # To debug empty user/group problem with chef 11:
+  # Chef::Log.debug("deploy::bibcd - deploy resource: " + deploy.inspect)
+
   next unless cluster_name == node["easybib"]["cluster_name"]
 
   case application
@@ -18,9 +20,6 @@ node['deploy'].each do |application, deploy|
 
   Chef::Log.info("deploy::bibcd - Deployment started.")
   Chef::Log.info("deploy::bibcd - Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
-
-#  To debug empty user/group problem with chef 11:
-#  Chef::Log.debug("depoy::bibcd - deploy resource: " + deploy.inspect)
 
   opsworks_deploy_user do
     deploy_data deploy

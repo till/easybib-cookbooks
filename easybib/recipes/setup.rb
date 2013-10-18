@@ -12,6 +12,10 @@ end
 include_recipe "easybib::nginxstats"
 include_recipe "easybib::cron"
 
+if is_aws()
+  include_recipe "easybib::opsworks-fixes"
+end
+
 # landscape is buggy
 # https://bugs.launchpad.net/ubuntu/+source/pam/+bug/805423
 package "landscape-client" do

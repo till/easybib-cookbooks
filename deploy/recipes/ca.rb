@@ -5,7 +5,6 @@ node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::ca - app: #{application}, role: #{instance_roles}")
 
-  next unless deploy["deploying_user"]
   next unless cluster_name == 'Citation Analytics'
 
   case application
