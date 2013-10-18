@@ -1,4 +1,5 @@
 include_recipe "php-fpm::service"
+include_recipe "pecl-manager::service"
 
 cluster_name   = get_cluster_name()
 instance_roles = get_instance_roles()
@@ -27,6 +28,14 @@ node["deploy"].each do |application, deploy|
 
   service "php-fpm" do
     action :reload
+  end
+
+  link "/etc/init.d/pecl-manager" do
+    to "#{deploy["current_path"]}/bin/workers"
+  end
+
+  service "pecl-manager" do
+    action :restart
   end
 
   cron "clean-up changes" do
