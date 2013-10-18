@@ -34,6 +34,10 @@ node["deploy"].each do |application, deploy|
     to "#{deploy["current_path"]}/bin/workers"
   end
 
+  service "pecl-manager" do
+    action :restart
+  end
+
   cron "clean-up changes" do
     minute "0"
     hour "0"
