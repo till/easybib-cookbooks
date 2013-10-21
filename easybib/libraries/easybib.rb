@@ -22,6 +22,10 @@ module EasyBib
   
   def allow_deploy(application, requested_application, requested_role = nil)
     
+    if !is_aws() 
+      return false
+    end
+    
     if requested_role.nil?
       requested_role = requested_application
     end
