@@ -3,13 +3,8 @@ include_recipe "apt::ppa"
 case node["lsb"]["codename"]
 when "lucid", "maverick", "natty", "oneiric"
 
-  [
-    "add-apt-repository #{node["redis"]["ppa"]}",
-    "apt-get -y -f -m update"
-  ].each do |cmd|
-    execute "Running #{cmd}" do
-      command cmd
-    end
+  easybib_launchpad node["redis"]["ppa"] do
+    action :discover
   end
 
   package "redis-server"

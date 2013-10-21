@@ -1,11 +1,7 @@
 include_recipe "apt::ppa"
 
-execute "discover ppa" do
-  command "add-apt-repository ppa:nijel/phpmyadmin"
-end
-
-execute "update sources" do
-  command "apt-get update"
+easybib_launchpad "ppa:nijel/phpmyadmin" do
+  action :discover
 end
 
 package "phpmyadmin"
