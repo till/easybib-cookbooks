@@ -1,19 +1,8 @@
 include_recipe "php-fpm::service"
 
-cluster_name   = get_cluster_name()
-instance_roles = get_instance_roles()
+node['deploy'].each do |application, deploy|
 
-node["deploy"].each do |application, deploy|
-
-  next unless cluster_name == node["easybib"]["cluster_name"]
-
-  case application
-  when 'infolit'
-    next unless instance_roles.include?('nginxphpapp')
-  else
-    Chef::Log.info("deploy::infolit - #{application} (in #{cluster_name}) skipped")
-    next
-  end
+  next unless allow_deploy(application, 'infolit', 'nginxphpapp')
 
   Chef::Log.info("deploy::infolit - Deployment started.")
   Chef::Log.info("deploy::infolit - Deploying as user: #{deploy["user"]} and #{deploy["group"]}")

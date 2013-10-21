@@ -1,22 +1,6 @@
-instance_roles = get_instance_roles()
-cluster_name   = get_cluster_name()
-
 node['deploy'].each do |application, deploy|
 
-  Chef::Log.info("deploy::bibcd - request to deploy app: #{application}, role: #{instance_roles} in #{cluster_name}")
-
-  # To debug empty user/group problem with chef 11:
-  # Chef::Log.debug("deploy::bibcd - deploy resource: " + deploy.inspect)
-
-  next unless cluster_name == node["easybib"]["cluster_name"]
-
-  case application
-  when 'bibcd'
-    next unless instance_roles.include?('bibcd')
-  else
-    Chef::Log.info("deploy::bibcd - #{application} (in #{cluster_name}) skipped")
-    next
-  end
+  next unless allow_deploy(application, 'bibcd')
 
   Chef::Log.info("deploy::bibcd - Deployment started.")
   Chef::Log.info("deploy::bibcd - Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
