@@ -19,6 +19,28 @@ module EasyBib
 
     return false
   end
+  
+  def allow_deploy(application, requested_application, node = self.node)
+    
+    instance_roles = get_instance_roles()
+    cluster_name   = get_cluster_name()
+    
+    Chef::Log.info("deploy #{requested_application} - request to deploy app: #{application}, role: #{instance_roles} in #{cluster_name}")
+    
+    if cluster_name != node["easybib"]["cluster_name"]
+      return false
+    end
+
+    case application
+    when requested_application
+      return false unless instance_roles.include?(requested_application)
+    else
+      Chef::Log.info("deploy #{requested_application} - #{application} (in #{cluster_name}) skipped")
+      return false
+    end
+    
+    return true
+  end
 
   def get_env_for_nginx(app, node = self.node)
     return get_env(app, node, "nginx")
