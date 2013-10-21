@@ -28,16 +28,20 @@ module EasyBib
     Chef::Log.info("deploy #{requested_application} - request to deploy app: #{application}, role: #{instance_roles} in #{cluster_name}")
     
     if cluster_name != node["easybib"]["cluster_name"]
+      Chef::Log.debug("deploy::debug : clustername wrong")
       return false
     end
 
     case application
     when requested_application
+      Chef::Log.debug("deploy::debug : when requested application")
       return false unless instance_roles.include?(requested_application)
     else
       Chef::Log.info("deploy #{requested_application} - #{application} (in #{cluster_name}) skipped")
       return false
     end
+    
+    Chef::Log.debug("deploy::debug : returning true")
     
     return true
   end
