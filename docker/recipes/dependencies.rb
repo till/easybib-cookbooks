@@ -1,11 +1,10 @@
 include_recipe "apt::ppa"
 
-if !::File.exists?("/etc/apt/sources.list.d/dotcloud-lxc-docker-#{node["lsb"]["codename"]}.list")
-  execute "add #{node["docker"]["ppa"]}" do
-    command "add-apt-repository #{node["docker"]["ppa"]}"
+easybib_launchpad node["docker"]["ppa"] do
+  action :discover
+  not_if do
+    ::File.exists?("/etc/apt/sources.list.d/dotcloud-lxc-docker-#{node["lsb"]["codename"]}.list")
   end
-
-  execute "apt-get update"
 end
 
 #if is_aws()

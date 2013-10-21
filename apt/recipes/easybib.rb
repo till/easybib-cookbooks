@@ -1,9 +1,3 @@
-ppa = node["apt"]["easybib"]["ppa"]
-
-execute "add #{ppa}" do
-  command "add-apt-repository #{ppa}"
-end
-
-execute "update sources" do
-  command "apt-get -y -f -q update"
+easybib_launchpad node["apt"]["easybib"]["ppa"] do
+  action :discover
 end
