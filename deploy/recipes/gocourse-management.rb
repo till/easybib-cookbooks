@@ -1,16 +1,8 @@
 include_recipe "php-fpm::service"
 
-cluster_name   = get_cluster_name()
-instance_roles = get_instance_roles()
+node['deploy'].each do |application, deploy|
 
-node["deploy"].each do |application, deploy|
-
-  case application
-  when 'management'
-    next unless instance_roles.include?('management-server')
-  else
-    next
-  end
+  next unless allow_deploy(application, 'management', 'management-server')
 
   opsworks_deploy_dir do
     user  deploy["user"]
