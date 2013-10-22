@@ -32,7 +32,7 @@ template "#{cfg_dir}/prosody.cfg.lua" do
   variables(
     :include_files => "#{cfg_partial_dir}/*.cfg.lua"
   )
-  notifies :restart, "service[prosody]"
+  notifies :reload, "service[prosody]"
 end
 
 template "#{cfg_partial_dir}/prosody.cfg.lua" do
@@ -45,7 +45,7 @@ template "#{cfg_partial_dir}/prosody.cfg.lua" do
     :db => node["prosody"]["db"],
     :domains => node["prosody"]["domains"]
   )
-  notifies :restart, "service[prosody]"
+  notifies :reload, "service[prosody]"
 end
 
 include_recipe "prosody::ssl"
