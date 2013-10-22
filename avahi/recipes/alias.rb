@@ -19,6 +19,7 @@ template "/etc/avahi/aliases.d/domains" do
     :domains => node["avahi"]["alias"]["domains"]
   })
   notifies :restart, "service[avahi-aliases]"
+  notifies :restart, "service[nscd]"
   not_if do
     node["avahi"]["alias"]["domains"].empty?
   end

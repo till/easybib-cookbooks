@@ -6,6 +6,7 @@ template "/etc/avahi/avahi-daemon.conf" do
   mode   "0644"
   owner  "root"
   group  "root"
+  notifies :restart, "service[nscd]"
 end
 
 service "avahi-daemon" do
