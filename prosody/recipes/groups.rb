@@ -11,9 +11,9 @@ template "/var/prosody/sharedgroups.txt" do
   source "sharedgroups.txt.erb"
   owner "prosody"
   group "prosody"
-  mode "0644"
+  mode "0600"
   variables({
     :groups => node['prosody']['groups'],
   })
-  notifies :restart, "service[prosody]"
+  notifies :reload, "service[prosody]"
 end
