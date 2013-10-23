@@ -1,4 +1,4 @@
-groups_cfg = "/etc/prosody/conf.d/prosody_groups.lua"
+groups_cfg = "/etc/prosody/conf.d/prosody_groups.cfg.lua"
 
 execute "load sharedgroups" do
   command "echo 'groups_file = \"/var/prosody/sharedgroups.txt\"' >> #{groups_cfg}"
