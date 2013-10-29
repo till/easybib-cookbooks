@@ -9,6 +9,8 @@ base_packages.each do |p|
   package p
 end
 
+gem_package "bib-opsworks"
+
 service "nscd" do
   action :nothing
   supports [ :start, :stop, :restart, :reload ]
