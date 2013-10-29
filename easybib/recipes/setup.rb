@@ -9,7 +9,7 @@ base_packages.each do |p|
   package p
 end
 
-gem_package "bib-opsworks"
+gem_package "BibOpsworks"
 
 service "nscd" do
   action :nothing
