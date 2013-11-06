@@ -6,12 +6,13 @@ if node["loggly"] && (node["loggly"]["domain"] != 'example')
   
   Chef::Log.debug("Logglydata is: #{logglydata}")
   if is_aws()
-    cluster_name   = get_cluster_name()
-    logglydata << " tag=\"#{cluster_name.gsub(/ \s\\,/,'')}\""
+    cluster_name   = get_cluster_name().gsub(/\s\\,/,'_')
+    logglydata << " tag=\"#{cluster_name}\""
     Chef::Log.debug("Logglydata is: #{logglydata}")
     
     get_instance_roles().each do |layer|
-      logglydata << " tag=\"#{layer.gsub(/ \s\\,/,'')}\""
+      layer = layer.gsub(/\s\\,/,'_')
+      logglydata << " tag=\"#{layer}\""
       Chef::Log.debug("Logglydata is: #{logglydata}")
     end
   end
