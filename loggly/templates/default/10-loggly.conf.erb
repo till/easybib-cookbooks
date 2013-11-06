@@ -23,7 +23,7 @@ if !::EasyBib.get_instance_roles(node).include?('loadbalancer')
 %>
 
 # forward to loggly: https://easybib.loggly.com
-$template LogglyFormat,"%pri% %protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= @logglydata %>] %msg%\n"
+$template LogglyFormat,"<%%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= @logglydata %>] %msg%\n"
 
 *.* @@logs-01.loggly.com:514; LogglyFormat
 
