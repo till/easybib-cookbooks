@@ -6,10 +6,10 @@ if node["loggly"] && (node["loggly"]["domain"] != 'example')
   
   if is_aws()
     cluster_name   = get_cluster_name().gsub(/\W/,'_')
-    logglydata << " tag=\\\"stack:#{cluster_name}\\\""
+    logglydata << " tag=\\\"stack.#{cluster_name}\\\""
     get_instance_roles().each do |layer|
       layer = layer.gsub(/\W/,'_')
-      logglydata << " tag=\\\"layer:#{layer}\\\""
+      logglydata << " tag=\\\"layer.#{layer}\\\""
     end
   end
 
