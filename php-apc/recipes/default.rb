@@ -6,7 +6,7 @@ include_recipe "apt::easybib"
   package package_name do
     action :install
     only_if do
-      find_package = Mixlib::ShellOut.new("apt-cache showpkg #{package_name}")
+      find_package = Mixlib::ShellOut.new("apt-get install -s #{package_name}")
       find_package.run_command
       find_package.exitstatus == 0 && !find_package.stdout.empty?
     end
