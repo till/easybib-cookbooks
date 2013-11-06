@@ -3,7 +3,7 @@ require 'chefspec'
 describe 'php-apc::configure' do
   let (:chef_run) { ChefSpec::ChefRunner.new.converge('php-apc::configure') }
   it "creates apc.ini" do
-    expect(chef_run).to create_file("/opt/easybib/etc/php/apc.ini")
+    expect(chef_run).to create_file("/opt/easybib/etc/php/apc-settings.ini")
   end
   it "it contains production settings" do
 
