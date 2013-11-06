@@ -4,20 +4,15 @@ if node["loggly"] && (node["loggly"]["domain"] != 'example')
 
   logglydata = node["loggly"]["token"]
   
-  Chef::Log.debug("Logglydata is: #{logglydata}")
   if is_aws()
     cluster_name   = get_cluster_name().gsub(/\W/,'_')
-    logglydata << " tag=\\\"#{cluster_name}\\\""
-    Chef::Log.debug("Logglydata is: #{logglydata}")
-    
+    logglydata << " tag=\\\"stack:#{cluster_name}\\\""
     get_instance_roles().each do |layer|
       layer = layer.gsub(/\W/,'_')
-      logglydata << " tag=\\\"#{layer}\\\""
-      Chef::Log.debug("Logglydata is: #{logglydata}")
+      logglydata << " tag=\\\"layer:#{layer}\\\""
     end
   end
 
-  Chef::Log.debug("Logglydata is: #{logglydata}")
   template "/etc/rsyslog.d/10-loggly.conf" do
     source "10-loggly.conf.erb"
     variables(
