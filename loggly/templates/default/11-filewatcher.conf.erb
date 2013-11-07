@@ -1,0 +1,18 @@
+<% if ::EasyBib.get_instance_roles(node).include?('nginxphpapp') %>
+
+$ModLoad imfile
+<%
+node[:syslog][:logfiles].each do|fileName,logSeverity|
+%>
+  $InputFileName <%= fileName %>
+  $InputFileTag <%= File.basename(fileName, '.log') %>
+  $InputFileStateFile stat-<%= File.basename(fileName, '.log') %>
+  $InputFileSeverity <%= logSeverity %>
+  $InputRunFileMonitor
+<%
+end
+%>
+
+$InputFilePollInterval <%= node[:syslog][:poll] %>
+
+<% end %>
