@@ -1,6 +1,6 @@
 gem_package "json"
 
-if node["loggly"] && (node["loggly"]["domain"] != 'example')
+if node["loggly"] && (node["loggly"]["token"] != 'example')
 
   logglydata = node["loggly"]["token"]
   
