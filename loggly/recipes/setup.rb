@@ -1,6 +1,6 @@
 gem_package "json"
 
-if node["loggly"] && (node["loggly"]["domain"] != 'example')
+if node["loggly"] && (node["loggly"]["token"] != 'example')
 
   logglydata = node["loggly"]["token"]
   
@@ -20,12 +20,16 @@ if node["loggly"] && (node["loggly"]["domain"] != 'example')
     )
     mode "0644"
   end
+  
+  template "/etc/rsyslog.d/11-filewatcher.conf" do
+    source "11-filewatcher.conf.erb"
+    mode "0644"
+  end
 
   service "rsyslog" do
     supports :status => true, :restart => true, :reload => true
     action [ :restart ]
   end
-
 
   include_recipe "loggly::opsworks"
 
