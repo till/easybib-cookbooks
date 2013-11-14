@@ -1,19 +1,22 @@
-if is_aws()
-  deploy_dir = "/srv/www/api/current/public/"
-  nginx_extras = ""
-  domain_name = node["gocourse"]["domain"]["api"]
-else
-  deploy_dir = "/vagrant_data/public/"
-  domain_name = ""
-  nginx_extras = "sendfile off;"
-end
-
-default_router = "index.php"
 config = "api"
 
-db_conf = get_db_conf("gocourse")
+if is_aws()
+  deploy_dir = "/srv/www/#{config}/current/public/"
+else
+  if node["vagrant"]["combined"] == true
+    deploy_dir = node["vagrant"]["deploy_to"][config]
+  else
+    deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+  end
+end
+
+domain_name = node["gocourse"]["domain"]["api"]
 domain_conf = get_domain_conf("gocourse")
-aws_conf = get_aws_conf("gocourse")
+
+env_conf = ""
+if has_env?("gocourse")
+  env_conf = get_env_for_nginx("gocourse")
+end
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
   source "silex.conf.erb"
@@ -25,13 +28,12 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :doc_root    => deploy_dir,
     :domain_name => domain_name,
     :access_log  => 'off',
-    :nginx_extra => nginx_extras,
-    :default_router => default_router,
+    :nginx_extra => node["nginx-app"]["extras"],
+    :default_router => node["nginx-app"]["default_router"],
     :xhprof_enable => false,
     :upstream => config,
-    :db_conf => db_conf,
-    :domain_conf => domain_conf,
-    :aws_conf => aws_conf
+    :env_conf => env_conf,
+    :domain_conf => domain_conf
   )
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end

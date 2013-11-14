@@ -1,15 +1,10 @@
 include_recipe "apt::ppa"
 
-case node[:lsb][:codename]
+case node["lsb"]["codename"]
 when "lucid", "maverick", "natty", "oneiric"
 
-  [
-    "add-apt-repository #{node["redis"]["ppa"]}",
-    "apt-get -y -f -m update"
-  ].each do |cmd|
-    execute "Running #{cmd}" do
-      command cmd
-    end
+  easybib_launchpad node["redis"]["ppa"] do
+    action :discover
   end
 
   package "redis-server"
@@ -17,5 +12,5 @@ when "lucid", "maverick", "natty", "oneiric"
   include_recipe "redis::user"
   include_recipe "redis::configure"
 else
-  Chef::Log.error("Unsupported platform: #{node[:lsb][:codename]}")
+  Chef::Log.error("Unsupported platform: #{node["lsb"]["codename"]}")
 end

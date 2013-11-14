@@ -1,0 +1,26 @@
+Vagrant::Config.run do |config|
+
+    config.vm.boot_mode = :gui
+    config.vm.box = "precise64"
+    config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
+
+    config.vm.network :hostonly, "33.33.33.124"
+
+    config.vm.customize [
+        "modifyvm", :id,
+        "--name", "Vagrant Cookbook Testbox",
+        "--memory", "256"
+    ]
+
+    config.vm.provision :shell, :inline => "apt-get update -y"
+    config.vm.provision :shell, :inline => "wget -O - http://opscode.com/chef/install.sh | sudo bash"
+
+    config.vm.provision :chef_solo do |chef|
+        chef.cookbooks_path = "./../../"
+        chef.log_level = :debug
+        chef.add_recipe "easybib::setup"
+        chef.add_recipe "percona::server"
+        chef.add_recipe "prosody"
+        chef.json = JSON.parse(File.read("./prosody.json"))
+    end
+end

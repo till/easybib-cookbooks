@@ -1,7 +1,7 @@
 cron "Add our email into crontab" do
   mailto node["sysop_email"]
 
-  only_if do
-    node.attribute?("sysop_email") && !node["sysop_email"].empty?
+  not_if do
+    node["sysop_email"].nil? || node["sysop_email"].empty?
   end
 end

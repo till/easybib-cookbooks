@@ -5,4 +5,6 @@ maintainer        'Till Klampaeckel'
 maintainer_email  'till@php.net'
 
 supports 'ubuntu', "12.04.2"
+
 depends "apt"
+depends "easybib"

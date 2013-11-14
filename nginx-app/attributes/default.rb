@@ -5,6 +5,15 @@ default["nginx-app"]["static_directories"] = ["js", "css", "images", "raw"]
 default["nginx-app"]["config_dir"]         = "/etc/nginx"
 default["nginx-app"]["conf_file"]          = "easybib.com.conf.erb"
 
+default["nginx-app"]["extras"] = ""
+default["nginx-app"]["xhprof"] = {}
+default["nginx-app"]["xhprof"]["enable"] = false
+
+default["nginx-app"]["default_router"] = "index.php"
+
+default["nginx-app"]["vagrant"] = {}
+default["nginx-app"]["vagrant"]["deploy_dir"] = "/vagrant_data/web/"
+
 # module specific configuration for assets
 default["nginx-app"]["js_modules"] = {
     "debugger"        => "debugger",
@@ -41,9 +50,6 @@ default["nginx-app"]["css_modules"] = {
     "pearson"         => "pearson",
     "folders"         => "folders"
 }
-
-# Silverline attribs
-default["silverline"]["nginx_name"] = "nginx"
 
 default["nginx-app"]["sitescraper"] = {}
 default["nginx-app"]["sitescraper"]["routes_enabled"] = {}

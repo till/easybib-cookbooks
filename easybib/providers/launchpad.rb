@@ -1,0 +1,21 @@
+action :discover do
+
+  repository = new_resource.repository
+
+  discover_command = "add-apt-repository "
+  discover_command << "--yes " if node["lsb"]["codename"] == 'precise'
+  discover_command << repository
+
+  execute "update_easybib_sources" do
+    command "apt-get -y -f -q update"
+    action :nothing
+  end
+
+  execute "discover ppa: #{repository}" do
+    command discover_command
+    notifies :run, "execute[update_easybib_sources]", :immediately
+  end
+
+  new_resource.updated_by_last_action(true)
+
+end

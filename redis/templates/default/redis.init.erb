@@ -13,11 +13,11 @@
 
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=<%= node[:redis][:prefix] %>/bin/redis-server
+DAEMON=<%= node["redis"]["prefix"] %>/bin/redis-server
 DAEMON_ARGS=/etc/redis/redis.conf
 NAME=redis-server
 DESC=redis-server
-PIDFILE=<%= node[:redis][:pid_file] %>
+PIDFILE=<%= node["redis"]["pid_file"] %>
 
 #
 # Include defaults if available
@@ -49,7 +49,7 @@ case "$1" in
         ;;
   stop)
         echo -n "Stopping $DESC: "
-        if redis-cli -p <%= node[:redis][:port] %> SHUTDOWN
+        if redis-cli -p <%= node["redis"]["port"] %> SHUTDOWN
         then
                 echo "$NAME."
         else
@@ -60,7 +60,7 @@ case "$1" in
 
   status)
         echo -n "$DESC is "
-        REDIS_RESPONSE=$(redis-cli -p <%= node[:redis][:port] %> ECHO FOO)
+        REDIS_RESPONSE=$(redis-cli -p <%= node["redis"]["port"] %> ECHO FOO)
         if [ "x${REDIS_RESPONSE}" = "xFOO" ]; then
             echo "running"
         else

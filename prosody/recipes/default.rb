@@ -1,8 +1,14 @@
 case node["platform"]
 when "debian", "ubuntu"
   include_recipe "prosody::apt"
-  package "lua-event"
-  package "liblua5.1-sec1"
+
+  ["lua-event", "liblua5.1-sec1", "lua-zlib"].each do |package_dep|
+    package "installing #{package_dep} for prosody" do
+      package_name package_dep
+      action :install
+    end
+  end
+
   package_name = "prosody"
 when "freebsd", "gentoo"
   package_name = "net-im/prosody"
@@ -20,3 +26,4 @@ package "installing prosody" do
 end
 
 include_recipe "prosody::configure"
+include_recipe "prosody::groups"

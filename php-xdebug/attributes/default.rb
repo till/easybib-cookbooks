@@ -1,7 +1,7 @@
-default[:xdebug]           = {}
-default[:xdebug][:version] = "latest"
+default["xdebug"]            = {}
+default["xdebug"]["version"] = nil
 
-default[:xdebug][:config] = {
+default["xdebug"]["config"] = {
     "scream"               => 1,
     "show_exception_trace" => 0,
     "remote_enable"        => 1,

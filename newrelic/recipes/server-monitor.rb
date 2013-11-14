@@ -4,6 +4,9 @@ execute "newrelic-license" do
   command "nrsysmond-config --set license_key=#{node["newrelic"]["license"]}"
   action :nothing
   notifies :create, "template[/etc/newrelic/nrsysmond.cfg]", :immediately
+  not_if do
+    node["newrelic"]["license"].empty?
+  end
 end
 
 host_name = "#{node["hostname"]}.#{get_cluster_name().gsub(/\s+/, "-").strip.downcase}"
@@ -21,8 +24,14 @@ template "/etc/newrelic/nrsysmond.cfg" do
   })
   action :nothing
   notifies :start, "service[newrelic-sysmond]", :immediately
+  not_if do
+    node["newrelic"]["license"].empty?
+  end
 end
 
 package "newrelic-sysmond" do
   notifies :run, "execute[newrelic-license]", :immediately
+  not_if do
+    node["newrelic"]["license"].empty?
+  end
 end

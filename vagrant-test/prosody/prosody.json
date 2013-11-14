@@ -1,0 +1,26 @@
+{
+    "deploy": {
+
+    },
+    "prosody": {
+        "admins": [
+            "till@example.org"
+        ],
+        "domains": [
+            "example.org"
+        ],
+        "users": {
+            "till@example.org": "test123",
+            "fh@example.org": "test123",
+            "john@example.org": "foobar"
+        },
+        "groups": {
+            "dev": ["till@example.org", "fh@example.org"],
+            "lala": ["fh@example.org", "john@example.org"]
+        },
+        "conferences": {
+            "test-room@conference.example.org": ["till@example.org"],
+            "other-room@conference.example.org": ["john@example.org", "fh@example.org"]
+        }
+    }
+}

@@ -11,6 +11,7 @@ recipe            "easybib::cron", "Configure MAILTO= in crontab"
 
 supports 'ubuntu'
 
+depends "avahi"
 depends "bash"
 depends "composer"
 depends "deploy"
@@ -27,6 +28,7 @@ depends "php-gearman"
 depends "php-intl"
 depends "php-phar"
 depends "php-posix"
+depends "php-zip"
+depends "php-zlib"
 depends "php-suhosin"
-depends "silverline"
 depends "unfuddle-ssl-fix"

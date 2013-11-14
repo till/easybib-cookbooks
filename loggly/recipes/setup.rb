@@ -1,9 +1,28 @@
 gem_package "json"
 
-if node[:loggly] && (node[:loggly][:domain] != 'example')
+if node["loggly"] && (node["loggly"]["token"] != 'example')
+
+  logglydata = node["loggly"]["token"]
+  
+  if is_aws()
+    cluster_name   = get_cluster_name().gsub(/\W/,'_')
+    logglydata << " tag=\\\"stack.#{cluster_name}\\\""
+    get_instance_roles().each do |layer|
+      layer = layer.gsub(/\W/,'_')
+      logglydata << " tag=\\\"layer.#{layer}\\\""
+    end
+  end
 
   template "/etc/rsyslog.d/10-loggly.conf" do
     source "10-loggly.conf.erb"
+    variables(
+      :logglydata => logglydata
+    )
+    mode "0644"
+  end
+  
+  template "/etc/rsyslog.d/11-filewatcher.conf" do
+    source "11-filewatcher.conf.erb"
     mode "0644"
   end
 
@@ -12,25 +31,6 @@ if node[:loggly] && (node[:loggly][:domain] != 'example')
     action [ :restart ]
   end
 
-  cookbook_file "/usr/local/bin/deviceid" do
-    source "deviceid"
-    mode "0755"
-  end
-
-  if is_aws()
-
-    instance = get_instance()
-
-    template "/etc/init.d/loggly" do
-      source "loggly.sh.erb"
-      mode "0755"
-      variables({
-        :instance => instance
-      })
-    end
-  end
-
-  include_recipe "loggly::scalarium"
-  include_recipe "loggly::service"
+  include_recipe "loggly::opsworks"
 
 end

@@ -15,11 +15,11 @@ defaults
   option          httplog
   option          dontlognull
   retries         3
-  redispatch
   maxconn         2000
   contimeout      50000
   clitimeout      50000
   srvtimeout      50000
+  option          redispatch
   option          httpclose     # disable keepalive (HAProxy does not yet support the HTTP keep-alive mode)
   option          abortonclose  # enable early dropping of aborted requests from pending queue
   option          httpchk       # enable HTTP protocol to check on servers health
@@ -28,7 +28,7 @@ defaults
   stats uri <%= node[:haproxy][:stats_url] %>
   <% end -%>
   <% node[:haproxy][:errorloc].each do |error_code,error_file| %>
-  errorfile <%= error_code %> /etc/haproxy/<%= error_file %>
+  errorfile <%= error_code %> /etc/haproxy/errors/<%= error_file %>
   <% end %>
 <%
 # bind haproxy to the following parameters

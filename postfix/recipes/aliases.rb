@@ -4,8 +4,8 @@ template "/etc/aliases" do
   owner  "root"
   group  "root"
   variables(
-    :aliases => node[:postfix][:aliases],
-    :email   => node[:sysop_email]
+    :aliases => node["postfix"]["aliases"],
+    :email   => node["sysop_email"]
   )
 end
 

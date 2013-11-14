@@ -6,6 +6,7 @@ cluster_name   = get_cluster_name()
 node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::research - app: #{application}, role: #{instance_roles}")
+
   Chef::Log.info("Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
   case application
@@ -64,7 +65,9 @@ node["deploy"].each do |application, deploy|
     app application
   end
 
-  service "php-fpm" do
+  service "php-fpm-#{application}" do
+    service_name "php-fpm"
+    supports :reload => true
     action :reload
     only_if do
       application == 'research_app'

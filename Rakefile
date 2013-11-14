@@ -26,7 +26,7 @@ end
 
 desc "ChefSpec"
 task :chefspec do
-  sh 'find . -type d -maxdepth 2 -name "spec" -exec bundle exec rspec {} \;'
+  sh 'find . -maxdepth 2 -type d -name "spec" -exec bundle exec rspec {} \;'
 end
 
 desc "Runs foodcritic linter"
@@ -34,13 +34,25 @@ task :foodcritic do
   if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
     sandbox = File.join(File.dirname(__FILE__), 'fc_sandbox')
 
-    epic_fail = %w{ ~FC002 ~FC003 ~FC004 ~FC005 ~FC013 ~FC014 ~FC015 ~FC016 ~FC017 ~FC019 ~FC022 ~FC023 ~FC024 ~FC033 ~FC034 ~FC043 ~FC045 }
+    epic_fail = %w{ ~FC019 ~FC023 ~FC024 ~FC034 ~FC045 }
 
     cookbooks = find_cookbooks('.')
 
     cookbooks.each do |cb|
+
       prepare_foodcritic_sandbox(sandbox, cb)
-      sh "foodcritic --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
+
+      verbose(false)
+      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
+
+      sh fc_command do |ok, res|
+        if !ok
+          puts "Cookbook: #{cb}"
+          puts "Command failed: #{fc_command}"
+          puts res
+          exit 1
+        end
+      end
     end
 
   else
@@ -51,9 +63,6 @@ end
 private
 def prepare_foodcritic_sandbox(sandbox, cookbook)
 
-  puts cookbook
-  puts "\n"
-
   files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
 
   opts = {:verbose => false}
@@ -61,8 +70,6 @@ def prepare_foodcritic_sandbox(sandbox, cookbook)
   rm_rf sandbox, opts
   mkdir_p sandbox, opts
   cp_r Dir.glob("#{cookbook}/{#{files.join(',')}}"), sandbox, opts
-
-  puts "\n\n"
 end
 
 private
@@ -70,7 +77,7 @@ def find_cookbooks(all_your_base)
   cookbooks = []
 
   # ignore the following - mostly third party
-  skip = [ 'bprobe', 'git', 'scalarium_nodejs', 'vagrant-test', 'ohai' ]
+  skip = [ 'bprobe', 'git', 'opsworks_nodejs', 'vagrant-test', 'ohai', 'test' ]
   Dir.entries(all_your_base).select do |entry|
     next unless File.directory?(File.join(all_your_base, entry))
     next unless !(entry[0, 1] == '.')
@@ -83,10 +90,13 @@ def find_cookbooks(all_your_base)
   return cookbooks
 end
 
-#  t.files = cookbooks
-#  t.options = {
-#    :tags => %w( ~readme ),
-#    :fail_tags => %w( ~FC002 ~FC003 ~FC004 ~FC005 ~FC013 ~FC014 ~FC015 ~FC023 ~FC024 ~FC033 ~FC045 )
-#    # ignored: FC016, FC017, FC19, FC043
-#  }
-#end
+current_dir = File.expand_path(File.dirname(__FILE__))
+
+if !ENV['TRAVIS'] && File.exists?(current_dir + '/.kitchen.yml')
+  begin
+    require 'kitchen/rake_tasks'
+    Kitchen::RakeTasks.new
+  rescue LoadError
+    puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
+  end
+end

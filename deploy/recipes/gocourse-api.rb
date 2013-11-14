@@ -1,16 +1,9 @@
 include_recipe "php-fpm::service"
+include_recipe "pecl-manager::service"
 
-cluster_name   = get_cluster_name()
-instance_roles = get_instance_roles()
+node['deploy'].each do |application, deploy|
 
-node["deploy"].each do |application, deploy|
-
-  case application
-  when 'api'
-    next unless instance_roles.include?('api-server')
-  else
-    next
-  end
+  next unless allow_deploy(application, 'api', 'api-server')
 
   opsworks_deploy_dir do
     user  deploy["user"]
@@ -25,6 +18,14 @@ node["deploy"].each do |application, deploy|
 
   service "php-fpm" do
     action :reload
+  end
+
+  link "/etc/init.d/pecl-manager" do
+    to "#{deploy["current_path"]}/bin/workers"
+  end
+
+  service "pecl-manager" do
+    action :restart
   end
 
   cron "clean-up changes" do

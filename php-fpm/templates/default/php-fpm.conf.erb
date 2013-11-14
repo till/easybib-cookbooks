@@ -1,6 +1,6 @@
 [global]
-pid = <%= node["php-fpm"][:prefix] %>/var/run/php-fpm.pid
-error_log = <%= node["php-fpm"][:fpmlog] %>
+pid = <%= node["php-fpm"]["prefix"] %>/var/run/php-fpm.pid
+error_log = <%= node["php-fpm"]["fpmlog"] %>
 log_level = notice
 
 ; If this number of child processes exit with SIGSEGV or SIGBUS within the time
@@ -25,23 +25,23 @@ process_control_timeout = 10s
 
 daemonize = yes
 
-<% if !::EasyBib.is_aws(node) && node[:users] -%>
+<% if !::EasyBib.is_aws(node) && node["users"] -%>
 
-include=<%= node["php-fpm"][:prefix] %>/etc/php-fpm/*.conf
+include=<%= node["php-fpm"]["prefix"] %>/etc/php-fpm/*.conf
 
 <% else -%>
 
 [www]
 
-listen = <%= node["php-fpm"][:socketdir] %>/<%= node["php-fpm"][:user] %>
+listen = <%= node["php-fpm"]["socketdir"] %>/<%= node["php-fpm"]["user"] %>
 listen.backlog = -1
 
-listen.owner = <%= node["php-fpm"][:user] %>
-listen.group = <%= node["php-fpm"][:group] %>
+listen.owner = <%= node["php-fpm"]["user"] %>
+listen.group = <%= node["php-fpm"]["group"] %>
 listen.mode = 0666
 
-user = <%= node["php-fpm"][:user] %>
-group = <%= node["php-fpm"][:group] %>
+user = <%= node["php-fpm"]["user"] %>
+group = <%= node["php-fpm"]["group"] %>
 
 pm = dynamic
 pm.max_children = 100
@@ -57,7 +57,7 @@ ping.response = p0ng
 ;request_terminate_timeout = 0
 request_slowlog_timeout = 4
 
-slowlog = <%= node["php-fpm"][:slowlog] %>
+slowlog = <%= node["php-fpm"]["slowlog"] %>
 
 <% end -%>
 

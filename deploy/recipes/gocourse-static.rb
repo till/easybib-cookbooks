@@ -1,15 +1,12 @@
-cluster_name   = get_cluster_name()
-instance_roles = get_instance_roles()
-
 node["deploy"].each do |application, deploy|
 
   case application
   when 'consumer'
-    next unless instance_roles.include?('consumer-server')
+    next unless allow_deploy(application, 'consumer', 'consumer-server')
   when 'signup'
-    next unless instance_roles.include?('signup-server')
+    next unless allow_deploy(application, 'signup', 'signup-server')
   when 'domainadmin'
-    next unless instance_roles.include?('domainadmin-server')
+    next unless allow_deploy(application, 'domainadmin', 'domainadmin-server')
   else
     next
   end

@@ -13,3 +13,5 @@ recipe            "apt::repair", "Install apt-repair-sources"
 %w{ ubuntu debian }.each do |os|
   supports os
 end
+
+depends 'easybib'

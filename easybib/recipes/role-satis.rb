@@ -9,5 +9,4 @@ include_recipe "deploy::satis"
 
 if is_aws()
   include_recipe "newrelic"
-  include_recipe "silverline"
 end
