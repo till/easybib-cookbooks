@@ -6,6 +6,8 @@ directory base do
   group node["librato"]["statsd"]["group"]
 end
 
+cluster_name = get_cluster_name()
+
 template "#{base}/config.js" do
   source "easybib-config.js.erb"
   mode   "0600"
@@ -14,6 +16,6 @@ template "#{base}/config.js" do
   variables({
     :statsd => node["librato"]["statsd"],
     :metrics => node["librato"]["metrics"],
-    :cluster_name => get_cluster_name()
+    :cluster_name => cluster_name
   })
 end
