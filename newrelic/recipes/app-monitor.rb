@@ -16,14 +16,16 @@ commands.each do |cmd|
   end
 end
 
-directory node["php-fpm"]["prefix"] do
+etc_dir = "#{node["php-fpm"]["prefix"]}/etc/php"
+
+directory etc_dir do
   owner node["php-fpm"]["user"]
   group node["php-fpm"]["group"]
   action :create
   recursive true
 end
 
-template "#{node["php-fpm"]["prefix"]}/etc/php/newrelic.ini" do
+template "#{etc_dir}/newrelic.ini" do
   source "newrelic.ini.erb"
   owner node["php-fpm"]["user"]
   group node["php-fpm"]["group"]
