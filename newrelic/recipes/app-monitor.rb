@@ -16,6 +16,13 @@ commands.each do |cmd|
   end
 end
 
+directory node["php-fpm"]["prefix"] do
+  owner node["php-fpm"]["user"]
+  group node["php-fpm"]["group"]
+  action :create
+  recursive true
+end
+
 template "#{node["php-fpm"]["prefix"]}/etc/php/newrelic.ini" do
   source "newrelic.ini.erb"
   owner node["php-fpm"]["user"]
