@@ -1,2 +1,2 @@
-node["php-mysqli"] = {}
-node["php-mysqli"]["reconnect"] = 1
+default["php-mysqli"] = {}
+default["php-mysqli"]["reconnect"] = 1
