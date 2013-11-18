@@ -18,8 +18,7 @@ describe 'php-apc::configure' do
 
     chef_run.converge 'php-apc::configure'
 
-    conf = "extension=apc.so\n"
-    conf << "apc.ttl=0\n"
+    conf = "apc.ttl=0\n"
     conf << "apc.mmap_file_mask=/dev/zero\n"
     conf << "apc.shm_size=70M\n"
     conf << "\n"
