@@ -1,0 +1,9 @@
+<%= node[:syslog][:haproxy][:log_dir] %>/haproxy.log {
+       daily
+       rotate 10
+       copytruncate
+       delaycompress
+       compress
+       notifempty
+       missingok
+}
