@@ -1,7 +1,15 @@
 require 'chefspec'
 
 describe 'php-fpm::default' do
-  let (:chef_run) { ChefSpec::Runner.new.converge('php-fpm::default') }
+  before do
+    stub_command("apt-get install -s php5-easybib-apcu").and_return(1)
+    stub_command("apt-get install -s php5-easybib-apc").and_return(0)
+  end
+
+  let (:chef_run) do
+    ChefSpec::Runner.new.converge('php-fpm::default')
+  end
+
   it "installs php5-easybib" do
     expect(chef_run).to install_package('php5-easybib')
   end
