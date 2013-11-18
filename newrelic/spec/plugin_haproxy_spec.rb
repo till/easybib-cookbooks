@@ -41,7 +41,7 @@ describe 'haproxy::plugin_newrelic' do
     file = chef_run.cookbook_file('/etc/init.d/newrelic-haproxy')
     expect(file.mode).to eq('0755')
 
-    expect(chef_run).to create_file '/etc/newrelic/newrelic_haproxy_agent.yml'
+    expect(chef_run).to render_file '/etc/newrelic/newrelic_haproxy_agent.yml'
     file = chef_run.template('/etc/newrelic/newrelic_haproxy_agent.yml')
     expect(file.mode).to eq('0644')
   end
