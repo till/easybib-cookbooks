@@ -18,5 +18,4 @@ default["haproxy"]["errorloc"] = {
 default["haproxy"]["ctl"] = {}
 default["haproxy"]["ctl"]["version"] = "1.1.0"
 default["haproxy"]["ctl"]["base_path"] = "/usr/local/share"
-default["syslog"]["haproxy"]            = {}
-default["syslog"]["haproxy"]["log_dir"] = "/mnt/logs/haproxy"
+default["haproxy"]["log_dir"] = "/mnt/logs/haproxy"

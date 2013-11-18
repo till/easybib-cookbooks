@@ -1,4 +1,4 @@
-<%= node[:syslog][:haproxy][:log_dir] %>/haproxy.log {
+<%= node[:haproxy][:log_dir] %>/haproxy.log {
        daily
        rotate 10
        copytruncate
