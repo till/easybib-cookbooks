@@ -8,4 +8,4 @@ script:
   - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
   - rake test
   - rake foodcritic
-  - rake chefspec
+  - rake spec
