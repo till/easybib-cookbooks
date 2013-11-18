@@ -21,7 +21,7 @@ end
 
 desc "WIP: Ruby lint (too slow)"
 task :lint do
-  system 'find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;'
+  system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
 end
 
 desc "ChefSpec"
