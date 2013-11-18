@@ -1,7 +1,7 @@
 require 'chefspec'
 
 describe 'php-fpm::default' do
-  let (:chef_run) { ChefSpec::ChefRunner.new.converge('php-fpm::default') }
+  let (:chef_run) { ChefSpec::Runner.new.converge('php-fpm::default') }
   it "installs php5-easybib" do
     expect(chef_run).to install_package 'php5-easybib'
   end

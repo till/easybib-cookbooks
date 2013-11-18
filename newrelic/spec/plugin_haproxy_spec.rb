@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'haproxy::plugin_newrelic' do
   it 'installs the newrelic haproxy plugin' do
-    chef_run = ChefSpec::ChefRunner.new
+    chef_run = ChefSpec::Runner.new
 
     haproxy_node = {
       'stats_user' => 'my-user',

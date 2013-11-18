@@ -1,13 +1,13 @@
 require 'chefspec'
 
 describe 'php-apc::configure' do
-  let (:chef_run) { ChefSpec::ChefRunner.new.converge('php-apc::configure') }
+  let (:chef_run) { ChefSpec::Runner.new.converge('php-apc::configure') }
   it "creates apc.ini" do
     expect(chef_run).to create_file("/opt/easybib/etc/php/apc-settings.ini")
   end
   it "it contains production settings" do
 
-    chef_run = ChefSpec::ChefRunner.new do |node|
+    chef_run = ChefSpec::Runner.new do |node|
       # fake opsworks
       node.default["opsworks"] = {}
       node.default.opsworks["stack"] = {}
@@ -25,6 +25,6 @@ describe 'php-apc::configure' do
     conf << "apc.stat=0\n"
     conf << "apc.slam_defense=1\n"
     conf << "apc.max_file_size=2M\n"
-    expect(chef_run).to create_file_with_content "/opt/easybib/etc/php/apc.ini", conf
+    expect(chef_run).to render_file("/opt/easybib/etc/php/apc.ini").with_content(conf)
   end
 end
