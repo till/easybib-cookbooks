@@ -11,10 +11,11 @@ end
 
 git "#{base_path}/haproxyctl" do
   repository "git://github.com/flores/haproxyctl.git"
-  reference "0.1.0"
+  reference node["haproxy"]["ctl"]["version"]
   action :sync
 end
 
 link "/etc/init.d/haproxyctl" do
   to "#{base_path}/haproxyctl/bin/haproxyctl"
 end
+

@@ -7,8 +7,6 @@ default["syslog"]["logfiles"]           = {
 }
 
 default["syslog"]["host"]               = "logs-01.loggly.com"
-default["syslog"]["haproxy"]            = {}
-default["syslog"]["haproxy"]["log_dir"] = "/mnt/logs/haproxy"
 default["syslog"]["poll"]               = 10
 
 set_unless["loggly"]["token"] = "example"
