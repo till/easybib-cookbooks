@@ -26,7 +26,6 @@ node['deploy'].each do |application, deploy|
 
   service "pecl-manager" do
     action :restart
-    ignore_failure true
   end
 
   cron "clean-up changes" do
