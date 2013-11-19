@@ -7,7 +7,6 @@
 default["haproxy"]             = {}
 default["haproxy"]["errorloc"] = {
   "400" => "400.http",
-  "401" => "401.http",
   "403" => "403.http",
   "408" => "408.http",
   "500" => "5xx.http",
