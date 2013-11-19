@@ -1,24 +1,13 @@
 require 'chefspec'
 
 describe 'php-mysqli::configure' do
-  let (:chef_run) { ChefSpec::ChefRunner.new.converge('php-mysqli::configure') }
-  it "creates mysqli-settings.ini" do
-    expect(chef_run).to create_file("/opt/easybib/etc/php/mysqli-settings.ini")
-  end
-  it "it contains production settings" do
+  let (:chef_run) { ChefSpec::Runner.new.converge('php-mysqli::configure') }
 
-    chef_run = ChefSpec::ChefRunner.new do |node|
-      # fake opsworks
-      node.default["opsworks"] = {}
-      node.default.opsworks["stack"] = {}
-      node.default.opsworks.stack["name"] = "chef-spec-run"
-      node.default.opsworks["instance"] = {}
-      node.default.opsworks.instance["layers"] = []
-    end
+  it "creates mysqli-settings.ini which contains the correct settings" do
 
-    chef_run.converge 'php-mysqli::configure'
+    chef_run = ChefSpec::Runner.new.converge('php-mysqli::configure')
 
     conf = "mysqli.reconnect = 1\n"
-    expect(chef_run).to create_file_with_content "/opt/easybib/etc/php/mysqli-settings.ini", conf
+    expect(chef_run).to render_file("/opt/easybib/etc/php/mysqli-settings.ini").with_content(conf)
   end
 end
