@@ -27,6 +27,6 @@ describe 'php-apc::configure' do
     conf << "apc.slam_defense=1\n"
     conf << "apc.max_file_size=2M\n"
 
-    expect(chef_run).to render_file("/opt/easybib/etc/php/apc.ini").with_content(conf)
+    expect(chef_run).to render_file("/opt/easybib/etc/php/apc-settings.ini").with_content(conf)
   end
 end
