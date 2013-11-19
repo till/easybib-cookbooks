@@ -11,7 +11,7 @@ Bundler.setup
 task :default => [
   :lint,
   :test,
-  :chefspec,
+  :spec,
   :foodcritic
 ]
 
@@ -29,7 +29,7 @@ desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
   args.with_defaults( :cookbook => '*', :recipe => '*', :output_file => nil )
   t.verbose = false
-  t.fail_on_error = false
+  t.fail_on_error = true
   t.rspec_opts = args.output_file.nil? ? '--format d' : "--format RspecJunitFormatter --out #{args.output_file}"
   t.ruby_opts = '-W0' #it supports ruby options too
   t.pattern = "#{args.cookbook}/spec/#{args.recipe}_spec.rb"
