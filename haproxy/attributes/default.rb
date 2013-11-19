@@ -6,13 +6,14 @@
 
 default["haproxy"]             = {}
 default["haproxy"]["errorloc"] = {
-    "400" => "400.http",
-    "403" => "403.http",
-    "408" => "408.http",
-    "500" => "500.http",
-    "502" => "502.http",
-    "503" => "503.http",
-    "504" => "504.http"
+  "400" => "400.html",
+  "401" => "401.html",
+  "403" => "403.html",
+  "408" => "408.html",
+  "500" => "5xx.html",
+  "502" => "5xx.html",
+  "503" => "5xx.html",
+  "504" => "5xx.html"
 }
 
 default["haproxy"]["ctl"] = {}
