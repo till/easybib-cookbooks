@@ -2,4 +2,4 @@ $ModLoad imudp
 $UDPServerAddress 127.0.0.1
 $UDPServerRun 514
 
-local1.*  <%= node[:syslog][:haproxy][:log_dir] %>/haproxy.log
+local1.*  <%= node[:haproxy][:log_dir] %>/haproxy.log
