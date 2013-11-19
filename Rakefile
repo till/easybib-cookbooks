@@ -4,13 +4,14 @@
 require 'bundler'
 require 'rake'
 require 'rake/testtask'
+require 'rspec/core/rake_task'
 
 Bundler.setup
 
 task :default => [
   :lint,
   :test,
-  :chefspec,
+  :spec,
   :foodcritic
 ]
 
@@ -24,9 +25,14 @@ task :lint do
   system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
 end
 
-desc "ChefSpec"
-task :chefspec do
-  sh 'find . -maxdepth 2 -type d -name "spec" -exec bundle exec rspec {} \;'
+desc 'Runs specs with chefspec.'
+RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
+  args.with_defaults( :cookbook => '*', :recipe => '*', :output_file => nil )
+  t.verbose = false
+  t.fail_on_error = true
+  t.rspec_opts = args.output_file.nil? ? '--format d' : "--format RspecJunitFormatter --out #{args.output_file}"
+  t.ruby_opts = '-W0' #it supports ruby options too
+  t.pattern = "#{args.cookbook}/spec/#{args.recipe}_spec.rb"
 end
 
 desc "Runs foodcritic linter"
