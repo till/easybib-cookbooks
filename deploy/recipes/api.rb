@@ -14,7 +14,7 @@ node['deploy'].each do |application, deploy|
     path  deploy["deploy_to"]
   end
 
-  easybib_nginx_config "api" do
+  easybib_nginx "api" do
     config_template "silex.conf.erb"
     aws true
     doc_root 'web'
