@@ -13,5 +13,6 @@ supports 'ubuntu'
 depends "bibcd"
 depends "php-fpm"
 depends "prosody"
+depends "nginx-app"
 depends "nginx-lb"
 depends "pecl-manager"

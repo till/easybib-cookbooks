@@ -1,4 +1,5 @@
 include_recipe "php-fpm::service"
+include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
 
@@ -11,6 +12,12 @@ node['deploy'].each do |application, deploy|
     user  deploy["user"]
     group deploy["group"]
     path  deploy["deploy_to"]
+  end
+
+  nginx_app_config "api" do
+    config_template "silex.conf.erb"
+    aws true
+    notifies :restart, "service[nginx]", :delayed
   end
 
   opsworks_deploy do
