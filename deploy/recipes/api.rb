@@ -16,7 +16,6 @@ node['deploy'].each do |application, deploy|
 
   easybib_nginx "api" do
     config_template "silex.conf.erb"
-    aws true
     doc_root 'web'
     notifies :restart, "service[nginx]", :delayed
   end
