@@ -14,12 +14,6 @@ node['deploy'].each do |application, deploy|
     path  deploy["deploy_to"]
   end
 
-  easybib_nginx application do
-    config_template "silex.conf.erb"
-    doc_root 'web'
-    notifies :restart, "service[nginx]", :delayed
-  end
-
   opsworks_deploy do
     deploy_data deploy
     app application
