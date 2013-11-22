@@ -1,5 +1,5 @@
 action :remove do
-  config_name = get_config_name
+  config_name = get_config_name(new_resource)
   execute "rm /etc/nginx/sites-enabled/#{config_name}.conf" do
     only_if do
       File.exists?("/etc/nginx/sites-enabled/#{config_name}.conf")
