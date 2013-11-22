@@ -25,6 +25,7 @@ action :setup do
   domain_config = new_resource.domain_config
 
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
+    cookbook "nginx-app"
     source config_template
     mode   "0755"
     owner  node["nginx-app"]["user"]
