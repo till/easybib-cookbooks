@@ -14,7 +14,7 @@ node['deploy'].each do |application, deploy|
     path  deploy["deploy_to"]
   end
 
-  nginx_app_config "api" do
+  easybib_nginx_config "api" do
     config_template "silex.conf.erb"
     aws true
     notifies :restart, "service[nginx]", :delayed
