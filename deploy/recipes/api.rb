@@ -5,7 +5,7 @@ node['deploy'].each do |application, deploy|
 
   next unless allow_deploy(application, 'api', 'nginxphpapp')
 
-  Chef::Log.info("deploy::api- Deployment started.")
+  Chef::Log.info("deploy::api - Deployment started.")
   Chef::Log.info("deploy::api - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
   opsworks_deploy_dir do
@@ -14,7 +14,7 @@ node['deploy'].each do |application, deploy|
     path  deploy["deploy_to"]
   end
 
-  easybib_nginx "api" do
+  easybib_nginx application do
     config_template "silex.conf.erb"
     doc_root 'web'
     notifies :restart, "service[nginx]", :delayed
