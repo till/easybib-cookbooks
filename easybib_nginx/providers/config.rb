@@ -1,4 +1,11 @@
 action :remove do
+  config_name = get_config_name
+  execute "rm /etc/nginx/sites-enabled/#{config_name}.conf" do
+    only_if do
+      File.exists?("/etc/nginx/sites-enabled/#{config_name}.conf")
+    end
+  end
+
   new_resource.updated_by_last_action(true)
 end
 
