@@ -1,5 +1,4 @@
 require 'chef/mixin/shell_out'
-#require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
 
 action :install do
@@ -9,7 +8,7 @@ action :install do
   ext_dir = get_extension_dir()
   ext_dir << ::File::SEPARATOR if ext_dir[-1].chr != ::File::SEPARATOR
   so_file   = "#{ext_dir}/#{extension}.so"
-  
+
   if !version.nil?
     extension = "#{extension}-#{version}"
   end
@@ -34,7 +33,7 @@ action :setup do
     Chef::Log.debug('files list returned by pecl was empty, falling back to default')
     files = [ext_prefix + name + '.so']
   end
-  
+
   extensions = Hash[ files.map { |filepath|
     rel_file = filepath.clone
     rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
@@ -51,8 +50,8 @@ action :setup do
     group "root"
     mode "0644"
     variables(
-      :name => name, 
-      :extensions => extensions, 
+      :name => name,
+      :extensions => extensions,
       :directives => new_resource.config_directives
     )
   end
@@ -116,4 +115,3 @@ def get_extension_files(name)
 
   files
 end
-
