@@ -26,10 +26,11 @@
          }
     </style>
     <title>EasyBib</title>
+    <meta name="robots" content="noindex, nofollow, noarchive"/>
 </head>
 <body>
     <div id="error">
-        <img src="http://cdn.easybib.com/images/easybib_logo.gif" />
+        <img src="http://cdn-edge2.easybib.com/images/logo.png" />
         <h1>403: Request denied.</h1>
         <p>
             We're sorry. Your request has been denied.
