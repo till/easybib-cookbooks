@@ -92,7 +92,7 @@ ssl = {
     key = "/etc/prosody/certs/cert.key";
     certificate = "/etc/prosody/certs/cert.pem";
     options = { "no_sslv2", "no_ticket", "no_compression", "no_sslv3" };
-    ciphers = "kECDH:HIGH:!MEDIUM:!LOW:!NULL:!DSS:!eNULL:!aNULL@STRENGTH";
+    ciphers = "kECDH:HIGH:!MEDIUM:!LOW:!NULL:!DSS:!DES:!3DES:!AES128:!CAMELLIA128:!eNULL:!aNULL@STRENGTH";
     --openssl dhparam -outform PEM -out dhparam.pem 4096
     dhparam = "/etc/prosody/certs/dhparam.pem"
 }
