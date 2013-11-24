@@ -106,3 +106,12 @@ if !stored_certificate
     action :stop
   end
 end
+
+execute "installing Diffie–Hellman parameter file" do
+  command "openssl dhparam -outform PEM -out #{ssl_dir}/dhparam.pem 4096"
+  not_if do
+    File.exists?('#{ssl_dir}/dhparam.pem')
+  end
+end
+
+

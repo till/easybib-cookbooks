@@ -91,6 +91,10 @@ allow_registration = false;
 ssl = {
     key = "/etc/prosody/certs/cert.key";
     certificate = "/etc/prosody/certs/cert.pem";
+    options = { "no_sslv2", "no_ticket", "no_compression", "no_sslv3" };
+    ciphers = "kECDH:HIGH:!MEDIUM:!LOW:!NULL:!DSS:!DES:!3DES:!AES128:!CAMELLIA128:!eNULL:!aNULL@STRENGTH";
+    --openssl dhparam -outform PEM -out dhparam.pem 4096
+    dhparam = "/etc/prosody/certs/dhparam.pem"
 }
 
 -- Only allow encrypted streams? Encryption is already used when
@@ -100,7 +104,7 @@ ssl = {
 -- domains.
 
 c2s_require_encryption = true
---s2s_require_encryption = false
+s2s_require_encryption = true
 
 storage = "<%= @storage -%>"
 
@@ -139,9 +143,8 @@ log = {
         error = "/var/log/prosody/prosody.err";
         -- Log everything of level "info" and higher (that is, all except "debug" messages)
         -- to prosody.log
-        info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for more verbose logging
-        debug = "/var/log/prosody/prosody.dbg"; 
-        --"*syslog"; -- Uncomment this for logging to syslog
+        debug = "/var/log/prosody/prosody.dbg";
+        info = "*syslog"; -- Uncomment this for logging to syslog
 }
 
 -- Pidfile, used by prosodyctl and the init.d script
