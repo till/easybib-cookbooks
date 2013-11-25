@@ -23,6 +23,7 @@ action :setup do
   access_log = new_resource.access_log
   database_config = new_resource.database_config
   domain_config = new_resource.domain_config
+  domain_name = new_resource.domain_name
 
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook "nginx-app"
@@ -31,9 +32,10 @@ action :setup do
     owner  node["nginx-app"]["user"]
     group  node["nginx-app"]["group"]
     variables(
-      :php_user    => node["php-fpm"]["user"],
-      :doc_root    => deploy_dir,
-      :access_log  => access_log,
+      :php_user => node["php-fpm"]["user"],
+      :domain_name => domain_name,
+      :doc_root => deploy_dir,
+      :access_log => access_log,
       :nginx_extra => node["nginx-app"]["extras"],
       :default_router => node["nginx-app"]["default_router"],
       :xhprof_enable => node["nginx-app"]["xhprof"]["enable"],
