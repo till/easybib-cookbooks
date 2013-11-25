@@ -25,6 +25,12 @@ action :setup do
   domain_config = new_resource.domain_config
   domain_name = new_resource.domain_name
 
+  default_router = node["nginx-app"]["default_router"]
+
+  if !::File.exists?("#{deploy_dir}/#{default_router}")
+    default_router = 'index.php'
+  end
+
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook "nginx-app"
     source config_template
@@ -37,7 +43,7 @@ action :setup do
       :doc_root => deploy_dir,
       :access_log => access_log,
       :nginx_extra => node["nginx-app"]["extras"],
-      :default_router => node["nginx-app"]["default_router"],
+      :default_router => default_router,
       :upstream => config_name,
       :db_conf => database_config,
       :domain_conf => domain_config
