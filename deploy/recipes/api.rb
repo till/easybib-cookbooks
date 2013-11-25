@@ -26,7 +26,7 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
-    template "silex.conf.erb"
+    config_template "silex.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root 'web'
     notifies :restart, "service[nginx]", :delayed
