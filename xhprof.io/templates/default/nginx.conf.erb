@@ -1,0 +1,17 @@
+<% if @xhprof_enable && @xhprof_enable == true -%>
+location <%=::XHProf.get_path(node)%> {
+    # drop location to serve assets
+    alias <%=@xhprof_root%>;
+    index index.php;
+    # serve PHP files from xhprof.io
+    location ~* \.php$ {
+        root          <%=@xhprof_root%>/;
+        fastcgi_index index.php;
+        fastcgi_pass  <%=@upstream%>_phpfpm;
+        include       fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME <%=@xhprof_root%>/index.php;
+        fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+        fastcgi_param PHP_ADMIN_VALUE "short_open_tag=On";
+    }
+}
+<% end -%>

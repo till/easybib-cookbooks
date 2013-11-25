@@ -30,7 +30,6 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :access_log => 'off',
     :nginx_extra => node["nginx-app"]["extras"],
     :default_router => node["nginx-app"]["default_router"],
-    :xhprof_enable => false,
     :upstream => config,
     :env_conf => env_conf,
     :domain_conf => domain_conf

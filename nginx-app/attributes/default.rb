@@ -6,8 +6,6 @@ default["nginx-app"]["config_dir"]         = "/etc/nginx"
 default["nginx-app"]["conf_file"]          = "easybib.com.conf.erb"
 
 default["nginx-app"]["extras"] = ""
-default["nginx-app"]["xhprof"] = {}
-default["nginx-app"]["xhprof"]["enable"] = false
 
 default["nginx-app"]["default_router"] = "index.php"
 
