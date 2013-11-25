@@ -15,3 +15,9 @@ location <%=::XHProf.get_path(node)%> {
     }
 }
 <% end -%>
+
+<% if @xhprof_enable && @xhprof_enable == true -%>
+    set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
+    set $php_value "$php_value \n auto_append_file=<%=@xhprof_root%>/inc/append.php";
+    fastcgi_param PHP_VALUE $php_value;
+<% end -%>
