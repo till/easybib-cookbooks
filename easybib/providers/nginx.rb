@@ -28,9 +28,9 @@ action :setup do
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook "nginx-app"
     source config_template
-    mode   "0755"
-    owner  node["nginx-app"]["user"]
-    group  node["nginx-app"]["group"]
+    mode "0755"
+    owner node["nginx-app"]["user"]
+    group node["nginx-app"]["group"]
     variables(
       :php_user => node["php-fpm"]["user"],
       :domain_name => domain_name,
@@ -38,7 +38,6 @@ action :setup do
       :access_log => access_log,
       :nginx_extra => node["nginx-app"]["extras"],
       :default_router => node["nginx-app"]["default_router"],
-      :xhprof_enable => node["nginx-app"]["xhprof"]["enable"],
       :upstream => config_name,
       :db_conf => database_config,
       :domain_conf => domain_config
