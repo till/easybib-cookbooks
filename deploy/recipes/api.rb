@@ -1,10 +1,11 @@
 include_recipe "php-fpm::service"
+include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
 
   next unless allow_deploy(application, 'api', 'nginxphpapp')
 
-  Chef::Log.info("deploy::api- Deployment started.")
+  Chef::Log.info("deploy::api - Deployment started.")
   Chef::Log.info("deploy::api - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
   opsworks_deploy_dir do
