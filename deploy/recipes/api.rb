@@ -3,7 +3,13 @@ include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
 
-  next unless allow_deploy(application, 'api', 'nginxphpapp')
+  if application == 'api'
+    next unless allow_deploy(application, 'api', 'nginxphpapp')
+  end
+
+  if application == 'discover_api'
+    next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
+  end
 
   Chef::Log.info("deploy::api - Deployment started.")
   Chef::Log.info("deploy::api - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
@@ -17,6 +23,13 @@ node['deploy'].each do |application, deploy|
   opsworks_deploy do
     deploy_data deploy
     app application
+  end
+
+  easybib_nginx application do
+    config_template "silex.conf.erb"
+    domain_name deploy['domains'].join(' ')
+    doc_root deploy['document_root']
+    notifies :restart, "service[nginx]", :delayed
   end
 
   service "php-fpm" do
