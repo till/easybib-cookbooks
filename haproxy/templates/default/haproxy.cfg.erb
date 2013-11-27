@@ -95,7 +95,8 @@ frontend http-in
       <% if node[:opsworks][:layers][layername][:instances].empty? -%>
   #skipping layer <%= layername %> because layer has no instances
       <% else %>
-        <% layerconfig.each do |acl| -%>
+        <% layerconfig.each do |aclid, acl| -%>
+  #rule <%= aclid %>
   acl use_<%= layername %> <%= acl %>
   use_backend <%= layername %>_php_app_servers if use_<%= layername %>
         <% end -%>
