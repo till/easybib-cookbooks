@@ -69,30 +69,40 @@ backend php_app_servers
   <% end -%>
 <% end -%>
 
+<% if !node[:haproxy][:additional_layers].nil? || !node[:haproxy][:additional_layers].empty?  -%>
+#additional backends:
+  <% node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
+backend <%= layername %>_php_app_servers
+  balance roundrobin
+  option redispatch
+  option httpclose
+  option forwardfor
+  option httpchk <%= node[:haproxy][:health_check_method] %> <%= node[:haproxy][:health_check_url] %>
+    <% node[:opsworks][:layers][layername][:instances].each do |name,backend| -%>
+  server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
+    <% end -%>
+  <% end -%>
+<% end -%>
+
+
+
 frontend http-in
   bind <%= haproxy_host %>:<%= haproxy_port %>
 
-  # all domains of PHP applications
-  <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
-    <% app_config['domains'].each do |domain| -%>
-  acl php_application_<%= app_name %>_domain_<%= domain %> hdr_end(host) -i <%= domain %>
-      <% if app_config['mounted_at'] -%>
-  acl php_application_<%= app_name %>_domain_<%= domain %>_path path_beg <%= app_config['mounted_at'] %>
-      <% end -%>
-    <% end -%>
-  <% end -%>
-
-  <% unless node[:haproxy][:php_applications].empty? || node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
-    <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
-      <% app_config['domains'].each do |domain| -%>
-        <% if app_config['mounted_at'] -%>
-  use_backend php_app_servers if php_application_<%= app_name %>_domain_<%= domain %> php_application_<%= app_name %>_domain_<%= domain %>_path
-        <% else -%>
-  use_backend php_app_servers if php_application_<%= app_name %>_domain_<%= domain %>
+  <% if !node[:haproxy][:additional_layers].nil? || !node[:haproxy][:additional_layers].empty?  -%>
+  #additional backends:
+    <% node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
+      <% if node[:opsworks][:layers][layername][:instances].empty? -%>
+  #skipping layer <%= layername %> because layer has no instances
+      <% else %>
+        <% layerconfig.each do |acl| -%>
+  acl use_<%= layername %> <%= acl %>
+  use_backend <%= layername %>_php_app_servers if use_<%= layername %>
         <% end -%>
       <% end -%>
     <% end -%>
   <% end -%>
+
 
   <% if !node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
   default_backend php_app_servers
