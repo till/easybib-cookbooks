@@ -88,7 +88,8 @@ backend <%= layername %>_php_app_servers
 
 frontend http-in
   bind <%= haproxy_host %>:<%= haproxy_port %>
-
+  option log-separate-errors
+  
   <% if !node[:haproxy][:additional_layers].nil? || !node[:haproxy][:additional_layers].empty?  -%>
   #additional backends:
     <% node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
