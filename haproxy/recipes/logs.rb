@@ -1,3 +1,5 @@
+include_recipe "rsyslogd"
+
 template "/etc/rsyslog.d/10-haproxy.conf" do
   source "haproxy-logs.erb"
   mode "0644"
