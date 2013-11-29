@@ -13,8 +13,8 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
     end
   end
 
-  template "/etc/rsyslog.d/10-loggly.conf" do
-    source "10-loggly.conf.erb"
+  template "/etc/rsyslog.d/49-loggly.conf" do
+    source "49-loggly.conf.erb"
     variables(
       :logglydata => logglydata
     )

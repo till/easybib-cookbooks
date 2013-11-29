@@ -2,4 +2,11 @@ $ModLoad imudp
 $UDPServerAddress 127.0.0.1
 $UDPServerRun 514
 
-local1.*  <%= node[:haproxy][:log_dir] %>/haproxy.log
+if ( \
+  $programname contains 'haproxy' and \
+  ($syslogseverity <= 6 /* notice */ ) \
+) then -<%= node[:haproxy][:log_dir] %>/haproxy.log
+
+# Uncomment the following to stop logging anything that matches the last rule.
+& ~
+
