@@ -1,5 +1,7 @@
 gem_package "json"
 
+include_recipe "rsyslogd"
+
 if node["loggly"] && (node["loggly"]["token"] != 'example')
 
   logglydata = node["loggly"]["token"]
@@ -19,13 +21,13 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
       :logglydata => logglydata
     )
     mode "0644"
+    notifies :restart, "service[rsyslog]", :delayed
   end
   
   template "/etc/rsyslog.d/11-filewatcher.conf" do
     source "11-filewatcher.conf.erb"
     mode "0644"
+    notifies :restart, "service[rsyslog]", :delayed
   end
-
-  include_recipe "rsyslogd"
 
 end
