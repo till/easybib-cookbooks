@@ -26,11 +26,6 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
     mode "0644"
   end
 
-  service "rsyslog" do
-    supports :status => true, :restart => true, :reload => true
-    action [ :restart ]
-  end
-
-  include_recipe "loggly::opsworks"
+  include_recipe "rsyslogd"
 
 end
