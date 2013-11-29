@@ -29,6 +29,7 @@ node['deploy'].each do |application, deploy|
     config_template "silex.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
+    env_source application
     notifies :restart, "service[nginx]", :delayed
   end
   
