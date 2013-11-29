@@ -11,6 +11,11 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
   end
 
+  env_conf = ''
+  if has_env?(application)
+    env_conf = get_env_for_nginx(application)
+  end
+
   Chef::Log.info("deploy::api - Deployment started.")
   Chef::Log.info("deploy::api - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
@@ -29,6 +34,7 @@ node['deploy'].each do |application, deploy|
     config_template "silex.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
+    env_config env_conf
     notifies :restart, "service[nginx]", :delayed
   end
 

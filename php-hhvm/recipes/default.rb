@@ -13,3 +13,5 @@ apt_package "install hhvm" do
   package_name "hhvm"
   options "--allow-unauthenticated"
 end
+
+include_recipe "php-hhvm::configure"

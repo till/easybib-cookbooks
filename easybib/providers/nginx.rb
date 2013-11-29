@@ -23,6 +23,7 @@ action :setup do
   access_log = new_resource.access_log
   database_config = new_resource.database_config
   domain_config = new_resource.domain_config
+  env_config = new_resource.env_config
   domain_name = new_resource.domain_name
   
   env_config = ''

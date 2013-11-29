@@ -25,11 +25,16 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
+  env_conf = ''
+  if has_env?(application)
+    env_conf = get_env_for_nginx(application)
+  end
+    
   easybib_nginx application do
     config_template "silex.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
-    env_source application
+    env_config env_conf
     notifies :restart, "service[nginx]", :delayed
   end
   

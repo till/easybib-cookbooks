@@ -11,6 +11,13 @@ server {
 
     root <%= @doc_root %>;
 
+    location = /health_check.php {
+        access_log <%= @access_log %>;
+        include    <%= @nginx_conf %>/fastcgi_params;
+        fastcgi_pass  phpfpm_sitescraper;
+        fastcgi_param SCRIPT_FILENAME $document_root/health_check.php;
+    }
+
     location /nginx_status {
         stub_status on;
         access_log  <%= @access_log %>;
