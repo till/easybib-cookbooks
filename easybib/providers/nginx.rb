@@ -25,11 +25,6 @@ action :setup do
   domain_config = new_resource.domain_config
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
-  
-  env_config = ''
-  if !new_resource.env_source.nil? && ::EasyBib::has_env?(new_resource.env_source, node)
-    env_config = ::EasyBib::get_env_for_nginx(new_resource.env_source, node)
-  end
 
   default_router = node["nginx-app"]["default_router"]
 
