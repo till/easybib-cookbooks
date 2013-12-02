@@ -1,11 +1,11 @@
 include_recipe "avahi::alias-service"
 
-template "/etc/avahi/aliases.d/gocourse" do
+template "/etc/avahi/aliases.d/getcourse" do
   cookbook "avahi"
   source "alias.erb"
   mode "0644"
   variables({
-    :domains => node["gocourse"]["domain"]
+    :domains => node["getcourse"]["domain"]
   })
   notifies :restart, "service[avahi-aliases]"
 end

@@ -1,8 +1,8 @@
-if node.attribute?("gocourse")
+if node.attribute?("getcourse")
 
-  env_conf = get_env_for_shell("gocourse")
+  env_conf = get_env_for_shell("getcourse")
 
-  template "/etc/profile.d/gocourse.sh" do
+  template "/etc/profile.d/getcourse.sh" do
     source "profile.erb"
     mode "0755"
     variables :env => env_conf
