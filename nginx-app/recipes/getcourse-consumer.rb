@@ -1,4 +1,4 @@
-config = "signup"
+config = "consumer"
 
 if is_aws()
   deploy_dir = "/srv/www/#{config}/current/build/"
@@ -10,7 +10,7 @@ else
   end
 end
 
-domain_name = node["gocourse"]["domain"]["signup"]
+domain_name = "#{node["getcourse"]["domain"]["consumer"]} *.#{node["getcourse"]["domain"]["consumer"]}"
 default_router = "index.html"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
