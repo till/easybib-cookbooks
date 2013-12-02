@@ -32,7 +32,7 @@ node['deploy'].each do |application, deploy|
   # at the same moment.
   # TODO: Remove the gocourse-part when all stacks have a 'getcourse' binary deployed.
 
-  cron "clean-up changes (gocourse)" do
+  cron "clean-up changes (gocourse-version) for #{application}" do
     minute "0"
     hour "0"
     weekday "1"
@@ -45,7 +45,7 @@ node['deploy'].each do |application, deploy|
     end
   end
 
-  cron "clean-up changes (getcourse)" do
+  cron "clean-up changes (getcourse version) for #{application}" do
     minute "0"
     hour "0"
     weekday "1"
