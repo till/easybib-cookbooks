@@ -28,13 +28,22 @@ node['deploy'].each do |application, deploy|
     action :restart
   end
 
-  cron "clean-up changes" do
-    minute "0"
-    hour "0"
-    weekday "1"
-    user deploy["user"]
-    home node["deploy"][application]["home"]
-    mailto node["sysop_email"]
-    command "cd /srv/www/#{application}/current && ./bin/gocourse cleanup changes"
+  # Using "gocourse" and "getcourse", so we dont have to update/rename everything
+  # at the same moment.
+  # TODO: Remove the gocourse-part when all stacks have a 'getcourse' binary deployed.
+  
+  ["gocourse", "getcourse"].each do |cron_app_name|
+    cron "clean-up changes (#{cron_app_name}, #{application}) " do
+      minute "0"
+      hour "0"
+      weekday "1"
+      user deploy["user"]
+      home node["deploy"][application]["home"]
+      mailto node["sysop_email"]
+      command "cd /srv/www/#{application}/current && ./bin/#{cron_app_name} cleanup changes"
+      only_if do
+        File.exists?("/srv/www/#{application}/current/bin/#{cron_app_name}")
+      end
+    end
   end
 end
