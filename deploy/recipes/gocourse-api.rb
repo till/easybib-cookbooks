@@ -45,5 +45,16 @@ node['deploy'].each do |application, deploy|
         File.exists?("/srv/www/#{application}/current/bin/#{cron_app_name}")
       end
     end
+    
+    cron "resume documents (#{cron_app_name}, #{application}) " do
+      minute "*/10"
+      user deploy["user"]
+      home node["deploy"][application]["home"]
+      mailto node["sysop_email"]
+      command "cd /srv/www/#{application}/current && ./bin/#{cron_app_name} resume documents"
+      only_if do
+        File.exists?("/srv/www/#{application}/current/bin/#{cron_app_name}")
+      end
+    end
   end
 end
