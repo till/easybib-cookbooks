@@ -22,9 +22,6 @@ node["deploy"].each do |application, deploy|
   when 'gearmanworker'
     next unless instance_roles.include?('gearman-worker')
 
-  when 'sitescraper'
-    next unless instance_roles.include?('sitescraper')
-
   else
     Chef::Log.info("deploy::easybib - #{application} (in #{cluster_name}) skipped")
     next

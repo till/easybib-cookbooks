@@ -2,13 +2,15 @@ include_recipe "php-fpm::service"
 include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
-
-  if application == 'api'
-    next unless allow_deploy(application, 'api', 'nginxphpapp')
+  
+  next unless ["sitescraper", "worldcat"].include?(application)
+  
+  if application == 'sitescraper'
+    next unless allow_deploy(application, 'sitescraper')
   end
 
-  if application == 'discover_api'
-    next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
+  if application == 'worldcat'
+    next unless allow_deploy(application, 'worldcat')
   end
 
   env_conf = ''
@@ -31,10 +33,12 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
-    config_template "silex.conf.erb"
+    config_template "internal-api.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
-    env_config env_conf
+    access_log      "off"
+    routes_enabled  node["nginx-app"][application]["routes_enabled"]
+    routes_denied   node["nginx-app"][application]["routes_denied"]
     notifies :restart, "service[nginx]", :delayed
   end
 
