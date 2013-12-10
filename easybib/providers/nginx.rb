@@ -19,13 +19,22 @@ action :setup do
 
   config_name = get_config_name(new_resource)
 
+  if new_resource.nginx_extras.nil?
+    nginx_extras = node["nginx-app"]["extras"]
+  else
+    nginx_extras = new_resource.nginx_extras
+  end
+
   config_template = new_resource.config_template
   access_log = new_resource.access_log
   database_config = new_resource.database_config
   domain_config = new_resource.domain_config
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
-
+  domain_name = new_resource.routes_enabled
+  domain_name = new_resource.routes_denied
+  
+  nginx_extras = node["nginx-app"]["extras"]
   default_router = node["nginx-app"]["default_router"]
 
   if !::File.exists?("#{deploy_dir}/#{default_router}")
@@ -43,12 +52,14 @@ action :setup do
       :domain_name => domain_name,
       :doc_root => deploy_dir,
       :access_log => access_log,
-      :nginx_extra => node["nginx-app"]["extras"],
+      :nginx_extra => nginx_extras,
       :default_router => default_router,
       :upstream => config_name,
       :db_conf => database_config,
       :domain_conf => domain_config,
-      :env_conf => env_config
+      :env_conf => env_config,
+      :routes_enabled => routes_enabled,
+      :routes_denied => routes_denied
     )
   end
 
