@@ -30,7 +30,7 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  easybib_nginx config do
+  easybib_nginx application do
     config_template "internal-api.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
