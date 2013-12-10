@@ -3,6 +3,8 @@ include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
   
+  next unless ["sitescraper", "worldcat"].include?(application)
+  
   if application == 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
   end
