@@ -58,7 +58,7 @@ server {
     location / {
         deny all;
     }
-    <% if !@routes_denied.empty? -%>
+    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
     location ~ /(<%= @routes_denied.join('|') %>) {
         deny all;
     }
