@@ -16,8 +16,8 @@ node['deploy'].each do |application, deploy|
     env_conf = get_env_for_nginx(application)
   end
 
-  Chef::Log.info("deploy::api - Deployment started.")
-  Chef::Log.info("deploy::api - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+  Chef::Log.info("deploy::#{application} - Deployment started.")
+  Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
   opsworks_deploy_dir do
     user  deploy["user"]
