@@ -2,13 +2,13 @@ include_recipe "php-fpm::service"
 include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
-
+  
   if application == 'sitescraper'
-    next unless allow_deploy(application, 'sitescraper', 'nginxphpapp')
+    next unless allow_deploy(application, 'sitescraper')
   end
 
   if application == 'worldcat'
-    next unless allow_deploy(application, 'worldcat', 'nginxphpapp')
+    next unless allow_deploy(application, 'worldcat')
   end
 
   env_conf = ''
