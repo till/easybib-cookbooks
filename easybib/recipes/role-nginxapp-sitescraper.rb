@@ -7,6 +7,3 @@ if is_aws
 else
   include_recipe "nginx-app::sitescraper"
 end
-
-#include_recipe "deploy::easybib"
-#include_recipe "nginx-app::sitescraper"

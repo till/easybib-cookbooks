@@ -37,7 +37,6 @@ node['deploy'].each do |application, deploy|
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
     access_log      "off"
-    nginx_extras    nginx_extras
     routes_enabled  node["nginx-app"][application]["routes_enabled"]
     routes_denied   node["nginx-app"][application]["routes_denied"]
     notifies :restart, "service[nginx]", :delayed
