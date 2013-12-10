@@ -19,9 +19,10 @@ action :setup do
 
   config_name = get_config_name(new_resource)
 
-  nginx_extras = new_resource.nginx_extras
   if new_resource.nginx_extras.nil?
     nginx_extras = node["nginx-app"]["extras"]
+  else
+    nginx_extras = new_resource.nginx_extras
   end
 
   config_template = new_resource.config_template
