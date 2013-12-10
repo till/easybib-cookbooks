@@ -10,7 +10,6 @@ end
 
 easybib_nginx config do
   config_template "internal-api.conf.erb"
-  upstream        config
   doc_root        deploy_dir
   access_log      'off'
   nginx_extra     nginx_extras
