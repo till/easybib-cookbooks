@@ -12,5 +12,5 @@ attribute :domain_config, :kind_of => String, :default => ''
 attribute :database_config, :kind_of => String, :default => ''
 attribute :env_config, :kind_of => String, :default => ''
 attribute :nginx_extra, :kind_of => String, :default => ''
-attribute :routes_enabled, :kind_of => Array, :default => Array.new
-attribute :routes_denied, :kind_of => Array, :default => Array.new
+attribute :routes_enabled, :default => {}
+attribute :routes_denied, :default => {}
