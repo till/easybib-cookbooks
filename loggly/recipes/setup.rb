@@ -29,5 +29,12 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
     mode "0644"
     notifies :restart, "service[rsyslog]", :delayed
   end
+  
+  cookbook_file "/etc/ssl/certs/loggly.full.pem" do
+    source "loggly.full.pem"
+    owner "root"
+    group "root"
+    mode 0644
+  end
 
 end
