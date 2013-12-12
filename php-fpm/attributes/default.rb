@@ -14,4 +14,4 @@ default["php-fpm"]["group"] = "www-data"
 default["php-fpm"]["tmpdir"] = "/tmp/php"
 default["php-fpm"]["socketdir"] = "/var/run/php-fpm"
 
-default["php-fpm"]["packages"] = "graphviz,php5-easybib,php5-easybib-mbstring,php5-easybib-memcache"
+default["php-fpm"]["packages"] = "php5-easybib,php5-easybib-mbstring,php5-easybib-memcache"
