@@ -1,5 +1,6 @@
 gem_package "json"
 
+require "easybib"
 include_recipe "rsyslogd"
 
 if node["loggly"] && (node["loggly"]["token"] != 'example')
@@ -22,6 +23,12 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
     )
     mode "0644"
     notifies :restart, "service[rsyslog]", :delayed
+  end
+  
+  #clean up old location
+  file "/etc/rsyslog.d/10-loggly.conf" do
+    action :delete
+    only_if { File.exists?('/etc/rsyslog.d/10-loggly.conf') }
   end
   
   template "/etc/rsyslog.d/11-filewatcher.conf" do
