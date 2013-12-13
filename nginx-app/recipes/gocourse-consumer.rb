@@ -19,6 +19,7 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
   owner  node["nginx-app"]["user"]
   group  node["nginx-app"]["group"]
   variables(
+    :listen_opts => 'default_server',
     :doc_root    => deploy_dir,
     :domain_name => domain_name,
     :access_log  => 'off',
