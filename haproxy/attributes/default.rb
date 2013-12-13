@@ -19,6 +19,6 @@ default["haproxy"]["ctl"] = {}
 default["haproxy"]["ctl"]["version"] = "1.1.0"
 default["haproxy"]["ctl"]["base_path"] = "/usr/local/share"
 default["haproxy"]["hatop"] = {}
-default["haproxy"]["hatop"]["version"] = "v0.7.7"
+default["haproxy"]["hatop"]["version"] = "tags/v0.7.7"
 default["haproxy"]["hatop"]["base_path"] = "/usr/local/share"
 default["haproxy"]["log_dir"] = "/mnt/var/log/haproxy"
