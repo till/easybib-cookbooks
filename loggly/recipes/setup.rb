@@ -36,7 +36,7 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
     notifies :restart, "service[rsyslog]", :delayed
   end
 
-  package "rsyslogd-gnutls"
+  package "rsyslog-gnutls"
 
   cookbook_file "/etc/ssl/certs/loggly.full.pem" do
     source "loggly.full.pem"
