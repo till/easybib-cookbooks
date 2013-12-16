@@ -22,6 +22,10 @@ server {
 
     root <%= @doc_root%>;
 
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
+        try_files $uri;
+    }
+
     location ~* \.php$ {
         fastcgi_index index.php;
         fastcgi_pass  <%=@upstream%>_phpfpm;
@@ -35,6 +39,7 @@ server {
 
     location ~* \.(eot|ttf|woff)$ {
         add_header Access-Control-Allow-Origin *;
+        try_files $uri;
     }
 
     location @site {
