@@ -25,7 +25,7 @@ node['deploy'].each do |application, deploy|
     path  deploy["deploy_to"]
   end
 
-  easybib_deploy do
+  easybib_deploy application do
     deploy_data deploy
     app application
   end
