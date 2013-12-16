@@ -96,6 +96,7 @@ server {
     location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
+        root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
         <% if @password_protected && @password_protected.to_s == "true" -%>
             auth_basic            "Restricted";
             auth_basic_user_file  <%=node["nginx-app"][:config_dir]%>/htpasswd;
