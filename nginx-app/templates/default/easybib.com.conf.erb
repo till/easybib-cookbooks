@@ -31,22 +31,22 @@ server {
         access_log  <%= @access_log %>;
     }
 
-    location = /google8a01a818524239c8.html {
+    location ^~ /google8a01a818524239c8.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
         access_log  <%= @access_log %>;
     }
 
-    location = /googled16040836651a26a.html {
+    location ^~ /googled16040836651a26a.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
         access_log  <%= @access_log %>;
     }
 
-    location = /bsm-xd.html {
+    location ^~ /bsm-xd.html {
         root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
         access_log  <%= @access_log %>;
     }
 
-    location /nginx_status {
+    location ^~ /nginx_status {
         stub_status on;
         access_log  <%= @access_log %>;
         allow       127.0.0.1;
@@ -62,7 +62,7 @@ server {
     }
 
 <% @js_alias.each do |www_alias,www_dir| -%>
-    location /js/<%=www_alias%>/ {
+    location ^~ /js/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
@@ -70,7 +70,7 @@ server {
 <% end -%>
 
 <% @img_alias.each do |www_alias,www_dir| -%>
-    location /images/<%=www_alias%>/ {
+    location ^~ /images/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
@@ -78,7 +78,7 @@ server {
 <% end -%>
 
 <% @css_alias.each do |www_alias,www_dir| -%>
-    location /css/<%=www_alias%>/ {
+    location ^~ /css/<%=www_alias%>/ {
         root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
@@ -86,7 +86,7 @@ server {
 <% end -%>
 
 <% node["nginx-app"][:static_directories].each do |dir| -%>
-    location /<%=dir%>/ {
+    location ^~ /<%=dir%>/ {
         root       <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
@@ -102,6 +102,8 @@ server {
             auth_basic_user_file  <%=node["nginx-app"][:config_dir]%>/htpasswd;
         <% end -%>
             access_log <%= @access_log %>;
+            add_header Access-Control-Allow-Origin *;
+            
     }
 
     location / {
