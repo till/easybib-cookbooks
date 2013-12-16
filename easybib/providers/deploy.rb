@@ -10,8 +10,8 @@ action :deploy do
   execute "Setting Crontab from App File" do
     user "www-data"
     cwd deploy_data[:deploy_to]
-    command "crontab -u www-data #{deploy_data[:deploy_to]}/deploy/crontab"
-    only_if { ::File.exists?("#{deploy_data[:deploy_to]}/deploy/crontab") }
+    command "crontab -u www-data #{deploy_data[:deploy_to]}/current/deploy/crontab"
+    only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/crontab") }
   end
 
   new_resource.updated_by_last_action(true)
