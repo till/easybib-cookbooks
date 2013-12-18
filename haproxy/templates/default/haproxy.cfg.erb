@@ -6,7 +6,7 @@
     <%= render "haproxy.cfg.backend.erb", :variables => {
         :layername => 'nginxphpapp',
         :instances => node[:opsworks][:layers][:nginxphpapp][:instances],
-        :haproxy =>node[:haproxy]
+        :haproxy => node[:haproxy]
     } %>
 <% end -%>
 
@@ -15,12 +15,12 @@
   <%= render "haproxy.cfg.backend.erb", :variables => {
       :layername => layername,
       :instances => node[:opsworks][:layers][:nginxphpapp][:instances],
-      :haproxy =>node[:haproxy]
+      :haproxy => node[:haproxy]
   } %>
   <% end -%>
 <% end -%>
 
 <%= render "haproxy.cfg.frontend.erb", :variables => {
     :opsworkslayers => node[:opsworks][:layers],
-    :haproxy =>node[:haproxy]
+    :haproxy => node[:haproxy]
 } %>
