@@ -8,10 +8,10 @@ frontend http-in
   bind <%= haproxy_host %>:<%= haproxy_port %>
   option log-separate-errors
   
-  <% if !:haproxy[:additional_layers].nil? || :haproxy[:additional_layers].empty?  -%>
+  <% if !@node[:haproxy][:additional_layers].nil? || @node[:haproxy][:additional_layers].empty?  -%>
   #additional backends:
-    <% node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
-      <% if :opsworkslayers[layername][:instances].empty? -%>
+    <% @node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
+      <% if @node[:opsworks][:layers][layername][:instances].empty? -%>
   #skipping layer <%= layername %> because layer has no instances
       <% else %>
         <% layerconfig.each do |aclid, acl| -%>
@@ -23,6 +23,6 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !:opsworkslayers[:nginxphpapp][:instances].empty? -%>
+  <% if !@node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
   default_backend nginxphpapp_php_app_servers
   <% end -%>

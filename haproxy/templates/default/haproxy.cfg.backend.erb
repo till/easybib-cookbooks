@@ -12,12 +12,12 @@ haproxy_check_interval = 3000
 haproxy_maxconn = 255
 -%>
 
-backend <%= :layername %>_php_app_servers
+backend <%= @layername %>_php_app_servers
   balance roundrobin
   option redispatch
   option httpclose
   option forwardfor
-  option httpchk <%= :haproxy[:health_check_method] %> <%= :haproxy[:health_check_url] %>
-  <% :instances.each do |name,backend| -%>
+  option httpchk <%= @node[:haproxy][:health_check_method] %> <%= @node[:haproxy][:health_check_url] %>
+  <% @node[:opsworks][:layers][:nginxphpapp][:instances].each do |name,backend| -%>
   server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
   <% end -%>
