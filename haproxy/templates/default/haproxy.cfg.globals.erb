@@ -1,0 +1,31 @@
+global
+  log 127.0.0.1   local1 notice
+  #log loghost    local0 info
+  maxconn 4096
+  #debug
+  #quiet
+  user haproxy
+  group haproxy
+  stats socket /tmp/haproxy.sock level admin
+
+defaults
+  log             global
+  mode            http
+  option          httplog
+  option          dontlognull
+  retries         3
+  maxconn         2000
+  contimeout      50000
+  clitimeout      50000
+  srvtimeout      50000
+  option          redispatch
+  option          httpclose     # disable keepalive (HAProxy does not yet support the HTTP keep-alive mode)
+  option          abortonclose  # enable early dropping of aborted requests from pending queue
+  option          httpchk       # enable HTTP protocol to check on servers health
+<% if @node[:haproxy][:enable_stats] -%>
+  stats auth <%= @node[:haproxy][:stats_user] %>:<%= @node[:haproxy][:stats_password] %>
+  stats uri <%= @node[:haproxy][:stats_url] %>
+<% end -%>
+<% @node[:haproxy][:errorloc].each do |error_code,error_file| %>
+  errorfile <%= error_code %> /etc/haproxy/errors/<%= error_file %>
+<% end %>
