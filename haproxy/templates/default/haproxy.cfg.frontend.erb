@@ -23,6 +23,14 @@ frontend http-in
     <% end -%>
   <% end -%>
 
+  <% if !@node[:haproxy][:acls].nil? || @node[:haproxy][:acls].empty?  -%>
+  #acls from node json:
+    <% @node[:haproxy][:acls].each do |aclname,aclconfig| -%>
+  #rule <%= aclname %>
+  <%= aclconfig %>
+    <% end -%>
+  <% end -%>
+
   <% if !@node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
   default_backend nginxphpapp_php_app_servers
   <% end -%>
