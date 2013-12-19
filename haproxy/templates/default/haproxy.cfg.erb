@@ -6,13 +6,6 @@
     <%= render "haproxy.cfg.backend.erb", :variables => { 'layername' => 'nginxphpapp' } %>
 <% end -%>
 
-<% if !node[:haproxy][:additional_layers].nil? || !node[:haproxy][:additional_layers].empty?
-    node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
-  <%= render "haproxy.cfg.backend.erb" %>
-  <% end 
-end -%>
-
-  
 <%= render "haproxy.cfg.frontend.erb", :variables => {
     'opsworkslayers' => node[:opsworks][:layers],
     'haproxy' => node[:haproxy]
