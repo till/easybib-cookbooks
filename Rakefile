@@ -40,7 +40,7 @@ task :foodcritic do
   if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
     sandbox = File.join(File.dirname(__FILE__), 'fc_sandbox')
 
-    epic_fail = %w{ ~FC019 ~FC023 ~FC024 ~FC034 ~FC045 }
+#    epic_fail = %w{ }
 
     cookbooks = find_cookbooks('.')
 
@@ -49,8 +49,8 @@ task :foodcritic do
       prepare_foodcritic_sandbox(sandbox, cb)
 
       verbose(false)
-      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
-
+#      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
+      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any #{sandbox}"
       sh fc_command do |ok, res|
         if !ok
           puts "Cookbook: #{cb}"
