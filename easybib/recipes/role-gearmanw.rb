@@ -7,6 +7,7 @@ include_recipe "unfuddle-ssl-fix::install"
 include_recipe "php-gearman"
 include_recipe "php-phar"
 include_recipe "php-posix"
+include_recipe "composer::configure"
 include_recipe "deploy::easybib"
 
 if is_aws()
