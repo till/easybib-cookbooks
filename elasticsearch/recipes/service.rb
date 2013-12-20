@@ -1,3 +1,4 @@
 service "elasticsearch" do
-  action   :start
+  supports [ :enable, :start, :stop, :restart ]
+  action   :nothing
 end

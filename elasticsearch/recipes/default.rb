@@ -1,3 +1,5 @@
+include_recipe "elasticsearch::service"
+
 package "openjdk-7-jre-headless"
 
 deb_name = "elasticsearch-" + node[:elasticsearch][:version] + ".deb"
@@ -15,6 +17,6 @@ dpkg_package "elasticsearch" do
   source  deb_path
   version node[:elasticsearch][:version]
   action  :install
+  notifies :enable, "service[elasticsearch]"
+  notifies :start, "service[elasticsearch]"
 end
-
-include_recipe "elasticsearch::service"
