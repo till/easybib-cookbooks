@@ -7,7 +7,15 @@ haproxy_host = ""
 frontend http-in
   bind <%= haproxy_host %>:<%= haproxy_port %>
   option log-separate-errors
-  
+
+  <% if !@node[:haproxy][:acls].nil? || @node[:haproxy][:acls].empty?  -%>
+  #acls from node json:
+    <% @node[:haproxy][:acls].each do |aclname,aclconfig| -%>
+  #rule <%= aclname %>
+  <%= aclconfig %>
+    <% end -%>
+  <% end -%>
+
   <% if !@node[:haproxy][:additional_layers].nil? || @node[:haproxy][:additional_layers].empty?  -%>
   #additional backends:
     <% @node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
@@ -20,14 +28,6 @@ frontend http-in
   use_backend <%= layername %>_php_app_servers if use_<%= layername %>
         <% end -%>
       <% end -%>
-    <% end -%>
-  <% end -%>
-
-  <% if !@node[:haproxy][:acls].nil? || @node[:haproxy][:acls].empty?  -%>
-  #acls from node json:
-    <% @node[:haproxy][:acls].each do |aclname,aclconfig| -%>
-  #rule <%= aclname %>
-  <%= aclconfig %>
     <% end -%>
   <% end -%>
 
