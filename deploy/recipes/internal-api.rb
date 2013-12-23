@@ -8,7 +8,7 @@ node['deploy'].each do |application, deploy|
   next unless applications.include?(application)
 
   if application == 'crossref_service'
-    next unless allow_deploy(application, 'crossref_service')
+    next unless allow_deploy(application, 'crossref_service', 'crossref-www')
   end
 
   if application == 'sitescraper'
