@@ -44,7 +44,11 @@ module EasyBib
 
     case application
     when requested_application
-      return false unless instance_roles.include?(requested_role)
+      if !instance_roles.include?(requested_role)
+        irs = instance_roles.inspect
+        Chef::Log.debug("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
+        return false
+      end 
     else
       Chef::Log.debug("deploy #{requested_application} - #{application} (in #{cluster_name}) skipped")
       return false
