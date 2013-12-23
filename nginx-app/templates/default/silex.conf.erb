@@ -7,8 +7,14 @@ server {
 
     index <%=@default_router%> index.php;
 
+    access_log <%= @access_log %>;
+
 <% if !@domain_name.nil? && !@domain_name.empty? -%>
     server_name <%=@domain_name%>;
+<% end -%>
+
+<% if @nginx_extra -%>
+    <%= @nginx_extra -%>
 <% end -%>
 
     location = / {

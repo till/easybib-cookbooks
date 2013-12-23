@@ -31,8 +31,7 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :nginx_extra => node["nginx-app"]["extras"],
     :default_router => node["nginx-app"]["default_router"],
     :upstream => config,
-    :env_conf => env_conf,
-    :domain_conf => domain_conf
+    :env_conf => env_conf
   )
   notifies :restart, "service[nginx]", :delayed
 end
