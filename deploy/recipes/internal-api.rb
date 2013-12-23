@@ -2,9 +2,13 @@ include_recipe "php-fpm::service"
 include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
-  
-  next unless ["sitescraper", "worldcat"].include?(application)
-  
+
+  next unless ["crossref_service", "sitescraper", "worldcat"].include?(application)
+
+  if application == 'crossref_service'
+    next unless allow_deploy(application, 'crossref-www')
+  end
+
   if application == 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
   end
