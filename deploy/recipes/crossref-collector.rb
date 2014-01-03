@@ -13,7 +13,7 @@ node['deploy'].each do |application, deploy|
     app application
   end
   
-  cron "trigger crossref collector cronjob " do
+  cron "trigger crossref collector cronjob (application #{application} ) " do
     minute "0"
     user deploy["user"]
     home node["deploy"][application]["home"]
