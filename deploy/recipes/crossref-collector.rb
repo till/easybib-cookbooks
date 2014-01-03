@@ -12,5 +12,15 @@ node['deploy'].each do |application, deploy|
     deploy_data deploy
     app application
   end
-
+  
+  cron "trigger crossref collector cronjob " do
+    minute "0"
+    user deploy["user"]
+    home node["deploy"][application]["home"]
+    mailto node["sysop_email"]
+    command "cd /srv/www/#{application}/current && ./bin/crossref"
+    only_if do
+      File.exists?("/srv/www/#{application}/current/bin/crossref")
+    end
+  end
 end
