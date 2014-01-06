@@ -5,11 +5,11 @@ include_recipe "avahi::alias-service"
 end
 
 execute "update pip" do
-  command "pip install --upgrade pip"
+  command "pip install --no-use-wheel --upgrade pip"
 end
 
 execute "install python-avahi" do
-  command "pip install --force-reinstall #{node["avahi"]["alias"]["package"]}"
+  command "pip install --no-use-wheel --force-reinstall #{node["avahi"]["alias"]["package"]}"
 end
 
 template "/etc/avahi/aliases.d/domains" do
