@@ -5,7 +5,7 @@ include_recipe "avahi::alias-service"
 end
 
 execute "update pip" do
-  command "pip install --no-use-wheel --upgrade pip"
+  command "pip install --upgrade pip"
 end
 
 execute "install python-avahi" do
