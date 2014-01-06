@@ -3,7 +3,7 @@ include_recipe "nginx-app::service"
 
 node["deploy"].each do |application, deploy|
 
-  Chef::Log.info("deploy::research - app: #{application}, role: #{instance_roles}")
+  Chef::Log.info("deploy::research - app: #{application}")
   Chef::Log.info("Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
   case application
