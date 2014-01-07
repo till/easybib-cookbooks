@@ -17,7 +17,7 @@ node["deploy"].each do |application, deploy|
   when 'research_app'
     next unless allow_deploy(application, 'research_app', 'research_app')
   else
-    Chef::Log.info("deploy::research - #{application} (in #{cluster_name}) skipped")
+    Chef::Log.info("deploy::research - #{application} skipped")
     next
   end
 
