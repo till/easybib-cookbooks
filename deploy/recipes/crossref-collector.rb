@@ -1,6 +1,6 @@
 node['deploy'].each do |application, deploy|
 
-  next unless allow_deploy(application, 'crossref-collector', 'crossref-www')
+  next unless allow_deploy(application, 'crossref_collector', 'crossref-www')
 
   opsworks_deploy_dir do
     user  deploy["user"]
