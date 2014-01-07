@@ -9,9 +9,6 @@ node["deploy"].each do |application, deploy|
   case application
   when 'easybib_solr_server'
     next unless allow_deploy(application, 'easybib_solr_server', 'easybibsolr')
-    Chef::Log.debug('deploy::research - Setting deploy for SOLR SERVER')
-    # fix this: deploy to instance storage
-    deploy["deploy_to"]       = "/solr/apache-solr-1.4.1-compiled"
     deploy["restart_command"] = ""
     deploy["user"]            = "root"
   when 'research_app'
