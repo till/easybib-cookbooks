@@ -40,8 +40,7 @@ node["deploy"].each do |application, deploy|
     next unless instance_roles.include?('sitescraper')
 
   when 'research_app'
-    next unless cluster_name == 'Research Cloud'
-    next unless instance_roles.include?('nginxphpapp')
+    next unless instance_roles.include?('research_app')
 
   else
     Chef::Log.debug("Skipping nginx-app::configure for app #{application}")
