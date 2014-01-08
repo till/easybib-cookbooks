@@ -2,7 +2,7 @@ include_recipe "apache-solr::prepare"
 include_recipe "apache-solr::service"
 
 apache_solr_version = node[:apache_solr][:version]
-apache_solr_release = "apache-solr-#{apache_solr_version}.zip"
+apache_solr_release = "solr-#{apache_solr_version}.zip"
 
 base_dir = node[:apache_solr][:base_dir]
 
