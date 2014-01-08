@@ -7,7 +7,10 @@ end
 execute "update pip" do
   command "pip install --upgrade pip"
   only_if do
-    `pip -V`.split(' ')[1] != '1.5'
+    cmd = Mixlib::ShellOut.new("pip -V")
+    cmd.run_command
+    pip_version = cmd.stdout
+    pip_version.split(' ')[1] != '1.5'
   end
 end
 
