@@ -2,6 +2,7 @@ default[:apache_solr]            = {}
 default[:apache_solr][:version]  = "4.6.0"
 default[:apache_solr][:user]     = "root"
 default[:apache_solr][:group]    = "root"
+default[:apache_solr][:data_dir] = "/opt/apache/solr/data"
 default[:apache_solr][:base_dir] = "/opt/apache"
 default[:apache_solr][:log_file] = "/var/log/apache-solr.log"
 

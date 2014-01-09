@@ -2,6 +2,7 @@ template "/etc/init/apache-solr.conf" do
   mode   "0644"
   source "upstart.erb"
   variables(
+    :solr_install => node[:apache_solr][:data_dir],
     :solr_install => "#{node[:apache_solr][:base_dir]}/solr/",
     :solr_version => node[:apache_solr][:version],
     :solr_mem_max => node[:apache_solr][:memory][:max],
