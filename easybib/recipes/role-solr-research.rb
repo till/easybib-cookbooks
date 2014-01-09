@@ -1,7 +1,6 @@
 include_recipe "easybib::role-phpapp"
 
-include_recipe "php-pear"
-include_recipe "php-gearman"
+include_recipe "deploy::research"
 
-include_recipe "unfuddle-ssl-fix::install"
 include_recipe "apache-solr"
+#include_recipe "apache-solr::setup"
