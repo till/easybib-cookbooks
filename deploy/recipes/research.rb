@@ -7,8 +7,8 @@ node["deploy"].each do |application, deploy|
   Chef::Log.info("Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
   case application
-  when 'easybib_solr_server'
-    next unless allow_deploy(application, 'easybib_solr_server', 'easybibsolr')
+  when 'research_solr'
+    next unless allow_deploy(application, 'research_solr', 'easybib_solr_server')
     deploy["restart_command"] = ""
     deploy["user"]            = "root"
   when 'research_app'

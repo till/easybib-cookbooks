@@ -7,7 +7,7 @@ default[:apache_solr][:log_file] = "/var/log/apache-solr.log"
 
 set_unless[:apache_solr][:mirror] = "http://www.carfab.com/apachesoftware/lucene/solr/"
 set_unless[:apache_solr][:app]    = "easybib-test"
-set_unless[:apache_solr][:config_source_dir]    = "/srv/www/easybib_solr_server/current/"
+set_unless[:apache_solr][:config_source_dir]    = "/srv/www/research_solr/current/"
 
 set_unless[:apache_solr][:memory]       = {}
 set_unless[:apache_solr][:memory][:min] = '128m'
