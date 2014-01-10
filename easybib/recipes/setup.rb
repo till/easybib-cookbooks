@@ -2,7 +2,8 @@ base_packages = [
   "htop", "jwhois", "multitail",
   "apache2-utils", "strace", "rsync",
   "manpages", "manpages-dev", "nscd",
-  "subversion", "git-core", "unzip"
+  "subversion", "git-core", "unzip",
+  "realpath"
 ]
 
 base_packages.each do |p|
