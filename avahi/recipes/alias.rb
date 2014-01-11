@@ -5,7 +5,13 @@ include_recipe "avahi::alias-service"
 end
 
 execute "update pip" do
-  command "pip install --no-use-wheel --upgrade pip"
+  command "pip install --upgrade pip"
+  only_if do
+    cmd = Mixlib::ShellOut.new("pip -V")
+    cmd.run_command
+    pip_version = cmd.stdout
+    pip_version.split(' ')[1] != '1.5'
+  end
 end
 
 execute "install python-avahi" do
