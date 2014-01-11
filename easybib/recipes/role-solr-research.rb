@@ -1,4 +1,4 @@
-include_recipe "easybib::role-phpapp"
+include_recipe "easybib::role-generic"
 
 include_recipe "deploy::research"
 
