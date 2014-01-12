@@ -35,5 +35,6 @@ node["deploy"].each do |application, deploy|
     only_if do
       application == 'research_solr'
     end
+    notifies :restart, "service[prosody]"
   end
 end
