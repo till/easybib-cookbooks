@@ -6,15 +6,7 @@ node["deploy"].each do |application, deploy|
   Chef::Log.info("deploy::research - app: #{application}")
   Chef::Log.info("Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
-  case application
-  when 'research_solr'
-    next unless allow_deploy(application, 'research_solr', 'easybib_solr_server')
-  when 'research_app'
-    next unless allow_deploy(application, 'research_app', 'research_app')
-  else
-    Chef::Log.info("deploy::research - #{application} skipped")
-    next
-  end
+  next unless allow_deploy(application, 'research_app', 'research_app')
 
   Chef::Log.info("deploy::research - Deployment started.")
 
@@ -29,12 +21,4 @@ node["deploy"].each do |application, deploy|
     app application
   end
 
-  execute "copy config from git to solr basedir" do
-    cwd     node["apache_solr"]["base_dir"]
-    command "cp -R #{node["apache_solr"]["config_source_dir"]}/* #{node["apache_solr"]["base_dir"]}/solr/"
-    only_if do
-      application == 'research_solr'
-    end
-    notifies :restart, "service[apache-solr]"
-  end
 end
