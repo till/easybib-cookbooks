@@ -13,5 +13,6 @@ end
 
 service "apache-solr" do
   provider Chef::Provider::Service::Upstart
-  action   :nothing
+  supports :start => true, :stop => true, :restart => true
+  action   :enable
 end
