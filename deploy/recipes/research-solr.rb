@@ -1,6 +1,3 @@
-include_recipe "php-fpm::service"
-include_recipe "nginx-app::service"
-
 node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::research-solr - app: #{application}")
