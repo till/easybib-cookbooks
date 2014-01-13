@@ -24,6 +24,6 @@ node["deploy"].each do |application, deploy|
     only_if do
       application == 'research_solr'
     end
-    notifies :restart, "service[apache-solr]"
+    notifies :start, "service[apache-solr]"
   end
 end
