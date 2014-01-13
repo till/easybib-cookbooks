@@ -18,7 +18,7 @@ node["deploy"].each do |application, deploy|
     app application
   end
 
-  execute "copy config from git to solr basedir" do
+  execute "copy config from git to solr basedir - #{application}" do
     cwd     node["apache_solr"]["base_dir"]
     command "cp -R #{node["apache_solr"]["config_source_dir"]}/* #{node["apache_solr"]["base_dir"]}/solr/"
     only_if do
