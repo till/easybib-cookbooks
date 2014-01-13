@@ -28,7 +28,7 @@ server {
 
     root <%= @doc_root%>;
 
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico)$ {
         # Just an empty block so it is not matched by @site below
         # See easybib/issues#417
     }
