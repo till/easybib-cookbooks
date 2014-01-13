@@ -19,6 +19,8 @@ nginx_config = "easybib.com.conf.erb"
 
 node["deploy"].each do |application, deploy|
 
+  Chef::Log.debug("nginx-app::configure - app: #{application}")
+
   case application
   when 'easybib'
     if !node["nginx-lb"]["cluster"].include?(cluster_name)
