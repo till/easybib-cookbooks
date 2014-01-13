@@ -89,7 +89,7 @@ end
     }
 <% end -%>
 
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
         root <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
