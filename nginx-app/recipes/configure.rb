@@ -19,6 +19,8 @@ nginx_config = "easybib.com.conf.erb"
 
 node["deploy"].each do |application, deploy|
 
+  Chef::Log.debug("nginx-app::configure - app: #{application}")
+
   case application
   when 'easybib'
     if !node["nginx-lb"]["cluster"].include?(cluster_name)
@@ -40,8 +42,7 @@ node["deploy"].each do |application, deploy|
     next unless instance_roles.include?('sitescraper')
 
   when 'research_app'
-    next unless cluster_name == 'Research Cloud'
-    next unless instance_roles.include?('nginxphpapp')
+    next unless instance_roles.include?('research_app')
 
   else
     Chef::Log.debug("Skipping nginx-app::configure for app #{application}")

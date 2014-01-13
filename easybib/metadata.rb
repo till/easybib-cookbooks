@@ -11,6 +11,7 @@ recipe            "easybib::cron", "Configure MAILTO= in crontab"
 
 supports 'ubuntu'
 
+depends "apache-solr"
 depends "avahi"
 depends "bash"
 depends "composer"

@@ -8,5 +8,7 @@ respawn
 
 exec /usr/bin/java -Xms<%=@solr_mem_min%> -Xmx<%=@solr_mem_max%> \
 -Dsolr.solr.home=<%=@solr_install%>/solr \
+-Dsolr.data.dir=<%=@solr_data_dir%> \
 -Djetty.home=<%=@solr_install%> \
+-Dsolr.allow.unsafe.resourceloading=true \
 -jar <%=@solr_install%>/start.jar >> <%=@solr_log%> 2>&1
