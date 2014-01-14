@@ -3,12 +3,18 @@
 <% if node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
     <%= render "haproxy.cfg.fallback.erb" %>
 <% else -%>
-    <%= render "haproxy.cfg.backend.erb", :variables => { 'layername' => 'nginxphpapp' } %>
+    <%= render "haproxy.cfg.backend.erb", :variables => {
+        'layername' => 'nginxphpapp',
+        'health_check_string' => '#{node[:haproxy][:health_check_method} #{node[:haproxy][:health_check_url]}'
+    } %>
 <% end -%>
 
 <% if !node[:haproxy][:additional_layers].nil? || !node[:haproxy][:additional_layers].empty? %>
 <%   node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
-  <%= render "haproxy.cfg.backend.erb", :variables => { 'layername' => layername } %>
+  <%= render "haproxy.cfg.backend.erb", :variables => {
+      'layername' => layername
+      'health_check_string' => layerconfig[:health_check]
+  } %>
 <%   end -%>
 <% end -%>
 
