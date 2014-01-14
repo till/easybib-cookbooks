@@ -12,7 +12,7 @@
 <% if !node[:haproxy][:additional_layers].nil? || !node[:haproxy][:additional_layers].empty? %>
 <%   node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
   <%= render "haproxy.cfg.backend.erb", :variables => {
-      'layername' => layername
+      'layername' => layername,
       'health_check_string' => layerconfig[:health_check]
   } %>
 <%   end -%>
