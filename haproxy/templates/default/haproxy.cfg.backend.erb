@@ -17,7 +17,7 @@ backend <%= @layername %>_php_app_servers
   option redispatch
   option httpclose
   option forwardfor
-  option httpchk <%= @node[:haproxy][:health_check_method] %> <%= @node[:haproxy][:health_check_url] %>
+  option httpchk <%= @health_check_string %>
   <% @node[:opsworks][:layers][@layername][:instances].each do |name,backend| -%>
   server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
   <% end -%>
