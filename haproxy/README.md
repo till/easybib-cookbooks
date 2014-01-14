@@ -21,7 +21,7 @@ To host more than one domain with different backends, use the following blurb fo
         "acl": {
           "acl-1": "hdr_dom(host) -i domain.example.com"
         },
-        "health_check": "GET /health_check.php HTTP/1.1\r\nHost: domain.example.com"
+        "health_check": "GET /health_check.php HTTP/1.1\\\\r\\\\nHost: domain.example.com"
       }
     }
   },
