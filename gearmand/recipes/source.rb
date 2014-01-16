@@ -14,8 +14,6 @@ end
 build_deps = ["libboost-all-dev", "gperf", "libcloog-ppl0", "make"]
 
 case node["lsb"]["codename"]
-when 'lucid'
-  build_deps.push('libevent-dev')
 when 'precise'
   build_deps.push('libevent1-dev')
 else
