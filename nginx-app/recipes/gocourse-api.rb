@@ -10,12 +10,12 @@ else
   end
 end
 
-domain_name = node["gocourse"]["domain"]["api"]
-domain_conf = get_domain_conf("gocourse")
+domain_name = node["getcourse"]["domain"]["api"]
+domain_conf = get_domain_conf("getcourse")
 
 env_conf = ""
-if has_env?("gocourse")
-  env_conf = get_env_for_nginx("gocourse")
+if has_env?("getcourse")
+  env_conf = get_env_for_nginx("getcourse")
 end
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do

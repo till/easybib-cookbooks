@@ -10,7 +10,7 @@ cookbook_file "/etc/bash.bashrc" do
   mode   "0644"
 end
 
-["gocourse", "getcourse"].each do |shell_env|
+["getcourse"].each do |shell_env|
   env_conf = get_env_for_shell(shell_env)
 
   template "/etc/bashrc.d/#{shell_env}.sh" do
@@ -21,5 +21,4 @@ end
       env_conf.empty?
     end
   end
-  
 end

@@ -23,15 +23,15 @@ end
 database_credentials = []
 domain = []
 
-if node["gocourse"]
+if node["getcourse"]
 
-  gocourse_config = node["gocourse"]
-  if gocourse_confif["database"]
-    database_credentials = gocourse_config["database"]
+  getcourse_config = node["getcourse"]
+  if getcourse_confif["database"]
+    database_credentials = getcourse_config["database"]
   end
 
-  if gocourse_config["domain"]
-    domain = gocourse_config["domain"]
+  if getcourse_config["domain"]
+    domain = getcourse_config["domain"]
   end
 
 end
