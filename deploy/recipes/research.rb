@@ -21,4 +21,8 @@ node["deploy"].each do |application, deploy|
     app application
   end
 
+  service "php-fpm" do
+    action :reload
+  end
+
 end
