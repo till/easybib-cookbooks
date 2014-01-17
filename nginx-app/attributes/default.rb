@@ -49,6 +49,15 @@ default["nginx-app"]["css_modules"] = {
     "folders"         => "folders"
 }
 
+default["nginx-app"]["highbeam"] = {}
+default["nginx-app"]["highbeam"]["routes_enabled"] = {}
+default["nginx-app"]["highbeam"]["routes_denied"] = {}
 default["nginx-app"]["sitescraper"] = {}
 default["nginx-app"]["sitescraper"]["routes_enabled"] = {}
 default["nginx-app"]["sitescraper"]["routes_denied"] = {}
+default["nginx-app"]["worldcat"] = {}
+default["nginx-app"]["worldcat"]["routes_enabled"] = {}
+default["nginx-app"]["worldcat"]["routes_denied"] = {}
+default["nginx-app"]["yahooboss"] = {}
+default["nginx-app"]["yahooboss"]["routes_enabled"] = {}
+default["nginx-app"]["yahooboss"]["routes_denied"] = {}
