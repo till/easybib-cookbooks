@@ -1,6 +1,8 @@
 include_recipe "php-fpm::service"
 include_recipe "nginx-app::service"
 
+cluster_name   = get_cluster_name()
+
 node['deploy'].each do |application, deploy|
 
   case application
