@@ -10,7 +10,7 @@ else
   end
 end
 
-domain_name = node["gocourse"]["domain"]["signup"]
+domain_name = node["getcourse"]["domain"]["signup"]
 default_router = "index.html"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do

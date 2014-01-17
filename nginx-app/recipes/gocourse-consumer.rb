@@ -10,7 +10,7 @@ else
   end
 end
 
-domain_name = "#{node["gocourse"]["domain"]["consumer"]} *.#{node["gocourse"]["domain"]["consumer"]}"
+domain_name = "#{node["getcourse"]["domain"]["consumer"]} *.#{node["getcourse"]["domain"]["consumer"]}"
 default_router = "index.html"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do

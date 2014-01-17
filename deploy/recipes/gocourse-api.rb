@@ -28,11 +28,7 @@ node['deploy'].each do |application, deploy|
     action :restart
   end
 
-  # Using "gocourse" and "getcourse", so we dont have to update/rename everything
-  # at the same moment.
-  # TODO: Remove the gocourse-part when all stacks have a 'getcourse' binary deployed.
-  
-  ["gocourse", "getcourse"].each do |cron_app_name|
+  ["getcourse"].each do |cron_app_name|
     cron "clean-up changes (#{cron_app_name}, #{application}) " do
       minute "0"
       hour "0"
@@ -45,7 +41,7 @@ node['deploy'].each do |application, deploy|
         File.exists?("/srv/www/#{application}/current/bin/#{cron_app_name}")
       end
     end
-    
+
     cron "resume documents (#{cron_app_name}, #{application}) " do
       minute "*/10"
       user deploy["user"]

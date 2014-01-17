@@ -9,7 +9,7 @@
             ]
         }
     },
-    "gocourse": {
+    "getcourse": {
         "domain": {
             "api": "api.local"
         },

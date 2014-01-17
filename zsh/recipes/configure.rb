@@ -1,6 +1,6 @@
 # this is for vagrant
 
-env_conf = get_env_for_shell("gocourse")
+env_conf = get_env_for_shell("getcourse")
 
 template "/etc/zsh/zprofile" do
   source "zprofile.erb"
