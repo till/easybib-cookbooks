@@ -1,30 +1,22 @@
 include_recipe "php-fpm::service"
 include_recipe "nginx-app::service"
 
-applications = ["crossref_service", "sitescraper", "worldcat"]
-
 node['deploy'].each do |application, deploy|
 
-  next unless applications.include?(application)
-
-  if application == 'crossref_service'
+  case application
+  when 'crossref_service'
     next unless allow_deploy(application, 'crossref_service', 'crossref-www')
-  end
-
-  if application == 'highbeam'
+  when 'highbeam'
     next unless allow_deploy(application, 'highbeam')
-  end
-
-  if application == 'sitescraper'
+  when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
-  end
-
-  if application == 'worldcat'
+  when 'worldcat'
     next unless allow_deploy(application, 'worldcat')
-  end
-
-  if application == 'yahooboss'
+  when 'yahooboss'
     next unless allow_deploy(application, 'yahooboss')
+  else
+    Chef::Log.info("deploy::internal-api - #{application} (in #{cluster_name}) skipped")
+    next
   end
 
   env_conf = ''
