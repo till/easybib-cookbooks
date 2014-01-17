@@ -11,12 +11,20 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'crossref_service', 'crossref-www')
   end
 
+  if application == 'highbeam'
+    next unless allow_deploy(application, 'highbeam')
+  end
+
   if application == 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
   end
 
   if application == 'worldcat'
     next unless allow_deploy(application, 'worldcat')
+  end
+
+  if application == 'yahooboss'
+    next unless allow_deploy(application, 'yahooboss')
   end
 
   env_conf = ''
