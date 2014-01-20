@@ -9,18 +9,17 @@ node["deploy"].each do |application, deploy|
 
   case application
   when 'easybib'
-    if !['EasyBib', 'EasyBib Playground', 'Fruitkid', 'Fruitkid Playground'].include?(cluster_name)
-      next
-    end
-    if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
+    nginxphpapp_allowed = allow_deploy(application,'easybib','nginxphpapp')
+    testapp_allowed     = allow_deploy(application,'easybib','testapp')
+    if !nginxphpapp_allowed && !testapp_allowed
       next
     end
 
   when 'easybib_api'
-    next unless instance_roles.include?('bibapi')
+    next unless allow_deploy(application,'easybib_api','bibapi')
 
   when 'gearmanworker'
-    next unless instance_roles.include?('gearman-worker')
+    next unless allow_deploy(application,'gearmanworker','gearman-worker')
 
   else
     Chef::Log.info("deploy::easybib - #{application} (in #{cluster_name}) skipped")
