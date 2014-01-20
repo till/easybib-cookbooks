@@ -13,6 +13,9 @@ commands.each do |cmd|
       "NR_INSTALL_NOKSH" => "yes",
       "NR_INSTALL_KEY" => node["newrelic"]["license"]
     })
+    not_if do
+      node["newrelic"]["license"].empty?
+    end
   end
 end
 
@@ -34,4 +37,7 @@ template "#{etc_dir}/newrelic.ini" do
     :license => node["newrelic"]["license"]
   )
   notifies :reload, "service[php-fpm]", :immediately
+  not_if do
+    node["newrelic"]["license"].empty?
+  end
 end
