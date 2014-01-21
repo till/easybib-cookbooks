@@ -30,7 +30,7 @@
 #
 
 # install packages
-node["php-pear"]["packages"].each do |pear_package,pear_channel|
+node["php-pear"]["packages"].each do |pear_package, pear_channel|
 
   version = ""
   if !pear_package.index('-').nil?
@@ -38,7 +38,7 @@ node["php-pear"]["packages"].each do |pear_package,pear_channel|
     pear_package, pear_version = attrs
   end
 
-  #Chef::Log.info("PACKAGE: #{package}, Version: #{version}, Channel: #{channel}")
+  # Chef::Log.info("PACKAGE: #{package}, Version: #{version}, Channel: #{channel}")
 
   php_pear pear_package do
     action  :install_if_missing
@@ -47,4 +47,3 @@ node["php-pear"]["packages"].each do |pear_package,pear_channel|
     version pear_version
   end
 end
-

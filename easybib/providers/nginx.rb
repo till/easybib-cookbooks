@@ -11,7 +11,7 @@ end
 
 action :setup do
 
-  if ::EasyBib::is_aws(node)
+  if ::EasyBib.is_aws(node)
     deploy_dir = "/srv/www/#{new_resource.app_name}/current/#{new_resource.doc_root}"
   else
     deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
@@ -33,7 +33,7 @@ action :setup do
   domain_name = new_resource.domain_name
   routes_enabled = new_resource.routes_enabled
   routes_denied = new_resource.routes_denied
-  
+
   default_router = node["nginx-app"]["default_router"]
 
   if !::File.exists?("#{deploy_dir}/#{default_router}")
@@ -71,5 +71,5 @@ def get_config_name(resource)
   if !resource.config_name.empty?
     config_name = resource.config_name
   end
-  return config_name
+  config_name
 end

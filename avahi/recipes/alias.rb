@@ -21,9 +21,9 @@ end
 template "/etc/avahi/aliases.d/domains" do
   mode "0644"
   source "alias.erb"
-  variables({
+  variables(
     :domains => node["avahi"]["alias"]["domains"]
-  })
+  )
   notifies :restart, "service[avahi-aliases]"
   notifies :restart, "service[nscd]"
   not_if do

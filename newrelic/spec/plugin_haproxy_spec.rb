@@ -10,10 +10,10 @@ describe 'haproxy::plugin_newrelic' do
       'stats_url'  => '/haproxy-stats',
       'newrelic' => {
         'backends' => [
-          {'name' => 'backend1', 'proxy' => 'my_app_servers'}
+          { 'name' => 'backend1', 'proxy' => 'my_app_servers' }
         ],
         'frontends' => [
-          {'name' => 'frontend1', 'proxy' => 'http-in'}
+          { 'name' => 'frontend1', 'proxy' => 'http-in' }
         ]
       }
     }
@@ -21,10 +21,10 @@ describe 'haproxy::plugin_newrelic' do
     newrelic_node = {
       'haproxy' => {
         'backends' => [
-          {'name' => 'backend1', 'proxy' => 'my_app_servers'}
+          { 'name' => 'backend1', 'proxy' => 'my_app_servers' }
         ],
         'frontends' => [
-          {'name' => 'frontend1', 'proxy' => 'http-in'}
+          { 'name' => 'frontend1', 'proxy' => 'http-in' }
         ]
       }
     }

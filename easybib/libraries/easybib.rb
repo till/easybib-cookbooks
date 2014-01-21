@@ -1,14 +1,12 @@
 module EasyBib
-
   def amd64?(node = self.node)
     if node["kernel"]["machine"] == "x86_64"
       return true
     end
-    return false
+    false
   end
 
   def has_env?(app, node = self.node)
-
     if !node.attribute?(app)
       return false
     end
@@ -17,12 +15,11 @@ module EasyBib
       return true
     end
 
-    return false
+    false
   end
 
   def allow_deploy(application, requested_application, requested_role = nil)
-
-    if !is_aws()
+    if !is_aws
       return false
     end
 
@@ -30,14 +27,14 @@ module EasyBib
       requested_role = requested_application
     end
 
-    instance_roles = get_instance_roles()
-    cluster_name   = get_cluster_name()
+    instance_roles = get_instance_roles
+    cluster_name   = get_cluster_name
 
     Chef::Log.info(
       "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles} in #{cluster_name}"
     )
 
-    if cluster_name != self.node["easybib"]["cluster_name"]
+    if cluster_name != node["easybib"]["cluster_name"]
       Chef::Log.debug("deploy #{requested_application} - wrong cluster_name")
       return false
     end
@@ -56,15 +53,15 @@ module EasyBib
 
     Chef::Log.debug("deploy #{requested_application} - allowing deploy")
 
-    return true
+    true
   end
 
   def get_env_for_nginx(app, node = self.node)
-    return get_env(app, node, "nginx")
+    get_env(app, node, "nginx")
   end
 
   def get_env_for_shell(app, node = self.node)
-    return get_env(app, node, "shell")
+    get_env(app, node, "shell")
   end
 
   def get_env(app, node, config_type)
@@ -75,11 +72,11 @@ module EasyBib
     end
 
     if node[app]["env"].nil?
-      raise "Attribute 'env' for application '#{app}' is not defined!"
+      fail "Attribute 'env' for application '#{app}' is not defined!"
     end
 
     if !["nginx", "shell"].include?(config_type)
-      raise "Unknown configuration type: #{config_type}."
+      fail "Unknown configuration type: #{config_type}."
     end
 
     node[app]["env"].each_pair do |section, data|
@@ -104,16 +101,14 @@ module EasyBib
       end
     end
 
-    return config
-
+    config
   end
 
   def get_domain_conf(node_attribute, node = self.node)
-    return get_conf_from_env(node_attribute, "domain", node)
+    get_conf_from_env(node_attribute, "domain", node)
   end
 
   def get_conf_from_env(node_attribute, node_key, node)
-
     db_conf = ""
 
     if !node.attribute?(node_attribute)
@@ -154,15 +149,15 @@ module EasyBib
       end
     end
 
-    return db_conf
+    db_conf
   end
 
   def build_shell_config(key, value)
-    return "export #{key}=\"#{value}\"\n"
+    "export #{key}=\"#{value}\"\n"
   end
 
   def build_nginx_config(key, value)
-    return "fastcgi_param #{key} \"#{value}\";\n"
+    "fastcgi_param #{key} \"#{value}\";\n"
   end
 
   def get_cluster_name(node = self.node)
@@ -177,8 +172,7 @@ module EasyBib
     end
     ::Chef::Log.error("Unknown environment.")
 
-    return ""
-
+    ""
   end
 
   def get_deploy_user(node = self.node)
@@ -218,7 +212,7 @@ module EasyBib
     if node["opsworks"]
       return true
     end
-    return false
+    false
   end
 
   extend self

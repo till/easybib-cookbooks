@@ -18,4 +18,3 @@ end
 link "/etc/init.d/haproxyctl" do
   to "#{base_path}/haproxyctl/bin/haproxyctl"
 end
-

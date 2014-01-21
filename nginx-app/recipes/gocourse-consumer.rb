@@ -1,6 +1,6 @@
 config = "consumer"
 
-if is_aws()
+if is_aws
   deploy_dir = "/srv/www/#{config}/current/build/"
 else
   if node["vagrant"]["combined"] == true

@@ -7,6 +7,6 @@ include_recipe "php-posix"
 include_recipe "composer::configure"
 include_recipe "deploy::satis"
 
-if is_aws()
+if is_aws
   include_recipe "newrelic"
 end

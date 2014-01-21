@@ -6,6 +6,6 @@ include_recipe "php-mysqli::configure"
 include_recipe "composer::configure"
 include_recipe "deploy::crossref-collector"
 
-if is_aws()
+if is_aws
   include_recipe "newrelic"
 end

@@ -44,7 +44,7 @@ action :add do
     repository = "# Created by the Chef apt_repository LWRP\n" + repository
     repository += " #{new_resource.uri}"
     repository += " #{new_resource.distribution}"
-    new_resource.components.each {|component| repository += " #{component}"}
+    new_resource.components.each { |component| repository += " #{component}" }
     # write out the file, replace it if it already exists
     file "/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list" do
       owner "root"
