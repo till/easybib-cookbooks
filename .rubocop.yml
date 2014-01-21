@@ -61,9 +61,6 @@ PredicateName:
 Syntax:
   Enabled: false
 
-IndentationWidth:
-  Enabled: false
-
 MethodLength:
   Enabled: false
 

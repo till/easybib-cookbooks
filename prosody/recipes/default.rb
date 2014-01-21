@@ -16,7 +16,7 @@ when "netbsd"
   package_name = "chat/prosody"
 when "openbsd"
   package_name = "net/prosody"
-default
+else
   Chef::Log.error("Unsupported: #{node["platform"]}")
 end
 

@@ -265,13 +265,13 @@ module Boundary
     end
 
     def bad_response?(method, url, response)
-       case response
-       when Net::HTTPSuccess
-         false
-       else
-         true
+      case response
+      when Net::HTTPSuccess
+        false
+      else
+        true
         Chef::Log.error("Got a #{response.code} for #{method} to #{url}")
-       end
+      end
     end
   end
 end

@@ -6,8 +6,8 @@ php_source = "/tmp/php-#{node["php-pdo_sqlite"]["version"]}"
 php_archive = "#{php_source}.tar.gz"
 
 remote_file php_archive do
- checksum node["php-pdo_sqlite"]["checksum"]
- source "http://de3.php.net/get/php-#{node["php-pdo_sqlite"]["version"]}.tar.gz/from/de1.php.net/mirror"
+  checksum node["php-pdo_sqlite"]["checksum"]
+  source "http://de3.php.net/get/php-#{node["php-pdo_sqlite"]["version"]}.tar.gz/from/de1.php.net/mirror"
 end
 
 execute "tar -zxf #{php_archive}" do
