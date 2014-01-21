@@ -67,9 +67,6 @@ ParenthesesAsGroupedExpression:
 RedundantBegin:
   Enabled: false
 
-CaseIndentation:
-  Enabled: false
-
 Documentation:
   Enabled: false
 
