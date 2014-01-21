@@ -11,10 +11,10 @@ HashSyntax:
   EnforcedStyle: hash_rockets
 
 MethodLength:
-  Max: 25
+  Max: 35
 
 CyclomaticComplexity:
-  Max: 7
+  Max: 9
 
 ParameterLists:
   Enabled: false
@@ -29,6 +29,14 @@ SpaceInsideBrackets:
 RescueException:
   Enabled: false
 
+AccessorMethodName:
+  Enabled: false
+
+#I dont want to separate port numbers with underscores.
+NumericLiterals:
+  Enabled: false
+
+
 
 
 
@@ -38,16 +46,7 @@ RescueException:
 RedundantSelf:
   Enabled: false
 
-AccessorMethodName:
-  Enabled: false
-
 Void:
-  Enabled: false
-
-AndOr:
-  Enabled: false
-
-CyclomaticComplexity:
   Enabled: false
 
 FavorSprintf:
@@ -56,31 +55,16 @@ FavorSprintf:
 ModuleFunction:
   Enabled: false
 
-NumericLiterals:
-  Enabled: false
-
-Not:
-  Enabled: false
-
 PredicateName:
   Enabled: false
 
 Syntax:
   Enabled: false
 
-IndentationWidth:
-  Enabled: false
-
-MethodLength:
-  Enabled: false
-
 ParenthesesAsGroupedExpression:
   Enabled: false
 
 RedundantBegin:
-  Enabled: false
-
-CaseIndentation:
   Enabled: false
 
 Documentation:
