@@ -6,12 +6,12 @@ node['deploy'].each do |application, deploy|
 
   next unless allow_deploy(application, 'ssl', 'nginxphpapp')
 
-  if !deploy.has_key?("ssl_certificate")
+  if !deploy.key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
     next
   end
 
-  if !deploy.has_key?("ssl_certificate_key")
+  if !deploy.key?("ssl_certificate_key")
     Chef::Log.info("No ssl_certificate_key 'key'")
     next
   end

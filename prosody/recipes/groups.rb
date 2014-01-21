@@ -12,8 +12,8 @@ template "/var/prosody/sharedgroups.txt" do
   owner "prosody"
   group "prosody"
   mode "0600"
-  variables({
+  variables(
     :groups => node['prosody']['groups'],
-  })
+  )
   notifies :restart, "service[prosody]"
 end

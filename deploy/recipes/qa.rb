@@ -29,7 +29,7 @@ node['deploy'].each do |application, deploy|
   if has_env?(application)
     env_conf = get_env_for_nginx(application)
   end
-    
+
   easybib_nginx application do
     config_template "silex.conf.erb"
     domain_name deploy['domains'].join(' ')
@@ -37,14 +37,14 @@ node['deploy'].each do |application, deploy|
     env_config env_conf
     notifies :restart, "service[nginx]", :delayed
   end
-  
+
   if application == 'bibcd'
     template "#{deploy["deploy_to"]}/current/config/deployconfig.yml" do
       source "empty.erb"
       mode   0644
-      #This is an ugly quick hack: Ruby Yaml adds !map:Chef::Node::ImmutableMash which the Symfony Yaml 
-      #parser doesnt like. So lets remove it.
-      variables :content => YAML::dump(node['bibcd']['default']).gsub('!map:Chef::Node::ImmutableMash','')
+      # This is an ugly quick hack: Ruby Yaml adds !map:Chef::Node::ImmutableMash which the Symfony Yaml
+      # parser doesnt like. So lets remove it.
+      variables :content => YAML.dump(node['bibcd']['default']).gsub('!map:Chef::Node::ImmutableMash', '')
     end
 
     node['bibcd']['apps'].each do |appname, config|
@@ -56,7 +56,7 @@ node['deploy'].each do |application, deploy|
       end
     end
   end
-  
+
   service "php-fpm" do
     action :reload
   end

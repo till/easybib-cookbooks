@@ -2,7 +2,7 @@ include_recipe "percona::repository"
 
 case node[:percona][:version]
   when "5.0"
-    raise "5.0 is gone!"
+    fail "5.0 is gone!"
   when "5.1"
     package "percona-server-common-5.1"
     package "percona-server-client-5.1"

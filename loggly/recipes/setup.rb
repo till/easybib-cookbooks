@@ -6,11 +6,11 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
 
   logglydata = node["loggly"]["token"]
 
-  if is_aws()
-    cluster_name   = get_cluster_name().gsub(/\W/,'_')
+  if is_aws
+    cluster_name   = get_cluster_name.gsub(/\W/, '_')
     logglydata << " tag=\\\"stack.#{cluster_name}\\\""
-    get_instance_roles().each do |layer|
-      layer = layer.gsub(/\W/,'_')
+    get_instance_roles.each do |layer|
+      layer = layer.gsub(/\W/, '_')
       logglydata << " tag=\\\"layer.#{layer}\\\""
     end
   end
@@ -24,7 +24,7 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
     notifies :restart, "service[rsyslog]", :delayed
   end
 
-  #clean up old location
+  # clean up old location
   file "/etc/rsyslog.d/10-loggly.conf" do
     action :delete
     only_if { File.exists?('/etc/rsyslog.d/10-loggly.conf') }

@@ -1,7 +1,6 @@
 include_recipe "gearmand::user"
 include_recipe "gearmand::service"
 
-
 [
   "/var/run/#{node['gearmand']['name']}",
   "#{node["gearmand"]["prefix"]}/#{node['gearmand']['source']['version']}/var/log"

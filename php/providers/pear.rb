@@ -4,7 +4,7 @@ def initialize(*args)
   pear = pear_run("which pear").strip
 
   if pear.empty?
-    raise Chef::Exceptions::ShellCommandFailed, "PEAR is not installed, or not in the path."
+    fail Chef::Exceptions::ShellCommandFailed, "PEAR is not installed, or not in the path."
   end
 
   @pear_cmd = pear
@@ -12,21 +12,20 @@ def initialize(*args)
   Chef::Log.debug("Looks like we found a PEAR installer: #{@pear_cmd}")
   pear_run("#{@pear_cmd} config-set auto_discover 1")
   Chef::Log.debug("Enabled auto_discover")
-
 end
 
 def pear_run(cmd)
   cmd = Mixlib::ShellOut.new(cmd)
   out = cmd.run_command.stdout.strip
-  #Chef::Log.debug("Command '#{cmd.command}' ran with exit status: #{cmd.exitstatus}")
-  #Chef::Log.debug("StdOut: #{cmd.stdout}")
-  #Chef::Log.debug("StdErr: #{cmd.stderr}")
+  # Chef::Log.debug("Command '#{cmd.command}' ran with exit status: #{cmd.exitstatus}")
+  # Chef::Log.debug("StdOut: #{cmd.stdout}")
+  # Chef::Log.debug("StdErr: #{cmd.stderr}")
 
   if cmd.exitstatus > 0
-    raise "Failed: #{cmd.command}, StdOut: #{cmd.stdout}, StdErr: #{cmd.stderr}"
+    fail "Failed: #{cmd.command}, StdOut: #{cmd.stdout}, StdErr: #{cmd.stderr}"
   end
 
-  return out
+  out
 end
 
 def discovered?(pear, channel)
@@ -40,11 +39,9 @@ def discovered?(pear, channel)
   else
     return true
   end
-
 end
 
 def pear_cmd(pear, action, package, force, channel, version)
-
   if not discovered?(pear, channel)
     discover = Mixlib::ShellOut.new("#{pear} channel-discover #{channel}")
     discover.run_command
@@ -54,7 +51,7 @@ def pear_cmd(pear, action, package, force, channel, version)
   command_alias = "#{pear} channel-info #{channel}|grep -a Alias|awk '{print $2}'"
   channel_alias = pear_run(command_alias)
   if channel_alias.empty?
-    raise "Could not find alias for #{channel}"
+    fail "Could not find alias for #{channel}"
   end
   Chef::Log.debug("Channel: #{channel}, Alias: #{channel_alias}")
 

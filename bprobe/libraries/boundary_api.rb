@@ -25,12 +25,11 @@ require 'base64'
 
 module Boundary
   module API
-
     def create_meter_request(new_resource)
       begin
         url = build_url(new_resource, :create)
-        headers = generate_headers()
-        body = {:name => new_resource.name}.to_json
+        headers = generate_headers
+        body = { :name => new_resource.name }.to_json
 
         Chef::Log.info("Creating meter [#{new_resource.name}]")
         response = http_request(:post, url, headers, body)
@@ -77,7 +76,7 @@ module Boundary
     def apply_an_tag(new_resource, tag)
       begin
         url = build_url(new_resource, :tags)
-        headers = generate_headers()
+        headers = generate_headers
 
         Chef::Log.info("Applying meter tag [#{tag}]")
 
@@ -90,7 +89,7 @@ module Boundary
     def delete_meter_request(new_resource)
       begin
         url = build_url(new_resource, :delete)
-        headers = generate_headers()
+        headers = generate_headers
 
         Chef::Log.info("Deleting meter [#{new_resource.name}]")
         response = http_request(:delete, url, headers)
@@ -140,14 +139,14 @@ module Boundary
       end
     end
 
-    def generate_headers()
-      auth = auth_encode()
-      {"Authorization" => "Basic #{auth}", "Content-Type" => "application/json"}
+    def generate_headers
+      auth = auth_encode
+      { "Authorization" => "Basic #{auth}", "Content-Type" => "application/json" }
     end
 
-    def auth_encode()
+    def auth_encode
       auth = Base64.encode64("#{node[:boundary][:api][:key]}:").strip
-      auth.gsub("\n","")
+      auth.gsub("\n", "")
     end
 
     def build_url(new_resource, action)
@@ -174,7 +173,7 @@ module Boundary
     def meter_exists?(new_resource)
       begin
         url = build_url(new_resource, :search)
-        headers = generate_headers()
+        headers = generate_headers
 
         response = http_request(:get, url, headers)
 
@@ -197,7 +196,7 @@ module Boundary
     def get_meter_id(new_resource)
       begin
         url = build_url(new_resource, :search)
-        headers = generate_headers()
+        headers = generate_headers
 
         response = http_request(:get, url, headers)
 
@@ -230,7 +229,7 @@ module Boundary
       uri = URI(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
-      #http.ssl_version = "SSLv3"
+      # http.ssl_version = "SSLv3"
       http.ca_file = "#{Chef::Config[:file_cache_path]}/cacert.pem"
       http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
@@ -250,9 +249,9 @@ module Boundary
         nil
       end
 
-      headers.each{|k,v|
+      headers.each do|k, v|
         req[k] = v
-      }
+      end
       response = http.request(req)
 
       Chef::Log.debug("Response Body: #{response.body}")
@@ -274,6 +273,5 @@ module Boundary
         Chef::Log.error("Got a #{response.code} for #{method} to #{url}")
        end
     end
-
   end
 end

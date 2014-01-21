@@ -16,8 +16,8 @@ git "#{root_dir}/session-trasher" do
   action :sync
 end
 
-if !is_aws() || !node[:mysql]
-  raise "This relies on the password being send from Custom JSON"
+if !is_aws || !node[:mysql]
+  fail "This relies on the password being send from Custom JSON"
 end
 
 mysql_password = node[:mysql][:server_root_password]

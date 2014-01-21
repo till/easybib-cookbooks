@@ -7,9 +7,9 @@ nginx_dir     = node["nginx-lb"]["dir"]
 ssl_dir       = node["ssl-deploy"]["directory"]
 int_ip        = node["nginx-lb"]["int_ip"]
 
-if is_aws()
-  instance_roles = get_instance_roles()
-  cluster_name   = get_cluster_name()
+if is_aws
+  instance_roles = get_instance_roles
+  cluster_name   = get_cluster_name
 else
   Chef::Log.debug("Not running on AWS, setting defaults.")
   instance_roles = ""
@@ -33,12 +33,12 @@ node["deploy"].each do |application, deploy|
     next
   end
 
-  if !deploy.has_key?("ssl_certificate")
+  if !deploy.key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
     next
   end
 
-  if !deploy.has_key?("ssl_certificate_key")
+  if !deploy.key?("ssl_certificate_key")
     Chef::Log.info("No ssl_certificate_key 'key'")
     next
   end

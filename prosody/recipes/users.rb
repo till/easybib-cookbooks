@@ -1,5 +1,5 @@
 if !node["prosody"]["users"].empty?
-  node["prosody"]["users"].each do |email,passwd|
+  node["prosody"]["users"].each do |email, passwd|
 
     Chef::Log.debug("Email: #{email}")
 
@@ -10,17 +10,17 @@ if !node["prosody"]["users"].empty?
       Chef::Log.error("Domain for #{email} is not managed by this server.")
       next
     end
-    
+
     package "expect"
 
     execute "add user: #{email}" do
-      #prosodyctl register would overwrite an existing user, while 
-      #prosodyctl adduser does not accept the password as a param.
-      #Using expect as a workaround.
+      # prosodyctl register would overwrite an existing user, while
+      # prosodyctl adduser does not accept the password as a param.
+      # Using expect as a workaround.
       command "expect -c 'spawn /usr/bin/prosodyctl adduser #{email}
        expect \"Enter new password:\"
        send \"#{passwd}\\r\"
-       expect \"Retype new password:\" 
+       expect \"Retype new password:\"
        send \"#{passwd}\\r\"
        expect eof'"
     end
@@ -41,22 +41,22 @@ if node["prosody"]["storage"] == "sql"
     end
 
     if !node["prosody"]["users"].empty?
-      
-      userstatement = " NOT ("      
-      node["prosody"]["users"].each do |email,passwd|
+
+      userstatement = " NOT ("
+      node["prosody"]["users"].each do |email, passwd|
 
         Chef::Log.debug("Email: #{email}")
 
         account = email.split("@")[0]
         domain  = email.split("@")[1]
-        
+
         userstatement += " ( host='#{domain}' AND user='#{account}') OR "
 
-      end            
-      userstatement = userstatement[0..-4] #cut the last OR
+      end
+      userstatement = userstatement[0..-4] # cut the last OR
 
       Chef::Log.debug("I am going to delete prosody users where: #{userstatement} ")
-      
+
       execute "delete other accounts" do
         command "#{mysql_command} -e \"DELETE FROM #{db_conf["database"]}.prosody WHERE store='accounts' AND #{userstatement}) \""
       end

@@ -1,6 +1,6 @@
-if is_aws()
+if is_aws
 
-  deploy_user     = get_deploy_user()
+  deploy_user     = get_deploy_user
   deploy_username = deploy_user[:user]
   deploy_group    = deploy_user[:group]
 

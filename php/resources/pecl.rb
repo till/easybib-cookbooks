@@ -13,5 +13,4 @@ attribute :config,  :kind_of => Hash
 attribute :source_dir, :kind_of => String
 attribute :cflags, :kind_of => String
 attribute :config_directives, :kind_of => Hash, :default => {}
-attribute :zend_extensions, :kind_of => Array, :default => Array.new
-
+attribute :zend_extensions, :kind_of => Array, :default => []

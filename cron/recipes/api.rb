@@ -1,6 +1,6 @@
 # install a cronjob to run every 5 minutes
 
-roles = get_instance_roles()
+roles = get_instance_roles
 
 cron "stats from redis to mysql" do
   mailto node[:sysop_email]

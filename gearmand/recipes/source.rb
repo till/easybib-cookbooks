@@ -33,7 +33,6 @@ execute "tar -zxvf #{Chef::Config[:file_cache_path]}/gearmand-#{version}.tar.gz"
   cwd Chef::Config[:file_cache_path]
 end
 
-
 commands = [
   "./configure --prefix=#{prefix}/#{version} #{node['gearmand']['source']['flags']}",
   "make",
