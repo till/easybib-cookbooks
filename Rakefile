@@ -12,12 +12,18 @@ task :default => [
   :lint,
   :test,
   :spec,
+  :rubocop,
   :foodcritic
 ]
 
 desc "Run tests"
 Rake::TestTask.new do |t|
   t.pattern = '**/**/tests/test_*.rb'
+end
+
+desc "WIP: Ruby lint (too slow)"
+task :lint do
+  system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
 end
 
 desc "WIP: Ruby lint (too slow)"
@@ -106,3 +112,6 @@ if !ENV['TRAVIS'] && File.exists?(current_dir + '/.kitchen.yml')
     puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
   end
 end
+
+require 'rubocop/rake_task'
+Rubocop::RakeTask.new
