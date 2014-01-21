@@ -15,5 +15,5 @@ template "/var/prosody/sharedgroups.txt" do
   variables({
     :groups => node['prosody']['groups'],
   })
-  notifies :reload, "service[prosody]"
+  notifies :restart, "service[prosody]"
 end
