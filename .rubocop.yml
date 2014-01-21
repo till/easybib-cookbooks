@@ -32,6 +32,10 @@ RescueException:
 AccessorMethodName:
   Enabled: false
 
+#I dont want to separate port numbers with underscores.
+NumericLiterals:
+  Enabled: false
+
 
 
 
@@ -45,22 +49,10 @@ RedundantSelf:
 Void:
   Enabled: false
 
-AndOr:
-  Enabled: false
-
-CyclomaticComplexity:
-  Enabled: false
-
 FavorSprintf:
   Enabled: false
 
 ModuleFunction:
-  Enabled: false
-
-NumericLiterals:
-  Enabled: false
-
-Not:
   Enabled: false
 
 PredicateName:
