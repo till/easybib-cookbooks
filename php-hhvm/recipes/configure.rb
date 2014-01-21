@@ -9,4 +9,3 @@ template "/etc/hhvm/php.ini" do
   owner    node["php-fpm"]["user"]
   group    node["php-fpm"]["group"]
 end
-

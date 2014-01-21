@@ -8,7 +8,7 @@ directory pool_config_dir do
   recursive true
 end
 
-node["users"].each do |username,prop|
+node["users"].each do |username, prop|
   template "#{pool_config_dir}/#{username}.conf" do
     source "pool.conf.erb"
     owner  "www-data"

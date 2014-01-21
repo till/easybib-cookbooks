@@ -33,7 +33,7 @@ rd.run_action(:create)
 
 # only reload ohai if new plugins were dropped off OR
 # node['ohai']['plugin_path'] does not exists in client.rb
-if rd.updated? || 
+if rd.updated? ||
   !(::IO.read(Chef::Config[:config_file]) =~ /Ohai::Config\[:plugin_path\]\s*<<\s*["']#{node['ohai']['plugin_path']}["']/)
 
   ohai 'custom_plugins' do

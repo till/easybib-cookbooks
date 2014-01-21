@@ -4,7 +4,7 @@ directory "/etc/haproxy/errors/" do
   action :create
 end
 
-node["haproxy"]["errorloc"].each do |code,file|
+node["haproxy"]["errorloc"].each do |code, file|
   cookbook_file "/etc/haproxy/errors/#{file}" do
     source file
     owner "haproxy"

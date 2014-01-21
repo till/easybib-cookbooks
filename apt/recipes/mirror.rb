@@ -5,4 +5,4 @@ template "/etc/apt/mirror.list" do
   source "mirror.list.erb"
 end
 
-# todo: enable cronjob?
+# TODO: enable cronjob?

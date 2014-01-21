@@ -1,6 +1,6 @@
 # fix this for Ubuntu
 if !get_cluster_name.empty?
-  instance    = get_instance()
+  instance    = get_instance
   my_hostname = instance["hostname"]
 else
   # node.json

@@ -8,11 +8,11 @@ commands = [
 commands.each do |cmd|
   execute "Running: #{cmd}" do
     command cmd
-    environment({
+    environment(
       "NR_INSTALL_SILENT" => "yes",
       "NR_INSTALL_NOKSH" => "yes",
       "NR_INSTALL_KEY" => node["newrelic"]["license"]
-    })
+    )
     not_if do
       node["newrelic"]["license"].empty?
     end

@@ -1,8 +1,8 @@
 include_recipe "nginx-app::server"
 include_recipe "php-fpm::service"
 
-instance_roles   = get_instance_roles()
-cluster_name     = get_cluster_name()
+instance_roles   = get_instance_roles
+cluster_name     = get_cluster_name
 app_access_log   = "off"
 nginx_config_dir = node["nginx-app"]["config_dir"]
 

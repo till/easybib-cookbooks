@@ -22,7 +22,7 @@ if !php_bin.empty?
 
     extensions = `#{languages[:php_fpm][:php_bin]} -m`.strip.split("\n")
     extensions.each do |line|
-      if line.empty? or line[0,1] == '['
+      if line.empty? or line[0, 1] == '['
         next
       end
 
@@ -50,7 +50,7 @@ if !languages[:php_fpm][:pear_bin].nil?
   languages[:php_fpm][:pear_channels] = []
 
   channel_out.each do |line|
-    if line[0,4].empty?
+    if line[0, 4].empty?
       next
     end
 
@@ -59,9 +59,9 @@ if !languages[:php_fpm][:pear_bin].nil?
       next
     end
 
-    languages[:php_fpm][:pear_channels].push({
+    languages[:php_fpm][:pear_channels].push(
       :uri   => l[0],
       :alias => l[1]
-    })
+    )
   end
 end

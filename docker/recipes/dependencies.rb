@@ -7,6 +7,6 @@ easybib_launchpad node["docker"]["ppa"] do
   end
 end
 
-#if is_aws()
+# if is_aws()
 #  package "linux-image-extra-#{node["os_version"]}"
-#end
+# end
