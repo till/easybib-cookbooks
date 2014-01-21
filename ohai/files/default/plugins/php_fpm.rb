@@ -22,7 +22,7 @@ if !php_bin.empty?
 
     extensions = `#{languages[:php_fpm][:php_bin]} -m`.strip.split("\n")
     extensions.each do |line|
-      if line.empty? or line[0, 1] == '['
+      if line.empty? || line[0, 1] == '['
         next
       end
 

@@ -14,7 +14,7 @@ MethodLength:
   Max: 25
 
 CyclomaticComplexity:
-  Max: 7
+  Max: 9
 
 ParameterLists:
   Enabled: false
@@ -29,6 +29,10 @@ SpaceInsideBrackets:
 RescueException:
   Enabled: false
 
+AccessorMethodName:
+  Enabled: false
+
+
 
 
 
@@ -36,9 +40,6 @@ RescueException:
 # Cookbooks.
 
 RedundantSelf:
-  Enabled: false
-
-AccessorMethodName:
   Enabled: false
 
 Void:
