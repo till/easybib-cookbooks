@@ -12,7 +12,6 @@ execute "update-percona-apt" do
   action :nothing
 end
 
-
 template "/etc/apt/sources.list.d/percona.list" do
   source "percona.list.erb"
   mode 0644

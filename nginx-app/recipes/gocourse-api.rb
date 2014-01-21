@@ -1,6 +1,6 @@
 config = "api"
 
-if is_aws()
+if is_aws
   deploy_dir = "/srv/www/#{config}/current/public/"
 else
   if node["vagrant"]["combined"] == true

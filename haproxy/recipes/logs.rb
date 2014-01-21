@@ -17,4 +17,3 @@ template "/etc/logrotate.d/haproxy" do
   owner "syslog"
   group "adm"
 end
-

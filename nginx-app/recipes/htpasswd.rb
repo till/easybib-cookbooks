@@ -1,5 +1,5 @@
-cluster_name = get_cluster_name()
-is_aws = is_aws()
+cluster_name = get_cluster_name
+is_aws = is_aws
 
 template "#{node["nginx-app"]["config_dir"]}/htpasswd" do
   source "htpasswd.erb"

@@ -2,9 +2,9 @@ require 'resolv'
 
 ips = ['127.0.0.0/8']
 
-if !get_cluster_name().empty?
+if !get_cluster_name.empty?
 
-  instance = get_instance()
+  instance = get_instance
 
   ips.push(instance["ip"])
   ips.push(Resolv.getaddress(instance["private_dns_name"]))

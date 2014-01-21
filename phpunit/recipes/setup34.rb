@@ -32,9 +32,9 @@ if not node[:languages][:php].empty? and node[:languages][:php][:pear_bin]
   template "#{phpunit_location}#{pear_bin}/phpunit" do
     mode   "0755"
     source "phpunit.erb"
-    variables({
+    variables(
       :complete_path => "#{phpunit_location}#{php_dir}"
-    })
+    )
   end
 
   link "#{pear_bin}/phpunit#{major}" do

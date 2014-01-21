@@ -6,7 +6,6 @@ class TestEasyBib < Test::Unit::TestCase
   include EasyBib
 
   def test_build_nginx_config
-
     fake_node = Chef::Node.new
     fake_node.set["env"]["database"] = {
       "app" => {
@@ -17,7 +16,7 @@ class TestEasyBib < Test::Unit::TestCase
       }
     }
 
-    fake_node["env"]["database"]["app"].each do |k,v|
+    fake_node["env"]["database"]["app"].each do |k, v|
       assert_equal(
         build_nginx_config("app_#{k}", v),
         "fastcgi_param app_#{k} \"#{v}\";\n"
@@ -27,10 +26,10 @@ class TestEasyBib < Test::Unit::TestCase
 
   def test_get_db_conf
     # breaks on ruby 1.8
-    #assert_equal(
+    # assert_equal(
     #  get_db_conf("env", fake_node),
     #  "fastcgi_param APP_HOSTNAME \"127.0.0.1\";\nfastcgi_param APP_USERNAME \"root\";\nfastcgi_param APP_PASSWORD \"test123\";\nfastcgi_param APP_DATABASE \"app_stage\";\n"
-    #)
+    # )
   end
 
   def test_get_domain_conf
@@ -39,10 +38,9 @@ class TestEasyBib < Test::Unit::TestCase
       "api" => "api.local"
     }
 
-    #assert_equal(
+    # assert_equal(
     #  get_domain_conf("env", fake_node),
     #  "fastcgi_param DOMAIN_API \"api.local\";\n"
-    #)
+    # )
   end
-
 end
