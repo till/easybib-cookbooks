@@ -1,0 +1,99 @@
+AlignParameters:
+  Enabled: false
+
+Encoding:
+  Enabled: false
+
+LineLength:
+  Max: 200
+
+HashSyntax:
+  EnforcedStyle: hash_rockets
+
+MethodLength:
+  Max: 25
+
+CyclomaticComplexity:
+  Max: 7
+
+ParameterLists:
+  Enabled: false
+
+StringLiterals:
+  Enabled: false
+
+SpaceInsideBrackets:
+  Enabled: false
+
+#Some recipes have a valid reason to do so, see bprobe for example
+RescueException:
+  Enabled: false
+
+
+
+
+# Temp disabled rules below. Remove them on at a time, and refactor the
+# Cookbooks.
+
+RedundantSelf:
+  Enabled: false
+
+AccessorMethodName:
+  Enabled: false
+
+Void:
+  Enabled: false
+
+AndOr:
+  Enabled: false
+
+CyclomaticComplexity:
+  Enabled: false
+
+FavorSprintf:
+  Enabled: false
+
+ModuleFunction:
+  Enabled: false
+
+NumericLiterals:
+  Enabled: false
+
+Not:
+  Enabled: false
+
+PredicateName:
+  Enabled: false
+
+Syntax:
+  Enabled: false
+
+IndentationWidth:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+ParenthesesAsGroupedExpression:
+  Enabled: false
+
+RedundantBegin:
+  Enabled: false
+
+CaseIndentation:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+UselessAssignment:
+  Enabled: false
+
+WordArray:
+  Enabled: false
+
+FavorUnlessOverNegatedIf:
+  Enabled: false
+
+IfUnlessModifier:
+  Enabled: false
