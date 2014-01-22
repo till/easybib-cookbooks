@@ -9,11 +9,11 @@ require 'rspec/core/rake_task'
 Bundler.setup
 
 task :default => [
-  :lint,
   :test,
   :spec,
   :rubocop,
-  :foodcritic
+  :foodcritic,
+  :lint
 ]
 
 desc "Run tests"

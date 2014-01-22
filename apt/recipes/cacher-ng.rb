@@ -26,6 +26,7 @@ end
 directory node['apt']['cacher_dir'] do
   owner 'apt-cacher-ng'
   group 'apt-cacher-ng'
+  recursive true
   mode 0755
 end
 
