@@ -39,6 +39,9 @@ node['deploy'].each do |application, deploy|
 
   remote_file "#{node['s3-syncer']['path']}/syncer.tar.gz" do
     source node['s3-syncer']['source']
+    mode 0755
+    owner "www-data"
+    group "www-data"
   end
 
   execute "Extracting S3 Syncer" do
