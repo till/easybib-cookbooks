@@ -15,7 +15,15 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  %w{"/mnt/satis-output/" "/mnt/composer-tmp/" "#{node['s3-syncer']['path']}"}.each do |dir|
+  directory node['s3-syncer']['path'] do
+    recursive true
+    owner "www-data"
+    group "www-data"
+    mode  0755
+    action :create
+  end
+
+  %w{"/mnt/satis-output/" "/mnt/composer-tmp/"}.each do |dir|
     directory dir do
       recursive true
       owner "www-data"
