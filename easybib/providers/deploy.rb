@@ -14,9 +14,9 @@ action :deploy do
     only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/crontab") }
   end
 
-  import_file_path = "#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env"
+  import_file_path = "#{deploy_data[:deploy_to]}/current/deploy/pecl_manager_env"
 
-  Chef::Log.debug("easybib_deploy - import_file_path is #{import_file_path}")
+  Chef::Log.debug("easybib_deploy - import_file_path we are looking for is #{import_file_path}")
 
   pecl_manager_script "Setting up Pecl Manager" do
     dir deploy_data[:deploy_to]
