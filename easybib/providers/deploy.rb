@@ -14,5 +14,12 @@ action :deploy do
     only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/crontab") }
   end
 
+  pecl_manager_script "Setting up Pecl Manager" do
+    dir deploy_data[:deploy_to]
+    import_file "#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env"
+    only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env") }
+  end
+
   new_resource.updated_by_last_action(true)
+
 end
