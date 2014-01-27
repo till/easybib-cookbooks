@@ -1,5 +1,3 @@
-include_recipe "pecl-manager::service"
-
 action :create do
   dir = new_resource.dir
   envvar_file = "#{new_resource.dir}/#{new_resource.envvar_file}"
@@ -20,6 +18,7 @@ action :create do
   end
 
   service "pecl-manager" do
+    supports [ :start, :stop, :restart, :status ]
     action :restart
   end
 
