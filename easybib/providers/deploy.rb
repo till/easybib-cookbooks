@@ -16,10 +16,13 @@ action :deploy do
 
   import_file_path = "#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env"
 
+  Chef::Log.debug("easybib_deploy - import_file_path is #{import_file_path}")
+
   pecl_manager_script "Setting up Pecl Manager" do
     dir deploy_data[:deploy_to]
     envvar_file import_file_path
-    only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env") }
+    envvar_source new_resource.envvar_source
+    only_if { ::File.exists?(import_file_path) }
   end
 
   new_resource.updated_by_last_action(true)
