@@ -13,7 +13,7 @@ template "/var/prosody/sharedgroups.txt" do
   group "prosody"
   mode "0600"
   variables(
-    :groups => node['prosody']['groups'],
+    :groups => node['prosody']['groups']
   )
   notifies :restart, "service[prosody]"
 end
