@@ -3,12 +3,14 @@ include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
 
-  if application == 'bibcd'
+  case application
+  when 'bibcd'
     next unless allow_deploy(application, 'bibcd')
-  end
-
-  if application == 'bib-opsstatus'
+  when 'bib-opsstatus'
     next unless allow_deploy(application, 'bib-opsstatus')
+  else
+    Chef::Log.info("deploy::qa - #{application} skipped")
+    next
   end
 
   Chef::Log.info("deploy::#{application} - Deployment started.")
