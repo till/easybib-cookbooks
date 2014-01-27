@@ -14,9 +14,11 @@ action :deploy do
     only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/crontab") }
   end
 
+  import_file_path = "#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env"
+
   pecl_manager_script "Setting up Pecl Manager" do
     dir deploy_data[:deploy_to]
-    import_file "#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env"
+    envvar_file import_file_path
     only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/pecl-manager-env") }
   end
 
