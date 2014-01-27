@@ -13,6 +13,7 @@ node['deploy'].each do |application, deploy|
   easybib_deploy "getcourse-api" do
     deploy_data deploy
     app application
+    envvar_source "getcourse"
   end
 
   service "php-fpm" do
