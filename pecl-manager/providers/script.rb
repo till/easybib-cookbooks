@@ -1,6 +1,5 @@
 action :create do
   dir = new_resource.dir
-  envvar_file = "#{new_resource.dir}/#{new_resource.envvar_file}"
 
   global_envvars = get_env_for_shell(new_resource.envvar_source) unless new_resource.envvar_source.nil?
 
@@ -12,7 +11,7 @@ action :create do
     group "root"
     variables(
       :dir => dir,
-      :envvar_file => envvar_file,
+      :envvar_file => new_resource.envvar_file,
       :envvars => global_envvars
     )
   end
