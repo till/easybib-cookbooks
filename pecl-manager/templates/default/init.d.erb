@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Gearman worker manager
 
@@ -13,15 +13,21 @@
 ### END INIT INFO
 
 ##PATH##
-DAEMON=<%= @daemon %>
-PIDDIR=<%= @pid_dir %>
-PIDFILE=${PIDDIR}/gearman-manager.pid
-CONFIGFILE=<%= @config_file %>
-WORKERCLASS='<%= @worker_class %>'
+APPDIR = "<%= @dir %>"
 
-GEARMANUSER="gearman"
-LOGFILE=syslog
-PARAMS=""
+####DEFAULT ENVVARS#####
+DAEMON=${APPDIR}/bin/pecl_manager
+PIDDIR=/var/run/gearman
+PIDFILE=${PIDDIR}/manager.pid
+LOGFILE=/var/log/gearman-manager.log
+GEARMANUSER="www-data"
+PARAMS="-w /dev/null -vvv"
+
+####ENVVARS FROM JSON#####
+<%= @envvars %>
+
+####ENVVARS FROM EXTERNAL FILE#####
+<%= render @envvar_file, :local => true %>
 
 test -x ${DAEMON} || exit 0
 
@@ -42,8 +48,7 @@ start()
     -- -P $PIDFILE \
        -l $LOGFILE \
        -u $GEARMANUSER \
-       -d -vvv -p $WORKERCLASS \
-       -c $CONFIGFILE \
+       -d \
        $PARAMS
   then
     log_end_msg 0
@@ -60,7 +65,7 @@ stop()
   if start-stop-daemon \
     --stop \
     --oknodo \
-    --retry 10 \
+    --retry 20 \
     --pidfile $PIDFILE
   then
     log_end_msg 0
@@ -68,10 +73,6 @@ stop()
     log_end_msg 1
     exit 1
   fi
-  kill `ps aux | egrep 'gearm[a]n-manager -P ' | awk '{ print $2 }'` 2>/dev/null
-  sleep 2
-  kill -KILL `ps aux | egrep 'gearm[a]n-manager -P ' | awk '{ print $2 }'` 2>/dev/null
-  sleep 2
 }
 
 case "$1" in

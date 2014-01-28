@@ -1,5 +1,4 @@
 include_recipe "php-fpm::service"
-include_recipe "pecl-manager::service"
 
 node['deploy'].each do |application, deploy|
 
@@ -11,21 +10,14 @@ node['deploy'].each do |application, deploy|
     path  deploy["deploy_to"]
   end
 
-  opsworks_deploy do
+  easybib_deploy "getcourse-api" do
     deploy_data deploy
     app application
+    envvar_source "getcourse"
   end
 
   service "php-fpm" do
     action :reload
-  end
-
-  link "/etc/init.d/pecl-manager" do
-    to "#{deploy["current_path"]}/bin/workers"
-  end
-
-  service "pecl-manager" do
-    action :restart
   end
 
   ["getcourse"].each do |cron_app_name|
