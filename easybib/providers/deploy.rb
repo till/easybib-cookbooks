@@ -14,7 +14,7 @@ action :deploy do
     only_if { ::File.exists?("#{deploy_data[:deploy_to]}/current/deploy/crontab") }
   end
 
-  import_file_path = "#{deploy_data[:deploy_to]}/current/deploy/pecl_manager_env"
+  import_file_path = "#{deploy_data[:deploy_to]}/current/deploy/#{node[:easybib_deploy][:gearman_file]}"
 
   Chef::Log.debug("easybib_deploy - import_file_path we are looking for is #{import_file_path}")
 
