@@ -1,7 +1,7 @@
 action :create do
   dir = new_resource.dir
 
-  global_envvars = ::EasyBib.get_env_for_shell(new_resource.envvar_source) unless new_resource.envvar_source.nil?
+  global_envvars = ::EasyBib.get_env_for_shell(new_resource.envvar_source, node) unless new_resource.envvar_source.nil?
 
   template "/etc/init.d/pecl-manager" do
     cookbook "pecl-manager"
