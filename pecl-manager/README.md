@@ -1,43 +1,53 @@
 pecl-manager Cookbook
 ============
-This cookbook includes a service definition for pecl-manager as a recipe, and a provider to add and generate
-the relevant ```/etc/init.d/pecl-manager```.
+This cookbook provides a service definition for pecl-manager as a recipe and a provider to add and generate the `/etc/init.d/pecl-manager` init script (not upstart).
 
-Related: https://github.com/brianlmoon/GearmanManager
+Related resources:
+
+- https://github.com/brianlmoon/GearmanManager
+- https://github.com/mwillbanks/MwGearman
+- http://pecl.php.net/gearman
+- http://gearman.org/
 
 Requirements
 ------------
 This cookbook requires Chef 11.0.0 or later.
 
+It has been tested in Vagrant (with chef-solo provisioner) and AWS OpsWorks.
+
 ### Platform
 
-* Ubuntu 12.04
+- Ubuntu 12.04
 
 May work with or without modification on other Debian derivatives.
 
 -------
 ### service
-This recipe only includes the service defintion for ```pecl-manager```.
+This recipe only includes the service defintion for `pecl-manager`.
 
 Resources/Providers
 -------------------
 ### `script`
-This LWRP provides an easy way to generate a ```/etc/init.d/pecl-manager``` init script. It includes configuration
-from two different locations, and exports them in the script as environment variables:
-- From the node configuration: If you supply the parameter ```envvar_json_source```, all key/value-pairs under
-```node[envvar_json_source]``` will be exported. See ```easybib/libraries/easybib.rb```, function ```get_env_for_shell```
+
+This LWRP provides an easy way to create a `/etc/init.d/pecl-manager` init script. It includes configuration from two different locations, and exports them in the script as environment variables:
+
+- From the node configuration: If you supply the parameter `envvar_json_source`, all key/value-pairs under
+`node[envvar_json_source]` will be exported. See `easybib/libraries/easybib.rb`, function `get_env_for_shell`
 for implementation details
-- From a file in the source: The file supplied with the parameter ```envvar_file```.
+- From a file in the source: The file supplied with the parameter `envvar_file`.
 
 #### Easybib-Deploy
-This LWRP is included in easybib\_deploy and executed when the envvar\_file exists.
+
+This LWRP is included in `easybib_deploy` and executed when the `envvar_file` exists.
 
 #### Environment Variables
+
 There are several environment variables used to configure the init script. All of them are provided with a default
-setting - then first the JSON variables, then the variables from ```envvar_file``` are set. You can therefore
+setting - then first the JSON variables, then the variables from `envvar_file` are set. You can therefore
 override all default variables with your custom settings.
 
 Default Variables:
+
 ```
  #Path to application root directory, set by the cookbooks
 APPDIR=#variable
@@ -56,27 +66,31 @@ PARAMS="-w /dev/null -vvv"
 ```
 
 #### Actions
-- :create: creates the the file, registers and restarts the service.
+
+- `:create`: creates the the file, registers and restarts the service.
 
 #### Attribute Parameters
-- dir (required): The root directory for the script
-- envvar_file (required): The file to include for environment variables (see above)
-- envvar_json: The json key to import environment variables from (see above)
+
+- `dir` (required): The root directory for the script
+- `envvar_file` (required): The file to include for environment variables (see above)
+- `envvar_json`: The json key to import environment variables from (see above)
 
 #### Examples
 
-```
-pecl\_manager\_script "Setting up Pecl Manager" do
+```ruby
+pecl_manager_script "Setting up Pecl Manager" do
   dir                  "/var/www"
-  envvar\_file         "/var/www/deploy/pecl\_manager\_env"
-  envvar\_json\_source "defaultsettings"
+  envvar_file         "/var/www/deploy/pecl_manager_env"
+  envvar_json_source "defaultsettings"
 end
 ```
 
 License & Authors
 -----------------
-- Author:: Till Klampaeckel (till@php.net)
-- Author:: Florian Holzhauer (fh-easybib@fholzhauer.de)
+
+- Authors:
+ - Till Klampaeckel (till@php.net)
+ - Florian Holzhauer (fh-easybib@fholzhauer.de)
 
 ```text
 Copyright (c) 2014 Till Klampaeckel, Florian Holzhauer, ImagineEasy Solutions LLC
