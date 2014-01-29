@@ -11,6 +11,12 @@ action :create do
     envvar_json = ::EasyBib.get_env_for_shell(new_resource.envvar_json_source, node)
   end
 
+  # clean up old links to bin/worker
+  link "/etc/init.d/pecl-manager" do
+    action :delete
+    only_if "test -L /etc/init.d/pecl-manager"
+  end
+
   template "/etc/init.d/pecl-manager" do
     cookbook "pecl-manager"
     source "init.d.erb"
