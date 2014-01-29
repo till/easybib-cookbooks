@@ -2,7 +2,7 @@ default['gearmand']         = {}
 default['gearmand']['name'] = 'gearmand-easybib'
 default['gearmand']['user'] = 'gearman'
 default['gearmand']['port'] = 31337
-default['gearmand']['log']  = '--syslog' # or --logfile=/path/to/whatever
+default['gearmand']['log']  = '--syslog -l stderr' # or --logfile=/path/to/whatever
 
 # these are relevant for when we compile from source
 default['gearmand']['prefix']            = '/opt/gearman'
