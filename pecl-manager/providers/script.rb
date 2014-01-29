@@ -1,18 +1,32 @@
 action :create do
-  dir = new_resource.dir
+  root_dir = new_resource.dir
 
-  global_envvars = ::EasyBib.get_env_for_shell(new_resource.envvar_source, node) unless new_resource.envvar_source.nil?
+  # TODO: we should add a "if file exists" check here
+
+  Chef::Log.debug("Pecl-Manager: Importing file #{new_resource.envvar_file} in Startscript")
+
+  if new_resource.envvar_json_source.nil?
+    Chef::Log.debug("Pecl-Manager: No source for json env found")
+  else
+    envvar_json = ::EasyBib.get_env_for_shell(new_resource.envvar_json_source, node)
+  end
+
+  # clean up old links to bin/worker
+  link "/etc/init.d/pecl-manager" do
+    action :delete
+    only_if "test -L /etc/init.d/pecl-manager"
+  end
 
   template "/etc/init.d/pecl-manager" do
     cookbook "pecl-manager"
     source "init.d.erb"
-    mode "0700"
+    mode  "0700"
     owner "root"
     group "root"
     variables(
-      :dir => dir,
+      :dir => root_dir,
       :envvar_file => new_resource.envvar_file,
-      :envvars => global_envvars
+      :envvar_json => envvar_json
     )
   end
 
