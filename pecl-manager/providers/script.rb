@@ -1,8 +1,12 @@
 action :create do
-  dir = new_resource.dir
+  root_dir = new_resource.dir
 
-  global_envvars = ::EasyBib.get_env_for_shell(new_resource.envvar_source, node) unless new_resource.envvar_source.nil?
+  # TODO we should add a "if file exists" check here
 
+  unless new_resource.envvar_json_source.nil
+    global_envvars = ::EasyBib.get_env_for_shell(new_resource.envvar_json_source, node)
+  end
+  
   template "/etc/init.d/pecl-manager" do
     cookbook "pecl-manager"
     source "init.d.erb"
@@ -10,7 +14,7 @@ action :create do
     owner "root"
     group "root"
     variables(
-      :dir => dir,
+      :dir => root_dir,
       :envvar_file => new_resource.envvar_file,
       :envvars => global_envvars
     )
