@@ -24,7 +24,7 @@ GEARMANUSER="www-data"
 PARAMS="-w /dev/null -vvv"
 
 ####ENVVARS FROM JSON#####
-<%= @envvars %>
+<%= @envvar_json %>
 
 ####ENVVARS FROM EXTERNAL FILE#####
 <%= render @envvar_file, :local => true %>
