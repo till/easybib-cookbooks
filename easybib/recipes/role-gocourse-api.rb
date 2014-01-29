@@ -12,7 +12,7 @@ include_recipe "deploy::gocourse-api"
 include_recipe "nginx-app::gocourse-api"
 
 unless is_aws
-  gearmanconf_root_dir = "/vagrant_api"
+  gearmanconf_root_dir = ::File.expand_path("#{node['vagrant']['deploy_to']['api']}/..")
   import_file_path = "#{gearmanconf_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
 
   pecl_manager_script "Setting up Pecl Manager Script for vagrant" do
