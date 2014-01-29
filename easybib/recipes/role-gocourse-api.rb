@@ -10,4 +10,15 @@ include_recipe "bash::bashrc"
 include_recipe "bash::configure"
 include_recipe "deploy::gocourse-api"
 include_recipe "nginx-app::gocourse-api"
-include_recipe "pecl-manager::vagrant"
+
+unless is_aws
+  gearmanconf_root_dir = "/vagrant_api"
+  import_file_path = "#{gearmanconf_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
+
+  pecl_manager_script "Setting up Pecl Manager Script for vagrant" do
+    dir gearmanconf_root_dir
+    envvar_file import_file_path
+    envvar_source node['easybib_deploy']['env_source']
+    only_if { ::File.exists?(import_file_path) }
+  end
+end
