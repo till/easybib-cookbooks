@@ -10,7 +10,9 @@ base_packages.each do |p|
   package p
 end
 
-chef_gem "BibOpsworks"
+chef_gem "BibOpsworks" do
+  action :install
+end
 
 service "nscd" do
   action :nothing
