@@ -1,4 +1,2 @@
-include_recipe "easybib::role-generic"
-
-include_recipe "deploy::gocourse-static"
-include_recipe "nginx-app::gocourse-domainadmin"
+Chef::Log.warn('DEPRECATED: This setup is still using role-gocourse-domainadmin')
+include_recipe "easybib::role-getcourse-domainadmin"
