@@ -1,4 +1,4 @@
 include_recipe "easybib::role-generic"
 
-include_recipe "deploy::gocourse-static"
-include_recipe "nginx-app::gocourse-domainadmin"
+include_recipe "deploy::getcourse-static"
+include_recipe "nginx-app::getcourse-domainadmin"
