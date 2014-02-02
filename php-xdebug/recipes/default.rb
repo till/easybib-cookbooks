@@ -9,4 +9,14 @@ php_pecl "xdebug" do
   zend_extensions ['xdebug.so']
   config_directives node['xdebug']['config']
   action [ :install, :setup ]
+  not_if do
+    node["apt"]["easybib"]["ppa"] == "ppa:easybib/php55"
+  end
+end
+
+package "php5-easybib-xdebug" do
+  action :install
+  only_if do
+    node["apt"]["easybib"]["ppa"] == "ppa:easybib/php55"
+  end
 end
