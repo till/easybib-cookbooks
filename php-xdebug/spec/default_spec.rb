@@ -1,6 +1,6 @@
 require 'chefspec'
 
-describe 'php-apc::configure' do
+describe 'php-xdebug::default' do
 
   let (:chef_run) do
     ChefSpec::Runner.new do |node|
