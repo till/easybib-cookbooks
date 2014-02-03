@@ -2,6 +2,8 @@ language: ruby
 rvm:
   - 1.9.3
 before_script:
+#  https://github.com/travis-ci/travis-artifacts/issues/23
+  - gem install --version 0.8.9 faraday
   - gem install travis-artifacts
 script:
   - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
@@ -11,6 +13,7 @@ script:
 after_success:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz
   - travis-artifacts upload --path easybib-cookbooks.tar.gz
+  - travis-artifacts upload --path easybib-cookbooks.tar.gz --target-path artifacts/easybib-cookbooks-$TRAVIS_COMMIT-$TRAVIS_BUILD_ID.tar.gz
 env:
   global:
     - ARTIFACTS_AWS_REGION=us-east-1
