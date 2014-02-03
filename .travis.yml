@@ -13,7 +13,7 @@ script:
 after_success:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz
   - travis-artifacts upload --path easybib-cookbooks.tar.gz
-  - travis-artifacts upload --path easybib-cookbooks.tar.gz --target-path artifacts/easybib-cookbooks-$TRAVIS_COMMIT-$TRAVIS_BUILD_ID.tar.gz
+  - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then travis-artifacts upload --path easybib-cookbooks.tar.gz --target-path /easybib-cookbooks.tar.gz; fi
 env:
   global:
     - ARTIFACTS_AWS_REGION=us-east-1
