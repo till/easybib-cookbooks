@@ -11,7 +11,7 @@ describe 'php-xdebug::default' do
   end
 
   it "creates xdebug-settings.ini" do
-    expect(chef_run).to render_file("/opt/easybib/etc/php/xdebug-settings.ini")
+    expect(chef_run).to create_template("/opt/easybib/etc/php/xdebug-settings.ini")
   end
 
   it "installs php5-easybib-xdebug" do
