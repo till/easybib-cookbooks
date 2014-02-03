@@ -1,11 +1,22 @@
 language: ruby
 rvm:
-  - 1.9.3
-
-before_install: gem update --system 1.8.25 # Chef is not yet Ruby 2.0 compatible
-
+- 1.9.3
+before_script:
+- gem install travis-artifacts
+before_install:
+- gem update --system 1.8.25
 script:
-  - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
-  - rake test
-  - rake foodcritic
-  - rake spec
+- rubocop
+- find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
+- rake test
+- rake foodcritic
+- rake spec
+after_success:
+- tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz
+- travis-artifacts upload --path easybib-cookbooks.tar.gz
+env:
+  global:
+  - ARTIFACTS_AWS_REGION=us-east-1
+  - ARTIFACTS_S3_BUCKET=cookbooks.ezbib.com
+  - secure: q0O/UKJexDNbfcydbQOwyWukHQwtwu4DCXgyp07QxH9vTYmn3eodJuktETbSylYv5CgZx2A/h0xCrNwHysU2wxzfcyBk8MV4O/p1C6HrmLq/sFHBugR8mLIBcpdWTabDp7/vXvSFESTZB/l3eSO/e1bQciIx4JcKrq0tix5zryk=
+  - secure: K0UPn0v0/kUYBFXChgcBSpjcXamKs1I4oOesJwpqUSTBHL6LYQ4VrU4rMMIZAQj5K/Dnrxr23Y/YUpPcc6lkbBUNIYxG4ivoAQJ8l7QglT10JfSVj9W4gna/jTq12jM+Yco2NQN6POKA/tbZfhu/KIFCptZQ7vONW3DXSC215gQ=
