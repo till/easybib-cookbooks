@@ -10,6 +10,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'crossref_service', 'crossref-www')
   when 'highbeam'
     next unless allow_deploy(application, 'highbeam')
+  when 'jstor'
+    next unless allow_deploy(application, 'jstor')
   when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
   when 'worldcat'
