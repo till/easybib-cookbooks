@@ -1,5 +1,5 @@
 default["newrelic"] = {}
-default["newrelic"]["license"] = "change me"
+default["newrelic"]["license"] = ""
 
 default["newrelic"]["sysmond"] = {}
 default["newrelic"]["sysmond"]["log"] = {}
