@@ -3,8 +3,6 @@ rvm:
 - 1.9.3
 before_script:
 - gem install travis-artifacts
-before_install:
-- gem update --system 1.8.25
 script:
 - rubocop
 - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
