@@ -35,7 +35,16 @@ end
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
 
-install_not_needed = File.exists?("#{node['nodejs']['dir']}/bin/node") && `#{node['nodejs']['dir']}/bin/node --version`.chomp == "v#{node['nodejs']['version']}"
+node_symlink_exists = File.exists?("#{node['nodejs']['dir']}/bin/node")
+
+if node_symlink_exists
+  node_version_info = Mixlib::ShellOut.new("#{node['nodejs']['dir']}/bin/node --version")
+  node_version_info.run_command
+  node_version_installed = node_version_info.stdout.chomp
+  install_not_needed = node_version_installed == "v#{node['nodejs']['version']}"
+else
+  install_not_needed = false
+end
 
 execute "extract nodejs install" do
   command "tar -zxf #{nodejs_tar}"
