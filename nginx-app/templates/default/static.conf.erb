@@ -9,7 +9,7 @@ server {
         expires -1;
     }
 
-    location ~ (main-*\.css|main\.min-*\.js) {
+    location ~ (main-.*\.css|main\.min-.*\.js) {
         expires max;
     }
 
