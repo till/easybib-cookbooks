@@ -5,6 +5,14 @@ server {
 
     access_log <%=@access_log%>;
 
+    location = /index.html {
+        expires -1;
+    }
+
+    location ~ (main-*\.css|main\.min-*\.js) {
+        expires max;
+    }
+
 <% if @nginx_extra && !@nginx_extra.empty? -%>
     <%=@nginx_extra%>
 <% end -%>
@@ -15,6 +23,7 @@ server {
 
     location ~* \.(eot|ttf|woff)$ {
         add_header Access-Control-Allow-Origin *;
+        expires max;
     }
 
     root <%= @doc_root%>;
