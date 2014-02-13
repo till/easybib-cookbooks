@@ -41,7 +41,7 @@ end
 # see https://github.com/pear/pear-core/commit/8d569263eac91ad9484b45acb3a6381759138f3c#diff-b0dfa4abcb5cde685dae6b352ae38a17
 remote_file "/opt/easybib/pear/PEAR/REST.php" do
   source "https://raw2.github.com/pear/pear-core/8d569263eac91ad9484b45acb3a6381759138f3c/PEAR/REST.php"
-  mode 0755
+  mode 0644
 end
 
 if !node["php-pear"]["packages"].empty?
