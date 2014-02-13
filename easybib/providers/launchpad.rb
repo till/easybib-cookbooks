@@ -2,7 +2,7 @@ action :discover do
 
   repository = new_resource.repository
 
-  discover_command = "add-apt-repository  --yes"
+  discover_command = "add-apt-repository --yes "
   discover_command << repository
 
   execute "update_easybib_sources" do
