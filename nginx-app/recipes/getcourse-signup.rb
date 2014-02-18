@@ -23,7 +23,8 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :domain_name => domain_name,
     :access_log  => 'off',
     :nginx_extra => node["nginx-app"]["extras"],
-    :default_router => default_router
+    :default_router => default_router,
+    :push_state => node["getcourse"]["env"]["config"][config]["push_state"]
   )
   notifies :restart, "service[nginx]", :delayed
 end
