@@ -14,6 +14,9 @@ http {
 
     access_log      off;
 
+    # fruitkid domain names are to long for 64
+    server_names_hash_bucket_size 128;
+
     sendfile           on;
     tcp_nopush         on;
     keepalive_timeout  0;
