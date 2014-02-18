@@ -4,14 +4,16 @@
 require 'bundler'
 require 'rake'
 require 'rake/testtask'
+require 'rspec/core/rake_task'
 
 Bundler.setup
 
 task :default => [
-  :lint,
   :test,
-  :chefspec,
-  :foodcritic
+  :spec,
+  :rubocop,
+  :foodcritic,
+  :lint
 ]
 
 desc "Run tests"
@@ -21,12 +23,22 @@ end
 
 desc "WIP: Ruby lint (too slow)"
 task :lint do
-  system 'find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;'
+  system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
 end
 
-desc "ChefSpec"
-task :chefspec do
-  sh 'find . -maxdepth 2 -type d -name "spec" -exec bundle exec rspec {} \;'
+desc "WIP: Ruby lint (too slow)"
+task :lint do
+  system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
+end
+
+desc 'Runs specs with chefspec.'
+RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
+  args.with_defaults( :cookbook => '*', :recipe => '*', :output_file => nil )
+  t.verbose = false
+  t.fail_on_error = true
+  t.rspec_opts = args.output_file.nil? ? '--format d' : "--format RspecJunitFormatter --out #{args.output_file}"
+  t.ruby_opts = '-W0' #it supports ruby options too
+  t.pattern = "#{args.cookbook}/spec/#{args.recipe}_spec.rb"
 end
 
 desc "Runs foodcritic linter"
@@ -34,7 +46,7 @@ task :foodcritic do
   if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
     sandbox = File.join(File.dirname(__FILE__), 'fc_sandbox')
 
-    epic_fail = %w{ ~FC019 ~FC023 ~FC024 ~FC034 ~FC045 }
+#    epic_fail = %w{ }
 
     cookbooks = find_cookbooks('.')
 
@@ -43,8 +55,8 @@ task :foodcritic do
       prepare_foodcritic_sandbox(sandbox, cb)
 
       verbose(false)
-      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
-
+#      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any -f #{epic_fail.join(' -f ')} #{sandbox}"
+      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any #{sandbox}"
       sh fc_command do |ok, res|
         if !ok
           puts "Cookbook: #{cb}"
@@ -100,3 +112,6 @@ if !ENV['TRAVIS'] && File.exists?(current_dir + '/.kitchen.yml')
     puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
   end
 end
+
+require 'rubocop/rake_task'
+Rubocop::RakeTask.new

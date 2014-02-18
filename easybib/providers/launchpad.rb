@@ -2,8 +2,7 @@ action :discover do
 
   repository = new_resource.repository
 
-  discover_command = "add-apt-repository "
-  discover_command << "--yes " if node["lsb"]["codename"] == 'precise'
+  discover_command = "add-apt-repository --yes "
   discover_command << repository
 
   execute "update_easybib_sources" do

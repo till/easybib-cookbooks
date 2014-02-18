@@ -17,56 +17,127 @@
 # limitations under the License.
 #
 
-action :add do
-  unless ::File.exists?("/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list")
-    Chef::Log.info "Adding #{new_resource.repo_name} repository to /etc/apt/sources.list.d/#{new_resource.repo_name}-source.list"
-    # add key
-    if new_resource.keyserver && new_resource.key
-      execute "install-key #{new_resource.key}" do
-        command "apt-key adv --keyserver #{new_resource.keyserver} --recv #{new_resource.key}"
-        action :nothing
-      end.run_action(:run)
-    elsif new_resource.key && (new_resource.key =~ /http/)
-      key_name = new_resource.key.split(/\//).last
-      remote_file "#{Chef::Config[:file_cache_path]}/#{key_name}" do
-        source new_resource.key
-        mode "0644"
-        action :nothing
-      end.run_action(:create_if_missing)
-      execute "install-key #{key_name}" do
-        command "apt-key add #{Chef::Config[:file_cache_path]}/#{key_name}"
-        action :nothing
-      end.run_action(:run)
+use_inline_resources if defined?(use_inline_resources)
+
+def whyrun_supported?
+  true
+end
+
+# install apt key from keyserver
+def install_key_from_keyserver(key, keyserver)
+  execute "install-key #{key}" do
+    if !node['apt']['key_proxy'].empty?
+      command "apt-key adv --keyserver-options http-proxy=#{node['apt']['key_proxy']} --keyserver hkp://#{keyserver}:80 --recv #{key}"
+    else
+      command "apt-key adv --keyserver #{keyserver} --recv #{key}"
     end
-    # build our listing
-    repository = "deb"
-    repository = "deb-src" if new_resource.deb_src
-    repository = "# Created by the Chef apt_repository LWRP\n" + repository
-    repository += " #{new_resource.uri}"
-    repository += " #{new_resource.distribution}"
-    new_resource.components.each {|component| repository += " #{component}"}
-    # write out the file, replace it if it already exists
-    file "/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list" do
-      owner "root"
-      group "root"
-      mode 0644
-      content repository + "\n"
-      action :nothing
-    end.run_action(:create)
-    execute "update package index" do
-      command "apt-get update"
-      action :nothing
-    end.run_action(:run)
-    new_resource.updated_by_last_action(true)
+    action :run
+    not_if do
+      extract_fingerprints_from_cmd('apt-key finger').any? do |fingerprint|
+        fingerprint.end_with?(key.upcase)
+      end
+    end
+  end
+end
+
+# run command and extract gpg ids
+def extract_fingerprints_from_cmd(cmd)
+  so = Mixlib::ShellOut.new(cmd)
+  so.run_command
+  so.stdout.split(/\n/).map do |t|
+    if z = t.match(/^ +Key fingerprint = ([0-9A-F ]+)/) # rubocop:disable AssignmentInCondition
+      z[1].split.join
+    end
+  end.compact
+end
+
+# install apt key from URI
+def install_key_from_uri(uri)
+  key_name = uri.split(/\//).last
+  cached_keyfile = "#{Chef::Config[:file_cache_path]}/#{key_name}"
+  if new_resource.key =~ /http/
+    remote_file cached_keyfile do
+      source new_resource.key
+      mode 00644
+      action :create
+    end
+  else
+    cookbook_file cached_keyfile do
+      source new_resource.key
+      cookbook new_resource.cookbook
+      mode 00644
+      action :create
+    end
+  end
+
+  execute "install-key #{key_name}" do
+    command "apt-key add #{cached_keyfile}"
+    action :run
+    not_if do
+      installed_keys = extract_fingerprints_from_cmd('apt-key finger')
+      proposed_keys = extract_fingerprints_from_cmd("gpg --with-fingerprint #{cached_keyfile}")
+      (installed_keys & proposed_keys).sort == proposed_keys.sort
+    end
+  end
+end
+
+# build repo file contents
+def build_repo(uri, distribution, components, trusted, arch, add_deb_src)
+  components = components.join(' ') if components.respond_to?(:join)
+  repo_options = []
+  repo_options << "arch=#{arch}" if arch
+  repo_options << 'trusted=yes' if trusted
+  repo_options = '[' + repo_options.join(' ') + ']' unless repo_options.empty?
+  repo_info = "#{uri} #{distribution} #{components}\n"
+  repo_info = "#{repo_options} #{repo_info}" unless repo_options.empty?
+  repo =  "deb     #{repo_info}"
+  repo << "deb-src #{repo_info}" if add_deb_src
+  repo
+end
+
+action :add do
+  # add key
+  if new_resource.keyserver && new_resource.key
+    install_key_from_keyserver(new_resource.key, new_resource.keyserver)
+  elsif new_resource.key
+    install_key_from_uri(new_resource.key)
+  end
+
+  file '/var/lib/apt/periodic/update-success-stamp' do
+    action :nothing
+  end
+
+  execute 'apt-get update' do
+    ignore_failure true
+    action :nothing
+  end
+
+  # build repo file
+  repository = build_repo(
+    new_resource.uri,
+    new_resource.distribution,
+    new_resource.components,
+    new_resource.trusted,
+    new_resource.arch,
+    new_resource.deb_src
+    )
+
+  file "/etc/apt/sources.list.d/#{new_resource.name}.list" do
+    owner 'root'
+    group 'root'
+    mode 00644
+    content repository
+    action :create
+    notifies :delete, 'file[/var/lib/apt/periodic/update-success-stamp]', :immediately
+    notifies :run, 'execute[apt-get update]', :immediately if new_resource.cache_rebuild
   end
 end
 
 action :remove do
-  if ::File.exists?("/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list")
-    Chef::Log.info "Removing #{new_resource.repo_name} repository from /etc/apt/sources.list.d/"
-    file "/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list" do
+  if ::File.exists?("/etc/apt/sources.list.d/#{new_resource.name}.list")
+    Chef::Log.info "Removing #{new_resource.name} repository from /etc/apt/sources.list.d/"
+    file "/etc/apt/sources.list.d/#{new_resource.name}.list" do
       action :delete
     end
-    new_resource.updated_by_last_action(true)
   end
 end

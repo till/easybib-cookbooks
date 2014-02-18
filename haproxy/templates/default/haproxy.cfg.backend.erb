@@ -1,0 +1,23 @@
+<%
+# rise - number of successful checks to determine if the backend is 'up'
+haproxy_rise = 2
+
+# fall - number of failed checks to determine if the backend is down
+haproxy_fall = 3
+
+# in milliseconds - 10 seconds is too slow
+haproxy_check_interval = 3000
+
+# max connections
+haproxy_maxconn = 255
+-%>
+
+backend <%= @layername %>_php_app_servers
+  balance roundrobin
+  option redispatch
+  option httpclose
+  option forwardfor
+  option httpchk <%= @health_check_string %>
+  <% @node[:opsworks][:layers][@layername][:instances].each do |name,backend| -%>
+  server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
+  <% end -%>

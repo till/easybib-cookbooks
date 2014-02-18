@@ -1,10 +1,2 @@
-include_recipe "easybib::role-phpapp"
-
-include_recipe "php-posix"
-include_recipe "php-zip"
-include_recipe "php-intl"
-include_recipe "php-gearman"
-
-include_recipe "deploy::gocourse-api"
-include_recipe "nginx-app::gocourse-api"
-include_recipe "bash::configure"
+Chef::Log.warn('DEPRECATED: This setup is still using role-gocourse-api')
+include_recipe "easybib::role-getcourse-api"

@@ -1,15 +1,14 @@
 require 'chef/mixin/shell_out'
-#require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
 
 action :install do
   extension = new_resource.name
   version = new_resource.version
 
-  ext_dir = get_extension_dir()
+  ext_dir = get_extension_dir
   ext_dir << ::File::SEPARATOR if ext_dir[-1].chr != ::File::SEPARATOR
   so_file   = "#{ext_dir}/#{extension}.so"
-  
+
   if !version.nil?
     extension = "#{extension}-#{version}"
   end
@@ -26,7 +25,7 @@ end
 
 action :setup do
   name = new_resource.name
-  ext_prefix = get_extension_dir()
+  ext_prefix = get_extension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
   files = get_extension_files(name)
@@ -34,15 +33,15 @@ action :setup do
     Chef::Log.debug('files list returned by pecl was empty, falling back to default')
     files = [ext_prefix + name + '.so']
   end
-  
-  extensions = Hash[ files.map { |filepath|
+
+  extensions = Hash[ files.map do |filepath|
     rel_file = filepath.clone
     rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
 
     zend = new_resource.zend_extensions.include?(rel_file)
 
     [ (zend ? filepath : rel_file) , zend ]
-  }]
+  end]
 
   template "#{node["php-fpm"]["prefix"]}/etc/php/#{name}.ini" do
     source "extension.ini.erb"
@@ -51,8 +50,8 @@ action :setup do
     group "root"
     mode "0644"
     variables(
-      :name => name, 
-      :extensions => extensions, 
+      :name => name,
+      :extensions => extensions,
       :directives => new_resource.config_directives
     )
   end
@@ -64,12 +63,12 @@ end
 action :compile do
 
   if new_resource.source_dir.empty?
-    raise "Missing 'source_dir'."
+    fail "Missing 'source_dir'."
   end
 
   source_dir = new_resource.source_dir
   if !::File.exists?(source_dir)
-    raise "The 'source_dir' does not exist: #{source_dir}"
+    fail "The 'source_dir' does not exist: #{source_dir}"
   end
 
   extension = new_resource.name
@@ -99,7 +98,7 @@ action :compile do
 
 end
 
-def get_extension_dir()
+def get_extension_dir
   @extension_dir ||= begin
     p = shell_out("#{new_resource.prefix}/bin/php-config --extension-dir")
     p.stdout.strip
@@ -116,4 +115,3 @@ def get_extension_files(name)
 
   files
 end
-

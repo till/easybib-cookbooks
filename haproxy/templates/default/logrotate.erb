@@ -1,0 +1,19 @@
+<%= node[:haproxy][:log_dir] %>/haproxy.log {
+       daily
+       rotate 10
+       copytruncate
+       delaycompress
+       compress
+       notifempty
+       missingok
+}
+
+<%= node[:haproxy][:log_dir] %>/haproxy-errors.log {
+       daily
+       rotate 10
+       copytruncate
+       delaycompress
+       compress
+       notifempty
+       missingok
+}

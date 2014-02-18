@@ -12,7 +12,7 @@ phpunit_location = "/usr/local/phpunit#{major}"
 
 Chef::Log.debug("HELLO: #{node[:languages][:php][:php_bin]}")
 
-if not node[:languages][:php].empty? and node[:languages][:php][:pear_bin]
+if !node[:languages][:php].empty? && node[:languages][:php][:pear_bin]
 
   pear     = node[:languages][:php][:pear_bin]
   pear_bin = node[:languages][:php][:pear][:bin_dir]
@@ -32,9 +32,9 @@ if not node[:languages][:php].empty? and node[:languages][:php][:pear_bin]
   template "#{phpunit_location}#{pear_bin}/phpunit" do
     mode   "0755"
     source "phpunit.erb"
-    variables({
+    variables(
       :complete_path => "#{phpunit_location}#{php_dir}"
-    })
+    )
   end
 
   link "#{pear_bin}/phpunit#{major}" do

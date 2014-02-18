@@ -1,11 +1,2 @@
-include_recipe "avahi::alias-service"
-
-template "/etc/avahi/aliases.d/gocourse" do
-  cookbook "avahi"
-  source "alias.erb"
-  mode "0644"
-  variables({
-    :domains => node["gocourse"]["domain"]
-  })
-  notifies :restart, "service[avahi-aliases]"
-end
+Chef::Log.warn('DEPRECATED: This setup is still using role-gocourse-vagrant')
+include_recipe "easybib::role-getcourse-vagrant"

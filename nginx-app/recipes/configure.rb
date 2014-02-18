@@ -1,8 +1,8 @@
 include_recipe "nginx-app::server"
 include_recipe "php-fpm::service"
 
-instance_roles   = get_instance_roles()
-cluster_name     = get_cluster_name()
+instance_roles   = get_instance_roles
+cluster_name     = get_cluster_name
 app_access_log   = "off"
 nginx_config_dir = node["nginx-app"]["config_dir"]
 
@@ -18,6 +18,8 @@ password_protected = false
 nginx_config = "easybib.com.conf.erb"
 
 node["deploy"].each do |application, deploy|
+
+  Chef::Log.debug("nginx-app::configure - app: #{application}")
 
   case application
   when 'easybib'
@@ -40,8 +42,7 @@ node["deploy"].each do |application, deploy|
     next unless instance_roles.include?('sitescraper')
 
   when 'research_app'
-    next unless cluster_name == 'Research Cloud'
-    next unless instance_roles.include?('nginxphpapp')
+    next unless instance_roles.include?('research_app')
 
   else
     Chef::Log.debug("Skipping nginx-app::configure for app #{application}")

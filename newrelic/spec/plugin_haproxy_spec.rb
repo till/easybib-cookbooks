@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'haproxy::plugin_newrelic' do
   it 'installs the newrelic haproxy plugin' do
-    chef_run = ChefSpec::ChefRunner.new
+    chef_run = ChefSpec::Runner.new
 
     haproxy_node = {
       'stats_user' => 'my-user',
@@ -10,10 +10,10 @@ describe 'haproxy::plugin_newrelic' do
       'stats_url'  => '/haproxy-stats',
       'newrelic' => {
         'backends' => [
-          {'name' => 'backend1', 'proxy' => 'my_app_servers'}
+          { 'name' => 'backend1', 'proxy' => 'my_app_servers' }
         ],
         'frontends' => [
-          {'name' => 'frontend1', 'proxy' => 'http-in'}
+          { 'name' => 'frontend1', 'proxy' => 'http-in' }
         ]
       }
     }
@@ -21,10 +21,10 @@ describe 'haproxy::plugin_newrelic' do
     newrelic_node = {
       'haproxy' => {
         'backends' => [
-          {'name' => 'backend1', 'proxy' => 'my_app_servers'}
+          { 'name' => 'backend1', 'proxy' => 'my_app_servers' }
         ],
         'frontends' => [
-          {'name' => 'frontend1', 'proxy' => 'http-in'}
+          { 'name' => 'frontend1', 'proxy' => 'http-in' }
         ]
       }
     }
@@ -41,7 +41,7 @@ describe 'haproxy::plugin_newrelic' do
     file = chef_run.cookbook_file('/etc/init.d/newrelic-haproxy')
     expect(file.mode).to eq('0755')
 
-    expect(chef_run).to create_file '/etc/newrelic/newrelic_haproxy_agent.yml'
+    expect(chef_run).to render_file '/etc/newrelic/newrelic_haproxy_agent.yml'
     file = chef_run.template('/etc/newrelic/newrelic_haproxy_agent.yml')
     expect(file.mode).to eq('0644')
   end

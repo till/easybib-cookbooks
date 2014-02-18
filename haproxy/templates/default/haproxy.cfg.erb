@@ -1,99 +1,21 @@
-global
-  log 127.0.0.1   local0
-  log 127.0.0.1   local1 notice
-  #log loghost    local0 info
-  maxconn 4096
-  #debug
-  #quiet
-  user haproxy
-  group haproxy
-  stats socket /tmp/haproxy.sock
+<%= render "haproxy.cfg.globals.erb" %>
 
-defaults
-  log             global
-  mode            http
-  option          httplog
-  option          dontlognull
-  retries         3
-  maxconn         2000
-  contimeout      50000
-  clitimeout      50000
-  srvtimeout      50000
-  option          redispatch
-  option          httpclose     # disable keepalive (HAProxy does not yet support the HTTP keep-alive mode)
-  option          abortonclose  # enable early dropping of aborted requests from pending queue
-  option          httpchk       # enable HTTP protocol to check on servers health
-  <% if node[:haproxy][:enable_stats] -%>
-  stats auth <%= node[:haproxy][:stats_user] %>:<%= node[:haproxy][:stats_password] %>
-  stats uri <%= node[:haproxy][:stats_url] %>
-  <% end -%>
-  <% node[:haproxy][:errorloc].each do |error_code,error_file| %>
-  errorfile <%= error_code %> /etc/haproxy/errors/<%= error_file %>
-  <% end %>
-<%
-# bind haproxy to the following parameters
-haproxy_port = 80
-haproxy_host = ""
-
-# rise - number of successful checks to determine if the backend is 'up'
-haproxy_rise = 2
-
-# fall - number of failed checks to determine if the backend is down
-haproxy_fall = 3
-
-# in milliseconds - 10 seconds is too slow
-haproxy_check_interval = 3000
-
-# max connections
-haproxy_maxconn = 255
--%>
-
-# Set up application listeners here.
-<% if node[:opsworks][:layers][:nginxphpapp][:instances].blank? -%>
-listen application <%= haproxy_host %>:<%= haproxy_port %>
-  # configure a fake backend as long as there are no real ones
-  # this way HAProxy will not fail on a config check
-  balance roundrobin
-  server localhost 127.0.0.1:8080 weight 1 maxconn 5 check
+<% if node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
+    <%= render "haproxy.cfg.fallback.erb" %>
+<% else -%>
+    <%= render "haproxy.cfg.backend.erb", :variables => {
+        'layername' => 'nginxphpapp',
+        'health_check_string' => "#{node[:haproxy][:health_check_method]} #{node[:haproxy][:health_check_url]}"
+    } %>
 <% end -%>
 
-<% if !node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
-backend php_app_servers
-  balance roundrobin
-  option redispatch
-  option httpclose
-  option forwardfor
-  option httpchk <%= node[:haproxy][:health_check_method] %> <%= node[:haproxy][:health_check_url] %>
-  <% node[:opsworks][:layers][:nginxphpapp][:instances].each do |name,backend| -%>
-  server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
-  <% end -%>
+<% if !node[:haproxy][:additional_layers].nil? || !node[:haproxy][:additional_layers].empty? %>
+<%   node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
+  <%= render "haproxy.cfg.backend.erb", :variables => {
+      'layername' => layername,
+      'health_check_string' => layerconfig[:health_check]
+  } %>
+<%   end -%>
 <% end -%>
 
-frontend http-in
-  bind <%= haproxy_host %>:<%= haproxy_port %>
-
-  # all domains of PHP applications
-  <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
-    <% app_config['domains'].each do |domain| -%>
-  acl php_application_<%= app_name %>_domain_<%= domain %> hdr_end(host) -i <%= domain %>
-      <% if app_config['mounted_at'] -%>
-  acl php_application_<%= app_name %>_domain_<%= domain %>_path path_beg <%= app_config['mounted_at'] %>
-      <% end -%>
-    <% end -%>
-  <% end -%>
-
-  <% unless node[:haproxy][:php_applications].empty? || node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
-    <% node[:haproxy][:php_applications].each do |app_name, app_config| -%>
-      <% app_config['domains'].each do |domain| -%>
-        <% if app_config['mounted_at'] -%>
-  use_backend php_app_servers if php_application_<%= app_name %>_domain_<%= domain %> php_application_<%= app_name %>_domain_<%= domain %>_path
-        <% else -%>
-  use_backend php_app_servers if php_application_<%= app_name %>_domain_<%= domain %>
-        <% end -%>
-      <% end -%>
-    <% end -%>
-  <% end -%>
-
-  <% if !node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
-  default_backend php_app_servers
-  <% end -%>
+<%= render "haproxy.cfg.frontend.erb" %>

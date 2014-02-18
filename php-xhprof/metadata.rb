@@ -5,6 +5,7 @@ license           "BSD License"
 description       "Installs ext/xhprof for PHP"
 version           "0.1"
 
+depends "apt"
 depends "php-fpm"
 
 supports 'ubuntu'

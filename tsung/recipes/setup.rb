@@ -5,8 +5,8 @@ package "libhtml-template-perl"
 package "libhtml-template-expr-perl"
 package "erlang-nox"
 
-tsungver="1.3.3"
-pkgrev="1"
+tsungver = "1.3.3"
+pkgrev = "1"
 
 remote_file "#{Chef::Config[:file_cache_path]}/tsung_#{tsungver}-#{pkgrev}_all.deb" do
   source "http://tsung.erlang-projects.org/dist/ubuntu/tsung_#{tsungver}-#{pkgrev}_all.deb"
@@ -15,14 +15,14 @@ remote_file "#{Chef::Config[:file_cache_path]}/tsung_#{tsungver}-#{pkgrev}_all.d
   not_if "test -f #{Chef::Config[:file_cache_path]}/tsung_#{tsungver}-#{pkgrev}_all.deb"
 end
 
-#dpkg_package "#{Chef::Config[:file_cache_path]}/tsung_#{tsungver}-#{pkgrev}_all.deb"
+# dpkg_package "#{Chef::Config[:file_cache_path]}/tsung_#{tsungver}-#{pkgrev}_all.deb"
 
 execute "Install tsung package" do
   command "dpkg -i #{Chef::Config[:file_cache_path]}/tsung_#{tsungver}-#{pkgrev}_all.deb"
   not_if "test -f /usr/bin/tsung"
 end
 
-home_dir="/home/ubuntu"
+home_dir = "/home/ubuntu"
 
 directory "#{home_dir}/.tsung/log" do
   owner "ubuntu"

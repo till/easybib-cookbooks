@@ -1,14 +1,12 @@
 default["syslog"]                       = {}
-default["syslog"]["logfiles"]           = { 
-  "/var/log/nginx/error.log" => "error", 
-  "/var/log/php/slow.log" => "notice", 
-  "/var/log/php/error.log" => "error", 
+default["syslog"]["logfiles"]           = {
+  "/var/log/nginx/error.log" => "error",
+  "/var/log/php/slow.log" => "notice",
+  "/var/log/php/error.log" => "error",
   "/var/log/php/fpm.log" => "error"
 }
 
 default["syslog"]["host"]               = "logs-01.loggly.com"
-default["syslog"]["haproxy"]            = {}
-default["syslog"]["haproxy"]["log_dir"] = "/mnt/logs/haproxy"
 default["syslog"]["poll"]               = 10
 
 set_unless["loggly"]["token"] = "example"

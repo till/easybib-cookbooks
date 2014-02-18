@@ -5,3 +5,5 @@ license           "BSD License"
 version           "0.1"
 
 supports 'ubuntu'
+
+depends "easybib"

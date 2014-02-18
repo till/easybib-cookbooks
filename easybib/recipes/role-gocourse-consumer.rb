@@ -1,4 +1,2 @@
-include_recipe "easybib::role-generic"
-
-include_recipe "deploy::gocourse-static"
-include_recipe "nginx-app::gocourse-consumer"
+Chef::Log.warn('DEPRECATED: This setup is still using role-gocourse-consumer')
+include_recipe "easybib::role-getcourse-consumer"

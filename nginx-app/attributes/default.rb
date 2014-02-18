@@ -5,9 +5,9 @@ default["nginx-app"]["static_directories"] = ["js", "css", "images", "raw"]
 default["nginx-app"]["config_dir"]         = "/etc/nginx"
 default["nginx-app"]["conf_file"]          = "easybib.com.conf.erb"
 
+default["nginx-app"]["ppa"] = "ppa:easybib/remote-mirrors"
+
 default["nginx-app"]["extras"] = ""
-default["nginx-app"]["xhprof"] = {}
-default["nginx-app"]["xhprof"]["enable"] = false
 
 default["nginx-app"]["default_router"] = "index.php"
 
@@ -51,6 +51,15 @@ default["nginx-app"]["css_modules"] = {
     "folders"         => "folders"
 }
 
+default["nginx-app"]["highbeam"] = {}
+default["nginx-app"]["highbeam"]["routes_enabled"] = []
+default["nginx-app"]["highbeam"]["routes_denied"] = []
 default["nginx-app"]["sitescraper"] = {}
-default["nginx-app"]["sitescraper"]["routes_enabled"] = {}
-default["nginx-app"]["sitescraper"]["routes_denied"] = {}
+default["nginx-app"]["sitescraper"]["routes_enabled"] = []
+default["nginx-app"]["sitescraper"]["routes_denied"] = []
+default["nginx-app"]["worldcat"] = {}
+default["nginx-app"]["worldcat"]["routes_enabled"] = []
+default["nginx-app"]["worldcat"]["routes_denied"] = []
+default["nginx-app"]["yahooboss"] = {}
+default["nginx-app"]["yahooboss"]["routes_enabled"] = []
+default["nginx-app"]["yahooboss"]["routes_denied"] = []

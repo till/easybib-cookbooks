@@ -4,12 +4,11 @@ end
 
 def check_target(dir)
   if !::File.directory?(dir)
-    raise "#{dir} is not a directory"
+    fail "#{dir} is not a directory"
   end
 end
 
 def shell_out(cmd, cwd)
-
   Chef::Log.debug("Executing command #{cmd}")
 
   shell = Mixlib::ShellOut.new(cmd, :env => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, :cwd => cwd)
@@ -24,13 +23,13 @@ def shell_out(cmd, cwd)
 
   shell.error!
 
-  return shell.stdout.strip
+  shell.stdout.strip
 end
 
 def find_php
   @php_bin = shell_out("which php", nil)
   if @php_bin.empty?
-    raise "PHP was not found."
+    fail "PHP was not found."
   end
 end
 
@@ -38,7 +37,7 @@ def has_phar?
   count = shell_out("#{@php_bin} -m|grep Phar|wc -l", nil)
   count = count.to_i
   if count == 0
-    raise "ext/phar is not installed"
+    fail "ext/phar is not installed"
   end
 end
 
@@ -47,7 +46,7 @@ action :setup do
   deploy_to = new_resource.name
   check_target(deploy_to)
 
-  find_php()
+  find_php
   has_phar?
 
   if ::File.exists?("#{deploy_to}/composer.phar")
@@ -57,7 +56,7 @@ action :setup do
     shell_out("curl http://getcomposer.org/installer --silent --output #{deploy_to}/installer", deploy_to)
 
     if !::File.exists?("#{deploy_to}/installer")
-      raise "Does not exist?"
+      fail "Does not exist?"
     end
 
     shell_out("#{@php_bin} installer", deploy_to)
@@ -71,7 +70,7 @@ action :install do
 
   deploy_to = new_resource.name
   check_target(deploy_to)
-  find_php()
+  find_php
   has_phar?
 
   if !::File.exists?("#{deploy_to}/composer.phar")

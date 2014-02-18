@@ -7,28 +7,14 @@ server {
 
     index <%=@default_router%> index.php;
 
+    access_log <%= @access_log %>;
+
 <% if !@domain_name.nil? && !@domain_name.empty? -%>
     server_name <%=@domain_name%>;
 <% end -%>
 
-<% if @xhprof_enable && @xhprof_enable == true -%>
-    location <%=::XHProf.get_path(node)%> {
-        # drop location to serve assets
-        alias <%=@xhprof_root%>;
-
-        index index.php;
-
-        # serve PHP files from xhprof.io
-        location ~* \.php$ {
-            root          <%=@xhprof_root%>/;
-            fastcgi_index index.php;
-            fastcgi_pass  <%=@upstream%>_phpfpm;
-            include       fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME <%=@xhprof_root%>/index.php;
-            fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
-            fastcgi_param PHP_ADMIN_VALUE "short_open_tag=On";
-        }
-    }
+<% if @nginx_extra -%>
+    <%= @nginx_extra -%>
 <% end -%>
 
     location = / {
@@ -42,19 +28,19 @@ server {
 
     root <%= @doc_root%>;
 
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
+        # Just an empty block so it is not matched by @site below
+        # See easybib/issues#417
+    }
+
     location ~* \.php$ {
         fastcgi_index index.php;
         fastcgi_pass  <%=@upstream%>_phpfpm;
         include       fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
-<% if @env_conf -%>
+<% if @env_conf && !@env_conf.empty? -%>
         <%=@env_conf-%>
-<% end -%>
-<% if @xhprof_enable && @xhprof_enable == true -%>
-        set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
-        set $php_value "$php_value \n auto_append_file=<%=@xhprof_root%>/inc/append.php";
-        fastcgi_param PHP_VALUE $php_value;
 <% end -%>
     }
 
@@ -66,13 +52,8 @@ server {
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
-<% if @env_conf -%>
+<% if @env_conf && !@env_conf.empty? -%>
             <%=@env_conf%>
-<% end -%>
-<% if @xhprof_enable && @xhprof_enable == true -%>
-            set $php_value "auto_prepend_file=<%=@xhprof_root%>/inc/prepend.php";
-            set $php_value "$php_value \n auto_append_file=<%=@xhprof_root%>/inc/append.php";
-            fastcgi_param PHP_VALUE $php_value;
 <% end -%>
     }
 }

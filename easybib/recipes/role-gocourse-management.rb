@@ -1,7 +1,2 @@
-include_recipe "easybib::role-phpapp"
-
-include_recipe "php-intl"
-
-include_recipe "deploy::gocourse-management"
-include_recipe "nginx-app::gocourse-management"
-include_recipe "bash::configure"
+Chef::Log.warn('DEPRECATED: This setup is still using role-gocourse-management')
+include_recipe "easybib::role-getcourse-management"

@@ -7,7 +7,7 @@ cookbook_file "/tmp/grant.sql" do
 end
 
 mysql_command = "mysql -u #{node[:percona][:user]}"
-if not node[:percona][:password].empty?
+if !node[:percona][:password].empty?
   mysql_command += " -p#{node[:percona][:password]}"
 end
 mysql_command += " < /tmp/grant.sql"

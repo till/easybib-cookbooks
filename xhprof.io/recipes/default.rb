@@ -16,7 +16,7 @@ git node["xhprof.io"]["root"] do
   action :sync
 end
 
-xhprof_dsn = get_dsn()
+xhprof_dsn = get_dsn
 
 template "#{node["xhprof.io"]["root"]}/xhprof/includes/config.inc.php" do
   owner owner

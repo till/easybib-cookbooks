@@ -9,7 +9,10 @@
             ]
         }
     },
-    "gocourse": {
+    "easybib": {
+        "cluster_name": "vagrant"
+    },
+    "getcourse": {
         "domain": {
             "api": "api.local"
         },

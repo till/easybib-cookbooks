@@ -14,8 +14,6 @@ end
 build_deps = ["libboost-all-dev", "gperf", "libcloog-ppl0", "make"]
 
 case node["lsb"]["codename"]
-when 'lucid'
-  build_deps.push('libevent-dev')
 when 'precise'
   build_deps.push('libevent1-dev')
 else
@@ -34,7 +32,6 @@ end
 execute "tar -zxvf #{Chef::Config[:file_cache_path]}/gearmand-#{version}.tar.gz" do
   cwd Chef::Config[:file_cache_path]
 end
-
 
 commands = [
   "./configure --prefix=#{prefix}/#{version} #{node['gearmand']['source']['flags']}",

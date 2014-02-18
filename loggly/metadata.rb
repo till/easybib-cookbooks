@@ -7,3 +7,6 @@ version           "0.1"
 recipe            "loggly::setup", "Setup."
 
 supports 'ubuntu'
+
+depends 'rsyslogd'
+depends 'easybib'
