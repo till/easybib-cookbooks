@@ -26,4 +26,3 @@ if !File.exists?("#{node['s3-syncer']['path']}/bin/syncer")
     command "`which php` composer-AWS_S3.phar --no-interaction install --prefer-source --optimize-autoloader"
   end
 end
-
