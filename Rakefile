@@ -12,23 +12,12 @@ task :default => [
   :test,
   :spec,
   :rubocop,
-  :foodcritic,
-  :lint
+  :foodcritic
 ]
 
 desc "Run tests"
 Rake::TestTask.new do |t|
   t.pattern = '**/**/tests/test_*.rb'
-end
-
-desc "WIP: Ruby lint (too slow)"
-task :lint do
-  system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
-end
-
-desc "WIP: Ruby lint (too slow)"
-task :lint do
-  system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
 end
 
 desc 'Runs specs with chefspec.'
