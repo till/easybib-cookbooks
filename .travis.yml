@@ -1,24 +1,23 @@
 language: ruby
 rvm:
   - 1.9.3
-before_script:
-#  https://github.com/travis-ci/travis-artifacts/issues/23
-  - gem install --version 0.8.9 faraday
-  - gem install travis-artifacts
+
 script:
   - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
   - rake rubocop
   - rake test
   - rake foodcritic
   - rake spec
+
 after_success:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz
   - travis-artifacts upload --path easybib-cookbooks.tar.gz
   - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then travis-artifacts upload --path easybib-cookbooks.tar.gz --target-path /; fi
+
 env:
   global:
     - ARTIFACTS_AWS_REGION=us-east-1
     - secure: q0O/UKJexDNbfcydbQOwyWukHQwtwu4DCXgyp07QxH9vTYmn3eodJuktETbSylYv5CgZx2A/h0xCrNwHysU2wxzfcyBk8MV4O/p1C6HrmLq/sFHBugR8mLIBcpdWTabDp7/vXvSFESTZB/l3eSO/e1bQciIx4JcKrq0tix5zryk=
     - secure: K0UPn0v0/kUYBFXChgcBSpjcXamKs1I4oOesJwpqUSTBHL6LYQ4VrU4rMMIZAQj5K/Dnrxr23Y/YUpPcc6lkbBUNIYxG4ivoAQJ8l7QglT10JfSVj9W4gna/jTq12jM+Yco2NQN6POKA/tbZfhu/KIFCptZQ7vONW3DXSC215gQ=
     - secure: qwyDqpP3CAf/FDU5oyuPuZpf1tUyYqGmcz//wHMFqM07ZL8BmaeUe4+MQf9gKDi9bF3MbgbqbOof6ju2hF1YWP9tgKrVz9U7b7cSBkqltNun/YSlPvG2Kfj9rk5gpw9kJxyHdvZDhCpCO/3x2sDX6m824/k+p5gKmr1KIx8xFec=
-  
+
