@@ -5,6 +5,7 @@ before_script:
 #  https://github.com/travis-ci/travis-artifacts/issues/23
   - gem install --version 0.8.9 faraday
   - gem install travis-artifacts
+  - bundle install
 script:
   - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
   - rake rubocop

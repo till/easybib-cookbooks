@@ -26,11 +26,6 @@ task :lint do
   system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
 end
 
-desc "WIP: Ruby lint (too slow)"
-task :lint do
-  system 'find . -type f -name "*.rb" -exec ruby -c {} \;'
-end
-
 desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
   args.with_defaults( :cookbook => '*', :recipe => '*', :output_file => nil )
