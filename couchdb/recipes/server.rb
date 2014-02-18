@@ -16,12 +16,12 @@ end
 
 remote_file "#{Chef::Config[:file_cache_path]}/apache-couchdb-#{couchdb_version}.tgz" do
   source "http://apache.easy-webs.de/couchdb/#{couchdb_version}/apache-couchdb-#{couchdb_version}.tar.gz"
-  not_if &couchdb_already_installed
+  not_if(&couchdb_already_installed)
 end
 
 execute "unpack CouchDB" do
   command "tar -xzf apache-couchdb-#{couchdb_version}.tgz"
-  not_if &couchdb_already_installed
+  not_if(&couchdb_already_installed)
   cwd Chef::Config[:file_cache_path]
 end
 
@@ -29,14 +29,14 @@ execute "Configure CouchDB" do
   cwd "#{Chef::Config[:file_cache_path]}/apache-couchdb-#{couchdb_version}"
   environment "HOME" => "/root"
   command "./configure --sysconfdir=/etc"
-  not_if &couchdb_already_installed
+  not_if(&couchdb_already_installed)
 end
 
 execute "Compile and install CouchDB" do
   cwd "#{Chef::Config[:file_cache_path]}/apache-couchdb-#{couchdb_version}"
   environment "HOME" => "/root"
   command "make && make install"
-  not_if &couchdb_already_installed
+  not_if(&couchdb_already_installed)
 end
 
 include_recipe "couchdb::configure"
