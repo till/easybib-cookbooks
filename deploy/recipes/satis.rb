@@ -67,7 +67,7 @@ node['deploy'].each do |application, deploy|
     variables(
       :doc_root       => "#{deploy['deploy_to']}/current/#{deploy['document_root']}",
       :domain_name    => deploy['domains'].join(' '),
-      :htpasswd       => "#{deploy['document_root']}/current/htpasswd",
+      :htpasswd       => "#{deploy['deploy_to']}/current/htpasswd",
       :access_log     => 'off',
       :nginx_extra    => node["nginx-app"]["extras"]
     )
