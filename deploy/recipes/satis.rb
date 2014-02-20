@@ -68,8 +68,7 @@ node['deploy'].each do |application, deploy|
       :domain_name    => deploy['domains'].join(' '),
       :htpasswd       => "#{deploy['document_root']}/current/htpasswd",
       :access_log     => 'off',
-      :nginx_extra    => node["nginx-app"]["extras"],
-      :default_router => default_router
+      :nginx_extra    => node["nginx-app"]["extras"]
     )
     notifies :restart, "service[nginx]", :delayed
   end
