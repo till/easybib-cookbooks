@@ -2,13 +2,13 @@ node['deploy'].each do |application, deploy|
 
   case application
   when 'satis'
-    next unless allow_deploy(application, 'satis')
+    next unless allow_deploy(application, 'satis', 'satis')
 
   when 'easybib_private_satis'
-    next unless allow_deploy(application, 'easybib_private_satis')
+    next unless allow_deploy(application, 'easybib_private_satis', 'satis')
 
   when 'getcourse_private_satis'
-    next unless allow_deploy(application, 'getcourse_private_satis')
+    next unless allow_deploy(application, 'getcourse_private_satis', 'satis')
 
   else
     Chef::Log.info("deploy::satis - #{application} skipped")
