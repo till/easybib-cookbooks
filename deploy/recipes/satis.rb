@@ -59,6 +59,7 @@ node['deploy'].each do |application, deploy|
   end
 
   template "/etc/nginx/sites-enabled/#{application}.conf" do
+    cookbook "nginx-app"
     source "satis.conf.erb"
     mode   "0755"
     owner  node["nginx-app"]["user"]
