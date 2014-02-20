@@ -58,4 +58,20 @@ node['deploy'].each do |application, deploy|
     end
   end
 
+  template "/etc/nginx/sites-enabled/#{application}.conf" do
+    source "satis.conf.erb"
+    mode   "0755"
+    owner  node["nginx-app"]["user"]
+    group  node["nginx-app"]["group"]
+    variables(
+      :doc_root       => "#{deploy['document_root']}/current/#{deploy['document_root']}",
+      :domain_name    => deploy['domains'].join(' '),
+      :htpasswd       => "#{deploy['document_root']}/current/htpasswd",
+      :access_log     => 'off',
+      :nginx_extra    => node["nginx-app"]["extras"],
+      :default_router => default_router
+    )
+    notifies :restart, "service[nginx]", :delayed
+  end
+
 end
