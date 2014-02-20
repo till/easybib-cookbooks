@@ -5,6 +5,7 @@ include_recipe "unfuddle-ssl-fix::install"
 include_recipe "php-phar"
 include_recipe "php-posix"
 include_recipe "composer::configure"
+include_recipe "nginx-app::configure"
 include_recipe "deploy::satis"
 
 if is_aws
