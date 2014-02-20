@@ -65,7 +65,7 @@ node['deploy'].each do |application, deploy|
     owner  node["nginx-app"]["user"]
     group  node["nginx-app"]["group"]
     variables(
-      :doc_root       => "#{deploy['document_root']}/current/#{deploy['document_root']}",
+      :doc_root       => "#{deploy['deploy_to']}/current/#{deploy['document_root']}",
       :domain_name    => deploy['domains'].join(' '),
       :htpasswd       => "#{deploy['document_root']}/current/htpasswd",
       :access_log     => 'off',
