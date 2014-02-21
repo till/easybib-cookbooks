@@ -37,8 +37,8 @@ if node["getcourse"]
 end
 
 domain_name = nil
-if node["vagrant"]["combined"] == true
-  domain_name = 'easybib.local'
+if node["vagrant"].attribute?("applications") && node["vagrant"]["applications"].attribute?("www")
+  domain_name = node["vagrant"]["applications"]["www"]["domain_name"]
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
