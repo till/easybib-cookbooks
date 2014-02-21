@@ -9,6 +9,10 @@ server {
     <%= @nginx_extra -%>
   <% end -%>
 
+  <% if @domain_name -%>
+      server_name <%=@domain_name%>;
+  <% end -%>
+
     client_max_body_size 5m;
 
     location = /health_check.php {
