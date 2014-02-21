@@ -11,6 +11,10 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
   end
 
+  if application == 'id'
+    next unless allow_deploy(application, 'id', 'nginxphpapp')
+  end
+
   env_conf = ''
   if has_env?(application)
     env_conf = get_env_for_nginx(application)
