@@ -1,0 +1,26 @@
+server {
+    listen 80 <%=@listen_opts%>;
+
+    index index.html;
+
+    access_log <%=@access_log%>;
+
+    location = /(index.html|packages.json) {
+        expires -1;
+    }
+
+<% if @htpasswd && !@htpasswd.empty? && File.exists?(@htpasswd) -%>
+    auth_basic            "Restricted";
+    auth_basic_user_file  <%= @htpasswd%>;
+<% end -%>
+
+<% if @nginx_extra && !@nginx_extra.empty? -%>
+    <%=@nginx_extra%>
+<% end -%>
+
+<% if !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% end -%>
+
+    root <%= @doc_root%>;
+}
