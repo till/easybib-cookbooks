@@ -36,6 +36,11 @@ if node["getcourse"]
 
 end
 
+domain_name = nil
+if node["vagrant"].attribute?("applications") && node["vagrant"]["applications"].attribute?("www")
+  domain_name = node["vagrant"]["applications"]["www"]["domain_name"]
+end
+
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
   source node["nginx-app"]["conf_file"]
   mode   "0755"
@@ -49,6 +54,7 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :application  => "easybib",
     :access_log   => 'off',
     :nginx_extra  => 'sendfile  off;',
+    :domain_name  => domain_name,
     :database     => database_credentials,
     :domain       => domain,
     :php_upstream => "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
