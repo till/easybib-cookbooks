@@ -9,6 +9,13 @@ if !node.attribute?("docroot")
 end
 
 vagrant_dir = "/vagrant_data"
+domain_name = nil
+
+if node["vagrant"].attribute?("applications") && node["vagrant"]["applications"].attribute?("www")
+  domain_name = node["vagrant"]["applications"]["www"]["domain_name"]
+  vagrant_dir = File.expand_path(File.dirname(node["vagrant"]["applications"]["www"]["doc_root_location"]))
+  Chef::Log.debug("WWW Vagrant dir: #{vagrant_dir}")
+end
 
 directory node["deploy"]["deploy_to"] do
   mode      "0755"
@@ -34,11 +41,6 @@ if node["getcourse"]
     domain = getcourse_config["domain"]
   end
 
-end
-
-domain_name = nil
-if node["vagrant"].attribute?("applications") && node["vagrant"]["applications"].attribute?("www")
-  domain_name = node["vagrant"]["applications"]["www"]["domain_name"]
 end
 
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
