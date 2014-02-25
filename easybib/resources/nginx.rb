@@ -13,5 +13,6 @@ attribute :database_config, :kind_of => String, :default => ''
 attribute :env_config, :kind_of => String, :default => ''
 attribute :nginx_extras, :kind_of => String, :default => ''
 attribute :deploy_dir, :kind_of => String, :default => nil
+attribute :default_router, :kind_of => String, :default => nil
 attribute :routes_enabled, :default => {}
 attribute :routes_denied, :default => {}
