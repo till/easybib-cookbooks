@@ -30,19 +30,8 @@ Questions, comments? Feel free to [get in touch][touch]!
  * php-fpm (by [Till Klampaeckel][till])
  * redis (by [Mathias Meyer][meyer]/scalarium)
  * tsung (by [Till Klampaeckel][till])
- * unfuddle-ssl-fix (by [Till Klampaeckel][till])
  * varnish (by [Till Klampaeckel][till])
-
-## Override scalarium
-
- * deploy
- * haproxy
+ * and much more :)
 
 [meyer]: http://www.paperplanes.de/
 [till]: http://till.klampaeckel.de/blog/
-
-# Todo Till
-
- * finish varnish recipe
- * test loggly
- * document cookbooks (readme, etc.)
