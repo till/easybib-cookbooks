@@ -41,7 +41,7 @@ action :setup do
   if !::File.exists?("#{deploy_dir}/#{default_router}")
     default_router = 'index.php'
   end
-  
+
   default_router = new_resource.default_router unless new_resource.default_router.nil?
 
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
