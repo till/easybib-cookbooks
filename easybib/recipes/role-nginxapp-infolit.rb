@@ -1,7 +1,5 @@
 include_recipe "easybib::role-phpapp"
 
-include_recipe "php-pear"
-
 if is_aws
   include_recipe "deploy::ssl-infolit"
   include_recipe "deploy::infolit"

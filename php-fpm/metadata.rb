@@ -11,5 +11,4 @@ recipe            "php-fpm::dependencies", "Install dependencies"
 supports 'ubuntu'
 
 depends "apt"
-depends "php-pear"
 depends "php-apc"
