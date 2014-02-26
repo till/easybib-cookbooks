@@ -1,5 +1,5 @@
 unless is_aws
-  import_file_path = "#{node['easybib_deploy']['gearman_file']}/deploy/#{node['easybib_deploy']['gearman_file']}"
+  import_file_path = "#{node['easybib_deploy']['gearman_root']}/deploy/#{node['easybib_deploy']['gearman_file']}"
 
   pecl_manager_script "Setting up Pecl Manager Script for vagrant" do
     dir "/vagrant_www"
