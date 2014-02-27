@@ -12,7 +12,8 @@ action :deploy do
 
     execute "Clear old crontab" do
       user "www-data"
-      command "crontab -u www-data -r"
+      #crontab will exit with 130 if crontab has already been cleared, hence the ;true
+      command "crontab -u www-data -r; true"
     end
 
     CRON_REGEX = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
