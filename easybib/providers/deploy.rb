@@ -12,7 +12,7 @@ action :deploy do
 
     execute "Clear old crontab" do
       user "www-data"
-      #crontab will exit with 130 if crontab has already been cleared, hence the ;true
+      # crontab will exit with 130 if crontab has already been cleared, hence the ;true
       command "crontab -u www-data -r; true"
     end
 
