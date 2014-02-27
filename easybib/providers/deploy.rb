@@ -21,7 +21,8 @@ action :deploy do
     cron_counter = 1
 
     crontabs.each_line do |line|
-      next unless crontab == line.match(CRON_REGEX)
+      crontab = line.match(CRON_REGEX)
+      next unless crontab
 
       cron_name = "#{app}_#{cron_counter}"
 
