@@ -26,7 +26,7 @@ action :deploy do
 
       cron_name = "#{app}_#{cron_counter}"
 
-      cron cron_name do
+      cron_d cron_name do
         action :create
         minute crontab[0]
         hour crontab[1]
