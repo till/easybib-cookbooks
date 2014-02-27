@@ -29,13 +29,13 @@ action :deploy do
 
       cron_d cron_name do
         action :create
-        minute crontab[0]
-        hour crontab[1]
-        day crontab[2]
-        month crontab[3]
-        weekday crontab[4]
+        minute crontab[1]
+        hour crontab[2]
+        day crontab[3]
+        month crontab[4]
+        weekday crontab[5]
         user "www-data"
-        command crontab[5]
+        command crontab[6]
       end
 
     end
