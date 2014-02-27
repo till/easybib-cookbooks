@@ -9,22 +9,22 @@ action :deploy do
   end
 
   if ::File.exists?("#{deploy_data['deploy_to']}/current/deploy/crontab")
-  
+
     execute "Clear old crontab" do
       user "www-data"
       command "crontab -u www-data -r"
     end
-  
+
     CRON_REGEX = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
-    
+
     crontabs = ::File.open("#{deploy_data['deploy_to']}/current/deploy/crontab")
     cron_counter = 1
-    
+
     crontabs.each_line do |line|
-      next unless crontab = line.match( CRON_REGEX )
-      
+      next unless crontab == line.match(CRON_REGEX)
+
       cron_name = "#{app}_#{cron_counter}"
-      
+
       cron cron_name do
         action :create
         minute crontab[0]
@@ -35,9 +35,9 @@ action :deploy do
         user "www-data"
         command crontab[5]
       end
-      
+
     end
-  fi
+  end
 
   import_file_path = "#{application_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
 
