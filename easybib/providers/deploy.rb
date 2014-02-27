@@ -8,11 +8,37 @@ action :deploy do
     app app
   end
 
-  execute "Setting Crontab from App File" do
-    user "www-data"
-    cwd deploy_data['deploy_to']
-    command "crontab -u www-data #{deploy_data['deploy_to']}/current/deploy/crontab"
-    only_if { ::File.exists?("#{deploy_data['deploy_to']}/current/deploy/crontab") }
+  if ::File.exists?("#{deploy_data['deploy_to']}/current/deploy/crontab")
+
+    execute "Clear old crontab" do
+      user "www-data"
+      # crontab will exit with 130 if crontab has already been cleared, hence the ;true
+      command "crontab -u www-data -r; true"
+    end
+
+    CRON_REGEX = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
+
+    crontabs = ::File.open("#{deploy_data['deploy_to']}/current/deploy/crontab")
+    cron_counter = 1
+
+    crontabs.each_line do |line|
+      crontab = line.match(CRON_REGEX)
+      next unless crontab
+
+      cron_name = "#{app}_#{cron_counter}"
+
+      cron_d cron_name do
+        action :create
+        minute crontab[1]
+        hour crontab[2]
+        day crontab[3]
+        month crontab[4]
+        weekday crontab[5]
+        user "www-data"
+        command crontab[6]
+      end
+
+    end
   end
 
   import_file_path = "#{application_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
