@@ -11,7 +11,7 @@ end
 vagrant_dir = "/vagrant_data"
 domain_name = nil
 
-if node["vagrant"].attribute?("applications") && node["vagrant"]["applications"].attribute?("www")
+if node.attribute?("vagrant") && node["vagrant"].attribute?("applications") && node["vagrant"]["applications"].attribute?("www")
   domain_name = node["vagrant"]["applications"]["www"]["domain_name"]
   vagrant_dir = File.expand_path(File.dirname(node["vagrant"]["applications"]["www"]["doc_root_location"]))
   Chef::Log.debug("WWW Vagrant dir: #{vagrant_dir}")
