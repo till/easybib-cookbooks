@@ -10,7 +10,7 @@ All these cookbooks are [BSD Licensed][bsd], so feel free to use and abuse.
 
 [bsd]: http://www.opensource.org/licenses/bsd-license.php
 
-Please note that some recipes rely on a scalarium setup/environment so you best test the setup before you call it a day. Some are also heavy work in progress. Take into account that even though they are used in production all/most of them are still `0.1` versioned.
+Please not that some recipes rely on a scalarium setup/environment so you best test the setup before you call it a day. Some are also heavy work in progress. Take into account that even though they are used in production all/most of them are still `0.1` versioned.
 
 Questions, comments? Feel free to [get in touch][touch]!
 
