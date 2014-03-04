@@ -2,9 +2,6 @@ cron Cookbook
 =============
 Installs the cron package and starts the crond service.
 
-recipe            "cron::api", "Setup the cronjob for API tracking!"
-
-
 Requirements
 ------------
 Platforms:
