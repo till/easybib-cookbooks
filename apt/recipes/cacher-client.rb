@@ -50,7 +50,6 @@ unless Chef::Config[:solo] || servers.length > 0
   servers += search(:node, query)
 end
 
-
 if instance_roles.include?('aptcache')
   # instance provisioning would fail here - accessing aptcache while aptcache is
   # still being set up is a somewhat stupid idea.
