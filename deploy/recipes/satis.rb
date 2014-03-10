@@ -31,9 +31,15 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  include_recipe "satis::s3-syncer"
+  directory '/vol/satis-sync/files/' do
+    recursive true
+    owner "www-data"
+    group "www-data"
+    mode  0755
+    action :create
+  end
 
-  %w{"/mnt/satis-output/" "/mnt/composer-tmp/"}.each do |dir|
+  %w{/mnt/satis-output/ /mnt/composer-tmp/}.each do |dir|
     directory dir do
       recursive true
       owner "www-data"
