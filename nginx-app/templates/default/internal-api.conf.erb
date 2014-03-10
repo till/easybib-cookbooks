@@ -56,8 +56,9 @@ server {
     }
 
     location / {
-        deny all;
+        return 301 http://easybib.com/company/contact;
     }
+
     <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
     location ~ /(<%= @routes_denied.join('|') %>) {
         deny all;
