@@ -12,6 +12,15 @@ if !node[:percona][:password].empty?
 end
 mysql_command += " < /tmp/grant.sql"
 
-execute "open mysql to the world!!!111one" do
+execute "open mysql to the world in mysql config" do
   command mysql_command
+end
+
+cookbook_file "/etc/mysql/my.cnf" do
+  source "my.cnf"
+  mode "0644"
+end
+
+service "mysql" do
+  action :restart
 end
