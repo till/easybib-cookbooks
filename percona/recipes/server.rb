@@ -14,3 +14,8 @@ else
   # wat?
   Chef::Log.debug("Unknown version: #{node[:percona][:version]}")
 end
+
+service "mysql" do
+  action :nothing
+  supports [ :start, :stop, :restart ]
+end
