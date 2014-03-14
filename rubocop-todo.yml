@@ -36,12 +36,6 @@ ModuleFunction:
 ParenthesesAsGroupedExpression:
   Enabled: false
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-PercentLiteralDelimiters:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: NamePrefixBlacklist.
 PredicateName:

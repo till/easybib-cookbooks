@@ -12,7 +12,7 @@ recipe            "apt::repair", "Install apt-repair-sources"
 recipe            'apt::cacher-ng', 'Set up an apt-cacher-ng caching proxy'
 recipe            'apt::cacher-client', 'Client for the apt::cacher-ng caching proxy'
 
-%w{ ubuntu }.each do |os|
+%w(ubuntu).each do |os|
   supports os
 end
 

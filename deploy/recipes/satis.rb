@@ -39,7 +39,7 @@ node['deploy'].each do |application, deploy|
     action :create
   end
 
-  %w{/mnt/satis-output/ /mnt/composer-tmp/}.each do |dir|
+  %w(/mnt/satis-output/ /mnt/composer-tmp/).each do |dir|
     directory dir do
       recursive true
       owner "www-data"

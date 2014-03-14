@@ -5,7 +5,7 @@ description      "Installs/Configures bprobe"
 long_description "Installs/Configures bprobe"
 version          "0.1"
 
-%w{ ubuntu centos }.each do |os|
+%w(ubuntu centos).each do |os|
   supports os
 end
 

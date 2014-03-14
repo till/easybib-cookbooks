@@ -20,7 +20,7 @@ directory node["couchdb"]["viewdir"] do
   end
 end
 
-%w{db views}.each do |dir|
+%w(db views).each do |dir|
   directory "#{node["couchdb"]["datadir"]}/#{dir}" do
     owner "couchdb"
     group "couchdb"
