@@ -36,11 +36,6 @@ ModuleFunction:
 ParenthesesAsGroupedExpression:
   Enabled: false
 
-# Offense count: 3
-# Configuration parameters: NamePrefixBlacklist.
-PredicateName:
-  Enabled: false
-
 # Offense count: 5
 RedundantBegin:
   Enabled: false

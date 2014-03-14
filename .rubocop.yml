@@ -36,6 +36,9 @@ AccessorMethodName:
 NumericLiterals:
   Enabled: false
 
+PredicateName:
+  Enabled: false
+
 FileName:
   Enabled: false
 
