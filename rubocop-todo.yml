@@ -40,11 +40,6 @@ ParenthesesAsGroupedExpression:
 RedundantBegin:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-RedundantSelf:
-  Enabled: false
-
 # Offense count: 14
 UselessAssignment:
   Enabled: false
