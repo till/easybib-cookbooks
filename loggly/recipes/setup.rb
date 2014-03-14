@@ -27,7 +27,7 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
   # clean up old location
   file "/etc/rsyslog.d/10-loggly.conf" do
     action :delete
-    only_if { File.exists?('/etc/rsyslog.d/10-loggly.conf') }
+    only_if { File.exist?('/etc/rsyslog.d/10-loggly.conf') }
   end
 
   template "/etc/rsyslog.d/11-filewatcher.conf" do

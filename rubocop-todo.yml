@@ -10,21 +10,12 @@
 ClassAndModuleChildren:
   Enabled: false
 
-# Offense count: 29
-# Cop supports --auto-correct.
-DeprecatedClassMethods:
-  Enabled: false
-
 # Offense count: 10
 Documentation:
   Enabled: false
 
 # Offense count: 38
 FavorUnlessOverNegatedIf:
-  Enabled: false
-
-# Offense count: 59
-FileName:
   Enabled: false
 
 # Offense count: 5
@@ -37,12 +28,6 @@ FormatString:
 IfUnlessModifier:
   Enabled: false
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-IndentHash:
-  Enabled: false
-
 # Offense count: 2
 ModuleFunction:
   Enabled: false
@@ -51,24 +36,8 @@ ModuleFunction:
 ParenthesesAsGroupedExpression:
   Enabled: false
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-PercentLiteralDelimiters:
-  Enabled: false
-
-# Offense count: 3
-# Configuration parameters: NamePrefixBlacklist.
-PredicateName:
-  Enabled: false
-
 # Offense count: 5
 RedundantBegin:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-RedundantSelf:
   Enabled: false
 
 # Offense count: 14

@@ -8,10 +8,10 @@ version           "0.9.0"
 recipe            "git", "Installs git"
 recipe            "git::server", "Sets up a runit_service for git daemon"
 
-%w{ ubuntu debian arch}.each do |os|
+%w(ubuntu debian arch).each do |os|
   supports os
 end
 
-%w{ runit }.each do |cb|
+%w(runit).each do |cb|
   depends cb
 end

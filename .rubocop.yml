@@ -36,4 +36,13 @@ AccessorMethodName:
 NumericLiterals:
   Enabled: false
 
+PredicateName:
+  Enabled: false
+
+FileName:
+  Enabled: false
+
+RedundantSelf:
+  Enabled: false
+
 inherit_from: rubocop-todo.yml 

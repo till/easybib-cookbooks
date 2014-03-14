@@ -1,7 +1,7 @@
 execute "discover apt-repository" do
   command "echo deb #{node["php-hhvm"]["apt"]["repo"]} #{node["lsb"]["codename"]} main > #{node["php-hhvm"]["apt"]["file"]}"
   not_if do
-    File.exists?(node["php-hhvm"]["apt"]["file"])
+    File.exist?(node["php-hhvm"]["apt"]["file"])
   end
 end
 

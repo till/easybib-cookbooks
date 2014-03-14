@@ -39,7 +39,7 @@ node['deploy'].each do |application, deploy|
     action :create
   end
 
-  %w{/mnt/satis-output/ /mnt/composer-tmp/}.each do |dir|
+  %w(/mnt/satis-output/ /mnt/composer-tmp/).each do |dir|
     directory dir do
       recursive true
       owner "www-data"
@@ -54,7 +54,7 @@ node['deploy'].each do |application, deploy|
     command "cd #{deploy["deploy_to"]}/current/ && sh update-dist.sh"
     user "www-data"
     only_if do
-      File.exists?("#{deploy["deploy_to"]}/current/update-dist.sh")
+      File.exist?("#{deploy["deploy_to"]}/current/update-dist.sh")
     end
   end
 
@@ -63,7 +63,7 @@ node['deploy'].each do |application, deploy|
     command "cd #{deploy["deploy_to"]}/current/ && sh update-and-pull.sh"
     user "www-data"
     only_if do
-      File.exists?("#{deploy["deploy_to"]}/current/update-and-pull.sh")
+      File.exist?("#{deploy["deploy_to"]}/current/update-and-pull.sh")
     end
   end
 

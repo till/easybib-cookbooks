@@ -11,7 +11,7 @@ end
 file "#{node["nginx-lb"]["dir"]}/sites-enabled/default" do
   action :delete
   only_if do
-    File.exists?("#{node["nginx-lb"]["dir"]}/sites-enabled/default")
+    File.exist?("#{node["nginx-lb"]["dir"]}/sites-enabled/default")
   end
 end
 
