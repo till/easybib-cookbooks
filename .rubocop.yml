@@ -36,4 +36,7 @@ AccessorMethodName:
 NumericLiterals:
   Enabled: false
 
+FileName:
+  Enabled: false
+
 inherit_from: rubocop-todo.yml 
