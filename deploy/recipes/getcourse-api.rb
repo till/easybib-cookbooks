@@ -29,7 +29,7 @@ node['deploy'].each do |application, deploy|
     mailto node["sysop_email"]
     command "cd /srv/www/#{application}/current && ./bin/getcourse cleanup changes"
     only_if do
-      File.exists?("/srv/www/#{application}/current/bin/getcourse")
+      File.exist?("/srv/www/#{application}/current/bin/getcourse")
     end
   end
 
@@ -40,7 +40,7 @@ node['deploy'].each do |application, deploy|
     mailto node["sysop_email"]
     command "cd /srv/www/#{application}/current && ./bin/getcourse resume documents"
     only_if do
-      File.exists?("/srv/www/#{application}/current/bin/getcourse")
+      File.exist?("/srv/www/#{application}/current/bin/getcourse")
     end
   end
 end

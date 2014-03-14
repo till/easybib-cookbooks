@@ -8,7 +8,7 @@ remote_file php_archive do
   checksum node["php-bcmath"]["checksum"]
   source "http://de3.php.net/get/php-#{node["php-bcmath"]["version"]}.tar.gz/from/de1.php.net/mirror"
   not_if do
-    File.exists?(php_archive)
+    File.exist?(php_archive)
   end
 end
 

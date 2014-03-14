@@ -94,7 +94,7 @@ node["deploy"].each do |application, deploy|
 end
 
 ["/cert.pem", "/cert.key"].each do |f|
-  if File.exists?(ssl_dir + f)
+  if File.exist?(ssl_dir + f)
     stored_certificate = true
   end
 end

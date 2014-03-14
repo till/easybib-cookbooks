@@ -5,7 +5,7 @@ directory node["couchdb"]["datadir"] do
   action :create
   recursive true
   only_if do
-    !File.exists?(node["couchdb"]["datadir"])
+    !File.exist?(node["couchdb"]["datadir"])
   end
 end
 
@@ -16,7 +16,7 @@ directory node["couchdb"]["viewdir"] do
   action :create
   recursive true
   only_if do
-    !File.exists?(node["couchdb"]["viewdir"])
+    !File.exist?(node["couchdb"]["viewdir"])
   end
 end
 
@@ -28,7 +28,7 @@ end
     action :create
     recursive true
     only_if do
-      !File.exists?("#{node["couchdb"]["datadir"]}/#{dir}")
+      !File.exist?("#{node["couchdb"]["datadir"]}/#{dir}")
     end
   end
 end
@@ -40,7 +40,7 @@ directory node["couchdb"]["logdir"] do
   action :create
   recursive true
   only_if do
-    !File.exists?(node["couchdb"]["logdir"])
+    !File.exist?(node["couchdb"]["logdir"])
   end
 end
 

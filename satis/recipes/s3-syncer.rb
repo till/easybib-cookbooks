@@ -6,7 +6,7 @@ directory node['s3-syncer']['path'] do
   action :create
 end
 
-if !File.exists?("#{node['s3-syncer']['path']}/bin/syncer")
+if !File.exist?("#{node['s3-syncer']['path']}/bin/syncer")
   remote_file "#{node['s3-syncer']['path']}/syncer.tar.gz" do
     source node['s3-syncer']['source']
     mode 0755

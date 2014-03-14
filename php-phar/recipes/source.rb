@@ -5,7 +5,7 @@ php_version = node[:php_phar][:version]
 remote_file "#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz" do
   source "http://us.php.net/get/php-#{php_version}.tar.gz/from/us.php.net/mirror"
   only_if do
-    !File.exists?("#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz") || !File.directory?("#{Chef::Config[:file_cache_path]}/php-#{php_version}")
+    !File.exist?("#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz") || !File.directory?("#{Chef::Config[:file_cache_path]}/php-#{php_version}")
   end
 end
 
@@ -14,7 +14,7 @@ execute "extract tar" do
   cwd     Chef::Config[:file_cache_path]
   creates "#{Chef::Config[:file_cache_path]}/php-#{php_version}"
   only_if do
-    File.exists?("#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz")
+    File.exist?("#{Chef::Config[:file_cache_path]}/php-#{php_version}.tar.gz")
   end
 end
 

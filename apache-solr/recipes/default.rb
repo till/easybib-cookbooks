@@ -12,7 +12,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/#{apache_solr_release}" do
   group  node[:apache_solr][:group]
   source "#{node[:apache_solr][:mirror]}/#{apache_solr_version}/#{apache_solr_release}"
   not_if do
-    File.exists?("#{Chef::Config[:file_cache_path]}/#{apache_solr_release}")
+    File.exist?("#{Chef::Config[:file_cache_path]}/#{apache_solr_release}")
   end
 end
 

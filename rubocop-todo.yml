@@ -10,11 +10,6 @@
 ClassAndModuleChildren:
   Enabled: false
 
-# Offense count: 29
-# Cop supports --auto-correct.
-DeprecatedClassMethods:
-  Enabled: false
-
 # Offense count: 10
 Documentation:
   Enabled: false

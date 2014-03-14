@@ -5,7 +5,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/install-npm.sh" do
   source "http://npmjs.org/install.sh"
   mode "0755"
   not_if do
-    File.exists?("/usr/bin/npm")
+    File.exist?("/usr/bin/npm")
   end
 end
 
