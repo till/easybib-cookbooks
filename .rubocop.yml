@@ -36,44 +36,4 @@ AccessorMethodName:
 NumericLiterals:
   Enabled: false
 
-# Temp disabled rules below. Remove them on at a time, and refactor the
-# Cookbooks.
-
-RedundantSelf:
-  Enabled: false
-
-Void:
-  Enabled: false
-
-FavorSprintf:
-  Enabled: false
-
-ModuleFunction:
-  Enabled: false
-
-PredicateName:
-  Enabled: false
-
-Syntax:
-  Enabled: false
-
-ParenthesesAsGroupedExpression:
-  Enabled: false
-
-RedundantBegin:
-  Enabled: false
-
-Documentation:
-  Enabled: false
-
-UselessAssignment:
-  Enabled: false
-
-WordArray:
-  Enabled: false
-
-FavorUnlessOverNegatedIf:
-  Enabled: false
-
-IfUnlessModifier:
-  Enabled: false
+inherit_from: rubocop-todo.yml 

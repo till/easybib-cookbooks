@@ -22,5 +22,5 @@ template "/etc/default/#{node['gearmand']['name']}" do
     :port => node['gearmand']['port'],
     :log  => node['gearmand']['log']
   )
-  notifies :restart, "service[#{node['gearmand']['name']}]"
+  notifies :restart, "service[#{node['gearmand']['name']}]", :immediate
 end
