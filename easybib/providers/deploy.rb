@@ -2,13 +2,14 @@ action :deploy do
   app = new_resource.app
   deploy_data = new_resource.deploy_data
   application_root_dir = "#{deploy_data['deploy_to']}/current"
+  crontab_path = "#{deploy_data['deploy_to']}/current/deploy/crontab"
 
   opsworks_deploy do
     deploy_data deploy_data
     app app
   end
 
-  if ::File.exists?("#{deploy_data['deploy_to']}/current/deploy/crontab")
+  if ::File.exists?(crontab_path)
 
     execute "Clear old crontab" do
       user "www-data"
@@ -18,7 +19,9 @@ action :deploy do
 
     CRON_REGEX = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
 
-    crontabs = ::File.open("#{deploy_data['deploy_to']}/current/deploy/crontab")
+    Chef::Log.debug("easybib_deploy - importing cronjobs from #{crontab_path}")
+
+    crontabs = ::File.open(crontab_path)
     cron_counter = 1
 
     crontabs.each_line do |line|
@@ -26,6 +29,8 @@ action :deploy do
       next unless crontab
 
       cron_name = "#{app}_#{cron_counter}"
+
+      Chef::Log.debug("easybib_deploy - installing crontab file #{cron_name}")
 
       cron_d cron_name do
         action :create
@@ -38,7 +43,11 @@ action :deploy do
         command crontab[6]
       end
 
+      cron_counter += 1
+
     end
+  else
+    Chef::Log.debug("easybib_deploy - crontab file not found at #{crontab_path}, skipping")
   end
 
   import_file_path = "#{application_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
