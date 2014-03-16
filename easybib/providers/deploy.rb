@@ -43,6 +43,8 @@ action :deploy do
         command crontab[6]
       end
 
+      cron_counter += 1
+
     end
   else
     Chef::Log.debug("easybib_deploy - crontab file not found at #{crontab_path}, skipping")
