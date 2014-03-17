@@ -29,3 +29,4 @@ end
 
 default["chef_handler"]["handler_path"] = "#{File.expand_path(File.join(Chef::Config[:file_cache_path], '..'))}/handlers"
 default["chef_handler"]["sns_topic"] = nil
+default["chef_handler"]["sns_alert_activities"] = ['deploy', 'configure']
