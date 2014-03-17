@@ -6,7 +6,7 @@ unless node["chef_handler"]["sns_topic"].nil?
   # Then activate the handler with the `chef_handler` LWRP
   chef_handler "Chef::Handler::Sns" do
     source "#{Gem::Specification.find_by_name("chef-handler-sns").lib_dirs_glob}/chef/handler/sns"
-    arguments { :topic_arn => node["chef_handler"]["sns_topic"] }
+    arguments [ :topic_arn => node["chef_handler"]["sns_topic"] ]
     supports :exception => true
     action :enable
   end

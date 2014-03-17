@@ -36,4 +36,10 @@ AccessorMethodName:
 NumericLiterals:
   Enabled: false
 
+StringConversionInInterpolation:
+  Enabled: false
+
+SingleLineBlockParams:
+  Enabled: false
+
 inherit_from: rubocop-todo.yml 
