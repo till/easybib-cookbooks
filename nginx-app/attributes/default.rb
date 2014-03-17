@@ -11,6 +11,8 @@ default["nginx-app"]["extras"] = ""
 
 default["nginx-app"]["default_router"] = "index.php"
 
+default["nginx-app"]["contact_url"] = "http://easybib.com/company/contact"
+
 default["nginx-app"]["vagrant"] = {}
 default["nginx-app"]["vagrant"]["deploy_dir"] = "/vagrant_data/web/"
 

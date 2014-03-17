@@ -30,6 +30,7 @@ template "/etc/newrelic/nrsysmond.cfg" do
 end
 
 package "newrelic-sysmond" do
+  action :upgrade
   notifies :run, "execute[newrelic-license]", :immediately
   not_if do
     node["newrelic"]["license"].empty?

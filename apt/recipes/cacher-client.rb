@@ -50,32 +50,37 @@ unless Chef::Config[:solo] || servers.length > 0
   servers += search(:node, query)
 end
 
-if servers.length > 0
-  Chef::Log.info("apt-cacher-ng server found on #{servers[0]}.")
-  if servers[0]['apt']['cacher_interface']
-    cacher_ipaddress = interface_ipaddress(servers[0], servers[0]['apt']['cacher_interface'])
-  else
-    cacher_ipaddress = servers[0].ipaddress
-  end
-  t = template '/etc/apt/apt.conf.d/01proxy' do
-    source '01proxy.erb'
-    owner 'root'
-    group 'root'
-    mode 00644
-    variables(
-      :proxy => cacher_ipaddress,
-      :port => servers[0]['apt']['cacher_port'],
-      :bypass => node['apt']['cache_bypass']
-      )
-    action(node['apt']['compiletime'] ? :nothing : :create)
-    notifies :run, 'execute[apt-get update]', :immediately
-  end
-  t.run_action(:create) if node['apt']['compiletime']
+if get_instance_roles.include?('aptcache')
+  # instance provisioning would fail here - accessing aptcache while aptcache is
+  # still being set up is a somewhat stupid idea.
+  Chef::Log.info('Skipping aptcache configuration: Aptcache should not use itself.')
 else
-  Chef::Log.info('No apt-cacher-ng server found.')
-  file '/etc/apt/apt.conf.d/01proxy' do
-    action :delete
+  if servers.length > 0
+    Chef::Log.info("apt-cacher-ng server found on #{servers[0]}.")
+    if servers[0]['apt']['cacher_interface']
+      cacher_ipaddress = interface_ipaddress(servers[0], servers[0]['apt']['cacher_interface'])
+    else
+      cacher_ipaddress = servers[0].ipaddress
+    end
+    t = template '/etc/apt/apt.conf.d/01proxy' do
+      source '01proxy.erb'
+      owner 'root'
+      group 'root'
+      mode 00644
+      variables(
+        :proxy => cacher_ipaddress,
+        :port => servers[0]['apt']['cacher_port'],
+        :bypass => node['apt']['cache_bypass']
+        )
+      action(node['apt']['compiletime'] ? :nothing : :create)
+      notifies :run, 'execute[apt-get update]', :immediately
+    end
+    t.run_action(:create) if node['apt']['compiletime']
+  else
+    Chef::Log.info('No apt-cacher-ng server found.')
+    file '/etc/apt/apt.conf.d/01proxy' do
+      action :delete
+    end
   end
 end
-
 include_recipe 'apt::default'
