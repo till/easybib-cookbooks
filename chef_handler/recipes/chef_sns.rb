@@ -1,8 +1,11 @@
 unless node["chef_handler"]["sns_topic"].nil?
 
   chef_gem 'nokogiri'
-  OpsWorks::InternalGems.internal_gem_package('chef-handler-sns', :version => '1.1.0')
-  chef_gem 'chef-handler-sns'
+
+  gem 'chef-handler-sns'do
+    action :install
+    version '= 1.1.0'
+  end
 
   # Then activate the handler with the `chef_handler` LWRP
   chef_handler "Chef::Handler::Sns" do

@@ -27,7 +27,6 @@ end
 include_recipe "easybib::nginxstats"
 include_recipe "easybib::cron"
 
-
 # landscape is buggy
 # https://bugs.launchpad.net/ubuntu/+source/pam/+bug/805423
 package "landscape-client" do
