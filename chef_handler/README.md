@@ -7,6 +7,9 @@ Attributes
 ==========
 
 `node["chef_handler"]["handler_path"]` - location to drop off handlers directory, default is `/var/chef/handlers`.
+`node["chef_handler"]["sns_topic"]` - Amazon SNS Alert handler: sns topic id to notify. If unset, sns handler will not be installed
+`node["chef_handler"]["sns_alert_activities"]` - activities to monitor for failures - default is `['deploy', 'configure']`.
+
 
 Resource/Provider
 =================
@@ -82,6 +85,11 @@ json_file
 ---------
 
 Leverages the `chef_handler` LWRP to automatically register the `Chef::Handler::JsonFile` handler that ships as part of Chef. This handler serializes the run status data to a JSON file located at `/var/chef/reports`.
+
+sns_notification
+---------
+
+This handler notifies via Amazon SNS on failure. It requires `node["chef_handler"]["sns_topic"]` to be set.
 
 License and Author
 ==================

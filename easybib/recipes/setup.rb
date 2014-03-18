@@ -14,7 +14,7 @@ chef_gem "BibOpsworks" do
   action :install
 end
 
-include_recipe "chef_handler::dummy"
+include_recipe "chef_handler::sns_notification"
 
 service "nscd" do
   action :nothing
