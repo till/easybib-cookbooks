@@ -56,7 +56,7 @@ server {
     }
 
     location / {
-        return 301 <%=node["nginx-app"]["contact_url"] %>
+        return 301 <%=node["nginx-app"]["contact_url"] %>;
     }
 
     <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
