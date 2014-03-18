@@ -17,7 +17,7 @@ action :create do
     only_if "test -L /etc/init.d/pecl-manager"
   end
 
-  template "/etc/init.d/pecl-manager" do
+  t = template "/etc/init.d/pecl-manager" do
     cookbook "pecl-manager"
     source "init.d.erb"
     mode  "0700"
@@ -32,9 +32,10 @@ action :create do
 
   service "pecl-manager" do
     supports [ :start, :stop, :restart, :status ]
-    action :restart
+    action :nothing
+    subscribes :restart, "service[#{node['gearmand']['name']}]", :immediately
   end
 
-  new_resource.updated_by_last_action(true)
+  new_resource.updated_by_last_action(t.updated_by_last_action?)
 
 end
