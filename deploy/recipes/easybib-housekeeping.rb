@@ -7,7 +7,7 @@ node['deploy'].each do |application, deploy|
 
   case application
   when 'schoolanalytics'
-    next unless allow_deploy(application, 'schoolanalytics')
+    next unless allow_deploy(application, 'schoolanalytics', 'housekeeping')
   else
     Chef::Log.info("deploy::housekeeping - #{application} (in #{cluster_name}) skipped")
     next
