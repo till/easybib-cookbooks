@@ -8,6 +8,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'bibcd')
   when 'bib-opsstatus'
     next unless allow_deploy(application, 'bib-opsstatus')
+  when 'travis-asset-browser'
+    next unless allow_deploy(application, 'travis-asset-browser')
   else
     Chef::Log.info("deploy::qa - #{application} skipped")
     next
@@ -35,6 +37,7 @@ node['deploy'].each do |application, deploy|
   easybib_nginx application do
     config_template "silex.conf.erb"
     domain_name deploy['domains'].join(' ')
+    htpasswd "#{deploy['deploy_to']}/current/htpasswd"
     doc_root deploy['document_root']
     env_config env_conf
     notifies :restart, "service[nginx]", :delayed

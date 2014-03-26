@@ -35,6 +35,7 @@ action :setup do
   domain_name = new_resource.domain_name
   routes_enabled = new_resource.routes_enabled
   routes_denied = new_resource.routes_denied
+  htpasswd = new_resource.htpasswd
 
   default_router = node["nginx-app"]["default_router"]
 
@@ -44,7 +45,7 @@ action :setup do
 
   default_router = new_resource.default_router unless new_resource.default_router.nil?
 
-  template "/etc/nginx/sites-enabled/#{config_name}.conf" do
+  t = template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook "nginx-app"
     source config_template
     mode "0755"
@@ -62,11 +63,12 @@ action :setup do
       :domain_conf => domain_config,
       :env_conf => env_config,
       :routes_enabled => routes_enabled,
-      :routes_denied => routes_denied
+      :routes_denied => routes_denied,
+      :htpasswd => htpasswd
     )
   end
 
-  new_resource.updated_by_last_action(true)
+  new_resource.updated_by_last_action(t.updated_by_last_action?)
 
 end
 
