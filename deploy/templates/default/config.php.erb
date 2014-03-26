@@ -1,0 +1,8 @@
+<?php
+
+$c = array();
+$c['base-path'] = null;
+<% @config.each do |name, value| -%>
+$c['<%=name%>'] = '<%=value%>';
+
+return $c;

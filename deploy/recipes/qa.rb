@@ -43,7 +43,8 @@ node['deploy'].each do |application, deploy|
     notifies :restart, "service[nginx]", :delayed
   end
 
-  if application == 'bibcd'
+  case application
+  when 'bibcd'
     template "#{deploy["deploy_to"]}/current/config/deployconfig.yml" do
       source "empty.erb"
       mode   0644
@@ -59,6 +60,13 @@ node['deploy'].each do |application, deploy|
         app_name appname
         config config
       end
+    end
+  when 'travis-asset-browser'
+    template "#{deploy["deploy_to"]}/current/config.php" do
+      source "config.php.erb"
+      mode 0600
+      owner "www-data"
+      variables :config => node['travis-asset-browser']['config']
     end
   end
 
