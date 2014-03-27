@@ -10,5 +10,5 @@ default["travis-artifacts-browser"]["config"] = {
   "cache-time" => 600,
   "cache-dir" => "/tmp",
   "bucket-name" => "",
-  "bucket-url-prefix" => "http://bucket-name.s3.amazonaws.com",
+  "bucket-url-prefix" => "http://bucket-name.s3.amazonaws.com"
 }
