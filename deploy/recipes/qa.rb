@@ -8,6 +8,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'bibcd')
   when 'bib-opsstatus'
     next unless allow_deploy(application, 'bib-opsstatus')
+  when 'travis_asset_browser'
+    next unless allow_deploy(application, 'travis_asset_browser', 'travis-asset-browser')
   else
     Chef::Log.info("deploy::qa - #{application} skipped")
     next
@@ -35,12 +37,14 @@ node['deploy'].each do |application, deploy|
   easybib_nginx application do
     config_template "silex.conf.erb"
     domain_name deploy['domains'].join(' ')
+    htpasswd "#{deploy['deploy_to']}/current/htpasswd"
     doc_root deploy['document_root']
     env_config env_conf
     notifies :restart, "service[nginx]", :delayed
   end
 
-  if application == 'bibcd'
+  case application
+  when 'bibcd'
     template "#{deploy["deploy_to"]}/current/config/deployconfig.yml" do
       source "empty.erb"
       mode   0644
@@ -56,6 +60,13 @@ node['deploy'].each do |application, deploy|
         app_name appname
         config config
       end
+    end
+  when 'travis_asset_browser'
+    template "#{deploy["deploy_to"]}/current/config.php" do
+      source "config.php.erb"
+      mode 0600
+      owner "www-data"
+      variables :config => node['travis-asset-browser']['config']
     end
   end
 
