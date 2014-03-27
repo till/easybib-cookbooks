@@ -8,7 +8,7 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'bibcd')
   when 'bib-opsstatus'
     next unless allow_deploy(application, 'bib-opsstatus')
-  when 'travis-asset-browser'
+  when 'travis_asset_browser'
     next unless allow_deploy(application, 'travis-asset-browser')
   else
     Chef::Log.info("deploy::qa - #{application} skipped")
@@ -61,7 +61,7 @@ node['deploy'].each do |application, deploy|
         config config
       end
     end
-  when 'travis-asset-browser'
+  when 'travis_asset_browser'
     template "#{deploy["deploy_to"]}/current/config.php" do
       source "config.php.erb"
       mode 0600
