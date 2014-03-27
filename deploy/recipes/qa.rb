@@ -9,7 +9,7 @@ node['deploy'].each do |application, deploy|
   when 'bib-opsstatus'
     next unless allow_deploy(application, 'bib-opsstatus')
   when 'travis_asset_browser'
-    next unless allow_deploy(application, 'travis-asset-browser')
+    next unless allow_deploy(application, 'travis_asset_browser', 'travis-asset-browser')
   else
     Chef::Log.info("deploy::qa - #{application} skipped")
     next
