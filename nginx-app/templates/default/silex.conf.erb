@@ -61,4 +61,10 @@ server {
             <%=@env_conf%>
 <% end -%>
     }
+    
+    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+    location ~ /(<%= @routes_denied.join('|') %>) {
+        deny all;
+    }
+    <% end -%>
 }

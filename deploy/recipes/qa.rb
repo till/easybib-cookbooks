@@ -34,12 +34,23 @@ node['deploy'].each do |application, deploy|
     env_conf = get_env_for_nginx(application)
   end
 
+  if node["nginx-app"].attribute?(application)
+    if node["nginx-app"][application].attribute?("routes_enabled")
+      routes_enabled = node["nginx-app"][application]["routes_enabled"]
+    end
+    if node["nginx-app"][application].attribute?("routes_disabled")
+      routes_disabled = node["nginx-app"][application]["routes_disabled"]
+    end
+  end
+
   easybib_nginx application do
     config_template "silex.conf.erb"
-    domain_name deploy['domains'].join(' ')
-    htpasswd "#{deploy['deploy_to']}/current/htpasswd"
-    doc_root deploy['document_root']
-    env_config env_conf
+    domain_name     deploy['domains'].join(' ')
+    htpasswd        "#{deploy['deploy_to']}/current/htpasswd"
+    doc_root        deploy['document_root']
+    env_config      env_conf
+    routes_enabled  routes_enabled
+    routes_denied   routes_disabled
     notifies :restart, "service[nginx]", :delayed
   end
 
