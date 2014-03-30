@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-describe 'easybib::empty' do
+describe 'easybib_crontab' do
 
   let(:cookbook_paths) do
     [
