@@ -3,7 +3,7 @@ action :create do
   crontab_file = new_resource.crontab_file
 
   updated = false
-  
+
   if ::File.exists?(crontab_file)
 
     execute "Clear old crontab" do
@@ -39,9 +39,9 @@ action :create do
         user "www-data"
         command crontab[6]
       end
-      
+
       Chef::Log.info("easybib_deploy - I just called cron_d for #{cron_name}")
-      
+
       cron_counter += 1
 
     end
