@@ -22,49 +22,10 @@ server {
     auth_basic_user_file  <%= @htpasswd%>;
 <% end -%>
 
-    location = / {
-        try_files @site @site;
-    }
-
-    #all other locations try other files first and go to our front controller if none of them exists
-    location / {
-        try_files $uri $uri/ @site;
-    }
-
     root <%= @doc_root%>;
 
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
-        # Just an empty block so it is not matched by @site below
-        # See easybib/issues#417
-    }
-
-    location ~* \.php$ {
-        fastcgi_index index.php;
-        fastcgi_pass  <%=@upstream%>_phpfpm;
-        include       fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
-<% if @env_conf && !@env_conf.empty? -%>
-        <%=@env_conf-%>
-<% end -%>
-    }
-
-    location ~* \.(eot|ttf|woff)$ {
-        add_header Access-Control-Allow-Origin *;
-    }
-
-    location @site {
-            fastcgi_pass  <%=@upstream%>_phpfpm;
-            include       fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
-<% if @env_conf && !@env_conf.empty? -%>
-            <%=@env_conf%>
-<% end -%>
-    }
-    
-    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
-    location ~ /(<%= @routes_denied.join('|') %>) {
-        deny all;
-    }
-    <% end -%>
+    <%= render "partials/default-php.erb", :cookbook => 'nginx-app', :variables => {
+        "php_bypass_static_content" => true
+    } %>
+    <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
 }
