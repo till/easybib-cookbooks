@@ -34,7 +34,7 @@ describe 'silex-config-template' do
     end
 
     it "does enable all routes" do
-      expect(chef_run).not_to render_file('/tmp/config.conf').with_content(%r[location / {\n\w*try_files $uri $uri/ @site;\n\w*}])
+      expect(chef_run).to render_file('/tmp/config.conf').with_content(%r!location / {\n.*try_files \$uri \$uri/ @site;\n.*}!)
     end
   end
 
