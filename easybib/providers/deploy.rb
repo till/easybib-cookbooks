@@ -8,8 +8,8 @@ action :deploy do
     app app
   end
 
-  easybib_crontab do
-    crontab_path "#{deploy_data['deploy_to']}/current/deploy/crontab"
+  easybib_crontab app do
+    crontab_file "#{deploy_data['deploy_to']}/current/deploy/crontab"
     app app
   end
 
