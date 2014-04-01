@@ -1,6 +1,6 @@
 location ~ /(<%= @routes_enabled.join('|') %>) {
 
-        location / {
+        location ~ / {
             try_files $uri $uri/ @site;
         }
 
