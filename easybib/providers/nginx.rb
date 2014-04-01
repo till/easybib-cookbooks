@@ -33,9 +33,19 @@ action :setup do
   domain_config = new_resource.domain_config
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
-  routes_enabled = new_resource.routes_enabled
-  routes_denied = new_resource.routes_denied
   htpasswd = new_resource.htpasswd
+  application = new_resource.app_name
+
+  if node["nginx-app"].attribute?(application)
+    if node["nginx-app"][application].attribute?("routes_enabled")
+      routes_enabled = node["nginx-app"][application]["routes_enabled"]
+    end
+    if node["nginx-app"][application].attribute?("routes_denied")
+      routes_denied = node["nginx-app"][application]["routes_denied"]
+    end
+  else
+    Chef::Log.info("No routes_enabled/routes_denied found for #{application}")
+  end
 
   default_router = node["nginx-app"]["default_router"]
 
