@@ -10,6 +10,7 @@ default["nginx-app"]["ppa"] = "ppa:easybib/remote-mirrors"
 default["nginx-app"]["extras"] = ""
 
 default["nginx-app"]["default_router"] = "index.php"
+default["nginx-app"]["health_check"] = "health_check.php"
 
 default["nginx-app"]["contact_url"] = "http://easybib.com/company/contact"
 

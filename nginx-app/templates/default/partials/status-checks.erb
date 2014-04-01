@@ -1,4 +1,11 @@
-    location /nginx_status {
+    location = /<%= node["nginx-app"]["health_check"] %> {
+        access_log    <%= @access_log %>;
+        include       fastcgi_params;
+        fastcgi_pass  <%=@upstream%>_phpfpm;
+        fastcgi_param SCRIPT_FILENAME $document_root/<%= node["nginx-app"]["health_check"] %>;
+    }
+
+    location = /nginx_status {
         stub_status on;
         access_log  <%= @access_log %>;
         allow       127.0.0.1;
