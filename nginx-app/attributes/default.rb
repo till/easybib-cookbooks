@@ -53,3 +53,9 @@ default["nginx-app"]["css_modules"] = {
     "pearson"         => "pearson",
     "folders"         => "folders"
 }
+
+# app config:
+# default["nginx-app"]["example-app"] = {}
+# default["nginx-app"]["example-app"]["routes_enabled"] = []
+# default["nginx-app"]["example-app"]["routes_denied"] = []
+# default["nginx-app"]["example-app"]["health_check"] = "health_check.php"
