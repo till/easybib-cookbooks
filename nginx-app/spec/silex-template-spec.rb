@@ -66,6 +66,53 @@ describe 'silex-config-template' do
         .with_content(slash_is_redirected)
     end
   end
+  describe "some routes disabled" do
+    before do
+      node.set["testdata"]["routes_enabled"] = nil
+      node.set["testdata"]["routes_denied"]  = ['/some/route', '/other/route']
+    end
+
+    it "does not deny any routes" do
+      expect(chef_run).to render_file(config_filename)
+        .with_content('/some/route|/other/route')
+    end
+
+    it "does route / to php" do
+      expect(chef_run).to render_file(config_filename)
+        .with_content(slash_is_enabled)
+    end
+
+    it "does not redirect / to another location" do
+      expect(chef_run).not_to render_file(config_filename)
+        .with_content(slash_is_redirected)
+    end
+  end
+  describe "some routes enabled, some disabled" do
+    before do
+      node.set["testdata"]["routes_enabled"] = ['/some/route', '/other/route']
+      node.set["testdata"]["routes_denied"]  = ['/some/droute', '/other/droute']
+    end
+
+    it "does set routes for enabled routes" do
+      expect(chef_run).to render_file(config_filename)
+        .with_content(default_route_for_partial_route('/some/route|/other/route'))
+    end
+
+    it "does deny disabled routes" do
+      expect(chef_run).to render_file(config_filename)
+        .with_content(some_routes_denied('/some/droute|/other/droute'))
+    end
+
+    it "does not route / to php" do
+      expect(chef_run).not_to render_file(config_filename)
+        .with_content(slash_is_enabled)
+    end
+
+    it "does redirect / to another location" do
+      expect(chef_run).to render_file(config_filename)
+        .with_content(slash_is_redirected)
+    end
+  end
 end
 
 def slash_is_redirected(target = 'http://easybib.com/company/contact')
