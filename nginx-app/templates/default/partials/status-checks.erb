@@ -1,7 +1,8 @@
     location = /<%= @health_check %> {
         include       fastcgi_params;
         fastcgi_pass  <%=@upstream%>_phpfpm;
-        fastcgi_param SCRIPT_FILENAME $document_root/<%= node["nginx-app"]["health_check"] %>;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
     }
 
     location = /nginx_status {
