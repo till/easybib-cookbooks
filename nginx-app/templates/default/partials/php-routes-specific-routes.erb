@@ -1,0 +1,41 @@
+location ~ /(<%= @routes_enabled.join('|') %>) {
+
+        location / {
+            try_files $uri $uri/ @site;
+        }
+
+    <%if @php_bypass_static_content -%>
+        location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
+            # Just an empty block so it is not matched by @site below
+            # See easybib/issues#417
+        }
+    <% end -%>
+
+        location ~* \.(eot|ttf|woff)$ {
+            add_header Access-Control-Allow-Origin *;
+        }
+
+        location ~* \.php$ {
+            fastcgi_index index.php;
+            fastcgi_pass  <%=@upstream%>_phpfpm;
+            include       fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+    <% if @env_conf && !@env_conf.empty? -%>
+            <%=@env_conf-%>
+    <% end -%>
+        }
+
+        location @site {
+                fastcgi_pass  <%=@upstream%>_phpfpm;
+                include       fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+    <% if @env_conf && !@env_conf.empty? -%>
+                <%=@env_conf%>
+    <% end -%>
+        }
+    }
+
+    location = / {
+        return 301 <%=node["nginx-app"]["contact_url"] %>;
+    }
