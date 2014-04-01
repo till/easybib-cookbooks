@@ -25,15 +25,15 @@ location ~ /(<%= @routes_enabled.join('|') %>) {
             <%=@env_conf-%>
     <% end -%>
         }
+    }
 
-        location @site {
-                fastcgi_pass  <%=@upstream%>_phpfpm;
-                include       fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
-    <% if @env_conf && !@env_conf.empty? -%>
-                <%=@env_conf%>
-    <% end -%>
-        }
+    location @site {
+            fastcgi_pass  <%=@upstream%>_phpfpm;
+            include       fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+<% if @env_conf && !@env_conf.empty? -%>
+            <%=@env_conf%>
+<% end -%>
     }
 
     location = / {
