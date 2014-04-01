@@ -24,13 +24,13 @@ server {
 
     root <%= @doc_root%>;
 
-    <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
+<%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
         "upstream" => @upstream,
         "health_check" => @health_check
     } %>
 
     <% if @routes_enabled.nil? || @routes_enabled.empty? -%>
-    <%= render "partials/php-routes-default.erb", :cookbook => 'nginx-app', :variables => {
+<%= render "partials/php-routes-default.erb", :cookbook => 'nginx-app', :variables => {
         "php_bypass_static_content" => true,
         "routes_enabled" => @routes_enabled,
         "upstream" => @upstream,
@@ -39,7 +39,7 @@ server {
         "default_router" => @default_router
     } %>
     <% else -%>
-    <%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
+<%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
         "php_bypass_static_content" => true,
         "routes_enabled" => @routes_enabled,
         "upstream" => @upstream,
@@ -50,6 +50,6 @@ server {
     <% end %>
 
     <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
-    <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
+<%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
     <% end %>
 }
