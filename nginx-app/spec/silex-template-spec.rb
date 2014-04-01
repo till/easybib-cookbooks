@@ -31,35 +31,55 @@ describe 'silex-config-template' do
     end
 
     it "does not deny any routes" do
-      expect(chef_run).not_to render_file(config_filename).with_content(some_routes_denied)
+      expect(chef_run).not_to render_file(config_filename)
+        .with_content(some_routes_denied)
     end
     it "does route / to php" do
-      expect(chef_run).to render_file(config_filename).with_content(slash_is_enabled)
+      expect(chef_run).to render_file(config_filename)
+        .with_content(slash_is_enabled)
     end
   end
 
   describe "some routes enabled" do
     before do
-      node.set["testdata"]["routes_enabled"] = ['/some/route']
+      node.set["testdata"]["routes_enabled"] = ['/some/route', '/other/route']
       node.set["testdata"]["routes_denied"]  = nil
     end
 
+    it "does set routes for enabled routes" do
+      expect(chef_run).to render_file(config_filename)
+        .with_content(default_route_for_partial_route('/some/route|/other/route'))
+    end
+
     it "does not deny any routes" do
-      expect(chef_run).not_to render_file(config_filename).with_content(some_routes_denied)
+      expect(chef_run).not_to render_file(config_filename)
+        .with_content(some_routes_denied)
     end
 
     it "does not route / to php" do
-      expect(chef_run).not_to render_file(config_filename).with_content(slash_is_enabled)
+      expect(chef_run).not_to render_file(config_filename)
+        .with_content(slash_is_enabled)
     end
 
     it "does redirect / to another location" do
-      expect(chef_run).to render_file(config_filename).with_content(slash_is_redirected)
+      expect(chef_run).to render_file(config_filename)
+        .with_content(slash_is_redirected)
     end
   end
+end
 
-  let(:slash_is_redirected)          { %r!location = / {\s* return 301 http://easybib.com/company/contact;\s*}! }
-  let(:default_route_for_some_route) { %r!location ~ /(.*) {\s*location / {\s*try_files $uri $uri/ @site;\s*}! }
-  let(:slash_is_enabled)             { %r!location = / {\s*try_files @site @site;\s*}! }
-  let(:some_routes_denied)           { %r!location ~ /(.*) {\s*deny all;\s*}! }
+def slash_is_redirected(target = 'http://easybib.com/company/contact')
+  %r!location = / {\s* return 301 #{target};\s*}!
+end
 
+def default_route_for_partial_route(routes = '.*')
+  %r!location ~ /\(#{routes}\) {\s*location / {\s*try_files \$uri \$uri/ @site;\s*}!
+end
+
+def slash_is_enabled
+  %r!location = / {\s*try_files @site @site;\s*}!
+end
+
+def some_routes_denied(routes = '.*')
+  %r!location ~ /\(#{routes}\) {\s*deny all;\s*}!
 end
