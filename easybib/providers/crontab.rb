@@ -38,6 +38,7 @@ action :create do
         weekday crontab[5]
         user "www-data"
         command crontab[6]
+        path node["easybib_deploy"]["cron_path"]
       end
 
       Chef::Log.info("easybib_deploy - I just called cron_d for #{cron_name}")

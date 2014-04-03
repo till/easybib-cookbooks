@@ -37,7 +37,8 @@ describe 'easybib_crontab' do
           :month => "4",
           :weekday => "5",
           :user => "www-data",
-          :command => "cronline"
+          :command => "cronline",
+          :path => "/usr/local/bin:/usr/bin:/bin"
         )
       end
 
