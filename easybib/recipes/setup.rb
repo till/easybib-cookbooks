@@ -10,8 +10,13 @@ base_packages.each do |p|
   package p
 end
 
-chef_gem "BibOpsworks" do
-  action :install
+if is_aws
+
+  chef_gem "BibOpsworks"
+
+  include_recipe "chef_handler::sns_notification"
+  include_recipe "easybib::opsworks-fixes"
+  include_recipe "apt::cacher-client"
 end
 
 service "nscd" do
@@ -21,11 +26,6 @@ end
 
 include_recipe "easybib::nginxstats"
 include_recipe "easybib::cron"
-
-if is_aws
-  include_recipe "easybib::opsworks-fixes"
-  include_recipe "apt::cacher-client"
-end
 
 # landscape is buggy
 # https://bugs.launchpad.net/ubuntu/+source/pam/+bug/805423
