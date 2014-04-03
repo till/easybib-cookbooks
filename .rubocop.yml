@@ -32,6 +32,9 @@ RescueException:
 AccessorMethodName:
   Enabled: false
 
+RegexpLiteral:
+  Enabled: false
+
 # I dont want to separate port numbers with underscores.
 NumericLiterals:
   Enabled: false

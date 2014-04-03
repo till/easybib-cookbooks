@@ -33,9 +33,26 @@ action :setup do
   domain_config = new_resource.domain_config
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
-  routes_enabled = new_resource.routes_enabled
-  routes_denied = new_resource.routes_denied
   htpasswd = new_resource.htpasswd
+  application = new_resource.app_name
+
+  routes_enabled = nil
+  routes_denied  = nil
+  health_check   = node["nginx-app"]["health_check"]
+
+  if node["nginx-app"].attribute?(application)
+    if node["nginx-app"][application].attribute?("routes_enabled")
+      routes_enabled = node["nginx-app"][application]["routes_enabled"]
+    end
+    if node["nginx-app"][application].attribute?("routes_denied")
+      routes_denied = node["nginx-app"][application]["routes_denied"]
+    end
+    if node["nginx-app"][application].attribute?("health_check")
+      health_check = node["nginx-app"][application]["health_check"]
+    end
+  else
+    Chef::Log.info("No routes_enabled/routes_denied found for #{application}")
+  end
 
   default_router = node["nginx-app"]["default_router"]
 
@@ -62,6 +79,7 @@ action :setup do
       :db_conf => database_config,
       :domain_conf => domain_config,
       :env_conf => env_config,
+      :health_check => health_check,
       :routes_enabled => routes_enabled,
       :routes_denied => routes_denied,
       :htpasswd => htpasswd

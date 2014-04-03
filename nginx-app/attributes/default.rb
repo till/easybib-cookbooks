@@ -10,6 +10,7 @@ default["nginx-app"]["ppa"] = "ppa:easybib/remote-mirrors"
 default["nginx-app"]["extras"] = ""
 
 default["nginx-app"]["default_router"] = "index.php"
+default["nginx-app"]["health_check"] = "health_check.php"
 
 default["nginx-app"]["contact_url"] = "http://easybib.com/company/contact"
 
@@ -53,15 +54,8 @@ default["nginx-app"]["css_modules"] = {
     "folders"         => "folders"
 }
 
-default["nginx-app"]["highbeam"] = {}
-default["nginx-app"]["highbeam"]["routes_enabled"] = []
-default["nginx-app"]["highbeam"]["routes_denied"] = []
-default["nginx-app"]["sitescraper"] = {}
-default["nginx-app"]["sitescraper"]["routes_enabled"] = []
-default["nginx-app"]["sitescraper"]["routes_denied"] = []
-default["nginx-app"]["worldcat"] = {}
-default["nginx-app"]["worldcat"]["routes_enabled"] = []
-default["nginx-app"]["worldcat"]["routes_denied"] = []
-default["nginx-app"]["yahooboss"] = {}
-default["nginx-app"]["yahooboss"]["routes_enabled"] = []
-default["nginx-app"]["yahooboss"]["routes_denied"] = []
+# app config:
+# default["nginx-app"]["example-app"] = {}
+# default["nginx-app"]["example-app"]["routes_enabled"] = []
+# default["nginx-app"]["example-app"]["routes_denied"] = []
+# default["nginx-app"]["example-app"]["health_check"] = "health_check.php"

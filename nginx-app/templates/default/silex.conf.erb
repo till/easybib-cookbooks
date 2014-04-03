@@ -22,43 +22,34 @@ server {
     auth_basic_user_file  <%= @htpasswd%>;
 <% end -%>
 
-    location = / {
-        try_files @site @site;
-    }
-
-    #all other locations try other files first and go to our front controller if none of them exists
-    location / {
-        try_files $uri $uri/ @site;
-    }
-
     root <%= @doc_root%>;
 
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
-        # Just an empty block so it is not matched by @site below
-        # See easybib/issues#417
-    }
+<%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
+        "upstream" => @upstream,
+        "health_check" => @health_check
+    } %>
 
-    location ~* \.php$ {
-        fastcgi_index index.php;
-        fastcgi_pass  <%=@upstream%>_phpfpm;
-        include       fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
-<% if @env_conf && !@env_conf.empty? -%>
-        <%=@env_conf-%>
-<% end -%>
-    }
+    <% if @routes_enabled.nil? || @routes_enabled.empty? -%>
+<%= render "partials/php-routes-default.erb", :cookbook => 'nginx-app', :variables => {
+        "php_bypass_static_content" => true,
+        "routes_enabled" => @routes_enabled,
+        "upstream" => @upstream,
+        "env_conf" => @env_conf,
+        "access_log" => @access_log,
+        "default_router" => @default_router
+    } %>
+    <% else -%>
+<%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
+        "php_bypass_static_content" => true,
+        "routes_enabled" => @routes_enabled,
+        "upstream" => @upstream,
+        "env_conf" => @env_conf,
+        "access_log" => @access_log,
+        "default_router" => @default_router
+    } %>
+    <% end %>
 
-    location ~* \.(eot|ttf|woff)$ {
-        add_header Access-Control-Allow-Origin *;
-    }
-
-    location @site {
-            fastcgi_pass  <%=@upstream%>_phpfpm;
-            include       fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
-<% if @env_conf && !@env_conf.empty? -%>
-            <%=@env_conf%>
-<% end -%>
-    }
+    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+<%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
+    <% end %>
 }

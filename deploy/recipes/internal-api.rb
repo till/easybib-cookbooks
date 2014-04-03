@@ -44,27 +44,11 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  routes_enabled = []
-  routes_disabled = []
-
-  if node["nginx-app"].attribute?(application)
-    if node["nginx-app"][application].attribute?("routes_enabled")
-      routes_enabled = node["nginx-app"][application]["routes_enabled"]
-    end
-    if node["nginx-app"][application].attribute?("routes_disabled")
-      routes_disabled = node["nginx-app"][application]["routes_disabled"]
-    end
-  else
-    Chef::Log.warn("No Route Config for #{application} found in Stack JSON, not enabling any routes")
-  end
-
   easybib_nginx application do
     config_template "internal-api.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
     access_log      "off"
-    routes_enabled  routes_enabled
-    routes_denied   routes_disabled
     notifies :restart, "service[nginx]", :delayed
   end
 
