@@ -24,3 +24,5 @@ template "/etc/default/#{node['gearmand']['name']}" do
   )
   notifies :restart, "service[#{node['gearmand']['name']}]", :immediate
 end
+
+include_recipe "monit::gearmand"

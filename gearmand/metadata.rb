@@ -5,3 +5,4 @@ maintainer_email  "till@php.net"
 supports "ubuntu"
 
 depends "apt"
+depends "monit"
