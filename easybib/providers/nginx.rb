@@ -86,7 +86,10 @@ action :setup do
     )
   end
 
-  new_resource.updated_by_last_action(t.updated_by_last_action?)
+  # this _should_ work by returning the updated-value of the template provider.
+  # however, it does not always, so we are returning true always to make sure the stack is properly restarted.
+  # see easybib/issues#1103
+  new_resource.updated_by_last_action(true)
 
 end
 
