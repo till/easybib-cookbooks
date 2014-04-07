@@ -33,7 +33,7 @@ describe 'easybib_gearmanw' do
         )
       end
     end
-    
+
     context "create with non-existing peclmanager file" do
       before { stub_gearmanw_file_not_existing }
 
