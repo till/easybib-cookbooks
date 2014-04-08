@@ -1,9 +1,11 @@
+    <%unless @health_check.nil? -%>
     location = /<%= @health_check %> {
         include       fastcgi_params;
         fastcgi_pass  <%=@upstream%>_phpfpm;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
     }
+    <% end -%>
 
     location = /nginx_status {
         stub_status on;
