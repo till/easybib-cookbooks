@@ -39,6 +39,7 @@ action :setup do
   routes_enabled = nil
   routes_denied  = nil
   health_check   = node["nginx-app"]["health_check"]
+  Chef::Log.debug("Health Check is now #{health_check}")
 
   if node["nginx-app"].attribute?(application)
     if node["nginx-app"][application].attribute?("routes_enabled")
@@ -49,6 +50,7 @@ action :setup do
     end
     if node["nginx-app"][application].attribute?("health_check")
       health_check = node["nginx-app"][application]["health_check"]
+      Chef::Log.debug("Health Check is now #{health_check}")
     end
   else
     Chef::Log.info("No routes_enabled/routes_denied found for #{application}")
