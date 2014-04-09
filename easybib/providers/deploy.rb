@@ -13,15 +13,8 @@ action :deploy do
     app app
   end
 
-  import_file_path = "#{application_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
-
-  Chef::Log.debug("easybib_deploy - import_file_path we are looking for is #{import_file_path}")
-
-  pecl_manager_script "Setting up Pecl Manager" do
-    dir                application_root_dir
-    envvar_file        import_file_path
+  easybib_gearmanw application_root_dir do
     envvar_json_source new_resource.envvar_json_source
-    only_if { ::File.exists?(import_file_path) }
   end
 
   new_resource.updated_by_last_action(true)
