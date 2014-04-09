@@ -12,6 +12,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'highbeam')
   when 'jstor'
     next unless allow_deploy(application, 'jstor')
+  when 'oclc_eswitch'
+    next unless allow_deploy(application, 'oclc_eswitch', 'oclc-eswitch')
   when 'proquest'
     next unless allow_deploy(application, 'proquest')
   when 'sitescraper'
