@@ -16,13 +16,16 @@ location ~ /(<%= @routes_enabled.join('|') %>) {
         }
 
         location ~* \.php$ {
-            fastcgi_index index.php;
+            fastcgi_index <%=@default_router%>;
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
     <% if @env_conf && !@env_conf.empty? -%>
             <%=@env_conf-%>
+    <% end -%>
+    <% if !::EasyBib.get_cluster_name(node).empty? -%>
+            fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
     <% end -%>
         }
     }
@@ -31,9 +34,13 @@ location ~ /(<%= @routes_enabled.join('|') %>) {
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+            fastcgi_index <%=@default_router%>;
 <% if @env_conf && !@env_conf.empty? -%>
             <%=@env_conf%>
 <% end -%>
+    <% if !::EasyBib.get_cluster_name(node).empty? -%>
+            fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
+    <% end -%>
     }
 
     location = / {
