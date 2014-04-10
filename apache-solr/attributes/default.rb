@@ -6,7 +6,7 @@ default[:apache_solr][:data_dir] = "/solr-data/research-collection/"
 default[:apache_solr][:base_dir] = "/opt/apache"
 default[:apache_solr][:log_file] = "/var/log/apache-solr.log"
 
-set_unless[:apache_solr][:mirror] = "http://www.carfab.com/apachesoftware/lucene/solr/"
+set_unless[:apache_solr][:mirror] = "http://archive.apache.org/dist/lucene/solr/"
 set_unless[:apache_solr][:app]    = "easybib-test"
 set_unless[:apache_solr][:config_source_dir]    = "/srv/www/research_solr/current/"
 
