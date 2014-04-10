@@ -6,8 +6,8 @@ node['deploy'].each do |application, deploy|
   case application
   when 'bibcd'
     next unless allow_deploy(application, 'bibcd')
-  when 'bib-opsstatus'
-    next unless allow_deploy(application, 'bib-opsstatus')
+  when 'bib_opsstatus'
+    next unless allow_deploy(application, 'bib_opsstatus', 'bib-opsstatus')
   when 'travis_asset_browser'
     next unless allow_deploy(application, 'travis_asset_browser', 'travis-asset-browser')
   else
