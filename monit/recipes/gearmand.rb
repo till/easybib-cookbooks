@@ -1,3 +1,4 @@
+include_recipe "monit::default"
 include_recipe "monit::service"
 
 template "/etc/monit/conf.d/gearmand.monitrc" do

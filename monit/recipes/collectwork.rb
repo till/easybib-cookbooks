@@ -1,4 +1,5 @@
 # installs the monitrc for our collectwork processes
+include_recipe "monit::default"
 include_recipe "monit::service"
 
 thepidfile = node["monit"]["collectwork"]["pid_file"]
