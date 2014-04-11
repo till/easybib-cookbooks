@@ -1,7 +1,7 @@
 include_recipe "monit::service"
 
 template "/etc/monit/conf.d/pecl-manager.monitrc" do
-  source "pecl-manager.monit.erb"
+  source "gearmand.monit.erb"
   mode   "0644"
   owner  "root"
   group  "root"
