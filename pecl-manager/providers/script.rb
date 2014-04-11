@@ -32,8 +32,7 @@ action :create do
 
   service "pecl-manager" do
     supports [ :start, :stop, :restart, :status ]
-    action :nothing
-    subscribes :restart, "service[#{node['gearmand']['name']}]", :immediately
+    action :restart
   end
 
   new_resource.updated_by_last_action(t.updated_by_last_action?)
