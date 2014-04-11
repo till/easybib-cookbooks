@@ -14,10 +14,6 @@ action :create do
       envvar_json_source new_resource.envvar_json_source
     end
 
-    if p.updated_by_last_action?
-
-    end
-
     new_resource.updated_by_last_action(p.updated_by_last_action?)
 
   else

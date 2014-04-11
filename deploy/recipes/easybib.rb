@@ -45,10 +45,11 @@ node["deploy"].each do |application, deploy|
     app application
   end
 
-  next if application == 'gearmanworker'
-
-  service "php-fpm" do
-    action :reload
+  if application == 'gearmanworker'
+    include_recipe "monit::pecl-manager"
+  else
+    service "php-fpm" do
+      action :reload
+    end
   end
-
 end
