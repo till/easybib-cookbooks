@@ -16,6 +16,8 @@ node['deploy'].each do |application, deploy|
     envvar_json_source "getcourse"
   end
 
+  include_recipe "monit::pecl-manager"
+
   service "php-fpm" do
     action :reload
   end
