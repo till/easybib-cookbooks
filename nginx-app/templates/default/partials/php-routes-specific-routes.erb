@@ -16,7 +16,6 @@ location ~ /(<%= @routes_enabled.join('|') %>) {
         }
 
         location ~* \.php$ {
-            fastcgi_index <%=@default_router%>;
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -34,7 +33,6 @@ location ~ /(<%= @routes_enabled.join('|') %>) {
             fastcgi_pass  <%=@upstream%>_phpfpm;
             include       fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
-            fastcgi_index <%=@default_router%>;
 <% if @env_conf && !@env_conf.empty? -%>
             <%=@env_conf%>
 <% end -%>
