@@ -4,7 +4,6 @@ require File.join(File.dirname(__FILE__), '../libraries/easybib', 'cron.rb')
 
 class TestCron < Test::Unit::TestCase
   def test_cronparser
-
     crontab_file = File.join(File.dirname(__FILE__), 'crontabs')
 
     cron = ::EasyBib::Cron.new("application_name", crontab_file)
