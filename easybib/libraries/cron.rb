@@ -1,16 +1,16 @@
 module EasyBib
-  module Cron
+  class Cron
     def initialize(app, file)
       @app = app
       @file = file
     end
 
     def get_name(count)
-      return "#{@app}_#{count}"
+      "#{@app}_#{count}"
     end
 
     def parse!
-      CRON_REGEX = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
+      regex = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
 
       ::Chef::Log.info("easybib_deploy - importing cronjobs from #{crontab_file}")
 
@@ -20,7 +20,7 @@ module EasyBib
       collection = []
 
       crontabs.each_line do |line|
-        crontab = line.match(CRON_REGEX)
+        crontab = line.match(regex)
         Chef::Log.info("easybib_deploy - crontabline: #{crontab}")
         next unless crontab
 
@@ -29,6 +29,5 @@ module EasyBib
 
       collection
     end
-
   end
 end
