@@ -161,9 +161,6 @@ module EasyBib
   end
 
   def get_cluster_name(node = self.node)
-    if node["scalarium"]
-      return node["scalarium"]["cluster"]["name"]
-    end
     if node["opsworks"] && node["opsworks"]["stack"]
       return node["opsworks"]["stack"]["name"]
     end
@@ -176,9 +173,6 @@ module EasyBib
   end
 
   def get_deploy_user(node = self.node)
-    if node["scalarium"]
-      return node["scalarium"]["deploy_user"]
-    end
     if node["opsworks"]
       return node["opsworks"]["deploy_user"]
     end
@@ -186,9 +180,6 @@ module EasyBib
   end
 
   def get_instance_roles(node = self.node)
-    if node["scalarium"]
-      return node["scalarium"]["instance"]["roles"]
-    end
     if node["opsworks"]
       return node["opsworks"]["instance"]["layers"]
     end
@@ -196,9 +187,6 @@ module EasyBib
   end
 
   def get_instance(node = self.node)
-    if node["scalarium"]
-      return node["scalarium"]["instance"]
-    end
     if node["opsworks"]
       return node["opsworks"]["instance"]
     end
@@ -206,9 +194,6 @@ module EasyBib
   end
 
   def is_aws(node = self.node)
-    if node["scalarium"]
-      return true
-    end
     if node["opsworks"]
       return true
     end
