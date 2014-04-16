@@ -12,8 +12,6 @@ module EasyBib
     def parse!
       regex = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
 
-      ::Chef::Log.info("easybib_deploy - importing cronjobs from #{crontab_file}")
-
       crontabs = ::File.open(@file)
       cron_counter = 1
 
