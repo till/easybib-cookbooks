@@ -1,6 +1,6 @@
 require 'test/unit'
 require 'chef'
-require File.join(File.dirname(__FILE__), '../libraries/easybib', 'cron.rb')
+require File.join(File.dirname(__FILE__), '../libraries', 'cron.rb')
 
 class TestCron < Test::Unit::TestCase
   def test_cronparser
