@@ -44,3 +44,8 @@ location ~ /(<%= @routes_enabled.join('|') %>) {
     location = / {
         return 301 <%=node["nginx-app"]["contact_url"] %>;
     }
+    
+    location ~ .* {
+        deny all;
+    }
+    
