@@ -5,6 +5,6 @@ cookbook_file "/etc/init.d/nginx" do
   mode   "0755"
   owner  "root"
   only_if do
-    is_aws
+    ::EasyBib.is_aws
   end
 end
