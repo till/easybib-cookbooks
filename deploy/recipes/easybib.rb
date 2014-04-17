@@ -31,7 +31,6 @@ node["deploy"].each do |application, deploy|
 
   easybib_opsworks_deploy_user application do
     deploy_data deploy
-    app application
   end
 
   easybib_opsworks_deploy_dir deploy["deploy_to"] do
