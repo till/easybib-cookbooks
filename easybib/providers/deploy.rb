@@ -3,7 +3,7 @@ action :deploy do
   deploy_data = new_resource.deploy_data
   application_root_dir = "#{deploy_data['deploy_to']}/current"
 
-  opsworks_deploy do
+  easybib_opsworks_deploy do
     deploy_data deploy_data
     app app
   end

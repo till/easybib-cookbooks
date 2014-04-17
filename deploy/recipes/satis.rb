@@ -20,7 +20,7 @@ node['deploy'].each do |application, deploy|
 
   Chef::Log.info("deploy::satis - Deploying as user: #{deploy["user"]} and #{deploy["group"]} to #{deploy["deploy_to"]}")
 
-  opsworks_deploy_dir do
+  easybib_opsworks_deploy_dir do
     user  deploy["user"]
     group deploy["group"]
     path  deploy["deploy_to"]

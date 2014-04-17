@@ -29,12 +29,12 @@ node["deploy"].each do |application, deploy|
   Chef::Log.info("deploy::easybib - Deployment started.")
   Chef::Log.info("deploy::easybib - Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
 
-  opsworks_deploy_user do
+  easybib_opsworks_deploy_user do
     deploy_data deploy
     app application
   end
 
-  opsworks_deploy_dir do
+  easybib_opsworks_deploy_dir do
     user  deploy["user"]
     group deploy["group"]
     path  deploy["deploy_to"]
