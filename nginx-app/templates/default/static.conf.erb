@@ -26,5 +26,14 @@ server {
         expires max;
     }
 
+<% if @push_state -%>
+    #route all requests that don't serve a file through index.html
+    location / {
+        if (!-e $request_filename) {
+           rewrite ^(.*)$ /index.html break;
+        }
+    }
+<% end -%>
+
     root <%= @doc_root%>;
 }
