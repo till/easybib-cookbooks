@@ -12,10 +12,14 @@ module EasyBib
     def parse!
       regex = '([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +([0-9/\-\*]+) +(.*)'
 
+      collection = []
+
+      if !::File.exists?(@file)
+        return collection
+      end
+
       crontabs = ::File.open(@file)
       cron_counter = 1
-
-      collection = []
 
       crontabs.each_line do |line|
         crontab = line.match(regex)

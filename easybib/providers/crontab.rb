@@ -4,16 +4,13 @@ action :create do
 
   updated = false
 
-  if !::File.exists?(crontab_file)
-    Chef::Log.info("easybib_deploy - crontab file not found at #{crontab_file}, skipping")
-    new_resource.updated_by_last_action(updated)
-    return
-  end
-
   execute "Clear old crontab" do
     user "www-data"
     # crontab will exit with 130 if crontab has already been cleared, hence the ;true
     command "crontab -u www-data -r; true"
+    only_if do
+      ::File.exists?(crontab_file)
+    end
   end
 
   Chef::Log.info("easybib_deploy - importing cronjobs from #{crontab_file}")
