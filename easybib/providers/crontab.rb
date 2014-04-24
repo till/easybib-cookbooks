@@ -4,6 +4,11 @@ action :create do
 
   updated = false
 
+  if !::File.exists?(crontab_file)
+    new_resource.updated_by_last_action(updated)
+    next
+  end
+
   execute "Clear old crontab" do
     user "www-data"
     # crontab will exit with 130 if crontab has already been cleared, hence the ;true
