@@ -47,6 +47,21 @@ describe 'easybib_crontab' do
       end
     end
   end
+
+  describe "easybib_crontab without file" do
+    describe "create" do
+      before { stub_crontab_does_not_exist }
+
+      it "does not proceed" do
+        expect(chef_run).not_to run_execute('crontab -u www-data -r; true')
+      end
+    end
+  end
+end
+
+def stub_crontab_does_not_exist
+  ::File.stub(:exists?).with(anything).and_call_original
+  ::File.stub(:exists?).with('/some_file').and_return false
 end
 
 def stub_crontab_with_one_valid_and_one_invalid_line

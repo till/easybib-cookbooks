@@ -1,0 +1,2 @@
+0 3 * * * cd /srv/www/api/current/bin && ./getcourse cleanup changes && snooze 3600-a763a833-b305-44ba-94b9-6f1c04d9d45f
+*/4 * * * * cd /srv/www/api/current/bin && ./getcourse resume documents && snooze 3600-c1238a64-0fb4-4cda-8583-8ac687ad762b
