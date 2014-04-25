@@ -31,14 +31,6 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  directory '/vol/satis-sync/files/' do
-    recursive true
-    owner "www-data"
-    group "www-data"
-    mode  0755
-    action :create
-  end
-
   %w{/mnt/satis-output/ /mnt/composer-tmp/}.each do |dir|
     directory dir do
       recursive true
@@ -46,24 +38,6 @@ node['deploy'].each do |application, deploy|
       group "www-data"
       mode  0755
       action :create
-    end
-  end
-
-  cron "satis run update-dist.sh in cron - #{application}" do
-    minute "*/30"
-    command "cd #{deploy["deploy_to"]}/current/ && sh update-dist.sh"
-    user "www-data"
-    only_if do
-      File.exists?("#{deploy["deploy_to"]}/current/update-dist.sh")
-    end
-  end
-
-  cron "satis run update-and-pull.sh in cron - #{application}" do
-    minute "*/5"
-    command "cd #{deploy["deploy_to"]}/current/ && sh update-and-pull.sh"
-    user "www-data"
-    only_if do
-      File.exists?("#{deploy["deploy_to"]}/current/update-and-pull.sh")
     end
   end
 
