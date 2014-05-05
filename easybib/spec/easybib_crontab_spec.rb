@@ -48,6 +48,26 @@ describe 'easybib_crontab' do
     end
   end
 
+  describe "easybib_crontab actions" do
+    describe "create" do
+      before { stub_crontab_with_getcourse_bug }
+
+      it "cleans leftover old crontab" do
+        expect(chef_run).to run_execute('crontab -u www-data -r; true')
+      end
+
+      it "creates a cronjob" do
+        expect(chef_run).to create_cron_d('some-app_1')
+          .with(
+          :minute => "*/5",
+          :hour => "*",
+          :user => "www-data"
+        )
+      end
+
+    end
+  end
+
   describe "easybib_crontab without file" do
     describe "create" do
       before { stub_crontab_does_not_exist }
@@ -72,6 +92,18 @@ def stub_crontab_with_one_valid_and_one_invalid_line
   expect(open_file).to receive(:each_line)
     .and_yield('1 2 3 4 5 cronline')
     .and_yield('second line')
+
+  ::File.stub(:open).with(anything).and_call_original
+  ::File.stub(:open).with('/some_file').and_return open_file
+end
+
+def stub_crontab_with_getcourse_bug
+  ::File.stub(:exists?).with(anything).and_call_original
+  ::File.stub(:exists?).with('/some_file').and_return true
+
+  open_file = double('file')
+  expect(open_file).to receive(:each_line)
+    .and_yield('*/5 * * * * cd /srv/www/api/current/bin && ./getcourse resume documents && snooze 3600-abcdef12-1234-1234-1234-111111111111')
 
   ::File.stub(:open).with(anything).and_call_original
   ::File.stub(:open).with('/some_file').and_return open_file

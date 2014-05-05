@@ -1,6 +1,7 @@
 language: ruby
 rvm:
-  - 1.9.3
+  - 1.8.7
+  - 2.0.0
 
 script:
   - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
