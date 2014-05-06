@@ -39,7 +39,7 @@ end
 #easybib/issues#1332
 commands = [
   "rm -f /etc/newrelic/nrsysmond.cfg",
-  "apt-get install -f -y newrelic-sysmond",
+  "apt-get install -f -o Dpkg::Options::=--force-confdef  -y newrelic-sysmond",
 ]
 
 commands.each do |cmd|
