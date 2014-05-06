@@ -16,18 +16,6 @@ template "/etc/default/newrelic-sysmond" do
   mode "0640"
 end
 
-#easybib/issues#1332
-commands = [
-  "rm /etc/newrelic/nrsysmond.cfg",
-  "apt-get install -y newrelic-sysmond"
-]
-
-commands.each do |cmd|
-  execute "Running: #{cmd}" do
-    command cmd
-  end
-end
-
 host_name = "#{node["hostname"]}.#{get_cluster_name.gsub(/\s+/, "-").strip.downcase}"
 
 template "/etc/newrelic/nrsysmond.easybib.cfg" do
@@ -48,9 +36,20 @@ template "/etc/newrelic/nrsysmond.easybib.cfg" do
   end
 end
 
+#easybib/issues#1332
+commands = [
+  "rm /etc/newrelic/nrsysmond.cfg",
+  "apt-get install -f -y newrelic-sysmond",
+]
+
+commands.each do |cmd|
+  execute "Running: #{cmd}" do
+    command cmd
+  end
+end
+
 package "newrelic-sysmond" do
   action :upgrade
-  options "-f"
   notifies :run, "execute[newrelic-license]", :immediately
   not_if do
     node["newrelic"]["license"].empty?
