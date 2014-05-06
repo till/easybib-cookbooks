@@ -1,7 +1,7 @@
 include_recipe "php-fpm::service"
 
 commands = [
-  "apt-get install -y newrelic-php5",
+  "apt-get install -f -y newrelic-php5",
   "newrelic-install install"
 ]
 
