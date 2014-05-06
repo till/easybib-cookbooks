@@ -5,6 +5,7 @@ action :create do
 
   Chef::Log.debug("Pecl-Manager: Importing file #{new_resource.envvar_file} in Startscript")
 
+  envvar_json = ''
   if new_resource.envvar_json_source.nil?
     Chef::Log.debug("Pecl-Manager: No source for json env found")
   else
