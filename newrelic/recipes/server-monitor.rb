@@ -29,7 +29,7 @@ template "/etc/newrelic/nrsysmond.easybib.cfg" do
     :loglevel => node["newrelic"]["sysmond"]["log"]["level"],
     :hostname => host_name
   )
-  action :nothing
+  action :create
   notifies :start, "service[newrelic-sysmond]", :immediately
   not_if do
     node["newrelic"]["license"].empty?
