@@ -43,6 +43,7 @@ end
 
 package "newrelic-sysmond" do
   action :upgrade
+  options "-f"
   notifies :run, "execute[newrelic-license]", :immediately
   not_if do
     node["newrelic"]["license"].empty?
