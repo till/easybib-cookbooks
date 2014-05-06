@@ -38,7 +38,7 @@ end
 
 #easybib/issues#1332
 commands = [
-  "rm /etc/newrelic/nrsysmond.cfg",
+  "rm -f /etc/newrelic/nrsysmond.cfg",
   "apt-get install -f -y newrelic-sysmond",
 ]
 
