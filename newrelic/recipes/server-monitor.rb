@@ -17,8 +17,15 @@ template "/etc/default/newrelic-sysmond" do
 end
 
 #easybib/issues#1332
-file "/etc/newrelic/nrsysmond.cfg" do
-  action :delete
+commands = [
+  "rm /etc/newrelic/nrsysmond.cfg",
+  "apt-get install -y newrelic-sysmond"
+]
+
+commands.each do |cmd|
+  execute "Running: #{cmd}" do
+    command cmd
+  end
 end
 
 host_name = "#{node["hostname"]}.#{get_cluster_name.gsub(/\s+/, "-").strip.downcase}"
