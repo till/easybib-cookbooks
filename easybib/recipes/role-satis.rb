@@ -5,7 +5,7 @@ include_recipe "php-phar"
 include_recipe "php-posix"
 include_recipe "composer::configure"
 include_recipe "nginx-app::configure"
-include_recipe "easybib_deploy::satis"
+include_recipe "easybib-deploy::satis"
 
 if is_aws
   include_recipe "newrelic"

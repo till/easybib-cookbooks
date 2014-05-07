@@ -4,7 +4,7 @@ include_recipe "php-gearman"
 include_recipe "php-zip"
 include_recipe "php-zlib"
 
-include_recipe "easybib_deploy::easybib"
+include_recipe "easybib-deploy::easybib"
 
 if is_aws
   include_recipe "nginx-app::configure"

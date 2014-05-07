@@ -5,7 +5,7 @@ include_recipe "php-fpm"
 include_recipe "php-phar"
 include_recipe "php-mysqli::configure"
 include_recipe "composer::configure"
-include_recipe "easybib_deploy::crossref-collector"
+include_recipe "easybib-deploy::crossref-collector"
 
 if is_aws
   include_recipe "newrelic"
