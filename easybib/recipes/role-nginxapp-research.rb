@@ -2,7 +2,7 @@ include_recipe "easybib::role-phpapp"
 
 include_recipe "php-gearman"
 
-include_recipe "deploy::research"
+include_recipe "easybib_deploy::research"
 
 if is_aws
   include_recipe "nginx-app::configure"

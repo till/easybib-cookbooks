@@ -8,5 +8,4 @@ recipe            "satis::s3-syncer", "Deploys s3-syncer for composer-s3-binding
 
 supports 'ubuntu'
 
-depends "deploy"
 depends "easybib"

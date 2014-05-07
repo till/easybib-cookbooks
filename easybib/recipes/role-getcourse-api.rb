@@ -9,7 +9,7 @@ include_recipe "php-mysqli::configure"
 include_recipe "snooze"
 include_recipe "bash::bashrc"
 include_recipe "bash::configure"
-include_recipe "deploy::getcourse-api"
+include_recipe "easybib_deploy::getcourse-api"
 include_recipe "nginx-app::getcourse-api"
 
 unless is_aws
