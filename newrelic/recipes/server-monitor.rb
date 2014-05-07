@@ -12,8 +12,8 @@ end
 template "/etc/default/newrelic-sysmond" do
   source "nrsysmond.default.erb"
   owner "root"
-  group "newrelic"
-  mode "0640"
+  group "root"
+  mode "0644"
 end
 
 host_name = "#{node["hostname"]}.#{get_cluster_name.gsub(/\s+/, "-").strip.downcase}"
