@@ -26,7 +26,8 @@ server {
         "upstream" => @upstream,
         "env_conf" => @env_conf,
         "access_log" => @access_log,
-        "default_router" => @default_router
+        "default_router" => @default_router,
+        "node" => @node
     } %>
     <% else -%>
 <%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
@@ -35,7 +36,8 @@ server {
         "upstream" => @upstream,
         "env_conf" => @env_conf,
         "access_log" => @access_log,
-        "default_router" => @default_router
+        "default_router" => @default_router,
+        "node" => @node
     } %>
     <% end %>
 
