@@ -4,7 +4,7 @@ require File.join(File.dirname(__FILE__), '../libraries', 'config.rb')
 
 class TestConfig < Test::Unit::TestCase
 
-  # ensures a leading extension name is stripped
+  # ensures a leading extension name is kept/added
   def test_get_directives
 
     directives = {
@@ -18,8 +18,8 @@ class TestConfig < Test::Unit::TestCase
     config_directives = config.get_directives
     assert_equal(false, config_directives.empty?)
     assert_equal(directives.length, config_directives.length)
-    assert_equal(config_directives["memory_consumption"], 10)
-    assert_equal(config_directives["super_duper"], true)
-    assert_equal(config_directives["no_prefix"], 1)
+    assert_equal(config_directives["opcache.memory_consumption"], 10)
+    assert_equal(config_directives["opcache.super_duper"], true)
+    assert_equal(config_directives["opcache.no_prefix"], 1)
   end
 end
