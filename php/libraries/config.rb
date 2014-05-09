@@ -8,10 +8,10 @@ module Php
     # add leading extension name in case it's not included
     # this makes it a little more robust
     def get_directives
-      keep = Hash.new
+      keep = {}
       l = @ext_name.length
 
-      @directives.each do |k,v|
+      @directives.each do |k, v|
         if k[0, l] == @ext_name
           keep[k] = v
           next

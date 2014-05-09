@@ -3,10 +3,8 @@ require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'config.rb')
 
 class TestConfig < Test::Unit::TestCase
-
   # ensures a leading extension name is kept/added
   def test_get_directives
-
     directives = {
       "opcache.memory_consumption" => 10,
       "opcache.super_duper" => true,
