@@ -43,6 +43,11 @@ action :setup do
     [ (zend ? filepath : rel_file) , zend ]
   end]
 
+  config_directives = new_resource.config_directives
+
+  config = ::Php::Config.new(name, config_directives)
+  directives = config.get_directives
+
   template "#{node["php-fpm"]["prefix"]}/etc/php/#{name}.ini" do
     source "extension.ini.erb"
     cookbook "php"
@@ -52,7 +57,7 @@ action :setup do
     variables(
       :name => name,
       :extensions => extensions,
-      :directives => new_resource.config_directives
+      :directives => directives
     )
   end
 
