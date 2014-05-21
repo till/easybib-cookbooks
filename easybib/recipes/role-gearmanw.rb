@@ -4,6 +4,7 @@ include_recipe "php-mysqli::configure"
 include_recipe "php-gearman"
 include_recipe "php-posix"
 include_recipe "php-poppler-pdf"
+include_recipe "php-intl"
 include_recipe "easybib-deploy::easybib"
 include_recipe "pecl-manager::vagrant"
 
