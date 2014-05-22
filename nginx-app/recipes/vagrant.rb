@@ -55,6 +55,7 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :deploy       => node["deploy"],
     :application  => "easybib",
     :access_log   => node["nginx-app"]["access_log"],
+    :listen_opts  => 'default_server',
     :nginx_extra  => 'sendfile  off;',
     :domain_name  => domain_name,
     :database     => database_credentials,
