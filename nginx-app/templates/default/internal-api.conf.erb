@@ -3,7 +3,7 @@ upstream <%=@upstream%>_phpfpm {
 }
 
 server {
-    listen   80;
+    listen 80 <%=@listen_opts%>;
 
   <% if @nginx_extra -%>
     <%= @nginx_extra -%>

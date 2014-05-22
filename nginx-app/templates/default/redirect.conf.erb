@@ -1,5 +1,5 @@
 server {
-    listen 80;
+    listen 80 <%=@listen_opts%>;
     server_name <%=@domain_name%>;
     rewrite ^ http://<%=@new_domain_name%>$request_uri? permanent;
 }
