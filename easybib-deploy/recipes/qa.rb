@@ -45,12 +45,16 @@ node['deploy'].each do |application, deploy|
 
   case application
   when 'bibcd'
+
+    # This is an ugly quick hack: Ruby Yaml adds !map:Chef::Node::ImmutableMash which the Symfony Yaml
+    # parser doesnt like. So lets remove it. First Chef 11.4/Ruby 1.8, then Chef 11.10/Ruby 2.0
+    content = YAML.dump(node['bibcd']['default']).gsub('!map:Chef::Node::ImmutableMash', '')
+    content = content.gsub('!ruby/hash:Chef::Node::ImmutableMash', '')
+
     template "#{deploy["deploy_to"]}/current/config/deployconfig.yml" do
       source "empty.erb"
       mode   0644
-      # This is an ugly quick hack: Ruby Yaml adds !map:Chef::Node::ImmutableMash which the Symfony Yaml
-      # parser doesnt like. So lets remove it.
-      variables :content => YAML.dump(node['bibcd']['default']).gsub('!map:Chef::Node::ImmutableMash', '')
+      variables :content => content
     end
 
     node['bibcd']['apps'].each do |appname, config|
