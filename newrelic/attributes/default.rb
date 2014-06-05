@@ -1,6 +1,8 @@
 default["newrelic"] = {}
 default["newrelic"]["license"] = ""
 
+default["newrelic"]["action"] = "install"
+
 default["newrelic"]["sysmond"] = {}
 default["newrelic"]["sysmond"]["log"] = {}
 default["newrelic"]["sysmond"]["log"]["file"] = "/var/log/newrelic/nrsysmond.log"
