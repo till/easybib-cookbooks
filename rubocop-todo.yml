@@ -79,6 +79,10 @@ UselessAssignment:
 Void:
   Enabled: false
 
+#Disabling this for now, since it is in an external cookbook which will be berkshelfed soon
+ClassAndModuleChildren:
+  Enabled: false
+
 # Offense count: 15
 # Cop supports --auto-correct.
 WordArray:
