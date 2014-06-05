@@ -10,3 +10,6 @@ MethodLength:
   Max: 20
 SignalException:
   Enabled: false
+ClassAndModuleChildren:
+  Enabled: false
+
