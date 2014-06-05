@@ -92,6 +92,6 @@ def klass
     # first/uppermost namespace of the class, so we need
     # to enable the #const_get inherit paramenter only when
     # we are searching in Kernel scope (see COOK-4117).
-    @new_resource.class_name.split('::').reduce(Kernel) { |a, e| scope.const_get(e, a == Kernel) }
+    @new_resource.class_name.split('::').reduce(Kernel) { |a, e| a.const_get(e, a == Kernel) }
   end
 end
