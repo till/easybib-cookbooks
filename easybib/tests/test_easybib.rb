@@ -32,6 +32,13 @@ class TestEasyBib < Test::Unit::TestCase
     # )
   end
 
+  def test_to_php_json
+    assert_equal(
+      "--- \nBLA: \n",
+      to_php_yaml(Chef::Node::ImmutableMash.new(["BLA"]))
+    )
+  end
+
   def test_get_domain_conf
     fake_node = Chef::Node.new
     fake_node.set["env"]["domain"] = {
