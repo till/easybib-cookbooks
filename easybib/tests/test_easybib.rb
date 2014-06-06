@@ -5,6 +5,14 @@ require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 class TestEasyBib < Test::Unit::TestCase
   include EasyBib
 
+  def test_config_no_doublequote
+    fake_node = Chef::Node.new
+    fake_node.set["fakeapp"]["env"]["database"]["something"] = 'foo"bar'
+    assert_raises RuntimeError do 
+      get_env("fakeapp", fake_node, "nginx")
+    end
+  end
+
   def test_build_nginx_config
     fake_node = Chef::Node.new
     fake_node.set["env"]["database"] = {
@@ -23,6 +31,38 @@ class TestEasyBib < Test::Unit::TestCase
       )
     end
   end
+
+  def test_build_ini_config
+    fake_node = Chef::Node.new
+    fake_node.set["env"]["database"] = {
+      "app" => {
+        "hostname" => "127.0.0.1",
+        "username" => "root",
+        "password" => "test123",
+        "database" => "app_stage"
+      }
+    }
+
+    fake_node["env"]["database"]["app"].each do |k, v|
+      assert_equal(
+        "app_#{k} = \"#{v}\"\n",
+        build_ini_config("app_#{k}", v)
+      )
+    end
+  end
+
+  def test_ini_config
+    fake_node = Chef::Node.new
+    fake_node.set["fakeapp"]["env"]["database"] = {
+      "something" => "foobar",
+      "whatever" => "bar"
+    }
+    assert_equal(
+      get_env("fakeapp", fake_node, "ini"),
+      "DATABASE_SOMETHING = \"foobar\"\nDATABASE_WHATEVER = \"bar\"\n"
+    )
+  end
+
 
   def test_get_db_conf
     # breaks on ruby 1.8

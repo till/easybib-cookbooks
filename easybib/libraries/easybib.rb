@@ -75,7 +75,7 @@ module EasyBib
       fail "Attribute 'env' for application '#{app}' is not defined!"
     end
 
-    if !["nginx", "shell"].include?(config_type)
+    if !["nginx", "shell", "ini"].include?(config_type)
       fail "Unknown configuration type: #{config_type}."
     end
 
@@ -83,19 +83,25 @@ module EasyBib
 
       data.each_pair do |config_key, config_value|
         if config_value.is_a?(String)
+
+          raise "The character \" is not supported as a value in the config" if config_value.match('"')
+
           var = sprintf('%s_%s', section.upcase, config_key.upcase)
 
           config << build_nginx_config(var, config_value) if config_type == "nginx"
           config << build_shell_config(var, config_value) if config_type == "shell"
-
+          config << build_ini_config(var, config_value) if config_type == "ini"
           next
         end
 
         config_value.each_pair do |sub_key, sub_value|
           var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
 
+          raise "The character \" is not supported as a value in the config" if sub_value.match('"')
+
           config << build_nginx_config(var, sub_value) if config_type == "nginx"
           config << build_shell_config(var, sub_value) if config_type == "shell"
+          config << build_ini_config(var, sub_value) if config_type == "ini"
         end
 
       end
@@ -158,6 +164,10 @@ module EasyBib
 
   def build_nginx_config(key, value)
     "fastcgi_param #{key} \"#{value}\";\n"
+  end
+
+  def build_ini_config(key, value)
+    "#{key} = \"#{value}\"\n"
   end
 
   def get_cluster_name(node = self.node)
