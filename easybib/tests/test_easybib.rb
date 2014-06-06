@@ -8,7 +8,7 @@ class TestEasyBib < Test::Unit::TestCase
   def test_config_no_doublequote
     fake_node = Chef::Node.new
     fake_node.set["fakeapp"]["env"]["database"]["something"] = 'foo"bar'
-    assert_raises RuntimeError do 
+    assert_raises RuntimeError do
       get_env("fakeapp", fake_node, "nginx")
     end
   end
@@ -62,7 +62,6 @@ class TestEasyBib < Test::Unit::TestCase
       "DATABASE_SOMETHING = \"foobar\"\nDATABASE_WHATEVER = \"bar\"\n"
     )
   end
-
 
   def test_get_db_conf
     # breaks on ruby 1.8
