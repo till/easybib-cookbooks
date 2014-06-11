@@ -49,7 +49,7 @@ node['deploy'].each do |application, deploy|
     template "#{deploy["deploy_to"]}/current/config/deployconfig.yml" do
       source "empty.erb"
       mode   0644
-      variables :content => to_php_yaml(node['bibcd']['default'])
+      variables :content => ::EasyBib.to_php_yaml(node['bibcd']['default'])
     end
 
     node['bibcd']['apps'].each do |appname, config|
