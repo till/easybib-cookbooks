@@ -27,22 +27,6 @@ link "#{node["deploy"]["deploy_to"]}/current" do
   to vagrant_dir
 end
 
-database_credentials = []
-domain = []
-
-if node["getcourse"]
-
-  getcourse_config = node["getcourse"]
-  if getcourse_confif["database"]
-    database_credentials = getcourse_config["database"]
-  end
-
-  if getcourse_config["domain"]
-    domain = getcourse_config["domain"]
-  end
-
-end
-
 template "/etc/nginx/sites-enabled/easybib.com.conf" do
   source node["nginx-app"]["conf_file"]
   mode   "0755"
@@ -55,10 +39,9 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
     :deploy       => node["deploy"],
     :application  => "easybib",
     :access_log   => node["nginx-app"]["access_log"],
+    :listen_opts  => 'default_server',
     :nginx_extra  => 'sendfile  off;',
     :domain_name  => domain_name,
-    :database     => database_credentials,
-    :domain       => domain,
     :php_upstream => "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
   )
   notifies :restart, "service[nginx]", :delayed

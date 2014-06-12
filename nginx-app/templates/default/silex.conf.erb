@@ -3,7 +3,7 @@ upstream <%=@upstream%>_phpfpm {
 }
 
 server {
-    listen 80;
+    listen 80 <%=@listen_opts%>;
 
     index <%=@default_router%> index.php;
 

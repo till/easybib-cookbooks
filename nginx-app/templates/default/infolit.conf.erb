@@ -5,7 +5,7 @@ upstream phpfpm {
 <% if node[:opsworks] -%>
 
 server {
-    listen 80;
+    listen 80 <%=@listen_opts%>;
     return 301 https://<%=node[:infolit][:domain]%>$request_uri;
 }
 

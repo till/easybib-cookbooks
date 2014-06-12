@@ -1,21 +1,25 @@
 include_recipe "php-fpm::service"
 
-commands = [
-  "apt-get install -y newrelic-php5",
-  "newrelic-install install"
-]
+ENV["NR_INSTALL_SILENT"] = "yes"
+ENV["NR_INSTALL_NOKSH"] = "yes"
+ENV["NR_INSTALL_KEY"] = node["newrelic"]["license"]
 
-commands.each do |cmd|
-  execute "Running: #{cmd}" do
-    command cmd
-    environment(
-      "NR_INSTALL_SILENT" => "yes",
-      "NR_INSTALL_NOKSH" => "yes",
-      "NR_INSTALL_KEY" => node["newrelic"]["license"]
-    )
-    not_if do
-      node["newrelic"]["license"].empty?
-    end
+package "newrelic-php5" do
+  action node["newrelic"]["action"]
+  not_if do
+    node["newrelic"]["license"].empty?
+  end
+end
+
+execute "Running: newrelic-install install" do
+  command "newrelic-install install"
+  environment(
+    "NR_INSTALL_SILENT" => "yes",
+    "NR_INSTALL_NOKSH" => "yes",
+    "NR_INSTALL_KEY" => node["newrelic"]["license"]
+  )
+  not_if do
+    node["newrelic"]["license"].empty?
   end
 end
 

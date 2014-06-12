@@ -19,33 +19,32 @@ nginx_config = "easybib.com.conf.erb"
 
 node["deploy"].each do |application, deploy|
 
-  Chef::Log.debug("nginx-app::configure - app: #{application}")
+  Chef::Log.info("nginx-app::configure - app: #{application}")
 
   case application
   when 'easybib'
-    if !node["nginx-lb"]["cluster"].include?(cluster_name)
-      next
-    end
-    if !instance_roles.include?('nginxphpapp') && !instance_roles.include?('testapp')
+    nginxphpapp_allowed = allow_deploy(application, 'easybib', 'nginxphpapp')
+    testapp_allowed     = allow_deploy(application, 'easybib', 'testapp')
+    if !nginxphpapp_allowed && !testapp_allowed
+      Chef::Log.info("nginx-app::configure - skipping easybib, allow_deploy mismatch")
       next
     end
 
   when 'easybib_api'
-    next unless instance_roles.include?('bibapi')
+    next unless allow_deploy(application, 'easybib_api', 'bibapi')
 
   when 'infolit'
-    next unless cluster_name == 'InfoLit'
-    next unless instance_roles.include?('nginxphpapp')
+    next unless allow_deploy(application, 'infolit', 'nginxphpapp')
     nginx_config = "infolit.conf.erb"
 
   when 'sitescraper'
-    next unless instance_roles.include?('sitescraper')
+    next unless allow_deploy(application, 'sitescraper')
 
   when 'research_app'
-    next unless instance_roles.include?('research_app')
+    next unless allow_deploy(application, 'research_app', 'research_app')
 
   else
-    Chef::Log.debug("Skipping nginx-app::configure for app #{application}")
+    Chef::Log.info("Skipping nginx-app::configure for app #{application}")
     next
   end
 

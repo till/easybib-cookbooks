@@ -10,7 +10,7 @@ execute "newrelic-license" do
 end
 
 package "newrelic-sysmond" do
-  action :install
+  action node["newrelic"]["action"]
   notifies :run, "execute[newrelic-license]", :immediately
   not_if do
     node["newrelic"]["license"].empty?
