@@ -23,7 +23,9 @@ include_recipe "easybib::nginxstats"
 include_recipe "easybib::cron"
 
 if is_aws
-  include_recipe "chef_handler_sns::default"
+  if node.attribute?("chef_handler_sns") && node["chef_handler_sns"].attribute?("topic_arn")
+    include_recipe "chef_handler_sns::default"
+  end
   include_recipe "easybib::opsworks-fixes"
   include_recipe "apt::cacher-client"
 end
