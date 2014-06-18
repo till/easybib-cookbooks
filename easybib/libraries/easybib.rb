@@ -44,7 +44,7 @@ module EasyBib
     else
       # TODO: we should add a check for the var type of requested_application here, probably
       allow = false
-      requested_application.each_pair do |current_requested_application|
+      requested_application.each do |current_requested_application|
         allow_current = is_app_configured_for_stack(application, current_requested_application, requested_role, instance_roles)
         # allow if any of requested_applications is allowed, so lets use OR:
         allow ||= allow_current
