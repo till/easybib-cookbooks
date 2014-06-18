@@ -31,7 +31,7 @@ module EasyBib
     )
 
     if cluster_name != node["easybib"]["cluster_name"]
-      Chef::Log.debug("deploy #{requested_application} - wrong cluster_name")
+      Chef::Log.info("deploy #{requested_application} - wrong cluster_name")
       return false
     end
     if requested_application.is_a?(String)
@@ -60,15 +60,15 @@ module EasyBib
     when requested_application
       if !instance_roles.include?(requested_role)
         irs = instance_roles.inspect
-        Chef::Log.debug("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
+        Chef::Log.info("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
         return false
       end
     else
-      Chef::Log.debug("deploy #{requested_application} - #{application} skipped")
+      Chef::Log.info("deploy #{requested_application} - #{application} skipped")
       return false
     end
 
-    Chef::Log.debug("deploy #{requested_application} - allowing deploy")
+    Chef::Log.info("deploy #{requested_application} - allowing deploy")
     true
   end
 
