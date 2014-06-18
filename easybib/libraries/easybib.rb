@@ -31,7 +31,6 @@ module EasyBib
     )
 
     if cluster_name != node["easybib"]["cluster_name"]
-      puts "wrong #{cluster_name}"
       Chef::Log.debug("deploy #{requested_application} - wrong cluster_name")
       return false
     end
