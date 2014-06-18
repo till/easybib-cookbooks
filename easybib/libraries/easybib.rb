@@ -39,6 +39,21 @@ module EasyBib
       return false
     end
 
+    if requested_application.is_a?(String)
+      return is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
+    else
+      # TODO: we should add a check for the var type of requested_application here, probably
+      allow = false
+      requested_application.each_pair do |current_requested_application|
+        allow_current = is_app_configured_for_stack(application, current_requested_application, requested_role, instance_roles)
+        # allow if any of requested_applications is allowed, so lets use OR:
+        allow ||= allow_current
+      end
+      return allow
+    end
+  end
+
+  def is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
     case application
     when requested_application
       if !instance_roles.include?(requested_role)
@@ -52,7 +67,6 @@ module EasyBib
     end
 
     Chef::Log.debug("deploy #{requested_application} - allowing deploy")
-
     true
   end
 
