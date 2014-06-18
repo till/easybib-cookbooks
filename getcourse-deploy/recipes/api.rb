@@ -2,10 +2,7 @@ include_recipe "php-fpm::service"
 
 node['deploy'].each do |application, deploy|
 
-  apps = ['api', 'feature_flags']
-  next unless apps.include?(application)
-
-  # next unless allow_deploy(application, 'api', 'api-server')
+  next unless allow_deploy(application, ['api', 'feature_flags'], 'api-server')
 
   opsworks_deploy_dir do
     user  deploy["user"]
