@@ -10,5 +10,5 @@ end
 
 if is_aws
   include_recipe "php-opcache::configure"
-  include_recipe "newrelic"
+  include_recipe "newrelic" if node["easybib_deploy"]["use_newrelic"] == "yes"
 end
