@@ -1,5 +1,5 @@
 include_recipe "php-fpm::service"
-include_recipe "mysql::client" if is_aws
+include_recipe "percona::client" if is_aws
 
 node['deploy'].each do |application, deploy|
 
