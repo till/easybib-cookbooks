@@ -11,6 +11,7 @@ include_recipe "bash::bashrc"
 include_recipe "bash::configure"
 include_recipe "getcourse-deploy::api"
 include_recipe "nginx-app::getcourse-api"
+include_recipe "nginx-app::getcourse-ff"
 
 unless is_aws
   gearmanconf_root_dir = ::File.expand_path("#{node['vagrant']['deploy_to']['api']}/..")
