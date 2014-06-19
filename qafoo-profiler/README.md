@@ -1,0 +1,3 @@
+# Qafoo Profiler
+
+Setup recipe. :)

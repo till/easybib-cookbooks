@@ -18,6 +18,7 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = "./../../"
     chef.add_recipe "easybib::role-phpapp"
     chef.add_recipe "php-opcache"
+    chef.add_recipe "qafoo-profiler"
     chef.json = JSON.parse(File.read("./deploy.json"))
 
     chef.log_level = :debug
