@@ -18,41 +18,57 @@ module EasyBib
     false
   end
 
-  def allow_deploy(application, requested_application, requested_role = nil)
-    if !is_aws
+  def allow_deploy(application, requested_application, requested_role = nil, node = self.node)
+    if !is_aws(node)
       return false
     end
 
-    if requested_role.nil?
-      requested_role = requested_application
-    end
-
-    instance_roles = get_instance_roles
-    cluster_name   = get_cluster_name
+    instance_roles = get_instance_roles(node)
+    cluster_name   = get_cluster_name(node)
 
     Chef::Log.info(
       "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles} in #{cluster_name}"
     )
 
-    if cluster_name != self.node["easybib"]["cluster_name"]
-      Chef::Log.debug("deploy #{requested_application} - wrong cluster_name")
+    if cluster_name != node["easybib"]["cluster_name"]
+      Chef::Log.info("deploy #{requested_application} - wrong cluster_name")
       return false
     end
+    if requested_application.is_a?(String)
+      if requested_role.nil?
+        requested_role = requested_application
+      end
+      return is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
+    elsif requested_application.is_a?(Array)
+      allow = false
+      requested_application.each do |current_requested_application|
+        if requested_role.nil?
+          requested_role = current_requested_application
+        end
+        allow_current = is_app_configured_for_stack(application, current_requested_application, requested_role, instance_roles)
+        # allow if any of requested_applications is allowed, so lets use OR:
+        allow ||= allow_current
+      end
+      return allow
+    else
+      fail "Unknown value type supplied for requested_role in allow_deploy"
+    end
+  end
 
+  def is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
     case application
     when requested_application
       if !instance_roles.include?(requested_role)
         irs = instance_roles.inspect
-        Chef::Log.debug("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
+        Chef::Log.info("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
         return false
       end
     else
-      Chef::Log.debug("deploy #{requested_application} - #{application} (in #{cluster_name}) skipped")
+      Chef::Log.info("deploy #{requested_application} - #{application} skipped")
       return false
     end
 
-    Chef::Log.debug("deploy #{requested_application} - allowing deploy")
-
+    Chef::Log.info("deploy #{requested_application} - allowing deploy")
     true
   end
 
