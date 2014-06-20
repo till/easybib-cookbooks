@@ -1,0 +1,5 @@
+set mailserver <%= @host %> USERNAME <%= @mailuser %> PASSWORD <%= @mailpass %> using SSLAUTO
+set mail-format { from: <%= mailsender %> }
+<% recipients.each do |recipient_address| -%>
+set alert <%= @recipient_address %> but not on { pid ppid }
+<% end -%>
