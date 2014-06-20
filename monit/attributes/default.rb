@@ -5,6 +5,7 @@ default["monit"]["collectwork"]["start_script"]  = "/etc/init.d/collectwork"
 default["monit"]["collectwork"]["helper_script"] = "/usr/local/bin/collectwork"
 default["monit"]["collectwork"]["user"]          = "www-data"
 default["monit"]["collectwork"]["command"]       = "/srv/www/ebim2/current/bin/ebim2 cron-collect-work"
+default['monit']['mailsender']                   = "monit@machine.local"
 default['monit']['mailhost']                     = nil
 default['monit']['mailuser']                     = nil
 default['monit']['mailpass']                     = nil
