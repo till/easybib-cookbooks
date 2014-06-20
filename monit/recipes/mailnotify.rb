@@ -1,6 +1,3 @@
-# installs the monitrc for our backup process
-include_recipe "monit::service"
-
 template "/etc/monit/conf.d/mailnotify.monitrc" do
   source "mailnotify.monit.erb"
   mode   "0644"
