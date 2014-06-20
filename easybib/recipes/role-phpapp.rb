@@ -12,4 +12,5 @@ if is_aws
   include_recipe "php-opcache::configure"
   include_recipe "newrelic" if node["easybib_deploy"]["use_newrelic"] == "yes"
   include_recipe "qafoo-profiler" if node["easybib_deploy"]["use_newrelic"] != "yes"
+  include_recipe "php-xhprof" if node["easybib_deploy"]["use_newrelic"] != "yes"
 end
