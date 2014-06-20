@@ -11,5 +11,5 @@ template "/etc/monit/conf.d/mailnotify.monitrc" do
     'recipients' => node['monit']['notification_recipients']
   )
   notifies :restart, "service[monit]"
-  not_if node['monit']['notification_recipients'].nil?
+  not_if { node['monit']['notification_recipients'].nil? }
 end
