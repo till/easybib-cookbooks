@@ -1,5 +1,7 @@
 include_recipe "apt::easybib"
 
-["php5-easybib-xhprof", "graphviz"].each do |p|
+# "graphviz"
+
+["php5-easybib-xhprof"].each do |p|
   package p
 end
