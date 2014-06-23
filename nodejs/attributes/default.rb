@@ -10,3 +10,4 @@ default["nodejs"]["prefix"] = "/opt/nodejs"
 default["nodejs"]["dir"] = "/usr/local"
 default["nodejs"]["npm"] = "1.3.5"
 default["nodejs"]["make_threads"] = node["cpu"] ? node["cpu"]["total"].to_i : 2
+default["nodejs"]["directories"] = [".npm", "tmp"]
