@@ -18,6 +18,13 @@ action :create do
     end
   end
 
+  Dir.glob('/etc/cron.d/#{app}_*') do |cron_file|
+    Chef::Log.info("easybib_deploy - crontab: removing old #{cron_file}")
+    cron_d cron_file do
+      action :delete
+    end
+  end
+
   Chef::Log.info("easybib_deploy - importing cronjobs from #{crontab_file}")
 
   cron = ::EasyBib::Cron.new(app, crontab_file)
