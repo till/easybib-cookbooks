@@ -18,11 +18,9 @@ action :create do
     end
   end
 
-  Dir.glob('/etc/cron.d/#{app}_*') do |cron_file|
-    Chef::Log.info("easybib_deploy - crontab: removing old #{cron_file}")
-    cron_d cron_file do
-      action :delete
-    end
+  execute "Clear old cron.d files" do
+    # rm will exit with 1 if no old cron.d files existed, hence the ;true
+    command "rm /etc/cron.d/#{app}_*; true"
   end
 
   Chef::Log.info("easybib_deploy - importing cronjobs from #{crontab_file}")
