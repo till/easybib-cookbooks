@@ -1,4 +1,4 @@
-name             'ruby'
+name             'ruby-brightbox'
 maintainer       'Till Klampaeckel'
 maintainer_email 'till@php.net'
 license          'New BSD license'
