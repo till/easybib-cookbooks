@@ -12,3 +12,15 @@ apt_repository "qafoo" do
 end
 
 package "qprofd"
+
+flags = node["qafoo-profiler"]["flags"]
+flags << "--hostname \"#{get_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
+
+template "/etc/init/qprofd.conf" do
+  mode 0644
+  source "init-qprofd.erb"
+  variables({
+    :flags => flags.join(' '),
+    :log_file => node["qafoo-provfiler"]["log_file"]
+  })
+end
