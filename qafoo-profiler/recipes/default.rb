@@ -19,8 +19,8 @@ flags << "--hostname \"#{get_cluster_name}.#{node["opsworks"]["instance"]["hostn
 template "/etc/init/qprofd.conf" do
   mode 0644
   source "init-qprofd.erb"
-  variables({
+  variables(
     :flags => flags.join(' '),
     :log_file => node["qafoo-provfiler"]["log_file"]
-  })
+  )
 end
