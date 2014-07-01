@@ -11,7 +11,7 @@ end
 
 package "qprofd"
 
-qprofd_flags = Array.new
+qprofd_flags = []
 qprofd_flags << node["qafoo-profiler"]["flags"]
 qprofd_flags << "--hostname \"#{get_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
 
