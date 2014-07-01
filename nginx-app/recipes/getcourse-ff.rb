@@ -1,7 +1,9 @@
 config = "feature_flags"
 
+htpasswd_path = nil
 if is_aws
-  deploy_dir = "/srv/www/#{config}/current/www/"
+  deploy_dir    = "/srv/www/#{config}/current/www/"
+  htpasswd_path = "/srv/www/#{config}/current/deploy/htpasswd"
 else
   if node["vagrant"]["combined"] == true
     deploy_dir = node["vagrant"]["deploy_to"][config]
@@ -31,7 +33,8 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :nginx_extra => node["nginx-app"]["extras"],
     :default_router => node["nginx-app"]["default_router"],
     :upstream => config,
-    :env_conf => env_conf
+    :env_conf => env_conf,
+    :htpasswd => htpasswd_path
   )
   notifies :restart, "service[nginx]", :delayed
 end

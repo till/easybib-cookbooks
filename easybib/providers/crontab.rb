@@ -11,11 +11,18 @@ action :create do
 
   execute "Clear old crontab" do
     user "www-data"
-    # crontab will exit with 130 if crontab has already been cleared, hence the ;true
-    command "crontab -u www-data -r; true"
+    # crontab will exit with 130 if crontab has already been cleared
+    command "crontab -u www-data -r"
+    ignore_failure true
     only_if do
       ::File.exists?(crontab_file)
     end
+  end
+
+  execute "Clear old cron.d files" do
+    # rm will exit with 1 if no old cron.d files existed
+    command "rm /etc/cron.d/#{app}_*"
+    ignore_failure true
   end
 
   Chef::Log.info("easybib_deploy - importing cronjobs from #{crontab_file}")

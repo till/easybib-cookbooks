@@ -25,7 +25,7 @@ describe 'easybib_crontab' do
       before { stub_crontab_with_one_valid_and_one_invalid_line }
 
       it "cleans leftover old crontab" do
-        expect(chef_run).to run_execute('crontab -u www-data -r; true')
+        expect(chef_run).to run_execute('crontab -u www-data -r')
       end
 
       it "creates a cronjob" do
@@ -53,7 +53,7 @@ describe 'easybib_crontab' do
       before { stub_crontab_does_not_exist }
 
       it "does not proceed" do
-        expect(chef_run).not_to run_execute('crontab -u www-data -r; true')
+        expect(chef_run).not_to run_execute('crontab -u www-data -r')
       end
     end
   end

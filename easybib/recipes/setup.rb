@@ -21,6 +21,7 @@ end
 
 include_recipe "easybib::nginxstats"
 include_recipe "easybib::cron"
+include_recipe "easybib::ruby"
 
 if is_aws
   if node.attribute?("chef_handler_sns") &&

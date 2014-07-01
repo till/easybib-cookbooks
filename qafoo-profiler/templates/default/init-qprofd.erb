@@ -1,0 +1,9 @@
+description "Qafoo Profiler Daemon"
+
+start on (filesystem and net-device-up IFACE!=lo)
+stop on shutdown
+respawn
+setuid qafoo
+setgid qafoo
+
+exec /usr/bin/qprofd <%= @flags %> >> <%= @log_file %> 2>&1
