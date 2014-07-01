@@ -2,8 +2,6 @@ source_list = "/etc/apt/sources.list.d/qafoo.list"
 
 codename = "trusty" # node["lsb"]["codename"]
 
-group "qafoo" # bugfix
-
 apt_repository "qafoo" do
   uri node["qafoo-profiler"]["ppa"]
   distribution codename
@@ -13,14 +11,15 @@ end
 
 package "qprofd"
 
-flags = node["qafoo-profiler"]["flags"]
-flags << "--hostname \"#{get_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
+qprofd_flags = Array.new
+qprofd_flags << node["qafoo-profiler"]["flags"]
+qprofd_flags << "--hostname \"#{get_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
 
 template "/etc/init/qprofd.conf" do
   mode 0644
   source "init-qprofd.erb"
   variables(
-    :flags => flags.join(' '),
-    :log_file => node["qafoo-provfiler"]["log_file"]
+    :flags => qprofd_flags.join(' '),
+    :log_file => node["qafoo-profiler"]["log_file"]
   )
 end
