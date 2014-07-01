@@ -12,6 +12,9 @@
     "easybib": {
         "cluster_name": "vagrant"
     },
+    "easybib_deploy": {
+        "use_newrelic": "no"
+    },
     "getcourse": {
         "domain": {
             "api": "api.local"
