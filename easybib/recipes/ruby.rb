@@ -3,8 +3,12 @@ gemrc_paths = {
   "www-data" => "/var/www"
 }
 
-gemrc_paths << Dir.entries("/home").select do |f|
-  !File.directory? f
+home_dir = "/home"
+
+Dir.entries(home_dir).each do |fileName|
+  next if fileName =~ /^\.\.?$/
+  next unless File.directory?(fileName)
+  gemrc_paths["#{fileName}"] = "#{home_dir}/#{fileName}"
 end
 
 gemrc_paths.each do |username, home_directory|
