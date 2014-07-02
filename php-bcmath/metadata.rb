@@ -7,3 +7,4 @@ supports "ubuntu"
 
 depends "php-fpm"
 depends "php"
+license           "BSD License"

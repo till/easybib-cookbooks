@@ -7,3 +7,4 @@ supports 'ubuntu'
 supports 'freebsd'
 
 depends "easybib"
+license           "BSD License"
