@@ -5,3 +5,4 @@ version           '0.1'
 
 depends "newrelic"
 depends "rsyslogd"
+license           "BSD License"
