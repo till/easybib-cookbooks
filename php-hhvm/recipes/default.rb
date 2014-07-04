@@ -3,10 +3,15 @@ apt_package "install add-apt-repository" do
 end
 
 execute "add libboost ppa" do
-  command <<-EOF
-    add-apt-repository -y ppa:mapnik/boost
-    wget -O - http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
-  EOF
+  command "add-apt-repository -y ppa:mapnik/boost"
+end
+
+remote_file "/tmp/hhvm.gpg.key" do
+  source "http://dl.hhvm.com/conf/hhvm.gpg.key"
+end
+
+execute "add hhvm repo key" do
+  command "apt-key add /tmp/hhvm.gpg.key"
 end
 
 execute "discover apt-repository" do
