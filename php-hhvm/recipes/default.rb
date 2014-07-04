@@ -6,12 +6,12 @@ execute "add libboost ppa" do
   command "add-apt-repository -y ppa:mapnik/boost"
 end
 
-remote_file "/tmp/hhvm.gpg.key" do
+remote_file "#{Chef::Config[:file_cache_path]}/hhvm.gpg.key" do
   source "http://dl.hhvm.com/conf/hhvm.gpg.key"
 end
 
 execute "add hhvm repo key" do
-  command "apt-key add /tmp/hhvm.gpg.key"
+  command "apt-key add #{Chef::Config[:file_cache_path]}/hhvm.gpg.key"
 end
 
 execute "discover apt-repository" do
