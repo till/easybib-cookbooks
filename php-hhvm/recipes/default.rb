@@ -11,7 +11,7 @@ end
 
 execute "discover apt-repository" do
   command "echo deb #{node["php-hhvm"]["apt"]["repo"]} #{node["lsb"]["codename"]} main > #{node["php-hhvm"]["apt"]["file"]}"
-  creates "#{node["php-hhvm"]["apt"]["file"]}"
+  creates node["php-hhvm"]["apt"]["file"]
 end
 
 execute "update_hhvm_apt" do
