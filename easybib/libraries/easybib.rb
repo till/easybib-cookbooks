@@ -73,62 +73,11 @@ module EasyBib
   end
 
   def get_env_for_nginx(app, node = self.node)
-    get_env(app, node, "nginx")
+    ::EasyBib::Config.get_env("nginx", app, node)
   end
 
   def get_env_for_shell(app, node = self.node)
-    get_env(app, node, "shell")
-  end
-
-  def get_env(app, node, config_type)
-    config = ""
-
-    if !node.attribute?(app)
-      return config
-    end
-
-    if node[app]["env"].nil?
-      fail "Attribute 'env' for application '#{app}' is not defined!"
-    end
-
-    node[app]["env"].each_pair do |section, data|
-
-      data.each_pair do |config_key, config_value|
-        if config_value.is_a?(String)
-
-          fail "The character \" is not supported as a value in the config" if config_value.match('"')
-
-          var = sprintf('%s_%s', section.upcase, config_key.upcase)
-
-          config << build_config(config_type, var, config_value)
-          next
-        end
-
-        config_value.each_pair do |sub_key, sub_value|
-          var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
-
-          fail "The character \" is not supported as a value in the config" if sub_value.match('"')
-
-          config << build_config(config_type, var, sub_value)
-        end
-
-      end
-    end
-
-    config
-  end
-
-  def build_config(config_type, var, value)
-    case config_type
-    when "nginx"
-      build_nginx_config(var, value)
-    when "shell"
-      build_shell_config(var, value)
-    when "ini"
-      build_ini_config(var, value)
-    else
-      fail "Unknown configuration type: #{config_type}."
-    end
+    ::EasyBib::Config.get_env("shell", app, node)
   end
 
   def get_domain_conf(node_attribute, node = self.node)
@@ -177,18 +126,6 @@ module EasyBib
     end
 
     db_conf
-  end
-
-  def build_shell_config(key, value)
-    "export #{key}=\"#{value}\"\n"
-  end
-
-  def build_nginx_config(key, value)
-    "fastcgi_param #{key} \"#{value}\";\n"
-  end
-
-  def build_ini_config(key, value)
-    "#{key} = \"#{value}\"\n"
   end
 
   def get_cluster_name(node = self.node)
@@ -241,6 +178,12 @@ module EasyBib
   end
 
   extend self
+
+  protected
+
+  def build_nginx_config(key, value)
+    "fastcgi_param #{key} \"#{value}\";\n"
+  end
 end
 
 class Chef::Recipe
