@@ -8,6 +8,7 @@ recipe            "nginx-app::server", "Installs Nginx"
 recipe            "nginx-app::configure", "Configures virtualhost, etc."
 
 depends "php-fpm"
+depends "hhvm-fcgi"
 depends "apt"
 depends "easybib"
 

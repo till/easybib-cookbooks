@@ -16,11 +16,10 @@ node["vagrant"]["applications"].each do |app_name, app_config|
   doc_root_location  = app_config["doc_root_location"]
 
   easybib_nginx app_name do
-    config_template "silex.conf.erb"
+    config_template "hhvm.conf.erb"
     deploy_dir doc_root_location
     default_router default_router
     domain_name domain_name
     notifies :restart, "service[nginx]", :delayed
-    notifies :restart, "service[hhvm]", :delayed
   end
 end
