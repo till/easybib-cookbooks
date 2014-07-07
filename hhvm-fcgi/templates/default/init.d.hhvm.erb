@@ -27,10 +27,10 @@ SCRIPTNAME=/etc/init.d/$NAME
 [ -x "$DAEMON" ] || exit 0
 
 # Default values. This values can be overwritten in '/etc/default/hhvm'
-CONFIG_FILE="/etc/hhvm/server.ini"
-SYSTEM_CONFIG_FILE="/etc/hhvm/php.ini"
-RUN_AS_USER="www-data"
-RUN_AS_GROUP="www-data"
+CONFIG_FILE="<%= node["hhvm-fcgi"]["prefix"]%>/etc/hhvm/php-fcgi.ini"
+SYSTEM_CONFIG_FILE="<%= node["hhvm-fcgi"]["prefix"]%>/etc/hhvm/php.ini"
+RUN_AS_USER="<%= node["hhvm-fcgi"]["user"]%>"
+RUN_AS_GROUP="<%= node["hhvm-fcgi"]["group"]%>"
 ADDITIONAL_ARGS=""
 
 # Read configuration variable file if it is present
