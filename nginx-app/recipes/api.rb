@@ -21,6 +21,5 @@ node["vagrant"]["applications"].each do |app_name, app_config|
     default_router default_router
     domain_name domain_name
     notifies :restart, "service[nginx]", :delayed
-    notifies :restart, "service[hhvm]", :delayed
   end
 end
