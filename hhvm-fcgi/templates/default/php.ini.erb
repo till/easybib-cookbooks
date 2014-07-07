@@ -139,3 +139,12 @@ soap.wsdl_cache_limit = 5
 
 [sysvshm]
 ;sysvshm.init_mem = 10000
+
+[hhvm]
+pid = /var/run/hhvm/pid
+hhvm.server.port = 9000
+hhvm.server.type = fastcgi
+hhvm.server.default_document = index.php
+hhvm.log.use_log_file = true
+hhvm.log.file="<%= node["hhvm-fcgi"]["logfile"] %>"
+hhvm.repo.central.path = /var/run/hhvm/hhvm.hhb
