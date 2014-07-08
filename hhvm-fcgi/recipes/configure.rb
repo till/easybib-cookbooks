@@ -1,5 +1,6 @@
-fcgi_conf = "#{node["hhvm-fcgi"]["prefix"]}#{node["hhvm-fcgi"]["inifile"]["fcgi"]}"
-cli_conf  = "#{node["hhvm-fcgi"]["prefix"]}#{node["hhvm-fcgi"]["inifile"]["cli"]}"
+fcgi_conf  = "#{node["hhvm-fcgi"]["prefix"]}#{node["hhvm-fcgi"]["conf"]["fcgi"]}"
+cli_conf   = "#{node["hhvm-fcgi"]["prefix"]}#{node["hhvm-fcgi"]["conf"]["cli"]}"
+hhvm_conf  = "#{node["hhvm-fcgi"]["prefix"]}#{node["hhvm-fcgi"]["conf"]["hhvm"]}"
 
 if node["hhvm-fcgi"]["user"] == "vagrant"
   display_errors = "On"
@@ -17,7 +18,7 @@ template fcgi_conf do
   )
   owner    node["hhvm-fcgi"]["user"]
   group    node["hhvm-fcgi"]["group"]
-  notifies :reload, "service[hhvm]", :delayed
+  notifies :restart, "service[hhvm]", :delayed
 end
 
 template cli_conf do
@@ -26,6 +27,16 @@ template cli_conf do
   variables(
     :enable_dl      => "On",
     :memory_limit   => '1024M',
+    :display_errors => 'On'
+  )
+  owner node["hhvm-fcgi"]["user"]
+  group node["hhvm-fcgi"]["group"]
+end
+
+template hhvm_conf do
+  mode "0755"
+  source "config.hdf.erb"
+  variables(
     :display_errors => 'On'
   )
   owner node["hhvm-fcgi"]["user"]
