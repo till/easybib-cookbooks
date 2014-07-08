@@ -1,7 +1,5 @@
-etc_cli_dir  = "#{node["hhvm-fcgi"]["prefix"]}/etc/hhvm"
-etc_fcgi_dir = "#{node["hhvm-fcgi"]["prefix"]}/etc/hhvm"
-conf_cli     = "php.ini"
-conf_fcgi    = "php-fcgi.ini"
+fcgi_conf = "#{node["hhvm-fcgi"]["prefix"]}#{node["hhvm-fcgi"]["inifile"]["fcgi"]}"
+cli_conf  = "#{node["hhvm-fcgi"]["prefix"]}#{node["hhvm-fcgi"]["inifile"]["cli"]}"
 
 if node["hhvm-fcgi"]["user"] == "vagrant"
   display_errors = "On"
@@ -9,7 +7,7 @@ else
   display_errors = "Off"
 end
 
-template "#{etc_fcgi_dir}/#{conf_fcgi}" do
+template fcgi_conf do
   mode     "0755"
   source   "php.ini.erb"
   variables(
@@ -22,7 +20,7 @@ template "#{etc_fcgi_dir}/#{conf_fcgi}" do
   notifies :reload, "service[hhvm]", :delayed
 end
 
-template "#{etc_cli_dir}/#{conf_cli}" do
+template cli_conf do
   mode "0755"
   source "php.ini.erb"
   variables(

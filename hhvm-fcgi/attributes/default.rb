@@ -2,6 +2,10 @@ default["hhvm-fcgi"] = {}
 
 default["hhvm-fcgi"]["prefix"] = ""
 
+default["hhvm-fcgi"]["inifile"] = {}
+default["hhvm-fcgi"]["inifile"]["cli"] = "/etc/hhvm/php.ini"
+default["hhvm-fcgi"]["inifile"]["fcgi"] = "/etc/hhvm/php-fcgi.ini"
+
 default["hhvm-fcgi"]["logfile"] = "/var/log/hhvm/error.log"
 default["hhvm-fcgi"]["slowlog_timeout"] = 4
 default["hhvm-fcgi"]["displayerrors"] = false
