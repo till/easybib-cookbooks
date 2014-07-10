@@ -16,7 +16,7 @@ action :create do
       cookbook "easybib"
       source "empty.erb"
       variables(
-        :content => ::EasyBib::Config.get_configcontent(format, app)
+        :content => ::EasyBib::Config.get_configcontent(format, app, node)
       )
     end
   end
