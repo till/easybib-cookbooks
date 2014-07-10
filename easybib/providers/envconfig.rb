@@ -3,7 +3,7 @@ action :create do
   path = new_resource.path
 
   if path.nil?
-    if is_aws
+    if ::EasyBib.is_aws
       path = "#{deploy_data['deploy_to']}/current/"
     else
       fail "Fatal: easybib_env-config needs path in non-aws setup"
