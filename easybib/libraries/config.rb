@@ -52,8 +52,10 @@ module EasyBib
 
     def to_configformat(format, data)
       fail "No Config supplied" if data.nil?
+      puts data.inspect
       config = generate_start(format)
       data.each_pair do |main_section, section_data|
+        Chef::Log.info("Config: Processing section #{main_section}")
         config << generate_section_start(format, main_section)
         config << generate_config_part(format, main_section, section_data)
         config << generate_section_end(format, main_section)
@@ -108,7 +110,7 @@ module EasyBib
     def generate_config_part(format, section, section_data)
       config = ""
       section_data.each_pair do |config_key, config_value|
-        fail "section_data is not a string - generate_config_part is not recursive, this wont work!" unless config_value.is_a?(String)
+        fail "section_data for #{config_key} is not a string - generate_config_part is not recursive, this wont work!" unless config_value.is_a?(String)
         config << build_config(format, config_key, config_value, section)
       end
       config
