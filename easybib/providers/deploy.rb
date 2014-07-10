@@ -17,7 +17,9 @@ action :deploy do
     envvar_json_source new_resource.envvar_json_source
   end
 
-  easybib_envconfig app
+  easybib_envconfig do
+    app app
+  end
 
   new_resource.updated_by_last_action(true)
 
