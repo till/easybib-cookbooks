@@ -1,6 +1,5 @@
 action :create do
   app = new_resource.app
-  deploy_data = new_resource.deploy_data
   path = new_resource.path
 
   if path.nil?
@@ -11,12 +10,15 @@ action :create do
     end
   end
 
-  template "#{path}/.deploy_configuration.ini" do
-    mode   "0644"
-    cookbook "easybib"
-    source "config.ini.erb"
-    variables
-
+  ["ini", "php", "shell"].each do |format|
+    template "#{path}/.deploy_configuration.#{format}" do
+      mode   "0644"
+      cookbook "easybib"
+      source "empty.erb"
+      variables(
+        :content => ::EasyBib::Config.get_configcontent(format, app)
+      )
+    end
   end
 
   new_resource.updated_by_last_action(true)
