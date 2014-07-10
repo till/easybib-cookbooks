@@ -4,7 +4,7 @@ action :create do
 
   if path.nil?
     if ::EasyBib.is_aws(node)
-      path = "#{deploy_data['deploy_to']}/current/"
+      path = "#{node['deploy'][app]['deploy_to']}/current/"
     else
       fail "Fatal: easybib_env-config needs path in non-aws setup"
     end
