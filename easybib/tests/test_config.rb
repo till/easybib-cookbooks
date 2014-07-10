@@ -3,7 +3,8 @@ require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 require File.join(File.dirname(__FILE__), '../libraries', 'config.rb')
 
-class TestEasyBib < Test::Unit::TestCase
+# rubocop:disable ClassLength
+class TestEasyBibConfig < Test::Unit::TestCase
   include EasyBib
 
   def test_config_no_doublequote
@@ -32,6 +33,7 @@ class TestEasyBib < Test::Unit::TestCase
 appname = \"some_app\"
 domains = \"foo.tld,bar.tld\"
 deploy_dir = \"/tmp/bla\"
+app_dir = \"/tmp/bla/current/\"
 [deployed_stack]
 stackname = \"opsworks-stack\"
 environment = \"playground\"
@@ -46,6 +48,7 @@ BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
     assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
 export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld,bar.tld\"
 export DEPLOYED_APPLICATION_DEPLOY_DIR=\"/tmp/bla\"
+export DEPLOYED_APPLICATION_APP_DIR=\"/tmp/bla/current/\"
 export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
 export DEPLOYED_STACK_ENVIRONMENT=\"playground\"
 export BLA_SOMEKEY=\"somevalue\"
@@ -58,6 +61,7 @@ export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"\n",
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
 fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla\";
+fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
 fastcgi_param BLA_SOMEKEY \"somevalue\";
@@ -73,6 +77,7 @@ $deploy_config = array(
     'appname'=>\"some_app\",
     'domains'=>\"foo.tld,bar.tld\",
     'deploy_dir'=>\"/tmp/bla\",
+    'app_dir'=>\"/tmp/bla/current/\",
   ),
   'deployed_stack' => array(
     'stackname'=>\"opsworks-stack\",

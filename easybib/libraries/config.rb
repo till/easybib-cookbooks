@@ -36,15 +36,8 @@ module EasyBib
     def get_configcontent(format, appname, node = self.node)
       fail "No Config for #{appname}" if node['deploy'][appname].nil?
       data = {
-        'deployed_application' => {
-          'appname' => node['deploy'][appname]['application'],
-          'domains' => node['deploy'][appname]['domains'].join(','),
-          'deploy_dir' => node['deploy'][appname]['deploy_to']
-        },
-        'deployed_stack' => {
-          'stackname' => node['opsworks']['stack']['name'],
-          'environment' => node['easybib_deploy']['envtype']
-        },
+        'deployed_application' => get_appdata(node, appname),
+        'deployed_stack' => get_stackdata(node),
         'settings' => streamline_appenv(node['deploy'][appname]['env'])
       }
       to_configformat(format, data)
@@ -63,6 +56,30 @@ module EasyBib
     end
 
     protected
+
+    def get_appdata(node, appname)
+      data = {}
+      data['appname'] = node['deploy'][appname]['application']
+      data['domains'] = node['deploy'][appname]['domains'].join(',')
+      if ::EasyBib.is_aws(node)
+        data['deploy_dir'] = node['deploy'][appname]['deploy_to']
+        data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
+      else
+        if node['vagrant'].exists? && node['vagrant']['deploy_to'].exists? && node['vagrant']['deploy_to'][appname].exists?
+          data['deploy_dir'] = data['app_dir'] = node['vagrant']['deploy_to'][appname]
+        else
+          data['deploy_dir'] = data['app_dir'] = '/vagrant_data'
+        end
+      end
+      data
+    end
+
+    def get_stackdata(node)
+      data = {}
+      data['stackname'] = node['opsworks']['stack']['name']
+      data['environment'] = node['easybib_deploy']['envtype']
+      data
+    end
 
     # generate top of file
     def generate_start(format)
