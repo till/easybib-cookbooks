@@ -3,7 +3,6 @@ require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 require File.join(File.dirname(__FILE__), '../libraries', 'config.rb')
 
-# rubocop:disable ClassLength
 class TestEasyBib < Test::Unit::TestCase
   include EasyBib
 
@@ -28,6 +27,48 @@ class TestEasyBib < Test::Unit::TestCase
   end
 
   def test_config_to_ini
+    assert_equal(
+      "[deployed_application]
+appname = \"some_app\"
+domains = \"foo.tld,bar.tld\"
+deploy_dir = \"/tmp/bla\"
+[deployed_stack]
+stackname = \"opsworks-stack\"
+environment = \"playground\"
+[settings]
+BLA_SOMEKEY = \"somevalue\"
+BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
+      ::EasyBib::Config.get_configcontent('ini', 'some_app', get_fakenode_config)
+    )
+  end
+
+  def test_config_to_shell
+    assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
+export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld,bar.tld\"
+export DEPLOYED_APPLICATION_DEPLOY_DIR=\"/tmp/bla\"
+export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
+export DEPLOYED_STACK_ENVIRONMENT=\"playground\"
+export BLA_SOMEKEY=\"somevalue\"
+export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"\n",
+      ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_config)
+    )
+  end
+
+  def test_config_to_nginx
+    assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
+fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
+fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla\";
+fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
+fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
+fastcgi_param BLA_SOMEKEY \"somevalue\";
+fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
+      ::EasyBib::Config.get_configcontent('nginx', 'some_app', get_fakenode_config)
+    )
+  end
+
+  protected
+
+  def get_fakenode_config
     fake_node = Chef::Node.new
     fake_node.set['deploy'] = {
         'some_app' => {
@@ -48,18 +89,6 @@ class TestEasyBib < Test::Unit::TestCase
     fake_node.set['opsworks'] =  { 'stack' => { 'name' => 'opsworks-stack' } }
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
 
-    assert_equal(
-      ::EasyBib::Config.get_configcontent('ini', 'some_app', fake_node),
-      "[deployed_application]
-appname = \"some_app\"
-domains = \"foo.tld,bar.tld\"
-deploy_dir = \"/tmp/bla\"
-[deployed_stack]
-stackname = \"opsworks-stack\"
-environment = \"playground\"
-[settings]
-BLA_SOMEKEY = \"somevalue\"
-BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n"
-    )
+    fake_node
   end
 end

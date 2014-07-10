@@ -55,7 +55,7 @@ module EasyBib
       config = ""
       data.each_pair do |main_section, section_data|
         config << generate_header(format, main_section)
-        config << generate_config_part(format, section_data)
+        config << generate_config_part(format, main_section, section_data)
       end
       config
     end
@@ -72,11 +72,11 @@ module EasyBib
       end
     end
 
-    def generate_config_part(format, section_data)
+    def generate_config_part(format, section, section_data)
       config = ""
       section_data.each_pair do |config_key, config_value|
         fail "section_data is not a string - generate_config_part is not recursive, this wont work!" unless config_value.is_a?(String)
-        config << build_config(format, config_key, config_value)
+        config << build_config(format, config_key, config_value, section)
       end
       config
     end
@@ -103,14 +103,14 @@ module EasyBib
       returnparam
     end
 
-    def build_config(format, var, value)
+    def build_config(format, var, value, section = nil)
       case format
       when "nginx"
-        build_nginx_config(var, value)
+        build_nginx_config(var, value, section)
       when "shell"
-        build_shell_config(var, value)
+        build_shell_config(var, value, section)
       when "ini"
-        build_ini_config(var, value)
+        build_ini_config(var, value, section)
       else
         fail "Unknown configuration type: #{format}."
       end
@@ -125,15 +125,17 @@ module EasyBib
       config
     end
 
-    def build_shell_config(key, value)
+    def build_shell_config(key, value, section = nil)
+      key = sprintf('%s_%s', section.upcase, key.upcase) if ['deployed_application', 'deployed_stack'].include?(section)
       "export #{key}=\"#{value}\"\n"
     end
 
-    def build_nginx_config(key, value)
+    def build_nginx_config(key, value, section = nil)
+      key = sprintf('%s_%s', section.upcase, key.upcase) if ['deployed_application', 'deployed_stack'].include?(section)
       "fastcgi_param #{key} \"#{value}\";\n"
     end
 
-    def build_ini_config(key, value)
+    def build_ini_config(key, value, section = nil)
       "#{key} = \"#{value}\"\n"
     end
   end
