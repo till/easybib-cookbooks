@@ -52,7 +52,6 @@ module EasyBib
 
     def to_configformat(format, data)
       fail "No Config supplied" if data.nil?
-      puts data.inspect
       config = generate_start(format)
       data.each_pair do |main_section, section_data|
         Chef::Log.info("Config: Processing section #{main_section}")
