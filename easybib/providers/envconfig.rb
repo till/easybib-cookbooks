@@ -2,14 +2,6 @@ action :create do
   app = new_resource.app
   path = new_resource.path
 
-  if path.nil?
-    if ::EasyBib.is_aws(node)
-      path = "#{node['deploy'][app]['deploy_to']}/current/"
-    else
-      fail "Fatal: easybib_env-config needs path in non-aws setup"
-    end
-  end
-
   ["ini", "php", "shell"].each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
       mode   "0644"
