@@ -66,6 +66,27 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
     )
   end
 
+  def test_config_to_php
+    assert_equal("<?php
+$deploy_config = array(
+  'deployed_application' => array(
+    'appname'=>\"some_app\",
+    'domains'=>\"foo.tld,bar.tld\",
+    'deploy_dir'=>\"/tmp/bla\",
+  ),
+  'deployed_stack' => array(
+    'stackname'=>\"opsworks-stack\",
+    'environment'=>\"playground\",
+  ),
+  'settings' => array(
+    'BLA_SOMEKEY'=>\"somevalue\",
+    'BLA_SOMEGROUP_SOMEOTHERKEY'=>\"someothervalue\",
+  ),
+);",
+      ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
+    )
+  end
+
   protected
 
   def get_fakenode_config

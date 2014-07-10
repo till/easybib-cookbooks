@@ -52,21 +52,54 @@ module EasyBib
 
     def to_configformat(format, data)
       fail "No Config supplied" if data.nil?
-      config = ""
+      config = generate_start(format)
       data.each_pair do |main_section, section_data|
-        config << generate_header(format, main_section)
+        config << generate_section_start(format, main_section)
         config << generate_config_part(format, main_section, section_data)
+        config << generate_section_end(format, main_section)
       end
-      config
+      config << generate_end(format)
     end
 
     protected
 
-    # generates the section header, currently only for ini format
-    def generate_header(format, main_section)
+    # generate top of file
+    def generate_start(format)
       case format
+      when "php"
+        "<?php\n$deploy_config = array(\n"
+      else
+        ""
+      end
+    end
+
+    # generate end of file
+    def generate_end(format)
+      case format
+      when "php"
+        ");"
+      else
+        ""
+      end
+    end
+
+    # generates the section header
+    def generate_section_start(format, main_section)
+      case format
+      when "php"
+        "  '#{main_section}' => array(\n"
       when "ini"
         "[#{main_section}]\n"
+      else
+        ""
+      end
+    end
+
+    # generates the section footer
+    def generate_section_end(format, main_section)
+      case format
+      when "php"
+        "  ),\n"
       else
         ""
       end
@@ -111,6 +144,8 @@ module EasyBib
         build_shell_config(var, value, section)
       when "ini"
         build_ini_config(var, value, section)
+      when "php"
+        build_php_config(var, value, section)
       else
         fail "Unknown configuration type: #{format}."
       end
@@ -123,6 +158,10 @@ module EasyBib
         next
       end
       config
+    end
+
+    def build_php_config(key, value, section = nil)
+      "    '#{key}'=>\"#{value}\",\n"
     end
 
     def build_shell_config(key, value, section = nil)
