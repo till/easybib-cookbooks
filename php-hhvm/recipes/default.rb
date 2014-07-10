@@ -1,17 +1,12 @@
-execute "discover apt-repository" do
-  command "echo deb #{node["php-hhvm"]["apt"]["repo"]} #{node["lsb"]["codename"]} main > #{node["php-hhvm"]["apt"]["file"]}"
-  not_if do
-    File.exists?(node["php-hhvm"]["apt"]["file"])
-  end
-end
-
-execute "update_hhvm_apt" do
-  command "apt-get update -y --allow-unauthenticated"
+apt_repository "liboost" do
+  uri node["php-hhvm"]["apt"]["ppa"]
+  distribution node["lsb"]["codename"]
+  components ["main"]
+  key node["php-hhvm"]["apt"]["key"]
 end
 
 apt_package "install hhvm" do
   package_name "hhvm"
-  options "--allow-unauthenticated"
 end
 
 include_recipe "php-hhvm::configure"
