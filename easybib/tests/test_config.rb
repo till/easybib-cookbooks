@@ -3,7 +3,8 @@ require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 require File.join(File.dirname(__FILE__), '../libraries', 'config.rb')
 
-class TestEasyBib < Test::Unit::TestCase
+# rubocop:disable ClassLength
+class TestEasyBibConfig < Test::Unit::TestCase
   include EasyBib
 
   def test_config_no_doublequote
