@@ -1,7 +1,12 @@
 action :create do
   app = new_resource.app
-  path = new_resource.path
-  
+
+  if new_resource.path.nil?
+    path = node['deploy'][app]['deploy_to'] + '/current/'
+  else
+    path = new_resource.path
+  end
+
   Chef::Log.info("writing envconfig for #{app} to #{path}")
 
   ["ini", "php", "shell"].each do |format|
