@@ -24,7 +24,7 @@ node['deploy'].each do |application, deploy|
     path  deploy["deploy_to"]
   end
 
-  opsworks_deploy do
+  easybib_deploy do
     deploy_data deploy
     app application
   end
@@ -59,13 +59,6 @@ node['deploy'].each do |application, deploy|
         app_name appname
         config config
       end
-    end
-  when 'travis_asset_browser'
-    template "#{deploy["deploy_to"]}/current/config.php" do
-      source "config.php.erb"
-      mode 0600
-      owner "www-data"
-      variables :config => node['travis-asset-browser']['config']
     end
   end
 
