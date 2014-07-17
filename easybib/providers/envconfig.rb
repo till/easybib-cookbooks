@@ -9,7 +9,7 @@ action :create do
 
   Chef::Log.info("writing envconfig for #{app} to #{path}")
 
-  ["ini", "php", "shell"].each do |format|
+  ["ini", "php", "sh"].each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
       mode   "0644"
       cookbook "easybib"
