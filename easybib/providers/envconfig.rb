@@ -1,6 +1,8 @@
 action :create do
   app = new_resource.app
   path = new_resource.path
+  
+  Chef::Log.info("writing envconfig for #{app} to #{path}")
 
   ["ini", "php", "shell"].each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
