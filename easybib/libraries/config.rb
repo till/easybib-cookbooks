@@ -159,6 +159,7 @@ module EasyBib
       when "nginx"
         build_nginx_config(var, value, section)
       when "shell"
+        build_shell_config(var, value, section)
       when "sh"
         build_shell_config(var, value, section)
       when "ini"
