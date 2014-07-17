@@ -7,6 +7,8 @@ node["deploy"].each do |application, deploy|
     next unless allow_deploy(application, 'signup', 'signup-server')
   when 'domainadmin'
     next unless allow_deploy(application, 'domainadmin', 'domainadmin-server')
+  when 'management'
+    next unless allow_deploy(application, 'management', 'management-server')
   else
     next
   end
