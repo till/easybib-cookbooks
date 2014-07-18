@@ -1,0 +1,57 @@
+upstream <%=@upstream%>_phpfpm {
+    server  127.0.0.1:9000;
+}
+
+server {
+    listen 80 <%=@listen_opts%>;
+
+    index <%=@default_router%> index.php;
+
+    access_log <%= @access_log %>;
+
+<% if !@domain_name.nil? && !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% end -%>
+
+<% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+<% end -%>
+
+<% if @htpasswd && !@htpasswd.empty? && File.exists?(@htpasswd) -%>
+    auth_basic            "Restricted";
+    auth_basic_user_file  <%= @htpasswd%>;
+<% end -%>
+
+    root <%= @doc_root%>;
+
+<%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
+        "upstream" => @upstream,
+        "health_check" => @health_check
+    } %>
+
+    <% if @routes_enabled.nil? || @routes_enabled.empty? -%>
+<%= render "partials/php-routes-default.erb", :cookbook => 'nginx-app', :variables => {
+        "php_bypass_static_content" => true,
+        "routes_enabled" => @routes_enabled,
+        "upstream" => @upstream,
+        "env_conf" => @env_conf,
+        "access_log" => @access_log,
+        "default_router" => @default_router,
+        "node" => @node
+    } %>
+    <% else -%>
+<%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
+        "php_bypass_static_content" => true,
+        "routes_enabled" => @routes_enabled,
+        "upstream" => @upstream,
+        "env_conf" => @env_conf,
+        "access_log" => @access_log,
+        "default_router" => @default_router,
+        "node" => @node
+    } %>
+    <% end %>
+
+    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+<%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
+    <% end %>
+}
