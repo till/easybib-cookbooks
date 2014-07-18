@@ -10,7 +10,7 @@ else
   end
 end
 
-domain_name = node["getcourse"]["domain"]["api"]
+domain_name = node["getcourse"]["domain"][config]
 domain_conf = get_domain_conf("getcourse")
 
 env_conf = ""
