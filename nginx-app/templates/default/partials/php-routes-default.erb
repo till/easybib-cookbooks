@@ -32,6 +32,15 @@
         fastcgi_pass  <%=@upstream%>_phpfpm;
         include       fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+
+        add_header X-Cache $upstream_cache_status;
+
+<% if @cache_enabled && @cache_enabled == true -%>
+        fastcgi_cache <%=@cache_config["zone"]%>;
+        fastcgi_cache_bypass $fastcgi_skipcache;
+        fastcgi_no_cache $fastcgi_skipcache;
+<% end -%>
+
 <% if @env_conf && !@env_conf.empty? -%>
         <%=@env_conf%>
 <% end -%>
