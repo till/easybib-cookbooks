@@ -1,5 +1,5 @@
 config = "api"
-cache_enable = false;
+cache_enable = false
 
 if is_aws
   deploy_dir = "/srv/www/#{config}/current/public/"
