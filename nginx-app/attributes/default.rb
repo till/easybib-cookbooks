@@ -56,6 +56,7 @@ default["nginx-app"]["css_modules"] = {
 }
 
 default["nginx-app"]["cache"] = {
+  "enabled" => false,
   "lifetime" => "5m",
   "methods" => "GET",
   "path" => "/dev/shm/nginxcache",

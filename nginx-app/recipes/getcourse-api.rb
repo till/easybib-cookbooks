@@ -1,9 +1,7 @@
 config = "api"
-cache_enabled = false
 
 if is_aws
   deploy_dir = "/srv/www/#{config}/current/public/"
-  cache_enabled = true
   include_recipe "nginx-app::cache"
 else
   if node["vagrant"]["combined"] == true
@@ -35,7 +33,6 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :default_router => node["nginx-app"]["default_router"],
     :upstream => config,
     :env_conf => env_conf,
-    :cache_enabled => cache_enabled,
     :cache_config => node["nginx-app"]["cache"]
   )
   notifies :restart, "service[nginx]", :delayed
