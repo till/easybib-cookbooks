@@ -35,7 +35,7 @@
 
         add_header X-Cache $upstream_cache_status;
 
-<% if @cache_config["enabled"] == true -%>
+<% if @cache_config and @cache_config["enabled"] == true -%>
         fastcgi_cache <%=@cache_config["zone"]%>;
         fastcgi_cache_bypass $fastcgi_skipcache;
         fastcgi_no_cache $fastcgi_skipcache;
