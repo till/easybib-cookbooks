@@ -4,6 +4,7 @@ cache_enable = false;
 if is_aws
   deploy_dir = "/srv/www/#{config}/current/public/"
   cache_enabled = true
+  include_recipe "nginx-app::cache"
 else
   if node["vagrant"]["combined"] == true
     deploy_dir = node["vagrant"]["deploy_to"][config]
