@@ -72,7 +72,7 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
 
   def test_config_to_php
     assert_equal("<?php
-return array(
+return [
   'deployed_application' => array(
     'appname'=>\"some_app\",
     'domains'=>\"foo.tld,bar.tld\",
@@ -87,7 +87,7 @@ return array(
     'BLA_SOMEKEY'=>\"somevalue\",
     'BLA_SOMEGROUP_SOMEOTHERKEY'=>\"someothervalue\",
   ),
-);",
+];",
       ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
     )
   end
