@@ -72,7 +72,7 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
 
   def test_config_to_php
     assert_equal("<?php
-$deploy_config = array(
+return array(
   'deployed_application' => array(
     'appname'=>\"some_app\",
     'domains'=>\"foo.tld,bar.tld\",
