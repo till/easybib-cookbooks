@@ -3,6 +3,9 @@ cache_conf = node["nginx-app"]["cache"]
 directory cache_conf["path"] do
   owner node["nginx-app"]["owner"]
   group node["nginx-app"]["group"]
+  only_if do
+    cache_conf["enabled"] == true
+  end
 end
 
 template "/etc/nginx/conf.d/cache.conf" do
@@ -15,4 +18,7 @@ template "/etc/nginx/conf.d/cache.conf" do
     :zone => cache_conf["zone"]
   )
   notifies :restart, "service[nginx]", :delayed
+  only_if do
+    cache_conf["enabled"] == true
+  end
 end

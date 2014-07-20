@@ -1,8 +1,9 @@
+include_recipe "nginx-app::cache"
+
 config = "api"
 
 if is_aws
   deploy_dir = "/srv/www/#{config}/current/public/"
-  include_recipe "nginx-app::cache"
 else
   if node["vagrant"]["combined"] == true
     deploy_dir = node["vagrant"]["deploy_to"][config]
