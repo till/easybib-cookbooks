@@ -113,6 +113,18 @@ describe 'silex-config-template' do
         .with_content(slash_is_redirected)
     end
   end
+
+  describe "fastcgi caching can is enabled" do
+    before do
+      node.set["nginx-app"]["cache"]["enabled"] = true
+    end
+
+    it "does enable the fastcgi cache" do
+      expect(chef_run).to render_file(config_file)
+        .with_content(include("fastcgi_cache #{node["nginx-app"]["cache"]["zone"]};"))
+    end
+  end
+
 end
 
 def slash_is_redirected(target = 'http://easybib.com/company/contact')
