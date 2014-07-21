@@ -105,7 +105,7 @@ module EasyBib
     def generate_section_start(format, main_section)
       case format
       when "php"
-        "  '#{main_section}' => array(\n"
+        "  '#{main_section}' => [\n"
       when "ini"
         "[#{main_section}]\n"
       else
@@ -117,7 +117,7 @@ module EasyBib
     def generate_section_end(format, main_section)
       case format
       when "php"
-        "  ),\n"
+        "  ],\n"
       else
         ""
       end
