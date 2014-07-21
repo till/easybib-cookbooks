@@ -38,7 +38,7 @@ module EasyBib
       data = {
         'deployed_application' => get_appdata(node, appname),
         'deployed_stack' => get_stackdata(node),
-        'settings' => streamline_appenv(node['deploy'][appname]['env'])
+        'settings' => streamline_appenv(node[appname]['env'])
       }
       to_configformat(format, data)
     end

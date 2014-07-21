@@ -100,13 +100,15 @@ return [
         'some_app' => {
           'application' => 'some_app',
           'domains' => ['foo.tld', 'bar.tld'],
-          'deploy_to' => '/tmp/bla',
-          'env' => {
-            'bla' => {
-              'somekey' => 'somevalue',
-              'somegroup' => {
-                'someotherkey' => 'someothervalue'
-              }
+          'deploy_to' => '/tmp/bla'
+        }
+      }
+    fake_node.set['some_app'] = {
+        'env' => {
+          'bla' => {
+            'somekey' => 'somevalue',
+            'somegroup' => {
+              'someotherkey' => 'someothervalue'
             }
           }
         }
