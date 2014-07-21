@@ -115,6 +115,7 @@ describe 'silex-config-template' do
         .with_content(slash_is_redirected)
     end
   end
+
 end
 
 def slash_is_redirected(target = 'http://easybib.com/company/contact')
