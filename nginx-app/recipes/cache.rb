@@ -1,3 +1,5 @@
+include_recipe "nginx-app::service"
+
 cache_conf = node["nginx-app"]["cache"]
 
 directory cache_conf["path"] do
