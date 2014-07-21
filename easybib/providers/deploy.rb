@@ -8,7 +8,7 @@ action :deploy do
     app app
   end
 
-  easybib_crontab app do
+  easybib_crontab "#{app}_#{new_resource.cronjob_role}" do
     crontab_file "#{deploy_data['deploy_to']}/current/deploy/crontab"
     app app
     only_if do
