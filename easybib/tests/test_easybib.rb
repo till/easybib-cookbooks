@@ -116,7 +116,6 @@ class TestEasyBib < Test::Unit::TestCase
     )
   end
 
-
   def test_deploy_crontab
     assert_equal(
       deploy_crontab?([], nil),
