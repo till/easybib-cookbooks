@@ -15,6 +15,8 @@ node['deploy'].each do |application, deploy|
     deploy_data deploy
     app application
     envvar_json_source "getcourse"
+    cronjob_role "housekeeping"
+    instance_roles node["opsworks"]["instance"]["layers"]
   end
 
   include_recipe "monit::pecl-manager" if application == 'api'
