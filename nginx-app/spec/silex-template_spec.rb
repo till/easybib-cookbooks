@@ -44,6 +44,7 @@ describe 'silex-config-template' do
     before do
       node.set["testdata"]["routes_enabled"] = ['/some/route', '/other/route']
       node.set["testdata"]["routes_denied"]  = nil
+      node.set["opsworks"]["stack"]["name"]  = "rspec"
     end
 
     it "does set routes for enabled routes" do
@@ -91,6 +92,7 @@ describe 'silex-config-template' do
     before do
       node.set["testdata"]["routes_enabled"] = ['/some/route', '/other/route']
       node.set["testdata"]["routes_denied"]  = ['/some/droute', '/other/droute']
+      node.set["opsworks"]["stack"]["name"]  = "rspec"
     end
 
     it "does set routes for enabled routes" do
