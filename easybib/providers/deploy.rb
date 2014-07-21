@@ -12,13 +12,10 @@ action :deploy do
     crontab_file "#{deploy_data['deploy_to']}/current/deploy/crontab"
     app app
     only_if do
-      if new_resource.cronjob_role.nil?
-        return true
-      end
-      if new_resource.instances_roles.include?(new_resource.cronjob_role)
-        return true
-      end
-      return false
+      ::EasyBib.deploy_crontab?(
+        new_resource.instance_roles,
+        new_resource.cronjob_role
+      )
     end
   end
 

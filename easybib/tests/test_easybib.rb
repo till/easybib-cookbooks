@@ -115,4 +115,26 @@ class TestEasyBib < Test::Unit::TestCase
       "fastcgi_param DATABASE_SOMETHING \"foobar\";\nfastcgi_param DATABASE_WHATEVER \"bar\";\n"
     )
   end
+
+
+  def test_deploy_crontab
+    assert_equal(
+      deploy_crontab?([], nil),
+      true
+    )
+  end
+
+  def test_deploy_crontab_wrong_role
+    assert_equal(
+      deploy_crontab?(['role1', 'role2'], 'housekeeping'),
+      false
+    )
+  end
+
+  def test_deploy_crontab_all_roles
+    assert_equal(
+      deploy_crontab?(['role1', 'housekeeping'], 'housekeeping'),
+      true
+    )
+  end
 end
