@@ -13,9 +13,16 @@ describe 'nginx-app::getcourse-api' do
   let(:chef_run) { runner.converge("nginx-app::getcourse-api") }
   let(:node)     { runner.node }
 
+  let(:cache_config_file) { "/etc/nginx/conf.d/cache.conf" }
+  let(:nginx_config_file) { "/etc/nginx/sites-enabled/api.conf" }
+
   describe "fastcgi cache is enabled" do
     before do
-      node.set["nginx-app"]["cache"]["enabled"] = true
+      node.set["nginx-app"]["cache"] = {
+        "enabled" => true,
+        "zone" => "CHEFSPEC_TEST"
+      }
+
       node.set["vagrant"] = {
         "combined" => true,
         "deploy_to" => "/foo/bar"
@@ -26,7 +33,7 @@ describe 'nginx-app::getcourse-api' do
     end
 
     it "does render the cache.conf" do
-      expect(chef_run).to render_file("/etc/nginx/conf.d/cache.conf")
+      expect(chef_run).to render_file(cache_config_file)
     end
 
     it "does enable the fastcgi cache" do
