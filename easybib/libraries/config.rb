@@ -85,7 +85,7 @@ module EasyBib
     def generate_start(format)
       case format
       when "php"
-        "<?php\n$deploy_config = array(\n"
+        "<?php\nreturn [\n"
       else
         ""
       end
@@ -95,7 +95,7 @@ module EasyBib
     def generate_end(format)
       case format
       when "php"
-        ");"
+        "];"
       else
         ""
       end
