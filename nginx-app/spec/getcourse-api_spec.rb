@@ -37,10 +37,34 @@ describe 'nginx-app::getcourse-api' do
     end
 
     it "does enable the fastcgi cache" do
-      expect(chef_run).to render_file("/etc/nginx/sites-enabled/api.conf")
+      expect(chef_run).to render_file(nginx_config_file)
         .with_content(
           include("fastcgi_cache #{node["nginx-app"]["cache"]["zone"]};")
         )
     end
+  end
+
+  describe "fastcgi cache is not enabled" do
+    before do
+      node.set["vagrant"] = {
+        "combined" => true,
+        "deploy_to" => "/foo/bar"
+      }
+      node.set["getcourse"]["domain"] = {
+        "api" => "api.example.org"
+      }
+    end
+
+    it "does not render cache.conf" do
+      expect(chef_run).not_to render_file(cache_config_file)
+    end
+
+    it "does not enable the fastcgi cache" do
+      expect(chef_run).not_to render_file(nginx_config_file)
+        .with_content(
+          include("fastcgi_cache #{node["nginx-app"]["cache"]["zone"]};")
+        )
+    end
+
   end
 end
