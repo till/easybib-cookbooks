@@ -72,22 +72,22 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
 
   def test_config_to_php
     assert_equal("<?php
-$deploy_config = array(
-  'deployed_application' => array(
+return [
+  'deployed_application' => [
     'appname'=>\"some_app\",
     'domains'=>\"foo.tld,bar.tld\",
     'deploy_dir'=>\"/tmp/bla\",
     'app_dir'=>\"/tmp/bla/current/\",
-  ),
-  'deployed_stack' => array(
+  ],
+  'deployed_stack' => [
     'stackname'=>\"opsworks-stack\",
     'environment'=>\"playground\",
-  ),
-  'settings' => array(
+  ],
+  'settings' => [
     'BLA_SOMEKEY'=>\"somevalue\",
     'BLA_SOMEGROUP_SOMEOTHERKEY'=>\"someothervalue\",
-  ),
-);",
+  ],
+];",
       ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
     )
   end

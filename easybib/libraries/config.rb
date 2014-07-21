@@ -85,7 +85,7 @@ module EasyBib
     def generate_start(format)
       case format
       when "php"
-        "<?php\n$deploy_config = array(\n"
+        "<?php\nreturn [\n"
       else
         ""
       end
@@ -95,7 +95,7 @@ module EasyBib
     def generate_end(format)
       case format
       when "php"
-        ");"
+        "];"
       else
         ""
       end
@@ -105,7 +105,7 @@ module EasyBib
     def generate_section_start(format, main_section)
       case format
       when "php"
-        "  '#{main_section}' => array(\n"
+        "  '#{main_section}' => [\n"
       when "ini"
         "[#{main_section}]\n"
       else
@@ -117,7 +117,7 @@ module EasyBib
     def generate_section_end(format, main_section)
       case format
       when "php"
-        "  ),\n"
+        "  ],\n"
       else
         ""
       end
@@ -159,6 +159,8 @@ module EasyBib
       when "nginx"
         build_nginx_config(var, value, section)
       when "shell"
+        build_shell_config(var, value, section)
+      when "sh"
         build_shell_config(var, value, section)
       when "ini"
         build_ini_config(var, value, section)

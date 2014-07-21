@@ -1,0 +1,151 @@
+[PHP]
+engine = On
+short_open_tag = Off
+asp_tags = Off
+precision = 14
+y2k_compliance = On
+output_buffering = 4096
+zlib.output_compression = Off
+;zlib.output_compression_level = -1
+implicit_flush = Off
+unserialize_callback_func =
+serialize_precision = 100
+allow_call_time_pass_reference = Off
+safe_mode = Off
+safe_mode_gid = Off
+safe_mode_include_dir =
+safe_mode_exec_dir =
+safe_mode_allowed_env_vars = PHP_
+safe_mode_protected_env_vars = LD_LIBRARY_PATH
+disable_functions =
+disable_classes =
+realpath_cache_size = 128k
+realpath_cache_ttl = 3600
+expose_php = Off
+max_execution_time = <%= node["hhvm-fcgi"]["maxexecutiontime"] %>
+max_input_time = 60
+memory_limit = <%= @memory_limit %>
+error_reporting = E_ALL & ~E_DEPRECATED
+display_errors = <%= @display_errors %>
+display_startup_errors = Off
+log_errors = On
+log_errors_max_len = 1024
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+report_memleaks = On
+track_errors = Off
+html_errors = Off
+error_log = syslog
+variables_order = "GPCS"
+request_order = "GP"
+register_globals = Off
+register_long_arrays = Off
+register_argc_argv = Off
+auto_globals_jit = On
+post_max_size = 16M
+magic_quotes_gpc = Off
+magic_quotes_runtime = Off
+magic_quotes_sybase = Off
+auto_prepend_file =
+auto_append_file =
+default_mimetype = "text/html"
+default_charset = "utf-8"
+include_path = ".:<%= node["hhvm-fcgi"]["prefix"] %>/pear"
+doc_root =
+user_dir =
+enable_dl = <%= @enable_dl %>
+file_uploads = On
+upload_tmp_dir = <%= node["hhvm-fcgi"]["tmpdir"] %>
+upload_max_filesize = 10M
+max_file_uploads = 20
+allow_url_fopen = On
+allow_url_include = Off
+default_socket_timeout = 60
+
+[Date]
+date.timezone = America/New_York
+
+[Syslog]
+define_syslog_variables  = Off
+
+[mail function]
+;sendmail_path =
+;mail.force_extra_parameters =
+mail.add_x_header = On
+;mail.log =
+
+[SQL]
+; http://php.net/sql.safe-mode
+sql.safe_mode = Off
+
+[MySQLi]
+mysqli.max_persistent = 0
+;mysqli.allow_local_infile = On
+mysqli.allow_persistent = Off
+mysqli.max_links = -1
+mysqli.cache_size = 2000
+mysqli.default_port = 3306
+mysqli.default_socket =
+mysqli.default_host =
+mysqli.default_user =
+mysqli.default_pw =
+mysqli.reconnect = Off
+
+[mysqlnd]
+mysqlnd.collect_statistics = On
+mysqlnd.collect_memory_statistics = Off
+;mysqlnd.net_cmd_buffer_size = 2048
+;mysqlnd.net_read_buffer_size = 32768
+
+[bcmath]
+bcmath.scale = 0
+
+[Session]
+session.save_handler = files
+session.save_path = "<%= node["hhvm-fcgi"]["tmpdir"] %>"
+session.use_cookies = 1
+;session.cookie_secure =
+session.use_only_cookies = 1
+session.name = PHPSESSID
+session.auto_start = 0
+session.cookie_lifetime = 0
+session.cookie_path = /
+session.cookie_domain =
+session.cookie_httponly =
+session.serialize_handler = php
+session.gc_probability = 1
+session.gc_divisor = 1000
+session.gc_maxlifetime = 1440
+session.bug_compat_42 = Off
+session.bug_compat_warn = Off
+session.referer_check =
+session.entropy_length = 0
+session.cache_limiter = nocache
+session.cache_expire = 180
+session.use_trans_sid = 0
+session.hash_function = 0
+session.hash_bits_per_character = 5
+url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=fakeentry"
+
+[Tidy]
+;tidy.default_config = <%= node["hhvm-fcgi"]["prefix"] %>/lib/php/default.tcfg
+tidy.clean_output = Off
+
+[soap]
+soap.wsdl_cache_enabled=1
+soap.wsdl_cache_dir="<%= node["hhvm-fcgi"]["tmpdir"] %>"
+soap.wsdl_cache_ttl=86400
+soap.wsdl_cache_limit = 5
+
+[sysvshm]
+;sysvshm.init_mem = 10000
+
+[hhvm]
+pid = /var/run/hhvm/pid
+hhvm.server.port = 9000
+hhvm.server.type = fastcgi
+hhvm.server.default_document = index.php
+hhvm.repo.central.path = /var/run/hhvm/hhvm.hhb
+
+hhvm.log.use_log_file = true
+hhvm.log.file="<%= node["hhvm-fcgi"]["logfile"] %>"

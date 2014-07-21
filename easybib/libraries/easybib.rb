@@ -135,7 +135,7 @@ module EasyBib
     if node["easybib"] && node["easybib"]["cluster_name"]
       return node["easybib"]["cluster_name"]
     end
-    ::Chef::Log.error("Unknown environment.")
+    ::Chef::Log.error("Unknown environment. (get_cluster_name)")
 
     ""
   end
@@ -144,21 +144,21 @@ module EasyBib
     if node["opsworks"]
       return node["opsworks"]["deploy_user"]
     end
-    ::Chef::Log.debug("Unknown environment.")
+    ::Chef::Log.debug("Unknown environment. (get_deploy_user)")
   end
 
   def get_instance_roles(node = self.node)
     if node["opsworks"]
       return node["opsworks"]["instance"]["layers"]
     end
-    ::Chef::Log.debug("Unknown environment.")
+    ::Chef::Log.debug("Unknown environment. (get_instance_roles)")
   end
 
   def get_instance(node = self.node)
     if node["opsworks"]
       return node["opsworks"]["instance"]
     end
-    ::Chef::Log.debug("Unknown environment.")
+    ::Chef::Log.debug("Unknown environment. (get_instance)")
   end
 
   def is_aws(node = self.node)

@@ -1,0 +1,7 @@
+fastcgi_cache_path <%= @cache_path %> levels=1:2 keys_zone=<%= @zone %>:10m inactive=10m max_size=64m;
+fastcgi_cache_key $scheme$request_method$host$request_uri;
+fastcgi_cache_lock on;
+fastcgi_cache_use_stale error timeout invalid_header updating http_500;
+fastcgi_cache_valid <%= @lifetime %>;
+fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+fastcgi_cache_methods <%= @cache_methods %>;

@@ -1,8 +1,4 @@
-include_recipe "easybib::role-phpapp"
+include_recipe "easybib::role-generic"
 
-include_recipe "php-intl"
-
-include_recipe "bash::configure"
-include_recipe "bash::bashrc"
-include_recipe "getcourse-deploy::management"
+include_recipe "getcourse-deploy::static"
 include_recipe "nginx-app::getcourse-management"

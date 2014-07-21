@@ -1,10 +1,8 @@
 upstream <%=@upstream%>_phpfpm {
-    server  unix:/var/run/php-fpm/<%= @php_user %>;
+    server  127.0.0.1:9000;
 }
 
 server {
-    set $fastcgi_skipcache 1; # skip by default
-
     listen 80 <%=@listen_opts%>;
 
     index <%=@default_router%> index.php;
@@ -26,10 +24,6 @@ server {
 
     root <%= @doc_root%>;
 
-    if ($http_x_cache_me) {
-        set $fastcgi_skipcache 0;
-    }
-
 <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
         "upstream" => @upstream,
         "health_check" => @health_check
@@ -43,8 +37,7 @@ server {
         "env_conf" => @env_conf,
         "access_log" => @access_log,
         "default_router" => @default_router,
-        "node" => @node,
-        "cache_config" => @cache_config
+        "node" => @node
     } %>
     <% else -%>
 <%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
