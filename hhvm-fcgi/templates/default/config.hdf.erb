@@ -1,0 +1,14 @@
+Log {
+    Level = Info
+    NoSilencer = true
+    AlwaysLogUnhandledExceptions = true
+    RuntimeErrorReportingLevel = 8191
+    InjectedStackTrace = true
+}
+<% if @display_errors == 'On' %>
+Debug {
+    FullBacktrace = true
+    ServerStackTrace = true
+    ServerErrorMessage = true
+}
+<% end %>
