@@ -13,7 +13,9 @@ end
 
 execute "Install the latest npm" do
   command "#{Chef::Config[:file_cache_path]}/install-npm.sh"
-  environment ({"clean" => "no"})
+  environment ({
+    "clean" => "no"
+  })
   not_if do
     File.exist?(npm_bin)
   end
