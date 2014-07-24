@@ -6,6 +6,18 @@ module EasyBib
     false
   end
 
+  def deploy_crontab?(instance_roles, cronjob_role)
+    if cronjob_role.nil?
+      return true
+    end
+
+    if instance_roles.include?(cronjob_role)
+      return true
+    end
+
+    false
+  end
+
   def has_env?(app, node = self.node)
     if !node.attribute?(app)
       return false
