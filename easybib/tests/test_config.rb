@@ -70,6 +70,29 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
     )
   end
 
+  def test_config_to_nginx_empty_settings
+    fake_node = Chef::Node.new
+    fake_node.set['deploy'] = {
+        'some_app' => {
+          'application' => 'some_app',
+          'domains' => ['foo.tld', 'bar.tld'],
+          'deploy_to' => '/tmp/bla'
+        }
+      }
+
+    fake_node.set['opsworks'] =  { 'stack' => { 'name' => 'opsworks-stack' } }
+    fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
+
+    assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
+fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
+fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla\";
+fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
+fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
+fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
+      ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
+    )
+  end
+
   def test_config_to_php
     assert_equal("<?php
 return [
