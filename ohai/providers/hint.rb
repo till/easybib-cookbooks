@@ -22,7 +22,6 @@ action :create do
   end
 end
 
-
 def load_current_resource
   @current_resource = Chef::Resource::OhaiHint.new(new_resource.name)
   if ::File.exist?(build_ohai_hint_path)

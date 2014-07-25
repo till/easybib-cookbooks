@@ -10,7 +10,7 @@ end
 
 hint_resource.run_action(:create)
 
-test_plugin_content =<<__EOL__
+test_plugin_content = <<__EOL__
 provides 'hint_tester'
 
 if hint?(:test)
@@ -20,12 +20,9 @@ else
 end
 __EOL__
 
-
-
 file File.join(node[:ohai][:plugin_path], 'test.rb') do
   content test_plugin_content
 end.run_action(:create)
-
 
 if hint_resource.updated_by_last_action?
   ohai 'custom_hints' do

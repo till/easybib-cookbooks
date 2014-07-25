@@ -20,4 +20,4 @@ attribute "ohai/plugins",
   :description => "Read plugins from these cookbooks and paths",
   :type => "hash",
   :required => "optional",
-  :default => {'ohai' => 'plugins'}
+  :default => { 'ohai' => 'plugins' }
