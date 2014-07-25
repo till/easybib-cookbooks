@@ -1,0 +1,7 @@
+*.swp
+.kitchen/
+.kitchen.local.yml
+.librarian/
+Cheffile.lock
+Gemfile.lock
+tmp/
