@@ -32,7 +32,7 @@ node['deploy'].each do |application, deploy|
     template "#{credential_dir}/credentials" do
       cookbook "awscli"
       source "credentials.erb"
-      mode 0644
+      mode 0600
       variables({
         :key_id => node["getcourse"]["env"]["aws"]["access_key"],
         :secret => node["getcourse"]["env"]["aws"]["secret_key"]
