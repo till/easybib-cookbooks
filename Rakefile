@@ -81,7 +81,7 @@ def find_cookbooks(all_your_base)
   cookbooks = []
 
   # ignore the following - mostly third party
-  skip = [ 'bprobe', 'git', 'opsworks_nodejs', 'vagrant-test', 'ohai', 'test' ]
+  skip = [ 'python', 'bprobe', 'git', 'opsworks_nodejs', 'vagrant-test', 'ohai', 'test' ]
   Dir.entries(all_your_base).select do |entry|
     next unless File.directory?(File.join(all_your_base, entry))
     next unless !(entry[0, 1] == '.')
