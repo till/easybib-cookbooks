@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+site 'http://community.opscode.com/api/v1'
+
+cookbook 'ohai', :path => '../'
+cookbook 'ohai_test', :path => './test/cookbooks/ohai_test'
+
