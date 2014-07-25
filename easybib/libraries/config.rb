@@ -35,10 +35,14 @@ module EasyBib
 
     def get_configcontent(format, appname, node = self.node)
       fail "No Config for #{appname}" if node['deploy'][appname].nil?
+      settings = {}
+      if node.attribute?(appname) && node[appname].attribute?('env')
+        settings = streamline_appenv(node[appname]['env'])
+      end
       data = {
         'deployed_application' => get_appdata(node, appname),
         'deployed_stack' => get_stackdata(node),
-        'settings' => streamline_appenv(node[appname]['env'])
+        'settings' => settings
       }
       to_configformat(format, data)
     end
