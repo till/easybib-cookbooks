@@ -5,6 +5,7 @@ require 'bundler'
 require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
+require 'yaml'
 
 Bundler.setup
 
@@ -22,12 +23,20 @@ end
 
 desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
+
   args.with_defaults( :cookbook => '*', :recipe => '*', :output_file => nil )
+
+  file_list = FileList["#{args.cookbook}/spec/#{args.recipe}_spec.rb"]
+
+  find_all_ignored.each do |ignored|
+    file_list = file_list.exclude("#{ignored}/spec/**")
+  end
+
   t.verbose = false
   t.fail_on_error = true
   t.rspec_opts = args.output_file.nil? ? '--format d' : "--format RspecJunitFormatter --out #{args.output_file}"
   t.ruby_opts = '-W0' #it supports ruby options too
-  t.pattern = "#{args.cookbook}/spec/#{args.recipe}_spec.rb"
+  t.pattern = file_list
 end
 
 desc "Runs foodcritic linter"
@@ -80,8 +89,8 @@ private
 def find_cookbooks(all_your_base)
   cookbooks = []
 
-  # ignore the following - mostly third party
-  skip = [ 'python', 'bprobe', 'git', 'opsworks_nodejs', 'vagrant-test', 'ohai', 'test' ]
+  skip = find_all_ignored
+
   Dir.entries(all_your_base).select do |entry|
     next unless File.directory?(File.join(all_your_base, entry))
     next unless !(entry[0, 1] == '.')
@@ -92,6 +101,20 @@ def find_cookbooks(all_your_base)
   end
 
   return cookbooks
+end
+
+private
+# ignore the following - mostly third party
+def find_all_ignored
+
+  skipped = []
+
+  rubocop = YAML.load_file("./.rubocop.yml")
+  rubocop["AllCops"]["Excludes"].each do |ignored|
+    skipped << ignored.split("/")[0]
+  end
+
+  skipped
 end
 
 current_dir = File.expand_path(File.dirname(__FILE__))
