@@ -39,4 +39,8 @@ RegexpLiteral:
 NumericLiterals:
   Enabled: false
 
-inherit_from: rubocop-todo.yml 
+AllCops:
+  Excludes:
+    - python/**
+
+inherit_from: rubocop-todo.yml
