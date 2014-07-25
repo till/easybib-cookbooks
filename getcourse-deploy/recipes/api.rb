@@ -35,7 +35,7 @@ node['deploy'].each do |application, deploy|
       mode 0644
       variables({
         :key_id => node["getcourse"]["env"]["aws"]["access_key"],
-        :secret => node["getcourse"]["env"]["aws"]["secret"]
+        :secret => node["getcourse"]["env"]["aws"]["secret_key"]
       })
     end
 
