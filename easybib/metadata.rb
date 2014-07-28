@@ -14,6 +14,7 @@ supports 'ubuntu'
 depends "apt"
 depends "apache-solr"
 depends "avahi"
+depends "awscli"
 depends "bash"
 depends "chef_handler_sns"
 depends "cron"
