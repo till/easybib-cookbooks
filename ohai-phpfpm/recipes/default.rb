@@ -1,4 +1,3 @@
-cookbook_file "php_fpm.rb" do
-  path "#{node['ohai']['plugin_path']}/php_fpm.rb"
-  action :create
-end
+node.set[:ohai][:plugins][:phpfpm] = 'ohai'
+
+include_recipe 'ohai'
