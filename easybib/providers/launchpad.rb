@@ -1,5 +1,15 @@
 action :discover do
 
+  apt_package "install add-apt-repository" do
+    package_name "python-software-properties"
+    only_if { node['lsb']['release'].to_f < 14.04 }
+  end
+
+  apt_package "install add-apt-repository" do
+    package_name "software-properties-common"
+    not_if { node['lsb']['release'].to_f < 14.04 }
+  end
+
   repository = new_resource.repository
 
   discover_command = "add-apt-repository --yes "
@@ -11,7 +21,7 @@ action :discover do
   end
 
   execute "update_easybib_sources" do
-    command "apt-get -y -f -q update"
+    command "apt-get -y -q update"
     action :nothing
   end
 
