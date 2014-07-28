@@ -33,10 +33,10 @@ node['deploy'].each do |application, deploy|
       cookbook "awscli"
       source "credentials.erb"
       mode 0600
-      variables({
+      variables(
         :key_id => node["getcourse"]["env"]["aws"]["access_key"],
         :secret => node["getcourse"]["env"]["aws"]["secret_key"]
-      })
+      )
     end
 
     include_recipe "monit::pecl-manager"
