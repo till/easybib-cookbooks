@@ -1,5 +1,5 @@
 include_recipe "easybib::role-generic"
-#include_recipe "ohai-phpfpm::default"
+include_recipe "ohai-phpfpm::default"
 include_recipe "php-fpm"
 include_recipe "php-phar"
 include_recipe "php-suhosin"
