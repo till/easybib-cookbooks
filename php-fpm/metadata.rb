@@ -8,7 +8,10 @@ recipe            "php-fpm::default", "Installs our custom PHP package from laun
 recipe            "php-fpm::download", "Downloads the source and extracts it"
 recipe            "php-fpm::prepare", "Creates prequesites like user and directories"
 recipe            "php-fpm::dependencies", "Install dependencies"
+recipe            "php-fpm::ohai", "php-fpm ohai plugin installer"
+
 supports 'ubuntu'
 
 depends "apt"
+depends "ohai"
 depends "php-apc"
