@@ -32,6 +32,8 @@ node['deploy'].each do |application, deploy|
     template "#{credential_dir}/credentials" do
       cookbook "awscli"
       source "credentials.erb"
+      owner deploy["user"]
+      group deploy["group"]
       mode 0600
       variables(
         :key_id => node["getcourse"]["env"]["aws"]["access_key"],
