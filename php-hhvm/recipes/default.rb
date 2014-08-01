@@ -1,11 +1,10 @@
-apt_package "install add-apt-repository" do
-  package_name "python-software-properties"
-  only_if { node['lsb']['release'].to_f < 14.04 }
-end
+include_recipe "apt::ppa"
 
-execute "add libboost ppa" do
-  command "add-apt-repository -y #{node["php-hhvm"]["boost"]["ppa"]}"
-  only_if { node['lsb']['release'].to_f < 14.04 }
+easybib_launchpad node["php-hhvm"]["boost"]["ppa"] do
+  action :discover
+  only_if do
+    node["lsb"]["release"].to_f < 14.04
+  end
 end
 
 apt_repository "hhvm" do
