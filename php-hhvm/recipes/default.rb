@@ -16,7 +16,7 @@ apt_repository "hhvm" do
 end
 
 apt_package "install hhvm" do
-  package_name "hhvm"
+  package_name "hhvm#{node["php-hhvm"]["build"]}"
 end
 
 include_recipe "php-hhvm::configure"

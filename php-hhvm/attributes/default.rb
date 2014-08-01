@@ -1,5 +1,7 @@
 default["php-hhvm"] = {}
 
+default["php-hhvm"]["build"] = "" # -nightly, -dbg
+
 default["php-hhvm"]["apt"] = {}
 default["php-hhvm"]["apt"]["repo"] = "http://dl.hhvm.com/ubuntu"
 default["php-hhvm"]["apt"]["key"] = "http://dl.hhvm.com/conf/hhvm.gpg.key"
