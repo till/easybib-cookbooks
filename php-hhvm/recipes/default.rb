@@ -1,3 +1,4 @@
+include_recipe "apt"
 include_recipe "apt::ppa"
 
 easybib_launchpad node["php-hhvm"]["boost"]["ppa"] do
@@ -12,10 +13,6 @@ apt_repository "hhvm" do
   distribution node["lsb"]["codename"]
   components ["main"]
   key node["php-hhvm"]["apt"]["key"]
-end
-
-execute "apt-get update" do
-  command "apt-get update"
 end
 
 apt_package "install hhvm" do
