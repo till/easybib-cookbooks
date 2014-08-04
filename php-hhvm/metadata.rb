@@ -5,4 +5,7 @@ license           "BSD License"
 description       "Installs Facebook's HHVM"
 version           "0.1"
 
-supports 'ubuntu'
+supports "ubuntu"
+
+depends "apt"
+depends "easybib"
