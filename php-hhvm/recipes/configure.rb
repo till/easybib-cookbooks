@@ -16,7 +16,8 @@ template "/etc/hhvm/php.ini" do
     :enable_dl => hhvm_config["enable_dl"],
     :error_log => hhvm_config["error_log"],
     :memory_limit   => hhvm_config["memory_limit"],
-    :display_errors => hhvm_config["display_errors"]
+    :display_errors => hhvm_config["display_errors"],
+    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"]
   )
   owner hhvm_user
   group hhvm_group
