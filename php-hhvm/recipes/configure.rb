@@ -4,7 +4,8 @@ template "/etc/hhvm/php.ini" do
   variables(
     :enable_dl      => 'Off',
     :memory_limit   => '-1',
-    :display_errors => 'On'
+    :display_errors => 'On',
+    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"]
   )
   owner    node["php-fpm"]["user"]
   group    node["php-fpm"]["group"]
