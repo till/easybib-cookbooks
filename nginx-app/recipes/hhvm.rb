@@ -26,7 +26,6 @@ node["vagrant"]["applications"].each do |app_name, app_config|
     default_router default_router
     domain_name domain_name
     env_config env_conf
-    asset_root app_config["asset_root"]
     notifies :restart, "service[nginx]", :delayed
   end
 end

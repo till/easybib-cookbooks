@@ -25,7 +25,6 @@ node['deploy'].each do |application, deploy|
     config_template "hhvm.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
-    asset_root deploy['asset_root'] ### XXX this doesn't work
     notifies :restart, "service[nginx]", :delayed
   end
 
