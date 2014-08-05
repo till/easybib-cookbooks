@@ -35,7 +35,7 @@ ignore_repeated_source = Off
 report_memleaks = On
 track_errors = Off
 html_errors = Off
-error_log = syslog
+error_log = <%= @error_log %>
 variables_order = "GPCS"
 request_order = "GP"
 register_globals = Off
@@ -43,6 +43,7 @@ register_long_arrays = Off
 register_argc_argv = Off
 auto_globals_jit = On
 post_max_size = 16M
+max_input_vars = <%= @max_input_vars %>
 magic_quotes_gpc = Off
 magic_quotes_runtime = Off
 magic_quotes_sybase = Off

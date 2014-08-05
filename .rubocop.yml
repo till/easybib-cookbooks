@@ -39,4 +39,12 @@ RegexpLiteral:
 NumericLiterals:
   Enabled: false
 
-inherit_from: rubocop-todo.yml 
+AllCops:
+  Excludes:
+    - python/**
+    - ohai/**
+    - opsworks_nodejs/**
+    - vagrant-test/**
+    - test/**
+
+inherit_from: rubocop-todo.yml

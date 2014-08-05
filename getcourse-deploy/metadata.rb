@@ -6,6 +6,7 @@ version           "0.1"
 
 supports 'ubuntu'
 
+depends "awscli"
 depends "bibcd"
 depends "easybib"
 depends "monit"
