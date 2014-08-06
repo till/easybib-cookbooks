@@ -10,8 +10,10 @@ end
 
 template fcgi_conf do
   mode     "0755"
+  cookbook "php-fpm"
   source   "php.ini.erb"
   variables(
+    :hhvm           => true,
     :enable_dl      => 'Off',
     :memory_limit   => node["hhvm-fcgi"]["memorylimit"],
     :display_errors => display_errors
@@ -23,6 +25,7 @@ end
 
 template cli_conf do
   mode "0755"
+  cookbook "php-fpm"
   source "php.ini.erb"
   variables(
     :enable_dl      => "On",
@@ -44,6 +47,7 @@ template hhvm_conf do
 end
 
 template "/etc/logrotate.d/hhvm" do
+  cookbook "php-fpm"
   source "logrotate.erb"
   mode "0644"
   owner "root"
