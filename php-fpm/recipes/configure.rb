@@ -50,7 +50,9 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
     :memory_limit => node["php-fpm"]["memorylimit"],
     :display_errors => display_errors,
     :max_execution_time => node["php-fpm"]["maxexecutiontime"],
+    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"],
     :logfile => node["php-fpm"]["logfile"],
+    :error_log => 'syslog',
     :tmpdir => node["php-fpm"]["tmpdir"],
     :prefix => node["php-fpm"]["prefix"]
   )
@@ -64,9 +66,11 @@ template "#{etc_cli_dir}/#{conf_cli}" do
   source "php.ini.erb"
   variables(
     :enable_dl      => "On",
+    :error_log      => 'syslog',
     :memory_limit   => '1024M',
     :display_errors => 'On',
     :max_execution_time => '-1',
+    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"],
     :logfile => node["php-fpm"]["logfile"],
     :tmpdir => node["php-fpm"]["tmpdir"],
     :prefix => node["php-fpm"]["prefix"]
