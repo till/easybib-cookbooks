@@ -1,16 +1,16 @@
-directory node["php-fpm"]["tmpdir"] do
+directory node["hhvm-fcgi"]["tmpdir"] do
   mode "0755"
   owner node["hhvm-fcgi"]["user"]
   group node["hhvm-fcgi"]["group"]
 end
 
-directory File.dirname(node["php-fpm"]["logfile"]) do
+directory File.dirname(node["hhvm-fcgi"]["logfile"]) do
   mode "0755"
   owner node["hhvm-fcgi"]["user"]
   group node["hhvm-fcgi"]["group"]
 end
 
-file node["php-fpm"]["logfile"] do
+file node["hhvm-fcgi"]["logfile"] do
   mode "0755"
   owner node["hhvm-fcgi"]["user"]
   group node["hhvm-fcgi"]["group"]

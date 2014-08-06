@@ -1,5 +1,18 @@
 default["hhvm-fcgi"] = {}
 
+## hhvm
+
+default["hhvm-fcgi"]["build"] = "" # -nightly, -dbg
+
+default["hhvm-fcgi"]["apt"] = {}
+default["hhvm-fcgi"]["apt"]["repo"] = "http://dl.hhvm.com/ubuntu"
+default["hhvm-fcgi"]["apt"]["key"] = "http://dl.hhvm.com/conf/hhvm.gpg.key"
+
+default["hhvm-fcgi"]["boost"] = {}
+default["hhvm-fcgi"]["boost"]["ppa"] = "ppa:mapnik/boost"
+
+## config/fcgi
+
 default["hhvm-fcgi"]["prefix"] = ""
 
 default["hhvm-fcgi"]["conf"] = {}
