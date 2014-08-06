@@ -29,7 +29,7 @@ node['deploy'].each do |application, deploy|
   end
 
   service "hhvm-fcgi" do
-    action :reload
+    action :reload # TODO: this is probably unnessessary
   end
 
 end
