@@ -16,7 +16,11 @@ template fcgi_conf do
     :hhvm           => true,
     :enable_dl      => 'Off',
     :memory_limit   => node["hhvm-fcgi"]["memorylimit"],
-    :display_errors => display_errors
+    :display_errors => display_errors,
+    :max_execution_time => node["hhvm-fcgi"]["maxexecutiontime"],
+    :logfile => node["hhvm-fcgi"]["logfile"],
+    :tmpdir => node["hhvm-fcgi"]["tmpdir"],
+    :prefix => node["hhvm-fcgi"]["prefix"]
   )
   owner    node["hhvm-fcgi"]["user"]
   group    node["hhvm-fcgi"]["group"]
@@ -30,7 +34,11 @@ template cli_conf do
   variables(
     :enable_dl      => "On",
     :memory_limit   => '1024M',
-    :display_errors => 'On'
+    :display_errors => 'On',
+    :max_execution_time => '-1',
+    :logfile => node["hhvm-fcgi"]["logfile"],
+    :tmpdir => node["hhvm-fcgi"]["tmpdir"],
+    :prefix => node["hhvm-fcgi"]["prefix"]
   )
   owner node["hhvm-fcgi"]["user"]
   group node["hhvm-fcgi"]["group"]
@@ -49,6 +57,9 @@ end
 template "/etc/logrotate.d/hhvm" do
   cookbook "php-fpm"
   source "logrotate.erb"
+  variables(
+    :logfile => node["hhvm-fcgi"]["logfile"]
+  )
   mode "0644"
   owner "root"
   group "root"
