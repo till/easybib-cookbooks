@@ -3,6 +3,17 @@ action :deploy do
   deploy_data = new_resource.deploy_data
   application_root_dir = "#{deploy_data['deploy_to']}/current"
 
+  opsworks_deploy_user do
+    deploy_data deploy_data
+    app app
+  end
+
+  opsworks_deploy_dir do
+    user  deploy_data["user"]
+    group deploy_data["group"]
+    path  deploy_data["deploy_to"]
+  end
+
   opsworks_deploy do
     deploy_data deploy_data
     app app

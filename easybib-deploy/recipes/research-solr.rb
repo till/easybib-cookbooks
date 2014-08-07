@@ -7,12 +7,6 @@ node["deploy"].each do |application, deploy|
 
   Chef::Log.info("deploy::research-solr - Deployment started.")
 
-  opsworks_deploy_dir do
-    user  deploy["user"]
-    group deploy["group"]
-    path  deploy["deploy_to"]
-  end
-
   easybib_deploy application do
     deploy_data deploy
     app application
