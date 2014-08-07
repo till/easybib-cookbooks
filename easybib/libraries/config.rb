@@ -69,18 +69,27 @@ module EasyBib
         data['deploy_dir'] = node['deploy'][appname]['deploy_to']
         data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
       else
-        if node['vagrant'].exists? && node['vagrant']['deploy_to'].exists? && node['vagrant']['deploy_to'][appname].exists?
+        if node['vagrant'] && node['vagrant']['deploy_to'] && node['vagrant']['deploy_to'][appname]
           data['deploy_dir'] = data['app_dir'] = node['vagrant']['deploy_to'][appname]
         else
           data['deploy_dir'] = data['app_dir'] = '/vagrant_data'
         end
       end
+      # ensure deploy_dir and app_dir ends with a slash:
+      data['deploy_dir'] << '/' unless data['deploy_dir'].end_with?('/')
+      data['app_dir']    << '/' unless data['app_dir'].end_with?('/')
       data
     end
 
     def get_stackdata(node)
       data = {}
-      data['stackname'] = node['opsworks']['stack']['name']
+      if ::EasyBib.is_aws(node)
+        data['stackname'] = node['opsworks']['stack']['name']
+      elsif node['vagrant']
+        data['stackname'] = "vagrant"
+      else
+        data['stackname'] = "undefined"
+      end
       data['environment'] = node['easybib_deploy']['envtype']
       data
     end
