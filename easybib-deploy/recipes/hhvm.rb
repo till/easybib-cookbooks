@@ -3,8 +3,8 @@ include_recipe "nginx-app::service"
 
 node['deploy'].each do |application, deploy|
 
-  if application == 'hhvm'
-    next unless allow_deploy(application, 'hhvm', 'hhvm')
+  if application == 'scholar'
+    next unless allow_deploy(application, 'scholar', 'hhvm')
   end
 
   Chef::Log.info("deploy::#{application} - Deployment started.")
