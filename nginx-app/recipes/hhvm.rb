@@ -20,7 +20,7 @@ node["vagrant"]["applications"].each do |app_name, app_config|
     deploy_dir doc_root_location
     default_router default_router
     domain_name domain_name
-    nginx_extra node["nginx-app"]["extras"]
+    nginx_extras node["nginx-app"]["extras"]
     notifies :restart, "service[nginx]", :delayed
   end
 end
