@@ -15,7 +15,7 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  easybib_nginx app_name do
+  easybib_nginx application do
     config_template "hhvm.conf.erb"
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
