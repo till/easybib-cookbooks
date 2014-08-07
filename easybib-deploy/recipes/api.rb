@@ -15,23 +15,20 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'id', 'nginxphpapp')
   end
 
-  env_conf = ''
-  if has_env?(application)
-    env_conf = get_env_for_nginx(application)
-  end
-
   Chef::Log.info("deploy::#{application} - Deployment started.")
   Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
-
-  opsworks_deploy_dir do
-    user  deploy["user"]
-    group deploy["group"]
-    path  deploy["deploy_to"]
-  end
 
   easybib_deploy application do
     deploy_data deploy
     app application
+  end
+
+  # env conf is deprecated, remove as soon as
+  # https://github.com/easybiblabs/easybib-discover-api/pull/9
+
+  env_conf = ''
+  if has_env?(application)
+    env_conf = get_env_for_nginx(application)
   end
 
   easybib_nginx application do
