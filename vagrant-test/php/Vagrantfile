@@ -16,9 +16,11 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => "apt-get update -y"
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
-    chef.add_recipe "easybib::role-phpapp"
-    chef.add_recipe "php-opcache"
-    chef.add_recipe "qafoo-profiler"
+    chef.add_recipe "php-hhvm"
+    #chef.add_recipe "easybib::role-getcourse-api"
+    #chef.add_recipe "nginx-app::cache"
+    #chef.add_recipe "php-opcache"
+    #chef.add_recipe "qafoo-profiler"
     chef.json = JSON.parse(File.read("./deploy.json"))
 
     chef.log_level = :debug

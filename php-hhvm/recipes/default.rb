@@ -1,17 +1,22 @@
-execute "discover apt-repository" do
-  command "echo deb #{node["php-hhvm"]["apt"]["repo"]} #{node["lsb"]["codename"]} main > #{node["php-hhvm"]["apt"]["file"]}"
-  not_if do
-    File.exists?(node["php-hhvm"]["apt"]["file"])
+include_recipe "apt"
+include_recipe "apt::ppa"
+
+easybib_launchpad node["php-hhvm"]["boost"]["ppa"] do
+  action :discover
+  only_if do
+    node["lsb"]["release"].to_f < 14.04
   end
 end
 
-execute "update_hhvm_apt" do
-  command "apt-get update -y --allow-unauthenticated"
+apt_repository "hhvm" do
+  uri node["php-hhvm"]["apt"]["repo"]
+  distribution node["lsb"]["codename"]
+  components ["main"]
+  key node["php-hhvm"]["apt"]["key"]
 end
 
 apt_package "install hhvm" do
-  package_name "hhvm"
-  options "--allow-unauthenticated"
+  package_name "hhvm#{node["php-hhvm"]["build"]}"
 end
 
 include_recipe "php-hhvm::configure"

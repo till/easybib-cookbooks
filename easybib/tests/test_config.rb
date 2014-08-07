@@ -3,7 +3,8 @@ require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 require File.join(File.dirname(__FILE__), '../libraries', 'config.rb')
 
-class TestEasyBib < Test::Unit::TestCase
+# rubocop:disable ClassLength
+class TestEasyBibConfig < Test::Unit::TestCase
   include EasyBib
 
   def test_config_no_doublequote
@@ -32,6 +33,7 @@ class TestEasyBib < Test::Unit::TestCase
 appname = \"some_app\"
 domains = \"foo.tld,bar.tld\"
 deploy_dir = \"/tmp/bla\"
+app_dir = \"/tmp/bla/current/\"
 [deployed_stack]
 stackname = \"opsworks-stack\"
 environment = \"playground\"
@@ -46,6 +48,7 @@ BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
     assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
 export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld,bar.tld\"
 export DEPLOYED_APPLICATION_DEPLOY_DIR=\"/tmp/bla\"
+export DEPLOYED_APPLICATION_APP_DIR=\"/tmp/bla/current/\"
 export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
 export DEPLOYED_STACK_ENVIRONMENT=\"playground\"
 export BLA_SOMEKEY=\"somevalue\"
@@ -58,6 +61,7 @@ export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"\n",
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
 fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla\";
+fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
 fastcgi_param BLA_SOMEKEY \"somevalue\";
@@ -66,23 +70,47 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
     )
   end
 
+  def test_config_to_nginx_empty_settings
+    fake_node = Chef::Node.new
+    fake_node.set['deploy'] = {
+        'some_app' => {
+          'application' => 'some_app',
+          'domains' => ['foo.tld', 'bar.tld'],
+          'deploy_to' => '/tmp/bla'
+        }
+      }
+
+    fake_node.set['opsworks'] =  { 'stack' => { 'name' => 'opsworks-stack' } }
+    fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
+
+    assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
+fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
+fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla\";
+fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
+fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
+fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
+      ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
+    )
+  end
+
   def test_config_to_php
     assert_equal("<?php
-$deploy_config = array(
-  'deployed_application' => array(
+return [
+  'deployed_application' => [
     'appname'=>\"some_app\",
     'domains'=>\"foo.tld,bar.tld\",
     'deploy_dir'=>\"/tmp/bla\",
-  ),
-  'deployed_stack' => array(
+    'app_dir'=>\"/tmp/bla/current/\",
+  ],
+  'deployed_stack' => [
     'stackname'=>\"opsworks-stack\",
     'environment'=>\"playground\",
-  ),
-  'settings' => array(
+  ],
+  'settings' => [
     'BLA_SOMEKEY'=>\"somevalue\",
     'BLA_SOMEGROUP_SOMEOTHERKEY'=>\"someothervalue\",
-  ),
-);",
+  ],
+];",
       ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
     )
   end
@@ -95,13 +123,15 @@ $deploy_config = array(
         'some_app' => {
           'application' => 'some_app',
           'domains' => ['foo.tld', 'bar.tld'],
-          'deploy_to' => '/tmp/bla',
-          'env' => {
-            'bla' => {
-              'somekey' => 'somevalue',
-              'somegroup' => {
-                'someotherkey' => 'someothervalue'
-              }
+          'deploy_to' => '/tmp/bla'
+        }
+      }
+    fake_node.set['some_app'] = {
+        'env' => {
+          'bla' => {
+            'somekey' => 'somevalue',
+            'somegroup' => {
+              'someotherkey' => 'someothervalue'
             }
           }
         }

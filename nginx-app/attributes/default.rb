@@ -55,6 +55,14 @@ default["nginx-app"]["css_modules"] = {
     "folders"         => "folders"
 }
 
+default["nginx-app"]["cache"] = {
+  "enabled" => false,
+  "lifetime" => "5m",
+  "methods" => "GET",
+  "path" => "/dev/shm/nginxcache",
+  "zone" => "PHP"
+}
+
 # app config:
 # default["nginx-app"]["example-app"] = {}
 # default["nginx-app"]["example-app"]["routes_enabled"] = []

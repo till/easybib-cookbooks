@@ -16,6 +16,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'oclc_eswitch', 'oclc-eswitch')
   when 'proquest'
     next unless allow_deploy(application, 'proquest')
+  when 'recommend'
+    next unless allow_deploy(application, 'recommend')
   when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
   when 'worldcat'

@@ -18,7 +18,13 @@ node['deploy'].each do |application, deploy|
   Chef::Log.info("deploy::#{application} - Deployment started.")
   Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
-  easybib_deploy do
+  opsworks_deploy_dir do
+    user  deploy["user"]
+    group deploy["group"]
+    path  deploy["deploy_to"]
+  end
+
+  easybib_deploy application do
     deploy_data deploy
     app application
   end
@@ -53,13 +59,6 @@ node['deploy'].each do |application, deploy|
         app_name appname
         config config
       end
-    end
-  when 'travis_asset_browser'
-    template "#{deploy["deploy_to"]}/current/config.php" do
-      source "config.php.erb"
-      mode 0600
-      owner "www-data"
-      variables :config => node['travis-asset-browser']['config']
     end
   end
 

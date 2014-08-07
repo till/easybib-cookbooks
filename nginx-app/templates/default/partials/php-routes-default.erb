@@ -7,7 +7,7 @@
         try_files $uri $uri/ @site;
     }
 
-<%if @php_bypass_static_content -%>
+<% if @php_bypass_static_content -%>
     location ~* \.(jpg|jpeg|gif|png|css|js|ico|txt)$ {
         # Just an empty block so it is not matched by @site below
         # See easybib/issues#417
@@ -29,10 +29,19 @@
     }
 
     location @site {
-            fastcgi_pass  <%=@upstream%>_phpfpm;
-            include       fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+        fastcgi_pass  <%=@upstream%>_phpfpm;
+        include       fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+
+        add_header X-Cache $upstream_cache_status;
+
+<% if @cache_config and @cache_config["enabled"] == true -%>
+        fastcgi_cache <%=@cache_config["zone"]%>;
+        fastcgi_cache_bypass $fastcgi_skipcache;
+        fastcgi_no_cache $fastcgi_skipcache;
+<% end -%>
+
 <% if @env_conf && !@env_conf.empty? -%>
-            <%=@env_conf%>
+        <%=@env_conf%>
 <% end -%>
     }

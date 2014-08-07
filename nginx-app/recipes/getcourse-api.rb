@@ -1,3 +1,5 @@
+include_recipe "nginx-app::cache"
+
 config = "api"
 
 if is_aws
@@ -10,7 +12,7 @@ else
   end
 end
 
-domain_name = node["getcourse"]["domain"]["api"]
+domain_name = node["getcourse"]["domain"][config]
 domain_conf = get_domain_conf("getcourse")
 
 env_conf = ""
@@ -31,7 +33,8 @@ template "/etc/nginx/sites-enabled/#{config}.conf" do
     :nginx_extra => node["nginx-app"]["extras"],
     :default_router => node["nginx-app"]["default_router"],
     :upstream => config,
-    :env_conf => env_conf
+    :env_conf => env_conf,
+    :cache_config => node["nginx-app"]["cache"]
   )
   notifies :restart, "service[nginx]", :delayed
 end

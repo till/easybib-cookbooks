@@ -1,16 +1,15 @@
 action :create do
   app = new_resource.app
-  path = new_resource.path
 
-  if path.nil?
-    if ::EasyBib.is_aws(node)
-      path = "#{node['deploy'][app]['deploy_to']}/current/"
-    else
-      fail "Fatal: easybib_env-config needs path in non-aws setup"
-    end
+  if new_resource.path.nil?
+    path = node['deploy'][app]['deploy_to'] + '/current/'
+  else
+    path = new_resource.path
   end
 
-  ["ini", "php", "shell"].each do |format|
+  Chef::Log.info("writing envconfig for #{app} to #{path}")
+
+  ["ini", "php", "sh"].each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
       mode   "0644"
       cookbook "easybib"

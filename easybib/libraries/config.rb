@@ -35,17 +35,14 @@ module EasyBib
 
     def get_configcontent(format, appname, node = self.node)
       fail "No Config for #{appname}" if node['deploy'][appname].nil?
+      settings = {}
+      if node.attribute?(appname) && node[appname].attribute?('env')
+        settings = streamline_appenv(node[appname]['env'])
+      end
       data = {
-        'deployed_application' => {
-          'appname' => node['deploy'][appname]['application'],
-          'domains' => node['deploy'][appname]['domains'].join(','),
-          'deploy_dir' => node['deploy'][appname]['deploy_to']
-        },
-        'deployed_stack' => {
-          'stackname' => node['opsworks']['stack']['name'],
-          'environment' => node['easybib_deploy']['envtype']
-        },
-        'settings' => streamline_appenv(node['deploy'][appname]['env'])
+        'deployed_application' => get_appdata(node, appname),
+        'deployed_stack' => get_stackdata(node),
+        'settings' => settings
       }
       to_configformat(format, data)
     end
@@ -64,11 +61,35 @@ module EasyBib
 
     protected
 
+    def get_appdata(node, appname)
+      data = {}
+      data['appname'] = node['deploy'][appname]['application']
+      data['domains'] = node['deploy'][appname]['domains'].join(',')
+      if ::EasyBib.is_aws(node)
+        data['deploy_dir'] = node['deploy'][appname]['deploy_to']
+        data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
+      else
+        if node['vagrant'].exists? && node['vagrant']['deploy_to'].exists? && node['vagrant']['deploy_to'][appname].exists?
+          data['deploy_dir'] = data['app_dir'] = node['vagrant']['deploy_to'][appname]
+        else
+          data['deploy_dir'] = data['app_dir'] = '/vagrant_data'
+        end
+      end
+      data
+    end
+
+    def get_stackdata(node)
+      data = {}
+      data['stackname'] = node['opsworks']['stack']['name']
+      data['environment'] = node['easybib_deploy']['envtype']
+      data
+    end
+
     # generate top of file
     def generate_start(format)
       case format
       when "php"
-        "<?php\n$deploy_config = array(\n"
+        "<?php\nreturn [\n"
       else
         ""
       end
@@ -78,7 +99,7 @@ module EasyBib
     def generate_end(format)
       case format
       when "php"
-        ");"
+        "];"
       else
         ""
       end
@@ -88,7 +109,7 @@ module EasyBib
     def generate_section_start(format, main_section)
       case format
       when "php"
-        "  '#{main_section}' => array(\n"
+        "  '#{main_section}' => [\n"
       when "ini"
         "[#{main_section}]\n"
       else
@@ -100,7 +121,7 @@ module EasyBib
     def generate_section_end(format, main_section)
       case format
       when "php"
-        "  ),\n"
+        "  ],\n"
       else
         ""
       end
@@ -142,6 +163,8 @@ module EasyBib
       when "nginx"
         build_nginx_config(var, value, section)
       when "shell"
+        build_shell_config(var, value, section)
+      when "sh"
         build_shell_config(var, value, section)
       when "ini"
         build_ini_config(var, value, section)

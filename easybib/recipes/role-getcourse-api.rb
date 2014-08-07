@@ -13,7 +13,14 @@ include_recipe "getcourse-deploy::api"
 include_recipe "nginx-app::getcourse-api"
 include_recipe "nginx-app::getcourse-ff"
 
+include_recipe "awscli" if is_aws
+
 unless is_aws
+
+  chef_gem "travis" do
+    action :install
+  end
+
   gearmanconf_root_dir = ::File.expand_path("#{node['vagrant']['deploy_to']['api']}/..")
   import_file_path = "#{gearmanconf_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
 
