@@ -31,7 +31,7 @@ node["vagrant"]["applications"].each do |app_name, app_config|
   end
 
   easybib_envconfig app_name do
-    path doc_root_location
+    path app_root_location
   end
 
 end

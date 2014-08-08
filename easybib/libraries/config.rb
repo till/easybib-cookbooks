@@ -34,7 +34,6 @@ module EasyBib
     end
 
     def get_configcontent(format, appname, node = self.node)
-      fail "No Config for #{appname}" if node['deploy'][appname].nil?
       settings = {}
       if node.attribute?(appname) && node[appname].attribute?('env')
         settings = streamline_appenv(node[appname]['env'])
@@ -63,22 +62,46 @@ module EasyBib
 
     def get_appdata(node, appname)
       data = {}
-      data['appname'] = node['deploy'][appname]['application']
-      data['domains'] = node['deploy'][appname]['domains'].join(',')
+      if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
+        data['appname'] = appname
+      else
+        data['appname'] = node['deploy'][appname]['application']
+      end
+
+      data['domains'] = get_domains(node, appname)
+
       if ::EasyBib.is_aws(node)
         data['deploy_dir'] = node['deploy'][appname]['deploy_to']
         data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
       else
-        if node['vagrant'] && node['vagrant']['deploy_to'] && node['vagrant']['deploy_to'][appname]
-          data['deploy_dir'] = data['app_dir'] = node['vagrant']['deploy_to'][appname]
-        else
+        if node.fetch('vagrant', {}).fetch('applications', {})[appname].nil?
           data['deploy_dir'] = data['app_dir'] = '/vagrant_data'
+        else
+          if node['vagrant']['applications'][appname]['app_root_location'].nil?
+            path = node['vagrant']['applications'][appname]['doc_root_location']
+            Chef::Log.warn('app_root_location is not set in web_dna.json, trying to guess')
+            data['deploy_dir'] = data['app_dir'] = "/" + path.split('/')[1..-2].join('/')
+          else
+            data['deploy_dir'] = data['app_dir'] = node['vagrant']['applications'][appname]['app_root_location']
+          end
         end
       end
       # ensure deploy_dir and app_dir ends with a slash:
       data['deploy_dir'] << '/' unless data['deploy_dir'].end_with?('/')
       data['app_dir']    << '/' unless data['app_dir'].end_with?('/')
       data
+    end
+
+    def get_domains(node, appname)
+      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
+        return node['deploy'][appname]['domains'].join(',')
+      end
+
+      unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
+        return node['vagrant']['applications'][appname]['domain_name']
+      end
+
+      ''
     end
 
     def get_stackdata(node)
