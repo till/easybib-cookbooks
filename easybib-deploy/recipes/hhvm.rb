@@ -1,3 +1,4 @@
+include_recipe "hhvm-fcgi::configure"
 include_recipe "hhvm-fcgi::service"
 include_recipe "nginx-app::service"
 
