@@ -74,17 +74,7 @@ module EasyBib
         data['deploy_dir'] = node['deploy'][appname]['deploy_to']
         data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
       else
-        if node.fetch('vagrant', {}).fetch('applications', {})[appname].nil?
-          data['deploy_dir'] = data['app_dir'] = '/vagrant_data'
-        else
-          if node['vagrant']['applications'][appname]['app_root_location'].nil?
-            path = node['vagrant']['applications'][appname]['doc_root_location']
-            Chef::Log.warn('app_root_location is not set in web_dna.json, trying to guess')
-            data['deploy_dir'] = data['app_dir'] = "/" + path.split('/')[1..-2].join('/')
-          else
-            data['deploy_dir'] = data['app_dir'] = node['vagrant']['applications'][appname]['app_root_location']
-          end
-        end
+        data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
       end
       # ensure deploy_dir and app_dir ends with a slash:
       data['deploy_dir'] << '/' unless data['deploy_dir'].end_with?('/')
@@ -93,15 +83,30 @@ module EasyBib
     end
 
     def get_domains(node, appname)
-      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
-        return node['deploy'][appname]['domains'].join(',')
-      end
-
       unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
         return node['vagrant']['applications'][appname]['domain_name']
       end
 
+      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
+        return node['deploy'][appname]['domains'].join(',')
+      end
+
       ''
+    end
+
+    def get_vagrant_appdir(node, appname)
+      has_docroot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
+      has_approot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['app_root_location'].nil?
+
+      if has_approot_location
+        return node['vagrant']['applications'][appname]['app_root_location']
+      elsif !has_docroot_location
+        return '/vagrant_data'
+      end
+
+      Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
+      path = node['vagrant']['applications'][appname]['doc_root_location']
+      "/" + path.split('/')[1..-2].join('/')
     end
 
     def get_stackdata(node)
