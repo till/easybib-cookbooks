@@ -58,3 +58,24 @@ For example, this stack json:
     'AWS_SECRET_KEY'=>"BAR",
   ],
  ```
+ 
+ ## Stack Settings for Vagrant
+ 
+ ```
+ {
+   "vagrant": {
+     "applications": {
+       "application_shortname": {
+         "app_root_location": "/some_directory",
+         "doc_root_location": "/some_directory/www",
+         "domain_name": "my-domain.local"
+       }
+     }
+   },
+   "application_shortname": {
+     "env": {
+       "random_envvar": "foo"
+     }
+   }
+ }
+ ```
