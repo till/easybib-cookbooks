@@ -8,4 +8,4 @@ recipe            "hhvm-fcgi::default", "Set-up and start the hhvm fcgi server"
 supports 'ubuntu'
 
 depends "apt"
-depends "php-hhvm"
+depends "easybib"

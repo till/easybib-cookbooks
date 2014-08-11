@@ -46,11 +46,15 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
   mode     "0755"
   source   "php.ini.erb"
   variables(
-    :enable_dl      => 'Off',
-    :error_log      => 'syslog',
-    :memory_limit   => node["php-fpm"]["memorylimit"],
+    :enable_dl => 'Off',
+    :memory_limit => node["php-fpm"]["memorylimit"],
     :display_errors => display_errors,
-    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"]
+    :max_execution_time => node["php-fpm"]["maxexecutiontime"],
+    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"],
+    :logfile => node["php-fpm"]["logfile"],
+    :error_log => 'syslog',
+    :tmpdir => node["php-fpm"]["tmpdir"],
+    :prefix => node["php-fpm"]["prefix"]
   )
   owner    node["php-fpm"]["user"]
   group    node["php-fpm"]["group"]
@@ -65,7 +69,11 @@ template "#{etc_cli_dir}/#{conf_cli}" do
     :error_log      => 'syslog',
     :memory_limit   => '1024M',
     :display_errors => 'On',
-    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"]
+    :max_execution_time => '-1',
+    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"],
+    :logfile => node["php-fpm"]["logfile"],
+    :tmpdir => node["php-fpm"]["tmpdir"],
+    :prefix => node["php-fpm"]["prefix"]
   )
   owner node["php-fpm"]["user"]
   group node["php-fpm"]["group"]
@@ -81,6 +89,9 @@ end
 
 template "/etc/logrotate.d/php" do
   source "logrotate.erb"
+  variables(
+    :logfile => node["php-fpm"]["logfile"]
+  )
   mode "0644"
   owner "root"
   group "root"

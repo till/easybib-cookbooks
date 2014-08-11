@@ -1,9 +1,0 @@
-<%= File.dirname(node["hhvm-fcgi"][:logfile]) %>/*.log {
-       weekly
-       rotate 10
-       copytruncate
-       delaycompress
-       compress
-       notifempty
-       missingok
-}
