@@ -184,6 +184,10 @@ module EasyBib
       returnparam = {}
       return returnparam if data.nil?
       data.each_pair do |section, part_data|
+        if part_data.is_a?(String)
+          returnparam[section] = part_data
+          next
+        end
         part_data.each_pair do |config_key, config_value|
           if config_value.is_a?(String)
             fail "The character \" is not supported as a value in the config" if config_value.match('"')
