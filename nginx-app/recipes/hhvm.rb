@@ -24,4 +24,7 @@ node["vagrant"]["applications"].each do |app_name, app_config|
     nginx_extras node["nginx-app"]["extras"]
     notifies :restart, "service[nginx]", :delayed
   end
+
+  easybib_envconfig app_name
+
 end

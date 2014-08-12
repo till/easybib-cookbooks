@@ -46,3 +46,5 @@ template "/etc/nginx/sites-enabled/easybib.com.conf" do
   )
   notifies :restart, "service[nginx]", :delayed
 end
+
+easybib_envconfig "easybib"
