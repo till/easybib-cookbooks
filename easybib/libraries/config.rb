@@ -58,6 +58,28 @@ module EasyBib
       config << generate_end(format)
     end
 
+    def get_vagrant_appdir(node, appname)
+      if ::EasyBib.is_aws(node)
+        Chef::Log.warn('get_vagrant_appdir called from AWS env. There is something broken.')
+        # trying to return a somewhat sane default
+        return node['deploy'][appname]['deploy_to']
+      end
+
+      has_docroot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
+      has_approot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['app_root_location'].nil?
+
+      if has_approot_location
+        return node['vagrant']['applications'][appname]['app_root_location']
+      elsif !has_docroot_location
+        Chef::Log.info('neither app_root_location nor doc_root_location set. Locations set to vagrant default')
+        return '/vagrant_data'
+      end
+
+      Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
+      path = node['vagrant']['applications'][appname]['doc_root_location']
+      "/" + path.split('/')[1..-2].join('/')
+    end
+
     protected
 
     def get_appdata(node, appname)
@@ -92,21 +114,6 @@ module EasyBib
       end
 
       ''
-    end
-
-    def get_vagrant_appdir(node, appname)
-      has_docroot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
-      has_approot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['app_root_location'].nil?
-
-      if has_approot_location
-        return node['vagrant']['applications'][appname]['app_root_location']
-      elsif !has_docroot_location
-        return '/vagrant_data'
-      end
-
-      Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
-      path = node['vagrant']['applications'][appname]['doc_root_location']
-      "/" + path.split('/')[1..-2].join('/')
     end
 
     def get_stackdata(node)
