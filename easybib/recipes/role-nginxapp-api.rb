@@ -5,5 +5,5 @@ include_recipe "php-intl"
 if is_aws
   include_recipe "easybib-deploy::api"
 else
-  include_recipe "easybib-deploy::vagrant-api"
+  include_recipe "nginx-app::vagrant-api"
 end
