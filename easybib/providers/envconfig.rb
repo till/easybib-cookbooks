@@ -2,7 +2,11 @@ action :create do
   app = new_resource.app
 
   if new_resource.path.nil?
-    path = node['deploy'][app]['deploy_to'] + '/current/'
+    if ::EasyBib.is_aws(node)
+      path = node['deploy'][app]['deploy_to'] + '/current/'
+    else
+      path = ::EasyBib::Config.get_vagrant_appdir(node, app)
+    end
   else
     path = new_resource.path
   end

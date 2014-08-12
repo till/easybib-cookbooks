@@ -102,7 +102,7 @@ fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
         }
       }
 
-    fake_node.set['vagrant'] =  { 'deploy_to' => { 'some_app' => '/some_path' } }
+    fake_node.set['vagrant'] =  { 'applications' => { 'some_app' => { 'app_root_location' => '/some_path' } } }
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
 
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";

@@ -34,7 +34,6 @@ module EasyBib
     end
 
     def get_configcontent(format, appname, node = self.node)
-      fail "No Config for #{appname}" if node['deploy'][appname].nil?
       settings = {}
       if node.attribute?(appname) && node[appname].attribute?('env')
         settings = streamline_appenv(node[appname]['env'])
@@ -59,26 +58,62 @@ module EasyBib
       config << generate_end(format)
     end
 
+    def get_vagrant_appdir(node, appname)
+      if ::EasyBib.is_aws(node)
+        Chef::Log.warn('get_vagrant_appdir called from AWS env. There is something broken.')
+        # trying to return a somewhat sane default
+        return node['deploy'][appname]['deploy_to']
+      end
+
+      has_docroot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
+      has_approot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['app_root_location'].nil?
+
+      if has_approot_location
+        return node['vagrant']['applications'][appname]['app_root_location']
+      elsif !has_docroot_location
+        Chef::Log.info('neither app_root_location nor doc_root_location set. Locations set to vagrant default')
+        return '/vagrant_data'
+      end
+
+      Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
+      path = node['vagrant']['applications'][appname]['doc_root_location']
+      "/" + path.split('/')[1..-2].join('/')
+    end
+
     protected
 
     def get_appdata(node, appname)
       data = {}
-      data['appname'] = node['deploy'][appname]['application']
-      data['domains'] = node['deploy'][appname]['domains'].join(',')
+      if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
+        data['appname'] = appname
+      else
+        data['appname'] = node['deploy'][appname]['application']
+      end
+
+      data['domains'] = get_domains(node, appname)
+
       if ::EasyBib.is_aws(node)
         data['deploy_dir'] = node['deploy'][appname]['deploy_to']
         data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
       else
-        if node['vagrant'] && node['vagrant']['deploy_to'] && node['vagrant']['deploy_to'][appname]
-          data['deploy_dir'] = data['app_dir'] = node['vagrant']['deploy_to'][appname]
-        else
-          data['deploy_dir'] = data['app_dir'] = '/vagrant_data'
-        end
+        data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
       end
       # ensure deploy_dir and app_dir ends with a slash:
       data['deploy_dir'] << '/' unless data['deploy_dir'].end_with?('/')
       data['app_dir']    << '/' unless data['app_dir'].end_with?('/')
       data
+    end
+
+    def get_domains(node, appname)
+      unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
+        return node['vagrant']['applications'][appname]['domain_name']
+      end
+
+      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
+        return node['deploy'][appname]['domains'].join(',')
+      end
+
+      ''
     end
 
     def get_stackdata(node)
@@ -149,6 +184,10 @@ module EasyBib
       returnparam = {}
       return returnparam if data.nil?
       data.each_pair do |section, part_data|
+        if part_data.is_a?(String)
+          returnparam[section] = part_data
+          next
+        end
         part_data.each_pair do |config_key, config_value|
           if config_value.is_a?(String)
             fail "The character \" is not supported as a value in the config" if config_value.match('"')
