@@ -1,4 +1,4 @@
-<%= File.dirname(node["php-fpm"][:logfile]) %>/*.log {
+<%= File.dirname(@logfile) %>/*.log {
        weekly
        rotate 10
        copytruncate
