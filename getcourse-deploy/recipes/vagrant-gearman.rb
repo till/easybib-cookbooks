@@ -2,7 +2,7 @@ if is_aws
   Chef::Application.fatal!('This recipe is vagrant only')
 end
 
-if node.fetch('deploy', {}).fetch('api', {}).fetch('applications', {})['app_root_location'].nil?
+if node.fetch("vagrant", {}).fetch("applications", {}).fetch("api", {})["app_root_location"].nil?
   Chef::Log.warn('Please upgrade getcourse/vagrant, your web_dna.json is outdated!')
   gearmanconf_root_dir = ::File.expand_path("#{node['vagrant']['deploy_to']['api']}/..")
 else
