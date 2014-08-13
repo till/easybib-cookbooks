@@ -36,6 +36,20 @@ node['deploy'].each do |application, deploy|
     end
 
     include_recipe "monit::pecl-manager"
+
+    cron_d "frontend-acceptance-tests" do
+      action :create
+      hour 3
+      user deploy["user"]
+      command "/srv/www/api/current/bin/frontend-acceptance.rb 'acceptance' '#{node["easybib_deploy"]["travis-token"]}'"
+      path "/usr/local/bin:/usr/bin:/bin"
+      only_if do
+        ::EasyBib.deploy_crontab?(
+          node["opsworks"]["instance"]["layers"],
+          node["getcourse-deploy"]["master_server_layer"]
+        )
+      end
+    end
   end
 
   service "php-fpm" do
