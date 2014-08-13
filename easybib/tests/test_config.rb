@@ -31,7 +31,7 @@ class TestEasyBibConfig < Test::Unit::TestCase
     assert_equal(
       "[deployed_application]
 appname = \"some_app\"
-domains = \"foo.tld,bar.tld\"
+domains = \"foo.tld bar.tld\"
 deploy_dir = \"/tmp/bla/\"
 app_dir = \"/tmp/bla/current/\"
 [deployed_stack]
@@ -46,7 +46,7 @@ BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
 
   def test_config_to_shell
     assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
-export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld,bar.tld\"
+export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld bar.tld\"
 export DEPLOYED_APPLICATION_DEPLOY_DIR=\"/tmp/bla/\"
 export DEPLOYED_APPLICATION_APP_DIR=\"/tmp/bla/current/\"
 export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
@@ -59,7 +59,7 @@ export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"\n",
 
   def test_config_to_nginx
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
-fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
+fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla/\";
 fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
@@ -84,7 +84,7 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
 
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
-fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
+fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla/\";
 fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
@@ -106,7 +106,7 @@ fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
 
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
-fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
+fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"vagrant\";
@@ -128,7 +128,7 @@ fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
 
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
-fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld,bar.tld\";
+fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/vagrant_data/\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/vagrant_data/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"undefined\";
@@ -142,7 +142,7 @@ fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
 return [
   'deployed_application' => [
     'appname'=>\"some_app\",
-    'domains'=>\"foo.tld,bar.tld\",
+    'domains'=>\"foo.tld bar.tld\",
     'deploy_dir'=>\"/tmp/bla/\",
     'app_dir'=>\"/tmp/bla/current/\",
   ],

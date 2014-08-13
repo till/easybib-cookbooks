@@ -110,7 +110,7 @@ module EasyBib
       end
 
       unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
-        return node['deploy'][appname]['domains'].join(',')
+        return node['deploy'][appname]['domains'].join(' ')
       end
 
       ''
