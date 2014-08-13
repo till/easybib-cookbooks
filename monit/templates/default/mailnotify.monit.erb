@@ -1,5 +1,5 @@
 set mailserver <%= @host %> USERNAME <%= @mailuser %> PASSWORD <%= @mailpass %> using TLSV1
 set mail-format { from: <%= @mailsender %> }
 <% @recipients.each do |recipient_address| -%>
-set alert <%= recipient_address %> but not on { pid ppid }
+set alert <%= recipient_address %> but not on { pid ppid nonexist instance }
 <% end -%>
