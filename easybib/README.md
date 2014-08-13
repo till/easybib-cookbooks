@@ -8,7 +8,7 @@ Example: .deploy_configuration.php:
 return [
   'deployed_application' => [
     'appname'=>"some_app",
-    'domains'=>"app.example.tld, app.local",
+    'domains'=>"app.example.tld  app.local",
     'app_dir'=>"/srv/www/foo-app/",
     'deploy_dir'=>"/srv/www/foo-app/current/",
   ],
@@ -24,7 +24,7 @@ return [
 
 ### deployed_application
 * appname: The application name (short_name in opsworks)
-* domains: The domain(s), if more than one, concatenated with a comma
+* domains: The domain(s), if more than one, concatenated with space
 * app_dir: The application root directory (you usually want to use deploy_dir, though, see below)
 * deploy_dir: The directory the application has been deployed to. On vagrant, this is the same as app_dir, on opsworks, it is appdir/current/
 

@@ -72,12 +72,29 @@ module EasyBib
         return node['vagrant']['applications'][appname]['app_root_location']
       elsif !has_docroot_location
         Chef::Log.info('neither app_root_location nor doc_root_location set. Locations set to vagrant default')
-        return '/vagrant_data'
+        return '/vagrant_data/'
       end
 
       Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
       path = node['vagrant']['applications'][appname]['doc_root_location']
-      "/" + path.split('/')[1..-2].join('/')
+      "/" + path.split('/')[1..-2].join('/') + "/"
+    end
+
+    def get_domains(node, appname)
+      unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
+        domains = node['vagrant']['applications'][appname]['domain_name']
+        if domains.is_a?(String)
+          return domains
+        else
+          return domains.join(' ')
+        end
+      end
+
+      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
+        return node['deploy'][appname]['domains'].join(' ')
+      end
+
+      ''
     end
 
     protected
@@ -102,18 +119,6 @@ module EasyBib
       data['deploy_dir'] << '/' unless data['deploy_dir'].end_with?('/')
       data['app_dir']    << '/' unless data['app_dir'].end_with?('/')
       data
-    end
-
-    def get_domains(node, appname)
-      unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
-        return node['vagrant']['applications'][appname]['domain_name']
-      end
-
-      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
-        return node['deploy'][appname]['domains'].join(',')
-      end
-
-      ''
     end
 
     def get_stackdata(node)

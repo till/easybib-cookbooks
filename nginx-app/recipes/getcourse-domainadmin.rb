@@ -4,13 +4,18 @@ if is_aws
   deploy_dir = "/srv/www/#{config}/current/build/"
 else
   if node["vagrant"]["combined"] == true
-    deploy_dir = node["vagrant"]["deploy_to"][config]
+    if node.fetch("vagrant", {}).fetch("applications", {}).fetch(config, {})["doc_root_location"].nil?
+      Chef::Log.warn("Please upgrade getcourse/vagrant, your web_dna.json is outdated!")
+      deploy_dir = node["vagrant"]["deploy_to"][config]
+    else
+      deploy_dir = node["vagrant"]["applications"][config]["doc_root_location"]
+    end
   else
     deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
   end
 end
 
-domain_name = node["getcourse"]["domain"]["domainadmin"]
+domain_name = node["getcourse"]["domain"][config]
 default_router = "index.html"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
