@@ -3,3 +3,11 @@
         deny all;
     }
     <% end -%>
+
+    location /cgi-bin/ {
+        return 404;
+    }
+
+    location ~ \.cgi$ {
+        return 404;
+    }
