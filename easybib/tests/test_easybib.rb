@@ -136,4 +136,14 @@ class TestEasyBib < Test::Unit::TestCase
       true
     )
   end
+
+  def test_normalized_cluster_name
+    fake_node = Chef::Node.new
+    fake_node.set["opsworks"]["stack"]["name"] = "EasyBib Playgr$und-123"
+
+    assert_equal(
+      "easybib_playgr_und-123",
+      get_normalized_cluster_name(fake_node)
+    )
+  end
 end
