@@ -26,6 +26,13 @@ node['deploy'].each do |application, deploy|
     notifies :restart, "service[nginx]", :delayed
   end
 
+  link "/usr/local/bin/php" do
+    to "/usr/bin/php"
+    action :create
+    only_if { ::File.exists?('/usr/bin/php') }
+    not_if { ::File.exists?('/usr/local/bin/php') }
+  end
+
   service "hhvm-fcgi" do
     action :reload # TODO: this is probably unnessessary
   end
