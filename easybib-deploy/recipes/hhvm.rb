@@ -7,6 +7,10 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'scholar', 'hhvm')
   end
 
+  if application == 'featureflags'
+    next unless allow_deploy(application, 'featureflags', 'hhvm')
+  end
+
   Chef::Log.info("deploy::#{application} - Deployment started.")
   Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
