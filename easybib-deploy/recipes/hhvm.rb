@@ -1,13 +1,6 @@
 include_recipe "hhvm-fcgi::service"
 include_recipe "nginx-app::service"
 
-link "/usr/local/bin/php" do
-  to "/usr/bin/php"
-  action :create
-  only_if { ::File.exists?('/usr/bin/php') }
-  not_if { ::File.exists?('/usr/local/bin/php') }
-end
-
 node['deploy'].each do |application, deploy|
 
   if application == 'scholar'

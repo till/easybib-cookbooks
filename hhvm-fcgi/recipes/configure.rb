@@ -54,6 +54,13 @@ template hhvm_conf do
   group node["hhvm-fcgi"]["group"]
 end
 
+directory "/var/www/.hhvm.hhbc" do
+  mode "0755"
+  action :create
+  owner node["hhvm-fcgi"]["user"]
+  group node["hhvm-fcgi"]["group"]
+end
+
 template "/etc/logrotate.d/hhvm" do
   cookbook "php-fpm"
   source "logrotate.erb"
@@ -65,4 +72,11 @@ template "/etc/logrotate.d/hhvm" do
   group "root"
   notifies :enable, "service[hhvm]"
   notifies :start, "service[hhvm]"
+end
+
+link "/usr/local/bin/php" do
+  to "/usr/bin/php"
+  action :create
+  only_if { ::File.exists?('/usr/bin/php') }
+  not_if { ::File.exists?('/usr/local/bin/php') }
 end
