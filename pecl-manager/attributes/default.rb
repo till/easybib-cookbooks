@@ -1,2 +1,2 @@
-default["peclmanager"] = {}
-default["peclmanager"]["user"] = "www-data"
+default["pecl-manager"] = {}
+default["pecl-manager"]["user"] = "www-data"
