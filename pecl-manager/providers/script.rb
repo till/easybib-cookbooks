@@ -18,12 +18,6 @@ action :create do
     only_if "test -L /etc/init.d/pecl-manager"
   end
 
-  if ::EasyBib.is_aws(node)
-    gearman_user = "www-data"
-  else
-    gearman_user = "vagrant"
-  end
-
   t = template "/etc/init.d/pecl-manager" do
     cookbook "pecl-manager"
     source "init.d.erb"
@@ -34,7 +28,7 @@ action :create do
       :dir => root_dir,
       :envvar_file => new_resource.envvar_file,
       :envvar_json => envvar_json,
-      :gearman_user => gearman_user
+      :gearman_user => node["peclmanager"]["user"]
     )
   end
 
