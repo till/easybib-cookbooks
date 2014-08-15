@@ -20,7 +20,7 @@ DAEMON=${APPDIR}/bin/pecl_manager
 PIDDIR=/var/run/gearman
 PIDFILE=${PIDDIR}/manager.pid
 LOGFILE=/var/log/gearman-manager.log
-GEARMANUSER="www-data"
+GEARMANUSER="<%= @gearman_user %>"
 PARAMS="-w /dev/null -vvv"
 
 ####ENVVARS FROM JSON#####
