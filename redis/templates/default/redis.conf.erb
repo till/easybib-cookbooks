@@ -33,6 +33,10 @@ databases 16
 # different interval, or to listen to another port, and so on.
 #
 
+<% if node[:redis][:rdb][:keys_changed] > 0 -%>
+save <%= node[:redis][:rdb][:flush_interval] %> <%= node[:redis][:rdb][:keys_changed] %>
+<% end -%>
+
 <% if node[:redis][:master][:is_slave] == true -%>
 slaveof <%= node[:redis][:master][:address] %> <%= node[:redis][:master][:node] %>
 <% end -%>
