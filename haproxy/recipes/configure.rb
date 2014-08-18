@@ -20,3 +20,8 @@ template '/etc/haproxy/haproxy.cfg' do
   mode 0644
   notifies :restart, "service[haproxy]"
 end
+
+execute "echo 'checking if HAProxy is not running - if so start it'" do
+  not_if "pgrep haproxy"
+  notifies :start, "service[haproxy]"
+end
