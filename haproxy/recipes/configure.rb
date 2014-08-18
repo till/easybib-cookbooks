@@ -1,3 +1,5 @@
+include_recipe "haproxy::service"
+
 directory "/etc/haproxy/errors/" do
   recursive true
   mode "0755"
