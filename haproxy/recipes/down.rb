@@ -12,3 +12,11 @@ node["haproxy"]["errorloc"].each do |code, file|
     mode 0644
   end
 end
+
+template '/etc/haproxy/haproxy.cfg' do
+  source 'haproxy.easybib.cfg.erb'
+  owner 'root'
+  group 'root'
+  mode 0644
+  notifies :restart, "service[haproxy]"
+end
