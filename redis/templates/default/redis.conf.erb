@@ -113,6 +113,8 @@ masterauth <%= node[:redis][:master][:password] %>
 # IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append
 # log file in background when it gets too big.
 
+dir <%= node[:redis][:datadir] %>
+
 appendonly <%= node[:redis][:appendonly] %>
 
 # The name of the append only file (default: "appendonly.aof")
