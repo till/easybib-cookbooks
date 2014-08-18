@@ -13,6 +13,12 @@ default["redis"]["appendonly"]    = 'no'
 default["redis"]["aofile"]        = 'appendonly.aof'
 default["redis"]["appendfsync"]   = 'no'
 
+# use snapshots
+default["redis"]["rdb"] = {
+  "flush_interval" => 900,
+  "keys_changed" => 0
+}
+
 default["redis"]["ppa"] = 'ppa:chris-lea/redis-server'
 
 # master-slave configuration, allow overriding from opsworks/upstream

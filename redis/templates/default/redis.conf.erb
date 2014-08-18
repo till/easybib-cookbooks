@@ -33,6 +33,10 @@ databases 16
 # different interval, or to listen to another port, and so on.
 #
 
+<% if node[:redis][:rdb][:keys_changed] > 0 -%>
+save <%= node[:redis][:rdb][:flush_interval] %> <%= node[:redis][:rdb][:keys_changed] %>
+<% end -%>
+
 <% if node[:redis][:master][:is_slave] == true -%>
 slaveof <%= node[:redis][:master][:address] %> <%= node[:redis][:master][:node] %>
 <% end -%>
@@ -108,6 +112,8 @@ masterauth <%= node[:redis][:master][:password] %>
 #
 # IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append
 # log file in background when it gets too big.
+
+dir <%= node[:redis][:datadir] %>
 
 appendonly <%= node[:redis][:appendonly] %>
 
