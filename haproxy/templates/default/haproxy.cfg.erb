@@ -1,0 +1,37 @@
+# This is a fake-config, do not use.
+# Our "real" config is haproxy.easybib.cfg.erb
+# Opworks will generate haproxy.cfg from haproxy.cfg.erb and restart haproxy
+# before our cookbooks are being run. Since our config references custom error
+# documents, which are being rendered in haproxy::down, the "real" config would
+# point towards nonexisting error documents, and haproxy would not start with
+# our config, the setup would fail
+#
+# so we just use this dumb config which listens on 127.0.0.1 to be used with
+# opsworks, and after we generate the actual config, we just restart haproxy.
+#
+# Using opsworks default haproxy.cfg.erb would fail as well since some of the
+# backend detection magic fails with TemplateError "nil can't be coerced into Fixnum"
+
+
+global
+        maxconn 4096
+        user haproxy
+        group haproxy
+        daemon
+        quiet
+
+defaults
+        log     global
+        mode    http
+        option  httplog
+        option  dontlognull
+        retries 3
+        option redispatch
+        maxconn 2000
+        contimeout      5000
+        clitimeout      50000
+        srvtimeout      50000
+
+listen  fakesrv 127.0.0.1:8082
+        dispatch 127.0.0.1:8083
+
