@@ -13,7 +13,7 @@ package "qprofd"
 
 qprofd_flags = []
 qprofd_flags << node["qafoo-profiler"]["flags"]
-qprofd_flags << "--hostname \"#{get_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
+qprofd_flags << "--hostname \"#{get_normalized_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
 
 template "/etc/init/qprofd.conf" do
   mode 0644

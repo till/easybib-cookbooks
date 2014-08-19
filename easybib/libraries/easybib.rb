@@ -152,6 +152,11 @@ module EasyBib
     ""
   end
 
+  def get_normalized_cluster_name(node = self.node)
+    cluster_name = get_cluster_name(node)
+    cluster_name.downcase.gsub(/[^a-z0-9-]/, "_")
+  end
+
   def get_deploy_user(node = self.node)
     if node["opsworks"]
       return node["opsworks"]["deploy_user"]
