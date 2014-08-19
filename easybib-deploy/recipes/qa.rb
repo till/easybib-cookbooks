@@ -4,6 +4,8 @@ include_recipe "nginx-app::service"
 node['deploy'].each do |application, deploy|
 
   case application
+  when 'aptly'
+    next unless allow_deploy(application, 'aptly')
   when 'bibcd'
     next unless allow_deploy(application, 'bibcd')
   when 'bib_opsstatus'
