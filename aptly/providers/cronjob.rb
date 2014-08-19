@@ -13,5 +13,5 @@ action :create do
     path node["easybib_deploy"]["cron_path"]
   end
   new_resource.updated_by_last_action(true)
-  
+
 end
