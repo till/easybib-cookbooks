@@ -1,4 +1,7 @@
 if !node["prosody"]["users"].empty?
+
+  include_recipe "percona::client" if is_aws
+
   node["prosody"]["users"].each do |email, passwd|
 
     Chef::Log.debug("Email: #{email}")
