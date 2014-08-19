@@ -5,10 +5,14 @@ action :create do
   s3_mirror = node["aptly"]["s3_mirror"]
   cron_command = "MIRROR_NAME=#{mirror_name} S3_APT_MIRROR=s3://#{s3_mirror} #{path}/mirror-it.rb"
 
+  directory "/var/backups" do
+    user "backup"
+  end
+
   cron_d "aptly_sync_launchpad" do
     action :create
     minute "*/30"
-    user "backups"
+    user "backup"
     command cron_command
     path node["easybib_deploy"]["cron_path"]
   end
