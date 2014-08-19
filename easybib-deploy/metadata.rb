@@ -7,6 +7,7 @@ version           "0.1"
 
 supports 'ubuntu'
 
+depends "aptly"
 depends "bibcd"
 depends "satis"
 depends "php-fpm"
