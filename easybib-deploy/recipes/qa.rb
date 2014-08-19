@@ -64,7 +64,7 @@ node['deploy'].each do |application, deploy|
     end
   when 'aptly'
 
-    include "aptly::setup"
+    include_recipe "aptly::setup"
     aptly_cronjob do
       path "#{deploy["deploy_to"]}/current/"
     end
