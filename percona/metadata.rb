@@ -8,3 +8,5 @@ recipe            "percona::server", "Installs Percona-Server"
 recipe            "percona::repository", "Repository setup and key import"
 
 supports 'ubuntu'
+
+depends "apt"
