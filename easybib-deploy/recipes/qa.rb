@@ -60,6 +60,12 @@ node['deploy'].each do |application, deploy|
         config config
       end
     end
+  when 'aptly'
+
+    include "aptly::setup"
+    aptly_cronjob do
+      path "#{deploy["deploy_to"]}/current/"
+    end
   end
 
   service "php-fpm" do
