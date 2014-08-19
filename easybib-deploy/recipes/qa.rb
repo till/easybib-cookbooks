@@ -65,7 +65,7 @@ node['deploy'].each do |application, deploy|
   when 'aptly'
 
     include_recipe "aptly::setup"
-    aptly_cronjob do
+    aptly_cronjob "easybib-s3" do
       path "#{deploy["deploy_to"]}/current/"
     end
   end
