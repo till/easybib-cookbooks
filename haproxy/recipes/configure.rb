@@ -1,3 +1,5 @@
+include_recipe "haproxy::service"
+
 directory "/etc/haproxy/errors/" do
   recursive true
   mode "0755"
@@ -19,4 +21,9 @@ template '/etc/haproxy/haproxy.cfg' do
   group 'root'
   mode 0644
   notifies :restart, "service[haproxy]"
+end
+
+execute "echo 'checking if HAProxy is not running - if so start it'" do
+  not_if "pgrep haproxy"
+  notifies :start, "service[haproxy]"
 end
