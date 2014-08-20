@@ -29,7 +29,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe "aptly::repo"
+include_recipe "apt::ppa"
+include_recipe "apt::easybib"
 
 include_recipe "php-fpm::prepare"
 

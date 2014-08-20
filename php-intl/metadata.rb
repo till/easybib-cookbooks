@@ -5,7 +5,7 @@ version           '0.1'
 
 supports "ubuntu"
 
-depends "aptly"
+depends "apt"
 depends "php-fpm"
 depends "php"
-license "BSD License"
+license           "BSD License"

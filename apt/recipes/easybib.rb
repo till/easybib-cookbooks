@@ -1,1 +1,3 @@
-include_recipe "aptly::repo"
+easybib_launchpad node["apt"]["easybib"]["ppa"] do
+  action :discover
+end

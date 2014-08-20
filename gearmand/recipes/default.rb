@@ -1,4 +1,5 @@
-include_recipe "aptly::repo"
+include_recipe "apt::ppa"
+include_recipe "apt::easybib"
 
 package node['gearmand']['name']
 

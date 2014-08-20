@@ -1,4 +1,4 @@
-include_recipe "aptly::repo"
+include_recipe "nginx-app::ppa"
 include_recipe "nginx-app::service"
 
 ohai "reload_passwd" do

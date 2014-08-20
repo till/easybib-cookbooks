@@ -31,9 +31,8 @@ if is_aws
     include_recipe "chef_handler_sns::default"
   end
   include_recipe "easybib::opsworks-fixes"
+  include_recipe "apt::cacher-client"
 end
-
-include_recipe "aptly::repo"
 
 # landscape is buggy
 # https://bugs.launchpad.net/ubuntu/+source/pam/+bug/805423

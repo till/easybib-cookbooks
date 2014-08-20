@@ -1,4 +1,5 @@
-include_recipe "aptly::repo"
+include_recipe "apt::ppa"
+include_recipe "apt::easybib"
 
 ["php5-easybib-apcu", "php5-easybib-apc"].each do |package_name|
   Chef::Log.debug("Trying #{package_name}")
