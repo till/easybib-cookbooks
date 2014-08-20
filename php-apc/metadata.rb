@@ -5,7 +5,7 @@ license           "BSD License"
 description       "Installs ext/apc for PHP"
 version           "0.1"
 
-depends "apt"
+depends "aptly"
 depends "php-fpm"
 depends "easybib"
 

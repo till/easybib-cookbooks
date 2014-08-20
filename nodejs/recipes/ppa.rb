@@ -1,7 +1,3 @@
-include_recipe "apt::ppa"
-
-easybib_launchpad "ppa:chris-lea/node.js-devel" do
-  action :discover
-end
+include_recipe "aptly::repo"
 
 package "nodejs"

@@ -1,4 +1,3 @@
-include_recipe "apt::ppa"
-include_recipe "apt::easybib"
+include_recipe "aptly::repo"
 
 package "php5-easybib-phar"

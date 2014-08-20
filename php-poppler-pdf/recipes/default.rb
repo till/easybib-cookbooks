@@ -1,7 +1,6 @@
 include_recipe "php-fpm::service"
 
-include_recipe "apt::ppa"
-include_recipe "apt::easybib"
+include_recipe "aptly::repo"
 
 p = "php5-easybib-poppler-pdf"
 
