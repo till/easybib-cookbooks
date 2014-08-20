@@ -6,7 +6,7 @@ node['aptly']['gpgkeys'].each do |key|
 end
 
 apt_repository 'easybib-ppa' do
-  uri          'http://ppa.ezbib.com'
+  uri          'http://ppa.ezbib.com/precise55'
   distribution node['lsb']['codename']
   components   ['main']
 end
