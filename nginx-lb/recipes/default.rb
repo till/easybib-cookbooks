@@ -1,4 +1,4 @@
-include_recipe "nginx-app::ppa"
+include_recipe "aptly::repo"
 
 package 'nginx'
 include_recipe "nginx-app::service"

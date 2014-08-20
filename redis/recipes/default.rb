@@ -1,8 +1,4 @@
-include_recipe "apt::ppa"
-
-easybib_launchpad node["redis"]["ppa"] do
-  action :discover
-end
+include_recipe "aptly::repo"
 
 package "redis-server"
 

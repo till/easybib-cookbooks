@@ -5,7 +5,7 @@ license           "BSD License"
 description       "Setup for Zend Opcache for PHP"
 version           "0.1"
 
-depends "apt"
+depends "aptly"
 depends "php"
 
 supports 'ubuntu'

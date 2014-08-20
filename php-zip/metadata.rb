@@ -5,6 +5,7 @@ license           "BSD License"
 description       "Installs ext/zip for PHP"
 version           "0.1"
 
+depends "aptly"
 depends "php-fpm"
 
 supports 'ubuntu'

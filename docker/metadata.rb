@@ -7,5 +7,5 @@ version           '0.1'
 
 supports 'ubuntu', "12.04.2"
 
-depends "apt"
+depends "aptly"
 depends "easybib"

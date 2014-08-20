@@ -5,6 +5,6 @@ version           '0.1'
 
 supports "ubuntu"
 
-depends "apt"
+depends "aptly"
 depends "easybib"
-license           "BSD License"
+license "BSD License"
