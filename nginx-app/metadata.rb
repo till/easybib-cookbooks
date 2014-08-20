@@ -9,7 +9,7 @@ recipe            "nginx-app::configure", "Configures virtualhost, etc."
 
 depends "php-fpm"
 depends "hhvm-fcgi"
-depends "aptly"
+depends "apt"
 depends "easybib"
 
 supports 'ubuntu'

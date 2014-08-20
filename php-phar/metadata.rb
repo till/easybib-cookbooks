@@ -6,6 +6,6 @@ description       "Installs ext/phar for PHP"
 version           "0.1"
 
 depends "php-fpm"
-depends "aptly"
+depends "apt"
 
 supports 'ubuntu'

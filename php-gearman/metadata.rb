@@ -8,6 +8,6 @@ recipe            "php-gearman::default", "Installs ext/gearman from our Launchp
 
 depends "php-fpm"
 depends "php"
-depends "aptly"
+depends "apt"
 
 supports 'ubuntu'

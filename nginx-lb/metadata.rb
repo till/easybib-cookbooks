@@ -9,5 +9,4 @@ recipe            "nginx-lb::service", "Sets nginx up as a service"
 
 supports "ubuntu"
 
-depends "aptly"
 depends "nginx-app"

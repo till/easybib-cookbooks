@@ -12,6 +12,6 @@ recipe            "php-fpm::ohai", "php-fpm ohai plugin installer"
 
 supports 'ubuntu'
 
-depends "aptly"
+depends "apt"
 depends "ohai"
 depends "php-apc"

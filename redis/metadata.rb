@@ -9,5 +9,5 @@ recipe            "redis::monit", "Installs related to monitor redis through mon
 
 supports 'ubuntu'
 
-depends "aptly"
+depends "apt"
 depends "easybib"
