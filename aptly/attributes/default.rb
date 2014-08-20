@@ -10,5 +10,6 @@ default["aptly"]["gpgkeys"]      = [
   "06ED541C",
   "C3173AA6",
   "B6AC7E8C",
-  "0737E5F5"
+  "0737E5F5",
+  "E93F5328"
 ]
