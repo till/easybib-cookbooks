@@ -1,4 +1,5 @@
 service "rsyslog" do
+  provider Chef::Provider::Service::Debian
   supports :status => true, :restart => true, :reload => true
   action [ :nothing ]
 end
