@@ -15,11 +15,10 @@ qprofd_flags = []
 qprofd_flags << node["qafoo-profiler"]["flags"]
 qprofd_flags << "--hostname \"#{get_normalized_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
 
-template "/etc/init/qprofd.conf" do
+template "/etc/default/qprofd" do
   mode 0644
-  source "init-qprofd.erb"
+  source "defaults.erb"
   variables(
-    :flags => qprofd_flags.join(' '),
-    :log_file => node["qafoo-profiler"]["log_file"]
+    :flags => qprofd_flags.join(' ')
   )
 end
