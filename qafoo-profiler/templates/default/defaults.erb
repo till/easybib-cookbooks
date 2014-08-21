@@ -1,14 +1,1 @@
-description "Qafoo Profiler Daemon"
-
-start on (filesystem and net-device-up IFACE!=lo)
-stop on shutdown
-respawn
-setuid qafoo
-setgid qafoo
-
-script
-    if [ -f /etc/default/qafoo-profiler ] ; then
-        . /etc/default/qafoo-profiler
-    fi
-    exec /usr/bin/qprofd <%= @flags %> >> <%= @log_file %> 2>&1
-end script
+QPROFD_EXTRA="<%= @flags %>"
