@@ -1,5 +1,3 @@
-source_list = "/etc/apt/sources.list.d/qafoo.list"
-
 codename = "trusty" # node["lsb"]["codename"]
 
 apt_repository "qafoo" do
@@ -14,6 +12,7 @@ package "qprofd"
 qprofd_flags = []
 qprofd_flags << node["qafoo-profiler"]["flags"]
 qprofd_flags << "--hostname \"#{get_normalized_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
+qprofd_flags << "--logfile \"#{node["qafoo-profiler"]["log_file"]}\""
 
 template "/etc/default/qprofd" do
   mode 0644
