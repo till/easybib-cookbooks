@@ -147,12 +147,6 @@ module EasyBib
   end
 
   extend self
-
-  protected
-
-  def build_nginx_config(key, value)
-    "fastcgi_param #{key} \"#{value}\";\n"
-  end
 end
 
 class Chef::Recipe
