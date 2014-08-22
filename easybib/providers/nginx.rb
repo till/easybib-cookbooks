@@ -30,7 +30,6 @@ action :setup do
   config_template = new_resource.config_template
   access_log = new_resource.access_log
   database_config = new_resource.database_config
-  domain_config = new_resource.domain_config
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
   htpasswd = new_resource.htpasswd
@@ -79,7 +78,6 @@ action :setup do
       :default_router => default_router,
       :upstream => config_name,
       :db_conf => database_config,
-      :domain_conf => domain_config,
       :env_conf => env_config,
       :health_check => health_check,
       :routes_enabled => routes_enabled,

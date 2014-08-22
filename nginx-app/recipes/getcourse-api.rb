@@ -18,7 +18,6 @@ else
 end
 
 domain_name = ::EasyBib::Config.get_domains(node, config, 'getcourse')
-domain_conf = get_domain_conf("getcourse")
 
 env_conf = ""
 if has_env?("getcourse")
