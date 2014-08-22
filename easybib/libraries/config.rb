@@ -33,12 +33,10 @@ module EasyBib
       config
     end
 
-    def get_configcontent(format, appname, node = self.node, stack = 'getcourse')
+    def get_configcontent(format, appname, node = self.node)
       settings = {}
       if node.attribute?(appname) && node[appname].attribute?('env')
         settings = streamline_appenv(node[appname]['env'])
-      elsif !node.fetch(stack, {})['env'].nil?
-        settings = streamline_appenv(node[stack]['env'])
       end
       data = {
         'deployed_application' => get_appdata(node, appname),
