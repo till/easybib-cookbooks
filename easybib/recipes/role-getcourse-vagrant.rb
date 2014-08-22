@@ -16,7 +16,7 @@ template "/etc/avahi/aliases.d/getcourse" do
   source "alias.erb"
   mode "0644"
   variables(
-    :domains => domains
+    :domains => node["getcourse"]["domain"]
   )
   notifies :restart, "service[avahi-aliases]"
 end

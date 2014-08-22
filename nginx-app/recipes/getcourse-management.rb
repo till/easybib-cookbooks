@@ -15,7 +15,7 @@ else
   end
 end
 
-domain_name = ::EasyBib::Config.get_domains(node, config, 'getcourse')
+domain_name = node["getcourse"]["domain"][config] # ::EasyBib::Config.get_domains(node, config, 'getcourse')
 default_router = "index.html"
 
 template "/etc/nginx/sites-enabled/#{config}.conf" do
