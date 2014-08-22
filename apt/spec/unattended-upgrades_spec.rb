@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'chefspec'
 
 describe 'apt::unattended-upgrades' do
   context 'default' do

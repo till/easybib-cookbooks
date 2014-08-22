@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'chefspec'
 
 describe 'apt::cacher-ng' do
 

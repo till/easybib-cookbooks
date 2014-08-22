@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'chefspec'
 
 describe 'apt::default' do
   let(:chef_run) do
