@@ -17,7 +17,7 @@ else
   end
 end
 
-domain_name = node["getcourse"]["domain"][config]
+domain_name = ::EasyBib::Config.get_domains(node, config, 'getcourse')
 domain_conf = get_domain_conf("getcourse")
 
 env_conf = ""

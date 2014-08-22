@@ -80,7 +80,11 @@ module EasyBib
       "/" + path.split('/')[1..-2].join('/') + "/"
     end
 
-    def get_domains(node, appname)
+    def get_domains(node, appname, env = 'getcourse')
+      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
+        return node['deploy'][appname]['domains'].join(' ')
+      end
+
       unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
         domains = node['vagrant']['applications'][appname]['domain_name']
         if domains.is_a?(String)
@@ -90,8 +94,14 @@ module EasyBib
         end
       end
 
-      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
-        return node['deploy'][appname]['domains'].join(' ')
+      unless node.fetch(env, {}).fetch('domain', {})[appname].nil?
+        Chef::Log.warn("Using old node[#{env}]['domain'][appname] domain config")
+        if (env == 'getcourse') && (appname == 'consumer')
+          # workaround to use old domain config syntax for consumer here, too
+          # deprecated, and soon to be removed.
+          return "#{node[env]["domain"][appname]} *.#{node[env]["domain"][appname]}"
+        end
+        return node[env]['domain'][appname]
       end
 
       ''
