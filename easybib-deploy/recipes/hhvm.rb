@@ -22,6 +22,7 @@ node['deploy'].each do |application, deploy|
   easybib_nginx application do
     config_template "hhvm.conf.erb"
     domain_name deploy['domains'].join(' ')
+    htpasswd  "#{deploy['deploy_to']}/current/htpasswd"
     doc_root deploy['document_root']
     notifies :restart, "service[nginx]", :delayed
   end

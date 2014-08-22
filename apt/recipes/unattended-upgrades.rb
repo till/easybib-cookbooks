@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: apt
-# Recipe:: cacher-ng
+# Recipe:: unattended-upgrades
 #
-# Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -17,27 +17,27 @@
 # limitations under the License.
 #
 
-node.set['apt']['caching_server'] = true
+# On systems where apt is not installed, the resources in this recipe are not
+# executed. However, they _must_ still be present in the resource collection
+# or other cookbooks which notify these resources will fail on non-apt-enabled
+# systems.
+#
 
-package 'apt-cacher-ng' do
+package 'unattended-upgrades' do
+  response_file 'unattended-upgrades.seed.erb'
   action :install
 end
 
-directory node['apt']['cacher_dir'] do
-  owner 'apt-cacher-ng'
-  group 'apt-cacher-ng'
-  mode 0755
-end
-
-template '/etc/apt-cacher-ng/acng.conf' do
-  source 'acng.conf.erb'
+template '/etc/apt/apt.conf.d/20auto-upgrades' do
   owner 'root'
   group 'root'
-  mode 00644
-  notifies :restart, 'service[apt-cacher-ng]', :immediately
+  mode '644'
+  source '20auto-upgrades.erb'
 end
 
-service 'apt-cacher-ng' do
-  supports :restart => true, :status => false
-  action [:enable, :start]
+template '/etc/apt/apt.conf.d/50unattended-upgrades' do
+  owner 'root'
+  group 'root'
+  mode '644'
+  source '50unattended-upgrades.erb'
 end
