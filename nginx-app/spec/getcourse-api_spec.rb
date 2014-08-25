@@ -23,7 +23,6 @@ describe 'nginx-app::getcourse-api' do
       }
 
       node.set["vagrant"] = {
-        "combined" => true,
         "deploy_to" => "/foo/bar"
       }
       node.set["getcourse"]["domain"] = {
@@ -46,7 +45,6 @@ describe 'nginx-app::getcourse-api' do
   describe "fastcgi cache is not enabled" do
     before do
       node.set["vagrant"] = {
-        "combined" => true,
         "deploy_to" => "/foo/bar"
       }
       node.set["getcourse"]["domain"] = {
