@@ -25,6 +25,8 @@ stack_applications.each do |app|
     app_info    = ::EasyBib::Config.get_appdata(node, app)
     deploy_dir  = app_info['doc_root_dir']
 
+    Chef::Log.info("Setting deploy_dir for #{app} to #{deploy_dir}.")
+
     if app == 'api'
       include_recipe "nginx-app::cache"
     elsif app == 'feature_flags' && is_aws
