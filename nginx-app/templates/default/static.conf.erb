@@ -5,6 +5,10 @@ server {
 
     access_log <%=@access_log%>;
 
+    location ~* (\.deploy_configuration) {
+        deny all;
+    }
+
     location = /index.html {
         expires -1;
     }
