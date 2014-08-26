@@ -20,7 +20,7 @@ action :setup do
   else
     deploy_dir = new_resource.deploy_dir
   end
-  
+
   config_name = get_config_name(new_resource)
 
   if new_resource.nginx_extras.nil?

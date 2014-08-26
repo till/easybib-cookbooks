@@ -33,10 +33,16 @@ module EasyBib
       config
     end
 
-    def get_configcontent(format, appname, node = self.node)
+    def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
       settings = {}
       if node.attribute?(appname) && node[appname].attribute?('env')
+        Chef::Log.info('env settings for app #{appname} found')
         settings = streamline_appenv(node[appname]['env'])
+      elsif !node.fetch(stackname, {})['env'].nil?
+        Chef::Log.info('env settings for stack #{stackname} found')
+        settings = streamline_appenv(node[stackname]['env'])
+      else
+        Chef::Log.info('no env settings found')
       end
       data = {
         'deployed_application' => get_appdata(node, appname),
