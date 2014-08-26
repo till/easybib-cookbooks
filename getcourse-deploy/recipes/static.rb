@@ -17,5 +17,5 @@ node["deploy"].each do |application, deploy|
     deploy_data deploy
     app application
   end
-  
+
 end
