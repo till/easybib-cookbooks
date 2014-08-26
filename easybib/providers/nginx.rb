@@ -11,14 +11,16 @@ end
 
 action :setup do
 
-  if ::EasyBib.is_aws(node)
-    deploy_dir = "/srv/www/#{new_resource.app_name}/current/#{new_resource.doc_root}"
-  elsif !new_resource.deploy_dir.nil?
-    deploy_dir = new_resource.deploy_dir
+  if new_resource.deploy_dir.nil?
+    if ::EasyBib.is_aws(node)
+      deploy_dir = "/srv/www/#{new_resource.app_name}/current/#{new_resource.doc_root}"
+    else
+      deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+    end
   else
-    deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+    deploy_dir = new_resource.deploy_dir
   end
-
+  
   config_name = get_config_name(new_resource)
 
   if new_resource.nginx_extras.nil?
