@@ -7,4 +7,5 @@ supports 'ubuntu'
 supports 'freebsd'
 
 depends "easybib"
+depends "percona"
 license           "BSD License"

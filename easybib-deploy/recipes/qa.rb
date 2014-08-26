@@ -4,6 +4,8 @@ include_recipe "nginx-app::service"
 node['deploy'].each do |application, deploy|
 
   case application
+  when 'aptly'
+    next unless allow_deploy(application, 'aptly')
   when 'bibcd'
     next unless allow_deploy(application, 'bibcd')
   when 'bib_opsstatus'
@@ -59,6 +61,12 @@ node['deploy'].each do |application, deploy|
         app_name appname
         config config
       end
+    end
+  when 'aptly'
+
+    include_recipe "aptly::setup"
+    aptly_cronjob "easybib-s3" do
+      path "#{deploy["deploy_to"]}/current/"
     end
   end
 

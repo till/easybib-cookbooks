@@ -92,54 +92,6 @@ module EasyBib
     ::EasyBib::Config.get_env("shell", app, node)
   end
 
-  def get_domain_conf(node_attribute, node = self.node)
-    get_conf_from_env(node_attribute, "domain", node)
-  end
-
-  def get_conf_from_env(node_attribute, node_key, node)
-    db_conf = ""
-
-    if !node.attribute?(node_attribute)
-      return db_conf
-    end
-
-    env_config = node[node_attribute]
-    if env_config[node_key].nil? || env_config[node_key].empty?
-      return db_conf
-    end
-
-    config = env_config[node_key]
-
-    if ['domain', 'aws'].include?(node_key)
-      domain = config
-      domain.each_key do |app_name|
-
-        app_host = domain[app_name]
-
-        db_conf << build_nginx_config("#{node_key.upcase}_#{app_name}", app_host)
-      end
-
-      return db_conf
-    end
-
-    config.each_key do |connection_id|
-
-      connection_config = config[connection_id]
-
-      connection_config.each_key do |connection_config_key|
-
-        connection_config_value = connection_config[connection_config_key]
-
-        db_conf << build_nginx_config(
-          "#{connection_id}_#{connection_config_key}",
-          connection_config_value
-        )
-      end
-    end
-
-    db_conf
-  end
-
   def get_cluster_name(node = self.node)
     if node["opsworks"] && node["opsworks"]["stack"]
       return node["opsworks"]["stack"]["name"]
@@ -195,12 +147,6 @@ module EasyBib
   end
 
   extend self
-
-  protected
-
-  def build_nginx_config(key, value)
-    "fastcgi_param #{key} \"#{value}\";\n"
-  end
 end
 
 class Chef::Recipe

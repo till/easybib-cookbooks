@@ -13,7 +13,6 @@ template "/tmp/config.conf" do
     :default_router => node["testdata"]["default_router"],
     :upstream => node["testdata"]["upstream"],
     :db_conf => node["testdata"]["db_conf"],
-    :domain_conf => node["testdata"]["domain_conf"],
     :env_conf => node["testdata"]["env_conf"],
     :routes_enabled => node["testdata"]["routes_enabled"],
     :routes_denied => node["testdata"]["routes_denied"],
