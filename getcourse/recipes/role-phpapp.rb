@@ -40,7 +40,7 @@ stack_applications.each do |app|
       config_template "silex.conf.erb"
       htpasswd htpasswd_path
       domain_name domain_name
-      doc_root deploy_dir
+      deploy_dir deploy_dir
       env_config env_conf
       notifies :restart, "service[nginx]", :delayed
     end

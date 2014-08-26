@@ -22,7 +22,7 @@ stack_applications.each do |app|
       default_router "index.html"
       domain_name domain_name
       listen_opts listen_opts
-      doc_root deploy_dir
+      deploy_dir deploy_dir
       notifies :restart, "service[nginx]", :delayed
     end
   else
