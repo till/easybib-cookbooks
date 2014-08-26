@@ -14,20 +14,20 @@ include_recipe "getcourse-deploy::api"
 if is_aws
   stack_applications = node['deploy'].keys
 else
-  stack_applications = ['api', 'ff']
+  stack_applications = ['api', 'feature_flags']
 end
 
 stack_applications.each do |app|
   case app
-  when 'api', 'ff'
+  when 'api', 'feature_flags'
     htpasswd_path = nil
     domain_name = ::EasyBib::Config.get_domains(node, app, 'getcourse')
-    app_info    = ::EasyBib::Config.get_appdata(app)
+    app_info    = ::EasyBib::Config.get_appdata(node, app)
     deploy_dir  = app_info['doc_root_dir']
 
     if app == 'api'
       include_recipe "nginx-app::cache"
-    elsif app == 'ff' && is_aws
+    elsif app == 'feature_flags' && is_aws
       htpasswd_path = "#{app_info['app_dir']}deploy/htpasswd"
     end
 

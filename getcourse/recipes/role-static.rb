@@ -14,7 +14,7 @@ stack_applications.each do |app|
     listen_opts = (app == 'consumer') ? 'default_server' : ''
 
     domain_name = ::EasyBib::Config.get_domains(node, app, 'getcourse')
-    app_info    = ::EasyBib::Config.get_appdata(app)
+    app_info    = ::EasyBib::Config.get_appdata(node, app)
     deploy_dir  = app_info['doc_root_dir']
 
     easybib_nginx app do

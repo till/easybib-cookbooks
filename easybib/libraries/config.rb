@@ -39,7 +39,7 @@ module EasyBib
         settings = streamline_appenv(node[appname]['env'])
       end
       data = {
-        'deployed_application' => get_appdata(appname, node),
+        'deployed_application' => get_appdata(node, appname),
         'deployed_stack' => get_stackdata(node),
         'settings' => settings
       }
@@ -107,7 +107,7 @@ module EasyBib
       ''
     end
 
-    def get_appdata(appname, node = self.node)
+    def get_appdata(node, appname)
       data = {}
       if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
         data['appname'] = appname
