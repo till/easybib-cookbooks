@@ -3,6 +3,7 @@ node["deploy"].each do |application, deploy|
   case application
   when 'consumer'
     next unless allow_deploy(application, 'consumer', 'consumer-server')
+    listen_opts = 'default_server'
   when 'signup'
     next unless allow_deploy(application, 'signup', 'signup-server')
   when 'domainadmin'
@@ -17,5 +18,4 @@ node["deploy"].each do |application, deploy|
     deploy_data deploy
     app application
   end
-
 end

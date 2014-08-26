@@ -9,13 +9,23 @@ end
 
 stack_applications.each do |app|
   case app
-  when 'consumer'
-    include_recipe "nginx-app::getcourse-consumer"
-  when 'domainadmin'
-    include_recipe "nginx-app::getcourse-domainadmin"
-  when 'management'
-    include_recipe "nginx-app::getcourse-management"
-  when 'signup'
-    include_recipe "nginx-app::getcourse-signup"
+  when 'consumer', 'domainadmin', 'management', 'signup'
+
+    listen_opts = (app == 'consumer') ? 'default_server' : ''
+
+    domain_name = ::EasyBib::Config.get_domains(node, app, 'getcourse')
+    app_info    = ::EasyBib::Config.get_appdata(app)
+    deploy_dir  = app_info['doc_root_dir']
+
+    easybib_nginx app do
+      config_template "static.conf.erb"
+      default_router "index.html"
+      domain_name domain_name
+      listen_opts listen_opts
+      doc_root deploy_dir
+      notifies :restart, "service[nginx]", :delayed
+    end
+  else
+    Chef::Log.info('Application #{app} is not a static app, skipping in role-static')
   end
 end
