@@ -10,6 +10,7 @@ include_recipe "snooze"
 include_recipe "bash::bashrc"
 include_recipe "bash::configure"
 include_recipe "getcourse-deploy::api"
+include_recipe "getcourse-deploy::feature_flags"
 
 if is_aws
   stack_applications = node['deploy'].keys
