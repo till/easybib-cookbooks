@@ -6,3 +6,5 @@ description       "Installs the agent to collect xhprof data for the qafoo-profi
 version           "0.1"
 
 supports 'ubuntu'
+
+depends "apt"
