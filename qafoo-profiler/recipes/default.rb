@@ -7,17 +7,21 @@ apt_repository "qafoo" do
   key node["qafoo-profiler"]["key"]
 end
 
-package "qprofd"
+package "qprofd" do
+  action :upgrade # make sure we have the last version
+end
 
 qprofd_flags = []
 qprofd_flags << node["qafoo-profiler"]["flags"]
 qprofd_flags << "--hostname='#{get_normalized_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}'"
-qprofd_flags << "--log='#{node["qafoo-profiler"]["log_file"]}'"
 
 template "/etc/default/qprofd" do
   mode 0644
   source "defaults.erb"
   variables(
-    :flags => qprofd_flags.join(' ')
+    :flags => qprofd_flags.join(' '),
+    :logfile => node["qafoo-profiler"]["log_file"]
   )
 end
+
+include_recipe "qafoo-profiler::service"
