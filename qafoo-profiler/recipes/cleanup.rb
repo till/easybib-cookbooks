@@ -1,4 +1,4 @@
-include_recipe "qprofd::service"
+include_recipe "qafoo-profiler::service"
 
 service "qprod" do
   action :stop
