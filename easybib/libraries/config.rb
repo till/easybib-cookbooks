@@ -33,10 +33,16 @@ module EasyBib
       config
     end
 
-    def get_configcontent(format, appname, node = self.node)
+    def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
       settings = {}
       if node.attribute?(appname) && node[appname].attribute?('env')
+        Chef::Log.info('env settings for app #{appname} found')
         settings = streamline_appenv(node[appname]['env'])
+      elsif !node.fetch(stackname, {})['env'].nil?
+        Chef::Log.info('env settings for stack #{stackname} found')
+        settings = streamline_appenv(node[stackname]['env'])
+      else
+        Chef::Log.info('no env settings found')
       end
       data = {
         'deployed_application' => get_appdata(node, appname),
@@ -80,7 +86,11 @@ module EasyBib
       "/" + path.split('/')[1..-2].join('/') + "/"
     end
 
-    def get_domains(node, appname)
+    def get_domains(node, appname, env = 'getcourse')
+      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
+        return node['deploy'][appname]['domains'].join(' ')
+      end
+
       unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
         domains = node['vagrant']['applications'][appname]['domain_name']
         if domains.is_a?(String)
@@ -90,14 +100,18 @@ module EasyBib
         end
       end
 
-      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
-        return node['deploy'][appname]['domains'].join(' ')
+      unless node.fetch(env, {}).fetch('domain', {})[appname].nil?
+        Chef::Log.warn("Using old node[#{env}]['domain'][appname] domain config")
+        if (env == 'getcourse') && (appname == 'consumer')
+          # workaround to use old domain config syntax for consumer here, too
+          # deprecated, and soon to be removed.
+          return "#{node[env]["domain"][appname]} *.#{node[env]["domain"][appname]}"
+        end
+        return node[env]['domain'][appname]
       end
 
       ''
     end
-
-    protected
 
     def get_appdata(node, appname)
       data = {}
@@ -112,12 +126,17 @@ module EasyBib
       if ::EasyBib.is_aws(node)
         data['deploy_dir'] = node['deploy'][appname]['deploy_to']
         data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
+        data['doc_root_dir'] = "#{data['app_dir']}#{node['deploy'][appname]['document_root']}"
       else
         data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
+        data['doc_root_dir'] = node['vagrant']['applications'][appname]['doc_root_location']
       end
-      # ensure deploy_dir and app_dir ends with a slash:
-      data['deploy_dir'] << '/' unless data['deploy_dir'].end_with?('/')
-      data['app_dir']    << '/' unless data['app_dir'].end_with?('/')
+
+      # ensure all dirs end with a slash:
+      ['deploy_dir', 'app_dir', 'doc_root_dir'].each do |name|
+        data[name] << '/' unless data[name].end_with?('/')
+      end
+
       data
     end
 
@@ -133,6 +152,8 @@ module EasyBib
       data['environment'] = node['easybib_deploy']['envtype']
       data
     end
+
+    protected
 
     # generate top of file
     def generate_start(format)

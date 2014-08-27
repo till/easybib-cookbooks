@@ -1,6 +1,6 @@
  Package | External Version | Comment
 ------------ | ------------- | -------------
-apt| [2.3.4](https://github.com/opscode-cookbooks/apt/tree/v2.3.4) | added apt::easybib, apt::mirror.rb, apt::ppa, apt::proxy, apt::repair.rb, apt::updater.rb
+apt| [2.5.3](https://github.com/opscode-cookbooks/apt/tree/v2.5.3) | added apt::easybib, apt::mirror.rb, apt::ppa, apt::proxy, apt::repair.rb, apt::updater.rb
 build-essential| [2.0.2](https://github.com/opscode-cookbooks/build-essential/tree/v2.0.2) | 
 chef_handler| [1.1.6](https://github.com/opscode-cookbooks/chef_handler/tree/v1.1.6) | 
 chef_handler_sns| [1.0.0](https://github.com/onddo/chef_handler_sns-cookbook/tree/1.0.0) | 

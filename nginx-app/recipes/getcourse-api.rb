@@ -5,20 +5,15 @@ config = "api"
 if is_aws
   deploy_dir = "/srv/www/#{config}/current/public/"
 else
-  if node["vagrant"]["combined"] == true
-    if node.fetch("vagrant", {}).fetch("applications", {}).fetch(config, {})["doc_root_location"].nil?
-      Chef::Log.warn("Please upgrade getcourse/vagrant, your web_dna.json is outdated!")
-      deploy_dir = node["vagrant"]["deploy_to"][config]
-    else
-      deploy_dir = node["vagrant"]["applications"][config]["doc_root_location"]
-    end
+  if node.fetch("vagrant", {}).fetch("applications", {}).fetch(config, {})["doc_root_location"].nil?
+    Chef::Log.warn("Please upgrade getcourse/vagrant, your web_dna.json is outdated!")
+    deploy_dir = node["vagrant"]["deploy_to"][config]
   else
-    deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+    deploy_dir = node["vagrant"]["applications"][config]["doc_root_location"]
   end
 end
 
-domain_name = node["getcourse"]["domain"][config]
-domain_conf = get_domain_conf("getcourse")
+domain_name = ::EasyBib::Config.get_domains(node, config, 'getcourse')
 
 env_conf = ""
 if has_env?("getcourse")

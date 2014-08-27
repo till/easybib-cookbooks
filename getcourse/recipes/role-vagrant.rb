@@ -1,3 +1,7 @@
+include_recipe "percona::server"
+include_recipe "php-xdebug"
+include_recipe "avahi"
+include_recipe "avahi::alias"
 include_recipe "avahi::alias-service"
 
 if node.fetch('vagrant', {})['applications'].nil?
@@ -20,3 +24,8 @@ template "/etc/avahi/aliases.d/getcourse" do
   )
   notifies :restart, "service[avahi-aliases]"
 end
+
+include_recipe "nodejs"
+include_recipe "zsh::configure"
+include_recipe "redis"
+include_recipe "memcache"

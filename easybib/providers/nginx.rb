@@ -11,12 +11,14 @@ end
 
 action :setup do
 
-  if ::EasyBib.is_aws(node)
-    deploy_dir = "/srv/www/#{new_resource.app_name}/current/#{new_resource.doc_root}"
-  elsif !new_resource.deploy_dir.nil?
-    deploy_dir = new_resource.deploy_dir
+  if new_resource.deploy_dir.nil?
+    if ::EasyBib.is_aws(node)
+      deploy_dir = "/srv/www/#{new_resource.app_name}/current/#{new_resource.doc_root}"
+    else
+      deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+    end
   else
-    deploy_dir = node["nginx-app"]["vagrant"]["deploy_dir"]
+    deploy_dir = new_resource.deploy_dir
   end
 
   config_name = get_config_name(new_resource)
@@ -27,14 +29,20 @@ action :setup do
     nginx_extras = new_resource.nginx_extras
   end
 
+  if new_resource.cache_config.nil?
+    cache_config = node["nginx-app"]["cache"]
+  else
+    cache_config = new_resource.cache_config
+  end
+
   config_template = new_resource.config_template
   access_log = new_resource.access_log
   database_config = new_resource.database_config
-  domain_config = new_resource.domain_config
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
   htpasswd = new_resource.htpasswd
   application = new_resource.app_name
+  listen_opts = new_resource.listen_opts
 
   routes_enabled = nil
   routes_denied  = nil
@@ -79,12 +87,13 @@ action :setup do
       :default_router => default_router,
       :upstream => config_name,
       :db_conf => database_config,
-      :domain_conf => domain_config,
       :env_conf => env_config,
       :health_check => health_check,
       :routes_enabled => routes_enabled,
       :routes_denied => routes_denied,
-      :htpasswd => htpasswd
+      :htpasswd => htpasswd,
+      :listen_opts => listen_opts,
+      :cache_config => cache_config
     )
   end
 
