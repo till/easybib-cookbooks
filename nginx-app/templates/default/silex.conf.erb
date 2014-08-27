@@ -11,6 +11,10 @@ server {
 
     access_log <%= @access_log %>;
 
+    location ~* (\.deploy_configuration) {
+        deny all;
+    }
+
 <% if !@domain_name.nil? && !@domain_name.empty? -%>
     server_name <%=@domain_name%>;
 <% end -%>

@@ -13,6 +13,8 @@ action :create do
 
   Chef::Log.info("writing envconfig for #{app} to #{path}")
 
+  # FIXME: get_configcontent needs the stackname
+
   ["ini", "php", "sh"].each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
       mode   "0644"
