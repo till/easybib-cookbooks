@@ -26,4 +26,3 @@ template "/etc/default/qprofd" do
   )
   notifies :restart, "service[qprofd]"
 end
-

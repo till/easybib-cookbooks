@@ -1,6 +1,7 @@
-execute "stop qprofd nicely" do
-  command "stop qprofd"
-  ignore_failure true
+include_recipe "qprofd::service"
+
+service "qprod" do
+  action :stop
 end
 
 execute "stop qprofd hard" do
