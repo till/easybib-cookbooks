@@ -26,6 +26,9 @@ template "/etc/nginx/nginx.conf" do
   mode "0755"
   owner node["nginx-app"]["user"]
   group node["nginx-app"]["group"]
+  variables(
+    :nginx_user => node["nginx-app"]["user"]
+  )
 end
 
 execute "delete default vhost" do
