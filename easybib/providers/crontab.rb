@@ -10,9 +10,9 @@ action :create do
   end
 
   execute "Clear old crontab" do
-    user "www-data"
+    user node["nginx-app"]["user"]
     # crontab will exit with 130 if crontab has already been cleared
-    command "crontab -u www-data -r"
+    command "crontab -u #{node["nginx-app"]["user"]} -r"
     ignore_failure true
     only_if do
       ::File.exists?(crontab_file)
@@ -44,7 +44,7 @@ action :create do
       day crontab[3]
       month crontab[4]
       weekday crontab[5]
-      user "www-data"
+      user node["nginx-app"]["user"]
       command crontab[6]
       path node["easybib_deploy"]["cron_path"]
     end

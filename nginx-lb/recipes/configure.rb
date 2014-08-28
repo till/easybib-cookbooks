@@ -22,7 +22,8 @@ template "#{node["nginx-lb"]["dir"]}/nginx.conf" do
   mode   "0644"
   source "nginx.conf.erb"
   variables(
-    "processes" => processes
+    "processes" => processes,
+    "nginx_user" => node["nginx-lb"]["user"]
   )
   notifies :stop, "service[nginx]"
 end
