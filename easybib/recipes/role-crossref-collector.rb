@@ -8,5 +8,5 @@ include_recipe "composer::configure"
 include_recipe "easybib-deploy::crossref-collector"
 
 if is_aws
-  include_recipe "newrelic"
+  include_recipe "newrelic" if node["easybib_deploy"]["use_newrelic"] == "yes"
 end
