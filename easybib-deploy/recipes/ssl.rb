@@ -59,7 +59,7 @@ node["deploy"].each do |application, deploy|
   directory ssl_dir do
     mode      "0750"
     owner     "root"
-    group     "www-data"
+    group  node["nginx-app"]["group"]
     recursive true
   end
 
@@ -67,7 +67,7 @@ node["deploy"].each do |application, deploy|
     source "ssl_key.erb"
     mode   "0640"
     owner  "root"
-    group  "www-data"
+    group  node["nginx-app"]["group"]
     variables(
       "ssl_key" => ssl_certificate
     )
@@ -78,7 +78,7 @@ node["deploy"].each do |application, deploy|
     source "ssl_key.erb"
     mode   "0640"
     owner  "root"
-    group  "www-data"
+    group  node["nginx-app"]["group"]
     variables(
       "ssl_key" => ssl_certificate_key
     )
