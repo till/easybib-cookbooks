@@ -1,5 +1,3 @@
-source_list = "/etc/apt/sources.list.d/qafoo.list"
-
 codename = "trusty" # node["lsb"]["codename"]
 
 apt_repository "qafoo" do
@@ -9,17 +7,22 @@ apt_repository "qafoo" do
   key node["qafoo-profiler"]["key"]
 end
 
-package "qprofd"
+package "qprofd" do
+  action :upgrade # make sure we have the last version
+end
+
+include_recipe "qafoo-profiler::service"
 
 qprofd_flags = []
 qprofd_flags << node["qafoo-profiler"]["flags"]
-qprofd_flags << "--hostname \"#{get_normalized_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}\""
+qprofd_flags << "--hostname='#{get_normalized_cluster_name}.#{node["opsworks"]["instance"]["hostname"]}'"
 
-template "/etc/init/qprofd.conf" do
+template "/etc/default/qprofd" do
   mode 0644
-  source "init-qprofd.erb"
+  source "defaults.erb"
   variables(
     :flags => qprofd_flags.join(' '),
-    :log_file => node["qafoo-profiler"]["log_file"]
+    :logfile => node["qafoo-profiler"]["log_file"]
   )
+  notifies :restart, "service[qprofd]"
 end

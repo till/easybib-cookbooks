@@ -9,7 +9,7 @@ template "/etc/monit/conf.d/citationbackup-redis.monitrc" do
   variables(
     'pid_file' => '/var/run/citation-backup/redis-importer.pid',
     'app_name' => 'citationbackup-redis',
-    'group'    => 'www-data',
+    'group'    => node["nginx-app"]["user"],
     'init'     => '/etc/init.d/redis-importer'
   )
   notifies :restart, "service[monit]"

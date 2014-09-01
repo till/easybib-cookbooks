@@ -1,8 +1,8 @@
 # create this directory to save PID files to of the processes we run
 directory "/var/run/citation-backup" do
   mode      "0755"
-  owner     "www-data"
-  group     "www-data"
+  owner  node["nginx-app"]["user"]
+  group  node["nginx-app"]["group"]
   recursive true
 end
 

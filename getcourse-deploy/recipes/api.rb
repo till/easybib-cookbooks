@@ -14,14 +14,17 @@ node['deploy'].each do |application, deploy|
 
   next unless allow_deploy(application, 'api', 'api-server')
 
+  app_info    = ::EasyBib::Config.get_appdata(node, 'api')
+
   easybib_deploy "getcourse-#{application}" do
     deploy_data deploy
     app application
     envvar_json_source "getcourse"
-    cronjob_role node["getcourse-deploy"]["master_server_layer"]
+    cronjob_role node["getcourse_deploy"]["master_server_layer"]
     instance_roles node["opsworks"]["instance"]["layers"]
   end
 
+  # AWScli setup to upload db backups
   credential_dir = "#{node["opsworks"]["deploy_user"]["home"]}/.aws"
 
   directory credential_dir do
@@ -42,18 +45,25 @@ node['deploy'].each do |application, deploy|
     )
   end
 
+  # Monitoring for Gearman:
   include_recipe "monit::pecl-manager"
+
+  # Cronjob to trigger frontend acceptance tests every three hours
+  script_path  = "#{app_info['app_dir']}bin/frontend-acceptance.rb"
+  jobname      = node["getcourse_deploy"]["frontend_acceptance_travis_job_name"]
+  travis_token = node["getcourse_deploy"]["travis_token"]
+  cmd          = "#{script_path} '#{jobname}' '#{travis_token}'"
 
   cron_d "frontend-acceptance-tests" do
     action :create
     hour 3
     user deploy["user"]
-    command "/srv/www/api/current/bin/frontend-acceptance.rb 'acceptance' '#{node["easybib_deploy"]["travis-token"]}'"
+    command cmd
     path "/usr/local/bin:/usr/bin:/bin"
     only_if do
       ::EasyBib.deploy_crontab?(
         node["opsworks"]["instance"]["layers"],
-        node["getcourse-deploy"]["master_server_layer"]
+        node["getcourse_deploy"]["master_server_layer"]
       )
     end
   end

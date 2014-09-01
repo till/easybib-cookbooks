@@ -28,8 +28,8 @@ node['deploy'].each do |application, deploy|
   %w{/mnt/satis-output/ /mnt/composer-tmp/}.each do |dir|
     directory dir do
       recursive true
-      owner "www-data"
-      group "www-data"
+      owner  node["nginx-app"]["user"]
+      group  node["nginx-app"]["group"]
       mode  0755
       action :create
     end
