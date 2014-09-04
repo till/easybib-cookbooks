@@ -1,6 +1,3 @@
-include_recipe "easybib::role-generic"
-include_recipe "getcourse-deploy::static"
-
 if is_aws
   stack_applications = node['deploy'].keys
 else
@@ -10,6 +7,8 @@ end
 stack_applications.each do |app|
   case app
   when 'consumer', 'domainadmin', 'management', 'signup'
+    include_recipe "easybib::role-generic"
+    include_recipe "getcourse-deploy::static"
 
     listen_opts = (app == 'consumer') ? 'default_server' : ''
 

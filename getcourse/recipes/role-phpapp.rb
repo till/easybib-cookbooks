@@ -1,17 +1,3 @@
-include_recipe "easybib::role-phpapp"
-
-include_recipe "php-posix"
-include_recipe "php-zip"
-include_recipe "php-intl"
-include_recipe "php-gearman"
-include_recipe "php-mysqli::configure"
-
-include_recipe "snooze"
-include_recipe "bash::bashrc"
-include_recipe "bash::configure"
-include_recipe "getcourse-deploy::api"
-include_recipe "getcourse-deploy::feature_flags"
-
 if is_aws
   stack_applications = node['deploy'].keys
 else
@@ -21,6 +7,21 @@ end
 stack_applications.each do |app|
   case app
   when 'api', 'feature_flags'
+
+    include_recipe "easybib::role-phpapp"
+
+    include_recipe "php-posix"
+    include_recipe "php-zip"
+    include_recipe "php-intl"
+    include_recipe "php-gearman"
+    include_recipe "php-mysqli::configure"
+
+    include_recipe "snooze"
+    include_recipe "bash::bashrc"
+    include_recipe "bash::configure"
+    include_recipe "getcourse-deploy::api"
+    include_recipe "getcourse-deploy::feature_flags"
+
     htpasswd_path = nil
     domain_name = ::EasyBib::Config.get_domains(node, app, 'getcourse')
     app_info    = ::EasyBib::Config.get_appdata(node, app)
