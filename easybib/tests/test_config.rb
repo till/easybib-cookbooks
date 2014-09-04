@@ -127,9 +127,9 @@ environment = \"playground\"
 [settings]
 BLA_SOMEKEY = \"somevalue\"
 BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
-AWS_DB_HOST = \"some.db.tld\"
-AWS_DB_USER = \"dbuser\"
-AWS_DB_PORT = \"1234\"\n",
+DB_HOST = \"some.db.tld\"
+DB_USER = \"dbuser\"
+DB_PORT = \"1234\"\n",
       ::EasyBib::Config.get_configcontent('ini', 'some_app', fake_node)
     )
   end

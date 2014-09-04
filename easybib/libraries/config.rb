@@ -47,7 +47,7 @@ module EasyBib
 
       if !node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
         # add configuration from the RDS resource management in opsworks
-        dbconfig = streamline_appenv('aws' => { 'db' => node['deploy'][appname]['database'] })
+        dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
         settings.merge!(dbconfig)
       end
 
