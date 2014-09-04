@@ -44,6 +44,13 @@ module EasyBib
       else
         Chef::Log.info('no env settings found')
       end
+
+      if !node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
+        # add configuration from the RDS resource management in opsworks
+        dbconfig = streamline_appenv('aws' => { 'db' => node['deploy'][appname]['database'] })
+        settings.merge!(dbconfig)
+      end
+
       data = {
         'deployed_application' => get_appdata(node, appname),
         'deployed_stack' => get_stackdata(node),

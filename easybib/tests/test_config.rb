@@ -104,6 +104,32 @@ BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
     )
   end
 
+  def test_config_with_rds_to_ini
+    fake_node = get_fakenode_config
+    fake_node.set['deploy']['some_app']['database'] = {
+          'host' => 'some.db.tld',
+          'user' => 'dbuser'
+      }
+
+    assert_equal(
+      "[deployed_application]
+appname = \"some_app\"
+domains = \"foo.tld bar.tld\"
+deploy_dir = \"/tmp/bla/\"
+app_dir = \"/tmp/bla/current/\"
+doc_root_dir = \"/tmp/bla/current/www/\"
+[deployed_stack]
+stackname = \"opsworks-stack\"
+environment = \"playground\"
+[settings]
+BLA_SOMEKEY = \"somevalue\"
+BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
+AWS_DB_HOST = \"some.db.tld\"
+AWS_DB_USER = \"dbuser\"\n",
+      ::EasyBib::Config.get_configcontent('ini', 'some_app', fake_node)
+    )
+  end
+
   def test_config_to_shell
     assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
 export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld bar.tld\"
