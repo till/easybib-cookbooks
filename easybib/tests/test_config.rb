@@ -104,6 +104,36 @@ BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
     )
   end
 
+  def test_config_with_rds_to_ini
+    # IMPORTANT: Do not use port as string, since we want to check if no
+    # Fixnum to string error happens
+    fake_node = get_fakenode_config
+    fake_node.set['deploy']['some_app']['database'] = {
+          'host' => 'some.db.tld',
+          'user' => 'dbuser',
+          'port' => 1234
+      }
+
+    assert_equal(
+      "[deployed_application]
+appname = \"some_app\"
+domains = \"foo.tld bar.tld\"
+deploy_dir = \"/tmp/bla/\"
+app_dir = \"/tmp/bla/current/\"
+doc_root_dir = \"/tmp/bla/current/www/\"
+[deployed_stack]
+stackname = \"opsworks-stack\"
+environment = \"playground\"
+[settings]
+BLA_SOMEKEY = \"somevalue\"
+BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
+DB_HOST = \"some.db.tld\"
+DB_USER = \"dbuser\"
+DB_PORT = \"1234\"\n",
+      ::EasyBib::Config.get_configcontent('ini', 'some_app', fake_node)
+    )
+  end
+
   def test_config_to_shell
     assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
 export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld bar.tld\"
