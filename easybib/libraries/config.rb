@@ -213,29 +213,25 @@ module EasyBib
       config
     end
 
-    def streamline_appenv(data)
+    def streamline_appenv(data, prefix = '')
       returnparam = {}
       return returnparam if data.nil?
       data.each_pair do |section, part_data|
-        if part_data.is_a?(String)
-          returnparam[section] = part_data
-          next
-        end
-        part_data.each_pair do |config_key, config_value|
-          config_value = config_value.to_s if config_value.is_a?(Fixnum)
-          if config_value.is_a?(String)
-            fail "The character \" is not supported as a value in the config" if config_value.match('"')
-            var = sprintf('%s_%s', section.upcase, config_key.upcase)
-            returnparam[var] = config_value
-            next
-          end
 
-          config_value.each_pair do |sub_key, sub_value|
-            sub_value = sub_value.to_s if sub_value.is_a?(Fixnum)
-            var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
-            fail "The character \" is not supported as a value in the config" if sub_value.match('"')
-            returnparam[var] = sub_value
-          end
+        if prefix != ''
+          section = sprintf('%s_%s', prefix, section.upcase)
+        else
+          section = section.upcase
+        end
+
+        if part_data.is_a?(Hash)
+          returnparam.merge!(streamline_appenv(part_data, section))
+        elsif part_data.is_a?(String)
+          returnparam[section] = part_data
+        elsif part_data.respond_to?('to_s')
+          returnparam[section] = part_data.to_s
+        else
+          fail "I have no idea how to deal with config item #{section}."
         end
       end
       returnparam
