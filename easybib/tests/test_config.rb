@@ -105,10 +105,13 @@ BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
   end
 
   def test_config_with_rds_to_ini
+    # IMPORTANT: Do not use port as string, since we want to check if no
+    # Fixnum to string error happens
     fake_node = get_fakenode_config
     fake_node.set['deploy']['some_app']['database'] = {
           'host' => 'some.db.tld',
-          'user' => 'dbuser'
+          'user' => 'dbuser',
+          'port' => 1234
       }
 
     assert_equal(
@@ -125,7 +128,8 @@ environment = \"playground\"
 BLA_SOMEKEY = \"somevalue\"
 BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
 AWS_DB_HOST = \"some.db.tld\"
-AWS_DB_USER = \"dbuser\"\n",
+AWS_DB_USER = \"dbuser\"
+AWS_DB_PORT = \"1234\"\n",
       ::EasyBib::Config.get_configcontent('ini', 'some_app', fake_node)
     )
   end

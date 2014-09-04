@@ -222,6 +222,7 @@ module EasyBib
           next
         end
         part_data.each_pair do |config_key, config_value|
+          config_value = config_value.to_s if config_value.is_a?(Fixnum)
           if config_value.is_a?(String)
             fail "The character \" is not supported as a value in the config" if config_value.match('"')
             var = sprintf('%s_%s', section.upcase, config_key.upcase)
@@ -230,6 +231,7 @@ module EasyBib
           end
 
           config_value.each_pair do |sub_key, sub_value|
+            sub_value = sub_value.to_s if sub_value.is_a?(Fixnum)
             var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
             fail "The character \" is not supported as a value in the config" if sub_value.match('"')
             returnparam[var] = sub_value
