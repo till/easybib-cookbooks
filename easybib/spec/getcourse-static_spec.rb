@@ -39,7 +39,7 @@ describe 'easybib_nginx getcourse static' do
     end
   end
 
-  describe "gzip is not enabled" do
+  describe "gzip is enabled" do
     before do
       node.set["vagrant"] = {
         "combined" => true,
