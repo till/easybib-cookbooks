@@ -35,12 +35,11 @@ action :deploy do
     envvar_json_source new_resource.envvar_json_source
   end
 
-  unless node["easybib_deploy"]["envtype"] == "production"
-    cookbook_file "#{document_root_dir}/robots.txt" do
-      mode   "0644"
-      cookbook "easybib"
-      source "robots.txt"
-    end
+  cookbook_file "#{document_root_dir}/robots.txt" do
+    mode   "0644"
+    cookbook "easybib"
+    source "robots.txt"
+    not_if { node["easybib_deploy"]["envtype"] == "production" }
   end
 
   easybib_envconfig app
