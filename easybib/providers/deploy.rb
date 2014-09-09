@@ -2,6 +2,7 @@ action :deploy do
   app = new_resource.app
   deploy_data = new_resource.deploy_data
   application_root_dir = "#{deploy_data['deploy_to']}/current"
+  document_root_dir = "#{application_root_dir}/#{deploy_data['document_root']}/"
 
   opsworks_deploy_user do
     deploy_data deploy_data
@@ -32,6 +33,13 @@ action :deploy do
 
   easybib_gearmanw application_root_dir do
     envvar_json_source new_resource.envvar_json_source
+  end
+
+  cookbook_file "#{document_root_dir}/robots.txt" do
+    mode   "0644"
+    cookbook "easybib"
+    source "robots.txt"
+    not_if { node["easybib_deploy"]["envtype"] == "production" }
   end
 
   easybib_envconfig app
