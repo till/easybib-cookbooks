@@ -7,3 +7,10 @@ easybib_nginx "api" do
   deploy_dir "/some_path"
   env_config "some_env"
 end
+
+easybib_nginx "domainadmin" do
+  config_template "static.conf.erb"
+  domain_name "manage.example.org"
+  deploy_dir "/some_path"
+  env_config "some_env"
+end

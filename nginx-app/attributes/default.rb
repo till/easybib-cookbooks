@@ -63,6 +63,15 @@ default["nginx-app"]["cache"] = {
   "zone" => "PHP"
 }
 
+default["nginx-app"]["gzip"] = {
+  "enabled" => false,
+  "config" => {
+    "comp_level" => 2,
+    "min_length" => 1000,
+    "types" => "text/plain application/x-javascript text/xml text/css application/xml"
+  }
+}
+
 # app config:
 # default["nginx-app"]["example-app"] = {}
 # default["nginx-app"]["example-app"]["routes_enabled"] = []
