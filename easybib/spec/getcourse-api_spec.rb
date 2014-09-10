@@ -15,6 +15,7 @@ describe 'easybib_nginx getcourse api' do
       :step_into => ["easybib_nginx"]
     )
   end
+
   let(:chef_run) { runner.converge("fixtures::easybib_nginx") }
   let(:node)     { runner.node }
 
@@ -32,7 +33,7 @@ describe 'easybib_nginx getcourse api' do
       }
     end
 
-    it "does not enable gzip" do
+    it "does not enable gzip by default" do
       expect(chef_run).to render_file(nginx_config_file)
         .with_content(
           include("gzip off;")
