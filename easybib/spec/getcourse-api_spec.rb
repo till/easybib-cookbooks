@@ -41,14 +41,12 @@ describe 'easybib_nginx getcourse api' do
     end
 
     it "does enable gzip" do
-      #before do
-      #  node.set["nginx-app"]["gzip"] = true
-      #end
+      chef_run.node.set["nginx-app"]["gzip"] = true
 
-      #expect(chef_run).not_to render_file(nginx_config_file)
-      #  .with_content(
-      #    include("gzip on;")
-      #  )
+      expect(chef_run).not_to render_file(nginx_config_file)
+        .with_content(
+          include("gzip on;")
+        )
     end
   end
 
