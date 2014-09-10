@@ -21,6 +21,36 @@ describe 'easybib_nginx getcourse api' do
   let(:cache_config_file) { "/etc/nginx/conf.d/cache.conf" }
   let(:nginx_config_file) { "/etc/nginx/sites-enabled/api.conf" }
 
+  describe "gzip" do
+    before do
+      node.set["vagrant"] = {
+        "combined" => true,
+        "deploy_to" => "/foo/bar"
+      }
+      node.set["getcourse"]["domain"] = {
+        "api" => "api.example.org"
+      }
+    end
+
+    it "does not enable gzip" do
+      expect(chef_run).to render_file(nginx_config_file)
+        .with_content(
+          include("gzip off;")
+        )
+    end
+
+    it "does enable gzip" do
+      #before do
+      #  node.set["nginx-app"]["gzip"] = true
+      #end
+
+      #expect(chef_run).not_to render_file(nginx_config_file)
+      #  .with_content(
+      #    include("gzip on;")
+      #  )
+    end
+  end
+
   describe "fastcgi cache is enabled" do
     before do
       node.set["nginx-app"]["cache"] = {
