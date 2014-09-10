@@ -62,6 +62,11 @@ server {
     } %>
     <% end %>
 
+<%= render "partials/gzip.conf.erb", :cookbook => 'nginx-app', :variables => {
+    :enabled => @gzip["enabled"],
+    :config => @gzip["config"]
+} %>
+
     <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
 <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
     <% end %>
