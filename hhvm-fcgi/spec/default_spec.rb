@@ -15,7 +15,14 @@ describe 'hhvm-fcgi::default' do
 
   it "creates the config files" do
     Mixlib::ShellOut.stub(:new).and_return(@shellout)
+
+    # hhvm-fcgi::prepare
+    expect(chef_run).to create_directory('/tmp/hhvm')
+    expect(chef_run).to create_directory('/var/log/hhvm')
+    expect(chef_run).to create_file('/var/log/hhvm/error.log')
     expect(chef_run).to create_template('/etc/init.d/hhvm')
+
+    # hhvm-fcgi::configure
     expect(chef_run).to create_template('/etc/logrotate.d/hhvm')
     expect(chef_run).to create_template('/etc/hhvm/php.ini')
     expect(chef_run).to create_template('/etc/hhvm/php-fcgi.ini')
