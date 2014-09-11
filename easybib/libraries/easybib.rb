@@ -117,8 +117,9 @@ module EasyBib
     ::Chef::Log.debug("Unknown environment. (get_deploy_user)")
 
     {
-      "user" => "",
-      "group" => ""
+      "home" => "",
+      "group" => "",
+      "user" => ""
     }
   end
 
