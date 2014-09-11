@@ -25,6 +25,11 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
+<%= render "partials/gzip.conf.erb", :cookbook => 'nginx-app', :variables => {
+    :enabled => @gzip["enabled"],
+    :config => @gzip["config"]
+} %>
+
     location ~* \.(eot|ttf|woff)$ {
         add_header Access-Control-Allow-Origin *;
         expires max;

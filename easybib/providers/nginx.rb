@@ -93,7 +93,8 @@ action :setup do
       :routes_denied => routes_denied,
       :htpasswd => htpasswd,
       :listen_opts => listen_opts,
-      :cache_config => cache_config
+      :cache_config => cache_config,
+      :gzip => node["nginx-app"]["gzip"]
     )
   end
 

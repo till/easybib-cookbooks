@@ -1,8 +1,12 @@
 if node.attribute?("please_profile_my_chef_runs")
   include_recipe "chef_handler"
 
+  chef_gem "chef-handler-profiler" do
+    action :remove
+  end
+
   # Install `chef-handler-profiler` gem during the compile phase
-  chef_gem "chef-handler-profiler"
+  chef_gem "chef-handler-profiler-info"
 
   # load the gem here so it gets added to the $LOAD_PATH, otherwise chef_handler
   # will fail.
