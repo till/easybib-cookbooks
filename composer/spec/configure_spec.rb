@@ -11,6 +11,7 @@ describe 'composer::configure' do
   let(:runner)   { ChefSpec::Runner.new(:cookbook_path => cookbook_paths) }
   let(:chef_run) { runner.converge("composer::configure") }
   let(:node)     { runner.node }
+  let(:oauth)    { "123-super-secret-key" }
 
   describe "composer" do
     it "is not installed in vagrant" do
@@ -24,13 +25,13 @@ describe 'composer::configure' do
         "user" => "www-data",
         "group" => "www-data"
       }
-      node.set["composer"]["oauth_key"] = "123-super-secret-key"
+      node.set["composer"]["oauth_key"] = oauth
     end
 
     it "creates a config.json" do
       expect(chef_run).to render_file("/var/www/.composer/config.json")
         .with_content(
-          include("123-super-secret-key")
+          include("github.com\": \"#{oauth}")
         )
     end
   end
