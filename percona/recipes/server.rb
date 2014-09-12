@@ -21,9 +21,9 @@ end
 template "/etc/mysql/conf.d/vagrant.cnf" do
   mode 0644
   source "vagrant.cnf.erb"
-  variables({
+  variables(
     :config => node[:percona][:config]
-  })
+  )
   notifies :restart, "service[mysql]", :delayed
   not_if do
     ::EasyBib.is_aws(node)
