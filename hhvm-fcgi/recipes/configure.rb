@@ -4,7 +4,7 @@ config.each do |type,settings|
 
   next if type == "hhvm"
 
-  template "#{node["hhvm-fcgi"]["prefix"]}#{settings["file"]}" do
+  template "#{get_complete_path(settings["file"])}" do
     mode     "0755"
     cookbook "php-fpm"
     source   "php.ini.erb"
@@ -25,7 +25,7 @@ config.each do |type,settings|
   end
 end
 
-template "#{node["hhvm-fcgi"]["prefix"]}#{config["hhvm"]["file"]}" do
+template "#{get_complete_path(config["hhvm"]["file"])}" do
   mode "0755"
   source "config.hdf.erb"
   variables(
