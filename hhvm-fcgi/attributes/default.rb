@@ -30,6 +30,7 @@ default["hhvm-fcgi"]["config"]["hhvm"] = {
 
 default["hhvm-fcgi"]["config"]["fcgi"] = {
   "file" => "/etc/hhvm/php-fcgi.ini",
+  "hhvm" => true,
   "enable_dl" => "Off",
   "display_errors" => "Off",
   "memory_limit" => "512M",
@@ -38,6 +39,7 @@ default["hhvm-fcgi"]["config"]["fcgi"] = {
 
 default["hhvm-fcgi"]["config"]["cli"] = {
   "file" => "/etc/hhvm/php.ini",
+  "hhvm" => false,
   "enable_dl" => "On",
   "display_errors" => "On",
   "memory_limit" => "1G",

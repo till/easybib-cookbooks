@@ -9,7 +9,7 @@ config.each do |type,settings|
     cookbook "php-fpm"
     source   "php.ini.erb"
     variables(
-      :hhvm => true,
+      :hhvm => settings["hhvm"],
       :enable_dl => settings["enable_dl"],
       :memory_limit => settings["memory_limit"],
       :display_errors => settings["display_errors"],

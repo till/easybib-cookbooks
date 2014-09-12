@@ -29,7 +29,14 @@ describe 'hhvm-fcgi::default' do
       # hhvm-fcgi::configure
       expect(chef_run).to create_template('/etc/logrotate.d/hhvm')
       expect(chef_run).to create_template('/etc/hhvm/php.ini')
-      expect(chef_run).to create_template('/etc/hhvm/php-fcgi.ini')
+      expect(chef_run).not_to render_file('/etc/hhvm/php.ini')
+        .with_content(
+          include("[hhvm]")
+        )
+      expect(chef_run).to render_file('/etc/hhvm/php-fcgi.ini')
+        .with_content(
+          include("[hhvm]")
+        )
       expect(chef_run).to create_template('/etc/hhvm/config.hdf')
     end
   end
