@@ -113,7 +113,14 @@ module EasyBib
     if node["opsworks"]
       return node["opsworks"]["deploy_user"]
     end
+
     ::Chef::Log.debug("Unknown environment. (get_deploy_user)")
+
+    {
+      "home" => "",
+      "group" => "",
+      "user" => ""
+    }
   end
 
   def get_instance_roles(node = self.node)
