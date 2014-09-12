@@ -19,3 +19,8 @@ set_unless[:xtrabackup][:aws][:secret] = ''
 set_unless[:xtrabackup][:s3_bucket]    = 'plz-set-this'
 set_unless[:xtrabackup][:processor]    = '/usr/bin/easybib-backup-processor'
 set_unless[:xtrabackup][:uploader]     = '/usr/bin/easybib-backup-uploader'
+
+default[:percona][:config] = {
+  "interactive_timeout" => 300,
+  "wait_timeout" => 60
+}
