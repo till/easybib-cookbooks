@@ -144,7 +144,7 @@ soap.wsdl_cache_limit = 5
 <% if @hhvm %>
 [hhvm]
 pid = /var/run/hhvm/pid
-hhvm.server.port = 9000
+hhvm.server.port = <%= @hhvm_port %>
 hhvm.server.type = fastcgi
 hhvm.server.default_document = index.php
 hhvm.repo.central.path = /var/run/hhvm/hhvm.hhb

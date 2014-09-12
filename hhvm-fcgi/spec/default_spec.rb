@@ -9,17 +9,62 @@ describe 'hhvm-fcgi::default' do
     @shellout.stub(:error!)
   end
 
-  let (:chef_run) do
-    ChefSpec::Runner.new.converge('hhvm-fcgi::default')
+  let (:runner) { ChefSpec::Runner.new }
+  let (:chef_run) { runner.converge('hhvm-fcgi::default') }
+  let (:node) { runner.node }
+
+  describe "standard settings" do
+    it "installs hhvm and creates the config files" do
+      Mixlib::ShellOut.stub(:new).and_return(@shellout)
+
+      # hhvm-fcgi::apt
+      expect(chef_run).to install_apt_package("hhvm")
+
+      # hhvm-fcgi::prepare
+      expect(chef_run).to create_directory('/tmp/hhvm')
+      expect(chef_run).to create_directory('/var/log/hhvm')
+      expect(chef_run).to create_file('/var/log/hhvm/error.log')
+      expect(chef_run).to create_template('/etc/init.d/hhvm')
+
+      # hhvm-fcgi::configure
+      expect(chef_run).to create_template('/etc/logrotate.d/hhvm')
+      expect(chef_run).to create_template('/etc/hhvm/php.ini')
+      expect(chef_run).not_to render_file('/etc/hhvm/php.ini')
+        .with_content(
+          include("[hhvm]")
+        )
+      expect(chef_run).to render_file('/etc/hhvm/php-fcgi.ini')
+        .with_content(
+          include("[hhvm]")
+        )
+      expect(chef_run).to render_file('/etc/hhvm/config.hdf')
+        .with_content(
+          include("Debug")
+        )
+    end
   end
 
-  it "creates the config files" do
-    Mixlib::ShellOut.stub(:new).and_return(@shellout)
-    expect(chef_run).to create_template('/etc/init.d/hhvm')
-    expect(chef_run).to create_template('/etc/logrotate.d/hhvm')
-    expect(chef_run).to create_template('/etc/hhvm/php.ini')
-    expect(chef_run).to create_template('/etc/hhvm/php-fcgi.ini')
-    expect(chef_run).to create_template('/etc/hhvm/config.hdf')
+  describe "debug" do
+    before do
+      node.set["hhvm-fcgi"]["build"] = "-dbg"
+    end
+
+    it "installs the debug build of hhvm" do
+      expect(chef_run).to install_apt_package("hhvm-dbg")
+    end
+  end
+
+  describe "custom port" do
+    before do
+      node.set["hhvm-fcgi"]["listen"]["port"] = 31337
+    end
+
+    it "configures hhvm to listen on 31337" do
+      expect(chef_run).to render_file('/etc/hhvm/php-fcgi.ini')
+        .with_content(
+          include("hhvm.server.port = 31337")
+        )
+    end
   end
 
 end
