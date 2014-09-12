@@ -37,7 +37,10 @@ describe 'hhvm-fcgi::default' do
         .with_content(
           include("[hhvm]")
         )
-      expect(chef_run).to create_template('/etc/hhvm/config.hdf')
+      expect(chef_run).to render_file('/etc/hhvm/config.hdf')
+        .with_content(
+          include("Debug")
+        )
     end
   end
 
