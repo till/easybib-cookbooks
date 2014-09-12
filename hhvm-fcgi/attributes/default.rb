@@ -19,7 +19,10 @@ default["hhvm-fcgi"]["logfile"] = "/var/log/hhvm/error.log"
 default["hhvm-fcgi"]["user"] = "www-data"
 default["hhvm-fcgi"]["group"] = "www-data"
 
-default["hhvm-fcgi"]["listen"] = "127.0.0.1:9000"
+default["hhvm-fcgi"]["listen"] = {
+  "ip" => "127.0.0.1",
+  "port" => "9000"
+}
 
 default["hhvm-fcgi"]["config"] = {}
 

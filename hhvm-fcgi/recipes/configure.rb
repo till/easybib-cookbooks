@@ -10,6 +10,7 @@ config.each do |type,settings|
     source   "php.ini.erb"
     variables(
       :hhvm => settings["hhvm"],
+      :hhvm_port => node["hhvm-fcgi"]["listen"]["port"],
       :enable_dl => settings["enable_dl"],
       :memory_limit => settings["memory_limit"],
       :display_errors => settings["display_errors"],

@@ -54,4 +54,17 @@ describe 'hhvm-fcgi::default' do
     end
   end
 
+  describe "custom port" do
+    before do
+      node.set["hhvm-fcgi"]["listen"]["port"] = 31337
+    end
+
+    it "configures hhvm to listen on 31337" do
+      expect(chef_run).to render_file('/etc/hhvm/php-fcgi.ini')
+        .with_content(
+          include("hhvm.server.port = 31337")
+        )
+    end
+  end
+
 end
