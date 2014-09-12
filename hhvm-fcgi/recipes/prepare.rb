@@ -1,13 +1,14 @@
-directory node["hhvm-fcgi"]["tmpdir"] do
-  mode "0755"
-  owner node["hhvm-fcgi"]["user"]
-  group node["hhvm-fcgi"]["group"]
-end
+directories = [
+  node["hhvm-fcgi"]["tmpdir"],
+  File.dirname(node["hhvm-fcgi"]["logfile"])
+]
 
-directory File.dirname(node["hhvm-fcgi"]["logfile"]) do
-  mode "0755"
-  owner node["hhvm-fcgi"]["user"]
-  group node["hhvm-fcgi"]["group"]
+directories.each do |dir|
+  directory dir do
+    mode "0755"
+    owner node["hhvm-fcgi"]["user"]
+    group node["hhvm-fcgi"]["group"]
+  end
 end
 
 file node["hhvm-fcgi"]["logfile"] do
