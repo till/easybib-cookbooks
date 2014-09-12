@@ -1,8 +1,8 @@
 config = node["hhvm-fcgi"]["config"]
 
-config.each do |type,settings|
+config.each do |config_type, settings|
 
-  next if type == "hhvm"
+  next if config_type == "hhvm"
 
   template "#{get_complete_path(settings["file"])}" do
     mode     "0755"
