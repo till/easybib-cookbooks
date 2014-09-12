@@ -4,7 +4,7 @@ config.each do |config_type, settings|
 
   next if config_type == "hhvm"
 
-  template "#{get_complete_path(settings["file"])}" do
+  template get_complete_path(settings["file"]) do
     mode     "0755"
     cookbook "php-fpm"
     source   "php.ini.erb"
@@ -25,7 +25,7 @@ config.each do |config_type, settings|
   end
 end
 
-template "#{get_complete_path(config["hhvm"]["file"])}" do
+template get_complete_path(config["hhvm"]["file"]) do
   mode "0755"
   source "config.hdf.erb"
   variables(
