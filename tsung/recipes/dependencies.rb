@@ -1,0 +1,6 @@
+package "nginx"
+package "gnuplot-nox"
+package "libtemplate-perl"
+package "libhtml-template-perl"
+package "libhtml-template-expr-perl"
+package "erlang-nox"

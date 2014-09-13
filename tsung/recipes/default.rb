@@ -1,12 +1,7 @@
-package "nginx"
-package "gnuplot-nox"
-package "libtemplate-perl"
-package "libhtml-template-perl"
-package "libhtml-template-expr-perl"
-package "erlang-nox"
+include_recipe "tsung::dependencies"
 
-tsungver = "1.3.3"
-pkgrev = "1"
+tsungver = node["tsung"]["version"]
+pkgrev = node["tsung"]["pkgrev"]
 
 remote_file "#{Chef::Config[:file_cache_path]}/tsung_#{tsungver}-#{pkgrev}_all.deb" do
   source "http://tsung.erlang-projects.org/dist/ubuntu/tsung_#{tsungver}-#{pkgrev}_all.deb"
@@ -44,19 +39,6 @@ remote_file "#{home_dir}/.tsung/listids.csv" do
   owner "ubuntu"
   group "ubuntu"
   action :create
-end
-
-remote_file "/etc/nginx/sites-available/default" do
-  source "tsung.host"
-  mode "0644"
-  owner "www-data"
-  group "www-data"
-  action :create
-end
-
-service "nginx" do
-  supports :status => true, :restart => true
-  action [ :enable, :restart ]
 end
 
 # put rules in ~/.tsung/tsung.xml
