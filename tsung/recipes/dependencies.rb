@@ -8,4 +8,4 @@ include_recipe "nginx-app::server"
   "erlang-nox"
 ].each do |package_name|
   package package_name
-end 
+end
