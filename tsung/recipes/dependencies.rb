@@ -1,6 +1,11 @@
-package "nginx"
-package "gnuplot-nox"
-package "libtemplate-perl"
-package "libhtml-template-perl"
-package "libhtml-template-expr-perl"
-package "erlang-nox"
+include_recipe "nginx-app::server"
+
+[
+  "gnuplot-nox",
+  "libtemplate-perl",
+  "libhtml-template-perl",
+  "libhtml-template-expr-perl",
+  "erlang-nox"
+].each do |package_name|
+  package package_name
+end 
