@@ -40,6 +40,9 @@
             }
         }
     },
+    "tsung": {
+        "user": "vagrant"
+    },
     "opsworks": {
         "deploy_user": {
             "user": "vagrant",

@@ -1,0 +1,8 @@
+server {
+    listen <%= @port %>;
+
+    location / {
+        access_log <%= @access_log %>;
+        root <%= @root %>;
+    }
+}
