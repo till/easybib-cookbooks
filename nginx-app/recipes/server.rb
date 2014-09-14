@@ -12,8 +12,6 @@ package "nginx" do
   notifies :start, "service[nginx]"
 end
 
-include_recipe "nginx-app::service"
-
 template "/etc/nginx/fastcgi_params" do
   source "fastcgi_params.erb"
   mode "0755"
