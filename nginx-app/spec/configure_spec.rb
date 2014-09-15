@@ -27,7 +27,6 @@ describe 'nginx-app::configure' do
 
     it "includes necessary recipes" do
       expect(chef_run).to include_recipe "nginx-app::server"
-      expect(chef_run).to include_recipe "php-fpm::service"
     end
 
     describe "virtualhost" do
