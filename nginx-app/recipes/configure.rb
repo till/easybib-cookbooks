@@ -13,8 +13,7 @@ end
 # password protect?
 password_protected = false
 
-# put this in attributes
-nginx_config = "easybib.com.conf.erb"
+nginx_config = node["nginx-app"]["conf_file"]
 
 node["deploy"].each do |application, deploy|
 
