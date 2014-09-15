@@ -75,6 +75,22 @@ describe 'nginx-app::configure' do
             include("access_log #{access_log};")
           )
       end
+
+      describe "infolit" do
+        before do
+          node.set["deploy"]["infolit"] = {
+            "deploy_to" => "/srv/www/infolit"
+          }
+        end
+
+        it "creates the virtualhost from the correct erb" do
+          expect(chef_run).to create_template("render vhost: infolit")
+            .with(
+              name: vhost,
+              source: "infolit.conf.erb"
+            )
+        end
+      end
     end
   end
 end
