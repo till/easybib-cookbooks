@@ -40,7 +40,7 @@ describe 'nginx-app::configure' do
 
       it "writes virtualhost for app 'easybib'" do
         expect(chef_run).to create_template("render vhost: easybib")
-          .with(source: "easybib.com.conf.erb")
+          .with(:source => "easybib.com.conf.erb")
 
         template_resource = chef_run.template("render vhost: easybib")
         expect(template_resource).to notify('service[nginx]')
@@ -86,8 +86,8 @@ describe 'nginx-app::configure' do
         it "creates the virtualhost from the correct erb" do
           expect(chef_run).to create_template("render vhost: infolit")
             .with(
-              name: vhost,
-              source: "infolit.conf.erb"
+              :name => vhost,
+              :source => "infolit.conf.erb"
             )
         end
       end
