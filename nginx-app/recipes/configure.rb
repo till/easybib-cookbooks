@@ -61,7 +61,6 @@ node["deploy"].each do |application, deploy|
       :css_alias          => node["nginx-app"]["css_modules"],
       :access_log         => app_access_log,
       :deploy             => deploy,
-      :application        => application,
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
       :php_upstream       => php_upstream
