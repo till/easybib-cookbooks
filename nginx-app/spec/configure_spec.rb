@@ -20,7 +20,9 @@ describe 'nginx-app::configure' do
       node.set["easybib"]["cluster_name"] = stack
 
       node.set["opsworks"]["instance"]["layers"] = ["nginxphpapp"]
-      node.set["opsworks"]["stack"]["name"] = "Stack Name"
+      node.set["opsworks"]["stack"]["name"] = stack
+
+      node.set["docroot"] = "public"
     end
 
     it "includes necessary recipes" do
@@ -58,7 +60,7 @@ describe 'nginx-app::configure' do
       it "sets the correct SCRIPT_FILENAME" do
         expect(chef_run).to render_file(vhost)
           .with_content(
-            include('fastcgi_param SCRIPT_FILENAME /srv/www/easybib/current/www/index.php;')
+            include('fastcgi_param SCRIPT_FILENAME /srv/www/easybib/current/public/index.php;')
           )
       end
 
