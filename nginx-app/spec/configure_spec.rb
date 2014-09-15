@@ -40,6 +40,11 @@ describe 'nginx-app::configure' do
 
       it "writes virtualhost for app 'easybib'" do
         expect(chef_run).to create_template(vhost)
+
+        template_resource = chef_run.template(vhost)
+        expect(template_resource).to notify('service[nginx]')
+          .to(:restart)
+          .delayed
       end
 
       it "sets the correct upstream" do
