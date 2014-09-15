@@ -9,6 +9,7 @@ describe 'nginx-app::configure' do
   let(:vhost) { "/etc/nginx/sites-enabled/easybib.com.conf" }
   let(:access_log) { "/some/drive/access.log" }
   let(:php_user) { "some_user_account" }
+  let(:stack) { "Stack Name" }
 
   describe "deployment" do
     before do
@@ -16,7 +17,7 @@ describe 'nginx-app::configure' do
 
       node.set["deploy"] = {}
 
-      node.set["easybib"]["cluster_name"] = "Stack Name"
+      node.set["easybib"]["cluster_name"] = stack
 
       node.set["opsworks"]["instance"]["layers"] = ["nginxphpapp"]
       node.set["opsworks"]["stack"]["name"] = "Stack Name"
@@ -50,7 +51,7 @@ describe 'nginx-app::configure' do
       it "sets the correct BIB_ENV" do
         expect(chef_run).to render_file(vhost)
           .with_content(
-            include('fastcgi_param BIB_ENV "Stack Name";')
+            include("fastcgi_param BIB_ENV \"#{stack}\";")
           )
       end
 
