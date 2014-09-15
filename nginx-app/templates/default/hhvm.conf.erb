@@ -1,5 +1,5 @@
 upstream <%=@upstream%>_phpfpm {
-    server  127.0.0.1:9000;
+    server  <%=node["hhvm-fcgi"]["listen"]["ip"]%>:<%=node["hhvm-fcgi"]["listen"]["port"]%>;
 }
 
 server {

@@ -1,5 +1,4 @@
 include_recipe "nginx-app::server"
-include_recipe "php-fpm::service"
 
 instance_roles   = get_instance_roles
 cluster_name     = get_cluster_name
@@ -14,8 +13,7 @@ end
 # password protect?
 password_protected = false
 
-# put this in attributes
-nginx_config = "easybib.com.conf.erb"
+nginx_config = node["nginx-app"]["conf_file"]
 
 node["deploy"].each do |application, deploy|
 
@@ -50,7 +48,8 @@ node["deploy"].each do |application, deploy|
 
   php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
 
-  template "#{nginx_config_dir}/sites-enabled/easybib.com.conf" do
+  template "render vhost: #{application}" do
+    name   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
     source nginx_config
     mode   "0755"
     owner  node["nginx-app"]["user"]
@@ -61,7 +60,6 @@ node["deploy"].each do |application, deploy|
       :css_alias          => node["nginx-app"]["css_modules"],
       :access_log         => app_access_log,
       :deploy             => deploy,
-      :application        => application,
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
       :php_upstream       => php_upstream
