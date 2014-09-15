@@ -39,9 +39,10 @@ describe 'nginx-app::configure' do
       end
 
       it "writes virtualhost for app 'easybib'" do
-        expect(chef_run).to create_template(vhost)
+        expect(chef_run).to create_template("render vhost: easybib")
+          .with(source: "easybib.com.conf.erb")
 
-        template_resource = chef_run.template(vhost)
+        template_resource = chef_run.template("render vhost: easybib")
         expect(template_resource).to notify('service[nginx]')
           .to(:restart)
           .delayed
