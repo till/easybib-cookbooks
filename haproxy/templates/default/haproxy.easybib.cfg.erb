@@ -14,7 +14,7 @@
 <%   node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
   <%= render "haproxy.cfg.backend.erb", :variables => {
       'layername' => layername,
-      'health_check_string' => layerconfig[:health_check],
+      'health_check' => layerconfig[:health_check],
       'node' => @node
   } %>
 <%   end -%>
