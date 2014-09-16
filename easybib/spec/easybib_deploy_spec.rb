@@ -22,7 +22,7 @@ describe 'easybib_deploy' do
 
   describe "deploy" do
     it "creates a robots.txt" do
-      expect(chef_run).to create_cookbook_file("/srv/www/some-app/current/public/robots.txt")
+      expect(chef_run).to create_cookbook_file("/srv/www/some-app/current/public//robots.txt")
     end
   end
 end
