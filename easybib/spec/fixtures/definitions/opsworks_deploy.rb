@@ -1,3 +1,3 @@
-define :opsworks_deloy do
+define :opsworks_deploy do
   puts "Hello!"
 end
