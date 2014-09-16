@@ -1,9 +1,10 @@
 require 'chefspec'
+require_relative 'support/matchers'
 
 describe 'nginx-lb::configure' do
 
   let(:runner) do
-    ChefSpec::Runner.new do |node|
+    ChefSpec::Runner.new(:step_into => ["nginx_app_config"]) do |node|
       node.automatic["cpu"]["total"] = 20
     end
   end
@@ -36,10 +37,6 @@ describe 'nginx-lb::configure' do
             :cookbook => "nginx-lb",
             :source => "nginx.conf.erb"
           )
-
-        template_resource = chef_run.template(nginx_conf)
-        expect(template_resource).to notify('service[nginx]')
-          .to(:stop)
       end
 
       it "claims all but one cpu" do
@@ -54,6 +51,12 @@ describe 'nginx-lb::configure' do
           .with_content(
             include("user johndoe;")
           )
+      end
+
+      it "notifies service[nginx] to stop" do
+        resource = chef_run.nginx_app_config("nginx-lb: nginx.conf")
+        expect(resource).to notify('service[nginx]')
+          .to(:stop)
       end
     end
   end

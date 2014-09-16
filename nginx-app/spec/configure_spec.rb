@@ -2,7 +2,12 @@ require 'chefspec'
 
 describe 'nginx-app::configure' do
 
-  let(:runner)   { ChefSpec::Runner.new(:version => 12.04) }
+  let(:runner) do
+    ChefSpec::Runner.new(
+      :step_into => ["nginx_app_config"],
+      :version => 12.04
+    )
+  end
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node)     { runner.node }
 

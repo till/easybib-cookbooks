@@ -12,4 +12,4 @@ package "nginx" do
   notifies :start, "service[nginx]"
 end
 
-nginx_config
+nginx_app_config "nginx-app: nginx.conf"
