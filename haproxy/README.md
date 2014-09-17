@@ -36,8 +36,3 @@ interesting for a/b tests. The key of the array is not used, can be any string.
 
 health check is a custom string for the health check by haproxy - the example above shows one with an included
 hostname, to separate multiple apps on one instance from each other.
-
-
-## Dependencies
-
- * [newrelic](https://github.com/till/easybib-cookbooks/tree/master/newrelic)
