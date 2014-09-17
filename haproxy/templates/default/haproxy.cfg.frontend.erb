@@ -8,21 +8,21 @@ frontend http-in
   bind <%= haproxy_host %>:<%= haproxy_port %>
   option log-separate-errors
 
-  <% if !@node[:haproxy][:acls].nil? || @node[:haproxy][:acls].empty?  -%>
+  <% if !@node['haproxy']['acls'].nil? || @node['haproxy']['acls'].empty?  -%>
   #acls from node json:
-    <% @node[:haproxy][:acls].each do |aclname,aclconfig| -%>
+    <% @node['haproxy']['acls'].each do |aclname,aclconfig| -%>
   #rule <%= aclname %>
   <%= aclconfig %>
     <% end -%>
   <% end -%>
 
-  <% if !@node[:haproxy][:additional_layers].nil? || @node[:haproxy][:additional_layers].empty?  -%>
+  <% if !@node['haproxy']['additional_layers'].nil? || @node['haproxy']['additional_layers'].empty?  -%>
   #additional backends:
-    <% @node[:haproxy][:additional_layers].each do |layername,layerconfig| -%>
-      <% if @node[:opsworks][:layers][layername][:instances].empty? -%>
+    <% @node['haproxy']['additional_layers'].each do |layername,layerconfig| -%>
+      <% if @node['opsworks']['layers'][layername]['instances'].empty? -%>
   #skipping layer <%= layername %> because layer has no instances
       <% else %>
-        <% layerconfig[:acl].each do |aclid, acl| -%>
+        <% layerconfig['acl'].each do |aclid, acl| -%>
   #rule <%= aclid %>
   acl use_<%= layername %> <%= acl %>
   use_backend <%= layername %>_php_app_servers if use_<%= layername %>
@@ -31,6 +31,6 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node[:opsworks][:layers][:nginxphpapp][:instances].empty? -%>
+  <% if !@node['opsworks']['layers']['nginxphpapp']['instances'].empty? -%>
   default_backend nginxphpapp_php_app_servers
   <% end -%>

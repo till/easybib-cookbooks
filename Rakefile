@@ -45,19 +45,20 @@ task :foodcritic do
     sandbox = File.join(File.dirname(__FILE__), 'fc_sandbox')
 
     epic_fail = %w{ }
+    ignore_rules = %w{ }
 
     cookbooks = find_cookbooks('.')
 
     cookbooks.each do |cb|
-
+      print "."
       prepare_foodcritic_sandbox(sandbox, cb)
 
       verbose(false)
 
       fc_command = "bundle exec foodcritic -C --chef-version 11 -f any"
       fc_command << " -f #{epic_fail.join(' -f ')}" if !epic_fail.empty?
+      fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
       fc_command << " #{sandbox}"
-
       sh fc_command do |ok, res|
         if !ok
           puts "Cookbook: #{cb}"
@@ -67,7 +68,7 @@ task :foodcritic do
         end
       end
     end
-
+    puts "."
   else
     puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is < 1.9.2."
   end

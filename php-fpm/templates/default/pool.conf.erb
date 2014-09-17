@@ -1,6 +1,6 @@
 [<%= @user %>]
 
-listen = <%= node["php-fpm"][:socketdir] %>/<%= @user %>
+listen = <%= node["php-fpm"]["socketdir"] %>/<%= @user %>
 listen.backlog = -1
 
 listen.owner = <%= @user %>

@@ -2,9 +2,9 @@
 
 import getpass, glob, os, subprocess, sys, tarfile
 
-store='<%= node[:xtrabackup][:dir]} %>'
-uploader='<%= node[:xtrabackup][:uploader] %>'
-bucket='<%= node[:xtrabackup][:s3_bucket]} %>'
+store='<%= node["xtrabackup"]["dir"]} %>'
+uploader='<%= node["xtrabackup"]["uploader"] %>'
+bucket='<%= node["xtrabackup"]["s3_bucket"]} %>'
 
 if os.path.exists(store) is False:
     print "Backup location (%s) does not exist." % store
