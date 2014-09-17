@@ -32,7 +32,7 @@
 # install packages
 node['php-pear']['packages'].each do |pear_package, pear_channel|
 
-  version = ''
+  pear_version = ''
   unless pear_package.index('-').nil?
     attrs = pear_package.split('-')
     pear_package, pear_version = attrs
