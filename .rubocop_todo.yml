@@ -54,11 +54,6 @@ Style/AlignParameters:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/CommentIndentation:
-  Enabled: false
-
 # Offense count: 14
 Style/Documentation:
   Enabled: false
