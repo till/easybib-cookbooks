@@ -1,0 +1,5 @@
+check process <%= @app_name %>
+  with pidfile "<%= @pid_file %>"
+  start program = "<%= @init %> start"
+  stop program = "<%= @init %> stop"
+  if failed port 80 protocol http then restart
