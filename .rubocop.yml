@@ -11,4 +11,7 @@ AllCops:
     - 'vagrant-test/**/*'
     - 'test/**/*'
 
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+
 inherit_from: .rubocop_todo.yml

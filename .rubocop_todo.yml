@@ -135,11 +135,6 @@ Style/RedundantReturn:
 Style/RegexpLiteral:
   Enabled: false
 
-# Offense count: 656
-# Cop supports --auto-correct.
-Style/SingleSpaceBeforeFirstArg:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/SpaceBeforeComma:
