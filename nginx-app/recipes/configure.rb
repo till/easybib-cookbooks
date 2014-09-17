@@ -1,7 +1,5 @@
 include_recipe 'nginx-app::server'
 
-instance_roles   = get_instance_roles
-cluster_name     = get_cluster_name
 app_access_log   = node['nginx-app']['access_log']
 nginx_config_dir = node['nginx-app']['config_dir']
 

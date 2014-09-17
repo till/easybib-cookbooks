@@ -29,11 +29,6 @@ node['deploy'].each do |application, deploy|
     next
   end
 
-  env_conf = ''
-  if has_env?(application)
-    env_conf = get_env_for_nginx(application)
-  end
-
   Chef::Log.info("deploy::#{application} - Deployment started.")
   Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 

@@ -1,6 +1,5 @@
 action :create do
   application_root_dir = new_resource.application_root_dir
-  envvar_json_source   = new_resource.envvar_json_source
 
   import_file = "#{application_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
 

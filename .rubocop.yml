@@ -15,4 +15,43 @@ AllCops:
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
 
+Style/RegexpLiteral:
+  Enabled: false
+
+Style/PredicateName:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Metrics/ParameterLists:
+  Max: 6
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/LineLength:
+  Max: 160
+
+Metrics/CyclomaticComplexity:
+  Max: 8
+
 inherit_from: .rubocop_todo.yml

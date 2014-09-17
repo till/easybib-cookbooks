@@ -4,7 +4,6 @@ unless node['prosody']['users'].empty?
 
     Chef::Log.debug("Email: #{email}")
 
-    account = email.split('@')[0]
     domain  = email.split('@')[1]
 
     unless node['prosody']['domains'].include?(domain)

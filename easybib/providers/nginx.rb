@@ -72,7 +72,7 @@ action :setup do
 
   default_router = new_resource.default_router unless new_resource.default_router.nil?
 
-  t = template "/etc/nginx/sites-enabled/#{config_name}.conf" do
+  template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook 'nginx-app'
     source config_template
     mode '0755'

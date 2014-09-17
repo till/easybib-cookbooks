@@ -23,7 +23,7 @@ action :create do
     mode '0755'
     owner nginx_user
     group nginx_group
-    only_if { new_resource.enable_fastcgi }
+    only_if { enable_fastcgi }
   end
 
   last_updated = true if tfp.updated_by_last_action?

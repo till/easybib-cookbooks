@@ -19,7 +19,6 @@ module EasyBib
       end
 
       crontabs = ::File.open(@file)
-      cron_counter = 1
 
       crontabs.each_line do |line|
         crontab = line.match(regex)

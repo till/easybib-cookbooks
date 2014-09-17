@@ -12,59 +12,9 @@ Lint/UnusedBlockArgument:
 Lint/UnusedMethodArgument:
   Enabled: false
 
-# Offense count: 14
-Lint/UselessAssignment:
-  Enabled: false
-
-# Offense count: 4
-Metrics/CyclomaticComplexity:
-  Max: 8
-
-# Offense count: 281
-# Configuration parameters: AllowURI.
-Metrics/LineLength:
-  Max: 158
-
-# Offense count: 29
-# Configuration parameters: CountComments.
-Metrics/MethodLength:
-  Max: 30
-
-# Offense count: 2
-# Configuration parameters: CountKeywordArgs.
-Metrics/ParameterLists:
-  Max: 6
-
-# Offense count: 4
-Metrics/PerceivedComplexity:
-  Max: 8
-
-# Offense count: 3
-Style/AccessorMethodName:
-  Enabled: false
-
-# Offense count: 5
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-# Offense count: 14
-Style/Documentation:
-  Enabled: false
-
-# Offense count: 59
-# Configuration parameters: Exclude.
-Style/FileName:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/FormatString:
-  Enabled: false
-
-# Offense count: 3
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
   Enabled: false
 
 # Offense count: 397
@@ -73,22 +23,6 @@ Style/GuardClause:
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
-# Offense count: 50
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Enabled: false
-
 # Offense count: 3
 Style/ModuleFunction:
   Enabled: false
-
-# Offense count: 4
-# Configuration parameters: NamePrefix, NamePrefixBlacklist.
-Style/PredicateName:
-  Enabled: false
-
-# Offense count: 3
-# Configuration parameters: MaxSlashes.
-Style/RegexpLiteral:
-  Enabled: false
-

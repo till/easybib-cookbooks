@@ -1,7 +1,5 @@
 ssl_dir    = node['ssl-deploy']['directory']
 
-stored_certificate = false
-
 node['deploy'].each do |application, deploy|
 
   next unless allow_deploy(application, 'ssl', 'nginxphpapp')
