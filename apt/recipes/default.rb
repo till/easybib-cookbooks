@@ -82,7 +82,7 @@ execute 'apt-get-update-periodic' do
   end
 end
 
-%w{/var/cache/local /var/cache/local/preseeding}.each do |dirname|
+%w(/var/cache/local /var/cache/local/preseeding).each do |dirname|
   directory dirname do
     owner 'root'
     group 'root'
