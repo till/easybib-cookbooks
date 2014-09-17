@@ -45,11 +45,11 @@ describe 'easybib_gearmanw' do
 end
 
 def stub_gearmanw_file_existing
-  ::File.stub(:exists?).with(anything).and_call_original
-  ::File.stub(:exists?).with('/some_dir/deploy/pecl_manager_env').and_return true
+  ::File.stub(:exist?).with(anything).and_call_original
+  ::File.stub(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return true
 end
 
 def stub_gearmanw_file_not_existing
-  ::File.stub(:exists?).with(anything).and_call_original
-  ::File.stub(:exists?).with('/some_dir/deploy/pecl_manager_env').and_return false
+  ::File.stub(:exist?).with(anything).and_call_original
+  ::File.stub(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return false
 end

@@ -60,13 +60,13 @@ describe 'easybib_crontab' do
 end
 
 def stub_crontab_does_not_exist
-  ::File.stub(:exists?).with(anything).and_call_original
-  ::File.stub(:exists?).with('/some_file').and_return false
+  ::File.stub(:exist?).with(anything).and_call_original
+  ::File.stub(:exist?).with('/some_file').and_return false
 end
 
 def stub_crontab_with_one_valid_and_one_invalid_line
-  ::File.stub(:exists?).with(anything).and_call_original
-  ::File.stub(:exists?).with('/some_file').and_return true
+  ::File.stub(:exist?).with(anything).and_call_original
+  ::File.stub(:exist?).with('/some_file').and_return true
 
   open_file = double('file')
   expect(open_file).to receive(:each_line)
