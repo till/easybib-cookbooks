@@ -36,8 +36,7 @@ end
 destination_dir = node['nodejs']['dir']
 
 node_symlink_exists = File.exist?("#{destination_dir}/bin/node")
-# FIXME: not sure if we should remove or fix the "install not needed"
-# rubocop:disable Lint/UselessAssignment
+
 if node_symlink_exists
   node_version_info = Mixlib::ShellOut.new("#{node['nodejs']['dir']}/bin/node --version")
   node_version_info.run_command
@@ -46,15 +45,16 @@ if node_symlink_exists
 else
   install_not_needed = false
 end
-# rubocop:enable Lint/UselessAssignment
 
 execute 'extract nodejs install' do
   command "tar -zxf #{nodejs_tar}"
   cwd node['nodejs']['prefix']
+  not_if install_not_needed
 end
 
 %w(npm node).each do |file|
   link "#{destination_dir}/bin/#{file}" do
     to "#{node['nodejs']['prefix']}/#{package_stub}/bin/#{file}"
+    not_if install_not_needed
   end
 end
