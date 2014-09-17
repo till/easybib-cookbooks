@@ -109,10 +109,10 @@ BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
     # Fixnum to string error happens
     fake_node = get_fakenode_config
     fake_node.set['deploy']['some_app']['database'] = {
-          'host' => 'some.db.tld',
-          'user' => 'dbuser',
-          'port' => 1234
-      }
+      'host' => 'some.db.tld',
+      'user' => 'dbuser',
+      'port' => 1234
+    }
 
     assert_equal(
       "[deployed_application]
@@ -165,13 +165,13 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
   def test_config_to_nginx_empty_settings
     fake_node = Chef::Node.new
     fake_node.set['deploy'] = {
-        'some_app' => {
-          'application' => 'some_app',
-          'domains' => ['foo.tld', 'bar.tld'],
-          'deploy_to' => '/tmp/bla',
-          'document_root' => 'www'
-        }
+      'some_app' => {
+        'application' => 'some_app',
+        'domains' => ['foo.tld', 'bar.tld'],
+        'deploy_to' => '/tmp/bla',
+        'document_root' => 'www'
       }
+    }
 
     fake_node.set['opsworks'] =  { 'stack' => { 'name' => 'opsworks-stack' } }
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
@@ -190,11 +190,11 @@ fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
   def test_config_vagrantenv
     fake_node = Chef::Node.new
     fake_node.set['deploy'] = {
-        'some_app' => {
-          'application' => 'some_app',
-          'domains' => ['foo.tld', 'bar.tld']
-        }
+      'some_app' => {
+        'application' => 'some_app',
+        'domains' => ['foo.tld', 'bar.tld']
       }
+    }
 
     fake_node.set['vagrant'] =  { 'applications' => { 'some_app' => { 'app_root_location' => '/some_path', 'doc_root_location' => '/some_path/foo' } } }
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
@@ -238,23 +238,23 @@ return [
   def get_fakenode_config
     fake_node = Chef::Node.new
     fake_node.set['deploy'] = {
-        'some_app' => {
-          'application' => 'some_app',
-          'domains' => ['foo.tld', 'bar.tld'],
-          'deploy_to' => '/tmp/bla',
-          'document_root' => 'www'
-        }
+      'some_app' => {
+        'application' => 'some_app',
+        'domains' => ['foo.tld', 'bar.tld'],
+        'deploy_to' => '/tmp/bla',
+        'document_root' => 'www'
       }
+    }
     fake_node.set['some_app'] = {
-        'env' => {
-          'bla' => {
-            'somekey' => 'somevalue',
-            'somegroup' => {
-              'someotherkey' => 'someothervalue'
-            }
+      'env' => {
+        'bla' => {
+          'somekey' => 'somevalue',
+          'somegroup' => {
+            'someotherkey' => 'someothervalue'
           }
         }
       }
+    }
 
     fake_node.set['opsworks'] =  { 'stack' => { 'name' => 'opsworks-stack' } }
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
