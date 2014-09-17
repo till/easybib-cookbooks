@@ -19,7 +19,7 @@ server {
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
@@ -54,7 +54,7 @@ end
     }
 
     location ~ ^/(fpm_status|fpm_ping)$ {
-        include       <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
+        include       <%=node['nginx-app']['config_dir']%>/fastcgi_params;
         fastcgi_pass  phpfpm;
         fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
         allow         127.0.0.1;
@@ -85,7 +85,7 @@ end
     }
 <% end -%>
 
-<% node["nginx-app"]['static_directories'].each do |dir| -%>
+<% node['nginx-app']['static_directories'].each do |dir| -%>
     location ^~ /<%=dir%>/ {
         root       <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
         access_log <%= @access_log %>;
@@ -99,7 +99,7 @@ end
         root <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
     <% if @password_protected && @password_protected.to_s == "true" -%>
         auth_basic            "Restricted";
-        auth_basic_user_file  <%=node["nginx-app"]['config_dir']%>/htpasswd;
+        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
     <% end -%>
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
@@ -109,12 +109,12 @@ end
 
     <% if @password_protected && @password_protected.to_s == "true" -%>
         auth_basic            "Restricted";
-        auth_basic_user_file  <%=node["nginx-app"]['config_dir']%>/htpasswd;
+        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
     <% end -%>
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_index index.php;

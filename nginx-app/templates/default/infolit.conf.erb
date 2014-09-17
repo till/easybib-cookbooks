@@ -1,5 +1,5 @@
 upstream phpfpm {
-    server  unix:/var/run/php-fpm/<%= node["php-fpm"]['user'] %>;
+    server  unix:/var/run/php-fpm/<%= node['php-fpm']['user'] %>;
 }
 
 <% if node['opsworks'] -%>
@@ -33,7 +33,7 @@ server {
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
@@ -47,7 +47,7 @@ server {
     }
 
     location ~ ^/(fpm_status|fpm_ping)$ {
-        include       <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
+        include       <%=node['nginx-app']['config_dir']%>/fastcgi_params;
         fastcgi_pass  phpfpm;
         fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
         allow         127.0.0.1;
@@ -90,7 +90,7 @@ server {
     location /search/ {
 
         access_log off;
-        include <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_index search.php;
@@ -102,7 +102,7 @@ server {
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_index index.php;
