@@ -111,7 +111,7 @@ def find_all_ignored
   skipped = []
 
   rubocop = YAML.load_file("./.rubocop.yml")
-  rubocop["AllCops"]["Excludes"].each do |ignored|
+  rubocop["AllCops"]["Exclude"].each do |ignored|
     skipped << ignored.split("/")[0]
   end
 
@@ -130,4 +130,4 @@ if !ENV['TRAVIS'] && File.exists?(current_dir + '/.kitchen.yml')
 end
 
 require 'rubocop/rake_task'
-Rubocop::RakeTask.new
+RuboCop::RakeTask.new
