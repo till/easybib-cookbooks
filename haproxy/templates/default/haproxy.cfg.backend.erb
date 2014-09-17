@@ -12,7 +12,7 @@ haproxy_check_interval = 3000
 haproxy_maxconn = 255
 
 if @health_check.is_a?(Hash)
-    health_check_string = "GET #{@health_check[:url]} HTTP/1.1\\r\\nHost:\\ #{@health_check[:host]}"
+    health_check_string = "GET #{@health_check['url']} HTTP/1.1\\r\\nHost:\\ #{@health_check['host']}"
 else
     health_check_string = @health_check
 end
@@ -25,6 +25,6 @@ backend <%= @layername %>_php_app_servers
   option httpclose
   option forwardfor
   option httpchk <%= health_check_string %>
-  <% @node[:opsworks][:layers][@layername][:instances].each do |name,backend| -%>
+  <% @node['opsworks']['layers'][@layername]['instances'].each do |name,backend| -%>
   server <%= name %> <%= backend['private_dns_name'] %>:80 weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
   <% end -%>

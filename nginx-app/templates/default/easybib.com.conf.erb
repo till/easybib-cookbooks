@@ -19,10 +19,10 @@ server {
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        include <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/health_check.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
     }
 
     # Block ad calls to /something/<script type="text/javascript">
@@ -31,7 +31,7 @@ server {
     }
 
     location ~ /(doubleclick|eyeblaster|eyewonder|pointroll|unicast)/.*\.html {
-        root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
+        root        <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
         access_log  <%= @access_log %>;
     }
 
@@ -39,7 +39,7 @@ server {
 ['/google8a01a818524239c8.html', '/googled16040836651a26a.html', '/bsm-xd.html'].each do |route|
 -%>
     location ^~ <%= route %> {
-        root        <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
+        root        <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
         access_log  <%= @access_log %>;
     }
 <%
@@ -54,7 +54,7 @@ end
     }
 
     location ~ ^/(fpm_status|fpm_ping)$ {
-        include       <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        include       <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
         fastcgi_pass  phpfpm;
         fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
         allow         127.0.0.1;
@@ -63,7 +63,7 @@ end
 
 <% @js_alias.each do |www_alias,www_dir| -%>
     location ^~ /js/<%=www_alias%>/ {
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -71,7 +71,7 @@ end
 
 <% @img_alias.each do |www_alias,www_dir| -%>
     location ^~ /images/<%=www_alias%>/ {
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -79,15 +79,15 @@ end
 
 <% @css_alias.each do |www_alias,www_dir| -%>
     location ^~ /css/<%=www_alias%>/ {
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/<%=www_dir%>/www;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
 
-<% node["nginx-app"][:static_directories].each do |dir| -%>
+<% node["nginx-app"]['static_directories'].each do |dir| -%>
     location ^~ /<%=dir%>/ {
-        root       <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
+        root       <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -96,10 +96,10 @@ end
     location ~* \.(jpg|jpeg|gif|png|css|js|ico)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
-        root <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>;
+        root <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
     <% if @password_protected && @password_protected.to_s == "true" -%>
         auth_basic            "Restricted";
-        auth_basic_user_file  <%=node["nginx-app"][:config_dir]%>/htpasswd;
+        auth_basic_user_file  <%=node["nginx-app"]['config_dir']%>/htpasswd;
     <% end -%>
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
@@ -109,12 +109,12 @@ end
 
     <% if @password_protected && @password_protected.to_s == "true" -%>
         auth_basic            "Restricted";
-        auth_basic_user_file  <%=node["nginx-app"][:config_dir]%>/htpasswd;
+        auth_basic_user_file  <%=node["nginx-app"]['config_dir']%>/htpasswd;
     <% end -%>
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        include <%=node["nginx-app"]['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_index index.php;
@@ -123,7 +123,7 @@ end
         fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
     <% end -%>
 
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/index.php;
 
         index  index.php index.html index.htm;
     }
