@@ -49,7 +49,7 @@ node["deploy"].each do |application, deploy|
   php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
 
   template "render vhost: #{application}" do
-    name   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
+    path   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
     source nginx_config
     mode   "0755"
     owner  node["nginx-app"]["user"]
