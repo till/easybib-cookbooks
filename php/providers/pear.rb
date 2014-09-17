@@ -42,7 +42,7 @@ def discovered?(pear, channel)
 end
 
 def pear_cmd(pear, action, package, force, channel, version)
-  if !discovered?(pear, channel)
+  unless discovered?(pear, channel)
     discover = Mixlib::ShellOut.new("#{pear} channel-discover #{channel}")
     discover.run_command
   end

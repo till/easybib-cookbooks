@@ -44,6 +44,6 @@ remote_file "/opt/easybib/pear/PEAR/REST.php" do
   mode 0644
 end
 
-if !node["php-pear"]["packages"].empty?
+unless node["php-pear"]["packages"].empty?
   include_recipe "php-pear::packages"
 end

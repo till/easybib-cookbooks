@@ -32,7 +32,7 @@ template "#{node["xhprof.io"]["root"]}/xhprof/includes/config.inc.php" do
 end
 
 mysql_command = "mysql -h #{node["xhprof.io"]["host"]} -u #{node["xhprof.io"]["username"]}"
-if !node["xhprof.io"]["password"].empty?
+unless node["xhprof.io"]["password"].empty?
   mysql_command = "#{mysql_command} -p#{node["xhprof.io"]["password"]}"
 end
 

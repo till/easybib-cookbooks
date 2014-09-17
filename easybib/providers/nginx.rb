@@ -66,7 +66,7 @@ action :setup do
 
   default_router = node["nginx-app"]["default_router"]
 
-  if !::File.exist?("#{deploy_dir}/#{default_router}")
+  unless ::File.exist?("#{deploy_dir}/#{default_router}")
     default_router = 'index.php'
   end
 
@@ -107,7 +107,7 @@ end
 
 def get_config_name(resource)
   config_name = resource.app_name
-  if !resource.config_name.empty?
+  unless resource.config_name.empty?
     config_name = resource.config_name
   end
   config_name

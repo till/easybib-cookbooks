@@ -1,4 +1,4 @@
-if !node["prosody"]["users"].empty?
+unless node["prosody"]["users"].empty?
 
   node["prosody"]["users"].each do |email, passwd|
 
@@ -7,7 +7,7 @@ if !node["prosody"]["users"].empty?
     account = email.split("@")[0]
     domain  = email.split("@")[1]
 
-    if !node["prosody"]["domains"].include?(domain)
+    unless node["prosody"]["domains"].include?(domain)
       Chef::Log.error("Domain for #{email} is not managed by this server.")
       next
     end
@@ -40,11 +40,11 @@ if node["prosody"]["storage"] == "sql"
     include_recipe "percona::client" if is_aws
 
     mysql_command = "mysql -u %s -h %s" % [ db_conf["username"], db_conf["hostname"] ]
-    if !db_conf["password"].empty?
+    unless db_conf["password"].empty?
       mysql_command += " -p#{db_conf["password"]}"
     end
 
-    if !node["prosody"]["users"].empty?
+    unless node["prosody"]["users"].empty?
 
       userstatement = " NOT ("
       node["prosody"]["users"].each do |email, passwd|

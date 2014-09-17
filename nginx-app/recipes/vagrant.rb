@@ -1,10 +1,10 @@
-if !node["deploy"]["deploy_to"]
+unless node["deploy"]["deploy_to"]
   node.normal.deploy["deploy_to"] = "/var/www/easybib"
 end
 
 Chef::Log.debug("deploy: #{node["deploy"]["deploy_to"]}")
 
-if !node.attribute?("docroot")
+unless node.attribute?("docroot")
   node.normal.docroot = 'www'
 end
 

@@ -9,7 +9,7 @@ action :install do
   ext_dir << ::File::SEPARATOR if ext_dir[-1].chr != ::File::SEPARATOR
   so_file   = "#{ext_dir}/#{extension}.so"
 
-  if !version.nil?
+  unless version.nil?
     extension = "#{extension}-#{version}"
   end
 
@@ -72,7 +72,7 @@ action :compile do
   end
 
   source_dir = new_resource.source_dir
-  if !::File.exist?(source_dir)
+  unless ::File.exist?(source_dir)
     fail "The 'source_dir' does not exist: #{source_dir}"
   end
 

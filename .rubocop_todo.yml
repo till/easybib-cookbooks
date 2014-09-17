@@ -82,11 +82,6 @@ Style/IfUnlessModifier:
 Style/ModuleFunction:
   Enabled: false
 
-# Offense count: 41
-# Cop supports --auto-correct.
-Style/NegatedIf:
-  Enabled: false
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/NumericLiterals:

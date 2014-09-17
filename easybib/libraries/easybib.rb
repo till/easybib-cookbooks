@@ -19,7 +19,7 @@ module EasyBib
   end
 
   def has_env?(app, node = self.node)
-    if !node.attribute?(app)
+    unless node.attribute?(app)
       return false
     end
 
@@ -31,7 +31,7 @@ module EasyBib
   end
 
   def allow_deploy(application, requested_application, requested_role = nil, node = self.node)
-    if !is_aws(node)
+    unless is_aws(node)
       return false
     end
 
@@ -70,7 +70,7 @@ module EasyBib
   def is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
     case application
     when requested_application
-      if !instance_roles.include?(requested_role)
+      unless instance_roles.include?(requested_role)
         irs = instance_roles.inspect
         Chef::Log.info("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
         return false

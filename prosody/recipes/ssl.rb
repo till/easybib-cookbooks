@@ -27,12 +27,12 @@ node["deploy"].each do |application, deploy|
 
   Chef::Log.info("prosody::ssl - ssl key installation started")
 
-  if !deploy.key?("ssl_certificate")
+  unless deploy.key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
     next
   end
 
-  if !deploy.key?("ssl_certificate_key")
+  unless deploy.key?("ssl_certificate_key")
     Chef::Log.info("No ssl_certificate_key 'key'")
     next
   end
@@ -99,7 +99,7 @@ end
   end
 end
 
-if !stored_certificate
+unless stored_certificate
   Chef::Log.debug("No certificates were installed, we'll stop prosody.")
   service "prosody" do
     supports "status" => true, "restart" => true

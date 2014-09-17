@@ -24,21 +24,21 @@ node["deploy"].each do |application, deploy|
     next
   end
 
-  if !instance_roles.include?(right_role)
+  unless instance_roles.include?(right_role)
     next
   end
 
-  if !right_cluster.include?(cluster_name.to_s)
+  unless right_cluster.include?(cluster_name.to_s)
     Chef::Log.info("Will not deploy to: " + cluster_name.to_s)
     next
   end
 
-  if !deploy.key?("ssl_certificate")
+  unless deploy.key?("ssl_certificate")
     Chef::Log.info("No ssl_certificate 'key'")
     next
   end
 
-  if !deploy.key?("ssl_certificate_key")
+  unless deploy.key?("ssl_certificate_key")
     Chef::Log.info("No ssl_certificate_key 'key'")
     next
   end
@@ -108,7 +108,7 @@ end
   end
 end
 
-if !stored_certificate
+unless stored_certificate
   Chef::Log.debug("No certificates were installed, we'll stop nginx.")
   service "nginx" do
     supports "status" => true, "restart" => true

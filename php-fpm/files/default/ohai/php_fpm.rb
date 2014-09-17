@@ -34,7 +34,7 @@ else
   Ohai::Log.error("No PHP on this server.")
 end
 
-if !languages[:php_fpm][:pear_bin].nil?
+unless languages[:php_fpm][:pear_bin].nil?
 
   languages[:php_fpm][:pear] = {}
   languages[:php_fpm][:pear][:bin_dir] = `#{languages[:php_fpm][:pear_bin]} config-get bin_dir`.strip

@@ -56,11 +56,11 @@ task :foodcritic do
       verbose(false)
 
       fc_command = "bundle exec foodcritic -C --chef-version 11 -f any"
-      fc_command << " -f #{epic_fail.join(' -f ')}" if !epic_fail.empty?
+      fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
       fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
       fc_command << " #{sandbox}"
       sh fc_command do |ok, res|
-        if !ok
+        unless ok
           puts "Cookbook: #{cb}"
           puts "Command failed: #{fc_command}"
           puts res
@@ -95,7 +95,7 @@ def find_cookbooks(all_your_base)
 
   Dir.entries(all_your_base).select do |entry|
     next unless File.directory?(File.join(all_your_base, entry))
-    next unless !(entry[0, 1] == '.')
+    next if (entry[0, 1] == '.')
     next if skip.include?(entry)
 
     cookbooks.push(entry)

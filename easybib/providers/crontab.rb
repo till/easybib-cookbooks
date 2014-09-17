@@ -4,7 +4,7 @@ action :create do
 
   updated = false
 
-  if !::File.exist?(crontab_file)
+  unless ::File.exist?(crontab_file)
     new_resource.updated_by_last_action(updated)
     next
   end

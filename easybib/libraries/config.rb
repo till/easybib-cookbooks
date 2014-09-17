@@ -4,7 +4,7 @@ module EasyBib
     def get_env(format, app, node = self.node)
       config = ""
 
-      if !node.attribute?(app)
+      unless node.attribute?(app)
         return config
       end
 
@@ -45,7 +45,7 @@ module EasyBib
         Chef::Log.info('no env settings found')
       end
 
-      if !node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
+      unless node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
         # add configuration from the RDS resource management in opsworks
         dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
         settings.merge!(dbconfig)

@@ -3,7 +3,7 @@ def initialize(*args)
 end
 
 def check_target(dir)
-  if !::File.directory?(dir)
+  unless ::File.directory?(dir)
     fail "#{dir} is not a directory"
   end
 end
@@ -55,7 +55,7 @@ action :setup do
 
     shell_out("curl http://getcomposer.org/installer --silent --output #{deploy_to}/installer", deploy_to)
 
-    if !::File.exist?("#{deploy_to}/installer")
+    unless ::File.exist?("#{deploy_to}/installer")
       fail "Does not exist?"
     end
 
