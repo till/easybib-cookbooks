@@ -16,7 +16,7 @@ end
 
 service 'nscd' do
   action :nothing
-  supports [ :start, :stop, :restart, :reload ]
+  supports [:start, :stop, :restart, :reload]
 end
 
 include_recipe 'easybib::nginxstats'

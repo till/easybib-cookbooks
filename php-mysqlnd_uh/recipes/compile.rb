@@ -11,6 +11,6 @@ subversion 'Download mysqlnd_uh from svn' do
 end
 
 php_pecl 'mysqlnd_uh' do
-  action [ :compile, :setup ]
+  action [:compile, :setup]
   source_dir src_dir
 end

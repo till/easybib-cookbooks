@@ -22,7 +22,7 @@ end
 
 service 'apt-proxy' do
   supports :restart => true, :status => false
-  action [ :enable, :start ]
+  action [:enable, :start]
 end
 
 cookbook_file '/etc/apt-proxy/apt-proxy-v2.conf' do

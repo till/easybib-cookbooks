@@ -17,6 +17,6 @@ execute "tar -zxf #{php_archive}" do
 end
 
 php_pecl 'bcmath' do
-  action [ :compile, :setup]
+  action [:compile, :setup]
   source_dir "#{php_source}/ext/bcmath"
 end

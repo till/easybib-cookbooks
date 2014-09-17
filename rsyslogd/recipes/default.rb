@@ -1,7 +1,7 @@
 service 'rsyslog' do
   provider Chef::Provider::Service::Upstart
   supports :status => true, :restart => true, :reload => true
-  action [ :nothing ]
+  action [:nothing]
 end
 
 cookbook_file '/etc/rsyslog.d/10-debug-helper.conf' do

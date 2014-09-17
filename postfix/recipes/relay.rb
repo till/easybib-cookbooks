@@ -44,5 +44,5 @@ end
 
 service 'postfix' do
   supports :status => true, :restart => true, :reload => true, :check => true, :reload => true
-  action [ :enable, :reload ]
+  action [:enable, :reload]
 end

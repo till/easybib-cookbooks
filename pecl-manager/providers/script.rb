@@ -33,7 +33,7 @@ action :create do
   end
 
   service 'pecl-manager' do
-    supports [ :start, :stop, :restart, :status ]
+    supports [:start, :stop, :restart, :status]
     action :restart
   end
 

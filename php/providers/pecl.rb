@@ -34,13 +34,13 @@ action :setup do
     files = [ext_prefix + name + '.so']
   end
 
-  extensions = Hash[ files.map do |filepath|
+  extensions = Hash[files.map do |filepath|
     rel_file = filepath.clone
     rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
 
     zend = new_resource.zend_extensions.include?(rel_file)
 
-    [ (zend ? filepath : rel_file), zend ]
+    [(zend ? filepath : rel_file), zend]
   end]
 
   config_directives = new_resource.config_directives

@@ -11,5 +11,5 @@ end
 
 service 'avahi-daemon' do
   supports :status => true, :restart => true, :reload => false
-  action [ :restart ]
+  action [:restart]
 end

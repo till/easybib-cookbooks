@@ -1,7 +1,7 @@
 include_recipe 'php-fpm::source'
 
 php_pecl 'zip' do
-  action [ :install, :setup ]
+  action [:install, :setup]
   not_if do
     node['apt']['easybib']['ppa'] == 'ppa:easybib/php55'
   end

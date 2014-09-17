@@ -92,17 +92,6 @@ Style/PredicateName:
 Style/RegexpLiteral:
   Enabled: false
 
-# Offense count: 39
-# Cop supports --auto-correct.
-Style/SpaceInsideBrackets:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SupportedStyles.
-Style/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
 # Offense count: 12
 # Cop supports --auto-correct.
 Style/WordArray:

@@ -15,6 +15,6 @@ execute "tar -zxf #{php_archive}" do
 end
 
 php_pecl 'pdo_sqlite' do
-  action [ :compile, :setup ]
+  action [:compile, :setup]
   source_dir "#{php_source}/ext/pdo_sqlite"
 end

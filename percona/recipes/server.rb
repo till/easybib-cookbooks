@@ -3,7 +3,7 @@ include_recipe 'percona::client'
 
 service 'mysql' do
   action :nothing
-  supports [ :start, :stop, :restart ]
+  supports [:start, :stop, :restart]
 end
 
 case node['percona']['version']
