@@ -77,7 +77,6 @@ end
 private
 
 def prepare_foodcritic_sandbox(sandbox, cookbook)
-
   files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
 
   opts = {:verbose => false}
@@ -110,7 +109,6 @@ private
 
 # ignore the following - mostly third party
 def find_all_ignored
-
   skipped = []
 
   rubocop = YAML.load_file("./.rubocop.yml")
