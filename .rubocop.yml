@@ -54,4 +54,10 @@ Metrics/LineLength:
 Metrics/CyclomaticComplexity:
   Max: 8
 
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
 inherit_from: .rubocop_todo.yml
