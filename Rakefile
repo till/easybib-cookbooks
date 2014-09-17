@@ -75,6 +75,7 @@ task :foodcritic do
 end
 
 private
+
 def prepare_foodcritic_sandbox(sandbox, cookbook)
 
   files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
@@ -87,6 +88,7 @@ def prepare_foodcritic_sandbox(sandbox, cookbook)
 end
 
 private
+
 def find_cookbooks(all_your_base)
   cookbooks = []
 
@@ -105,6 +107,7 @@ def find_cookbooks(all_your_base)
 end
 
 private
+
 # ignore the following - mostly third party
 def find_all_ignored
 
