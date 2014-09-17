@@ -51,7 +51,7 @@ execute 'extract nodejs install' do
   cwd node['nodejs']['prefix']
 end
 
-['npm', 'node'].each do |file|
+%w(npm node).each do |file|
   link "/usr/local/bin/#{file}" do
     to "#{node['nodejs']['prefix']}/#{package_stub}/bin/#{file}"
   end

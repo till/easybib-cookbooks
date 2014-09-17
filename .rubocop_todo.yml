@@ -92,7 +92,3 @@ Style/PredicateName:
 Style/RegexpLiteral:
   Enabled: false
 
-# Offense count: 12
-# Cop supports --auto-correct.
-Style/WordArray:
-  MinSize: 4

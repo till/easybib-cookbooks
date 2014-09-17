@@ -1,4 +1,4 @@
-gems = ['newrelic_haproxy_agent', 'bundler', 'fastercsv']
+gems = %w(newrelic_haproxy_agent bundler fastercsv)
 
 gems.each do |gem|
   gem_package gem

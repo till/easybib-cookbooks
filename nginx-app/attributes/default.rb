@@ -2,7 +2,7 @@ default['nginx-app']                       = {}
 default['nginx-app']['access_log']         = 'off'
 default['nginx-app']['user']               = 'www-data'
 default['nginx-app']['group']              = 'www-data'
-default['nginx-app']['static_directories'] = ['js', 'css', 'images', 'raw']
+default['nginx-app']['static_directories'] = %w(js css images raw)
 default['nginx-app']['config_dir']         = '/etc/nginx'
 default['nginx-app']['conf_file']          = 'easybib.com.conf.erb'
 

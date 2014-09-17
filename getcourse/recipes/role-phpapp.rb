@@ -1,7 +1,7 @@
 if is_aws
   stack_applications = node['deploy'].keys
 else
-  stack_applications = ['api', 'feature_flags']
+  stack_applications = %w(api feature_flags)
 end
 
 stack_applications.each do |app|

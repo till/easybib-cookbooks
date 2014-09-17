@@ -140,7 +140,7 @@ module EasyBib
       end
 
       # ensure all dirs end with a slash:
-      ['deploy_dir', 'app_dir', 'doc_root_dir'].each do |name|
+      %w(deploy_dir app_dir doc_root_dir).each do |name|
         data[name] << '/' unless data[name].end_with?('/')
       end
 
@@ -268,12 +268,12 @@ module EasyBib
     end
 
     def build_shell_config(key, value, section = nil)
-      key = sprintf('%s_%s', section.upcase, key.upcase) if ['deployed_application', 'deployed_stack'].include?(section)
+      key = sprintf('%s_%s', section.upcase, key.upcase) if %w(deployed_application deployed_stack).include?(section)
       "export #{key}=\"#{value}\"\n"
     end
 
     def build_nginx_config(key, value, section = nil)
-      key = sprintf('%s_%s', section.upcase, key.upcase) if ['deployed_application', 'deployed_stack'].include?(section)
+      key = sprintf('%s_%s', section.upcase, key.upcase) if %w(deployed_application deployed_stack).include?(section)
       "fastcgi_param #{key} \"#{value}\";\n"
     end
 

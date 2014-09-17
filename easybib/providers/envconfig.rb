@@ -15,7 +15,7 @@ action :create do
 
   # FIXME: get_configcontent needs the stackname
 
-  ['ini', 'php', 'sh'].each do |format|
+  %w(ini php sh).each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
       mode   '0644'
       cookbook 'easybib'
