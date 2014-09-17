@@ -1,15 +1,15 @@
 module XHProf
   def get_path(node = self.node)
-    if node["xhprof.io"]
-      uri = URI(node["xhprof.io"]["url"])
+    if node['xhprof.io']
+      uri = URI(node['xhprof.io']['url'])
       return uri.path.gsub(/[#{Regexp.escape("/")}]+$/, '')
     end
-    "/xhprof"
+    '/xhprof'
   end
 
   def get_dsn(node = self.node)
-    conf = node["xhprof.io"]
-    "mysql:dbname=#{conf["dbname"]};host=#{conf["host"]}"
+    conf = node['xhprof.io']
+    "mysql:dbname=#{conf['dbname']};host=#{conf['host']}"
   end
 
   extend self

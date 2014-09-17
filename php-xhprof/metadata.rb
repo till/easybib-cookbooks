@@ -1,11 +1,11 @@
-name              "php-xhprof"
-maintainer        "Till Klampaeckel"
-maintainer_email  "till@php.net"
-license           "BSD License"
-description       "Installs ext/xhprof for PHP"
-version           "0.1"
+name              'php-xhprof'
+maintainer        'Till Klampaeckel'
+maintainer_email  'till@php.net'
+license           'BSD License'
+description       'Installs ext/xhprof for PHP'
+version           '0.1'
 
-depends "apt"
-depends "php-fpm"
+depends 'apt'
+depends 'php-fpm'
 
 supports 'ubuntu'

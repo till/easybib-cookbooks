@@ -103,17 +103,6 @@ Style/SpaceInsideBrackets:
 Style/SpaceInsideHashLiteralBraces:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceInsideParens:
-  Enabled: false
-
-# Offense count: 4261
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
-  Enabled: false
-
 # Offense count: 12
 # Cop supports --auto-correct.
 Style/WordArray:

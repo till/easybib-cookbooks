@@ -1,3 +1,3 @@
-node.set["ohai"]["plugins"]["php-fpm"] = "ohai"
+node.set['ohai']['plugins']['php-fpm'] = 'ohai'
 
-include_recipe "ohai"
+include_recipe 'ohai'

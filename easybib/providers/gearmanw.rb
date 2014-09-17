@@ -6,9 +6,9 @@ action :create do
 
   if ::File.exist?(import_file)
 
-    Chef::Log.debug("easybib_gearmanw - found gearmanw file, setting up")
+    Chef::Log.debug('easybib_gearmanw - found gearmanw file, setting up')
 
-    p = pecl_manager_script "Setting up Pecl Manager" do
+    p = pecl_manager_script 'Setting up Pecl Manager' do
       dir                application_root_dir
       envvar_file        import_file
       envvar_json_source new_resource.envvar_json_source

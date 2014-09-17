@@ -1,5 +1,5 @@
-include_recipe "nginx-app::server"
+include_recipe 'nginx-app::server'
 
-package "tsung"
+package 'tsung'
 
-include_recipe "tsung::configure"
+include_recipe 'tsung::configure'

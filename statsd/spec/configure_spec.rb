@@ -5,17 +5,17 @@ describe 'statsd::configure' do
   let (:chef_run) do
     ChefSpec::Runner.new do |node|
       # fake opsworks
-      node.default["opsworks"] = {}
-      node.default.opsworks["stack"] = {}
-      node.default.opsworks.stack["name"] = "chef spec run"
+      node.default['opsworks'] = {}
+      node.default.opsworks['stack'] = {}
+      node.default.opsworks.stack['name'] = 'chef spec run'
     end.converge(described_recipe)
   end
 
-  it "creates /etc/statsd/config.js" do
-    expect(chef_run).to render_file("/etc/statsd/config.js")
+  it 'creates /etc/statsd/config.js' do
+    expect(chef_run).to render_file('/etc/statsd/config.js')
   end
 
-  it "it contains the correct settings" do
+  it 'it contains the correct settings' do
 
     # before you think twice - this is javascript, not JSON
     conf  = "{\n"
@@ -30,6 +30,6 @@ describe 'statsd::configure' do
     conf << "  }\n"
     conf << "}\n"
 
-    expect(chef_run).to render_file("/etc/statsd/config.js").with_content(conf)
+    expect(chef_run).to render_file('/etc/statsd/config.js').with_content(conf)
   end
 end

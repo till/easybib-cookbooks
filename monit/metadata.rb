@@ -1,7 +1,7 @@
-name              "monit"
-maintainer        "Till Klampaeckel"
-maintainer_email  "till@php.net"
+name              'monit'
+maintainer        'Till Klampaeckel'
+maintainer_email  'till@php.net'
 version           '0.1'
-license           "BSD License"
+license           'BSD License'
 
-depends "nginx-app"
+depends 'nginx-app'

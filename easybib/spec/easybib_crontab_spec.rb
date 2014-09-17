@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require_relative 'spec_helper'
 
 describe 'easybib_crontab' do
 
@@ -12,47 +12,47 @@ describe 'easybib_crontab' do
   let(:runner) do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
-      :step_into => ["easybib_crontab"]
+      :step_into => ['easybib_crontab']
     )
   end
 
   let(:node) { runner.node }
 
-  let(:chef_run) { runner.converge("fixtures::easybib_crontab") }
+  let(:chef_run) { runner.converge('fixtures::easybib_crontab') }
 
-  describe "easybib_crontab actions" do
-    describe "create" do
+  describe 'easybib_crontab actions' do
+    describe 'create' do
       before { stub_crontab_with_one_valid_and_one_invalid_line }
 
-      it "cleans leftover old crontab" do
+      it 'cleans leftover old crontab' do
         expect(chef_run).to run_execute('crontab -u www-data -r')
       end
 
-      it "creates a cronjob" do
+      it 'creates a cronjob' do
         expect(chef_run).to create_cron_d('some-app_1')
           .with(
-          :minute => "1",
-          :hour => "2",
-          :day => "3",
-          :month => "4",
-          :weekday => "5",
-          :user => "www-data",
-          :command => "cronline",
-          :path => "/usr/local/bin:/usr/bin:/bin"
+          :minute => '1',
+          :hour => '2',
+          :day => '3',
+          :month => '4',
+          :weekday => '5',
+          :user => 'www-data',
+          :command => 'cronline',
+          :path => '/usr/local/bin:/usr/bin:/bin'
         )
       end
 
-      it "not to create a cronjob for an invalid line" do
+      it 'not to create a cronjob for an invalid line' do
         expect(chef_run).not_to create_cron_d('some-app_2')
       end
     end
   end
 
-  describe "easybib_crontab without file" do
-    describe "create" do
+  describe 'easybib_crontab without file' do
+    describe 'create' do
       before { stub_crontab_does_not_exist }
 
-      it "does not proceed" do
+      it 'does not proceed' do
         expect(chef_run).not_to run_execute('crontab -u www-data -r')
       end
     end

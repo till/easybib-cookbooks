@@ -1,3 +1,3 @@
-package "dnsmasq"
+package 'dnsmasq'
 
-include_recipe "dnsmasq::configure"
+include_recipe 'dnsmasq::configure'

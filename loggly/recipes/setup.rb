@@ -1,10 +1,10 @@
-gem_package "json"
+gem_package 'json'
 
-include_recipe "rsyslogd"
+include_recipe 'rsyslogd'
 
-if node["loggly"] && (node["loggly"]["token"] != 'example')
+if node['loggly'] && (node['loggly']['token'] != 'example')
 
-  logglydata = node["loggly"]["token"]
+  logglydata = node['loggly']['token']
 
   if is_aws
     cluster_name   = get_cluster_name.gsub(/\W/, '_')
@@ -15,33 +15,33 @@ if node["loggly"] && (node["loggly"]["token"] != 'example')
     end
   end
 
-  template "/etc/rsyslog.d/49-loggly.conf" do
-    source "49-loggly.conf.erb"
+  template '/etc/rsyslog.d/49-loggly.conf' do
+    source '49-loggly.conf.erb'
     variables(
       :logglydata => logglydata
     )
-    mode "0644"
-    notifies :restart, "service[rsyslog]", :delayed
+    mode '0644'
+    notifies :restart, 'service[rsyslog]', :delayed
   end
 
   # clean up old location
-  file "/etc/rsyslog.d/10-loggly.conf" do
+  file '/etc/rsyslog.d/10-loggly.conf' do
     action :delete
     only_if { File.exist?('/etc/rsyslog.d/10-loggly.conf') }
   end
 
-  template "/etc/rsyslog.d/11-filewatcher.conf" do
-    source "11-filewatcher.conf.erb"
-    mode "0644"
-    notifies :restart, "service[rsyslog]", :delayed
+  template '/etc/rsyslog.d/11-filewatcher.conf' do
+    source '11-filewatcher.conf.erb'
+    mode '0644'
+    notifies :restart, 'service[rsyslog]', :delayed
   end
 
-  package "rsyslog-gnutls"
+  package 'rsyslog-gnutls'
 
-  cookbook_file "/etc/ssl/certs/loggly.full.pem" do
-    source "loggly.full.pem"
-    owner "root"
-    group "root"
+  cookbook_file '/etc/ssl/certs/loggly.full.pem' do
+    source 'loggly.full.pem'
+    owner 'root'
+    group 'root'
     mode 0644
   end
 

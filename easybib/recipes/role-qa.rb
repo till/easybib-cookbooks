@@ -1,8 +1,8 @@
-include_recipe "easybib::role-phpapp"
+include_recipe 'easybib::role-phpapp'
 
-include_recipe "php-posix"
+include_recipe 'php-posix'
 if is_aws
-  include_recipe "easybib-deploy::qa"
+  include_recipe 'easybib-deploy::qa'
 else
-  include_recipe "nginx-app::qa"
+  include_recipe 'nginx-app::qa'
 end

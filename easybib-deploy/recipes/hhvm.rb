@@ -1,5 +1,5 @@
-include_recipe "hhvm-fcgi::service"
-include_recipe "nginx-app::service"
+include_recipe 'hhvm-fcgi::service'
+include_recipe 'nginx-app::service'
 
 node['deploy'].each do |application, deploy|
 
@@ -20,16 +20,16 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
-    config_template "hhvm.conf.erb"
+    config_template 'hhvm.conf.erb'
     domain_name deploy['domains'].join(' ')
     htpasswd  "#{deploy['deploy_to']}/current/htpasswd"
     doc_root deploy['document_root']
-    notifies :restart, "service[nginx]", :delayed
+    notifies :restart, 'service[nginx]', :delayed
   end
 
   easybib_envconfig application
 
-  service "hhvm-fcgi" do
+  service 'hhvm-fcgi' do
     action :reload # TODO: this is probably unnessessary
   end
 

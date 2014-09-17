@@ -1,6 +1,6 @@
 # WIP to document source install of gearmand
 
-package "gearman-job-server" do
+package 'gearman-job-server' do
   action :purge
 end
 
@@ -8,16 +8,16 @@ prefix = node['gearmand']['prefix']
 version = node['gearmand']['source']['version']
 
 directory prefix do
-  mode "0755"
+  mode '0755'
 end
 
-build_deps = ["libboost-all-dev", "gperf", "libcloog-ppl0", "make"]
+build_deps = ['libboost-all-dev', 'gperf', 'libcloog-ppl0', 'make']
 
-case node["lsb"]["codename"]
+case node['lsb']['codename']
 when 'precise'
   build_deps.push('libevent1-dev')
 else
-  Chef::Log.fatal!("Unsupported platform: #{node["lsb"]["codename"]}")
+  Chef::Log.fatal!("Unsupported platform: #{node['lsb']['codename']}")
 end
 
 build_deps.each do |dep|
@@ -35,8 +35,8 @@ end
 
 commands = [
   "./configure --prefix=#{prefix}/#{version} #{node['gearmand']['source']['flags']}",
-  "make",
-  "make install"
+  'make',
+  'make install'
 ]
 
 commands.each do |command|
@@ -49,4 +49,4 @@ commands.each do |command|
   end
 end
 
-include_recipe "gearmand::configure"
+include_recipe 'gearmand::configure'

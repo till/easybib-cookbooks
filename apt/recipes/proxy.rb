@@ -16,19 +16,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-package "apt-proxy" do
+package 'apt-proxy' do
   action :install
 end
 
-service "apt-proxy" do
+service 'apt-proxy' do
   supports :restart => true, :status => false
   action [ :enable, :start ]
 end
 
-cookbook_file "/etc/apt-proxy/apt-proxy-v2.conf" do
-  source "apt-proxy-v2.conf"
-  owner "root"
-  group "root"
+cookbook_file '/etc/apt-proxy/apt-proxy-v2.conf' do
+  source 'apt-proxy-v2.conf'
+  owner 'root'
+  group 'root'
   mode 0644
-  notifies :restart, "service[apt-proxy]"
+  notifies :restart, 'service[apt-proxy]'
 end

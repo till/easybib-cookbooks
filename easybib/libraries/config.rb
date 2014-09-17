@@ -2,17 +2,17 @@ module EasyBib
   module Config
     extend self
     def get_env(format, app, node = self.node)
-      config = ""
+      config = ''
 
       unless node.attribute?(app)
         return config
       end
 
-      if node[app]["env"].nil?
+      if node[app]['env'].nil?
         fail "Attribute 'env' for application '#{app}' is not defined!"
       end
       # TODO: This should use streamline_appenv
-      node[app]["env"].each_pair do |section, data|
+      node[app]['env'].each_pair do |section, data|
         data.each_pair do |config_key, config_value|
           if config_value.is_a?(String)
 
@@ -60,7 +60,7 @@ module EasyBib
     end
 
     def to_configformat(format, data)
-      fail "No Config supplied" if data.nil?
+      fail 'No Config supplied' if data.nil?
       config = generate_start(format)
       data.each_pair do |main_section, section_data|
         Chef::Log.info("Config: Processing section #{main_section}")
@@ -90,7 +90,7 @@ module EasyBib
 
       Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
       path = node['vagrant']['applications'][appname]['doc_root_location']
-      "/" + path.split('/')[1..-2].join('/') + "/"
+      '/' + path.split('/')[1..-2].join('/') + '/'
     end
 
     def get_domains(node, appname, env = 'getcourse')
@@ -112,7 +112,7 @@ module EasyBib
         if (env == 'getcourse') && (appname == 'consumer')
           # workaround to use old domain config syntax for consumer here, too
           # deprecated, and soon to be removed.
-          return "#{node[env]["domain"][appname]} *.#{node[env]["domain"][appname]}"
+          return "#{node[env]['domain'][appname]} *.#{node[env]['domain'][appname]}"
         end
         return node[env]['domain'][appname]
       end
@@ -152,9 +152,9 @@ module EasyBib
       if ::EasyBib.is_aws(node)
         data['stackname'] = node['opsworks']['stack']['name']
       elsif node['vagrant']
-        data['stackname'] = "vagrant"
+        data['stackname'] = 'vagrant'
       else
-        data['stackname'] = "undefined"
+        data['stackname'] = 'undefined'
       end
       data['environment'] = node['easybib_deploy']['envtype']
       data
@@ -165,47 +165,47 @@ module EasyBib
     # generate top of file
     def generate_start(format)
       case format
-      when "php"
+      when 'php'
         "<?php\nreturn [\n"
       else
-        ""
+        ''
       end
     end
 
     # generate end of file
     def generate_end(format)
       case format
-      when "php"
-        "];"
+      when 'php'
+        '];'
       else
-        ""
+        ''
       end
     end
 
     # generates the section header
     def generate_section_start(format, main_section)
       case format
-      when "php"
+      when 'php'
         "  '#{main_section}' => [\n"
-      when "ini"
+      when 'ini'
         "[#{main_section}]\n"
       else
-        ""
+        ''
       end
     end
 
     # generates the section footer
     def generate_section_end(format, main_section)
       case format
-      when "php"
+      when 'php'
         "  ],\n"
       else
-        ""
+        ''
       end
     end
 
     def generate_config_part(format, section, section_data)
-      config = ""
+      config = ''
       section_data.each_pair do |config_key, config_value|
         fail "section_data for #{config_key} is not a string - generate_config_part is not recursive, this wont work!" unless config_value.is_a?(String)
         config << build_config(format, config_key, config_value, section)
@@ -239,15 +239,15 @@ module EasyBib
 
     def build_config(format, var, value, section = nil)
       case format
-      when "nginx"
+      when 'nginx'
         build_nginx_config(var, value, section)
-      when "shell"
+      when 'shell'
         build_shell_config(var, value, section)
-      when "sh"
+      when 'sh'
         build_shell_config(var, value, section)
-      when "ini"
+      when 'ini'
         build_ini_config(var, value, section)
-      when "php"
+      when 'php'
         build_php_config(var, value, section)
       else
         fail "Unknown configuration type: #{format}."
@@ -255,7 +255,7 @@ module EasyBib
     end
 
     def get_output(data, format)
-      config = ""
+      config = ''
       data.each_pair do |config_key, config_value|
         config << build_config(format, config_key, config_value)
         next

@@ -19,21 +19,21 @@ class TestEasyBibConfig < Test::Unit::TestCase
     fake_node = Chef::Node.new
     fake_node.set['vagrant']['applications']['app']['app_root_location'] = '/app/root/dir/'
     assert_equal(
-      "/app/root/dir/",
-      ::EasyBib::Config.get_vagrant_appdir(fake_node, "app")
+      '/app/root/dir/',
+      ::EasyBib::Config.get_vagrant_appdir(fake_node, 'app')
     )
 
     fake_node = Chef::Node.new
     fake_node.set['vagrant']['applications']['app']['doc_root_location'] = '/doc/root/dir/'
     assert_equal(
-      "/doc/root/",
-      ::EasyBib::Config.get_vagrant_appdir(fake_node, "app")
+      '/doc/root/',
+      ::EasyBib::Config.get_vagrant_appdir(fake_node, 'app')
     )
 
     fake_node = Chef::Node.new
     assert_equal(
-      "/vagrant_data/",
-      ::EasyBib::Config.get_vagrant_appdir(fake_node, "app")
+      '/vagrant_data/',
+      ::EasyBib::Config.get_vagrant_appdir(fake_node, 'app')
     )
   end
 
@@ -41,22 +41,22 @@ class TestEasyBibConfig < Test::Unit::TestCase
     fake_node = Chef::Node.new
     fake_node.set['vagrant']['applications']['app']['domain_name'] = 'whatever.local'
     assert_equal(
-      "whatever.local",
-      ::EasyBib::Config.get_domains(fake_node, "app")
+      'whatever.local',
+      ::EasyBib::Config.get_domains(fake_node, 'app')
     )
 
     fake_node = Chef::Node.new
     fake_node.set['vagrant']['applications']['app']['domain_name'] = ['whatever.local', 'thing.local']
     assert_equal(
-      "whatever.local thing.local",
-      ::EasyBib::Config.get_domains(fake_node, "app")
+      'whatever.local thing.local',
+      ::EasyBib::Config.get_domains(fake_node, 'app')
     )
 
     fake_node = Chef::Node.new
     fake_node.set['deploy']['app']['domains'] = ['whatever.local', 'thing.local']
     assert_equal(
-      "whatever.local thing.local",
-      ::EasyBib::Config.get_domains(fake_node, "app")
+      'whatever.local thing.local',
+      ::EasyBib::Config.get_domains(fake_node, 'app')
     )
 
     fake_node = Chef::Node.new

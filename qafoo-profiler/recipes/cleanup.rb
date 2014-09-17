@@ -1,15 +1,15 @@
-include_recipe "qafoo-profiler::service"
+include_recipe 'qafoo-profiler::service'
 
-service "qprod" do
+service 'qprod' do
   action :stop
 end
 
-execute "stop qprofd hard" do
-  command "killall qprofd"
+execute 'stop qprofd hard' do
+  command 'killall qprofd'
   ignore_failure true
 end
 
-execute "cleanup socket file" do
-  command "rm -f /tmp/qprofd.sock"
+execute 'cleanup socket file' do
+  command 'rm -f /tmp/qprofd.sock'
   ignore_failure true
 end

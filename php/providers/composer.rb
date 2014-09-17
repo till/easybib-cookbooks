@@ -27,9 +27,9 @@ def shell_out(cmd, cwd)
 end
 
 def find_php
-  @php_bin = shell_out("which php", nil)
+  @php_bin = shell_out('which php', nil)
   if @php_bin.empty?
-    fail "PHP was not found."
+    fail 'PHP was not found.'
   end
 end
 
@@ -37,7 +37,7 @@ def has_phar?
   count = shell_out("#{@php_bin} -m|grep Phar|wc -l", nil)
   count = count.to_i
   if count == 0
-    fail "ext/phar is not installed"
+    fail 'ext/phar is not installed'
   end
 end
 
@@ -56,7 +56,7 @@ action :setup do
     shell_out("curl http://getcomposer.org/installer --silent --output #{deploy_to}/installer", deploy_to)
 
     unless ::File.exist?("#{deploy_to}/installer")
-      fail "Does not exist?"
+      fail 'Does not exist?'
     end
 
     shell_out("#{@php_bin} installer", deploy_to)

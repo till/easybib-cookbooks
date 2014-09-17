@@ -1,6 +1,6 @@
-include_recipe "apt::ppa"
-include_recipe "apt::easybib"
+include_recipe 'apt::ppa'
+include_recipe 'apt::easybib'
 
 package node['gearmand']['name']
 
-include_recipe "gearmand::configure"
+include_recipe 'gearmand::configure'

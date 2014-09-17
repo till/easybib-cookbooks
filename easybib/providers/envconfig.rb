@@ -15,11 +15,11 @@ action :create do
 
   # FIXME: get_configcontent needs the stackname
 
-  ["ini", "php", "sh"].each do |format|
+  ['ini', 'php', 'sh'].each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
-      mode   "0644"
-      cookbook "easybib"
-      source "empty.erb"
+      mode   '0644'
+      cookbook 'easybib'
+      source 'empty.erb'
       variables(
         :content => ::EasyBib::Config.get_configcontent(format, app, node)
       )

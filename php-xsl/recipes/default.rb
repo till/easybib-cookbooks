@@ -1,10 +1,10 @@
-include_recipe "php-fpm::service"
+include_recipe 'php-fpm::service'
 
-include_recipe "apt::ppa"
-include_recipe "apt::easybib"
+include_recipe 'apt::ppa'
+include_recipe 'apt::easybib'
 
-p = "php5-easybib-xsl"
+p = 'php5-easybib-xsl'
 
 package p do
-  notifies :reload, "service[php-fpm]", :delayed
+  notifies :reload, 'service[php-fpm]', :delayed
 end

@@ -1,10 +1,10 @@
-name              "php-bcmath"
-maintainer        "Till Klampaeckel"
-maintainer_email  "till@php.net"
+name              'php-bcmath'
+maintainer        'Till Klampaeckel'
+maintainer_email  'till@php.net'
 version           '0.1'
 
-supports "ubuntu"
+supports 'ubuntu'
 
-depends "php-fpm"
-depends "php"
-license           "BSD License"
+depends 'php-fpm'
+depends 'php'
+license           'BSD License'

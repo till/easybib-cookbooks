@@ -2,7 +2,7 @@
 # $LOAD_PATH << File.expand_path(File.dirname(__FILE__) + "fixtures/")
 # $LOAD_PATH << File.expand_path(File.dirname(__FILE__) + "../../")
 
-require "chefspec"
+require 'chefspec'
 
 RSpec.configure do |c|
   c.platform = 'ubuntu'

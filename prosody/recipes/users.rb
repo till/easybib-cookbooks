@@ -1,18 +1,18 @@
-unless node["prosody"]["users"].empty?
+unless node['prosody']['users'].empty?
 
-  node["prosody"]["users"].each do |email, passwd|
+  node['prosody']['users'].each do |email, passwd|
 
     Chef::Log.debug("Email: #{email}")
 
-    account = email.split("@")[0]
-    domain  = email.split("@")[1]
+    account = email.split('@')[0]
+    domain  = email.split('@')[1]
 
-    unless node["prosody"]["domains"].include?(domain)
+    unless node['prosody']['domains'].include?(domain)
       Chef::Log.error("Domain for #{email} is not managed by this server.")
       next
     end
 
-    package "expect"
+    package 'expect'
 
     execute "add user: #{email}" do
       # prosodyctl register would overwrite an existing user, while
@@ -29,30 +29,30 @@ unless node["prosody"]["users"].empty?
   end
 end
 
-if node["prosody"]["storage"] == "sql"
+if node['prosody']['storage'] == 'sql'
 
-  db_conf = node["prosody"]["db"]
-  driver  = db_conf["driver"].downcase
+  db_conf = node['prosody']['db']
+  driver  = db_conf['driver'].downcase
 
   case driver
-  when "mysql"
+  when 'mysql'
 
-    include_recipe "percona::client" if is_aws
+    include_recipe 'percona::client' if is_aws
 
-    mysql_command = "mysql -u %s -h %s" % [ db_conf["username"], db_conf["hostname"] ]
-    unless db_conf["password"].empty?
-      mysql_command += " -p#{db_conf["password"]}"
+    mysql_command = 'mysql -u %s -h %s' % [ db_conf['username'], db_conf['hostname'] ]
+    unless db_conf['password'].empty?
+      mysql_command += " -p#{db_conf['password']}"
     end
 
-    unless node["prosody"]["users"].empty?
+    unless node['prosody']['users'].empty?
 
-      userstatement = " NOT ("
-      node["prosody"]["users"].each do |email, passwd|
+      userstatement = ' NOT ('
+      node['prosody']['users'].each do |email, passwd|
 
         Chef::Log.debug("Email: #{email}")
 
-        account = email.split("@")[0]
-        domain  = email.split("@")[1]
+        account = email.split('@')[0]
+        domain  = email.split('@')[1]
 
         userstatement += " ( host='#{domain}' AND user='#{account}') OR "
 
@@ -61,14 +61,14 @@ if node["prosody"]["storage"] == "sql"
 
       Chef::Log.debug("I am going to delete prosody users where: #{userstatement} ")
 
-      execute "delete other accounts" do
-        command "#{mysql_command} -e \"DELETE FROM #{db_conf["database"]}.prosody WHERE store='accounts' AND #{userstatement}) \""
+      execute 'delete other accounts' do
+        command "#{mysql_command} -e \"DELETE FROM #{db_conf['database']}.prosody WHERE store='accounts' AND #{userstatement}) \""
       end
 
     end
 
   else
-    Chef::Log.error("Unsupport!")
+    Chef::Log.error('Unsupport!')
   end
 
 end

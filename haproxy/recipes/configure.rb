@@ -1,16 +1,16 @@
-include_recipe "haproxy::service"
+include_recipe 'haproxy::service'
 
-directory "/etc/haproxy/errors/" do
+directory '/etc/haproxy/errors/' do
   recursive true
-  mode "0755"
+  mode '0755'
   action :create
 end
 
-node["haproxy"]["errorloc"].each do |code, file|
+node['haproxy']['errorloc'].each do |code, file|
   cookbook_file "/etc/haproxy/errors/#{file}" do
     source file
-    owner "haproxy"
-    group "haproxy"
+    owner 'haproxy'
+    group 'haproxy'
     mode 0644
   end
 end
@@ -20,12 +20,12 @@ template '/etc/haproxy/haproxy.cfg' do
   owner 'root'
   group 'root'
   mode 0644
-  notifies :restart, "service[haproxy]"
+  notifies :restart, 'service[haproxy]'
 end
 
 execute "echo 'checking if HAProxy is not running - if so start it'" do
-  not_if "pgrep haproxy"
-  notifies :start, "service[haproxy]"
+  not_if 'pgrep haproxy'
+  notifies :start, 'service[haproxy]'
 end
 
-include_recipe "haproxy::monit"
+include_recipe 'haproxy::monit'

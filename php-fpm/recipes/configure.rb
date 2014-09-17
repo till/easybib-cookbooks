@@ -29,72 +29,72 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe "php-fpm::service"
+include_recipe 'php-fpm::service'
 
-etc_cli_dir = "#{node["php-fpm"]["prefix"]}/etc"
-etc_fpm_dir = "#{node["php-fpm"]["prefix"]}/etc"
-conf_cli    = "php-cli.ini"
-conf_fpm    = "php.ini"
+etc_cli_dir = "#{node['php-fpm']['prefix']}/etc"
+etc_fpm_dir = "#{node['php-fpm']['prefix']}/etc"
+conf_cli    = 'php-cli.ini'
+conf_fpm    = 'php.ini'
 
-if node["php-fpm"]["user"] == "vagrant"
-  display_errors = "On"
+if node['php-fpm']['user'] == 'vagrant'
+  display_errors = 'On'
 else
-  display_errors = "Off"
+  display_errors = 'Off'
 end
 
 template "#{etc_fpm_dir}/#{conf_fpm}" do
-  mode     "0755"
-  source   "php.ini.erb"
+  mode     '0755'
+  source   'php.ini.erb'
   variables(
     :enable_dl => 'Off',
-    :memory_limit => node["php-fpm"]["memorylimit"],
+    :memory_limit => node['php-fpm']['memorylimit'],
     :display_errors => display_errors,
-    :max_execution_time => node["php-fpm"]["maxexecutiontime"],
-    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"],
-    :logfile => node["php-fpm"]["logfile"],
+    :max_execution_time => node['php-fpm']['maxexecutiontime'],
+    :max_input_vars => node['php-fpm']['ini']['max-input-vars'],
+    :logfile => node['php-fpm']['logfile'],
     :error_log => 'syslog',
-    :tmpdir => node["php-fpm"]["tmpdir"],
-    :prefix => node["php-fpm"]["prefix"]
+    :tmpdir => node['php-fpm']['tmpdir'],
+    :prefix => node['php-fpm']['prefix']
   )
-  owner    node["php-fpm"]["user"]
-  group    node["php-fpm"]["group"]
-  notifies :reload, "service[php-fpm]", :delayed
+  owner    node['php-fpm']['user']
+  group    node['php-fpm']['group']
+  notifies :reload, 'service[php-fpm]', :delayed
 end
 
 template "#{etc_cli_dir}/#{conf_cli}" do
-  mode "0755"
-  source "php.ini.erb"
+  mode '0755'
+  source 'php.ini.erb'
   variables(
-    :enable_dl      => "On",
+    :enable_dl      => 'On',
     :error_log      => 'syslog',
     :memory_limit   => '1024M',
     :display_errors => 'On',
     :max_execution_time => '-1',
-    :max_input_vars => node["php-fpm"]["ini"]["max-input-vars"],
-    :logfile => node["php-fpm"]["logfile"],
-    :tmpdir => node["php-fpm"]["tmpdir"],
-    :prefix => node["php-fpm"]["prefix"]
+    :max_input_vars => node['php-fpm']['ini']['max-input-vars'],
+    :logfile => node['php-fpm']['logfile'],
+    :tmpdir => node['php-fpm']['tmpdir'],
+    :prefix => node['php-fpm']['prefix']
   )
-  owner node["php-fpm"]["user"]
-  group node["php-fpm"]["group"]
+  owner node['php-fpm']['user']
+  group node['php-fpm']['group']
 end
 
 template "#{etc_fpm_dir}/php-fpm.conf" do
-  mode     "0755"
-  source   "php-fpm.conf.erb"
-  owner    node["php-fpm"]["user"]
-  group    node["php-fpm"]["group"]
-  notifies :reload, "service[php-fpm]", :delayed
+  mode     '0755'
+  source   'php-fpm.conf.erb'
+  owner    node['php-fpm']['user']
+  group    node['php-fpm']['group']
+  notifies :reload, 'service[php-fpm]', :delayed
 end
 
-template "/etc/logrotate.d/php" do
-  source "logrotate.erb"
+template '/etc/logrotate.d/php' do
+  source 'logrotate.erb'
   variables(
-    :logfile => node["php-fpm"]["logfile"]
+    :logfile => node['php-fpm']['logfile']
   )
-  mode "0644"
-  owner "root"
-  group "root"
-  notifies :enable, "service[php-fpm]"
-  notifies :start, "service[php-fpm]"
+  mode '0644'
+  owner 'root'
+  group 'root'
+  notifies :enable, 'service[php-fpm]'
+  notifies :start, 'service[php-fpm]'
 end

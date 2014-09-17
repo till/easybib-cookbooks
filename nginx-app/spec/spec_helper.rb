@@ -1,4 +1,4 @@
-require "chefspec"
+require 'chefspec'
 
 RSpec.configure do |c|
   c.platform = 'ubuntu'

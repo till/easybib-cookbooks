@@ -1,5 +1,5 @@
-provides "languages/php_fpm"
-require_plugin "languages"
+provides 'languages/php_fpm'
+require_plugin 'languages'
 
 languages[:php_fpm] = Mash.new
 
@@ -15,7 +15,7 @@ if !php_bin.empty?
   pear_bin = `which pear`.strip
 
   if pear_bin.empty?
-    Ohai::Log.debug("Pear not found.")
+    Ohai::Log.debug('Pear not found.')
   else
     languages[:php_fpm][:pear_bin]       = pear_bin
     languages[:php_fpm][:php_extensions] = []
@@ -31,7 +31,7 @@ if !php_bin.empty?
 
   end
 else
-  Ohai::Log.error("No PHP on this server.")
+  Ohai::Log.error('No PHP on this server.')
 end
 
 unless languages[:php_fpm][:pear_bin].nil?

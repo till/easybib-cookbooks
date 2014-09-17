@@ -1,12 +1,12 @@
-directory node["nodejs"]["prefix"] do
-  mode "0755"
-  owner "root"
-  group "root"
+directory node['nodejs']['prefix'] do
+  mode '0755'
+  owner 'root'
+  group 'root'
 end
 
 # Shamelessly borrowed from http://docs.opscode.com/dsl_recipe_method_platform.html
 # Surely there's a more canonical way to get arch?
-arch = node['kernel']['machine'] =~ /x86_64/ ? "x64" : "x86"
+arch = node['kernel']['machine'] =~ /x86_64/ ? 'x64' : 'x86'
 
 distro_suffix = "-linux-#{arch}"
 
@@ -23,12 +23,12 @@ end
 # Let the user override the source url in the attributes
 nodejs_bin_url = "#{node['nodejs']['src_url']}/#{nodejs_tar_path}"
 
-remote_file "#{node["nodejs"]["prefix"]}/#{nodejs_tar}" do
+remote_file "#{node['nodejs']['prefix']}/#{nodejs_tar}" do
   source nodejs_bin_url
   checksum expected_checksum
-  mode "0644"
-  owner "root"
-  group "root"
+  mode '0644'
+  owner 'root'
+  group 'root'
   action :create_if_missing
 end
 
@@ -46,13 +46,13 @@ else
   install_not_needed = false
 end
 
-execute "extract nodejs install" do
+execute 'extract nodejs install' do
   command "tar -zxf #{nodejs_tar}"
-  cwd node["nodejs"]["prefix"]
+  cwd node['nodejs']['prefix']
 end
 
-[ "npm", "node" ].each do |file|
+[ 'npm', 'node' ].each do |file|
   link "/usr/local/bin/#{file}" do
-    to "#{node["nodejs"]["prefix"]}/#{package_stub}/bin/#{file}"
+    to "#{node['nodejs']['prefix']}/#{package_stub}/bin/#{file}"
   end
 end

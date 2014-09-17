@@ -1,7 +1,7 @@
-include_recipe "easybib::role-phpapp"
+include_recipe 'easybib::role-phpapp'
 
 if is_aws
-  include_recipe "easybib-deploy::internal-api"
+  include_recipe 'easybib-deploy::internal-api'
 else
-  include_recipe "nginx-app::sitescraper"
+  include_recipe 'nginx-app::sitescraper'
 end

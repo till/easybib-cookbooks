@@ -4,7 +4,7 @@ describe 'nginx-app::server' do
 
   let(:runner) do
     ChefSpec::Runner.new(
-      :step_into => ["nginx_app_config"],
+      :step_into => ['nginx_app_config'],
       :version => 12.04
     )
   end

@@ -1,5 +1,5 @@
-include_recipe "php-fpm::service"
-include_recipe "nginx-app::service"
+include_recipe 'php-fpm::service'
+include_recipe 'nginx-app::service'
 
 cluster_name   = get_cluster_name
 
@@ -43,14 +43,14 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
-    config_template "internal-api.conf.erb"
+    config_template 'internal-api.conf.erb'
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
-    access_log      "off"
-    notifies :restart, "service[nginx]", :delayed
+    access_log      'off'
+    notifies :restart, 'service[nginx]', :delayed
   end
 
-  service "php-fpm" do
+  service 'php-fpm' do
     action :reload
   end
 

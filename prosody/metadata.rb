@@ -6,6 +6,6 @@ version           '0.1'
 supports 'ubuntu'
 supports 'freebsd'
 
-depends "easybib"
-depends "percona"
-license           "BSD License"
+depends 'easybib'
+depends 'percona'
+license           'BSD License'

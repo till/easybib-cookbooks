@@ -1,6 +1,6 @@
-include_recipe "python::pip"
+include_recipe 'python::pip'
 
-python_pip "awscli" do
-  version node["awscli"]["version"]
+python_pip 'awscli' do
+  version node['awscli']['version']
   action :install
 end

@@ -48,12 +48,12 @@ action :setup do
   config = ::Php::Config.new(name, config_directives)
   directives = config.get_directives
 
-  template "#{node["php-fpm"]["prefix"]}/etc/php/#{name}.ini" do
-    source "extension.ini.erb"
-    cookbook "php"
-    owner "root"
-    group "root"
-    mode "0644"
+  template "#{node['php-fpm']['prefix']}/etc/php/#{name}.ini" do
+    source 'extension.ini.erb'
+    cookbook 'php'
+    owner 'root'
+    group 'root'
+    mode '0644'
     variables(
       :name => name,
       :extensions => extensions,
@@ -78,7 +78,7 @@ action :compile do
 
   extension = new_resource.name
 
-  configure = "./configure"
+  configure = './configure'
 
   cflags = new_resource.cflags
   if !cflags.nil? && !cflags.empty?
@@ -86,9 +86,9 @@ action :compile do
   end
 
   commands = [
-    "phpize",
+    'phpize',
     configure,
-    "make",
+    'make',
     "cp modules/#{extension}.so #{new_resource.source_dir}"
   ]
 

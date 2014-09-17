@@ -1,3 +1,3 @@
-include_recipe "ruby-brightbox"
+include_recipe 'ruby-brightbox'
 
-gem_package "apt-spy2"
+gem_package 'apt-spy2'

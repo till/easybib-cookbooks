@@ -1,20 +1,20 @@
-package "curl"
-package "nodejs"
+package 'curl'
+package 'nodejs'
 
-npm_bin = "/usr/bin/npm"
+npm_bin = '/usr/bin/npm'
 
 remote_file "#{Chef::Config[:file_cache_path]}/install-npm.sh" do
-  source node["nodejs"]["npm"]["install_url"]
-  mode "0755"
+  source node['nodejs']['npm']['install_url']
+  mode '0755'
   not_if do
     File.exist?(npm_bin)
   end
 end
 
-execute "Install the latest npm" do
+execute 'Install the latest npm' do
   command "#{Chef::Config[:file_cache_path]}/install-npm.sh"
   environment ({
-    "clean" => "no"
+    'clean' => 'no'
   })
   not_if do
     File.exist?(npm_bin)

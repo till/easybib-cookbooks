@@ -1,7 +1,7 @@
-name              "php"
-maintainer        "Till Klampaeckel"
-maintainer_email  "till@php.net"
+name              'php'
+maintainer        'Till Klampaeckel'
+maintainer_email  'till@php.net'
 version           '0.1'
 
 supports 'ubuntu'
-license           "BSD License"
+license           'BSD License'
