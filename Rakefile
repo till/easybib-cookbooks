@@ -1,5 +1,5 @@
 #!/usr/bin/env rake
-#encoding: utf-8
+# encoding: utf-8
 
 require 'bundler'
 require 'rake'
@@ -35,7 +35,7 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
   t.verbose = false
   t.fail_on_error = true
   t.rspec_opts = args.output_file.nil? ? '--format d' : "--format RspecJunitFormatter --out #{args.output_file}"
-  t.ruby_opts = '-W0' #it supports ruby options too
+  t.ruby_opts = '-W0' # it supports ruby options too
   t.pattern = file_list
 end
 
@@ -56,11 +56,11 @@ task :foodcritic do
       verbose(false)
 
       fc_command = "bundle exec foodcritic -C --chef-version 11 -f any"
-      fc_command << " -f #{epic_fail.join(' -f ')}" if !epic_fail.empty?
+      fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
       fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
       fc_command << " #{sandbox}"
       sh fc_command do |ok, res|
-        if !ok
+        unless ok
           puts "Cookbook: #{cb}"
           puts "Command failed: #{fc_command}"
           puts res
@@ -75,9 +75,9 @@ task :foodcritic do
 end
 
 private
-def prepare_foodcritic_sandbox(sandbox, cookbook)
 
-  files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
+def prepare_foodcritic_sandbox(sandbox, cookbook)
+  files = %w(*.md *.rb attributes definitions files libraries providers recipes resources templates)
 
   opts = {:verbose => false}
 
@@ -87,6 +87,7 @@ def prepare_foodcritic_sandbox(sandbox, cookbook)
 end
 
 private
+
 def find_cookbooks(all_your_base)
   cookbooks = []
 
@@ -94,7 +95,7 @@ def find_cookbooks(all_your_base)
 
   Dir.entries(all_your_base).select do |entry|
     next unless File.directory?(File.join(all_your_base, entry))
-    next unless !(entry[0, 1] == '.')
+    next if (entry[0, 1] == '.')
     next if skip.include?(entry)
 
     cookbooks.push(entry)
@@ -105,13 +106,13 @@ def find_cookbooks(all_your_base)
 end
 
 private
+
 # ignore the following - mostly third party
 def find_all_ignored
-
   skipped = []
 
   rubocop = YAML.load_file("./.rubocop.yml")
-  rubocop["AllCops"]["Excludes"].each do |ignored|
+  rubocop["AllCops"]["Exclude"].each do |ignored|
     skipped << ignored.split("/")[0]
   end
 
@@ -120,7 +121,7 @@ end
 
 current_dir = File.expand_path(File.dirname(__FILE__))
 
-if !ENV['TRAVIS'] && File.exists?(current_dir + '/.kitchen.yml')
+if !ENV['TRAVIS'] && File.exist?(current_dir + '/.kitchen.yml')
   begin
     require 'kitchen/rake_tasks'
     Kitchen::RakeTasks.new
@@ -130,4 +131,4 @@ if !ENV['TRAVIS'] && File.exists?(current_dir + '/.kitchen.yml')
 end
 
 require 'rubocop/rake_task'
-Rubocop::RakeTask.new
+RuboCop::RakeTask.new

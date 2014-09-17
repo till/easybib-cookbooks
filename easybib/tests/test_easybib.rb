@@ -125,24 +125,24 @@ class TestEasyBib < Test::Unit::TestCase
 
   def test_deploy_crontab_wrong_role
     assert_equal(
-      deploy_crontab?(['role1', 'role2'], 'housekeeping'),
+      deploy_crontab?(%w(role1 role2), 'housekeeping'),
       false
     )
   end
 
   def test_deploy_crontab_all_roles
     assert_equal(
-      deploy_crontab?(['role1', 'housekeeping'], 'housekeeping'),
+      deploy_crontab?(%w(role1 housekeeping), 'housekeeping'),
       true
     )
   end
 
   def test_normalized_cluster_name
     fake_node = Chef::Node.new
-    fake_node.set["opsworks"]["stack"]["name"] = "EasyBib Playgr$und-123"
+    fake_node.set['opsworks']['stack']['name'] = 'EasyBib Playgr$und-123'
 
     assert_equal(
-      "easybib_playgr_und-123",
+      'easybib_playgr_und-123',
       get_normalized_cluster_name(fake_node)
     )
   end

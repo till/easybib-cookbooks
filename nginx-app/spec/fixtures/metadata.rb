@@ -1,4 +1,4 @@
-name "fixtures"
-version "0.99.0"
+name 'fixtures'
+version '0.99.0'
 
-depends "nginx-app"
+depends 'nginx-app'

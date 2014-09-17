@@ -1,2 +1,2 @@
-default["docker"] = {}
-default["docker"]["ppa"] = "ppa:dotcloud/lxc-docker"
+default['docker'] = {}
+default['docker']['ppa'] = 'ppa:dotcloud/lxc-docker'

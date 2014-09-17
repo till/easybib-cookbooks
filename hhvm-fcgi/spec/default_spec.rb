@@ -13,12 +13,12 @@ describe 'hhvm-fcgi::default' do
   let (:chef_run) { runner.converge('hhvm-fcgi::default') }
   let (:node) { runner.node }
 
-  describe "standard settings" do
-    it "installs hhvm and creates the config files" do
+  describe 'standard settings' do
+    it 'installs hhvm and creates the config files' do
       Mixlib::ShellOut.stub(:new).and_return(@shellout)
 
       # hhvm-fcgi::apt
-      expect(chef_run).to install_apt_package("hhvm")
+      expect(chef_run).to install_apt_package('hhvm')
 
       # hhvm-fcgi::prepare
       expect(chef_run).to create_directory('/tmp/hhvm')
@@ -31,38 +31,38 @@ describe 'hhvm-fcgi::default' do
       expect(chef_run).to create_template('/etc/hhvm/php.ini')
       expect(chef_run).not_to render_file('/etc/hhvm/php.ini')
         .with_content(
-          include("[hhvm]")
+          include('[hhvm]')
         )
       expect(chef_run).to render_file('/etc/hhvm/php-fcgi.ini')
         .with_content(
-          include("[hhvm]")
+          include('[hhvm]')
         )
       expect(chef_run).to render_file('/etc/hhvm/config.hdf')
         .with_content(
-          include("Debug")
+          include('Debug')
         )
     end
   end
 
-  describe "debug" do
+  describe 'debug' do
     before do
-      node.set["hhvm-fcgi"]["build"] = "-dbg"
+      node.set['hhvm-fcgi']['build'] = '-dbg'
     end
 
-    it "installs the debug build of hhvm" do
-      expect(chef_run).to install_apt_package("hhvm-dbg")
+    it 'installs the debug build of hhvm' do
+      expect(chef_run).to install_apt_package('hhvm-dbg')
     end
   end
 
-  describe "custom port" do
+  describe 'custom port' do
     before do
-      node.set["hhvm-fcgi"]["listen"]["port"] = 31337
+      node.set['hhvm-fcgi']['listen']['port'] = 31_337
     end
 
-    it "configures hhvm to listen on 31337" do
+    it 'configures hhvm to listen on 31337' do
       expect(chef_run).to render_file('/etc/hhvm/php-fcgi.ini')
         .with_content(
-          include("hhvm.server.port = 31337")
+          include('hhvm.server.port = 31337')
         )
     end
   end

@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require_relative 'spec_helper'
 
 describe 'easybib_nginx getcourse api' do
 
@@ -12,102 +12,102 @@ describe 'easybib_nginx getcourse api' do
   let(:runner) do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
-      :step_into => ["easybib_nginx"]
+      :step_into => ['easybib_nginx']
     )
   end
 
-  let(:chef_run) { runner.converge("fixtures::easybib_nginx") }
+  let(:chef_run) { runner.converge('fixtures::easybib_nginx') }
   let(:node)     { runner.node }
 
-  let(:cache_config_file) { "/etc/nginx/conf.d/cache.conf" }
-  let(:nginx_config_file) { "/etc/nginx/sites-enabled/api.conf" }
+  let(:cache_config_file) { '/etc/nginx/conf.d/cache.conf' }
+  let(:nginx_config_file) { '/etc/nginx/sites-enabled/api.conf' }
 
-  describe "gzip is not enabled by default" do
+  describe 'gzip is not enabled by default' do
     before do
-      node.set["vagrant"] = {
-        "combined" => true,
-        "deploy_to" => "/foo/bar"
+      node.set['vagrant'] = {
+        'combined' => true,
+        'deploy_to' => '/foo/bar'
       }
-      node.set["getcourse"]["domain"] = {
-        "api" => "api.example.org"
+      node.set['getcourse']['domain'] = {
+        'api' => 'api.example.org'
       }
     end
 
-    it "does not enable gzip by default" do
+    it 'does not enable gzip by default' do
       expect(chef_run).to render_file(nginx_config_file)
         .with_content(
-          include("gzip off;")
+          include('gzip off;')
         )
     end
   end
 
-  describe "gzip can be enabled" do
+  describe 'gzip can be enabled' do
     before do
-      node.set["vagrant"] = {
-        "combined" => true,
-        "deploy_to" => "/foo/bar"
+      node.set['vagrant'] = {
+        'combined' => true,
+        'deploy_to' => '/foo/bar'
       }
-      node.set["getcourse"]["domain"] = {
-        "api" => "api.example.org"
+      node.set['getcourse']['domain'] = {
+        'api' => 'api.example.org'
       }
-      node.set["nginx-app"]["gzip"]["enabled"] = true
+      node.set['nginx-app']['gzip']['enabled'] = true
     end
 
-    it "does enable gzip" do
+    it 'does enable gzip' do
       expect(chef_run).to render_file(nginx_config_file)
         .with_content(
-          include("gzip on;")
+          include('gzip on;')
         )
     end
   end
 
-  describe "fastcgi cache is enabled" do
+  describe 'fastcgi cache is enabled' do
     before do
-      node.set["nginx-app"]["cache"] = {
-        "enabled" => true,
-        "zone" => "CHEFSPEC_TEST"
+      node.set['nginx-app']['cache'] = {
+        'enabled' => true,
+        'zone' => 'CHEFSPEC_TEST'
       }
 
-      node.set["vagrant"] = {
-        "combined" => true,
-        "deploy_to" => "/foo/bar"
+      node.set['vagrant'] = {
+        'combined' => true,
+        'deploy_to' => '/foo/bar'
       }
-      node.set["getcourse"]["domain"] = {
-        "api" => "api.example.org"
+      node.set['getcourse']['domain'] = {
+        'api' => 'api.example.org'
       }
     end
 
-    it "does render the cache.conf" do
+    it 'does render the cache.conf' do
       expect(chef_run).to render_file(cache_config_file)
     end
 
-    it "does enable the fastcgi cache" do
+    it 'does enable the fastcgi cache' do
       expect(chef_run).to render_file(nginx_config_file)
         .with_content(
-          include("fastcgi_cache #{node["nginx-app"]["cache"]["zone"]};")
+          include("fastcgi_cache #{node['nginx-app']['cache']['zone']};")
         )
     end
   end
 
-  describe "fastcgi cache is not enabled" do
+  describe 'fastcgi cache is not enabled' do
     before do
-      node.set["vagrant"] = {
-        "combined" => true,
-        "deploy_to" => "/foo/bar"
+      node.set['vagrant'] = {
+        'combined' => true,
+        'deploy_to' => '/foo/bar'
       }
-      node.set["getcourse"]["domain"] = {
-        "api" => "api.example.org"
+      node.set['getcourse']['domain'] = {
+        'api' => 'api.example.org'
       }
     end
 
-    it "does not render cache.conf" do
+    it 'does not render cache.conf' do
       expect(chef_run).not_to render_file(cache_config_file)
     end
 
-    it "does not enable the fastcgi cache" do
+    it 'does not enable the fastcgi cache' do
       expect(chef_run).not_to render_file(nginx_config_file)
         .with_content(
-          include("fastcgi_cache #{node["nginx-app"]["cache"]["zone"]};")
+          include("fastcgi_cache #{node['nginx-app']['cache']['zone']};")
         )
     end
 

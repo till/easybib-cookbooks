@@ -1,1 +1,1 @@
-package "zsh"
+package 'zsh'

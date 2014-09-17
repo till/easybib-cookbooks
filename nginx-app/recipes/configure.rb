@@ -1,21 +1,19 @@
-include_recipe "nginx-app::server"
+include_recipe 'nginx-app::server'
 
-instance_roles   = get_instance_roles
-cluster_name     = get_cluster_name
-app_access_log   = node["nginx-app"]["access_log"]
-nginx_config_dir = node["nginx-app"]["config_dir"]
+app_access_log   = node['nginx-app']['access_log']
+nginx_config_dir = node['nginx-app']['config_dir']
 
 # need to do this better
-if !node.attribute?("docroot") || node["docroot"].empty?
-  node.set["docroot"] = 'www'
+if !node.attribute?('docroot') || node['docroot'].empty?
+  node.set['docroot'] = 'www'
 end
 
 # password protect?
 password_protected = false
 
-nginx_config = node["nginx-app"]["conf_file"]
+nginx_config = node['nginx-app']['conf_file']
 
-node["deploy"].each do |application, deploy|
+node['deploy'].each do |application, deploy|
 
   Chef::Log.info("nginx-app::configure - app: #{application}")
 
@@ -24,7 +22,7 @@ node["deploy"].each do |application, deploy|
     nginxphpapp_allowed = allow_deploy(application, 'easybib', 'nginxphpapp')
     testapp_allowed     = allow_deploy(application, 'easybib', 'testapp')
     if !nginxphpapp_allowed && !testapp_allowed
-      Chef::Log.info("nginx-app::configure - skipping easybib, allow_deploy mismatch")
+      Chef::Log.info('nginx-app::configure - skipping easybib, allow_deploy mismatch')
       next
     end
 
@@ -33,7 +31,7 @@ node["deploy"].each do |application, deploy|
 
   when 'infolit'
     next unless allow_deploy(application, 'infolit', 'nginxphpapp')
-    nginx_config = "infolit.conf.erb"
+    nginx_config = 'infolit.conf.erb'
 
   when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
@@ -46,25 +44,25 @@ node["deploy"].each do |application, deploy|
     next
   end
 
-  php_upstream = "unix:/var/run/php-fpm/#{node["php-fpm"]["user"]}"
+  php_upstream = "unix:/var/run/php-fpm/#{node['php-fpm']['user']}"
 
   template "render vhost: #{application}" do
     path   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
     source nginx_config
-    mode   "0755"
-    owner  node["nginx-app"]["user"]
-    group  node["nginx-app"]["group"]
+    mode   '0755'
+    owner  node['nginx-app']['user']
+    group  node['nginx-app']['group']
     variables(
-      :js_alias           => node["nginx-app"]["js_modules"],
-      :img_alias          => node["nginx-app"]["img_modules"],
-      :css_alias          => node["nginx-app"]["css_modules"],
+      :js_alias           => node['nginx-app']['js_modules'],
+      :img_alias          => node['nginx-app']['img_modules'],
+      :css_alias          => node['nginx-app']['css_modules'],
       :access_log         => app_access_log,
       :deploy             => deploy,
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
       :php_upstream       => php_upstream
     )
-    notifies :restart, "service[nginx]", :delayed
+    notifies :restart, 'service[nginx]', :delayed
   end
 
   easybib_envconfig application

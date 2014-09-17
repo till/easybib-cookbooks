@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require_relative 'spec_helper'
 
 describe 'silex-config-template' do
 
@@ -10,107 +10,107 @@ describe 'silex-config-template' do
   end
 
   let(:runner)   { ChefSpec::Runner.new(:cookbook_path => cookbook_paths) }
-  let(:chef_run) { runner.converge("fixtures::silex-template") }
+  let(:chef_run) { runner.converge('fixtures::silex-template') }
   let(:node)     { runner.node }
   let(:config_filename) { '/tmp/config.conf' }
 
-  describe "enabled access log" do
+  describe 'enabled access log' do
     before do
-      node.set["testdata"]["access_log"] = "/tmp.log"
+      node.set['testdata']['access_log'] = '/tmp.log'
     end
 
-    it "sets correct access log path" do
+    it 'sets correct access log path' do
       expect(chef_run).to render_file(config_filename).with_content(/access_log \/tmp.log;/)
     end
   end
 
-  describe "no routes enabled or disabled" do
+  describe 'no routes enabled or disabled' do
     before do
-      node.set["testdata"]["routes_enabled"] = nil
-      node.set["testdata"]["routes_denied"]  = nil
+      node.set['testdata']['routes_enabled'] = nil
+      node.set['testdata']['routes_denied']  = nil
     end
 
-    it "does not deny any routes" do
+    it 'does not deny any routes' do
       expect(chef_run).not_to render_file(config_filename)
         .with_content(some_routes_denied)
     end
-    it "does route / to php" do
+    it 'does route / to php' do
       expect(chef_run).to render_file(config_filename)
         .with_content(slash_is_enabled)
     end
   end
 
-  describe "some routes enabled" do
+  describe 'some routes enabled' do
     before do
-      node.set["testdata"]["routes_enabled"] = ['/some/route', '/other/route']
-      node.set["testdata"]["routes_denied"]  = nil
-      node.set["opsworks"]["stack"]["name"]  = "rspec"
+      node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route']
+      node.set['testdata']['routes_denied']  = nil
+      node.set['opsworks']['stack']['name']  = 'rspec'
     end
 
-    it "does set routes for enabled routes" do
+    it 'does set routes for enabled routes' do
       expect(chef_run).to render_file(config_filename)
         .with_content(default_route_for_partial_route('/some/route|/other/route'))
     end
 
-    it "does not deny any routes" do
+    it 'does not deny any routes' do
       expect(chef_run).not_to render_file(config_filename)
         .with_content(some_routes_denied)
     end
 
-    it "does not route / to php" do
+    it 'does not route / to php' do
       expect(chef_run).not_to render_file(config_filename)
         .with_content(slash_is_enabled)
     end
 
-    it "does redirect / to another location" do
+    it 'does redirect / to another location' do
       expect(chef_run).to render_file(config_filename)
         .with_content(slash_is_redirected)
     end
   end
-  describe "some routes disabled" do
+  describe 'some routes disabled' do
     before do
-      node.set["testdata"]["routes_enabled"] = nil
-      node.set["testdata"]["routes_denied"]  = ['/some/route', '/other/route']
+      node.set['testdata']['routes_enabled'] = nil
+      node.set['testdata']['routes_denied']  = ['/some/route', '/other/route']
     end
 
-    it "does not deny any routes" do
+    it 'does not deny any routes' do
       expect(chef_run).to render_file(config_filename)
         .with_content('/some/route|/other/route')
     end
 
-    it "does route / to php" do
+    it 'does route / to php' do
       expect(chef_run).to render_file(config_filename)
         .with_content(slash_is_enabled)
     end
 
-    it "does not redirect / to another location" do
+    it 'does not redirect / to another location' do
       expect(chef_run).not_to render_file(config_filename)
         .with_content(slash_is_redirected)
     end
   end
-  describe "some routes enabled, some disabled" do
+  describe 'some routes enabled, some disabled' do
     before do
-      node.set["testdata"]["routes_enabled"] = ['/some/route', '/other/route']
-      node.set["testdata"]["routes_denied"]  = ['/some/droute', '/other/droute']
-      node.set["opsworks"]["stack"]["name"]  = "rspec"
+      node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route']
+      node.set['testdata']['routes_denied']  = ['/some/droute', '/other/droute']
+      node.set['opsworks']['stack']['name']  = 'rspec'
     end
 
-    it "does set routes for enabled routes" do
+    it 'does set routes for enabled routes' do
       expect(chef_run).to render_file(config_filename)
         .with_content(default_route_for_partial_route('/some/route|/other/route'))
     end
 
-    it "does deny disabled routes" do
+    it 'does deny disabled routes' do
       expect(chef_run).to render_file(config_filename)
         .with_content(some_routes_denied('/some/droute|/other/droute'))
     end
 
-    it "does not route / to php" do
+    it 'does not route / to php' do
       expect(chef_run).not_to render_file(config_filename)
         .with_content(slash_is_enabled)
     end
 
-    it "does redirect / to another location" do
+    it 'does redirect / to another location' do
       expect(chef_run).to render_file(config_filename)
         .with_content(slash_is_redirected)
     end

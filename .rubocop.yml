@@ -1,50 +1,63 @@
-AlignParameters:
-  Enabled: false
-
-Encoding:
-  Enabled: false
-
-LineLength:
-  Max: 200
-
-HashSyntax:
-  EnforcedStyle: hash_rockets
-
-MethodLength:
-  Max: 35
-
-CyclomaticComplexity:
-  Max: 9
-
-ParameterLists:
-  Enabled: false
-
-StringLiterals:
-  Enabled: false
-
-SpaceInsideBrackets:
-  Enabled: false
-
-# Some recipes have a valid reason to do so, see bprobe for example
-RescueException:
-  Enabled: false
-
-AccessorMethodName:
-  Enabled: false
-
-RegexpLiteral:
-  Enabled: false
-
-# I dont want to separate port numbers with underscores.
-NumericLiterals:
-  Enabled: false
-
 AllCops:
-  Excludes:
-    - python/**
-    - ohai/**
-    - opsworks_nodejs/**
-    - vagrant-test/**
-    - test/**
+  Exclude:
+    - 'build-essential/**/*'
+    - 'chef_handler/**/*'
+    - 'chef_handler_sns/**/*'
+    - 'cron/**/*'
+    - 'xml/**/*'
+    - 'python/**/*'
+    - 'ohai/**/*'
+    - 'opsworks_nodejs/**/*'
+    - 'vagrant-test/**/*'
+    - 'test/**/*'
+    - 'Rakefile'
 
-inherit_from: rubocop-todo.yml
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Style/PredicateName:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Metrics/ParameterLists:
+  Max: 6
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/LineLength:
+  Max: 160
+
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+inherit_from: .rubocop_todo.yml

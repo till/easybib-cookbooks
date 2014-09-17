@@ -1,1 +1,1 @@
-package "monit"
+package 'monit'

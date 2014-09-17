@@ -1,6 +1,6 @@
 module EasyBib
   def amd64?(node = self.node)
-    if node["kernel"]["machine"] == "x86_64"
+    if node['kernel']['machine'] == 'x86_64'
       return true
     end
     false
@@ -19,11 +19,11 @@ module EasyBib
   end
 
   def has_env?(app, node = self.node)
-    if !node.attribute?(app)
+    unless node.attribute?(app)
       return false
     end
 
-    if node[app]["env"]
+    if node[app]['env']
       return true
     end
 
@@ -31,7 +31,7 @@ module EasyBib
   end
 
   def allow_deploy(application, requested_application, requested_role = nil, node = self.node)
-    if !is_aws(node)
+    unless is_aws(node)
       return false
     end
 
@@ -42,7 +42,7 @@ module EasyBib
       "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles} in #{cluster_name}"
     )
 
-    if cluster_name != node["easybib"]["cluster_name"]
+    if cluster_name != node['easybib']['cluster_name']
       Chef::Log.info("deploy #{requested_application} - wrong cluster_name")
       return false
     end
@@ -63,14 +63,14 @@ module EasyBib
       end
       return allow
     else
-      fail "Unknown value type supplied for requested_role in allow_deploy"
+      fail 'Unknown value type supplied for requested_role in allow_deploy'
     end
   end
 
   def is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
     case application
     when requested_application
-      if !instance_roles.include?(requested_role)
+      unless instance_roles.include?(requested_role)
         irs = instance_roles.inspect
         Chef::Log.info("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
         return false
@@ -85,60 +85,60 @@ module EasyBib
   end
 
   def get_env_for_nginx(app, node = self.node)
-    ::EasyBib::Config.get_env("nginx", app, node)
+    ::EasyBib::Config.get_env('nginx', app, node)
   end
 
   def get_env_for_shell(app, node = self.node)
-    ::EasyBib::Config.get_env("shell", app, node)
+    ::EasyBib::Config.get_env('shell', app, node)
   end
 
   def get_cluster_name(node = self.node)
-    if node["opsworks"] && node["opsworks"]["stack"]
-      return node["opsworks"]["stack"]["name"]
+    if node['opsworks'] && node['opsworks']['stack']
+      return node['opsworks']['stack']['name']
     end
-    if node["easybib"] && node["easybib"]["cluster_name"]
-      return node["easybib"]["cluster_name"]
+    if node['easybib'] && node['easybib']['cluster_name']
+      return node['easybib']['cluster_name']
     end
-    ::Chef::Log.error("Unknown environment. (get_cluster_name)")
+    ::Chef::Log.error('Unknown environment. (get_cluster_name)')
 
-    ""
+    ''
   end
 
   def get_normalized_cluster_name(node = self.node)
     cluster_name = get_cluster_name(node)
-    cluster_name.downcase.gsub(/[^a-z0-9-]/, "_")
+    cluster_name.downcase.gsub(/[^a-z0-9-]/, '_')
   end
 
   def get_deploy_user(node = self.node)
-    if node["opsworks"]
-      return node["opsworks"]["deploy_user"]
+    if node['opsworks']
+      return node['opsworks']['deploy_user']
     end
 
-    ::Chef::Log.debug("Unknown environment. (get_deploy_user)")
+    ::Chef::Log.debug('Unknown environment. (get_deploy_user)')
 
     {
-      "home" => "",
-      "group" => "",
-      "user" => ""
+      'home' => '',
+      'group' => '',
+      'user' => ''
     }
   end
 
   def get_instance_roles(node = self.node)
-    if node["opsworks"]
-      return node["opsworks"]["instance"]["layers"]
+    if node['opsworks']
+      return node['opsworks']['instance']['layers']
     end
-    ::Chef::Log.debug("Unknown environment. (get_instance_roles)")
+    ::Chef::Log.debug('Unknown environment. (get_instance_roles)')
   end
 
   def get_instance(node = self.node)
-    if node["opsworks"]
-      return node["opsworks"]["instance"]
+    if node['opsworks']
+      return node['opsworks']['instance']
     end
-    ::Chef::Log.debug("Unknown environment. (get_instance)")
+    ::Chef::Log.debug('Unknown environment. (get_instance)')
   end
 
   def is_aws(node = self.node)
-    if node["opsworks"]
+    if node['opsworks']
       return true
     end
     false

@@ -1,10 +1,10 @@
-name              "phpmyadmin"
-maintainer        "Till Klampaeckel"
-maintainer_email  "till@php.net"
+name              'phpmyadmin'
+maintainer        'Till Klampaeckel'
+maintainer_email  'till@php.net'
 version           '0.1'
 
-supports "ubuntu"
+supports 'ubuntu'
 
-depends "apt"
-depends "easybib"
-license           "BSD License"
+depends 'apt'
+depends 'easybib'
+license           'BSD License'

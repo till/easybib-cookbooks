@@ -3,7 +3,7 @@ actions :install, :setup, :compile
 def initialize(*args)
   super
   @action  = :install
-  @prefix  = node["php-fpm"]["prefix"]
+  @prefix  = node['php-fpm']['prefix']
 end
 
 attribute :prefix, :kind_of => String

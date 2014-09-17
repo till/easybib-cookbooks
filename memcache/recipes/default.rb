@@ -1,1 +1,1 @@
-package "memcached"
+package 'memcached'

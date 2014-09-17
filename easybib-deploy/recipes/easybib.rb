@@ -1,9 +1,9 @@
-include_recipe "php-fpm::service"
+include_recipe 'php-fpm::service'
 
 instance_roles = get_instance_roles
 cluster_name   = get_cluster_name
 
-node["deploy"].each do |application, deploy|
+node['deploy'].each do |application, deploy|
 
   Chef::Log.info("deploy::easybib - app: #{application}, role: #{instance_roles}")
 
@@ -26,8 +26,8 @@ node["deploy"].each do |application, deploy|
     next
   end
 
-  Chef::Log.info("deploy::easybib - Deployment started.")
-  Chef::Log.info("deploy::easybib - Deploying as user: #{deploy["user"]} and #{deploy["group"]}")
+  Chef::Log.info('deploy::easybib - Deployment started.')
+  Chef::Log.info("deploy::easybib - Deploying as user: #{deploy['user']} and #{deploy['group']}")
 
   easybib_deploy application do
     deploy_data deploy
@@ -36,10 +36,10 @@ node["deploy"].each do |application, deploy|
 
   case application
   when 'gearmanworker'
-    include_recipe "monit::pecl-manager"
+    include_recipe 'monit::pecl-manager'
   else
-    service "php-fpm" do
-      action node["easybib_deploy"]["deploy_action"]
+    service 'php-fpm' do
+      action node['easybib_deploy']['deploy_action']
     end
   end
 

@@ -1,5 +1,5 @@
-include_recipe "php-fpm::service"
-include_recipe "nginx-app::service"
+include_recipe 'php-fpm::service'
+include_recipe 'nginx-app::service'
 
 node['deploy'].each do |application, deploy|
 
@@ -32,14 +32,14 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
-    config_template "silex.conf.erb"
+    config_template 'silex.conf.erb'
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
     env_config env_conf
-    notifies :restart, "service[nginx]", :delayed
+    notifies :restart, 'service[nginx]', :delayed
   end
 
-  service "php-fpm" do
+  service 'php-fpm' do
     action :reload
   end
 

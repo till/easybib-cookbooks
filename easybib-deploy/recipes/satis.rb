@@ -18,37 +18,37 @@ node['deploy'].each do |application, deploy|
     next
   end
 
-  Chef::Log.info("deploy::satis - Deploying as user: #{deploy["user"]} and #{deploy["group"]} to #{deploy["deploy_to"]}")
+  Chef::Log.info("deploy::satis - Deploying as user: #{deploy['user']} and #{deploy['group']} to #{deploy['deploy_to']}")
 
   easybib_deploy application do
     deploy_data deploy
     app application
   end
 
-  %w{/mnt/satis-output/ /mnt/composer-tmp/}.each do |dir|
+  %w(/mnt/satis-output/ /mnt/composer-tmp/).each do |dir|
     directory dir do
       recursive true
-      owner  node["nginx-app"]["user"]
-      group  node["nginx-app"]["group"]
+      owner  node['nginx-app']['user']
+      group  node['nginx-app']['group']
       mode  0755
       action :create
     end
   end
 
   template "/etc/nginx/sites-enabled/#{application}.conf" do
-    cookbook "nginx-app"
-    source "satis.conf.erb"
-    mode   "0755"
-    owner  node["nginx-app"]["user"]
-    group  node["nginx-app"]["group"]
+    cookbook 'nginx-app'
+    source 'satis.conf.erb'
+    mode   '0755'
+    owner  node['nginx-app']['user']
+    group  node['nginx-app']['group']
     variables(
       :doc_root       => "#{deploy['deploy_to']}/current/#{deploy['document_root']}",
       :domain_name    => deploy['domains'].join(' '),
       :htpasswd       => "#{deploy['deploy_to']}/current/htpasswd",
       :access_log     => 'off',
-      :nginx_extra    => node["nginx-app"]["extras"]
+      :nginx_extra    => node['nginx-app']['extras']
     )
-    notifies :restart, "service[nginx]", :delayed
+    notifies :restart, 'service[nginx]', :delayed
   end
 
 end

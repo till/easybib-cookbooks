@@ -11,17 +11,17 @@ describe 'haproxy::configure' do
         :additional_layers => {
           :app1 => {
             :acl => {
-              :acl1 => "hdr_dom(host) -i app1"
+              :acl1 => 'hdr_dom(host) -i app1'
             },
-            :health_check => "GET /health_check HTTP/1.1\\r\\nHost:\\ app1.tld"
+            :health_check => 'GET /health_check HTTP/1.1\\r\\nHost:\\ app1.tld'
           },
           :app2 => {
             :acl => {
-              :acl1 => "hdr_dom(host) -i app2"
+              :acl1 => 'hdr_dom(host) -i app2'
             },
             :health_check => {
-              :url => "/url",
-              :host => "app2.tld"
+              :url => '/url',
+              :host => 'app2.tld'
             }
           }
         },
@@ -33,9 +33,9 @@ describe 'haproxy::configure' do
   let (:chef_run) { runner.converge('haproxy::configure') }
   let (:node) { runner.node }
 
-  describe "standard settings" do
+  describe 'standard settings' do
     before do
-      stub_command("pgrep haproxy").and_return(false)
+      stub_command('pgrep haproxy').and_return(false)
     end
 
     it 'Configures haproxy' do

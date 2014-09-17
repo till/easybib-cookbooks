@@ -1,5 +1,5 @@
-include_recipe "apt::easybib"
+include_recipe 'apt::easybib'
 
-package "php5-easybib-opcache"
+package 'php5-easybib-opcache'
 
-include_recipe "php-opcache::configure"
+include_recipe 'php-opcache::configure'

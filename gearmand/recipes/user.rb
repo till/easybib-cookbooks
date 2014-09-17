@@ -1,5 +1,5 @@
 user node['gearmand']['user'] do
-  comment "gearmand user"
+  comment 'gearmand user'
   system true
-  shell "/bin/false"
+  shell '/bin/false'
 end

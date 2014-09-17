@@ -29,21 +29,21 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-pears = ["/usr/local/bin/pear", "/usr/bin/pear"]
+pears = ['/usr/local/bin/pear', '/usr/bin/pear']
 
 pears.each do |pear|
   link pear do
-    to "#{node["php-fpm"]["prefix"]}/bin/pear"
+    to "#{node['php-fpm']['prefix']}/bin/pear"
   end
 end
 
 # fucking hack. remove when pear is newer than 1.9.4
 # see https://github.com/pear/pear-core/commit/8d569263eac91ad9484b45acb3a6381759138f3c#diff-b0dfa4abcb5cde685dae6b352ae38a17
-remote_file "/opt/easybib/pear/PEAR/REST.php" do
-  source "https://raw2.github.com/pear/pear-core/8d569263eac91ad9484b45acb3a6381759138f3c/PEAR/REST.php"
+remote_file '/opt/easybib/pear/PEAR/REST.php' do
+  source 'https://raw2.github.com/pear/pear-core/8d569263eac91ad9484b45acb3a6381759138f3c/PEAR/REST.php'
   mode 0644
 end
 
-if !node["php-pear"]["packages"].empty?
-  include_recipe "php-pear::packages"
+unless node['php-pear']['packages'].empty?
+  include_recipe 'php-pear::packages'
 end
