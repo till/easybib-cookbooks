@@ -40,7 +40,7 @@ action :setup do
 
     zend = new_resource.zend_extensions.include?(rel_file)
 
-    [ (zend ? filepath : rel_file) , zend ]
+    [ (zend ? filepath : rel_file), zend ]
   end]
 
   config_directives = new_resource.config_directives

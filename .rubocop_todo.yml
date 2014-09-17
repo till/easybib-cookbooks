@@ -87,20 +87,9 @@ Style/ModuleFunction:
 Style/PredicateName:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: MaxSlashes.
 Style/RegexpLiteral:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceBeforeComma:
   Enabled: false
 
 # Offense count: 39
