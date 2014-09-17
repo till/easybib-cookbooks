@@ -56,7 +56,7 @@ describe 'hhvm-fcgi::default' do
 
   describe "custom port" do
     before do
-      node.set["hhvm-fcgi"]["listen"]["port"] = 31337
+      node.set["hhvm-fcgi"]["listen"]["port"] = 31_337
     end
 
     it "configures hhvm to listen on 31337" do
