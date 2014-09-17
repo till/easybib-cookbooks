@@ -35,7 +35,7 @@ end
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
 
-node_symlink_exists = File.exist?("#{node['nodejs']['dir']}/bin/node")
+node_symlink_exists = File.exist?("#{destination_dir}/bin/node")
 
 if node_symlink_exists
   node_version_info = Mixlib::ShellOut.new("#{node['nodejs']['dir']}/bin/node --version")
@@ -52,7 +52,7 @@ execute 'extract nodejs install' do
 end
 
 %w(npm node).each do |file|
-  link "/usr/local/bin/#{file}" do
+  link "#{destination_dir}/bin/#{file}" do
     to "#{node['nodejs']['prefix']}/#{package_stub}/bin/#{file}"
   end
 end
