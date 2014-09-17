@@ -91,7 +91,7 @@ describe 'nginx-app::configure' do
         it "creates the virtualhost from the correct erb" do
           expect(chef_run).to create_template("render vhost: infolit")
             .with(
-              :name => vhost,
+              :path => vhost,
               :source => "infolit.conf.erb"
             )
         end
