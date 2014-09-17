@@ -144,7 +144,7 @@ export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
 export DEPLOYED_STACK_ENVIRONMENT=\"playground\"
 export BLA_SOMEKEY=\"somevalue\"
 export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"\n",
-      ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_config)
+                 ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_config)
     )
   end
 
@@ -158,7 +158,7 @@ fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
 fastcgi_param BLA_SOMEKEY \"somevalue\";
 fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
-      ::EasyBib::Config.get_configcontent('nginx', 'some_app', get_fakenode_config)
+                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', get_fakenode_config)
     )
   end
 
@@ -183,7 +183,7 @@ fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/tmp/bla/current/www/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
-      ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
+                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
     )
   end
 
@@ -206,7 +206,7 @@ fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/some_path/foo/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"vagrant\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
-      ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
+                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
     )
   end
 
@@ -229,7 +229,7 @@ return [
     'BLA_SOMEGROUP_SOMEOTHERKEY'=>\"someothervalue\",
   ],
 ];",
-      ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
+                 ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
     )
   end
 
