@@ -4,7 +4,7 @@ action :create do
 
   import_file = "#{application_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
 
-  if ::File.exists?(import_file)
+  if ::File.exist?(import_file)
 
     Chef::Log.debug("easybib_gearmanw - found gearmanw file, setting up")
 

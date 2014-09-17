@@ -1,7 +1,7 @@
 require "yaml"
 
 action :add do
-  unless ::File.exists?("#{new_resource.path}/config/apps/#{new_resource.app_name}.yml")
+  unless ::File.exist?("#{new_resource.path}/config/apps/#{new_resource.app_name}.yml")
     Chef::Log.info "Adding #{new_resource.app_name} config to #{new_resource.path}/config/apps/#{new_resource.app_name}.yml"
 
     template "#{new_resource.path}/config/apps/#{new_resource.app_name}.yml" do

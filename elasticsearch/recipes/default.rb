@@ -9,7 +9,7 @@ deb_path = Chef::Config["file_cache_path"] + "/" + deb_name
 remote_file deb_path do
   source deb_url
   not_if do
-    File.exists?(deb_path)
+    File.exist?(deb_path)
   end
 end
 

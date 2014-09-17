@@ -4,7 +4,7 @@ action :create do
 
   updated = false
 
-  if !::File.exists?(crontab_file)
+  if !::File.exist?(crontab_file)
     new_resource.updated_by_last_action(updated)
     next
   end
@@ -15,7 +15,7 @@ action :create do
     command "crontab -u #{node["nginx-app"]["user"]} -r"
     ignore_failure true
     only_if do
-      ::File.exists?(crontab_file)
+      ::File.exist?(crontab_file)
     end
   end
 

@@ -57,7 +57,7 @@ action :delete do
   f = file "/etc/nginx/nginx.conf" do
     action :delete
     only_if do
-      File.exists?("/etc/nginx/nginx.conf")
+      File.exist?("/etc/nginx/nginx.conf")
     end
   end
 

@@ -120,7 +120,7 @@ end
 
 current_dir = File.expand_path(File.dirname(__FILE__))
 
-if !ENV['TRAVIS'] && File.exists?(current_dir + '/.kitchen.yml')
+if !ENV['TRAVIS'] && File.exist?(current_dir + '/.kitchen.yml')
   begin
     require 'kitchen/rake_tasks'
     Kitchen::RakeTasks.new

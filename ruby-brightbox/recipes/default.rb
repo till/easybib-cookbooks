@@ -4,7 +4,7 @@ sources_file = "/etc/apt/sources.list.d/#{node["ruby-brightbox"]["ppa"].split(':
 
 easybib_launchpad node["ruby-brightbox"]["ppa"] do
   not_if do
-    File.exists?(sources_file)
+    File.exist?(sources_file)
   end
 end
 

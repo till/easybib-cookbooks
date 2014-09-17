@@ -2,7 +2,7 @@ action :remove do
   config_name = get_config_name(new_resource)
   execute "rm /etc/nginx/sites-enabled/#{config_name}.conf" do
     only_if do
-      File.exists?("/etc/nginx/sites-enabled/#{config_name}.conf")
+      File.exist?("/etc/nginx/sites-enabled/#{config_name}.conf")
     end
   end
 
@@ -66,7 +66,7 @@ action :setup do
 
   default_router = node["nginx-app"]["default_router"]
 
-  if !::File.exists?("#{deploy_dir}/#{default_router}")
+  if !::File.exist?("#{deploy_dir}/#{default_router}")
     default_router = 'index.php'
   end
 

@@ -15,7 +15,7 @@ action :install do
 
   execute "pecl install #{extension}" do
     not_if do
-      ::File.exists?(so_file)
+      ::File.exist?(so_file)
     end
   end
 
@@ -72,7 +72,7 @@ action :compile do
   end
 
   source_dir = new_resource.source_dir
-  if !::File.exists?(source_dir)
+  if !::File.exist?(source_dir)
     fail "The 'source_dir' does not exist: #{source_dir}"
   end
 

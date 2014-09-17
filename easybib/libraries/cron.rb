@@ -14,7 +14,7 @@ module EasyBib
 
       collection = []
 
-      if !::File.exists?(@file)
+      if !::File.exist?(@file)
         return collection
       end
 

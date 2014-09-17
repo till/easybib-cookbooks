@@ -3,7 +3,7 @@ include_recipe "apt::ppa"
 easybib_launchpad node["docker"]["ppa"] do
   action :discover
   not_if do
-    ::File.exists?("/etc/apt/sources.list.d/dotcloud-lxc-docker-#{node["lsb"]["codename"]}.list")
+    ::File.exist?("/etc/apt/sources.list.d/dotcloud-lxc-docker-#{node["lsb"]["codename"]}.list")
   end
 end
 

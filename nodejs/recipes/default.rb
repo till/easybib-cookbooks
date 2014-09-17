@@ -35,7 +35,7 @@ end
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
 
-node_symlink_exists = File.exists?("#{node['nodejs']['dir']}/bin/node")
+node_symlink_exists = File.exist?("#{node['nodejs']['dir']}/bin/node")
 
 if node_symlink_exists
   node_version_info = Mixlib::ShellOut.new("#{node['nodejs']['dir']}/bin/node --version")

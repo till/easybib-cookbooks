@@ -49,13 +49,13 @@ action :setup do
   find_php
   has_phar?
 
-  if ::File.exists?("#{deploy_to}/composer.phar")
+  if ::File.exist?("#{deploy_to}/composer.phar")
     Chef::Log.debug("The composer.phar is already in #{deploy_to} - skipping.")
   else
 
     shell_out("curl http://getcomposer.org/installer --silent --output #{deploy_to}/installer", deploy_to)
 
-    if !::File.exists?("#{deploy_to}/installer")
+    if !::File.exist?("#{deploy_to}/installer")
       fail "Does not exist?"
     end
 
@@ -73,7 +73,7 @@ action :install do
   find_php
   has_phar?
 
-  if !::File.exists?("#{deploy_to}/composer.phar")
+  if !::File.exist?("#{deploy_to}/composer.phar")
     Chef::Log.info("Could not find 'composer.phar' in #{deploy_to}: silently skipping.")
   else
 

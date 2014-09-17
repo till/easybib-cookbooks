@@ -56,7 +56,7 @@ phps.each do |php_bin|
   link php_bin do
     to "#{install_prefix}/php"
     only_if do
-      File.exists?("#{install_prefix}/php")
+      File.exist?("#{install_prefix}/php")
     end
   end
 end
@@ -70,7 +70,7 @@ bins.each do |php_bin|
   link "#{expected_prefix}/#{php_bin}" do
     to real_bin
     only_if do
-      File.exists?(real_bin)
+      File.exist?(real_bin)
     end
   end
 

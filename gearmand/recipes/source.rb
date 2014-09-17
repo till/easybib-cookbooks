@@ -44,7 +44,7 @@ commands.each do |command|
     command command
     cwd "#{Chef::Config[:file_cache_path]}/gearmand-#{version}/"
     not_if do
-      File.exists?("#{prefix}/#{version}/sbin/gearmand")
+      File.exist?("#{prefix}/#{version}/sbin/gearmand")
     end
   end
 end

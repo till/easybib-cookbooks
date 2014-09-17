@@ -6,7 +6,7 @@ mysql_password = node['mysql']['server_root_password']
 
 backup_cmd = "/usr/bin/xtrabackup"
 
-if File.exists?(backup_cmd)
+if File.exist?(backup_cmd)
 
   directory node['xtrabackup']['dir'] do
     mode  "0744"
