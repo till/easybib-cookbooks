@@ -49,12 +49,12 @@ end
 execute 'extract nodejs install' do
   command "tar -zxf #{nodejs_tar}"
   cwd node['nodejs']['prefix']
-  not_if install_not_needed
+  not_if { install_not_needed }
 end
 
 %w(npm node).each do |file|
   link "#{destination_dir}/bin/#{file}" do
     to "#{node['nodejs']['prefix']}/#{package_stub}/bin/#{file}"
-    not_if install_not_needed
+    not_if { install_not_needed }
   end
 end
