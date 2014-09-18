@@ -36,16 +36,11 @@ module EasyBib
     end
 
     instance_roles = get_instance_roles(node)
-    cluster_name   = get_cluster_name(node)
 
     Chef::Log.info(
-      "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles} in #{cluster_name}"
+      "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles}"
     )
 
-    if cluster_name != node['easybib']['cluster_name']
-      Chef::Log.info("deploy #{requested_application} - wrong cluster_name")
-      return false
-    end
     if requested_application.is_a?(String)
       if requested_role.nil?
         requested_role = requested_application
