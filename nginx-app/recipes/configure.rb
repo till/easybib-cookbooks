@@ -65,6 +65,8 @@ node['deploy'].each do |application, deploy|
     notifies :restart, 'service[nginx]', :delayed
   end
 
-  easybib_envconfig application
+  easybib_envconfig application do
+    stackname 'easybib'
+  end
 
 end

@@ -9,7 +9,7 @@ action :create do
   if new_resource.envvar_json_source.nil?
     Chef::Log.debug('Pecl-Manager: No source for json env found')
   else
-    envvar_json = ::EasyBib.get_env_for_shell(new_resource.envvar_json_source, node)
+    envvar_json = ::EasyBib::Config.get_env('shell', new_resource.envvar_json_source, node)
   end
 
   # clean up old links to bin/worker

@@ -10,15 +10,13 @@ cookbook_file '/etc/bash.bashrc' do
   mode   '0644'
 end
 
-['getcourse'].each do |shell_env|
-  env_conf = get_env_for_shell(shell_env)
+env_conf = ::EasyBib::Config.get_env('shell', 'getcourse', node)
 
-  template "/etc/bashrc.d/#{shell_env}.sh" do
-    source 'profile.erb'
-    mode '0755'
-    variables :env => env_conf
-    not_if do
-      env_conf.empty?
-    end
+template '/etc/bashrc.d/getcourse.sh' do
+  source 'profile.erb'
+  mode '0755'
+  variables :env => env_conf
+  not_if do
+    env_conf.empty?
   end
 end

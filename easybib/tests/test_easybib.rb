@@ -104,18 +104,6 @@ class TestEasyBib < Test::Unit::TestCase
     end
   end
 
-  def test_get_env_for_nginx
-    fake_node = Chef::Node.new
-    fake_node.set['fakeapp']['env']['database'] = {
-      'something' => 'foobar',
-      'whatever' => 'bar'
-    }
-    assert_equal(
-      get_env_for_nginx('fakeapp', fake_node),
-      "fastcgi_param DATABASE_SOMETHING \"foobar\";\nfastcgi_param DATABASE_WHATEVER \"bar\";\n"
-    )
-  end
-
   def test_deploy_crontab
     assert_equal(
       deploy_crontab?([], nil),

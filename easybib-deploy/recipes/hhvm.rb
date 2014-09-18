@@ -27,7 +27,9 @@ node['deploy'].each do |application, deploy|
     notifies :restart, 'service[nginx]', :delayed
   end
 
-  easybib_envconfig application
+  easybib_envconfig application do
+    stackname 'scholar'
+  end
 
   service 'hhvm-fcgi' do
     action :reload # TODO: this is probably unnessessary

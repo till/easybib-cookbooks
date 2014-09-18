@@ -35,10 +35,7 @@ stack_applications.each do |app|
       htpasswd_path = "#{app_info['app_dir']}deploy/htpasswd"
     end
 
-    env_conf = ''
-    if has_env?('getcourse')
-      env_conf = get_env_for_nginx('getcourse')
-    end
+    env_conf = ::EasyBib::Config.get_env('nginx', 'getcourse', node)
 
     easybib_nginx app do
       config_template 'silex.conf.erb'
