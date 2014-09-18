@@ -32,8 +32,7 @@ Resources/Providers
 This LWRP provides an easy way to create a `/etc/init.d/pecl-manager` init script. It includes configuration from two different locations, and exports them in the script as environment variables:
 
 - From the node configuration: If you supply the parameter `envvar_json_source`, all key/value-pairs under
-`node[envvar_json_source]` will be exported. See `easybib/libraries/easybib.rb`, function `get_env_for_shell`
-for implementation details
+`node[envvar_json_source]` will be exported. See `easybib/libraries/config.rb` for implementation details
 - From a file in the source: The file supplied with the parameter `envvar_file`.
 
 #### Easybib-Deploy

@@ -31,10 +31,7 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  env_conf = ''
-  if has_env?(application)
-    env_conf = get_env_for_nginx(application)
-  end
+  env_conf = ::EasyBib::Config.get_env('nginx', application)
 
   easybib_nginx application do
     config_template 'silex.conf.erb'

@@ -1,38 +1,20 @@
 module EasyBib
   module Config
     extend self
-    def get_env(format, app, node = self.node)
-      config = ''
 
-      unless node.attribute?(app)
-        return config
-      end
+    # returns only the environment settings in the json
+    def get_env(format, app, node = self.node)
+      return '' unless node.attribute?(app)
 
       if node[app]['env'].nil?
         fail "Attribute 'env' for application '#{app}' is not defined!"
       end
-      # TODO: This should use streamline_appenv
-      node[app]['env'].each_pair do |section, data|
-        data.each_pair do |config_key, config_value|
-          if config_value.is_a?(String)
 
-            fail "The character \" is not supported as a value in the config" if config_value.match('"')
-            var = sprintf('%s_%s', section.upcase, config_key.upcase)
-            config << build_config(format, var, config_value)
-            next
-          end
-
-          config_value.each_pair do |sub_key, sub_value|
-            var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
-            fail "The character \" is not supported as a value in the config" if sub_value.match('"')
-            config << build_config(format, var, sub_value)
-          end
-        end
-      end
-
-      config
+      appenv = streamline_appenv(node[app]['env'])
+      generate_config_part(format, 'settings', appenv)
     end
 
+    # returns env settings and information about the stack, application env, and rds
     def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
       settings = {}
       if node.attribute?(appname) && node[appname].attribute?('env')
@@ -59,6 +41,7 @@ module EasyBib
       to_configformat(format, data)
     end
 
+    # converts hash in a string, formatted as envvars, php, ini
     def to_configformat(format, data)
       fail 'No Config supplied' if data.nil?
       config = generate_start(format)
@@ -71,6 +54,7 @@ module EasyBib
       config << generate_end(format)
     end
 
+    # returns app_root_location for vagrant
     def get_vagrant_appdir(node, appname)
       if ::EasyBib.is_aws(node)
         Chef::Log.warn('get_vagrant_appdir called from AWS env. There is something broken.')
@@ -93,6 +77,7 @@ module EasyBib
       '/' + path.split('/')[1..-2].join('/') + '/'
     end
 
+    # returns domains for appname
     def get_domains(node, appname, env = 'getcourse')
       unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
         return node['deploy'][appname]['domains'].join(' ')
@@ -120,6 +105,7 @@ module EasyBib
       ''
     end
 
+    # returns application metadata (name, domains, directories)
     def get_appdata(node, appname)
       data = {}
       if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
@@ -147,6 +133,7 @@ module EasyBib
       data
     end
 
+    # returns stack metadata (name, environment-type)
     def get_stackdata(node)
       data = {}
       if ::EasyBib.is_aws(node)
@@ -216,8 +203,8 @@ module EasyBib
     def streamline_appenv(data, prefix = '')
       returnparam = {}
       return returnparam if data.nil?
-      data.each_pair do |section, part_data|
 
+      data.each_pair do |section, part_data|
         if prefix != ''
           section = sprintf('%s_%s', prefix, section.upcase)
         else
@@ -238,6 +225,8 @@ module EasyBib
     end
 
     def build_config(format, var, value, section = nil)
+      fail "The character \" is not supported as a value in the config" if value.match('"')
+
       case format
       when 'nginx'
         build_nginx_config(var, value, section)

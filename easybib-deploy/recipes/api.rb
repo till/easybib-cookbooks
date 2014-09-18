@@ -23,19 +23,10 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  # env conf is deprecated, remove as soon as
-  # https://github.com/easybiblabs/easybib-discover-api/pull/9
-
-  env_conf = ''
-  if has_env?(application)
-    env_conf = get_env_for_nginx(application)
-  end
-
   easybib_nginx application do
     config_template 'silex.conf.erb'
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
-    env_config env_conf
     notifies :restart, 'service[nginx]', :delayed
   end
 

@@ -84,14 +84,6 @@ module EasyBib
     true
   end
 
-  def get_env_for_nginx(app, node = self.node)
-    ::EasyBib::Config.get_env('nginx', app, node)
-  end
-
-  def get_env_for_shell(app, node = self.node)
-    ::EasyBib::Config.get_env('shell', app, node)
-  end
-
   def get_cluster_name(node = self.node)
     if node['opsworks'] && node['opsworks']['stack']
       return node['opsworks']['stack']['name']
