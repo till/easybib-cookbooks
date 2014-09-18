@@ -13,15 +13,13 @@ action :create do
 
   Chef::Log.info("writing envconfig for #{app} to #{path}")
 
-  # FIXME: get_configcontent needs the stackname
-
   %w(ini php sh).each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
       mode   '0644'
       cookbook 'easybib'
       source 'empty.erb'
       variables(
-        :content => ::EasyBib::Config.get_configcontent(format, app, node)
+        :content => ::EasyBib::Config.get_configcontent(format, app, node, new_resource.stackname)
       )
     end
   end

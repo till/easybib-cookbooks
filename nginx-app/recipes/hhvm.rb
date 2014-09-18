@@ -25,6 +25,8 @@ node['vagrant']['applications'].each do |app_name, app_config|
     notifies :restart, 'service[nginx]', :delayed
   end
 
-  easybib_envconfig app_name
+  easybib_envconfig app_name do
+    stackname 'scholar'
+  end
 
 end

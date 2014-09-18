@@ -42,7 +42,12 @@ action :deploy do
     not_if { node['easybib_deploy']['envtype'] == 'production' }
   end
 
-  easybib_envconfig app
+  stackname = ::EasyBib.get_normalized_cluster_name(node).split('_').first
+  Chef::Log.info("setting config-stackname to #{stackname}")
+
+  easybib_envconfig app do
+    stackname stackname
+  end
 
   new_resource.updated_by_last_action(true)
 
