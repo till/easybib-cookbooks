@@ -24,7 +24,7 @@ module EasyBib
         Chef::Log.info("env settings for stack #{stackname} found")
         settings = streamline_appenv(node[stackname]['env'])
       else
-        Chef::Log.info('no env settings found')
+        Chef::Log.info("no env settings found - appname was #{appname}, stack #{stackname}")
       end
 
       unless node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
