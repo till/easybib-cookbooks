@@ -99,7 +99,9 @@ stackname = \"opsworks-stack\"
 environment = \"playground\"
 [settings]
 BLA_SOMEKEY = \"somevalue\"
-BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"\n",
+BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
+BLA_SOMEARRAY[0] = \"server1\"
+BLA_SOMEARRAY[1] = \"server2\"\n",
       ::EasyBib::Config.get_configcontent('ini', 'some_app', get_fakenode_config)
     )
   end
@@ -127,6 +129,8 @@ environment = \"playground\"
 [settings]
 BLA_SOMEKEY = \"somevalue\"
 BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
+BLA_SOMEARRAY[0] = \"server1\"
+BLA_SOMEARRAY[1] = \"server2\"
 DB_HOST = \"some.db.tld\"
 DB_USER = \"dbuser\"
 DB_PORT = \"1234\"\n",
@@ -143,7 +147,9 @@ export DEPLOYED_APPLICATION_DOC_ROOT_DIR=\"/tmp/bla/current/www/\"
 export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
 export DEPLOYED_STACK_ENVIRONMENT=\"playground\"
 export BLA_SOMEKEY=\"somevalue\"
-export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"\n",
+export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"
+export BLA_SOMEARRAY[0]=\"server1\"
+export BLA_SOMEARRAY[1]=\"server2\"\n",
                  ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_config)
     )
   end
@@ -157,7 +163,9 @@ fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/tmp/bla/current/www/\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
 fastcgi_param BLA_SOMEKEY \"somevalue\";
-fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";\n",
+fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";
+fastcgi_param BLA_SOMEARRAY[0] \"server1\";
+fastcgi_param BLA_SOMEARRAY[1] \"server2\";\n",
                  ::EasyBib::Config.get_configcontent('nginx', 'some_app', get_fakenode_config)
     )
   end
@@ -227,6 +235,7 @@ return [
   'settings' => [
     'BLA_SOMEKEY'=>\"somevalue\",
     'BLA_SOMEGROUP_SOMEOTHERKEY'=>\"someothervalue\",
+    'BLA_SOMEARRAY'=> [\"server1\", \"server2\"],
   ],
 ];",
                  ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
@@ -251,7 +260,8 @@ return [
           'somekey' => 'somevalue',
           'somegroup' => {
             'someotherkey' => 'someothervalue'
-          }
+          },
+          'somearray' => %w(server1 server2)
         }
       }
     }

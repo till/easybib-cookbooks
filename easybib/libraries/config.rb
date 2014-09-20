@@ -194,7 +194,9 @@ module EasyBib
     def generate_config_part(format, section, section_data)
       config = ''
       section_data.each_pair do |config_key, config_value|
-        fail "section_data for #{config_key} is not a string - generate_config_part is not recursive, this wont work!" unless config_value.is_a?(String)
+        unless config_value.is_a?(String) || config_value.is_a?(Array)
+          fail "section_data for #{config_key} is not a string or an array!"
+        end
         config << build_config(format, config_key, config_value, section)
       end
       config
@@ -205,27 +207,39 @@ module EasyBib
       return returnparam if data.nil?
 
       data.each_pair do |section, part_data|
-        if prefix != ''
-          section = sprintf('%s_%s', prefix, section.upcase)
-        else
-          section = section.upcase
-        end
+        section = get_returnparam_identifier(section, prefix)
+        content = get_returnparam(section, part_data)
 
-        if part_data.is_a?(Hash)
-          returnparam.merge!(streamline_appenv(part_data, section))
-        elsif part_data.is_a?(String)
-          returnparam[section] = part_data
-        elsif part_data.respond_to?('to_s')
-          returnparam[section] = part_data.to_s
-        else
-          fail "I have no idea how to deal with config item #{section}."
-        end
+        returnparam.merge!(content)
       end
       returnparam
     end
 
+    def get_returnparam_identifier(section, prefix)
+      if prefix != ''
+        return sprintf('%s_%s', prefix, section.upcase)
+      end
+      section.upcase
+    end
+
+    def get_returnparam(section, part_data)
+      if part_data.is_a?(Hash)
+        return streamline_appenv(part_data, section)
+      elsif part_data.is_a?(Array)
+        return { section => part_data }
+      elsif part_data.is_a?(String)
+        return { section => part_data }
+      elsif part_data.respond_to?('to_s')
+        return { section => part_data.to_s }
+      end
+
+      fail "I have no idea how to deal with config item #{section}."
+    end
+
     def build_config(format, var, value, section = nil)
-      fail "The character \" is not supported as a value in the config" if value.match('"')
+      if value.is_a?(String)
+        fail "The character \" is not supported as a value in the config" if value.match('"')
+      end
 
       case format
       when 'nginx'
@@ -253,21 +267,57 @@ module EasyBib
     end
 
     def build_php_config(key, value, section = nil)
+      if value.is_a?(Array)
+        value = value.join('", "')
+        return "    '#{key}'=> [\"#{value}\"],\n"
+      end
       "    '#{key}'=>\"#{value}\",\n"
     end
 
     def build_shell_config(key, value, section = nil)
       key = sprintf('%s_%s', section.upcase, key.upcase) if %w(deployed_application deployed_stack).include?(section)
+      if value.is_a?(Array)
+        returnvalue = ''
+        array_to_numbered_hash(key, value).each do |sub_key, item|
+          returnvalue << "export #{sub_key}=\"#{item}\"\n"
+        end
+        return returnvalue
+      end
       "export #{key}=\"#{value}\"\n"
     end
 
     def build_nginx_config(key, value, section = nil)
       key = sprintf('%s_%s', section.upcase, key.upcase) if %w(deployed_application deployed_stack).include?(section)
+      if value.is_a?(Array)
+        returnvalue = ''
+        array_to_numbered_hash(key, value).each do |sub_key, item|
+          returnvalue << "fastcgi_param #{sub_key} \"#{item}\";\n"
+        end
+        return returnvalue
+      end
       "fastcgi_param #{key} \"#{value}\";\n"
     end
 
     def build_ini_config(key, value, section = nil)
+      if value.is_a?(Array)
+        returnvalue = ''
+        array_to_numbered_hash(key, value).each do |sub_key, item|
+          returnvalue << "#{sub_key} = \"#{item}\"\n"
+        end
+        return returnvalue
+      end
       "#{key} = \"#{value}\"\n"
+    end
+
+    def array_to_numbered_hash(key, arr)
+      i = 0
+      ret = {}
+      arr.each do |item|
+        subkey = sprintf('%s[%s]', key, i)
+        ret[subkey] = item
+        i += 1
+      end
+      ret
     end
   end
 end
