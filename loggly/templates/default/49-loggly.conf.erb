@@ -9,20 +9,4 @@ $ActionSendStreamDriverPermittedPeer *.loggly.com
 
 $MaxMessageSize 64k
 
-<%
-if !::EasyBib.get_instance_roles(node).include?('loadbalancer')
-    # on loadbalancer, do not log web traffic to loggly
-%>
 *.* @@logs-01.loggly.com:6514;LogglyFormat
-<% else %>
-if ( \
-  $programname contains 'haproxy' and \
-  ($syslogseverity < 3 ) and \
-  not ($msg contains ' CD-- ' ) \
-) then @@logs-01.loggly.com:6514;LogglyFormat
-
-if ( \
-  $programname contains not 'haproxy' \
-) then @@logs-01.loggly.com:6514;LogglyFormat
-
-<% end %>
