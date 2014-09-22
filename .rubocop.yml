@@ -11,7 +11,7 @@ AllCops:
     - 'vagrant-test/**/*'
     - 'test/**/*'
     - 'Rakefile'
-    - 'fc_sandbox/*'
+    - 'fc_sandbox/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
