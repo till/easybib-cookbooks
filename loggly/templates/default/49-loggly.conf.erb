@@ -1,8 +1,3 @@
-<%
-if !::EasyBib.get_instance_roles(node).include?('loadbalancer')
-    # on loadbalancer we write to local files
-%>
-
 # forward to loggly: https://easybib.loggly.com
 $template LogglyFormat,"<%%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= @logglydata %>] %msg%\n"
 
@@ -14,9 +9,20 @@ $ActionSendStreamDriverPermittedPeer *.loggly.com
 
 $MaxMessageSize 64k
 
+<%
+if !::EasyBib.get_instance_roles(node).include?('loadbalancer')
+    # on loadbalancer, do not log web traffic to loggly
+%>
 *.* @@logs-01.loggly.com:6514;LogglyFormat
+<% else %>
+if ( \
+  $programname contains 'haproxy' and \
+  ($syslogseverity < 3 ) and \
+  not ($msg contains ' CD-- ' ) \
+) then @@logs-01.loggly.com:6514;LogglyFormat
 
-# unencrypted:
-# *.* @@logs-01.loggly.com:514; LogglyFormat
+if ( \
+  $programname contains not 'haproxy' \
+) then @@logs-01.loggly.com:6514;LogglyFormat
 
 <% end %>
