@@ -10,6 +10,8 @@ server {
     }
 
     location = /index.html {
+        add_header Pragma "no-cache";
+        add_header Cache-Control "no-store, no-cache, must-revalidate, post-check=0, pre-check=0";
         expires -1;
     }
 
@@ -33,6 +35,10 @@ server {
     location ~* \.(eot|ttf|woff)$ {
         add_header Access-Control-Allow-Origin *;
         expires max;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html =404;
     }
 
     root <%= @doc_root%>;
