@@ -7,15 +7,21 @@ service 'mysql' do
 end
 
 case node['percona']['version']
-when '5.0'
-  fail '5.0 is gone!'
 when '5.1'
   package 'percona-server-server-5.1'
 when '5.5'
   package 'percona-server-server-5.5'
 else
-  # wat?
-  Chef::Log.debug("Unknown version: #{node['percona']['version']}")
+  fail "Unknown version: #{node['percona']['version']}"
+end
+
+file node['percona']['config']['log-slow-queries'] do
+  owner 'mysql'
+  group 'adm'
+  action :create_if_missing
+  only_if do
+    node['percona']['config']['log-slow-queries']
+  end
 end
 
 template '/etc/mysql/conf.d/vagrant.cnf' do
