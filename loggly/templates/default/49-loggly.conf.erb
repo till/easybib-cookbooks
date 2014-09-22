@@ -12,6 +12,8 @@ $ActionSendStreamDriverMode 1
 $ActionSendStreamDriverAuthMode x509/name
 $ActionSendStreamDriverPermittedPeer *.loggly.com
 
+$MaxMessageSize 64k
+
 *.* @@logs-01.loggly.com:6514;LogglyFormat
 
 # unencrypted:
