@@ -4,6 +4,9 @@ action :create do
   if new_resource.path.nil?
     if ::EasyBib.is_aws(node)
       path = node['deploy'][app]['deploy_to'] + '/current/'
+      unless release_path.nil?
+        Chef::Log.info("Testing: release path is set to #{release_path}")
+      end
     else
       path = ::EasyBib::Config.get_vagrant_appdir(node, app)
     end
