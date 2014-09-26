@@ -1,0 +1,8 @@
+check system <%= @hostname %>
+    if loadavg (1min) > 15 then alert
+    if loadavg (5min) > 6 then alert
+    if memory usage > 75% then alert
+    if cpu usage (wait) > 50% then alert
+    
+check device rootfs with path /
+    if space usage > 80% for 5 times within 15 cycles then alert
