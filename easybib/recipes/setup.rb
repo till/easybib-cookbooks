@@ -31,7 +31,7 @@ if is_aws
     include_recipe 'chef_handler_sns::default'
   end
   include_recipe 'easybib::opsworks-fixes'
-  include_recipe 'apt::cacher-client'
+  include_recipe 'apt::unattended-upgrades'
 end
 
 # landscape is buggy
