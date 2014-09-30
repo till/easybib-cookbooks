@@ -2,25 +2,13 @@ $ModLoad imudp
 $UDPServerAddress 127.0.0.1
 $UDPServerRun 514
 
-#  Log everything haproxy related with a high severity in errors log.
-#  We skip everything with the haproxy-flags CD--, since this is user related
-#  and nothing we could fix or worry about - and happens a lot. 
-
-if ( \
-  $programname contains 'haproxy' and \
-  ($syslogseverity < 4 ) and \
-  not ($msg contains ' CD-- ' ) \
-) then -/mnt/var/log/haproxy/haproxy-errors.log
-
-
-# Now log everything with a lower severity which is web traffic related (referencing
-# our http-in frontend) in haproxy.log. Note the "& ~" below. This instructs rsyslogd
+# Log everything which is web traffic related (referencing our http-in frontend)
+# in haproxy.log. Note the "& ~" below. This instructs rsyslogd
 # that everything that matches this rule will not be logged anywhere later in the chain
 # which is good, since our web traffic would cause loggly to explode.
 
 if ( \
   $programname contains 'haproxy' and \
-  ( ($syslogseverity >= 4 /* 4=notice */ ) \
-  or ($msg contains ' http-in ' ) ) \
+  ($msg contains ' http-in ' ) \
 ) then -/mnt/var/log/haproxy/haproxy.log
 & ~
