@@ -131,4 +131,11 @@ if !ENV['TRAVIS'] && File.exist?(current_dir + '/.kitchen.yml')
 end
 
 require 'rubocop/rake_task'
-RuboCop::RakeTask.new
+# no autocorrect in travis
+if ENV['TRAVIS']
+  RuboCop::RakeTask.new
+else
+  RuboCop::RakeTask.new() do |task|
+    task.options = ["--auto-correct"]
+  end
+end
