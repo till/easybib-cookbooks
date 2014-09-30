@@ -1,4 +1,8 @@
 [mysqld]
 <% @config.each do |key, value| -%>
-<%=key%> = <%=value%>
+<% if value.to_s.empty? -%>
+<%= key %>
+<% else -%>
+<%= key %> = <%= value %>
+<% end -%>
 <% end -%>

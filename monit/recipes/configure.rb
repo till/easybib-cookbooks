@@ -1,4 +1,4 @@
 # for vagrant
-template "/etc/monit/monitrc" do
-  source "monitrc.erb"
+template '/etc/monit/monitrc' do
+  source 'monitrc.erb'
 end

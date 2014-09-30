@@ -9,13 +9,13 @@ action :install do
   ext_dir << ::File::SEPARATOR if ext_dir[-1].chr != ::File::SEPARATOR
   so_file   = "#{ext_dir}/#{extension}.so"
 
-  if !version.nil?
+  unless version.nil?
     extension = "#{extension}-#{version}"
   end
 
   execute "pecl install #{extension}" do
     not_if do
-      ::File.exists?(so_file)
+      ::File.exist?(so_file)
     end
   end
 
@@ -34,13 +34,13 @@ action :setup do
     files = [ext_prefix + name + '.so']
   end
 
-  extensions = Hash[ files.map do |filepath|
+  extensions = Hash[files.map do |filepath|
     rel_file = filepath.clone
     rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
 
     zend = new_resource.zend_extensions.include?(rel_file)
 
-    [ (zend ? filepath : rel_file) , zend ]
+    [(zend ? filepath : rel_file), zend]
   end]
 
   config_directives = new_resource.config_directives
@@ -48,12 +48,12 @@ action :setup do
   config = ::Php::Config.new(name, config_directives)
   directives = config.get_directives
 
-  template "#{node["php-fpm"]["prefix"]}/etc/php/#{name}.ini" do
-    source "extension.ini.erb"
-    cookbook "php"
-    owner "root"
-    group "root"
-    mode "0644"
+  template "#{node['php-fpm']['prefix']}/etc/php/#{name}.ini" do
+    source 'extension.ini.erb'
+    cookbook 'php'
+    owner 'root'
+    group 'root'
+    mode '0644'
     variables(
       :name => name,
       :extensions => extensions,
@@ -72,13 +72,13 @@ action :compile do
   end
 
   source_dir = new_resource.source_dir
-  if !::File.exists?(source_dir)
+  unless ::File.exist?(source_dir)
     fail "The 'source_dir' does not exist: #{source_dir}"
   end
 
   extension = new_resource.name
 
-  configure = "./configure"
+  configure = './configure'
 
   cflags = new_resource.cflags
   if !cflags.nil? && !cflags.empty?
@@ -86,9 +86,9 @@ action :compile do
   end
 
   commands = [
-    "phpize",
+    'phpize',
     configure,
-    "make",
+    'make',
     "cp modules/#{extension}.so #{new_resource.source_dir}"
   ]
 

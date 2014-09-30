@@ -1,30 +1,30 @@
-if node["prosody"]["storage"] == "sql"
+if node['prosody']['storage'] == 'sql'
 
-  db_conf = node["prosody"]["db"]
+  db_conf = node['prosody']['db']
 
-  driver = db_conf["driver"].downcase
+  driver = db_conf['driver'].downcase
 
   package "Installing DBI bindings for '#{driver}'" do
     package_name "lua-dbi-#{driver}"
   end
 
   case driver
-  when "mysql"
+  when 'mysql'
 
-    include_recipe "percona::client" if is_aws
+    include_recipe 'percona::client' if is_aws
 
-    mysql_command = "mysql -u %s -h %s" % [ db_conf["username"], db_conf["hostname"] ]
-    if !db_conf["password"].empty?
-      mysql_command += " -p#{db_conf["password"]}"
+    mysql_command = 'mysql -u %s -h %s' % [db_conf['username'], db_conf['hostname']]
+    unless db_conf['password'].empty?
+      mysql_command += " -p#{db_conf['password']}"
     end
 
-    execute "create database '#{db_conf["database"]} for prosody" do
-      command "#{mysql_command} -e \"CREATE DATABASE IF NOT EXISTS #{db_conf["database"]}\""
+    execute "create database '#{db_conf['database']} for prosody" do
+      command "#{mysql_command} -e \"CREATE DATABASE IF NOT EXISTS #{db_conf['database']}\""
     end
-  when "postgresql"
+  when 'postgresql'
     # this needs to be done
     Chef::Log.info("Haven't do this yet.")
-  when "sqlite3"
+  when 'sqlite3'
     # this should just work :)
   else
     Chef.Log::Error("The '#{driver}' is not yet supported.")

@@ -1,3 +1,3 @@
-package "subversion"
+package 'subversion'
 
-include_recipe "subversion::configure"
+include_recipe 'subversion::configure'

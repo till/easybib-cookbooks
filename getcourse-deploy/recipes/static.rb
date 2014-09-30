@@ -1,4 +1,4 @@
-node["deploy"].each do |application, deploy|
+node['deploy'].each do |application, deploy|
 
   case application
   when 'consumer'

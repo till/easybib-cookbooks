@@ -1,3 +1,3 @@
-default["awscli"] = {
-  "version" => "1.3.24"
+default['awscli'] = {
+  'version' => '1.3.24'
 }

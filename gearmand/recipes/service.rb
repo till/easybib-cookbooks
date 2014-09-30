@@ -5,8 +5,8 @@ service node['gearmand']['name'] do
 end
 
 template "/etc/init.d/#{node['gearmand']['name']}" do
-  mode "0755"
-  source "gearmand.initd.erb"
+  mode '0755'
+  source 'gearmand.initd.erb'
   variables(
     :prefix => node['gearmand']['prefix'],
     :name => node['gearmand']['name'],

@@ -4,22 +4,22 @@ action :create do
 
   updated = false
 
-  if !::File.exists?(crontab_file)
+  unless ::File.exist?(crontab_file)
     new_resource.updated_by_last_action(updated)
     next
   end
 
-  execute "Clear old crontab" do
-    user node["nginx-app"]["user"]
+  execute 'Clear old crontab' do
+    user node['nginx-app']['user']
     # crontab will exit with 130 if crontab has already been cleared
-    command "crontab -u #{node["nginx-app"]["user"]} -r"
+    command "crontab -u #{node['nginx-app']['user']} -r"
     ignore_failure true
     only_if do
-      ::File.exists?(crontab_file)
+      ::File.exist?(crontab_file)
     end
   end
 
-  execute "Clear old cron.d files" do
+  execute 'Clear old cron.d files' do
     # rm will exit with 1 if no old cron.d files existed
     command "rm /etc/cron.d/#{app}_*"
     ignore_failure true
@@ -44,9 +44,9 @@ action :create do
       day crontab[3]
       month crontab[4]
       weekday crontab[5]
-      user node["nginx-app"]["user"]
+      user node['nginx-app']['user']
       command crontab[6]
-      path node["easybib_deploy"]["cron_path"]
+      path node['easybib_deploy']['cron_path']
     end
 
     Chef::Log.info("easybib_deploy - I just called cron_d for #{cron_name}")

@@ -1,6 +1,6 @@
 module Hhvm
   def get_complete_path(path, node = self.node)
-    "#{node["hhvm-fcgi"]["prefix"]}#{path}"
+    "#{node['hhvm-fcgi']['prefix']}#{path}"
   end
 end
 

@@ -1,38 +1,20 @@
 module EasyBib
   module Config
     extend self
+
+    # returns only the environment settings in the json
     def get_env(format, app, node = self.node)
-      config = ""
+      return '' unless node.attribute?(app)
 
-      if !node.attribute?(app)
-        return config
-      end
-
-      if node[app]["env"].nil?
+      if node[app]['env'].nil?
         fail "Attribute 'env' for application '#{app}' is not defined!"
       end
-      # TODO: This should use streamline_appenv
-      node[app]["env"].each_pair do |section, data|
-        data.each_pair do |config_key, config_value|
-          if config_value.is_a?(String)
 
-            fail "The character \" is not supported as a value in the config" if config_value.match('"')
-            var = sprintf('%s_%s', section.upcase, config_key.upcase)
-            config << build_config(format, var, config_value)
-            next
-          end
-
-          config_value.each_pair do |sub_key, sub_value|
-            var = sprintf('%s_%s_%s', section.upcase, config_key.upcase, sub_key.upcase)
-            fail "The character \" is not supported as a value in the config" if sub_value.match('"')
-            config << build_config(format, var, sub_value)
-          end
-        end
-      end
-
-      config
+      appenv = streamline_appenv(node[app]['env'])
+      generate_config_part(format, 'settings', appenv)
     end
 
+    # returns env settings and information about the stack, application env, and rds
     def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
       settings = {}
       if node.attribute?(appname) && node[appname].attribute?('env')
@@ -42,10 +24,10 @@ module EasyBib
         Chef::Log.info("env settings for stack #{stackname} found")
         settings = streamline_appenv(node[stackname]['env'])
       else
-        Chef::Log.info('no env settings found')
+        Chef::Log.info("no env settings found - appname was #{appname}, stack #{stackname}")
       end
 
-      if !node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
+      unless node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
         # add configuration from the RDS resource management in opsworks
         dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
         settings.merge!(dbconfig)
@@ -59,8 +41,9 @@ module EasyBib
       to_configformat(format, data)
     end
 
+    # converts hash in a string, formatted as envvars, php, ini
     def to_configformat(format, data)
-      fail "No Config supplied" if data.nil?
+      fail 'No Config supplied' if data.nil?
       config = generate_start(format)
       data.each_pair do |main_section, section_data|
         Chef::Log.info("Config: Processing section #{main_section}")
@@ -71,6 +54,7 @@ module EasyBib
       config << generate_end(format)
     end
 
+    # returns app_root_location for vagrant
     def get_vagrant_appdir(node, appname)
       if ::EasyBib.is_aws(node)
         Chef::Log.warn('get_vagrant_appdir called from AWS env. There is something broken.')
@@ -90,9 +74,10 @@ module EasyBib
 
       Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
       path = node['vagrant']['applications'][appname]['doc_root_location']
-      "/" + path.split('/')[1..-2].join('/') + "/"
+      '/' + path.split('/')[1..-2].join('/') + '/'
     end
 
+    # returns domains for appname
     def get_domains(node, appname, env = 'getcourse')
       unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
         return node['deploy'][appname]['domains'].join(' ')
@@ -112,7 +97,7 @@ module EasyBib
         if (env == 'getcourse') && (appname == 'consumer')
           # workaround to use old domain config syntax for consumer here, too
           # deprecated, and soon to be removed.
-          return "#{node[env]["domain"][appname]} *.#{node[env]["domain"][appname]}"
+          return "#{node[env]['domain'][appname]} *.#{node[env]['domain'][appname]}"
         end
         return node[env]['domain'][appname]
       end
@@ -120,6 +105,7 @@ module EasyBib
       ''
     end
 
+    # returns application metadata (name, domains, directories)
     def get_appdata(node, appname)
       data = {}
       if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
@@ -140,21 +126,22 @@ module EasyBib
       end
 
       # ensure all dirs end with a slash:
-      ['deploy_dir', 'app_dir', 'doc_root_dir'].each do |name|
+      %w(deploy_dir app_dir doc_root_dir).each do |name|
         data[name] << '/' unless data[name].end_with?('/')
       end
 
       data
     end
 
+    # returns stack metadata (name, environment-type)
     def get_stackdata(node)
       data = {}
       if ::EasyBib.is_aws(node)
         data['stackname'] = node['opsworks']['stack']['name']
       elsif node['vagrant']
-        data['stackname'] = "vagrant"
+        data['stackname'] = 'vagrant'
       else
-        data['stackname'] = "undefined"
+        data['stackname'] = 'undefined'
       end
       data['environment'] = node['easybib_deploy']['envtype']
       data
@@ -165,49 +152,51 @@ module EasyBib
     # generate top of file
     def generate_start(format)
       case format
-      when "php"
+      when 'php'
         "<?php\nreturn [\n"
       else
-        ""
+        ''
       end
     end
 
     # generate end of file
     def generate_end(format)
       case format
-      when "php"
-        "];"
+      when 'php'
+        '];'
       else
-        ""
+        ''
       end
     end
 
     # generates the section header
     def generate_section_start(format, main_section)
       case format
-      when "php"
+      when 'php'
         "  '#{main_section}' => [\n"
-      when "ini"
+      when 'ini'
         "[#{main_section}]\n"
       else
-        ""
+        ''
       end
     end
 
     # generates the section footer
     def generate_section_end(format, main_section)
       case format
-      when "php"
+      when 'php'
         "  ],\n"
       else
-        ""
+        ''
       end
     end
 
     def generate_config_part(format, section, section_data)
-      config = ""
+      config = ''
       section_data.each_pair do |config_key, config_value|
-        fail "section_data for #{config_key} is not a string - generate_config_part is not recursive, this wont work!" unless config_value.is_a?(String)
+        unless config_value.is_a?(String) || config_value.is_a?(Array)
+          fail "section_data for #{config_key} is not a string or an array!"
+        end
         config << build_config(format, config_key, config_value, section)
       end
       config
@@ -216,38 +205,52 @@ module EasyBib
     def streamline_appenv(data, prefix = '')
       returnparam = {}
       return returnparam if data.nil?
+
       data.each_pair do |section, part_data|
+        section = get_returnparam_identifier(section, prefix)
+        content = get_returnparam(section, part_data)
 
-        if prefix != ''
-          section = sprintf('%s_%s', prefix, section.upcase)
-        else
-          section = section.upcase
-        end
-
-        if part_data.is_a?(Hash)
-          returnparam.merge!(streamline_appenv(part_data, section))
-        elsif part_data.is_a?(String)
-          returnparam[section] = part_data
-        elsif part_data.respond_to?('to_s')
-          returnparam[section] = part_data.to_s
-        else
-          fail "I have no idea how to deal with config item #{section}."
-        end
+        returnparam.merge!(content)
       end
       returnparam
     end
 
+    def get_returnparam_identifier(section, prefix)
+      if prefix != ''
+        return sprintf('%s_%s', prefix, section.upcase)
+      end
+      section.upcase
+    end
+
+    def get_returnparam(section, part_data)
+      if part_data.is_a?(Hash)
+        return streamline_appenv(part_data, section)
+      elsif part_data.is_a?(Array)
+        return { section => part_data }
+      elsif part_data.is_a?(String)
+        return { section => part_data }
+      elsif part_data.respond_to?('to_s')
+        return { section => part_data.to_s }
+      end
+
+      fail "I have no idea how to deal with config item #{section}."
+    end
+
     def build_config(format, var, value, section = nil)
+      if value.is_a?(String)
+        fail "The character \" is not supported as a value in the config" if value.match('"')
+      end
+
       case format
-      when "nginx"
+      when 'nginx'
         build_nginx_config(var, value, section)
-      when "shell"
+      when 'shell'
         build_shell_config(var, value, section)
-      when "sh"
+      when 'sh'
         build_shell_config(var, value, section)
-      when "ini"
+      when 'ini'
         build_ini_config(var, value, section)
-      when "php"
+      when 'php'
         build_php_config(var, value, section)
       else
         fail "Unknown configuration type: #{format}."
@@ -255,7 +258,7 @@ module EasyBib
     end
 
     def get_output(data, format)
-      config = ""
+      config = ''
       data.each_pair do |config_key, config_value|
         config << build_config(format, config_key, config_value)
         next
@@ -264,21 +267,57 @@ module EasyBib
     end
 
     def build_php_config(key, value, section = nil)
+      if value.is_a?(Array)
+        value = value.join('", "')
+        return "    '#{key}'=> [\"#{value}\"],\n"
+      end
       "    '#{key}'=>\"#{value}\",\n"
     end
 
     def build_shell_config(key, value, section = nil)
-      key = sprintf('%s_%s', section.upcase, key.upcase) if ['deployed_application', 'deployed_stack'].include?(section)
+      key = sprintf('%s_%s', section.upcase, key.upcase) if %w(deployed_application deployed_stack).include?(section)
+      if value.is_a?(Array)
+        returnvalue = ''
+        array_to_numbered_hash(key, value).each do |sub_key, item|
+          returnvalue << "export #{sub_key}=\"#{item}\"\n"
+        end
+        return returnvalue
+      end
       "export #{key}=\"#{value}\"\n"
     end
 
     def build_nginx_config(key, value, section = nil)
-      key = sprintf('%s_%s', section.upcase, key.upcase) if ['deployed_application', 'deployed_stack'].include?(section)
+      key = sprintf('%s_%s', section.upcase, key.upcase) if %w(deployed_application deployed_stack).include?(section)
+      if value.is_a?(Array)
+        returnvalue = ''
+        array_to_numbered_hash(key, value).each do |sub_key, item|
+          returnvalue << "fastcgi_param #{sub_key} \"#{item}\";\n"
+        end
+        return returnvalue
+      end
       "fastcgi_param #{key} \"#{value}\";\n"
     end
 
     def build_ini_config(key, value, section = nil)
+      if value.is_a?(Array)
+        returnvalue = ''
+        array_to_numbered_hash(key, value).each do |sub_key, item|
+          returnvalue << "#{sub_key} = \"#{item}\"\n"
+        end
+        return returnvalue
+      end
       "#{key} = \"#{value}\"\n"
+    end
+
+    def array_to_numbered_hash(key, arr)
+      i = 0
+      ret = {}
+      arr.each do |item|
+        subkey = sprintf('%s[%s]', key, i)
+        ret[subkey] = item
+        i += 1
+      end
+      ret
     end
   end
 end

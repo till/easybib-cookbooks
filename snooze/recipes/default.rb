@@ -1,1 +1,1 @@
-gem_package "snooze"
+gem_package 'snooze'

@@ -1,1 +1,1 @@
-package "hatop"
+package 'hatop'

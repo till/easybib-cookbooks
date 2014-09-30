@@ -26,7 +26,7 @@
 Chef::Log.debug 'apt is not installed. Apt-specific resources will not be executed.' unless apt_installed?
 
 # If compile_time_update run apt-get update at compile time
-if node['apt']['compile_time_update'] && ! ::File.exists?('/var/lib/apt/periodic/update-success-stamp')
+if node['apt']['compile_time_update'] && ! ::File.exist?('/var/lib/apt/periodic/update-success-stamp')
   e = execute 'apt-get-update at compile time' do
     command 'apt-get update'
     ignore_failure true
@@ -41,7 +41,7 @@ execute 'apt-get-update' do
   command 'apt-get update'
   ignore_failure true
   only_if { apt_installed? }
-  not_if { ::File.exists?('/var/lib/apt/periodic/update-success-stamp') }
+  not_if { ::File.exist?('/var/lib/apt/periodic/update-success-stamp') }
 end
 
 # For other recipes to call to force an update
@@ -77,12 +77,12 @@ execute 'apt-get-update-periodic' do
   ignore_failure true
   only_if do
     apt_installed? &&
-    ::File.exists?('/var/lib/apt/periodic/update-success-stamp') &&
+    ::File.exist?('/var/lib/apt/periodic/update-success-stamp') &&
     ::File.mtime('/var/lib/apt/periodic/update-success-stamp') < Time.now - node['apt']['periodic_update_min_delay']
   end
 end
 
-%w{/var/cache/local /var/cache/local/preseeding}.each do |dirname|
+%w(/var/cache/local /var/cache/local/preseeding).each do |dirname|
   directory dirname do
     owner 'root'
     group 'root'

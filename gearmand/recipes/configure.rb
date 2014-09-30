@@ -1,14 +1,14 @@
-include_recipe "gearmand::user"
-include_recipe "gearmand::service"
+include_recipe 'gearmand::user'
+include_recipe 'gearmand::service'
 
 [
   "/var/run/#{node['gearmand']['name']}",
-  "#{node["gearmand"]["prefix"]}/#{node['gearmand']['source']['version']}/var/log"
+  "#{node['gearmand']['prefix']}/#{node['gearmand']['source']['version']}/var/log"
 ].each do |dir|
 
   directory dir do
     recursive true
-    mode "0755"
+    mode '0755'
     owner node['gearmand']['user']
     group node['gearmand']['user']
   end
@@ -16,8 +16,8 @@ include_recipe "gearmand::service"
 end
 
 template "/etc/default/#{node['gearmand']['name']}" do
-  mode   "0644"
-  source "gearmand.default.erb"
+  mode   '0644'
+  source 'gearmand.default.erb'
   variables(
     :port => node['gearmand']['port'],
     :log  => node['gearmand']['log']
@@ -26,5 +26,5 @@ template "/etc/default/#{node['gearmand']['name']}" do
 end
 
 if is_aws
-  include_recipe "monit::gearmand"
+  include_recipe 'monit::gearmand'
 end

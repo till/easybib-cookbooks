@@ -2,7 +2,7 @@
 
 $ModLoad imfile
 <%
-node[:syslog][:logfiles].each do|fileName,logSeverity|
+node['syslog']['logfiles'].each do|fileName,logSeverity|
 %>
   $InputFileName <%= fileName %>
   $InputFileTag <%= File.basename(fileName, '.log') %>
@@ -13,6 +13,6 @@ node[:syslog][:logfiles].each do|fileName,logSeverity|
 end
 %>
 
-$InputFilePollInterval <%= node[:syslog][:poll] %>
+$InputFilePollInterval <%= node['syslog']['poll'] %>
 
 <% end %>

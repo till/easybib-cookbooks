@@ -1,4 +1,4 @@
-["build-essential", "autoconf", "make"].each do |dep|
+['build-essential', 'autoconf', 'make'].each do |dep|
   package dep do
     action :install
   end

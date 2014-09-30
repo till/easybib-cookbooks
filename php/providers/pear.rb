@@ -1,17 +1,17 @@
 def initialize(*args)
   super(*args)
 
-  pear = pear_run("which pear").strip
+  pear = pear_run('which pear').strip
 
   if pear.empty?
-    fail Chef::Exceptions::ShellCommandFailed, "PEAR is not installed, or not in the path."
+    fail Chef::Exceptions::ShellCommandFailed, 'PEAR is not installed, or not in the path.'
   end
 
   @pear_cmd = pear
 
   Chef::Log.debug("Looks like we found a PEAR installer: #{@pear_cmd}")
   pear_run("#{@pear_cmd} config-set auto_discover 1")
-  Chef::Log.debug("Enabled auto_discover")
+  Chef::Log.debug('Enabled auto_discover')
 end
 
 def pear_run(cmd)
@@ -42,7 +42,7 @@ def discovered?(pear, channel)
 end
 
 def pear_cmd(pear, action, package, force, channel, version)
-  if !discovered?(pear, channel)
+  unless discovered?(pear, channel)
     discover = Mixlib::ShellOut.new("#{pear} channel-discover #{channel}")
     discover.run_command
   end
@@ -62,17 +62,17 @@ def pear_cmd(pear, action, package, force, channel, version)
       Chef::Log.debug("PEAR package #{package} is already installed.")
       return
     end
-    action = "install"
+    action = 'install'
   end
 
   # force whatever comes next (probably a good idea)
-  f_param = ""
+  f_param = ''
   if force == true
-    f_param = " -f"
+    f_param = ' -f'
   end
 
   # version string
-  version_str = ""
+  version_str = ''
   if version && !version.empty?
     version_str = "-#{version}"
   end
@@ -84,21 +84,21 @@ def pear_cmd(pear, action, package, force, channel, version)
 end
 
 action :install do
-  pear_cmd(@pear_cmd, "install", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  pear_cmd(@pear_cmd, 'install', new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
   new_resource.updated_by_last_action(true)
 end
 
 action :uninstall do
-  pear_cmd(@pear_cmd, "uninstall", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  pear_cmd(@pear_cmd, 'uninstall', new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
   new_resource.updated_by_last_action(true)
 end
 
 action :upgrade do
-  pear_cmd(@pear_cmd, "upgrade", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  pear_cmd(@pear_cmd, 'upgrade', new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
   new_resource.updated_by_last_action(true)
 end
 
 action :install_if_missing do
-  pear_cmd(@pear_cmd, "install_if_missing", new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
+  pear_cmd(@pear_cmd, 'install_if_missing', new_resource.name, new_resource.force, new_resource.channel, new_resource.version)
   new_resource.updated_by_last_action(true)
 end

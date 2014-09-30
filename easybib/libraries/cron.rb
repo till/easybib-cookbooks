@@ -14,12 +14,11 @@ module EasyBib
 
       collection = []
 
-      if !::File.exists?(@file)
+      unless ::File.exist?(@file)
         return collection
       end
 
       crontabs = ::File.open(@file)
-      cron_counter = 1
 
       crontabs.each_line do |line|
         crontab = line.match(regex)

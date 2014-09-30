@@ -1,5 +1,5 @@
-include_recipe "php-fpm::service"
-include_recipe "nginx-app::service"
+include_recipe 'php-fpm::service'
+include_recipe 'nginx-app::service'
 
 node['deploy'].each do |application, deploy|
 
@@ -21,9 +21,9 @@ node['deploy'].each do |application, deploy|
   Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
 
   opsworks_deploy_dir do
-    user  deploy["user"]
-    group deploy["group"]
-    path  deploy["deploy_to"]
+    user  deploy['user']
+    group deploy['group']
+    path  deploy['deploy_to']
   end
 
   easybib_deploy application do
@@ -31,25 +31,22 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  env_conf = ''
-  if has_env?(application)
-    env_conf = get_env_for_nginx(application)
-  end
+  env_conf = ::EasyBib::Config.get_env('nginx', application)
 
   easybib_nginx application do
-    config_template "silex.conf.erb"
+    config_template 'silex.conf.erb'
     domain_name     deploy['domains'].join(' ')
     htpasswd        "#{deploy['deploy_to']}/current/htpasswd"
     doc_root        deploy['document_root']
     env_config      env_conf
-    notifies :restart, "service[nginx]", :delayed
+    notifies :restart, 'service[nginx]', :delayed
   end
 
   case application
   when 'bibcd'
 
-    template "#{deploy["deploy_to"]}/current/config/deployconfig.yml" do
-      source "empty.erb"
+    template "#{deploy['deploy_to']}/current/config/deployconfig.yml" do
+      source 'empty.erb'
       mode   0644
       variables :content => ::EasyBib.to_php_yaml(node['bibcd']['default'])
     end
@@ -57,20 +54,20 @@ node['deploy'].each do |application, deploy|
     node['bibcd']['apps'].each do |appname, config|
       bibcd_app "adding bibcd app #{appname}" do
         action :add
-        path "#{deploy["deploy_to"]}/current/"
+        path "#{deploy['deploy_to']}/current/"
         app_name appname
         config config
       end
     end
   when 'aptly'
 
-    include_recipe "aptly::setup"
-    aptly_cronjob "easybib-s3" do
-      path "#{deploy["deploy_to"]}/current/"
+    include_recipe 'aptly::setup'
+    aptly_cronjob 'easybib-s3' do
+      path "#{deploy['deploy_to']}/current/"
     end
   end
 
-  service "php-fpm" do
+  service 'php-fpm' do
     action :reload
   end
 

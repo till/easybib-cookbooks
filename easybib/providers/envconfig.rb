@@ -11,17 +11,21 @@ action :create do
     path = new_resource.path
   end
 
-  Chef::Log.info("writing envconfig for #{app} to #{path}")
+  if new_resource.stackname.nil?
+    stackname = ::EasyBib.get_normalized_cluster_name(node).split('_').first
+  else
+    stackname = new_resource.stackname
+  end
 
-  # FIXME: get_configcontent needs the stackname
+  Chef::Log.info("writing envconfig for #{app} to #{path}, stackname #{stackname}")
 
-  ["ini", "php", "sh"].each do |format|
+  %w(ini php sh).each do |format|
     template "#{path}/.deploy_configuration.#{format}" do
-      mode   "0644"
-      cookbook "easybib"
-      source "empty.erb"
+      mode   '0644'
+      cookbook 'easybib'
+      source 'empty.erb'
       variables(
-        :content => ::EasyBib::Config.get_configcontent(format, app, node)
+        :content => ::EasyBib::Config.get_configcontent(format, app, node, stackname)
       )
     end
   end

@@ -1,4 +1,4 @@
-include_recipe "apt::ppa"
-include_recipe "apt::easybib"
+include_recipe 'apt::ppa'
+include_recipe 'apt::easybib'
 
-package "php5-easybib-phar"
+package 'php5-easybib-phar'

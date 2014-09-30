@@ -29,13 +29,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe "apt::ppa"
-include_recipe "apt::easybib"
+include_recipe 'apt::ppa'
+include_recipe 'apt::easybib'
 
-include_recipe "php-fpm::prepare"
+include_recipe 'php-fpm::prepare'
 
-if !node["php-fpm"]["packages"].empty?
-  apt_packages = node["php-fpm"]["packages"].split(',')
+unless node['php-fpm']['packages'].empty?
+  apt_packages = node['php-fpm']['packages'].split(',')
 
   apt_packages.each do |p|
     package p do
@@ -44,24 +44,24 @@ if !node["php-fpm"]["packages"].empty?
   end
 end
 
-include_recipe "php-fpm::configure"
-include_recipe "php-apc::default"
+include_recipe 'php-fpm::configure'
+include_recipe 'php-apc::default'
 
-expected_prefix = "/usr/local/bin"
-install_prefix = "#{node["php-fpm"]["prefix"]}/bin"
+expected_prefix = '/usr/local/bin'
+install_prefix = "#{node['php-fpm']['prefix']}/bin"
 
-phps = ["/usr/bin/php", "#{expected_prefix}/php"]
+phps = ['/usr/bin/php', "#{expected_prefix}/php"]
 
 phps.each do |php_bin|
   link php_bin do
     to "#{install_prefix}/php"
     only_if do
-      File.exists?("#{install_prefix}/php")
+      File.exist?("#{install_prefix}/php")
     end
   end
 end
 
-bins = ["pear", "peardev", "pecl", "phar", "phar.phar", "php-config", "phpize"]
+bins = ['pear', 'peardev', 'pecl', 'phar', 'phar.phar', 'php-config', 'phpize']
 
 bins.each do |php_bin|
 
@@ -70,7 +70,7 @@ bins.each do |php_bin|
   link "#{expected_prefix}/#{php_bin}" do
     to real_bin
     only_if do
-      File.exists?(real_bin)
+      File.exist?(real_bin)
     end
   end
 

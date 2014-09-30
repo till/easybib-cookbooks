@@ -13,12 +13,12 @@
 # units are case insensitive so 1GB 1Gb 1gB are all the same.
 
 daemonize yes
-pidfile <%= node[:redis][:pid_file] %>
-port <%= node[:redis][:port] %>
-bind <%= node[:redis][:bind_address] %>
-timeout <%= node[:redis][:timeout] %>
-loglevel <%= node[:redis][:log_level] %>
-logfile <%= node[:redis][:log_file] %>
+pidfile <%= node['redis']['pid_file'] %>
+port <%= node['redis']['port'] %>
+bind <%= node['redis']['bind_address'] %>
+timeout <%= node['redis']['timeout'] %>
+loglevel <%= node['redis']['log_level'] %>
+logfile <%= node['redis']['log_file'] %>
 
 # Set the number of databases. The default database is DB 0, you can select
 # a different one on a per-connection basis using SELECT <dbid> where
@@ -33,12 +33,12 @@ databases 16
 # different interval, or to listen to another port, and so on.
 #
 
-<% if node[:redis][:rdb][:keys_changed] > 0 -%>
-save <%= node[:redis][:rdb][:flush_interval] %> <%= node[:redis][:rdb][:keys_changed] %>
+<% if node['redis']['rdb']['keys_changed'] > 0 -%>
+save <%= node['redis']['rdb']['flush_interval'] %> <%= node['redis']['rdb']['keys_changed'] %>
 <% end -%>
 
-<% if node[:redis][:master][:is_slave] == true -%>
-slaveof <%= node[:redis][:master][:address] %> <%= node[:redis][:master][:node] %>
+<% if node['redis']['master']['is_slave'] == true -%>
+slaveof <%= node['redis']['master']['address'] %> <%= node['redis']['master']['node'] %>
 <% end -%>
 
 # If the master is password protected (using the "requirepass" configuration
@@ -47,8 +47,8 @@ slaveof <%= node[:redis][:master][:address] %> <%= node[:redis][:master][:node] 
 # refuse the slave request.
 #
 
-<% if node[:redis][:master][:is_slave] == true && !node[:redis][:master][:password].empty? -%>
-masterauth <%= node[:redis][:master][:password] %>
+<% if node['redis']['master']['is_slave'] == true && !node['redis']['master']['password'].empty? -%>
+masterauth <%= node['redis']['master']['password'] %>
 <% end -%>
 
 ################################## SECURITY ###################################
@@ -113,12 +113,12 @@ masterauth <%= node[:redis][:master][:password] %>
 # IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append
 # log file in background when it gets too big.
 
-dir <%= node[:redis][:datadir] %>
+dir <%= node['redis']['datadir'] %>
 
-appendonly <%= node[:redis][:appendonly] %>
+appendonly <%= node['redis']['appendonly'] %>
 
 # The name of the append only file (default: "appendonly.aof")
-appendfilename <%= node[:redis][:aofile] %>
+appendfilename <%= node['redis']['aofile'] %>
 
 # The fsync() call tells the Operating System to actually write data on disk
 # instead to wait for more data in the output buffer. Some OS will really flush
@@ -141,7 +141,7 @@ appendfilename <%= node[:redis][:aofile] %>
 # If unsure, use "everysec".
 
 # appendfsync always
-appendfsync <%= node[:redis][:appendfsync] %>
+appendfsync <%= node['redis']['appendfsync'] %>
 # appendfsync no
 
 ############################### ADVANCED CONFIG ###############################

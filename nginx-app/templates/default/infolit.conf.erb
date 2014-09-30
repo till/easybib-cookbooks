@@ -1,19 +1,19 @@
 upstream phpfpm {
-    server  unix:/var/run/php-fpm/<%= node["php-fpm"][:user] %>;
+    server  unix:/var/run/php-fpm/<%= node['php-fpm']['user'] %>;
 }
 
-<% if node[:opsworks] -%>
+<% if node['opsworks'] -%>
 
 server {
     listen 80 <%=@listen_opts%>;
-    return 301 https://<%=node[:infolit][:domain]%>$request_uri;
+    return 301 https://<%=node['infolit']['domain']%>$request_uri;
 }
 
 <% end -%>
 
 server {
 
-<% if !node[:opsworks] -%>
+<% if !node['opsworks'] -%>
     listen 80;
 <% else -%>
     listen 443;
@@ -33,10 +33,10 @@ server {
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/health_check.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
     }
 
     location /nginx_status {
@@ -47,7 +47,7 @@ server {
     }
 
     location ~ ^/(fpm_status|fpm_ping)$ {
-        include       <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        include       <%=node['nginx-app']['config_dir']%>/fastcgi_params;
         fastcgi_pass  phpfpm;
         fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
         allow         127.0.0.1;
@@ -57,31 +57,31 @@ server {
     rewrite ^(/favicon.ico)$ /static/images/favicon.ico;
 
     location /js/ {
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
 
     location /images/ {
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
 
     location /css/ {
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
 
     location /static/ {
-    <% if node[:opsworks] -%>
+    <% if node['opsworks'] -%>
         expires    30d;
         add_header Pragma public;
         add_header Cache-Control "public";
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-build;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-build;
     <% else -%>
-        root       <%= @deploy[:deploy_to] %>/current/app/modules/infolit/www-src;
+        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-src;
     <% end -%>
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
@@ -90,11 +90,11 @@ server {
     location /search/ {
 
         access_log off;
-        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_index search.php;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/search.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/search.php;
         index  search.php;
     }
 
@@ -102,12 +102,12 @@ server {
 
         access_log <%= @access_log %>;
 
-        include <%=node["nginx-app"][:config_dir]%>/fastcgi_params;
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  phpfpm;
         fastcgi_index index.php;
 
-        fastcgi_param SCRIPT_FILENAME <%= @deploy[:deploy_to] %>/current/<%= node[:docroot] %>/index.php;
+        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/index.php;
 
         index  index.php index.html index.htm;
     }

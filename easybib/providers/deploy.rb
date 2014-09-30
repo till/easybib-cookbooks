@@ -10,9 +10,9 @@ action :deploy do
   end
 
   opsworks_deploy_dir do
-    user  deploy_data["user"]
-    group deploy_data["group"]
-    path  deploy_data["deploy_to"]
+    user  deploy_data['user']
+    group deploy_data['group']
+    path  deploy_data['deploy_to']
   end
 
   opsworks_deploy do
@@ -36,10 +36,10 @@ action :deploy do
   end
 
   cookbook_file "#{document_root_dir}/robots.txt" do
-    mode   "0644"
-    cookbook "easybib"
-    source "robots.txt"
-    not_if { node["easybib_deploy"]["envtype"] == "production" }
+    mode   '0644'
+    cookbook 'easybib'
+    source 'robots.txt'
+    not_if { node['easybib_deploy']['envtype'] == 'production' }
   end
 
   easybib_envconfig app
