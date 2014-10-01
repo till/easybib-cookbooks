@@ -20,3 +20,5 @@ template '/etc/bashrc.d/getcourse.sh' do
     env_conf.empty?
   end
 end
+
+include_recipe 'bash::color_prompt'
