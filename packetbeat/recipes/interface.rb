@@ -12,7 +12,7 @@ node['deploy'].each do |application, deploy|
   end
 
   execute 'create packetbeat schema' do # ~FC041
-    command "curl  -XPUT 'http://localhost:9200/_template/packetbeat' -d@#{Chef::Config['file_cache_path']}/packetbeat.template.json"
+    command "curl  -XPUT 'http://127.0.0.1:9200/_template/packetbeat' -d@#{Chef::Config['file_cache_path']}/packetbeat.template.json"
   end
 
   include_recipe 'packetbeat::dashboards'
