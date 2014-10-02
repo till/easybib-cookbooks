@@ -12,8 +12,14 @@ node['deploy'].each do |application, deploy|
     notifies :start, 'service[elasticsearch]', :immediately
   end
 
+  # this is ugly: it uses retries since elasticsearch needs some time to be available
+  # if anyone has a better solution...
+  curl_command = 'curl '
+  curl_command << '--retry-delay 1 --retry-max-time 60 '
+  curl_command << "-XPUT 'http://127.0.0.1:9200/_template/packetbeat' "
+  curl_command << "-d@#{Chef::Config['file_cache_path']}/packetbeat.template.json "
   execute 'create packetbeat schema' do # ~FC041
-    command "curl  -XPUT 'http://127.0.0.1:9200/_template/packetbeat' -d@#{Chef::Config['file_cache_path']}/packetbeat.template.json"
+    command curl_command
   end
 
   include_recipe 'packetbeat::dashboards'
