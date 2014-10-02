@@ -11,11 +11,20 @@ node['deploy'].each do |application, deploy|
     source 'packetbeat.template.json'
     notifies :start, 'service[elasticsearch]', :immediately
   end
+  
+  # the ugliest thing I ever did. elasticsearch needs some time to be available, so
+  # triggering curl directly afterwards causes the process to fail.
+  # there is no nice check in chef I am aware of.
+  # my first workaround was to use "retry-max-time" with curl, but retries with curl
+  # do not work for "connection refused".
+  # so lets use sleep for now, but this is pretty much a FIXME if anyone has a better idea.
+  
+  execute 'this sucks: wait for elasticsearch start' do
+    command 'sleep 15'
+  end
 
-  # this is ugly: it uses retries since elasticsearch needs some time to be available
-  # if anyone has a better solution...
   curl_command = 'curl '
-  curl_command << '--retry-delay 1 --retry-max-time 60 '
+  # curl_command << '--retry-delay 1 --retry-max-time 60 '
   curl_command << "-XPUT 'http://127.0.0.1:9200/_template/packetbeat' "
   curl_command << "-d@#{Chef::Config['file_cache_path']}/packetbeat.template.json "
   execute 'create packetbeat schema' do # ~FC041
