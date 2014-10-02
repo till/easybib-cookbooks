@@ -31,7 +31,7 @@ describe 'packetbeat agent' do
     end
 
     it 'does create a config' do
-      expect(chef_run).to render_file('/etc/packetbeat.conf')
+      expect(chef_run).to render_file('/etc/packetbeat/packetbeat.conf')
         .with_content(
           include('procs.monitored.nginx')
         )

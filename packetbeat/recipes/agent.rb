@@ -19,7 +19,7 @@ dpkg_package 'packetbeat' do
   notifies :enable, 'service[packetbeat]'
 end
 
-template '/etc/packetbeat.conf' do
+template '/etc/packetbeat/packetbeat.conf' do
   source 'packetbeat.conf.erb'
   mode '0644'
   variables(
