@@ -9,7 +9,7 @@ remote_file "#{Chef::Config['file_cache_path']}/#{filename}" do
 end
 
 apt_package 'packetbeat' do
-  action :upgrade
+  action :install
   source "#{Chef::Config['file_cache_path']}/#{filename}"
 end
 
