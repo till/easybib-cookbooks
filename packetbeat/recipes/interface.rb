@@ -11,7 +11,7 @@ node['deploy'].each do |application, deploy|
     source 'packetbeat.template.json'
   end
 
-  execute 'create packetbeat schema' do
+  execute 'create packetbeat schema' do # ~FC041
     command "curl  -XPUT 'http://localhost:9200/_template/packetbeat' -d@#{Chef::Config['file_cache_path']}/packetbeat.template.json"
   end
 

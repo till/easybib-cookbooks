@@ -23,7 +23,6 @@ template '/etc/packetbeat.conf' do
   mode '0644'
   variables(
     :elasticsearch => node['packetbeat']['config']['elasticsearch'],
-    :redis => node['packetbeat']['config']['redis'],
     :protocols => node['packetbeat']['config']['protocols'],
     :procs => node['packetbeat']['config']['procs'],
     :hostname => hostname,
