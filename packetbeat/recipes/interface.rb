@@ -1,6 +1,6 @@
 node['deploy'].each do |application, deploy|
 
-  next unless allow_deploy(application, 'packetbeat', 'qa')
+  next unless allow_deploy(application, 'packetbeat')
 
   include_recipe 'elasticsearch'
   include_recipe 'nginx-app::service'
