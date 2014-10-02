@@ -15,7 +15,7 @@ server {
     index index.html index.htm;
     <% unless @htpasswd.nil? %>
     auth_basic "Restricted";
-    auth_basic_user_file <%= @htpasswd %>;
+    auth_basic_user_file <%= @htpasswd%>;
     <% end %>
   }
   location ~ ^/_aliases$ {

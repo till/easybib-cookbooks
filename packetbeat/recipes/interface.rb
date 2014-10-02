@@ -62,6 +62,7 @@ node['deploy'].each do |application, deploy|
     template_cookbook 'packetbeat'
     config_template 'packetbeat.nginx.erb'
     doc_root deploy['document_root']
+    htpasswd htpasswd
     domain_name deploy['domains'].join(' ')
     notifies :restart, 'service[nginx]', :delayed
   end
