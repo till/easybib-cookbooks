@@ -18,7 +18,7 @@ describe 'packetbeat agent' do
 
   describe 'run with password' do
     before do
-      node.set['opsworks']['instance']['layers'] = ['qa']
+      node.set['opsworks']['instance']['layers'] = ['packetbeat']
       node.set['packetbeat']['config']['elasticsearch'] = 'http://user:pass@127.0.0.1:9200'
       node.set['deploy']['packetbeat'] = {
         'document_root' => 'root',
