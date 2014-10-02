@@ -1,3 +1,5 @@
+require 'uri'
+
 hostname = "#{node['opsworks']['instance']['hostname']}.#{get_normalized_cluster_name}"
 
 filename = node['packetbeat']['agent_deb'].split('/').last

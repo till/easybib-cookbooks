@@ -12,19 +12,24 @@
 [output]
 
   [output.elasticsearch]
-    <% unless @elasticsearch.nil? %>
+    <% unless @elasticsearch.nil?
+        el = URI(@elasticsearch)
+    %>
     enabled = true
-    host = "<%= @elasticsearch['host'] -%>"
-    port = <%= @elasticsearch['port'] -%>
+    host = "<%= el.host -%>"
+    port = <%= el.port -%>
+    
+    protocol = "<%= el.scheme -%>"
+      <% unless el.user.nil? %>
+    username = "<%= el.user -%>"
+    password = "<%= el.password -%>"
+      <% end %>
+      <% unless el.path.empty? %>
+    path = "<%= el.path -%>"
+      <% end %>
     save_topology = true
     <% end %>
-  [output.redis]
-    <% unless @redis.nil? %>
-    enabled = true
-    host = "<%= @redis['host'] -%>"
-    port = <%= @redis['port'] -%>
-    save_topology = true
-    <% end %>
+
 [interfaces]
 # Select on which network interfaces to sniff. You can use the "any"
 # keyword to sniff on all connected interfaces.
