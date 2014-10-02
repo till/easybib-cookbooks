@@ -42,6 +42,12 @@ else
   display_errors = 'Off'
 end
 
+directory node['php-fpm']['tmpdir'] do
+  owner node['php-fpm']['user']
+  group node['php-fpm']['group']
+  action :create
+end
+
 template "#{etc_fpm_dir}/#{conf_fpm}" do
   mode     '0755'
   source   'php.ini.erb'
