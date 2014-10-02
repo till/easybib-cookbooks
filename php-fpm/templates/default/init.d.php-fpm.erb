@@ -35,6 +35,8 @@ php_fpm_prepare () {
         mkdir -p "${SOCKET_DIR}"
         chown -R $runas:$runas $SOCKET_DIR
     fi
+    mkdir -p <%= node["php-fpm"]["tmpdir"]%>
+    chown -R $runas:$runas $SOCKET_DIR
 }
 
 php_fpm_is_running () {
