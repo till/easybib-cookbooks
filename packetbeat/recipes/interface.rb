@@ -9,6 +9,7 @@ node['deploy'].each do |application, deploy|
 
   cookbook_file "#{Chef::Config['file_cache_path']}/packetbeat.template.json"  do
     source 'packetbeat.template.json'
+    notifies :start, 'service[elasticsearch]', :immediately
   end
 
   execute 'create packetbeat schema' do # ~FC041

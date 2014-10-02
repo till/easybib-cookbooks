@@ -8,14 +8,15 @@ remote_file "#{Chef::Config['file_cache_path']}/#{filename}" do
   mode 0644
 end
 
-apt_package 'packetbeat' do
-  action :upgrade
-  source "#{Chef::Config['file_cache_path']}/#{filename}"
-end
-
 service 'packetbeat' do
   service_name  'packetbeat'
   supports     [:start, :stop, :restart]
+end
+
+dpkg_package 'packetbeat' do
+  source  "#{Chef::Config['file_cache_path']}/#{filename}"
+  action  :install
+  notifies :enable, 'service[packetbeat]'
 end
 
 template '/etc/packetbeat.conf' do
@@ -29,5 +30,5 @@ template '/etc/packetbeat.conf' do
     :ignore_outgoing => node['packetbeat']['config']['ignore_outgoint'],
     :hide_keywords => node['packetbeat']['config']['hide_keywords']
   )
-  notifies :restart, 'service[packetbeat]', :immediately
+  notifies :start, 'service[packetbeat]', :immediately
 end

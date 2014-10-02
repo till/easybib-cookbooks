@@ -26,8 +26,8 @@ describe 'packetbeat agent' do
       expect(chef_run).to create_remote_file('/var/chef/cache/packetbeat_0.3.3-1_amd64.deb')
     end
 
-    it 'does download the packetbeat package' do
-      expect(chef_run).to upgrade_apt_package('packetbeat')
+    it 'does install the packetbeat package' do
+      expect(chef_run).to install_dpkg_package('packetbeat')
     end
 
     it 'does create a config' do
