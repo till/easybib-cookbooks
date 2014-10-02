@@ -54,6 +54,7 @@ node['deploy'].each do |application, deploy|
   easybib_nginx 'packetbeat' do
     template_cookbook 'packetbeat'
     config_template 'packetbeat.nginx.erb'
+    doc_root deploy['document_root']
     domain_name deploy['domains'].join(' ')
     notifies :restart, 'service[nginx]', :delayed
   end
