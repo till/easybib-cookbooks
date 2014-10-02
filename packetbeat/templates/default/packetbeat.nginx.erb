@@ -11,7 +11,7 @@ server {
   <% end -%>
 
   location / {
-    root <%= @deploy['deploy_to'] %>/current/<%= @deploy['document_root'] %>;
+    root <%= @doc_root%>;
     index index.html index.htm;
     <% unless @htpasswd.nil? %>
     auth_basic "Restricted";
