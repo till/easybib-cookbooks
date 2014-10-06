@@ -31,12 +31,14 @@
 
 include_recipe 'php-fpm::service'
 
-etc_cli_dir = "#{node['php-fpm']['prefix']}/etc"
-etc_fpm_dir = "#{node['php-fpm']['prefix']}/etc"
+config = node['php-fpm']
+
+etc_cli_dir = "#{config['prefix']}/etc"
+etc_fpm_dir = "#{config['prefix']}/etc"
 conf_cli    = 'php-cli.ini'
 conf_fpm    = 'php.ini'
 
-if node['php-fpm']['user'] == 'vagrant'
+if config['user'] == 'vagrant'
   display_errors = 'On'
 else
   display_errors = 'Off'
@@ -79,12 +81,42 @@ template "#{etc_cli_dir}/#{conf_cli}" do
   group node['php-fpm']['group']
 end
 
+pool_dir = "#{config['prefix']}/etc/php-fpm/pool.d"
+
 template "#{etc_fpm_dir}/php-fpm.conf" do
   mode     '0755'
   source   'php-fpm.conf.erb'
   owner    node['php-fpm']['user']
   group    node['php-fpm']['group']
+  variables(
+    :pool_dir => pool_dir
+  )
   notifies :reload, 'service[php-fpm]', :delayed
+end
+
+directory pool_dir do
+  owner config['user']
+  group config['group']
+  action :create
+  recursive true
+end
+
+config['pools'].each do |pool_name|
+  template "#{pool_dir}/#{pool_name}.conf" do
+    mode "0644"
+    source "pool.conf.erb"
+    owner config['user']
+    group config['group']
+    variables(
+      :pool_name => pool_name,
+      :user => config['user'],
+      :group => config['group'],
+      :socket_dir => config['socketdir'],
+      :slowlog_timeout => config['slowlog_timeout'],
+      :slowlog => config['slowlog']
+    )
+    notifies :reload, 'service[php-fpm]', :delayed
+  end
 end
 
 template '/etc/logrotate.d/php' do

@@ -72,12 +72,18 @@ action :setup do
 
   default_router = new_resource.default_router unless new_resource.default_router.nil?
 
+  php_upstream = []
+  node["php-fpm"]["pools"].each do |pool_name|
+    php_upstream << "unix:/var/run/php-fpm/#{pool_name}"
+  end
+
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook 'nginx-app'
     source config_template
     mode '0755'
     owner node['nginx-app']['user']
     group node['nginx-app']['group']
+    helpers(EasyBib::Upstream)
     variables(
       :php_user => node['php-fpm']['user'],
       :domain_name => domain_name,
@@ -85,7 +91,8 @@ action :setup do
       :access_log => access_log,
       :nginx_extra => nginx_extras,
       :default_router => default_router,
-      :upstream => config_name,
+      :upstream_name => config_name,
+      :php_upstream => php_upstream,
       :db_conf => database_config,
       :env_conf => env_config,
       :health_check => health_check,

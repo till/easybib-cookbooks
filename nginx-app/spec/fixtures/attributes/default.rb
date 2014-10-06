@@ -15,3 +15,4 @@ default['testdata']['env_conf'] = nil
 default['testdata']['routes_enabled'] = nil
 default['testdata']['routes_denied'] = nil
 default['testdata']['htpasswd'] = nil
+default['testdata']['pools'] = ['pool1']

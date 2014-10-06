@@ -41,6 +41,10 @@ describe 'nginx-app::configure' do
         }
         node.set['nginx-app']['access_log'] = access_log
         node.set['php-fpm']['user'] = php_user
+
+        @template_context = Chef::Mixin::Template::TemplateContext.new({})
+        @template_context[:node] = @node
+        @template_context._extend_modules([EasyBib::Upstream])
       end
 
       it "writes virtualhost for app 'easybib'" do

@@ -44,7 +44,10 @@ node['deploy'].each do |application, deploy|
     next
   end
 
-  php_upstream = "unix:/var/run/php-fpm/#{node['php-fpm']['user']}"
+  php_upstream = []
+  node["php-fpm"]["pools"].each do |pool_name|
+    php_upstream << "unix:/var/run/php-fpm/#{pool_name}"
+  end
 
   template "render vhost: #{application}" do
     path   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"

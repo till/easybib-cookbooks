@@ -1,6 +1,4 @@
-upstream phpfpm {
-    server  <%= @php_upstream %>;
-}
+<%= render_upstream(@php_upstream, @upstream_name) -%>
 
 server {
     listen 80 <%=@listen_opts%>;
