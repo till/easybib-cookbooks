@@ -28,13 +28,13 @@ fastcgi_param  SERVER_NAME        $server_name;
 fastcgi_param  REDIRECT_STATUS    200;
 
 # connect to the fcgi backend, default 60
-fastcgi_connect_timeout      60;
+fastcgi_connect_timeout      5;
 
 # amount of time for the request to send data to the server, default: 60 (suggested 180?)
 fastcgi_send_timeout         60;
 
 # amount of time for nginx to wait for php-fpm to send data, default: 60 (suggested 180?)
-fastcgi_read_timeout         60;
+fastcgi_read_timeout         10;
 
 # default: 4k/8k
 fastcgi_buffer_size          128k;
