@@ -60,10 +60,10 @@ describe 'nginx-app::configure' do
       it 'sets the correct upstream' do
         expect(chef_run).to render_file(vhost)
           .with_content(
-            include("unix:\/var\/run\/php-fpm\/#{node['php-fpm']['pools'][0]}")
+            include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][0]}")
           )
           .with_content(
-            include('upstream easybib_phpfpm')
+            include('upstream easybib_phpfpm {')
           )
       end
 
