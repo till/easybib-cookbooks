@@ -103,6 +103,25 @@ describe 'nginx-app::configure' do
             )
         end
       end
+
+      describe 'pools' do
+        before do
+          node.set['php-fpm']['pools'] = %w(www1 www2 www3)
+        end
+
+        it 'creates three upstreams' do
+          expect(chef_run).to render_file(vhost)
+            .with_content(
+              include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][0]}")
+            )
+            .with_content(
+              include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][1]}")
+            )
+            .with_content(
+              include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][2]}")
+            )
+        end
+      end
     end
   end
 end
