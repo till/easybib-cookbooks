@@ -44,20 +44,11 @@ server {
 end
 -%>
 
-    location ^~ /nginx_status {
-        stub_status on;
-        access_log  <%= @access_log %>;
-        allow       127.0.0.1;
-        deny        all;
-    }
-
-    location ~ ^/(fpm_status|fpm_ping)$ {
-        include       <%=node['nginx-app']['config_dir']%>/fastcgi_params;
-        fastcgi_pass  phpfpm;
-        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
-        allow         127.0.0.1;
-        deny          all;
-    }
+    <%= render(
+      "partials/nginx_status.erb",
+      :cookbook => "nginx-app",
+      :variables => { :access_log => @access_log}
+    ) -%>
 
 <% @js_alias.each do |www_alias,www_dir| -%>
     location ^~ /js/<%=www_alias%>/ {
