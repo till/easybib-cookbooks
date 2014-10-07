@@ -45,7 +45,7 @@ node['deploy'].each do |application, deploy|
   end
 
   php_upstream = []
-  node["php-fpm"]["pools"].each do |pool_name|
+  node['php-fpm']['pools'].each do |pool_name|
     php_upstream << "unix:/var/run/php-fpm/#{pool_name}"
   end
 

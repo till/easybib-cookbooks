@@ -103,8 +103,8 @@ end
 
 config['pools'].each do |pool_name|
   template "#{pool_dir}/#{pool_name}.conf" do
-    mode "0644"
-    source "pool.conf.erb"
+    mode '0644'
+    source 'pool.conf.erb'
     owner config['user']
     group config['group']
     variables(
