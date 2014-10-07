@@ -1,4 +1,4 @@
-<%= render_upstream("unix:/var/run/php-fpm/#{node['php-fpm']['user']}", 'infolit') %>
+<%= render_upstream(@php_upstream, 'infolit') %>
 
 <% if node['opsworks'] -%>
 

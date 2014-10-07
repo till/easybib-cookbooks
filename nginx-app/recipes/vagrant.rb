@@ -26,11 +26,17 @@ link "#{node['deploy']['deploy_to']}/current" do
   to vagrant_dir
 end
 
+php_upstream = []
+node['php-fpm']['pools'].each do |pool_name|
+  php_upstream << "unix:#{node['php-fpm']['socketdir']}/#{pool_name}"
+end
+
 template '/etc/nginx/sites-enabled/easybib.com.conf' do
   source node['nginx-app']['conf_file']
   mode   '0755'
   owner  node['nginx-app']['user']
   group  node['nginx-app']['group']
+  helpers EasyBib::Upstream
   variables(
     :js_alias     => node['nginx-app']['js_modules'],
     :img_alias    => node['nginx-app']['img_modules'],
@@ -41,7 +47,7 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :listen_opts  => 'default_server',
     :nginx_extra  => 'sendfile  off;',
     :domain_name  => domain_name,
-    :php_upstream => "unix:/var/run/php-fpm/#{node['php-fpm']['user']}"
+    :php_upstream => php_upstream
   )
   notifies :restart, 'service[nginx]', :delayed
 end
