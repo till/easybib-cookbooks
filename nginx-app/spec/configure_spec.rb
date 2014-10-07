@@ -15,6 +15,7 @@ describe 'nginx-app::configure' do
   let(:access_log) { '/some/drive/access.log' }
   let(:php_user) { 'some_user_account' }
   let(:stack) { 'Stack Name' }
+  let(:template_name) { 'render vhost: easybib' }
 
   describe 'deployment' do
     before do
@@ -41,17 +42,16 @@ describe 'nginx-app::configure' do
         }
         node.set['nginx-app']['access_log'] = access_log
         node.set['php-fpm']['user'] = php_user
-
-        @template_context = Chef::Mixin::Template::TemplateContext.new({})
-        @template_context[:node] = @node
-        @template_context._extend_modules([EasyBib::Upstream])
       end
 
       it "writes virtualhost for app 'easybib'" do
-        expect(chef_run).to create_template('render vhost: easybib')
-          .with(:source => 'easybib.com.conf.erb')
+        expect(chef_run).to create_template(template_name)
+          .with(
+            :path => vhost,
+            :source => 'easybib.com.conf.erb'
+          )
 
-        template_resource = chef_run.template('render vhost: easybib')
+        template_resource = chef_run.template(template_name)
         expect(template_resource).to notify('service[nginx]')
           .to(:restart)
           .delayed
@@ -60,7 +60,10 @@ describe 'nginx-app::configure' do
       it 'sets the correct upstream' do
         expect(chef_run).to render_file(vhost)
           .with_content(
-            "unix:/var/run/php-fpm/#{php_user}"
+            include("unix:\/var\/run\/php-fpm\/#{node['php-fpm']['pools'][0]}")
+          )
+          .with_content(
+            include('upstream easybib_phpfpm')
           )
       end
 

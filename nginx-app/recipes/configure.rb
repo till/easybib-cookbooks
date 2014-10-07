@@ -55,6 +55,7 @@ node['deploy'].each do |application, deploy|
     mode   '0755'
     owner  node['nginx-app']['user']
     group  node['nginx-app']['group']
+    helpers EasyBib::Upstream
     variables(
       :js_alias           => node['nginx-app']['js_modules'],
       :img_alias          => node['nginx-app']['img_modules'],
@@ -63,7 +64,8 @@ node['deploy'].each do |application, deploy|
       :deploy             => deploy,
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
-      :php_upstream       => php_upstream
+      :php_upstream       => php_upstream,
+      :upstream_name      => application
     )
     notifies :restart, 'service[nginx]', :delayed
   end

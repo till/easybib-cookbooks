@@ -83,7 +83,7 @@ action :setup do
     mode '0755'
     owner node['nginx-app']['user']
     group node['nginx-app']['group']
-    helpers(EasyBib::Upstream)
+    helpers EasyBib::Upstream
     variables(
       :php_user => node['php-fpm']['user'],
       :domain_name => domain_name,
