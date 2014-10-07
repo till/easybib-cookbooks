@@ -45,7 +45,7 @@ end
 -%>
 
     <%= render(
-      "partials/nginx_status.erb",
+      "partials/status-checks.erb",
       :cookbook => "nginx-app",
       :variables => { :access_log => @access_log}
     ) -%>
