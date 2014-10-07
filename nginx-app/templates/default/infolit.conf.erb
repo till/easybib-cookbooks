@@ -27,6 +27,8 @@ server {
     <%= @nginx_extra -%>
 <% end -%>
 
+    root <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
+
     <%= render 'partials/status-checks.erb',
       :cookbook => 'nginx-app',
       :variables => {
@@ -40,7 +42,7 @@ server {
 
 <% ['js', 'images', 'css'].each do |route_name| -%>
     location /<%=route_name%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www;
+        alias      <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www/<%=route_name%>/;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -51,9 +53,9 @@ server {
         expires    30d;
         add_header Pragma public;
         add_header Cache-Control "public";
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-build;
+        alias      <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-build/static/;
     <% else -%>
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-src;
+        alias      <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-src/static/;
     <% end -%>
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
