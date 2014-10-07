@@ -74,7 +74,7 @@ action :setup do
 
   php_upstream = []
   node['php-fpm']['pools'].each do |pool_name|
-    php_upstream << "unix:/var/run/php-fpm/#{pool_name}"
+    php_upstream << "unix:#{node['php-fpm']['socketdir']}/#{pool_name}"
   end
 
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
