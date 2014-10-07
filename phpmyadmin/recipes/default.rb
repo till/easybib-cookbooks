@@ -1,7 +1,7 @@
 include_recipe 'apt::ppa'
 
-easybib_launchpad 'ppa:nijel/phpmyadmin' do
-  action :discover
+apt_repository 'phpmyadmin-ppa' do
+  uri    'ppa:nijel/phpmyadmin'
 end
 
 package 'phpmyadmin'

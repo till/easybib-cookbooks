@@ -1,7 +1,7 @@
 include_recipe 'apt::ppa'
 
-easybib_launchpad 'ppa:chris-lea/node.js-devel' do
-  action :discover
+apt_repository "easiybib-ppa" do
+  uri 'ppa:chris-lea/node.js-devel'
 end
 
 package 'nodejs'

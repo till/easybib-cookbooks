@@ -1,7 +1,7 @@
 include_recipe 'apt::ppa'
 
-easybib_launchpad node['redis']['ppa'] do
-  action :discover
+apt_repository 'redis-ppa' do
+  uri    node['redis']['ppa']
 end
 
 package 'redis-server'
