@@ -19,7 +19,7 @@ server {
 
         include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
-        fastcgi_pass  phpfpm;
+        fastcgi_pass  <%= @upstream_name %>_phpfpm;
         fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
     }
 
@@ -114,7 +114,7 @@ end
 
         include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
-        fastcgi_pass  phpfpm;
+        fastcgi_pass  <%= @upstream_name %>_phpfpm;
         fastcgi_index index.php;
 
     <% if !::EasyBib.get_cluster_name(node).empty? -%>
