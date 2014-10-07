@@ -6,7 +6,7 @@ describe 'php-fpm::configure' do
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node) { runner.node }
 
-  let(:etc_dir) { "/opt/easybib/etc" }
+  let(:etc_dir) { '/opt/easybib/etc' }
   let(:pool_dir) { "#{etc_dir}/php-fpm/pool.d" }
 
   it 'creates the pool configuration directory' do
@@ -20,7 +20,7 @@ describe 'php-fpm::configure' do
       )
   end
 
-  describe "pool configuration" do
+  describe 'pool configuration' do
     before do
       node.set['php-fpm']['pools'] = %w('app1', 'app2', 'app3')
     end
