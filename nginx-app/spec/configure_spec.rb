@@ -110,16 +110,12 @@ describe 'nginx-app::configure' do
         end
 
         it 'creates three upstreams' do
-          expect(chef_run).to render_file(vhost)
-            .with_content(
-              include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][0]}")
-            )
-            .with_content(
-              include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][1]}")
-            )
-            .with_content(
-              include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][2]}")
-            )
+          node['php-fpm']['pools'].each do |pool_name|
+            expect(chef_run).to render_file(vhost)
+              .with_content(
+                include("unix:/var/run/php-fpm/#{pool_name}")
+              )
+          end
         end
       end
     end
