@@ -72,11 +72,6 @@ action :setup do
 
   default_router = new_resource.default_router unless new_resource.default_router.nil?
 
-  php_upstream = []
-  node['php-fpm']['pools'].each do |pool_name|
-    php_upstream << "unix:#{node['php-fpm']['socketdir']}/#{pool_name}"
-  end
-
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook 'nginx-app'
     source config_template
@@ -92,7 +87,7 @@ action :setup do
       :nginx_extra => nginx_extras,
       :default_router => default_router,
       :upstream_name => config_name,
-      :php_upstream => php_upstream,
+      :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :db_conf => database_config,
       :env_conf => env_config,
       :health_check => health_check,

@@ -44,11 +44,6 @@ node['deploy'].each do |application, deploy|
     next
   end
 
-  php_upstream = []
-  node['php-fpm']['pools'].each do |pool_name|
-    php_upstream << "unix:/var/run/php-fpm/#{pool_name}"
-  end
-
   template "render vhost: #{application}" do
     path   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
     source nginx_config
@@ -64,7 +59,7 @@ node['deploy'].each do |application, deploy|
       :deploy             => deploy,
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
-      :php_upstream       => php_upstream,
+      :php_upstream       => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :upstream_name      => application,
       :environment        => ::EasyBib.get_cluster_name(node),
       :doc_root           => "#{deploy['deploy_to']}/current/#{node['docroot']}"
