@@ -3,13 +3,13 @@
 server {
     listen 80 <%=@listen_opts%>;
 
-  <% if @nginx_extra -%>
+<% if @nginx_extra -%>
     <%= @nginx_extra -%>
-  <% end -%>
+<% end -%>
 
-  <% if @domain_name -%>
-      server_name <%=@domain_name%>;
-  <% end -%>
+<% if @domain_name -%>
+    server_name <%=@domain_name%>;
+<% end -%>
 
     client_max_body_size 5m;
 
