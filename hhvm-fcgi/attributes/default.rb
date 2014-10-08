@@ -2,7 +2,7 @@ default['hhvm-fcgi'] = {}
 
 default['hhvm-fcgi']['build'] = '' # -nightly, -dbg
 
-if (node["lsb"]["codename"] == "trusty" and node["ppa"]["enable_trusty_mirror"])
+if node['lsb']['codename'] == 'trusty' && node['ppa']['enable_trusty_mirror']
   default['hhvm-fcgi']['apt']['repo'] = 'http://ppa.ezbib.com/trusty55'
 else
   default['hhvm-fcgi']['apt'] = {
@@ -10,7 +10,6 @@ else
     'key' => 'http://dl.hhvm.com/conf/hhvm.gpg.key'
   }
 end
-
 
 default['hhvm-fcgi']['boost'] = {
   'ppa' => 'ppa:mapnik/boost'

@@ -19,8 +19,7 @@ default['redis']['rdb'] = {
   'keys_changed' => 0
 }
 
-if (node["lsb"]["codename"] == "trusty" and node["ppa"]["enable_trusty_mirror"])
-  puts "trusty mirror"
+if node['lsb']['codename'] == 'trusty' && node['ppa']['enable_trusty_mirror']
   default['redis']['ppa'] = 'http://ppa.ezbib.com/trusty55'
 else
   default['redis']['ppa'] = 'ppa:chris-lea/redis-server'

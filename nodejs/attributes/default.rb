@@ -16,7 +16,7 @@ default['nodejs']['npm'] = {
   'install_url' => 'https://www.npmjs.org/install.sh'
 }
 
-if (node["lsb"]["codename"] == "trusty" and node["ppa"]["enable_trusty_mirror"])
+if node['lsb']['codename'] == 'trusty' && node['ppa']['enable_trusty_mirror']
   default['nodejs']['ppa'] = 'http://ppa.ezbib.com/trusty55'
 else
   default['nodejs']['ppa'] = 'ppa:chris-lea/node.js-devel'
