@@ -13,16 +13,6 @@ server {
 
     client_max_body_size 5m;
 
-    location = /health_check.php {
-
-        access_log <%= @access_log %>;
-
-        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
-
-        fastcgi_pass  <%= @upstream_name %>_phpfpm;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
-    }
-
     # Block ad calls to /something/<script type="text/javascript">
     location ~* <script {
         deny all;
@@ -44,35 +34,46 @@ server {
 end
 -%>
 
-    <%= render(
-      "partials/status-checks.erb",
+    <%= render "partials/status-checks.erb",
       :cookbook => "nginx-app",
-      :variables => { :access_log => @access_log}
-    ) -%>
+      :variables => {
+        :access_log => @access_log,
+        :health_check => 'health_check.php',
+        :upstream => @upstream_name
+      }
+    -%>
 
-<% @js_alias.each do |www_alias,www_dir| -%>
-    location ^~ /js/<%=www_alias%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
+<% module_dir = "#{@deploy['deploy_to']}/current/app/modules" -%>
 
-<% @img_alias.each do |www_alias,www_dir| -%>
-    location ^~ /images/<%=www_alias%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
+<%= render 'partials/module-assets.erb',
+  :cookbook => 'nginx-app',
+  :variables => {
+    :access_log => @access_log,
+    :assets => @js_alias,
+    :module_dir => module_dir,
+    :type => 'js'
+  }
+-%>
 
-<% @css_alias.each do |www_alias,www_dir| -%>
-    location ^~ /css/<%=www_alias%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
+<%= render 'partials/module-assets.erb',
+  :cookbook => 'nginx-app',
+  :variables => {
+    :access_log => @access_log,
+    :assets => @img_alias,
+    :module_dir => module_dir,
+    :type => 'images'
+  }
+-%>
+
+<%= render 'partials/module-assets.erb',
+  :cookbook => 'nginx-app',
+  :variables => {
+    :access_log => @access_log,
+    :assets => @css_alias,
+    :module_dir => module_dir,
+    :type => 'css'
+  }
+-%>
 
 <% node['nginx-app']['static_directories'].each do |dir| -%>
     location ^~ /<%=dir%>/ {
