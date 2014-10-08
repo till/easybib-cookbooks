@@ -1,5 +1,5 @@
-if !node['vagrant']
-  fail "Vagrant only!"
+unless node['vagrant']
+  fail 'Vagrant only!'
 end
 
 domain_name = nil
@@ -13,7 +13,7 @@ if node.attribute?('vagrant') && node['vagrant'].attribute?('applications') && n
 end
 
 unless node['deploy']['deploy_to']
-  fail "No deploy_to in deploy!"
+  fail 'No deploy_to in deploy!'
 end
 
 Chef::Log.debug("deploy: #{node['deploy']['deploy_to']}")
