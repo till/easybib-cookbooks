@@ -5,7 +5,7 @@ end
 domain_name = nil
 doc_root = nil
 
-if node.attribute?('vagrant') && node['vagrant'].attribute?('applications') && node['vagrant']['applications'].attribute?('www')
+if node['vagrant'].attribute?('applications') && node['vagrant']['applications'].attribute?('www')
   domain_name = node['vagrant']['applications']['www']['domain_name']
   doc_root = node['vagrant']['applications']['www']['doc_root_location']
 
