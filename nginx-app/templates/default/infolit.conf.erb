@@ -27,7 +27,7 @@ server {
     <%= @nginx_extra -%>
 <% end -%>
 
-    root <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
+    root <%= @doc_root %>;
 
     <%= render 'partials/status-checks.erb',
       :cookbook => 'nginx-app',
@@ -65,8 +65,7 @@ server {
       :cookbook => 'nginx-app',
       :variables => {
         :access_log => @access_log,
-        :deploy_to => @deploy['deploy_to'],
-        :docroot => node['docroot'],
+        :doc_root => @doc_root,
         :index => 'search.php',
         :location => '/search/',
         :nginx_config_dir => node['nginx-app']['config_dir'],

@@ -29,7 +29,7 @@ server {
     }
 
     location ~ /(doubleclick|eyeblaster|eyewonder|pointroll|unicast)/.*\.html {
-        root        <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
+        root        <%= @doc_root %>;
         access_log  <%= @access_log %>;
     }
 
@@ -76,7 +76,7 @@ end
 
 <% node['nginx-app']['static_directories'].each do |dir| -%>
     location ^~ /<%=dir%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
+        root       <%= @doc_root %>;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -85,7 +85,7 @@ end
     location ~* \.(jpg|jpeg|gif|png|css|js|ico)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
-        root <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
+        root <%= @doc_root %>;
     <% if @password_protected && @password_protected.to_s == "true" -%>
         auth_basic            "Restricted";
         auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
@@ -111,8 +111,7 @@ end
     <% if !@environment.empty? -%>
         fastcgi_param BIB_ENV "<%=@environment%>";
     <% end -%>
-
-        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/index.php;
+        fastcgi_param SCRIPT_FILENAME <%= @doc_root %>/index.php;
 
         index  index.php index.html index.htm;
     }

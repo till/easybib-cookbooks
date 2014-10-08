@@ -9,6 +9,6 @@ location <%= @location %> {
     fastcgi_param BIB_ENV "<%=@environment%>";
 <% end -%>
 
-    fastcgi_param SCRIPT_FILENAME <%=@deploy_to%>/current/<%=@docroot%>/<%=@index%>;
+    fastcgi_param SCRIPT_FILENAME <%=@doc_root%>/<%=@index%>;
     index         <%=@index%>;
 }

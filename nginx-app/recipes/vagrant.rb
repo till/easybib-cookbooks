@@ -48,7 +48,8 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :nginx_extra  => 'sendfile  off;',
     :domain_name  => domain_name,
     :php_upstream => php_upstream,
-    :environment  => ::EasyBib.get_cluster_name(node)
+    :environment  => ::EasyBib.get_cluster_name(node),
+    :doc_root     => "#{node['deploy']['deploy_to']}/current/#{node['docroot']}"
   )
   notifies :restart, 'service[nginx]', :delayed
 end
