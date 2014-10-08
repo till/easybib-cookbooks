@@ -1,7 +1,7 @@
-include_recipe 'apt::ppa'
+include_recipe 'aptly::gpg'
 
 apt_repository "easiybib-ppa" do
-  uri           'ppa:chris-lea/node.js-devel'
+  uri           node['nodejs']['ppa']
   distribution  node['lsb']['codename']
 end
 

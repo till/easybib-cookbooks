@@ -1,7 +1,6 @@
-include_recipe 'apt::ppa'
-include_recipe 'apt::easybib'
+include_recipe 'aptly::gpg'
 
 apt_repository "easiybib-ppa" do
-  uri           node['apt']['easybib']['ppa-php55'] 
+  uri           node['php55']['ppa']
   distribution  node['lsb']['codename']
 end

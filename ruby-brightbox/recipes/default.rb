@@ -1,4 +1,4 @@
-include_recipe 'apt::ppa'
+include_recipe 'aptly::gpg'
 
 sources_file = "/etc/apt/sources.list.d/#{node['ruby-brightbox']['ppa'].split(':')[1].gsub('/', '-')}.list"
 

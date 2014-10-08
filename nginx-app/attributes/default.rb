@@ -6,7 +6,11 @@ default['nginx-app']['static_directories'] = %w(js css images raw)
 default['nginx-app']['config_dir']         = '/etc/nginx'
 default['nginx-app']['conf_file']          = 'easybib.com.conf.erb'
 
-default['nginx-app']['ppa'] = 'ppa:easybib/remote-mirrors'
+if (node["lsb"]["codename"] == "trusty" and node["ppa"]["enable_trusty_mirror"])
+  default['ningx-app']['ppa'] = 'http://ppa.ezbib.com/trusty55'
+else
+  default['nginx-app']['ppa'] = 'ppa:easybib/remote-mirrors'
+end
 
 default['nginx-app']['extras'] = ''
 

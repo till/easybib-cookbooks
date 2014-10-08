@@ -1,5 +1,5 @@
 include_recipe 'apt'
-include_recipe 'apt::ppa'
+include_recipe 'aptly::gpg'
 
 apt_repository 'boost-ppa' do
   uri node['hhvm-fcgi']['boost']['ppa']
