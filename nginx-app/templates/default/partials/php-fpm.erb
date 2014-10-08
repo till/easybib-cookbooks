@@ -5,8 +5,8 @@ location <%= @location %> {
     fastcgi_pass  <%=@upstream_name%>_phpfpm;
     fastcgi_index <%=@index%>;
 
-<% if !::EasyBib.get_cluster_name(node).empty? -%>
-    fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
+<% if !@environment.nil? && !@environment.empty? -%>
+    fastcgi_param BIB_ENV "<%=@environment%>";
 <% end -%>
 
     fastcgi_param SCRIPT_FILENAME <%=@deploy_to%>/current/<%=@docroot%>/<%=@index%>;

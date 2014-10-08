@@ -65,7 +65,9 @@ node['deploy'].each do |application, deploy|
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
       :php_upstream       => php_upstream,
-      :upstream_name      => application
+      :upstream_name      => application,
+      :environment        => ::EasyBib.get_cluster_name(node),
+      :doc_root           => "#{deploy['deploy_to']}/current/#{node['docroot']}"
     )
     notifies :restart, 'service[nginx]', :delayed
   end

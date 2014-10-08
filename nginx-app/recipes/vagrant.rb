@@ -47,7 +47,8 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :listen_opts  => 'default_server',
     :nginx_extra  => 'sendfile  off;',
     :domain_name  => domain_name,
-    :php_upstream => php_upstream
+    :php_upstream => php_upstream,
+    :environment  => ::EasyBib.get_cluster_name(node)
   )
   notifies :restart, 'service[nginx]', :delayed
 end
