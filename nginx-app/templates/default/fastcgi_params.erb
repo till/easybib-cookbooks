@@ -27,29 +27,9 @@ fastcgi_param  SERVER_NAME        $server_name;
 # PHP only, required if PHP was built with --enable-force-cgi-redirect
 fastcgi_param  REDIRECT_STATUS    200;
 
-# connect to the fcgi backend, default 60
-fastcgi_connect_timeout      5;
-
-# amount of time for the request to send data to the server, default: 60 (suggested 180?)
-fastcgi_send_timeout         60;
-
-# amount of time for nginx to wait for php-fpm to send data, default: 60 (suggested 180?)
-fastcgi_read_timeout         10;
-
-# default: 4k/8k
-fastcgi_buffer_size          128k;
-
-# 256k + (256k * 4) = 1.25 MB, requests larger go to disk
-fastcgi_buffers              4 256k;
-
-# undocumented
-fastcgi_busy_buffers_size    256k;
-
-# undocumented
-fastcgi_temp_file_write_size 256k;
-
-# do not intercept errors from backend
-fastcgi_intercept_errors     on;
+<% node['nginx-app']['fastcgi'].each do |fcgi_config, fcgi_value| -%>
+<%= fcgi_config %> <%= fcgi_value %>;
+<% end -%>
 
 # only execute in aws context
 <%

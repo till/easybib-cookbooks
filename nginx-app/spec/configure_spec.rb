@@ -16,6 +16,7 @@ describe 'nginx-app::configure' do
   let(:php_user) { 'some_user_account' }
   let(:stack) { 'Stack Name' }
   let(:template_name) { 'render vhost: easybib' }
+  let(:fastcgi_conf) { '/etc/nginx/fastcgi_params' }
 
   describe 'deployment' do
     before do
@@ -117,6 +118,32 @@ describe 'nginx-app::configure' do
               )
           end
         end
+      end
+    end
+
+    describe 'fastcgi setup' do
+      before do
+        node.set['nginx-app']['fastcgi']['fastcgi_connect_timeout'] = 1500
+      end
+
+      it 'creates the configuration' do
+        expect(chef_run).to create_template(fastcgi_conf)
+      end
+
+      it 'sets the correct fastcgi settings' do
+        node['nginx-app']['fastcgi'].each do |k,v|
+          expect(chef_run).to render_file(fastcgi_conf)
+            .with_content(
+              include("#{k} #{v};")
+            )
+        end
+      end
+
+      it 'injected the correct value into the template' do
+        expect(chef_run).to render_file(fastcgi_conf)
+          .with_content(
+            include('fastcgi_connect_timeout 1500;')
+          )
       end
     end
   end
