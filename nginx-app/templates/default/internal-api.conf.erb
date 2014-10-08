@@ -1,4 +1,4 @@
-<%= render_upstream(["unix:/var/run/php-fpm/#{@php_user}"], @upstream_name) %>
+<%= render_upstream(@php_upstream, @upstream_name) %>
 
 server {
     listen 80 <%=@listen_opts%>;
