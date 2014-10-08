@@ -46,16 +46,15 @@ action :setup do
 
   routes_enabled = nil
   routes_denied  = nil
+
   health_check   = node['nginx-app']['health_check']
   Chef::Log.debug("Health Check is now #{health_check}")
 
   if node['nginx-app'].attribute?(application)
-    if node['nginx-app'][application].attribute?('routes_enabled')
-      routes_enabled = node['nginx-app'][application]['routes_enabled']
-    end
-    if node['nginx-app'][application].attribute?('routes_denied')
-      routes_denied = node['nginx-app'][application]['routes_denied']
-    end
+
+    routes_enabled = get_routes(node['nginx-app'][application], 'routes_enabled')
+    routes_denied = get_routes(node['nginx-app'][application], 'routes_denied')
+
     if node['nginx-app'][application].attribute?('health_check')
       health_check = node['nginx-app'][application]['health_check']
       Chef::Log.debug("Health Check is now #{health_check}")
@@ -113,4 +112,13 @@ def get_config_name(resource)
     config_name = resource.config_name
   end
   config_name
+end
+
+def get_routes(attr, type)
+  routes = nil
+  if attr.attribute?(type)
+    routes = attr[type]
+  end
+
+  routes
 end
