@@ -6,7 +6,8 @@ apt_repository 'ruby-brightbox' do
   not_if do
     File.exist?(sources_file)
   end
-  uri node['ruby-brightbox']['ppa']
+  distribution  node['lsb']['codename']
+  uri           node['ruby-brightbox']['ppa']
 end
 
 package "ruby#{node['ruby-brightbox']['version']}"
