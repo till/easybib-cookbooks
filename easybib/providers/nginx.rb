@@ -108,9 +108,10 @@ end
 
 def get_config_name(resource)
   config_name = resource.app_name
-  unless resource.config_name.empty?
-    config_name = resource.config_name
-  end
+
+  config_name = resource.config_name unless resource.config_name.empty?
+
+  Chef::Log.debug("CONFIG NAME: #{config_name} - #{resource.app_name} - #{resource.config_name}")
   config_name
 end
 
