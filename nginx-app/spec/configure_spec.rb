@@ -58,6 +58,13 @@ describe 'nginx-app::configure' do
           .delayed
       end
 
+      it 'sets the correct root' do
+        expect(chef_run).to render_file(vhost)
+          .with_content(
+            include('root /srv/www/easybib/current/public;')
+          )
+      end
+
       it 'sets the correct upstream' do
         expect(chef_run).to render_file(vhost)
           .with_content(
@@ -78,7 +85,7 @@ describe 'nginx-app::configure' do
       it 'sets the correct SCRIPT_FILENAME' do
         expect(chef_run).to render_file(vhost)
           .with_content(
-            include('fastcgi_param SCRIPT_FILENAME /srv/www/easybib/current/public/index.php;')
+            include('fastcgi_param SCRIPT_FILENAME $document_root/index.php;')
           )
       end
 
@@ -131,7 +138,7 @@ describe 'nginx-app::configure' do
       end
 
       it 'sets the correct fastcgi settings' do
-        node['nginx-app']['fastcgi'].each do |k,v|
+        node['nginx-app']['fastcgi'].each do |k, v|
           expect(chef_run).to render_file(fastcgi_conf)
             .with_content(
               include("#{k} #{v};")
