@@ -1,30 +1,22 @@
-unless node['deploy']['deploy_to']
-  node.normal.deploy['deploy_to'] = '/var/www/easybib'
+if !node['vagrant']
+  fail "Vagrant only!"
 end
 
-Chef::Log.debug("deploy: #{node['deploy']['deploy_to']}")
-
-unless node.attribute?('docroot')
-  node.normal.docroot = 'www'
-end
-
-vagrant_dir = '/vagrant_data'
 domain_name = nil
+doc_root = nil
 
 if node.attribute?('vagrant') && node['vagrant'].attribute?('applications') && node['vagrant']['applications'].attribute?('www')
   domain_name = node['vagrant']['applications']['www']['domain_name']
-  Chef::Log.debug("WWW Vagrant dir: #{vagrant_dir}")
+  doc_root = node['vagrant']['applications']['www']['doc_root_location']
+
+  node.normal.deploy['deploy_to'] = node['vagrant']['applications']['www']['app_root_location']
 end
 
-directory node['deploy']['deploy_to'] do
-  mode      '0755'
-  action    :create
-  recursive true
+unless node['deploy']['deploy_to']
+  fail "No deploy_to in deploy!"
 end
 
-link "#{node['deploy']['deploy_to']}/current" do
-  to vagrant_dir
-end
+Chef::Log.debug("deploy: #{node['deploy']['deploy_to']}")
 
 template '/etc/nginx/sites-enabled/easybib.com.conf' do
   source node['nginx-app']['conf_file']
@@ -43,8 +35,9 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :nginx_extra  => 'sendfile  off;',
     :domain_name  => domain_name,
     :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
+    :upstream_name => 'www',
     :environment  => ::EasyBib.get_cluster_name(node),
-    :doc_root     => "#{node['deploy']['deploy_to']}/current/#{node['docroot']}"
+    :doc_root     => doc_root
   )
   notifies :restart, 'service[nginx]', :delayed
 end
