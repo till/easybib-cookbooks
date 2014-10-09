@@ -7,7 +7,8 @@ module EasyBib
       return '' unless node.attribute?(app)
 
       if node[app]['env'].nil?
-        fail "Attribute 'env' for application '#{app}' is not defined!"
+        Chef::Log.info("Attribute 'env' for application '#{app}' is not defined!")
+        return ''
       end
 
       appenv = streamline_appenv(node[app]['env'])
