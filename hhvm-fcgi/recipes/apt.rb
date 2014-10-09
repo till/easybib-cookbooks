@@ -1,8 +1,8 @@
 include_recipe 'apt'
-include_recipe 'apt::ppa'
+include_recipe 'aptly::gpg'
 
-easybib_launchpad node['hhvm-fcgi']['boost']['ppa'] do
-  action :discover
+apt_repository 'boost-ppa' do
+  uri node['hhvm-fcgi']['boost']['ppa']
   only_if do
     node['lsb']['release'].to_f < 14.04
   end

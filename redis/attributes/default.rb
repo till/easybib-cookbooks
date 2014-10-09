@@ -19,7 +19,11 @@ default['redis']['rdb'] = {
   'keys_changed' => 0
 }
 
-default['redis']['ppa'] = 'ppa:chris-lea/redis-server'
+if node['lsb']['codename'] == 'trusty' && node['ppa']['enable_trusty_mirror']
+  default['redis']['ppa'] = 'http://ppa.ezbib.com/trusty55'
+else
+  default['redis']['ppa'] = 'ppa:chris-lea/redis-server'
+end
 
 # master-slave configuration, allow overriding from opsworks/upstream
 set_unless['redis']['master']             = {}

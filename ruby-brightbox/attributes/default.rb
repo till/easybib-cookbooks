@@ -1,3 +1,8 @@
 default['ruby-brightbox'] = {}
 default['ruby-brightbox']['version'] = '1.9.1'
-default['ruby-brightbox']['ppa']     = 'ppa:brightbox/ruby-ng'
+
+if node['lsb']['codename'] == 'trusty' && node['ppa']['enable_trusty_mirror']
+  default['ruby-brightbox']['ppa'] = 'http://ppa.ezbib.com/trusty55'
+else
+  default['ruby-brightbox']['ppa'] = 'ppa:brightbox/ruby-ng'
+end
