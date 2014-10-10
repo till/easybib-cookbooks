@@ -97,22 +97,6 @@ describe 'nginx-app::configure' do
           )
       end
 
-      describe 'infolit' do
-        before do
-          node.set['deploy']['infolit'] = {
-            'deploy_to' => '/srv/www/infolit'
-          }
-        end
-
-        it 'creates the virtualhost from the correct erb' do
-          expect(chef_run).to create_template('render vhost: infolit')
-            .with(
-              :path => vhost,
-              :source => 'infolit.conf.erb'
-            )
-        end
-      end
-
       describe 'pools' do
         before do
           node.set['php-fpm']['pools'] = %w(www1 www2 www3)
