@@ -5,14 +5,14 @@ end
 domain_name = nil
 doc_root = nil
 
-if node['vagrant'].attribute?('applications') && node['vagrant']['applications'].attribute?('www')
-  domain_name = node['vagrant']['applications']['www']['domain_name']
-  doc_root = node['vagrant']['applications']['www']['doc_root_location']
+app_data = ::EasyBib::Config.get_appdata(node, 'www')
 
-  node.normal.deploy['deploy_to'] = node['vagrant']['applications']['www']['app_root_location']
-end
+domain_name = app_data['domain_name']
+doc_root = app_data['doc_root_location']
 
-unless node['deploy']['deploy_to']
+node.normal.deploy['deploy_to'] = node['vagrant']['applications']['www']['app_root_location']
+
+if node['deploy']['deploy_to'].nil? || node['deploy']['deploy_to'].empty?
   fail 'No deploy_to in deploy!'
 end
 

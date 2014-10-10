@@ -35,6 +35,8 @@ node['deploy'].each do |application, deploy|
     end
   end
 
+  app_data = ::EasyBib::Config.get_appdata(node, application)
+
   template "/etc/nginx/sites-enabled/#{application}.conf" do
     cookbook 'nginx-app'
     source 'satis.conf.erb'
@@ -42,7 +44,7 @@ node['deploy'].each do |application, deploy|
     owner  node['nginx-app']['user']
     group  node['nginx-app']['group']
     variables(
-      :doc_root       => "#{deploy['deploy_to']}/current/#{deploy['document_root']}",
+      :doc_root       => app_data['doc_root_dir'],
       :domain_name    => deploy['domains'].join(' '),
       :htpasswd       => "#{deploy['deploy_to']}/current/htpasswd",
       :access_log     => 'off',

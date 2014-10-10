@@ -12,11 +12,8 @@ end
 action :setup do
 
   if new_resource.deploy_dir.nil?
-    if ::EasyBib.is_aws(node)
-      deploy_dir = "/srv/www/#{new_resource.app_name}/current/#{new_resource.doc_root}"
-    else
-      deploy_dir = node['nginx-app']['vagrant']['deploy_dir']
-    end
+    app_data = ::EasyBib::Config.get_appdata(node, resource.app_name)
+    deploy_dir = app_data['doc_root_dir']
   else
     deploy_dir = new_resource.deploy_dir
   end

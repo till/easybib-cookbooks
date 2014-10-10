@@ -3,11 +3,6 @@ include_recipe 'nginx-app::server'
 app_access_log   = node['nginx-app']['access_log']
 nginx_config_dir = node['nginx-app']['config_dir']
 
-# need to do this better
-if !node.attribute?('docroot') || node['docroot'].empty?
-  node.set['docroot'] = 'www'
-end
-
 # password protect?
 password_protected = false
 
@@ -44,6 +39,8 @@ node['deploy'].each do |application, deploy|
     next
   end
 
+  app_data = ::EasyBib::Config.get_appdata(node, application)
+
   template "render vhost: #{application}" do
     path   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
     source nginx_config
@@ -62,7 +59,7 @@ node['deploy'].each do |application, deploy|
       :php_upstream       => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :upstream_name      => application,
       :environment        => ::EasyBib.get_cluster_name(node),
-      :doc_root           => "#{deploy['deploy_to']}/current/#{node['docroot']}"
+      :doc_root           => app_data['doc_root_dir']
     )
     notifies :restart, 'service[nginx]', :delayed
   end

@@ -39,7 +39,8 @@ describe 'nginx-app::configure' do
     describe 'virtualhost' do
       before do
         node.set['deploy']['easybib'] = {
-          'deploy_to' => '/srv/www/easybib'
+          'deploy_to' => '/srv/www/easybib',
+          'document_root' => 'public'
         }
         node.set['nginx-app']['access_log'] = access_log
         node.set['php-fpm']['user'] = php_user
@@ -61,7 +62,7 @@ describe 'nginx-app::configure' do
       it 'sets the correct root' do
         expect(chef_run).to render_file(vhost)
           .with_content(
-            include('root /srv/www/easybib/current/public;')
+            include('root /srv/www/easybib/current/public/;')
           )
       end
 
