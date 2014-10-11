@@ -13,6 +13,35 @@ class TestEasyBib < Test::Unit::TestCase
     )
   end
 
+  def test_use_aptly_mirror
+    fake_node = Chef::Node.new
+    assert_equal(
+      false,
+      use_aptly_mirror?(fake_node)
+    )
+    fake_node = Chef::Node.new
+    fake_node.set['lsb']['codename'] = 'precise'
+    fake_node.set['apt']['enable_trusty_mirror'] = true
+    assert_equal(
+      false,
+      use_aptly_mirror?(fake_node)
+    )
+    fake_node = Chef::Node.new
+    fake_node.set['lsb']['codename'] = 'trusty'
+    fake_node.set['apt']['enable_trusty_mirror'] = false
+    assert_equal(
+      false,
+      use_aptly_mirror?(fake_node)
+    )
+    fake_node = Chef::Node.new
+    fake_node.set['lsb']['codename'] = 'trusty'
+    fake_node.set['apt']['enable_trusty_mirror'] = true
+    assert_equal(
+      true,
+      use_aptly_mirror?(fake_node)
+    )
+  end
+
   def test_allow_deploy_not_aws
     # "allow_deploy should never allow when is_aws is false"
     fake_node = Chef::Node.new
