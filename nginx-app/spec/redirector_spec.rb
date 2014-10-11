@@ -52,17 +52,23 @@ describe 'nginx-app::redirector' do
       expect(chef_run).to create_template(vhost_urls)
     end
 
-    it 'sets the rewrite rules' do
+    it 'adds a map and sets the rewrite rule' do
       node['redirector']['urls'].each do |domain_name, locations|
         expect(chef_run).to render_file("#{conf_dir}/urls-#{domain_name}.conf")
           .with_content(
             include("server_name #{domain_name};")
-            )
+          )
+          .with_content(
+            include('map $uri $new {')
+          )
+          .with_content(
+            include('rewrite ^ $new permanent;')
+          )
 
         locations.each do |from, to|
           expect(chef_run).to render_file("#{conf_dir}/urls-#{domain_name}.conf")
             .with_content(
-              include("#{from} #{to} permanent;")
+              include("#{from} #{to};")
             )
         end
       end
