@@ -21,9 +21,4 @@ default['php-fpm']['ini'] = {
 }
 
 default['php-fpm']['packages'] = 'php5-easybib,php5-easybib-mbstring,php5-easybib-memcache'
-
-if node['lsb']['codename'] == 'trusty' && node['apt']['enable_trusty_mirror']
-  default['php-fm']['ppa'] = 'http://ppa.ezbib.com/trusty55'
-else
-  default['php-fm']['ppa'] = 'ppa:easybib/php55'
-end
+default['php-fm']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:easybib/php55')

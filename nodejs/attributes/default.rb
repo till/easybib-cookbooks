@@ -16,8 +16,4 @@ default['nodejs']['npm'] = {
   'install_url' => 'https://www.npmjs.org/install.sh'
 }
 
-if node['lsb']['codename'] == 'trusty' && node['apt']['enable_trusty_mirror']
-  default['nodejs']['ppa'] = 'http://ppa.ezbib.com/trusty55'
-else
-  default['nodejs']['ppa'] = 'ppa:chris-lea/node.js-devel'
-end
+default['nginx-app']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:chris-lea/node.js-devel')

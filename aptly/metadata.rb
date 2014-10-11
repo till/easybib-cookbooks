@@ -9,4 +9,5 @@ supports 'ubuntu'
 
 depends 'apt'
 depends 'cron'
+depends 'easybib'
 depends 'easybib-deploy'
