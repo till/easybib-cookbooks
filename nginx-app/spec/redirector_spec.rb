@@ -11,7 +11,7 @@ describe 'nginx-app::redirector' do
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node)     { runner.node }
 
-  let(:conf_dir) { "/etc/nginx/sites-enabled" }
+  let(:conf_dir) { '/etc/nginx/sites-enabled' }
   let(:vhost_redir) { "#{conf_dir}/redir-example.org.conf" }
   let(:vhost_urls) { "#{conf_dir}/urls-john-doe.example.org.conf" }
 
