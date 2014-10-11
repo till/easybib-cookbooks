@@ -4,8 +4,8 @@ map $uri $new {
     <%=old_path%> <%=new_url%>;
 <% end -%>
 }
-<% end -%>
 
+<% end -%>
 server {
     listen 80 <%=@listen_opts%>;
     server_name <%=@domain_name%>;
