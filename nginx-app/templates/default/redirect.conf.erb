@@ -1,5 +1,18 @@
 server {
     listen 80 <%=@listen_opts%>;
     server_name <%=@domain_name%>;
+
+<% unless @new_domain_name.nil? -%>
     rewrite ^ http://<%=@new_domain_name%>$request_uri? permanent;
+<% end -%>
+
+<%
+unless @locations.nil?
+  @locations.each do |old_path, new_url|
+-%>
+    rewrite <%=old_path%> <%=new_url%> permanent;
+<%
+  end
+end
+-%>
 }
