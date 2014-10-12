@@ -74,5 +74,12 @@ describe 'nginx-app::redirector' do
         end
       end
     end
+
+    it 'sets up map.conf' do
+      expect(chef_run).to render_file("#{node['nginx-app']['config_dir']}/conf.d/map.conf")
+        .with_content(
+          include('map_hash_bucket_size 128;')
+        )
+    end
   end
 end

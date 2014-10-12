@@ -19,6 +19,18 @@ if node['redirector'].attribute?('domains')
 end
 
 if node['redirector'].attribute?('urls')
+
+  template "#{node['nginx-app']['config_dir']}/conf.d/map.conf" do
+    source 'generic-conf.erb'
+    mode   '0644'
+    owner  node['nginx-app']['user']
+    group  node['nginx-app']['group']
+    variables(
+      :prefix => 'map',
+      :config => node['nginx-app']['map']
+    )
+  end
+
   node['redirector']['urls'].each do |domain_name, locations|
     template "#{vhost_dir}/urls-#{domain_name}.conf" do
       source 'redirect.conf.erb'

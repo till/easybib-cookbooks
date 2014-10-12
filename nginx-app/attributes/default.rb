@@ -71,6 +71,10 @@ default['nginx-app']['gzip'] = {
   }
 }
 
+default['nginx-app']['map'] = {
+  'hash_bucket_size' => 128
+}
+
 # app config:
 # default["nginx-app"]["example-app"] = {}
 # default["nginx-app"]["example-app"]["routes_enabled"] = []
