@@ -71,6 +71,33 @@ default['nginx-app']['gzip'] = {
   }
 }
 
+default['nginx-app']['browser_caching'] = {
+  'enabled' => false,
+  'config' => {
+    'eot|ttf|woff' => {
+      'expires' => 'max',
+      'headers' => [
+        'Access-Control-Allow-Origin *'
+      ]
+    },
+    'jpe?g|png|gif|ico|css|svg' => {
+      'expires' => 'max',
+      'headers' => [
+        'Cache-Control "public, must-revalidate, proxy-revalidate"',
+        'Pragma public'
+      ]
+    },
+    'js' => {
+      'expires' => 'max',
+      'headers' => [
+        'Cache-Control "public, must-revalidate, proxy-revalidate"',
+        'Pragma public',
+        'Vary "Accept-Encoding"'
+      ]
+    }
+  }
+}
+
 default['nginx-app']['map'] = {
   'hash_bucket_size' => 128
 }
