@@ -53,12 +53,12 @@ describe 'nginx-app::configure' do
         .with_content(
           include('location / {')
         )
-        #.with_content(
-        #  include("#{fixture}/index.php;")
-        #)
-        #.with_content(
-        #  include("#{fixture}/search.php;")
-        #)
+      # .with_content(
+      #  include("#{fixture}/index.php;")
+      # )
+      # .with_content(
+      #  include("#{fixture}/search.php;")
+      # )
     end
   end
 end
