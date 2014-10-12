@@ -1,0 +1,9 @@
+<%
+unless @prefix.nil?
+  @config.each do |key, value|
+-%>
+<%= @prefix %>_<%= key %> <%= value %>;
+<%
+  end
+end
+-%>
