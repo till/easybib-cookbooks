@@ -15,3 +15,5 @@ default['nodejs']['directories'] = ['.npm', 'tmp']
 default['nodejs']['npm'] = {
   'install_url' => 'https://www.npmjs.org/install.sh'
 }
+
+default['nginx-app']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:chris-lea/node.js-devel')

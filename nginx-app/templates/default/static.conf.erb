@@ -15,9 +15,15 @@ server {
         expires -1;
     }
 
-    location ~ (main-.*\.css|main\.min-.*\.js) {
-        expires max;
-    }
+<% unless node['nginx-app']['browser_caching'].nil? -%>
+    <%= render 'partials/browser-caching.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :enabled => node['nginx-app']['browser_caching']['enabled'],
+        :config => node['nginx-app']['browser_caching']['config']
+      }
+    %>
+<% end -%>
 
 <% if @nginx_extra && !@nginx_extra.empty? -%>
     <%=@nginx_extra%>
@@ -27,15 +33,13 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
-<%= render "partials/gzip.conf.erb", :cookbook => 'nginx-app', :variables => {
-    :enabled => @gzip["enabled"],
-    :config => @gzip["config"]
+<% if @gzip -%>
+gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
+<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
+    :prefix => 'gzip',
+    :config => @gzip['config']
 } %>
-
-    location ~* \.(eot|ttf|woff)$ {
-        add_header Access-Control-Allow-Origin *;
-        expires max;
-    }
+<% end -%>
 
     location / {
         try_files $uri $uri/ /index.html =404;

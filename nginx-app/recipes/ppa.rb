@@ -1,5 +1,7 @@
-include_recipe 'apt::ppa'
+include_recipe 'aptly::gpg'
 
-easybib_launchpad node['nginx-app']['ppa'] do
-  action :discover
+apt_repository 'nginx-ppa' do
+  uri           node['nginx-app']['ppa']
+  distribution  node['lsb']['codename']
+  components    ['main']
 end

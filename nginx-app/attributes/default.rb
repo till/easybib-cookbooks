@@ -5,8 +5,7 @@ default['nginx-app']['group']              = 'www-data'
 default['nginx-app']['static_directories'] = %w(js css images raw)
 default['nginx-app']['config_dir']         = '/etc/nginx'
 default['nginx-app']['conf_file']          = 'easybib.com.conf.erb'
-
-default['nginx-app']['ppa'] = 'ppa:easybib/remote-mirrors'
+default['nginx-app']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:easybib/remote-mirrors')
 
 default['nginx-app']['extras'] = ''
 
@@ -72,6 +71,7 @@ default['nginx-app']['gzip'] = {
   }
 }
 
+<<<<<<< HEAD
 default['nginx-app']['fastcgi'] = {
   # connect to the fcgi backend, default 60
   'fastcgi_connect_timeout' => 60,
@@ -89,6 +89,37 @@ default['nginx-app']['fastcgi'] = {
   'fastcgi_temp_file_write_size' => '256k',
   # do not intercept errors from backend
   'fastcgi_intercept_errors' => 'on'
+=======
+default['nginx-app']['browser_caching'] = {
+  'enabled' => false,
+  'config' => {
+    'eot|ttf|woff' => {
+      'expires' => 'max',
+      'headers' => [
+        'Access-Control-Allow-Origin *'
+      ]
+    },
+    'jpe?g|png|gif|ico|css|svg' => {
+      'expires' => 'max',
+      'headers' => [
+        'Cache-Control "public, must-revalidate, proxy-revalidate"',
+        'Pragma public'
+      ]
+    },
+    'js' => {
+      'expires' => 'max',
+      'headers' => [
+        'Cache-Control "public, must-revalidate, proxy-revalidate"',
+        'Pragma public',
+        'Vary "Accept-Encoding"'
+      ]
+    }
+  }
+}
+
+default['nginx-app']['map'] = {
+  'hash_bucket_size' => 128
+>>>>>>> master
 }
 
 # app config:

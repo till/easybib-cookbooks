@@ -1,3 +1,3 @@
 default['ruby-brightbox'] = {}
 default['ruby-brightbox']['version'] = '1.9.1'
-default['ruby-brightbox']['ppa']     = 'ppa:brightbox/ruby-ng'
+default['ruby-brightbox']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:brightbox/ruby-ng')

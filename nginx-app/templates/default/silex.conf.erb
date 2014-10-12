@@ -58,16 +58,17 @@ server {
         "default_router" => @default_router,
         "node" => @node
     } %>
-    <% end %>
+<% end %>
 
 <% if @gzip -%>
-<%= render "partials/gzip.conf.erb", :cookbook => 'nginx-app', :variables => {
-    :enabled => @gzip["enabled"],
-    :config => @gzip["config"]
+gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
+<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
+    :prefix => 'gzip',
+    :config => @gzip['config']
 } %>
 <% end -%>
 
-    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+<% if !@routes_denied.nil? && !@routes_denied.empty? -%>
 <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
-    <% end %>
+<% end %>
 }

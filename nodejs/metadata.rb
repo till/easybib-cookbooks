@@ -8,3 +8,5 @@ recipe            'nodejs::default', "Setup launchpad repo and install 'nodejs'"
 supports 'ubuntu'
 
 depends 'apt'
+depends 'aptly'
+depends 'easybib'
