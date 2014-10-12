@@ -71,7 +71,6 @@ default['nginx-app']['gzip'] = {
   }
 }
 
-<<<<<<< HEAD
 default['nginx-app']['fastcgi'] = {
   # connect to the fcgi backend, default 60
   'fastcgi_connect_timeout' => 60,
@@ -89,7 +88,8 @@ default['nginx-app']['fastcgi'] = {
   'fastcgi_temp_file_write_size' => '256k',
   # do not intercept errors from backend
   'fastcgi_intercept_errors' => 'on'
-=======
+}
+
 default['nginx-app']['browser_caching'] = {
   'enabled' => false,
   'config' => {
@@ -119,7 +119,6 @@ default['nginx-app']['browser_caching'] = {
 
 default['nginx-app']['map'] = {
   'hash_bucket_size' => 128
->>>>>>> master
 }
 
 # app config:
