@@ -2,7 +2,7 @@
 if @enabled
   @config.each do |location, conf|
 -%>
-location ~* .(<%= location %>)$ {
+location ~* \.(<%= location %>)$ {
   expires <%= conf['expires'] %>;
 <%
     unless conf['headers'].nil?
