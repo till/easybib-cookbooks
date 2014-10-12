@@ -41,11 +41,6 @@ gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
 } %>
 <% end -%>
 
-    location ~* \.(eot|ttf|woff)$ {
-        add_header Access-Control-Allow-Origin *;
-        expires max;
-    }
-
     location / {
         try_files $uri $uri/ /index.html =404;
     }

@@ -74,6 +74,12 @@ default['nginx-app']['gzip'] = {
 default['nginx-app']['browser_caching'] = {
   'enabled' => false,
   'config' => {
+    'eot|ttf|woff' => {
+      'expires' => 'max',
+      'headers' => [
+        'Access-Control-Allow-Origin *'
+      ]
+    },
     'jpe?g|png|gif|ico|css|svg' => {
       'expires' => 'max',
       'headers' => [
