@@ -60,5 +60,21 @@ describe 'easybib_nginx getcourse static' do
           )
       end
     end
+
+    describe 'browser-caching' do
+      before do
+        node.set['nginx-app']['browser_caching']['enabled'] = true
+      end
+
+      it 'enables browser caching' do
+        expect(chef_run).to render_file(nginx_config_file)
+          .with_content(
+            include('location ~* .(jpe?g|png|gif|ico|css|svg)$ {')
+          )
+          .with_content(
+            include('add_header Cache-Control "public, must-revalidate, proxy-revalidate";')
+          )
+      end
+    end
   end
 end
