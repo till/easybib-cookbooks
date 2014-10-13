@@ -30,7 +30,6 @@ class TestEasyBibConfig < Test::Unit::TestCase
       '/doc/root/',
       ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
     )
-
   end
 
   def test_get_domains
