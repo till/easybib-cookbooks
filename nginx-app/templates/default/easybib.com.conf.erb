@@ -107,7 +107,7 @@ end
         fastcgi_pass  <%= @upstream_name %>_phpfpm;
         fastcgi_index index.php;
 
-    <% if !@environment.empty? -%>
+    <% unless @environment.empty? -%>
         fastcgi_param BIB_ENV "<%=@environment%>";
     <% end -%>
         fastcgi_param SCRIPT_FILENAME $document_root/index.php;
