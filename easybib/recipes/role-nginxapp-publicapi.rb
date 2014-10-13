@@ -6,6 +6,8 @@ include_recipe 'php-zlib'
 
 include_recipe 'easybib-deploy::easybib'
 
+include_recipe 'redis::default'
+
 if is_aws
   include_recipe 'nginx-app::configure'
 else
