@@ -17,7 +17,7 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :access_log   => node['nginx-app']['access_log'],
     :listen_opts  => 'default_server',
     :nginx_extra  => 'sendfile  off;',
-    :domain_name  => ::EasyBib::Config.get_appdata(node, 'www', 'domain_name'),
+    :domain_name  => ::EasyBib::Config.get_domains(node, 'www'),
     :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
     :upstream_name => 'www',
     :environment  => ::EasyBib.get_cluster_name(node),
