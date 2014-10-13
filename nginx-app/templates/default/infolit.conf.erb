@@ -64,24 +64,33 @@ server {
     <%= render 'partials/php-fpm.erb',
       :cookbook => 'nginx-app',
       :variables => {
-        :access_log => @access_log,
-        :environment => @environment,
         :index => 'search.php',
-        :location => '/search/',
-        :nginx_config_dir => node['nginx-app']['config_dir'],
-        :upstream_name => 'infolit'
+        :location => '/search/'
       }
     %>
 
     <%= render 'partials/php-fpm.erb',
       :cookbook => 'nginx-app',
       :variables => {
-        :access_log => @access_log,
-        :environment => @environment,
         :index => 'index.php',
-        :location => '/',
-        :nginx_config_dir => node['nginx-app']['config_dir'],
-        :upstream_name => 'infolit'
+        :location => '/'
       }
     %>
+
+    index index.html index.php ;
+
+    location ~ \.php {
+
+      access_log <%=@access_log%>;
+      include    <%=node['nginx-app']['config_dir']%>/fastcgi_params;
+
+      fastcgi_pass  infolit_phpfpm;
+      fastcgi_index index.php;
+
+  <% if !@environment.nil? && !@environment.empty? -%>
+      fastcgi_param BIB_ENV "<%=@environment%>";
+  <% end -%>
+
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
 }

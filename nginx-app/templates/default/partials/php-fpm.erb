@@ -1,14 +1,3 @@
 location <%= @location %> {
-    access_log <%=@access_log%>;
-    include    <%=@nginx_config_dir%>/fastcgi_params;
-
-    fastcgi_pass  <%=@upstream_name%>_phpfpm;
-    fastcgi_index <%=@index%>;
-
-<% if !@environment.nil? && !@environment.empty? -%>
-    fastcgi_param BIB_ENV "<%=@environment%>";
-<% end -%>
-
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    index         <%=@index%>;
+    try_files $uri $uri/ /<%= @index %>?$args;
 }
