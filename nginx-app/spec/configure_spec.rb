@@ -4,8 +4,7 @@ describe 'nginx-app::configure' do
 
   let(:runner) do
     ChefSpec::Runner.new(
-      :step_into => ['nginx_app_config'],
-      :version => 12.04
+      :step_into => ['nginx_app_config']
     )
   end
   let(:chef_run) { runner.converge(described_recipe) }
