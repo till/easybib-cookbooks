@@ -57,7 +57,8 @@ node['deploy'].each do |application, deploy|
       :php_upstream       => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :upstream_name      => application,
       :environment        => ::EasyBib.get_cluster_name(node),
-      :doc_root           => ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir')
+      :doc_root           => ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir'),
+      :app_dir            => ::EasyBib::Config.get_appdata(node, application, 'app_dir')
     )
     notifies :restart, 'service[nginx]', :delayed
   end

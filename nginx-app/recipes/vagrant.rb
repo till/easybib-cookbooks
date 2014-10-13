@@ -2,19 +2,6 @@ unless node['vagrant']
   fail 'Vagrant only!'
 end
 
-app_data = ::EasyBib::Config.get_appdata(node, 'www')
-
-domain_name = app_data['domain_name']
-doc_root = app_data['doc_root_dir']
-
-node.normal.deploy['deploy_to'] = node['vagrant']['applications']['www']['app_root_location']
-
-if node['deploy']['deploy_to'].nil? || node['deploy']['deploy_to'].empty?
-  fail 'No deploy_to in deploy!'
-end
-
-Chef::Log.debug("deploy: #{node['deploy']['deploy_to']}")
-
 template '/etc/nginx/sites-enabled/easybib.com.conf' do
   source node['nginx-app']['conf_file']
   mode   '0755'
@@ -30,11 +17,12 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :access_log   => node['nginx-app']['access_log'],
     :listen_opts  => 'default_server',
     :nginx_extra  => 'sendfile  off;',
-    :domain_name  => domain_name,
+    :domain_name  => ::EasyBib::Config.get_appdata(node, 'www', 'domain_name'),
     :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
     :upstream_name => 'www',
     :environment  => ::EasyBib.get_cluster_name(node),
-    :doc_root     => doc_root
+    :doc_root     => ::EasyBib::Config.get_appdata(node, 'www', 'doc_root_dir'),
+    :app_dir      => ::EasyBib::Config.get_appdata(node, 'www', 'app_dir')
   )
   notifies :restart, 'service[nginx]', :delayed
 end

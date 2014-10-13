@@ -42,7 +42,7 @@ server {
 
 <% ['js', 'images', 'css'].each do |route_name| -%>
     location /<%=route_name%>/ {
-        alias      <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www/<%=route_name%>/;
+        alias      <%= @app_dir %>/app/modules/infolit/www/<%=route_name%>/;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -53,9 +53,9 @@ server {
         expires    30d;
         add_header Pragma public;
         add_header Cache-Control "public";
-        alias      <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-build/static/;
+        alias      <%= @app_dir %>/app/modules/infolit/www-build/static/;
     <% else -%>
-        alias      <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-src/static/;
+        alias      <%= @app_dir %>/app/modules/infolit/www-src/static/;
     <% end -%>
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
