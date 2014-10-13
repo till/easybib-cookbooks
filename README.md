@@ -28,7 +28,6 @@ Questions, comments? Feel free to [get in touch][touch]!
  * loggly (by [Till Klampaeckel][till])
  * nginx-app (by [Till Klampaeckel][till])
  * php-fpm (by [Till Klampaeckel][till])
- * redis (by [Mathias Meyer][meyer]/scalarium)
  * tsung (by [Till Klampaeckel][till])
  * varnish (by [Till Klampaeckel][till])
  * and much more :)
