@@ -12,8 +12,7 @@ end
 action :setup do
 
   if new_resource.deploy_dir.nil?
-    app_data = ::EasyBib::Config.get_appdata(node, new_resource.app_name)
-    deploy_dir = app_data['doc_root_dir']
+    deploy_dir = ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'doc_root_dir')
   else
     deploy_dir = new_resource.deploy_dir
   end

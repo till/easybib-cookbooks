@@ -2,8 +2,7 @@ action :create do
   app = new_resource.app
 
   if new_resource.path.nil?
-    app_data = ::EasyBib::Config.get_appdata(node, app)
-    path = app_data['app_dir']
+    path = ::EasyBib::Config.get_appdata(node, app, 'app_dir')
   else
     path = new_resource.path
   end

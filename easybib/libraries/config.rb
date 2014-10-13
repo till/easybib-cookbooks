@@ -42,6 +42,87 @@ module EasyBib
       to_configformat(format, data)
     end
 
+    # returns domains for appname
+    def get_domains(node, appname, env = 'getcourse')
+      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
+        return node['deploy'][appname]['domains'].join(' ')
+      end
+
+      unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
+        domains = node['vagrant']['applications'][appname]['domain_name']
+        if domains.is_a?(String)
+          return domains
+        else
+          return domains.join(' ')
+        end
+      end
+
+      unless node.fetch(env, {}).fetch('domain', {})[appname].nil?
+        Chef::Log.warn("Using old node[#{env}]['domain'][appname] domain config")
+        if (env == 'getcourse') && (appname == 'consumer')
+          # workaround to use old domain config syntax for consumer here, too
+          # deprecated, and soon to be removed.
+          return "#{node[env]['domain'][appname]} *.#{node[env]['domain'][appname]}"
+        end
+        return node[env]['domain'][appname]
+      end
+
+      ''
+    end
+
+    # returns application metadata (name, domains, directories)
+    def get_appdata(node, appname, attribute = nil)
+      data = {}
+      if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
+        data['appname'] = appname
+      else
+        data['appname'] = node['deploy'][appname]['application']
+      end
+
+      data['domains'] = get_domains(node, appname)
+
+      if ::EasyBib.is_aws(node)
+        data['deploy_dir'] = node['deploy'][appname]['deploy_to']
+        data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
+        data['doc_root_dir'] = "#{data['app_dir']}#{node['deploy'][appname]['document_root']}"
+      else
+        data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
+        data['doc_root_dir'] = node['vagrant']['applications'][appname]['doc_root_location']
+      end
+
+      # ensure all dirs end with a slash:
+      %w(deploy_dir app_dir doc_root_dir).each do |name|
+        data[name] << '/' unless data[name].end_with?('/')
+      end
+
+      unless attribute.nil?
+        return data[attribute]
+      end
+
+      data
+    end
+
+    # returns stack metadata (name, environment-type)
+    def get_stackdata(node, attribute = nil)
+      data = {}
+      if ::EasyBib.is_aws(node)
+        data['stackname'] = node['opsworks']['stack']['name']
+      elsif node['vagrant']
+        data['stackname'] = 'vagrant'
+      else
+        data['stackname'] = 'undefined'
+      end
+      data['environment'] = node['easybib_deploy']['envtype']
+
+      unless attribute.nil?
+        return data[attribute]
+      end
+
+      data
+    end
+
+    protected
+
     # converts hash in a string, formatted as envvars, php, ini
     def to_configformat(format, data)
       fail 'No Config supplied' if data.nil?
@@ -77,78 +158,6 @@ module EasyBib
       path = node['vagrant']['applications'][appname]['doc_root_location']
       '/' + path.split('/')[1..-2].join('/') + '/'
     end
-
-    # returns domains for appname
-    def get_domains(node, appname, env = 'getcourse')
-      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
-        return node['deploy'][appname]['domains'].join(' ')
-      end
-
-      unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
-        domains = node['vagrant']['applications'][appname]['domain_name']
-        if domains.is_a?(String)
-          return domains
-        else
-          return domains.join(' ')
-        end
-      end
-
-      unless node.fetch(env, {}).fetch('domain', {})[appname].nil?
-        Chef::Log.warn("Using old node[#{env}]['domain'][appname] domain config")
-        if (env == 'getcourse') && (appname == 'consumer')
-          # workaround to use old domain config syntax for consumer here, too
-          # deprecated, and soon to be removed.
-          return "#{node[env]['domain'][appname]} *.#{node[env]['domain'][appname]}"
-        end
-        return node[env]['domain'][appname]
-      end
-
-      ''
-    end
-
-    # returns application metadata (name, domains, directories)
-    def get_appdata(node, appname)
-      data = {}
-      if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
-        data['appname'] = appname
-      else
-        data['appname'] = node['deploy'][appname]['application']
-      end
-
-      data['domains'] = get_domains(node, appname)
-
-      if ::EasyBib.is_aws(node)
-        data['deploy_dir'] = node['deploy'][appname]['deploy_to']
-        data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
-        data['doc_root_dir'] = "#{data['app_dir']}#{node['deploy'][appname]['document_root']}"
-      else
-        data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
-        data['doc_root_dir'] = node['vagrant']['applications'][appname]['doc_root_location']
-      end
-
-      # ensure all dirs end with a slash:
-      %w(deploy_dir app_dir doc_root_dir).each do |name|
-        data[name] << '/' unless data[name].end_with?('/')
-      end
-
-      data
-    end
-
-    # returns stack metadata (name, environment-type)
-    def get_stackdata(node)
-      data = {}
-      if ::EasyBib.is_aws(node)
-        data['stackname'] = node['opsworks']['stack']['name']
-      elsif node['vagrant']
-        data['stackname'] = 'vagrant'
-      else
-        data['stackname'] = 'undefined'
-      end
-      data['environment'] = node['easybib_deploy']['envtype']
-      data
-    end
-
-    protected
 
     # generate top of file
     def generate_start(format)
