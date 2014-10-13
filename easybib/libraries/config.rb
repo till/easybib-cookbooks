@@ -101,7 +101,7 @@ module EasyBib
       end
 
       value = data[attribute]
-      fail "Could not get #{attribute}!" if value.nil? || value.empty?
+      fail "Could not get #{attribute} for #{appname}!" if value.nil? || value.empty?
 
       value
     end
