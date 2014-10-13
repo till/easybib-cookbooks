@@ -2,13 +2,10 @@ unless node['vagrant']
   fail 'Vagrant only!'
 end
 
-domain_name = nil
-doc_root = nil
-
 app_data = ::EasyBib::Config.get_appdata(node, 'www')
 
 domain_name = app_data['domain_name']
-doc_root = app_data['doc_root_location']
+doc_root = app_data['doc_root_dir']
 
 node.normal.deploy['deploy_to'] = node['vagrant']['applications']['www']['app_root_location']
 
