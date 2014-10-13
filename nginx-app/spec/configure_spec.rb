@@ -27,8 +27,6 @@ describe 'nginx-app::configure' do
 
       node.set['opsworks']['instance']['layers'] = ['nginxphpapp']
       node.set['opsworks']['stack']['name'] = stack
-
-      node.set['docroot'] = 'public'
     end
 
     it 'includes necessary recipes' do
