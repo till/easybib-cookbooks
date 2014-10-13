@@ -25,7 +25,7 @@ describe 'nginx-app::configure' do
       node.set['opsworks']['instance']['layers'] = ['nginxphpapp']
       node.set['opsworks']['stack']['name'] = stack
 
-      node.set['docroot'] = 'public'
+      #node.set['docroot'] = 'public'
 
       node.set['deploy']['infolit'] = {
         'deploy_to' => '/srv/www/infolit',
