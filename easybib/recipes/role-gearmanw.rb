@@ -9,6 +9,8 @@ include_recipe 'easybib-deploy::easybib'
 include_recipe 'pecl-manager::vagrant'
 
 unless is_aws
+  package 'redis'
+
   gearmanconf_root_dir = ::File.expand_path(node['easybib_deploy']['gearman_root'])
   import_file_path = "#{gearmanconf_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
 
