@@ -31,6 +31,8 @@ describe 'nginx-app::configure' do
         'deploy_to' => '/srv/www/infolit',
         'document_root' => 'www'
       }
+
+      node.set['infolit']['domain'] = 'infolit.tld'
     end
 
     it 'creates the virtualhost from the correct erb' do
@@ -42,22 +44,22 @@ describe 'nginx-app::configure' do
     end
 
     it 'sets the correct handlers for / and /search/ through the php-fpm partial' do
-
-      fixture = 'fastcgi_param SCRIPT_FILENAME $document_root'
-
-      expect(chef_run).to create_template(template_name)
+      expect(chef_run).to render_file(vhost)
         .with_content(
           include('location /search/ {')
         )
         .with_content(
           include('location / {')
         )
-      # .with_content(
-      #  include("#{fixture}/index.php;")
-      # )
-      # .with_content(
-      #  include("#{fixture}/search.php;")
-      # )
+        .with_content(
+          include('fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;')
+        )
+        .with_content(
+          include('fastcgi_index search.php;')
+        )
+        .with_content(
+          include('fastcgi_index index.php;')
+        )
     end
   end
 end
