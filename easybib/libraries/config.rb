@@ -95,11 +95,14 @@ module EasyBib
         data[name] << '/' unless data[name].end_with?('/')
       end
 
-      unless attribute.nil?
-        return data[attribute]
+      if attribute.nil?
+        return data
       end
 
-      data
+      value = data[attribute]
+      fail "Could not get #{attribute}!" if value.nil? or value.empty?
+
+      value
     end
 
     # returns stack metadata (name, environment-type)
