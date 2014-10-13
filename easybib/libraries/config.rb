@@ -71,6 +71,7 @@ module EasyBib
     end
 
     # returns application metadata (name, domains, directories)
+    # rubocop:disable Metrics/PerceivedComplexity
     def get_appdata(node, appname, attribute = nil)
       data = {}
       if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
@@ -104,6 +105,7 @@ module EasyBib
 
       value
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     # returns stack metadata (name, environment-type)
     def get_stackdata(node, attribute = nil)
