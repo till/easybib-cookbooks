@@ -27,5 +27,5 @@ end
 
 include_recipe 'nodejs'
 include_recipe 'zsh::configure'
-include_recipe 'redis'
+package 'redis-server'
 include_recipe 'memcache'
