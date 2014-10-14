@@ -18,22 +18,17 @@ class TestEasyBibConfig < Test::Unit::TestCase
   def test_get_vagrant_appdir
     fake_node = Chef::Node.new
     fake_node.set['vagrant']['applications']['app']['app_root_location'] = '/app/root/dir/'
+    fake_node.set['vagrant']['applications']['app']['doc_root_location'] = '/foo/bla/dir/www/'
     assert_equal(
       '/app/root/dir/',
-      ::EasyBib::Config.get_vagrant_appdir(fake_node, 'app')
+      ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
     )
 
     fake_node = Chef::Node.new
     fake_node.set['vagrant']['applications']['app']['doc_root_location'] = '/doc/root/dir/'
     assert_equal(
       '/doc/root/',
-      ::EasyBib::Config.get_vagrant_appdir(fake_node, 'app')
-    )
-
-    fake_node = Chef::Node.new
-    assert_equal(
-      '/vagrant_data/',
-      ::EasyBib::Config.get_vagrant_appdir(fake_node, 'app')
+      ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
     )
   end
 

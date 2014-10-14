@@ -1,15 +1,6 @@
-include_recipe 'apt::ppa'
-include_recipe 'apt::easybib'
+include_recipe 'aptly::gpg'
 
-easybib_launchpad node['apt']['easybib']['ppa-php55'] do
-  action :discover
-end
-
-commands = [
-  'apt-get update',
-  'apt-get upgrade -y'
-]
-
-commands.each do |cmd|
-  execute cmd
+apt_repository 'easybib-ppa' do
+  uri           node['php55']['ppa']
+  distribution  node['lsb']['codename']
 end

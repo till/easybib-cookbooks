@@ -1,7 +1,9 @@
-include_recipe 'apt::ppa'
+include_recipe 'aptly::gpg'
 
-easybib_launchpad node['redis']['ppa'] do
-  action :discover
+apt_repository 'redis-ppa' do
+  uri           node['redis']['ppa']
+  distribution  node['lsb']['codename']
+  components    ['main']
 end
 
 package 'redis-server'

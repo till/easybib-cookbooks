@@ -2,10 +2,14 @@ default['hhvm-fcgi'] = {}
 
 default['hhvm-fcgi']['build'] = '' # -nightly, -dbg
 
-default['hhvm-fcgi']['apt'] = {
-  'repo' => 'http://dl.hhvm.com/ubuntu',
-  'key' => 'http://dl.hhvm.com/conf/hhvm.gpg.key'
-}
+if ::EasyBib.use_aptly_mirror?(node)
+  default['hhvm-fcgi']['apt']['repo'] = 'http://ppa.ezbib.com/trusty55'
+else
+  default['hhvm-fcgi']['apt'] = {
+    'repo' => 'http://dl.hhvm.com/ubuntu',
+    'key' => 'http://dl.hhvm.com/conf/hhvm.gpg.key'
+  }
+end
 
 default['hhvm-fcgi']['boost'] = {
   'ppa' => 'ppa:mapnik/boost'

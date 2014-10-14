@@ -15,9 +15,12 @@ default['php-fpm']['group'] = 'www-data'
 default['php-fpm']['tmpdir'] = '/tmp/php'
 default['php-fpm']['socketdir'] = '/var/run/php-fpm'
 
+default['php-fpm']['pools'] = ['www-data']
+
 # this is a wip - unify all configuration for php.ini
 default['php-fpm']['ini'] = {
   'max-input-vars' => 10_000
 }
 
 default['php-fpm']['packages'] = 'php5-easybib,php5-easybib-mbstring,php5-easybib-memcache'
+default['php-fm']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:easybib/php55')

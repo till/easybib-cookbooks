@@ -12,11 +12,7 @@ end
 action :setup do
 
   if new_resource.deploy_dir.nil?
-    if ::EasyBib.is_aws(node)
-      deploy_dir = "/srv/www/#{new_resource.app_name}/current/#{new_resource.doc_root}"
-    else
-      deploy_dir = node['nginx-app']['vagrant']['deploy_dir']
-    end
+    deploy_dir = ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'doc_root_dir')
   else
     deploy_dir = new_resource.deploy_dir
   end
@@ -46,16 +42,15 @@ action :setup do
 
   routes_enabled = nil
   routes_denied  = nil
+
   health_check   = node['nginx-app']['health_check']
   Chef::Log.debug("Health Check is now #{health_check}")
 
   if node['nginx-app'].attribute?(application)
-    if node['nginx-app'][application].attribute?('routes_enabled')
-      routes_enabled = node['nginx-app'][application]['routes_enabled']
-    end
-    if node['nginx-app'][application].attribute?('routes_denied')
-      routes_denied = node['nginx-app'][application]['routes_denied']
-    end
+
+    routes_enabled = get_routes(node['nginx-app'][application], 'routes_enabled')
+    routes_denied = get_routes(node['nginx-app'][application], 'routes_denied')
+
     if node['nginx-app'][application].attribute?('health_check')
       health_check = node['nginx-app'][application]['health_check']
       Chef::Log.debug("Health Check is now #{health_check}")
@@ -78,6 +73,7 @@ action :setup do
     mode '0755'
     owner node['nginx-app']['user']
     group node['nginx-app']['group']
+    helpers EasyBib::Upstream
     variables(
       :php_user => node['php-fpm']['user'],
       :domain_name => domain_name,
@@ -85,7 +81,8 @@ action :setup do
       :access_log => access_log,
       :nginx_extra => nginx_extras,
       :default_router => default_router,
-      :upstream => config_name,
+      :upstream_name => config_name,
+      :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :db_conf => database_config,
       :env_conf => env_config,
       :health_check => health_check,
@@ -107,8 +104,18 @@ end
 
 def get_config_name(resource)
   config_name = resource.app_name
-  unless resource.config_name.empty?
-    config_name = resource.config_name
-  end
+
+  config_name = resource.config_name unless resource.config_name.empty?
+
+  Chef::Log.debug("CONFIG NAME: #{config_name} - #{resource.app_name} - #{resource.config_name}")
   config_name
+end
+
+def get_routes(attr, type)
+  routes = nil
+  if attr.attribute?(type)
+    routes = attr[type]
+  end
+
+  routes
 end

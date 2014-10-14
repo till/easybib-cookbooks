@@ -1,5 +1,24 @@
+<% unless @locations.nil? -%>
+map $uri $new {
+<%
+@locations.sort.each do |old_path, new_url|
+  old_path = 'default' if old_path == '/'
+-%>
+
+    <%=old_path%> <%=new_url%>;
+<% end -%>
+}
+
+<% end -%>
 server {
     listen 80 <%=@listen_opts%>;
     server_name <%=@domain_name%>;
+<% unless @new_domain_name.nil? -%>
+
     rewrite ^ http://<%=@new_domain_name%>$request_uri? permanent;
+<% end -%>
+<% unless @locations.nil? -%>
+
+    rewrite ^ $new permanent;
+<% end -%>
 }
