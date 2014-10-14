@@ -71,6 +71,25 @@ default['nginx-app']['gzip'] = {
   }
 }
 
+default['nginx-app']['fastcgi'] = {
+  # connect to the fcgi backend, default 60
+  'fastcgi_connect_timeout' => 60,
+  # amount of time for the request to send data to the server, default: 60 (suggested 180?)
+  'fastcgi_send_timeout' => 60,
+  # amount of time for nginx to wait for php-fpm to send data, default: 60 (suggested 180?)
+  'fastcgi_read_timeout' => 10,
+  # default: 4k/8k
+  'fastcgi_buffer_size' => '128k',
+  # 256k + (256k * 4) = 1.25 MB, requests larger go to disk
+  'fastcgi_buffers' => '4 256k',
+  # undocumented
+  'fastcgi_busy_buffers_size' => '256k',
+  # undocumented
+  'fastcgi_temp_file_write_size' => '256k',
+  # do not intercept errors from backend
+  'fastcgi_intercept_errors' => 'on'
+}
+
 default['nginx-app']['browser_caching'] = {
   'enabled' => false,
   'config' => {

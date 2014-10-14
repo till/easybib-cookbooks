@@ -1,37 +1,26 @@
-upstream phpfpm {
-    server  <%= @php_upstream %>;
-}
+<%= render_upstream(@php_upstream, @upstream_name) -%>
 
 server {
     listen 80 <%=@listen_opts%>;
 
-  <% if @nginx_extra -%>
+<% if @nginx_extra -%>
     <%= @nginx_extra -%>
-  <% end -%>
+<% end -%>
 
-  <% if @domain_name -%>
-      server_name <%=@domain_name%>;
-  <% end -%>
+<% if @domain_name -%>
+    server_name <%=@domain_name%>;
+<% end -%>
 
     client_max_body_size 5m;
-
-    location = /health_check.php {
-
-        access_log <%= @access_log %>;
-
-        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
-
-        fastcgi_pass  phpfpm;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
-    }
 
     # Block ad calls to /something/<script type="text/javascript">
     location ~* <script {
         deny all;
     }
 
+    root <%= @doc_root %>;
+
     location ~ /(doubleclick|eyeblaster|eyewonder|pointroll|unicast)/.*\.html {
-        root        <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
         access_log  <%= @access_log %>;
     }
 
@@ -39,55 +28,55 @@ server {
 ['/google8a01a818524239c8.html', '/googled16040836651a26a.html', '/bsm-xd.html'].each do |route|
 -%>
     location ^~ <%= route %> {
-        root        <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
         access_log  <%= @access_log %>;
     }
 <%
 end
 -%>
 
-    location ^~ /nginx_status {
-        stub_status on;
-        access_log  <%= @access_log %>;
-        allow       127.0.0.1;
-        deny        all;
-    }
+    <%= render "partials/status-checks.erb",
+      :cookbook => "nginx-app",
+      :variables => {
+        :access_log => @access_log,
+        :health_check => 'health_check.php',
+        :upstream => @upstream_name
+      }
+    -%>
 
-    location ~ ^/(fpm_status|fpm_ping)$ {
-        include       <%=node['nginx-app']['config_dir']%>/fastcgi_params;
-        fastcgi_pass  phpfpm;
-        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
-        allow         127.0.0.1;
-        deny          all;
-    }
+<% module_dir = "#{@app_dir}app/modules" -%>
 
-<% @js_alias.each do |www_alias,www_dir| -%>
-    location ^~ /js/<%=www_alias%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
+<%= render 'partials/module-assets.erb',
+  :cookbook => 'nginx-app',
+  :variables => {
+    :access_log => @access_log,
+    :assets => @js_alias,
+    :module_dir => module_dir,
+    :type => 'js'
+  }
+-%>
 
-<% @img_alias.each do |www_alias,www_dir| -%>
-    location ^~ /images/<%=www_alias%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
+<%= render 'partials/module-assets.erb',
+  :cookbook => 'nginx-app',
+  :variables => {
+    :access_log => @access_log,
+    :assets => @img_alias,
+    :module_dir => module_dir,
+    :type => 'images'
+  }
+-%>
 
-<% @css_alias.each do |www_alias,www_dir| -%>
-    location ^~ /css/<%=www_alias%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/<%=www_dir%>/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
+<%= render 'partials/module-assets.erb',
+  :cookbook => 'nginx-app',
+  :variables => {
+    :access_log => @access_log,
+    :assets => @css_alias,
+    :module_dir => module_dir,
+    :type => 'css'
+  }
+-%>
 
 <% node['nginx-app']['static_directories'].each do |dir| -%>
     location ^~ /<%=dir%>/ {
-        root       <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -96,7 +85,6 @@ end
     location ~* \.(jpg|jpeg|gif|png|css|js|ico)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
-        root <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>;
     <% if @password_protected && @password_protected.to_s == "true" -%>
         auth_basic            "Restricted";
         auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
@@ -116,14 +104,13 @@ end
 
         include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
-        fastcgi_pass  phpfpm;
+        fastcgi_pass  <%= @upstream_name %>_phpfpm;
         fastcgi_index index.php;
 
-    <% if !::EasyBib.get_cluster_name(node).empty? -%>
-        fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
+    <% unless @environment.empty? -%>
+        fastcgi_param BIB_ENV "<%=@environment%>";
     <% end -%>
-
-        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
 
         index  index.php index.html index.htm;
     }

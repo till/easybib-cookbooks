@@ -1,6 +1,4 @@
-upstream phpfpm {
-    server  unix:/var/run/php-fpm/<%= node['php-fpm']['user'] %>;
-}
+<%= render_upstream(@php_upstream, 'infolit') %>
 
 <% if node['opsworks'] -%>
 
@@ -29,86 +27,70 @@ server {
     <%= @nginx_extra -%>
 <% end -%>
 
-    location = /health_check.php {
+    root <%= @doc_root %>;
 
-        access_log <%= @access_log %>;
-
-        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
-
-        fastcgi_pass  phpfpm;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/health_check.php;
-    }
-
-    location /nginx_status {
-        stub_status on;
-        access_log  <%= @access_log %>;
-        allow       127.0.0.1;
-        deny        all;
-    }
-
-    location ~ ^/(fpm_status|fpm_ping)$ {
-        include       <%=node['nginx-app']['config_dir']%>/fastcgi_params;
-        fastcgi_pass  phpfpm;
-        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
-        allow         127.0.0.1;
-        deny          all;
-    }
+    <%= render 'partials/status-checks.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :access_log => @access_log,
+        :health_check => "health_check.php",
+        :upstream => 'infolit'
+      }
+    %>
 
     rewrite ^(/favicon.ico)$ /static/images/favicon.ico;
 
-    location /js/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www;
+<% ['js', 'images', 'css'].each do |route_name| -%>
+    location /<%=route_name%>/ {
+        alias      <%= @app_dir %>app/modules/infolit/www/<%=route_name%>/;
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
-
-    location /images/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-
-    location /css/ {
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
+<% end -%>
 
     location /static/ {
     <% if node['opsworks'] -%>
         expires    30d;
         add_header Pragma public;
         add_header Cache-Control "public";
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-build;
+        alias      <%= @app_dir %>app/modules/infolit/www-build/static/;
     <% else -%>
-        root       <%= @deploy['deploy_to'] %>/current/app/modules/infolit/www-src;
+        alias      <%= @app_dir %>app/modules/infolit/www-src/static/;
     <% end -%>
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
 
-    location /search/ {
+    <%= render 'partials/php-fpm.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :index => 'search.php',
+        :location => '/search/'
+      }
+    %>
 
-        access_log off;
-        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
+    <%= render 'partials/php-fpm.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :index => 'index.php',
+        :location => '/'
+      }
+    %>
 
-        fastcgi_pass  phpfpm;
-        fastcgi_index search.php;
-        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/search.php;
-        index  search.php;
-    }
+    index index.html index.php ;
 
-    location / {
+    location ~ \.php {
 
-        access_log <%= @access_log %>;
+      access_log <%=@access_log%>;
+      include    <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
-        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
+      fastcgi_pass  infolit_phpfpm;
+      fastcgi_index index.php;
 
-        fastcgi_pass  phpfpm;
-        fastcgi_index index.php;
+  <% if !@environment.nil? && !@environment.empty? -%>
+      fastcgi_param BIB_ENV "<%=@environment%>";
+  <% end -%>
 
-        fastcgi_param SCRIPT_FILENAME <%= @deploy['deploy_to'] %>/current/<%= node['docroot'] %>/index.php;
-
-        index  index.php index.html index.htm;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }

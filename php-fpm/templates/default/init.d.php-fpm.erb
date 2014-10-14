@@ -20,6 +20,7 @@ exec_prefix=${prefix}
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
 php_fpm_CONF=${prefix}/etc/php-fpm.conf
+php_fpm_SOCKETS=<%= node['php-fpm']['socketdir'] %>
 php_fpm_PID=${prefix}/var/run/php-fpm.pid
 
 whoami=`whoami`
@@ -30,13 +31,10 @@ php_opts="--fpm-config $php_fpm_CONF"
 # prepare function
 # todo doesn't work with pools (currently)
 php_fpm_prepare () {
-    local SOCKET_DIR=`dirname $(cat $php_fpm_CONF|grep 'listen ='|awk '{print $3}')`
-    if [ "x${SOCKET_DIR}" != "x" ]; then
-        mkdir -p "${SOCKET_DIR}"
-        chown -R $runas:$runas $SOCKET_DIR
-    fi
+    mkdir -p "${php_fpm_SOCKETS}"
+    chown -R $runas:$runas $php_fpm_SOCKETS
     mkdir -p <%= node["php-fpm"]["tmpdir"]%>
-    chown -R $runas:$runas $SOCKET_DIR
+    chown -R $runas:$runas $php_fpm_SOCKETS
 }
 
 php_fpm_is_running () {

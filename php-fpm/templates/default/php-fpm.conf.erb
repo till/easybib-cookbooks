@@ -25,41 +25,7 @@ process_control_timeout = 10s
 
 daemonize = yes
 
-<% if !::EasyBib.is_aws(node) && node["users"] -%>
-
-include=<%= node["php-fpm"]["prefix"] %>/etc/php-fpm/*.conf
-
-<% else -%>
-
-[www]
-
-listen = <%= node["php-fpm"]["socketdir"] %>/<%= node["php-fpm"]["user"] %>
-listen.backlog = -1
-
-listen.owner = <%= node["php-fpm"]["user"] %>
-listen.group = <%= node["php-fpm"]["group"] %>
-listen.mode = 0666
-
-user = <%= node["php-fpm"]["user"] %>
-group = <%= node["php-fpm"]["group"] %>
-
-pm = dynamic
-pm.max_children = 100
-pm.start_servers = 30
-pm.min_spare_servers = 10
-pm.max_spare_servers = 100
-pm.max_requests = 500
-pm.status_path = /fpm_status
-
-ping.path = /fpm_ping
-ping.response = p0ng
-
-;request_terminate_timeout = 0
-request_slowlog_timeout = <%= node["php-fpm"]["slowlog_timeout"] %>
-
-slowlog = <%= node["php-fpm"]["slowlog"] %>
-
-<% end -%>
+include=<%= @pool_dir %>/*.conf
 
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.

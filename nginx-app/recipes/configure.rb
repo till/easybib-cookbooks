@@ -3,11 +3,6 @@ include_recipe 'nginx-app::server'
 app_access_log   = node['nginx-app']['access_log']
 nginx_config_dir = node['nginx-app']['config_dir']
 
-# need to do this better
-if !node.attribute?('docroot') || node['docroot'].empty?
-  node.set['docroot'] = 'www'
-end
-
 # password protect?
 password_protected = false
 
@@ -44,14 +39,13 @@ node['deploy'].each do |application, deploy|
     next
   end
 
-  php_upstream = "unix:/var/run/php-fpm/#{node['php-fpm']['user']}"
-
   template "render vhost: #{application}" do
     path   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
     source nginx_config
     mode   '0755'
     owner  node['nginx-app']['user']
     group  node['nginx-app']['group']
+    helpers EasyBib::Upstream
     variables(
       :js_alias           => node['nginx-app']['js_modules'],
       :img_alias          => node['nginx-app']['img_modules'],
@@ -60,7 +54,11 @@ node['deploy'].each do |application, deploy|
       :deploy             => deploy,
       :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
-      :php_upstream       => php_upstream
+      :php_upstream       => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
+      :upstream_name      => application,
+      :environment        => ::EasyBib.get_cluster_name(node),
+      :doc_root           => ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir'),
+      :app_dir            => ::EasyBib::Config.get_appdata(node, application, 'app_dir')
     )
     notifies :restart, 'service[nginx]', :delayed
   end

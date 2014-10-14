@@ -140,6 +140,15 @@ module EasyBib
     content.gsub('!ruby/hash:Chef::Node::ImmutableMash', '')
   end
 
+  def get_upstream_from_pools(pools, socket_dir)
+    php_upstream = []
+    pools.each do |pool_name|
+      php_upstream << "unix:#{socket_dir}/#{pool_name}"
+    end
+
+    php_upstream
+  end
+
   def use_aptly_mirror?(node = self.node)
     is_trusty = (node.fetch('lsb', {})['codename'] == 'trusty')
     enable_trusty_mirror = node.fetch('apt', {})['enable_trusty_mirror']

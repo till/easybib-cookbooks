@@ -1,0 +1,7 @@
+<% @assets.each do |www_alias,www_dir| -%>
+    location ^~ /<%= @type %>/<%=www_alias%>/ {
+        root       <%= @module_dir %>/<%=www_dir%>/www;
+        access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
+    }
+<% end -%>
