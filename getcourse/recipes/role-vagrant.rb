@@ -27,5 +27,8 @@ end
 
 include_recipe 'nodejs'
 include_recipe 'zsh::configure'
-package 'redis-server'
+# we use our recipe instead of the default package, because
+# our recipe writes data to disk instead of memory, so it survives
+# a vagrant suspend
+include_recipe 'redis::default'
 include_recipe 'memcache'
