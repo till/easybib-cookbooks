@@ -19,13 +19,14 @@ Questions, comments? Feel free to [get in touch][touch]!
 ## Available cookbooks
 
  * bigcouch (by [Till Klampaeckel][till])
- * couchdb (by [Mathias Meyer][meyer]/scalarium)
+ * couchdb (by [Mathias Meyer][meyer])
  * easybib (by [Till Klampaeckel][till])
  * easybib-solr (by [Till Klampaeckel][till])
  * ezproxy (by [Till Klampaeckel][till])
  * ganglia-plugins (by [Till Klampaeckel][till])
  * gearman (by [Till Klampaeckel][till])
  * loggly (by [Till Klampaeckel][till])
+ * redis (by [Mathias Meyer][meyer])
  * nginx-app (by [Till Klampaeckel][till])
  * php-fpm (by [Till Klampaeckel][till])
  * tsung (by [Till Klampaeckel][till])
