@@ -13,7 +13,8 @@ stack_applications.each do |app|
     listen_opts = (app == 'consumer') ? 'default_server' : ''
 
     domain_name = ::EasyBib::Config.get_domains(node, app, 'getcourse')
-    deploy_dir    = ::EasyBib::Config.get_appdata(node, app, 'doc_root_dir')
+    deploy_dir = ::EasyBib::Config.get_appdata(node, app, 'doc_root_dir')
+    app_dir = ::EasyBib::Config.get_appdata(node, app, 'app_dir')
 
     easybib_nginx app do
       config_template 'static.conf.erb'
@@ -21,6 +22,7 @@ stack_applications.each do |app|
       domain_name domain_name
       listen_opts listen_opts
       deploy_dir deploy_dir
+      nginx_local_conf "#{app_dir}/deploy/nginx.conf"
       notifies :restart, 'service[nginx]', :delayed
     end
   else
