@@ -1,0 +1,49 @@
+server {
+  listen 80 <%=@listen_opts%>;
+
+
+  <% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+  <% end -%>
+
+  <% if @domain_name -%>
+      server_name <%=@domain_name%>;
+  <% end -%>
+
+  location / {
+    root <%= @doc_root%>;
+    index index.html index.htm;
+    <% unless @htpasswd.nil? %>
+    auth_basic "Restricted";
+    auth_basic_user_file <%= @htpasswd%>;
+    <% end %>
+  }
+  location ~ ^/_aliases$ {
+    proxy_pass http://127.0.0.1:9200;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/.*/_aliases$ {
+    proxy_pass http://127.0.0.1:9200;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/_nodes$ {
+    proxy_pass http://127.0.0.1:9200;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/.*/_search$ {
+    proxy_pass http://127.0.0.1:9200;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/.*/_mapping {
+    proxy_pass http://127.0.0.1:9200;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/kibana-int/dashboard/.*$ {
+    proxy_pass http://127.0.0.1:9200;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/kibana-int/temp.*$ {
+    proxy_pass http://127.0.0.1:9200;
+    proxy_read_timeout 90;
+  }
+}

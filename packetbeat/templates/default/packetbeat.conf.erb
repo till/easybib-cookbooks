@@ -1,0 +1,72 @@
+###
+### Packetbeat Agent configuration file.
+###
+### Packetbeat is an application monitoring system that works by sniffing
+### the network traffic between your application ### components.
+###
+### For more configuration options, please visit:
+###
+###    http://packetbeat.com/docs/configuration.html
+###
+
+[output]
+
+  [output.elasticsearch]
+    <% unless @elasticsearch.nil?
+        el = URI(@elasticsearch)
+    %>
+    enabled = true
+    host = "<%= el.host -%>"
+    port = <%= el.port -%>
+    
+    protocol = "<%= el.scheme -%>"
+      <% unless el.user.nil? %>
+    username = "<%= el.user -%>"
+    password = "<%= el.password -%>"
+      <% end %>
+      <% unless el.path.empty? %>
+    path = "<%= el.path -%>"
+      <% end %>
+    save_topology = true
+    <% end %>
+
+[interfaces]
+# Select on which network interfaces to sniff. You can use the "any"
+# keyword to sniff on all connected interfaces.
+device = "any"
+
+[protocols]
+<% @protocols.each do |name,ports| -%>
+  [protocols.<%= name %>]
+  ports = [<%= ports.join(", ") -%>]
+<% end %>
+
+[procs]
+<% @procs.each do |name,grep| -%>
+  [procs.monitored.<%= name %>]
+  cmdline_grep = "<%= grep %>"
+<% end %>
+
+[agent]
+# The name of the agent as it will show up in the web interface. If not
+# defined, we will just use the hostname.
+#
+name=<%= @hostname -%>
+
+<% if @ignore_outgoing %>
+# Uncomment the following if you want to ignore transactions created
+# by the server on which the agent is installed. This option is useful
+# to remove duplicates if agents are installed on multiple servers.
+ignore_outgoing = true
+<% end %>
+
+[passwords]
+<% unless @hide_keywords.empty? %>
+# Uncomment the following to hide certain parameters from HTTP POST
+# requests. The value of the parameters will be replaced with '*' characters
+# This is generally useful for avoiding storing user passwords or other
+# sensitive information.
+hide_keywords = ["<%= @hide_keywords.join(", ") -%>"]
+<% end %>
+
+# vim: set ft=toml:
