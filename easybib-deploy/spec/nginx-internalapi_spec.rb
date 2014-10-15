@@ -4,7 +4,7 @@ describe 'easybib-deploy::internal-api' do
 
   let(:runner) do
     ChefSpec::Runner.new(
-      :step_into => ['nginx_app_config','easybib_nginx']
+      :step_into => %w(nginx_app_config easybib_nginx)
     )
   end
   let(:chef_run) { runner.converge(described_recipe) }
