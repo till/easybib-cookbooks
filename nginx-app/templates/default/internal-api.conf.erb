@@ -14,7 +14,7 @@ server {
     root <%= @doc_root %>;
 
 <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
-        "upstream" => @upstream,
+        "upstream" => @upstream_name,
         "health_check" => @health_check
     } %>
     <% if @routes_enabled.nil? || @routes_enabled.empty? -%>
