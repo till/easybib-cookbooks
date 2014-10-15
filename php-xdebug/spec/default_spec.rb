@@ -6,7 +6,7 @@ describe 'php-xdebug::default' do
     ChefSpec::Runner.new do |node|
       node.default['apt'] = {}
       node.default.apt['easybib'] = {}
-      node.default.apt.easybib['ppa'] = 'ppa:easybib/php55'
+      node.default.apt.easybib['php'] = '5.5'
     end.converge(described_recipe)
   end
 

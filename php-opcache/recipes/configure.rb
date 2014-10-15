@@ -3,6 +3,6 @@ php_pecl 'opcache' do
   config_directives node['php-opcache']['settings']
   action :setup
   only_if do
-    node['apt']['easybib']['ppa'] == 'ppa:easybib/php55'
+    node['apt']['easybib']['php'] == '5.5'
   end
 end
