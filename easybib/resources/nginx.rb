@@ -11,6 +11,7 @@ attribute :domain_name, :kind_of => String, :default => ''
 attribute :database_config, :kind_of => String, :default => ''
 attribute :env_config, :kind_of => String, :default => ''
 attribute :nginx_extras, :kind_of => String, :default => nil
+attribute :nginx_local_conf, :kind_of => String, :default => nil
 attribute :htpasswd, :kind_of => String, :default => ''
 attribute :deploy_dir, :kind_of => String, :default => nil
 attribute :default_router, :kind_of => String, :default => nil

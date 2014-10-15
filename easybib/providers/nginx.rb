@@ -39,6 +39,13 @@ action :setup do
   htpasswd = new_resource.htpasswd
   application = new_resource.app_name
   listen_opts = new_resource.listen_opts
+  nginx_local_conf = new_resource.nginx_local_conf
+
+  unless nginx_local_conf.nil?
+    unless ::File.exist?(nginx_local_conf)
+      nginx_local_conf = nil
+    end
+  end
 
   routes_enabled = nil
   routes_denied  = nil
@@ -80,6 +87,7 @@ action :setup do
       :doc_root => deploy_dir,
       :access_log => access_log,
       :nginx_extra => nginx_extras,
+      :nginx_local_conf => nginx_local_conf,
       :default_router => default_router,
       :upstream_name => config_name,
       :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
