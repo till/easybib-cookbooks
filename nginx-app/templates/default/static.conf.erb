@@ -29,6 +29,10 @@ server {
     <%=@nginx_extra%>
 <% end -%>
 
+<% unless @nginx_local_conf.nil? -%>
+<%= render @nginx_local_conf, :local => true %>
+<% end -%>
+
 <% if !@domain_name.empty? -%>
     server_name <%=@domain_name%>;
 <% end -%>
