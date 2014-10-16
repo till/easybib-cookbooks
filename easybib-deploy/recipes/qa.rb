@@ -31,7 +31,7 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  env_conf = ::EasyBib::Config.get_env('nginx', application)
+  env_conf = ::EasyBib::Config.get_env('nginx', application, node)
 
   easybib_nginx application do
     config_template 'silex.conf.erb'
