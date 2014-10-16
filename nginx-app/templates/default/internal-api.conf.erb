@@ -13,6 +13,8 @@ server {
 
     root <%= @doc_root %>;
 
+<%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
+
 <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
         "upstream" => @upstream_name,
         "health_check" => @health_check
