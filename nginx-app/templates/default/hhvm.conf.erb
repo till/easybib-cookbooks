@@ -1,4 +1,4 @@
-upstream <%=@upstream%>_phpfpm {
+upstream <%=@upstream_name%>_phpfpm {
     server  <%=node["hhvm-fcgi"]["listen"]["ip"]%>:<%=node["hhvm-fcgi"]["listen"]["port"]%>;
 }
 
