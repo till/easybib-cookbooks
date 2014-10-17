@@ -47,3 +47,12 @@ template '/etc/logrotate.d/hhvm' do
   notifies :enable, 'service[hhvm]'
   notifies :start, 'service[hhvm]'
 end
+
+template '/etc/monit/conf.d/hhvm.monitrc' do
+  mode 0644
+  source 'hhvm.monitrc.erb'
+  variables(
+    :pid_file => node['hhvm-fcgi']['pid_file'],
+    :service_name => node['hhvm-fcgi']['service_name']
+  )
+end
