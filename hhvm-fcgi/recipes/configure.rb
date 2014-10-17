@@ -55,4 +55,7 @@ template '/etc/monit/conf.d/hhvm.monitrc' do
     :pid_file => node['hhvm-fcgi']['pid_file'],
     :service_name => node['hhvm-fcgi']['service_name']
   )
+  only_if do
+    node['opsworks']
+  end
 end
