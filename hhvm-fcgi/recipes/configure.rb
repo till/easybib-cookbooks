@@ -56,6 +56,6 @@ template '/etc/monit/conf.d/hhvm.monitrc' do
     :service_name => node['hhvm-fcgi']['service_name']
   )
   only_if do
-    node['opsworks']
+    ::EasyBib.is_aws(node)
   end
 end
