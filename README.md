@@ -16,6 +16,10 @@ Questions, comments? Feel free to [get in touch][touch]!
 
 [touch]: http://twitter.com/klimpong
 
+## Testing
+
+`rake spec[cookbook]` only tests the cookbook `cookbook`
+
 ## Available cookbooks
 
  * bigcouch (by [Till Klampaeckel][till])
