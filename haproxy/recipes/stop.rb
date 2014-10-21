@@ -1,5 +1,5 @@
-include_recipe "haproxy::service"
+include_recipe 'haproxy::service'
 
-service "haproxy" do
+service 'haproxy' do
   action :stop
 end
