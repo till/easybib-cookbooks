@@ -44,6 +44,24 @@ describe 'hhvm-fcgi::default' do
     end
   end
 
+  describe 'monit' do
+    before do
+      node.set['opsworks'] = {}
+    end
+
+    it 'is monitored by monit' do
+      expect(chef_run).to create_template('/etc/monit/conf.d/hhvm.monitrc')
+
+      expect(chef_run).to render_file('/etc/monit/conf.d/hhvm.monitrc')
+        .with_content(
+          include("/etc/init.d/#{node['hhvm-fcgi']['service_name']}")
+        )
+        .with_content(
+          include("check process hhvm-server with pidfile \"#{node['hhvm-fcgi']['pid_file']}\"")
+        )
+    end
+  end
+
   describe 'debug' do
     before do
       node.set['hhvm-fcgi']['build'] = '-dbg'

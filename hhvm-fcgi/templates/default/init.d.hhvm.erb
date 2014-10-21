@@ -18,9 +18,9 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="HHVM FastCGI Daemon"
-NAME=hhvm
+NAME=<%= node['hhvm-fcgi']['service_name'] %>
 DAEMON=/usr/bin/hhvm
-PIDFILE=/var/run/hhvm/pid
+PIDFILE=<%= node['hhvm-fcgi']['pid_file'] %>
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
