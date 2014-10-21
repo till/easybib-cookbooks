@@ -28,4 +28,4 @@ execute "echo 'checking if HAProxy is not running - if so start it'" do
   notifies :start, 'service[haproxy]'
 end
 
-include_recipe 'haproxy::monit'
+# include_recipe 'haproxy::monit'
