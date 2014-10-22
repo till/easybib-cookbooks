@@ -20,6 +20,9 @@ default['hhvm-fcgi']['prefix'] = ''
 default['hhvm-fcgi']['tmpdir'] = '/tmp/hhvm'
 default['hhvm-fcgi']['logfile'] = '/var/log/hhvm/error.log'
 
+default['hhvm-fcgi']['pid_file'] = '/var/run/hhvm/pid'
+default['hhvm-fcgi']['service_name'] = 'hhvm'
+
 default['hhvm-fcgi']['user'] = 'www-data'
 default['hhvm-fcgi']['group'] = 'www-data'
 

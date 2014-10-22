@@ -1,0 +1,101 @@
+# Fail2Ban configuration file.
+#
+# The configuration here inherits from /etc/fail2ban/jail.conf. Any setting
+# omitted here will take it's value from that file
+#
+# Author: Yaroslav O. Halchenko <debian@onerussian.com>
+#
+#
+
+# The DEFAULT allows a global definition of the options. They can be overridden
+# in each jail afterwards.
+
+[DEFAULT]
+
+# "ignoreip" can be an IP address, a CIDR mask or a DNS host
+ignoreip = <%= node['fail2ban']['ignoreip']  %>
+findtime = <%= node['fail2ban']['findtime'] %>
+bantime  = <%= node['fail2ban']['bantime'] %>
+maxretry = <%= node['fail2ban']['maxretry'] %>
+
+# "backend" specifies the backend used to get files modification. Available
+# options are "gamin", "polling" and "auto".
+# yoh: For some reason Debian shipped python-gamin didn't work as expected
+#      This issue left ToDo, so polling is default backend for now
+backend = <%= node['fail2ban']['backend'] %>
+
+#
+# Destination email address used solely for the interpolations in
+# jail.{conf,local} configuration files.
+destemail = <%= node['fail2ban']['email'] %>
+
+#
+# ACTIONS
+#
+
+# Default banning action (e.g. iptables, iptables-new,
+# iptables-multiport, shorewall, etc) It is used to define
+# action_* variables. Can be overridden globally or per
+# section within jail.local file
+banaction = <%= node['fail2ban']['banaction'] %>
+
+# email action. Since 0.8.1 upstream fail2ban uses sendmail
+# MTA for the mailing. Change mta configuration parameter to mail
+# if you want to revert to conventional 'mail'.
+mta = <%= node['fail2ban']['mta'] %>
+
+# Default protocol
+protocol = <%= node['fail2ban']['protocol'] %>
+
+# Specify chain where jumps would need to be added in iptables-* actions
+chain = <%= node['fail2ban']['chain'] %>
+
+#
+# Action shortcuts. To be used to define action parameter
+
+# The simplest action to take: ban only
+action_ = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+
+# ban & send an e-mail with whois report to the destemail.
+action_mw = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+              %(mta)s-whois[name=%(__name__)s, dest="%(destemail)s", protocol="%(protocol)s", chain="%(chain)s"]
+
+# ban & send an e-mail with whois report and relevant log lines
+# to the destemail.
+action_mwl = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+               %(mta)s-whois-lines[name=%(__name__)s, dest="%(destemail)s", logpath=%(logpath)s, chain="%(chain)s"]
+
+# Choose default action.  To change, just override value of 'action' with the
+# interpolation to the chosen action shortcut (e.g.  action_mw, action_mwl, etc) in jail.local
+# globally (section [DEFAULT]) or per specific section
+action = %(<%= node['fail2ban']['action'] %>)s
+
+#
+# JAILS
+#
+
+# Next jails can inherit from the configuration in /etc/fail2ban/jail.conf.
+# Enable any defined in that file jail by including
+#
+# [SECTION_NAME]
+# enabled = true
+#
+# Optionally you may override any other parameter (e.g. banaction,
+# action, port, logpath, etc) in that section within jail.local
+
+
+<% @node['fail2ban']['services'].each do |service, param| %>
+[<%= service %>]
+
+enabled = <%= param['enabled'] %>
+<% %w{ port filter logpath findtime bantime maxretry protocol banaction }.each do |key| %>
+<% if param[key] %>
+<%=key%> = <%= param[key] %>
+<% end %>
+<% end %>
+<% if param['action'] %>
+action = %(<%= param['action'] %>)s
+<% end %>
+
+<% end %>
+

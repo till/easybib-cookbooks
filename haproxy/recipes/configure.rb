@@ -20,7 +20,11 @@ template '/etc/haproxy/haproxy.cfg' do
   owner 'root'
   group 'root'
   mode 0644
-  notifies :restart, 'service[haproxy]'
+  notifies :reload, 'service[haproxy]'
+end
+
+service 'haproxy' do
+  action [:enable, :start]
 end
 
 execute "echo 'checking if HAProxy is not running - if so start it'" do

@@ -1,4 +1,4 @@
-upstream <%=@upstream%>_phpfpm {
+upstream <%=@upstream_name%>_phpfpm {
     server  <%=node["hhvm-fcgi"]["listen"]["ip"]%>:<%=node["hhvm-fcgi"]["listen"]["port"]%>;
 }
 
@@ -31,7 +31,7 @@ server {
     <% end %>
 
 <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
-        "upstream" => @upstream,
+        "upstream" => @upstream_name,
         "health_check" => @health_check
     } %>
 
@@ -39,7 +39,7 @@ server {
 <%= render "partials/php-routes-default.erb", :cookbook => 'nginx-app', :variables => {
         "php_bypass_static_content" => true,
         "routes_enabled" => @routes_enabled,
-        "upstream" => @upstream,
+        "upstream" => @upstream_name,
         "env_conf" => @env_conf,
         "access_log" => @access_log,
         "default_router" => @default_router,
@@ -49,7 +49,7 @@ server {
 <%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
         "php_bypass_static_content" => true,
         "routes_enabled" => @routes_enabled,
-        "upstream" => @upstream,
+        "upstream" => @upstream_name,
         "env_conf" => @env_conf,
         "access_log" => @access_log,
         "default_router" => @default_router,
