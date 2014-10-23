@@ -1,8 +1,6 @@
-codename = 'trusty' # node["lsb"]["codename"]
-
 apt_repository 'qafoo' do
   uri node['qafoo-profiler']['ppa']
-  distribution codename
+  distribution 'debian'
   components ['main']
   key node['qafoo-profiler']['key']
 end
@@ -15,7 +13,17 @@ include_recipe 'qafoo-profiler::service'
 
 qprofd_flags = []
 qprofd_flags << node['qafoo-profiler']['flags']
-qprofd_flags << "--hostname='#{get_normalized_cluster_name}.#{node['opsworks']['instance']['hostname']}'"
+qprofd_flags << " --hostname='#{node['opsworks']['instance']['hostname']}.#{get_normalized_cluster_name}'"
+
+unless node.fetch('easybib_deploy', {})['envtype'].nil?
+  map = {
+    'vagrant' => 'development',
+    'playground' => 'staging',
+    'production' => 'production'
+  }
+  env = map[node['easybib_deploy']['envtype']]
+  qprofd_flags << " --env=#{env}"
+end
 
 template '/etc/default/qprofd' do
   mode 0644
