@@ -62,6 +62,11 @@ check_run_dir() {
         mkdir -p -m0755 /var/run/hhvm
         chown $RUN_AS_USER:$RUN_AS_GROUP /var/run/hhvm
     fi
+
+    if [ ! -d <%= @config['tmpdir'] %> ]; then
+      mkdir -p <%= @config['tmpdir'] %>
+      chown -R $RUN_AS_USER:$RUN_AS_GROUP <%= @config['tmpdir'] %>
+    fi
 }
 
 do_start()
