@@ -89,7 +89,7 @@ action :compile do
     'phpize',
     configure,
     'make',
-    "cp modules/#{extension}.so #{new_resource.source_dir}"
+    "cp modules/#{extension}.so #{get_extension_dir}"
   ]
 
   commands.each do |command|
