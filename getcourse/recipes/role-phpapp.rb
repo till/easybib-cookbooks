@@ -15,6 +15,7 @@ stack_applications.each do |app|
     include_recipe 'php-intl'
     include_recipe 'php-gearman'
     include_recipe 'php-mysqli::configure'
+    include_recipe 'php-imagick'
 
     include_recipe 'snooze'
     include_recipe 'bash::bashrc'
