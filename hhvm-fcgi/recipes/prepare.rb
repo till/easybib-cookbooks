@@ -22,4 +22,7 @@ template '/etc/init.d/hhvm' do
   source 'init.d.hhvm.erb'
   owner  node['hhvm-fcgi']['user']
   group  node['hhvm-fcgi']['group']
+  variables(
+    :config => node['hhvm-fcgi']
+  )
 end
