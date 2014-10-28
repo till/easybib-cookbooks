@@ -1,0 +1,16 @@
+*** Probes ***
+<%
+@probes.each do |probe|
+  probe.each do |k, v|
+    if k == 'name'
+-%>
+<%= "+ #{v}" %>
+<%
+    else
+-%>
+<%= "#{k} = #{v}" %>
+<%
+    end
+  end
+end
+-%>
