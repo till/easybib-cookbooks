@@ -32,7 +32,7 @@ default['smokeping'] = {
   }
 }
 
-#default['config']['databases'] = [
+# default['config']['databases'] = [
 #  {
 #    'host' => 'couchdb.something.com',
 #    'menu' => 'couchdb',
@@ -45,4 +45,4 @@ default['smokeping'] = {
 #    'probe' => 'Curl',
 #    'title' => 'couchdb'
 #  }
-#]
+# ]

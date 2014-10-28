@@ -20,20 +20,20 @@ end
 
 config = node['smokeping']['config']
 
-chef_gem "aws-sdk" unless config['aws']['access-key-id'].empty?
+chef_gem 'aws-sdk' unless config['aws']['access-key-id'].empty?
 
-template "/etc/smokeping/config.d/Probes" do
+template '/etc/smokeping/config.d/Probes' do
   mode 0644
-  source "probes.erb"
+  source 'probes.erb'
   variables(
     :probes => config['probes']
   )
   notifies :restart, 'service[smokeping]'
 end
 
-template "/etc/smokeping/config.d/Targets" do
+template '/etc/smokeping/config.d/Targets' do
   mode 0644
-  source "targets.erb"
+  source 'targets.erb'
   variables(
     :menu => config['menu'],
     :targets => config['targets']
