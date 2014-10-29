@@ -1,0 +1,24 @@
+Vagrant::Config.run do |config|
+
+  config.vm.boot_mode = :gui
+  config.vm.box = "easybib-ubuntu-14.04.1_vbox-4.3.12_chef-11.10.4_0.1"
+
+  config.vm.network :hostonly, "33.33.33.124"
+
+    config.vm.customize [
+        "modifyvm", :id,
+        "--name", "Vagrant Cookbook Testbox",
+        "--memory", "256"
+    ]
+
+  #config.vm.provision :shell, :inline => "sudo apt-spy2 fix --launchpad --country=de --commit"
+  config.vm.provision :shell, :inline => "sudo apt-get update -y"
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = "./../../"
+    chef.add_recipe "smokeping"
+    #chef.json = JSON.parse(File.read("./deploy.json"))
+
+    chef.log_level = :debug
+  end
+end
