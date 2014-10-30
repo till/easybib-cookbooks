@@ -18,19 +18,19 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="HHVM FastCGI Daemon"
-NAME=<%= node['hhvm-fcgi']['service_name'] %>
+NAME=<%= @config['service_name'] %>
 DAEMON=/usr/bin/hhvm
-PIDFILE=<%= node['hhvm-fcgi']['pid_file'] %>
+PIDFILE=<%= @config['pid_file'] %>
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
 
 # Default values. This values can be overwritten in '/etc/default/hhvm'
-CONFIG_FILE="<%= node["hhvm-fcgi"]["config"]["hhvm"]["file"]%>"
-SYSTEM_CONFIG_FILE="<%= node["hhvm-fcgi"]["config"]["fcgi"]["file"]%>"
-RUN_AS_USER="<%= node["hhvm-fcgi"]["user"]%>"
-RUN_AS_GROUP="<%= node["hhvm-fcgi"]["group"]%>"
+CONFIG_FILE="<%= @config['config']['hhvm']['file'] %>"
+SYSTEM_CONFIG_FILE="<%= @config['config']['fcgi']['file'] %>"
+RUN_AS_USER="<%= @config['user'] %>"
+RUN_AS_GROUP="<%= @config['group'] %>"
 ADDITIONAL_ARGS=""
 
 # Read configuration variable file if it is present
@@ -61,6 +61,11 @@ check_run_dir() {
     if [ "/var/run/hhvm" = "${PIDFILE_BASEDIR}" ] && [ ! -d /var/run/hhvm ]; then
         mkdir -p -m0755 /var/run/hhvm
         chown $RUN_AS_USER:$RUN_AS_GROUP /var/run/hhvm
+    fi
+
+    if [ ! -d <%= @config['tmpdir'] %> ]; then
+      mkdir -p <%= @config['tmpdir'] %>
+      chown -R $RUN_AS_USER:$RUN_AS_GROUP <%= @config['tmpdir'] %>
     fi
 }
 
