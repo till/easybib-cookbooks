@@ -5,16 +5,26 @@
         {
           "databases" : [
             {
-              "host" : "bar.cloudant.com",
-              "menu" : "bar",
-              "probe" : "FPing",
-              "title" : "bar"
-            },
-            {
               "host" : "foo.cloudant.com",
               "menu" : "foo",
               "probe" : "FPing",
-              "title" : "foo"
+              "title" : "cloudant foo"
+            }
+          ]
+        },
+        {
+          "websites" : [
+            {
+              "host" : "https://status.github.com/",
+              "menu" : "github",
+              "probe" : "Curl",
+              "title" : "Github Status"
+            },
+            {
+              "host" : "http://status.twitter.com/",
+              "menu" : "twitter",
+              "probe" : "Curl",
+              "title" : "Twitter Status"
             }
           ]
         }
