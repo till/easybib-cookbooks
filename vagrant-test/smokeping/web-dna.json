@@ -1,0 +1,24 @@
+{
+  "smokeping" : {
+    "config": {
+      "targets": [
+        {
+          "databases" : [
+            {
+              "host" : "bar.cloudant.com",
+              "menu" : "bar",
+              "probe" : "FPing",
+              "title" : "bar"
+            },
+            {
+              "host" : "foo.cloudant.com",
+              "menu" : "foo",
+              "probe" : "FPing",
+              "title" : "foo"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
