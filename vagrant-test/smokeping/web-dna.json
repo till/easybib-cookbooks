@@ -1,0 +1,34 @@
+{
+  "smokeping" : {
+    "config": {
+      "targets": [
+        {
+          "databases" : [
+            {
+              "host" : "foo.cloudant.com",
+              "menu" : "foo",
+              "probe" : "FPing",
+              "title" : "cloudant foo"
+            }
+          ]
+        },
+        {
+          "websites" : [
+            {
+              "host" : "status.github.com",
+              "menu" : "github",
+              "probe" : "Curl",
+              "title" : "Github Status"
+            },
+            {
+              "host" : "status.twitter.com",
+              "menu" : "twitter",
+              "probe" : "Curl",
+              "title" : "Twitter Status"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
