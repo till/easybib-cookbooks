@@ -9,6 +9,15 @@ default['smokeping'] = {
       'remark' => 'Welcome to smokeping',
       'title' => 'Network Latency Grapher'
     },
+    'pathnames' => {
+      'sendmail' => '/usr/sbin/sendmail',
+      'imgcache' => '/var/cache/smokeping/images',
+      'imgurl' => '../smokeping/images',
+      'datadir' => '/var/lib/smokeping',
+      'piddir' => '/var/run/smokeping',
+      'smokemail' => '/etc/smokeping/smokemail',
+      'tmail' => '/etc/smokeping/tmail'
+    },
     'probes' => [
       {
         'name' => 'FPing',
@@ -32,7 +41,7 @@ default['smokeping'] = {
   }
 }
 
-# default['config']['databases'] = [
+# default['config']['targets']['databases'] = [
 #  {
 #    'host' => 'couchdb.something.com',
 #    'menu' => 'couchdb',

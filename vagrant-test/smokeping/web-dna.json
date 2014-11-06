@@ -1,6 +1,9 @@
 {
   "smokeping" : {
     "config": {
+      "pathnames": {
+        "datadir": "/var/smokeping_rrd"
+      },
       "targets": [
         {
           "databases" : [

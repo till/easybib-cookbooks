@@ -2,7 +2,7 @@
 
 # Do you like what you see?
 
-If you want to work with us, please get in touch: [claudia@imagineeasy.com](mailto:claudia@imagineeasy.com)!
+If you want to work with us, please get in touch: [till@imagineeasy.com](mailto:till@imagineeasy.com)!
 
 # Cookbooks!
 
