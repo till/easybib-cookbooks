@@ -23,11 +23,12 @@ config = node['smokeping']['config']
 
 chef_gem 'aws-sdk' unless config['aws']['access-key-id'].empty?
 
-config['pathnames'].each do |config, path|
-  next unless path[0,1] == '/'
+config['pathnames'].each do |key, path|
+  next unless path[0, 1] == '/'
   directory path do
     mode 0755
     user 'smokeping'
+    recursive  true
   end
 end
 
