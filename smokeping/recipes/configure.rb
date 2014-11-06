@@ -9,6 +9,7 @@ cookbook_file "#{node['nginx-app']['config_dir']}/conf.d/smokeping.conf" do
 end
 
 smokeping_dir = '/usr/share/smokeping/www'
+smokeping_etc = '/etc/smokeping/config.d'
 
 link '/usr/share/nginx/html/smokeping' do
   to smokeping_dir
@@ -22,21 +23,38 @@ config = node['smokeping']['config']
 
 chef_gem 'aws-sdk' unless config['aws']['access-key-id'].empty?
 
-template '/etc/smokeping/config.d/Probes' do
+config['pathnames'].each do |config, path|
+  next unless path[0,1] == '/'
+  directory path do
+    mode 0755
+    user 'smokeping'
+  end
+end
+
+template "#{smokeping_etc}/pathnames" do
+  mode 0644
+  source 'pathnames.erb'
+  variables(
+    :pathnames => config['pathnames']
+  )
+  notifies :reload, 'service[smokeping]'
+end
+
+template "#{smokeping_etc}/Probes" do
   mode 0644
   source 'probes.erb'
   variables(
     :probes => config['probes']
   )
-  notifies :restart, 'service[smokeping]'
+  notifies :reload, 'service[smokeping]'
 end
 
-template '/etc/smokeping/config.d/Targets' do
+template "#{smokeping_etc}/Targets" do
   mode 0644
   source 'targets.erb'
   variables(
     :menu => config['menu'],
     :targets => config['targets']
   )
-  notifies :restart, 'service[smokeping]'
+  notifies :reload, 'service[smokeping]'
 end
