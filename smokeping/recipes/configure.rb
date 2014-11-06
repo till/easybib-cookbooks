@@ -26,8 +26,9 @@ chef_gem 'aws-sdk' unless config['aws']['access-key-id'].empty?
 config['pathnames'].each do |key, path|
   next unless path[0, 1] == '/'
   directory path do
-    mode 0755
+    mode 0775
     user 'smokeping'
+    group 'www-data'
     recursive  true
   end
 end
