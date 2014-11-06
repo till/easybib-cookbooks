@@ -2,7 +2,7 @@
   "smokeping" : {
     "config": {
       "pathnames": {
-        "datadir": "/vagrant/smokeping_rrd"
+        "datadir": "/var/smokeping_rrd"
       },
       "targets": [
         {
