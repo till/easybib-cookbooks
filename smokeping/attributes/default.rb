@@ -34,7 +34,7 @@ default['smokeping'] = {
         'name' => 'Curl',
         'binary' => '/usr/bin/curl',
         'step' => 60,
-        'urlformat' => '%host%/'
+        'urlformat' => 'http://%host%/'
       }
     ],
     'targets' => []
