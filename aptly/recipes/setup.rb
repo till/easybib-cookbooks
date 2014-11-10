@@ -21,3 +21,21 @@ template '/etc/aptly.conf' do
     )
   action :create
 end
+
+unless node.fetch('aptly', {}).fetch('gpg', {})['private_key'].nil?
+  template '/root/gpgkey.asc' do
+    source 'key.erb'
+    owner 'root'
+    group 'root'
+    mode 00600
+    variables(
+      :content => node['aptly']['gpg']['private_key']
+      )
+    action :create
+  end
+  execute 'Installing private gpg key' do
+    user 'root'
+    cwd '/root'
+    command 'gpg --import /root/gpgkey.asc'
+  end
+end
