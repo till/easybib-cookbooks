@@ -34,13 +34,7 @@ default['smokeping'] = {
         'name' => 'Curl',
         'binary' => '/usr/bin/curl',
         'step' => 60,
-        'urlformat' => 'http://%host%/'
-      },
-      {
-        'name' => 'Curl-SSL',
-        'binary' => '/usr/bin/curl',
-        'step' => 60,
-        'urlformat' => 'https://%host%/'
+        'urlformat' => '%host%/'
       }
     ],
     'targets' => []
