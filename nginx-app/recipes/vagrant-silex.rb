@@ -23,9 +23,15 @@ node['vagrant']['applications'].each do |app_name, app_config|
     notifies :restart, 'service[nginx]', :delayed
   end
 
+  stackname = 'easybib'
+
+  if %w(scholar feature_flags).include?(app_name)
+    stackname = 'scholar'
+  end
+
   easybib_envconfig app_name do
     # we are using stackname easybib since both is served from www-vagrant
-    stackname 'easybib'
+    stackname stackname
   end
 
 end

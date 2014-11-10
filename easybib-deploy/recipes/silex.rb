@@ -11,8 +11,16 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
   end
 
+  if application == 'featureflags'
+    next unless allow_deploy(application, 'featureflags', 'nginxphpapp')
+  end
+
   if application == 'id'
     next unless allow_deploy(application, 'id', 'nginxphpapp')
+  end
+
+  if application == 'scholar'
+    next unless allow_deploy(application, 'scholar', 'nginxphpapp')
   end
 
   Chef::Log.info("deploy::#{application} - Deployment started.")
