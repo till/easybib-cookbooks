@@ -4,5 +4,8 @@ check system <%= @hostname %>
     if memory usage > 75% then alert
     if cpu usage (wait) > 50% then alert
     
-check device rootfs with path /
+check filesystem rootfs with path /
+    if space usage > 80% for 5 times within 15 cycles then alert
+
+check filesystem mnt with path /mnt
     if space usage > 80% for 5 times within 15 cycles then alert
