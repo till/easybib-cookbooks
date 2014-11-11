@@ -1,0 +1,39 @@
+{
+  "smokeping" : {
+    "config": {
+      "pathnames": {
+        "datadir": "/var/smokeping_rrd"
+      },
+      "targets": [
+        {
+          "databases" : [
+            {
+              "host" : "foo.cloudant.com",
+              "menu" : "foo",
+              "probe" : "FPing",
+              "title" : "cloudant foo"
+            }
+          ]
+        },
+        {
+          "websites" : [
+            {
+              "host" : "status.github.com",
+              "menu" : "github",
+              "probe" : "Curl",
+              "title" : "Github Status",
+              "urlformat" : "https://%host%",
+              "extraargs" : "-6 --head --user user:password"
+            },
+            {
+              "host" : "status.twitter.com",
+              "menu" : "twitter",
+              "probe" : "Curl",
+              "title" : "Twitter Status"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

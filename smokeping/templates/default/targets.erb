@@ -19,9 +19,14 @@ title = <%= name %>
 ++ <%= target['menu'] %>
 probe = <%= target['probe'] %>
 host = <%= target['host'] %>
-menu = <%= target['menu'] %>
 title = <%= target['title'] %>
 
+<% if target['urlformat'] %>
+urlformat = <%= target['urlformat'] %>
+<% end %>
+<% if target['extraargs'] %>
+extraargs = <%= target['extraargs'] %>
+<% end %>
 <%
     end
   end

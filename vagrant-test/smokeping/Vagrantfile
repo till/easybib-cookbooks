@@ -17,7 +17,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
     chef.add_recipe "smokeping"
-    #chef.json = JSON.parse(File.read("./deploy.json"))
+    chef.json.merge!(JSON.parse(File.read("#{File.expand_path(File.dirname(__FILE__))}/web-dna.json")))
 
     chef.log_level = :debug
   end
