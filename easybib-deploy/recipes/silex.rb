@@ -35,6 +35,7 @@ node['deploy'].each do |application, deploy|
     config_template 'silex.conf.erb'
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
+    htpasswd "#{deploy['deploy_to']}/current/htpasswd"
     notifies :restart, 'service[nginx]', :delayed
   end
 
