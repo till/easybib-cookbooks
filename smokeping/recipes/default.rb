@@ -10,10 +10,17 @@ end
   fping curl libauthen-radius-perl libnet-ldap-perl
   libnet-dns-perl libio-socket-ssl-perl libnet-telnet-perl
   libsocket6-perl libio-socket-inet6-perl rrdtool sendmail
+  tcptraceroute
 ).each do |pkg|
   package pkg do
     action :install
   end
+end
+
+cookbook_file 'tcpping' do
+  path   '/usr/bin/tcpping'
+  mode   '0755'
+  action :create_if_missing
 end
 
 # for nginx
