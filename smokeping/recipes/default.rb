@@ -16,9 +16,11 @@ end
     action :install
   end
 end
-remote_file "/usr/bin/tcpping" do
-    source "http://www.vdberg.org/~richard/tcpping"
-    mode   "0755"
+
+cookbook_file 'tcpping' do
+  path   '/usr/bin/tcpping'
+  mode   '0755'
+  action :create_if_missing
 end
 
 # for nginx
