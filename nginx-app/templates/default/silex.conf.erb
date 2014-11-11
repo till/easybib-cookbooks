@@ -32,6 +32,12 @@ server {
         set $fastcgi_skipcache 0;
     }
 
+    <% unless @node.fetch('easybib-deploy', {}).fetch('scholar', {})['asset_root'].nil? -%>
+<%= render "partials/production-asset-route.erb", :cookbook => 'nginx-app', :variables => {
+    "asset_root" => @node['easybib-deploy']['scholar']['asset_root']
+    } %>
+    <% end %>
+
 <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
         "upstream" => @upstream_name,
         "health_check" => @health_check
