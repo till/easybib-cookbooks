@@ -20,13 +20,16 @@ title = <%= name %>
 probe = <%= target['probe'] %>
 host = <%= target['host'] %>
 title = <%= target['title'] %>
-
+<% if target['port'] %>
+port = <%= target['port'] %>
+<% end %>
 <% if target['urlformat'] %>
 urlformat = <%= target['urlformat'] %>
 <% end %>
 <% if target['extraargs'] %>
 extraargs = <%= target['extraargs'] %>
 <% end %>
+
 <%
     end
   end
