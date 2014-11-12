@@ -7,7 +7,7 @@ node['deploy'].each do |application, deploy|
   when 'infolit'
     next unless allow_deploy(application, 'infolit', 'nginxphpapp')
 
-  when 'rr-webeval'
+  when 'rr_webeval'
     next unless allow_deploy(application, 'rr_webeval', 'nginxphpapp')
 
   else
