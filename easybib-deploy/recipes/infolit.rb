@@ -8,7 +8,7 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'infolit', 'nginxphpapp')
 
   when 'rr-webeval'
-    next unless allow_deploy(application, 'rr-webeval', 'nginxphpapp')
+    next unless allow_deploy(application, 'rr_webeval', 'nginxphpapp')
 
   else
     Chef::Log.info("deploy::infolit - #{application} skipped")
