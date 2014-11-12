@@ -29,8 +29,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'infolit', 'nginxphpapp')
     nginx_config = 'infolit.conf.erb'
 
-  when 'rr-webeval'
-    next unless allow_deploy(application, 'rr-webeval', 'nginxphpapp')
+  when 'rr_webeval'
+    next unless allow_deploy(application, 'rr_webeval', 'nginxphpapp')
     nginx_config = 'silex.conf.erb'
     config_name = 'rr-webeval.conf'
 
