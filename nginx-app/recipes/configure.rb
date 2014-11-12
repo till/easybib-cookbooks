@@ -25,15 +25,6 @@ node['deploy'].each do |application, deploy|
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
 
-  when 'infolit'
-    next unless allow_deploy(application, 'infolit', 'nginxphpapp')
-    nginx_config = 'infolit.conf.erb'
-
-  when 'rr_webeval'
-    next unless allow_deploy(application, 'rr_webeval', 'nginxphpapp')
-    nginx_config = 'silex.conf.erb'
-    config_name = 'rr-webeval.conf'
-
   when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
 
