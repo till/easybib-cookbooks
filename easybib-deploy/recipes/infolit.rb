@@ -11,7 +11,7 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'rr-webeval', 'nginxphpapp')
 
   else
-    Chef::Log.info("deploy::infolit - #{application} (in #{cluster_name}) skipped")
+    Chef::Log.info("deploy::infolit - #{application} skipped")
     next
   end
 
