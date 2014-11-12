@@ -84,7 +84,7 @@ module EasyBib
 
       if ::EasyBib.is_aws(node)
         data['deploy_dir'] = node['deploy'][appname]['deploy_to']
-        data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
+        data['app_dir'] = node['deploy'][appname]['deploy_to'] + 'current/'
         data['doc_root_dir'] = "#{data['app_dir']}#{node['deploy'][appname]['document_root']}"
       else
         data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)

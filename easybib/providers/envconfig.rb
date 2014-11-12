@@ -16,7 +16,7 @@ action :create do
   Chef::Log.info("writing envconfig for #{app} to #{path}, stackname #{stackname}")
 
   %w(ini php sh).each do |format|
-    template "#{path}/.deploy_configuration.#{format}" do
+    template "#{path}.deploy_configuration.#{format}" do
       mode   '0644'
       cookbook 'easybib'
       source 'empty.erb'
