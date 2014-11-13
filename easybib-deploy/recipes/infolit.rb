@@ -30,7 +30,7 @@ node['deploy'].each do |application, deploy|
   # the webserver config was named 'easybib.com.conf' then, it now is infolit.conf
   # this is "one time use only", can be removed in december 2014
   file '/etc/nginx/sites-enabled/easybib.com.conf' do
-    action :remove
+    action :delete
     only_if { ::File.exist?('/etc/nginx/sites-enabled/easybib.com.conf') }
   end
 
