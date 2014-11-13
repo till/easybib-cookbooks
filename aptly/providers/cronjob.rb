@@ -8,7 +8,8 @@ action :create do
 
   cron_d 'aptly_sync_launchpad' do
     action :create
-    minute '*/30'
+    minute '0'
+    hour '5'
     user 'root'
     command cron_command
     path node['easybib_deploy']['cron_path']
