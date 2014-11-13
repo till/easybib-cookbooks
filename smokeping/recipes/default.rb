@@ -10,7 +10,7 @@ end
   fping curl libauthen-radius-perl libnet-ldap-perl
   libnet-dns-perl libio-socket-ssl-perl libnet-telnet-perl
   libsocket6-perl libio-socket-inet6-perl rrdtool sendmail
-  tcptraceroute
+  tcptraceroute hping3
 ).each do |pkg|
   package pkg do
     action :install
@@ -20,6 +20,12 @@ end
 cookbook_file 'tcpping' do
   path   '/usr/bin/tcpping'
   mode   '0755'
+  action :create_if_missing
+end
+
+cookbook_file 'HPing.pm' do
+  path   '/usr/share/perl5/Smokeping/probes/HPing.pm'
+  mode   '0644'
   action :create_if_missing
 end
 
