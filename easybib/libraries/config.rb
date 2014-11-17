@@ -252,10 +252,7 @@ module EasyBib
     end
 
     def build_config(format, var, value, section = nil)
-      if value.is_a?(String)
-        fail "The character \" is not supported as a value in the config" if value.match('"')
-        fail "The character \' is not supported as a value in the config" if value.match("'")
-      end
+      validate_value(value)
 
       case format
       when 'nginx'
@@ -270,6 +267,13 @@ module EasyBib
         build_php_config(var, value, section)
       else
         fail "Unknown configuration type: #{format}."
+      end
+    end
+
+    def validate_value(value)
+      if value.is_a?(String)
+        fail "The character \" is not supported as a value in the config" if value.match('"')
+        fail "The character \' is not supported as a value in the config" if value.match("'")
       end
     end
 
