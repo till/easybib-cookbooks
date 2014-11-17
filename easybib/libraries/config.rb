@@ -254,6 +254,7 @@ module EasyBib
     def build_config(format, var, value, section = nil)
       if value.is_a?(String)
         fail "The character \" is not supported as a value in the config" if value.match('"')
+        fail "The character \' is not supported as a value in the config" if value.match("'")
       end
 
       case format
@@ -283,10 +284,10 @@ module EasyBib
 
     def build_php_config(key, value, section = nil)
       if value.is_a?(Array)
-        value = value.join('", "')
-        return "    '#{key}'=> [\"#{value}\"],\n"
+        value = value.join("', '")
+        return "    '#{key}'=> ['#{value}'],\n"
       end
-      "    '#{key}'=>\"#{value}\",\n"
+      "    '#{key}'=>'#{value}',\n"
     end
 
     def build_shell_config(key, value, section = nil)

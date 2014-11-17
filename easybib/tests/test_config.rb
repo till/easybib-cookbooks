@@ -217,20 +217,20 @@ fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
     assert_equal("<?php
 return [
   'deployed_application' => [
-    'appname'=>\"some_app\",
-    'domains'=>\"foo.tld bar.tld\",
-    'deploy_dir'=>\"/tmp/bla/\",
-    'app_dir'=>\"/tmp/bla/current/\",
-    'doc_root_dir'=>\"/tmp/bla/current/www/\",
+    'appname'=>'some_app',
+    'domains'=>'foo.tld bar.tld',
+    'deploy_dir'=>'/tmp/bla/',
+    'app_dir'=>'/tmp/bla/current/',
+    'doc_root_dir'=>'/tmp/bla/current/www/',
   ],
   'deployed_stack' => [
-    'stackname'=>\"opsworks-stack\",
-    'environment'=>\"playground\",
+    'stackname'=>'opsworks-stack',
+    'environment'=>'playground',
   ],
   'settings' => [
-    'BLA_SOMEKEY'=>\"somevalue\",
-    'BLA_SOMEGROUP_SOMEOTHERKEY'=>\"someothervalue\",
-    'BLA_SOMEARRAY'=> [\"server1\", \"server2\"],
+    'BLA_SOMEKEY'=>'somevalue',
+    'BLA_SOMEGROUP_SOMEOTHERKEY'=>'someothervalue',
+    'BLA_SOMEARRAY'=> ['server1', 'server2'],
   ],
 ];",
                  ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
