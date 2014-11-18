@@ -17,6 +17,12 @@ action :setup do
     deploy_dir = new_resource.deploy_dir
   end
 
+  if new_resource.app_dir.nil?
+    app_dir = ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'app_dir')
+  else
+    app_dir = new_resource.app_dir
+  end
+
   config_name = get_config_name(new_resource)
 
   if new_resource.nginx_extras.nil?
@@ -85,6 +91,7 @@ action :setup do
       :php_user => node['php-fpm']['user'],
       :domain_name => domain_name,
       :doc_root => deploy_dir,
+      :app_dir => app_dir,
       :access_log => access_log,
       :nginx_extra => nginx_extras,
       :nginx_local_conf => nginx_local_conf,

@@ -7,6 +7,7 @@ nginx_config_dir = node['nginx-app']['config_dir']
 password_protected = false
 
 nginx_config = node['nginx-app']['conf_file']
+config_name = 'easybib.com.conf'
 
 node['deploy'].each do |application, deploy|
 
@@ -24,10 +25,6 @@ node['deploy'].each do |application, deploy|
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
 
-  when 'infolit'
-    next unless allow_deploy(application, 'infolit', 'nginxphpapp')
-    nginx_config = 'infolit.conf.erb'
-
   when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
 
@@ -40,7 +37,7 @@ node['deploy'].each do |application, deploy|
   end
 
   template "render vhost: #{application}" do
-    path   "#{nginx_config_dir}/sites-enabled/easybib.com.conf"
+    path   "#{nginx_config_dir}/sites-enabled/#{config_name}"
     source nginx_config
     mode   '0755'
     owner  node['nginx-app']['user']
