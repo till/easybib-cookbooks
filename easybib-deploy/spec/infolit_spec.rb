@@ -1,18 +1,18 @@
 require 'chefspec'
 
-describe 'nginx-app::configure' do
+describe 'easybib-deploy::infolit' do
 
   let(:runner) do
     ChefSpec::Runner.new(
-      :step_into => ['nginx_app_config']
+      :step_into => %w(nginx_app_config easybib_nginx)
     )
   end
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node)     { runner.node }
 
-  let(:vhost) { '/etc/nginx/sites-enabled/easybib.com.conf' }
+  let(:vhost) { '/etc/nginx/sites-enabled/infolit.conf' }
   let(:stack) { 'Stack Name' }
-  let(:template_name) { 'render vhost: infolit' }
+  let(:template_name) { '/etc/nginx/sites-enabled/infolit.conf' }
   let(:conf_name) { 'infolit.conf.erb' }
 
   describe 'infolit deployment' do
@@ -27,7 +27,8 @@ describe 'nginx-app::configure' do
 
       node.set['deploy']['infolit'] = {
         'deploy_to' => '/srv/www/infolit',
-        'document_root' => 'www'
+        'document_root' => 'www',
+        'domains' => ['foo.tld']
       }
 
       node.set['infolit']['domain'] = 'infolit.tld'

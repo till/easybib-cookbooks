@@ -11,8 +11,16 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
   end
 
+  if application == 'featureflags'
+    next unless allow_deploy(application, 'featureflags', 'nginxphpapp')
+  end
+
   if application == 'id'
     next unless allow_deploy(application, 'id', 'nginxphpapp')
+  end
+
+  if application == 'scholar'
+    next unless allow_deploy(application, 'scholar', 'nginxphpapp')
   end
 
   Chef::Log.info("deploy::#{application} - Deployment started.")
@@ -27,6 +35,7 @@ node['deploy'].each do |application, deploy|
     config_template 'silex.conf.erb'
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
+    htpasswd "#{deploy['deploy_to']}/current/htpasswd"
     notifies :restart, 'service[nginx]', :delayed
   end
 
