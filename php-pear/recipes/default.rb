@@ -40,7 +40,7 @@ end
 # fucking hack. remove when pear is newer than 1.9.4
 # see https://github.com/pear/pear-core/commit/8d569263eac91ad9484b45acb3a6381759138f3c#diff-b0dfa4abcb5cde685dae6b352ae38a17
 remote_file '/opt/easybib/pear/PEAR/REST.php' do
-  source 'https://github.com/pear/pear-core/blob/v1.9.5/PEAR.php'
+  source 'https://raw.githubusercontent.com/pear/pear-core/v1.9.5/PEAR.php'
   mode 0644
 end
 
