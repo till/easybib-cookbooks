@@ -7,7 +7,7 @@ template '/etc/monit/conf.d/haproxy.monitrc' do
   group  'root'
   variables(
     'pid_file' => '/var/run/haproxy.pid',
-    'app_name' => 'monit',
+    'app_name' => 'haproxy',
     'init'     => '/etc/init.d/haproxy'
   )
   notifies :restart, 'service[monit]'

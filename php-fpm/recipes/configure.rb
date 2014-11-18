@@ -130,3 +130,5 @@ template '/etc/logrotate.d/php' do
   notifies :enable, 'service[php-fpm]'
   notifies :start, 'service[php-fpm]'
 end
+
+include_recipe 'php-fpm::monit'
