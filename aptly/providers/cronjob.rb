@@ -5,7 +5,7 @@ action :create do
   s3_mirror = "#{node['aptly']['s3_mirror']}:#{node['aptly']['s3_mirror_prefix']}"
   pw = node['aptly']['sign_pass']
 
-  template ' #{path}/run.sh' do
+  template "#{path}/run.sh" do
     source 'run.sh.erb'
     cookbook 'aptly'
     owner 'root'
