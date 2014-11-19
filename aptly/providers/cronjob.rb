@@ -7,6 +7,7 @@ action :create do
 
   template ' #{path}/run.sh' do
     source 'run.sh.erb'
+    cookbook 'aptly'
     owner 'root'
     group 'root'
     mode 00700
