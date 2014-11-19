@@ -29,8 +29,8 @@ cookbook_file 'HPing.pm' do
   action :create_if_missing
 end
 
-bash "setcap hping" do
-  code "setcap cap_net_raw,cap_net_admin=eip /usr/sbin/hping3"
+bash 'setcap hping' do
+  code 'setcap cap_net_raw,cap_net_admin=eip /usr/sbin/hping3'
   user 'root'
 end
 
