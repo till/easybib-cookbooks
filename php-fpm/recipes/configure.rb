@@ -131,4 +131,6 @@ template '/etc/logrotate.d/php' do
   notifies :start, 'service[php-fpm]'
 end
 
-include_recipe 'php-fpm::monit'
+if is_aws
+  include_recipe 'php-fpm::monit'
+end
