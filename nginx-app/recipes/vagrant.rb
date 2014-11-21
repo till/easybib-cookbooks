@@ -2,6 +2,8 @@ unless node['vagrant']
   fail 'Vagrant only!'
 end
 
+app_dir = EasyBib::Config.get_appdata(node, 'www', 'app_dir')
+
 template '/etc/nginx/sites-enabled/easybib.com.conf' do
   source node['nginx-app']['conf_file']
   mode   '0755'
@@ -22,7 +24,8 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :upstream_name => 'www',
     :environment  => ::EasyBib.get_cluster_name(node),
     :doc_root     => ::EasyBib::Config.get_appdata(node, 'www', 'doc_root_dir'),
-    :app_dir      => ::EasyBib::Config.get_appdata(node, 'www', 'app_dir')
+    :app_dir      => app_dir,
+    :nginx_local_conf => "#{app_dir}/deploy/nginx.conf"
   )
   notifies :restart, 'service[nginx]', :delayed
 end
