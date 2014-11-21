@@ -41,6 +41,10 @@ server {
 
     rewrite ^(/favicon.ico)$ /static/images/favicon.ico;
 
+<% unless @nginx_local_conf.nil? -%>
+<%= render @nginx_local_conf, :local => true %>
+<% end -%>
+
 <% ['js', 'images', 'css'].each do |route_name| -%>
     location /<%=route_name%>/ {
         alias      <%= @app_dir %>app/modules/infolit/www/<%=route_name%>/;
