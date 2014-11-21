@@ -12,6 +12,9 @@ end
 
 chef_gem 'BibOpsworks' do
   action :install
+  only_if do
+    ::EasyBib.is_aws(node)
+  end
 end
 
 service 'nscd' do
