@@ -39,20 +39,16 @@ template "#{node['ezproxy']['install_dir']}/config.txt" do
   action :create
 end
 
-template "#{node['ezproxy']['install_dir']}/config.txt" do
-  source 'config.txt.erb'
-  owner 'root'
-  group 'root'
-  mode '0644'
-  variables(
-    :ezproxy_name => node['ezproxy']['name']
-  )
-  action :create
-end
-
 cookbook_file "#{node['ezproxy']['install_dir']}/user.txt" do
   source 'user.txt'
   mode "0644"
 end
+
+execute 'set up license' do
+  cwd node['ezproxy']['install_dir']
+  command "#{node['ezproxy']['install_dir']}/#{node['ezproxy']['bin_name']} -k #{node['ezproxy']['license']}"
+  not_if { node['ezproxy']['license'].nil? }
+end
+
 
 Chef::Log.warn('Not autostarting ezproxy - this recipe is only for testing!')

@@ -1,5 +1,12 @@
 {
-    "deploy": {
-
+  "avahi": {
+      "alias": {
+        "domains": [
+          "ezproxy.local",
+          "www.ezproxy.local",
+          "www.easybib.com.ezproxy.local",
+          "www-secure.easybib.com.ezproxy.local"
+        ]
+      }
     }
 }
