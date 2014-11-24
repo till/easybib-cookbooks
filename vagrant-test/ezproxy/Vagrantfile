@@ -1,0 +1,35 @@
+# set box names and locations of cookbooks
+box_url  = "https://s3.amazonaws.com/easybibdeployment/easybib-ubuntu-14.04.1_vbox-4.3.12_chef-11.10.4_0.1.box"
+box_file = "easybib-ubuntu-14.04.1_vbox-4.3.12_chef-11.10.4_0.1"
+
+Vagrant.configure("2") do |config|
+  config.vm.define :web do |test_config|
+    test_config.vm.box     = box_file
+    test_config.vm.box_url = box_url
+
+    test_config.vm.hostname = "vagrant-test"
+    test_config.vm.network :private_network, ip: "33.33.33.129"
+
+    test_config.vm.provider :virtualbox do |vb|
+      vb.gui = :true
+
+      vb.customize [
+            "modifyvm", :id,
+            "--name",  "Vagrant Cookbook Testbox",
+            "--memory", "512"
+      ]
+    end
+
+    test_config.vm.provision "shell", inline: "apt-get update -y"
+
+    test_config.vm.provision :chef_solo do |chef|
+
+        chef.cookbooks_path = "./../../"
+        chef.log_level = :debug
+        chef.add_recipe "easybib::setup"
+        chef.add_recipe "ezproxy::server"
+
+        chef.json = JSON.parse(File.read("#{File.expand_path(File.dirname(__FILE__))}/dna.json"))
+    end
+  end
+end

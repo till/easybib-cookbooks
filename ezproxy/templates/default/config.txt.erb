@@ -1,0 +1,156 @@
+##  For more information on this file, see:
+##          http://www.oclc.org/support/documentation/ezproxy/cfg/
+##                                   AND  
+##          http://www.oclc.org/support/documentation/ezproxy/db/
+
+##  In this file, lines starting with # are comments.  The lines starting
+##  with ##  are meant solely as comments, whereas the lines starting with
+##  only # are followed by example entries.
+
+
+##  PLEASE NOTE: IF YOU CHANGE THIS FILE, you must restart EZproxy to make
+##  those changes take effect. == see http://www.oclc.org/support/documentation/ezproxy/restart.htm
+
+
+# ****************************EZproxy options *****************************************
+
+## After running 'EZproxy -c' to test connectivity as instructed in the install guides
+## (http://www.oclc.org/us/en/support/documentation/ezproxy/download/), 
+##  If necessary, Name your EZproxy server 
+## == http://www.oclc.org/support/documentation/ezproxy/cfg/name/
+
+Name <%=@ezproxy_name%>
+
+
+##  EZproxy must be set to Proxy-by-port?or to Proxy-by-hostname:
+##  see http://www.oclc.org/support/documentation/ezproxy/portvshostname.htm
+##                             AND
+##  http://www.oclc.org/support/documentation/ezproxy/cfg/proxybyhostname.htm 
+
+Option ProxyByHostname
+
+##  By default, EZproxy listens on port 2048. You can specify a different port here
+
+LoginPort 80
+
+
+##  SSL == see: http://www.oclc.org/support/documentation/ezproxy/cfg/ssl/
+##  If using Proxy by HostName you must use a wildcard SSL certificate
+##  Please review http://www.oclc.org/support/documentation/ezproxy/cfg/ssl/certopts.htm before implementing SSL 
+
+LoginPortSSL 443
+
+
+##  Connection limits. == see: http://www.oclc.org/support/documentation/ezproxy/cfg/limits.htm
+
+MaxLifetime 120
+MaxSessions 500
+MaxVirtualHosts 1000
+
+
+##  When using Safari 2.0 and later with only three hostname components, Safari defaults to blocking the cookie. With EZproxy 3.6c GA
+## (2006-03-10) or later, you can add add the following to work around the restriction.
+# Option SafariCookiePatch
+
+
+##  Securing EZproxy == see: http://www.oclc.org/support/documentation/ezproxy/example/securing.htm 
+
+Audit Most
+AuditPurge 7
+Option StatusUser
+Option LogSession
+IntruderIPAttempts -interval=5 -expires=15 20
+IntruderUserAttempts -interval=5 -expires=15 10
+UsageLimit -enforce -interval=15 -expires=120 -MB=100 Global
+
+##  Logging == see: http://www.oclc.org/support/documentation/ezproxy/cfg/logformat/
+##                                            AND
+##                  http://www.oclc.org/support/documentation/ezproxy/cfg/logfile/
+
+
+LogFormat %h %l %u %t "%r" %s %b
+LogFile -strftime ezp%Y%m.log
+
+# **************************** Database Definitions *****************************************?
+##  See http://www.oclc.org/support/documentation/ezproxy/db/default.htm
+
+##  The following databases require no authentication,
+##  but demonstrate EZproxy functionality, and can be used for testing.
+##  Remove as desired.
+
+T Worldcat.org
+U http://worldcat.org
+DJ worldcat.org
+
+T WhatIsMyIP
+U http://whatismyip.com
+DJ whatismyip.com
+
+##  Many sites use dx.doi.org when linking from one database to another.
+##  This definition is recommended for all configurations.?
+##  See http://www.oclc.org/support/documentation/ezproxy/db/doi.htm for details 
+
+Title -hide DOI System
+URL http://dx.doi.org
+Domain doi.org
+
+
+## **************************** OCLC Services *************************************************
+## Some OCLC services have been pre-configured with default settings below. remove the '#' from each line 
+## associated with the desired service, and add additional options as desired 
+
+## -----------------------------  OCLC FirstSearch ----------------------------------------------
+# T OCLC FirstSearch
+# U http://firstsearch.oclc.org/FSIP
+# DJ oclc.org
+
+## ---------------------------- Camio and Archive Grid ---------------------------------------------
+
+# T ArchiveGrid
+# U http://archivegrid.org
+# DJ archivegrid.org
+
+# T CAMIO
+# U http://camio.oclc.org
+# DJ camio.oclc.org
+ 
+## --------------------------- NetLibrary ---------------------------------------------------------
+## Netlibrary can be configured for Single Sign on (SSO) or standard IP recognition access.
+## Edit the appropriate stanza for your isntitution. See http://www.oclc.org/support/documentation/ezproxy/db/netlibrary.htm/ for details
+
+
+## -- Standard IP recognition --
+# Title NetLibrary
+# URL http://www.netlibrary.com/
+# Domain netlibrary.com
+
+## -- Single Sign On (SSO) --
+
+# Title NetLibrary
+# URL http://www.netlibrary.com/
+# NetLibrary [libraryid]
+ 
+## NOTE : Replace [libraryid] in the line above with the appropriate ID
+
+## ************************ USER DEFINED DATABASES *************************************************
+
+## The section below is for all other user-defined databases  
+## Please see: http://www.oclc.org/support/documentation/ezproxy/db/default.htm for configuration
+## information for common and supported stanzas
+
+## You may also want to join the EZproxy listserv
+## To subscribe see: http://www.oclc.org/support/documentation/ezproxy/list.htm 
+
+T EasyBib
+U http://www.easybib.com/
+D www.easybib.com
+DJ www.easybib.com
+H www.easybib.com
+HJ www.easybib.com
+
+T EasyBib (HTTPS)
+U https://www-secure.easybib.com/
+D www-secure.easybib.com
+DJ www-secure.easybib.com
+H www-secure.easybib.com
+HJ www-secure.easybib.com
