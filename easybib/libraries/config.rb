@@ -88,6 +88,11 @@ module EasyBib
         data['doc_root_dir'] = "#{data['app_dir']}#{node['deploy'][appname]['document_root']}"
       else
         data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
+
+        if node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
+          fail "node[vagrant][applications][#{appname}][doc_root_location] is not set - fix web_dna.json!"
+        end
+
         data['doc_root_dir'] = node['vagrant']['applications'][appname]['doc_root_location']
       end
 
@@ -110,14 +115,17 @@ module EasyBib
     # returns stack metadata (name, environment-type)
     def get_stackdata(node, attribute = nil)
       data = {}
+
+      data['environment'] = node['easybib_deploy']['envtype']
+
       if ::EasyBib.is_aws(node)
         data['stackname'] = node['opsworks']['stack']['name']
       elsif node['vagrant']
         data['stackname'] = 'vagrant'
+        data['environment'] = 'vagrant'
       else
         data['stackname'] = 'undefined'
       end
-      data['environment'] = node['easybib_deploy']['envtype']
 
       unless attribute.nil?
         return data[attribute]
