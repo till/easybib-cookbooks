@@ -3,7 +3,6 @@ default['testdata']['source'] = nil
 default['testdata']['mode'] = '0755'
 default['testdata']['owner'] = 'theowner'
 default['testdata']['group'] = 'thegroup'
-default['testdata']['php_user'] = 'thephpuser'
 default['testdata']['domain_name'] = 'example.org'
 default['testdata']['doc_root'] = '/var/www'
 default['testdata']['access_log'] = 'off'

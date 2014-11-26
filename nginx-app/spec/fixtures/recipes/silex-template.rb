@@ -6,7 +6,6 @@ template '/tmp/config.conf' do
   group node['testdata']['group']
   helpers(EasyBib::Upstream)
   variables(
-    :php_user => node['testdata']['php_user'],
     :domain_name => node['testdata']['domain_name'],
     :doc_root => node['testdata']['doc_root'],
     :access_log => node['testdata']['access_log'],

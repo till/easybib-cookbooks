@@ -14,7 +14,6 @@ describe 'nginx-lb::configure' do
 
   let(:nginx_conf) { '/etc/nginx/nginx.conf' }
   let(:access_log) { '/some/drive/access.log' }
-  let(:php_user) { 'some_user_account' }
   let(:stack) { 'Stack Name' }
 
   describe 'nginx.conf generation' do

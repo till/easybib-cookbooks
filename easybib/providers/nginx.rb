@@ -88,7 +88,6 @@ action :setup do
     group node['nginx-app']['group']
     helpers EasyBib::Upstream
     variables(
-      :php_user => node['php-fpm']['user'],
       :domain_name => domain_name,
       :doc_root => deploy_dir,
       :app_dir => app_dir,
