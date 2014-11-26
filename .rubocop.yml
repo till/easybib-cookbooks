@@ -10,6 +10,8 @@ AllCops:
     - 'opsworks_nodejs/**/*'
     - 'vagrant-test/**/*'
     - 'test/**/*'
+    - 'erlang/**/*'
+    - 'rabbitmq/**/*'
     - 'Rakefile'
     - 'fc_sandbox/**/*'
 
