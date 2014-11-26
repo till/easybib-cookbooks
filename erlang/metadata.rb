@@ -6,9 +6,9 @@ description 'Installs erlang, optionally install GUI tools.'
 version '1.5.6'
 
 depends 'apt', '>= 1.7.0'
-#depends 'yum', '~> 3.0'
-#depends 'yum-epel'
-#depends 'yum-erlang_solutions'
+# depends 'yum', '~> 3.0'
+# depends 'yum-epel'
+# depends 'yum-erlang_solutions'
 depends 'build-essential'
 
 recipe 'erlang', 'Installs Erlang via native package, source, or Erlang Solutions package'
