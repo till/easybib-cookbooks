@@ -10,33 +10,6 @@ action :remove do
 end
 
 action :setup do
-
-  if new_resource.deploy_dir.nil?
-    deploy_dir = ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'doc_root_dir')
-  else
-    deploy_dir = new_resource.deploy_dir
-  end
-
-  if new_resource.app_dir.nil?
-    app_dir = ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'app_dir')
-  else
-    app_dir = new_resource.app_dir
-  end
-
-  config_name = get_config_name(new_resource)
-
-  if new_resource.nginx_extras.nil?
-    nginx_extras = node['nginx-app']['extras']
-  else
-    nginx_extras = new_resource.nginx_extras
-  end
-
-  if new_resource.cache_config.nil?
-    cache_config = node['nginx-app']['cache']
-  else
-    cache_config = new_resource.cache_config
-  end
-
   config_template = new_resource.config_template
   access_log = new_resource.access_log
   env_config = new_resource.env_config
@@ -44,40 +17,20 @@ action :setup do
   htpasswd = new_resource.htpasswd
   application = new_resource.app_name
   listen_opts = new_resource.listen_opts
-  nginx_local_conf = new_resource.nginx_local_conf
 
-  unless nginx_local_conf.nil?
-    unless ::File.exist?(nginx_local_conf)
-      nginx_local_conf = nil
-    end
-  end
+  deploy_dir = get_deploy_dir(new_resource, node)
+  app_dir = get_app_dir(new_resource, node)
+  config_name = get_config_name(new_resource)
+  nginx_extras = get_nginx_extras(new_resource, node)
+  cache_config = get_cache_config(new_resource, node)
 
-  routes_enabled = nil
-  routes_denied  = nil
+  nginx_local_conf = get_local_conf(new_resource)
 
-  health_check   = node['nginx-app']['health_check']
-  Chef::Log.debug("Health Check is now #{health_check}")
+  health_check = get_health_check(application, node)
+  routes_enabled =  get_routes(application, node, 'routes_enabled')
+  routes_denied  =  get_routes(application, node, 'routes_denied')
 
-  if node['nginx-app'].attribute?(application)
-
-    routes_enabled = get_routes(node['nginx-app'][application], 'routes_enabled')
-    routes_denied = get_routes(node['nginx-app'][application], 'routes_denied')
-
-    if node['nginx-app'][application].attribute?('health_check')
-      health_check = node['nginx-app'][application]['health_check']
-      Chef::Log.debug("Health Check is now #{health_check}")
-    end
-  else
-    Chef::Log.info("No routes_enabled/routes_denied found for #{application}")
-  end
-
-  default_router = node['nginx-app']['default_router']
-
-  unless ::File.exist?("#{deploy_dir}/#{default_router}")
-    default_router = 'index.php'
-  end
-
-  default_router = new_resource.default_router unless new_resource.default_router.nil?
+  default_router = get_default_router(node['nginx-app']['default_router'], new_resource.default_router, deploy_dir)
 
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook 'nginx-app'
@@ -114,6 +67,40 @@ action :setup do
 
 end
 
+def get_local_conf(new_resource)
+  unless new_resource.nginx_local_conf.nil?
+    if ::File.exist?(new_resource.nginx_local_conf)
+      return new_resource.nginx_local_conf
+    end
+  end
+  nil
+end
+
+def get_cache_config(new_resource, node)
+  return new_resource.cache_config unless new_resource.cache_config.nil?
+  node['nginx-app']['cache']
+end
+
+def get_nginx_extras(new_resource, node)
+  return new_resource.nginx_extras unless new_resource.nginx_extras.nil?
+  node['nginx-app']['extras']
+end
+
+def get_app_dir(new_resource, node)
+  return new_resource.app_dir unless new_resource.app_dir.nil?
+  ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'app_dir')
+end
+
+def get_deploy_dir(new_resource, node)
+  return new_resource.deploy_dir unless new_resource.deploy_dir.nil?
+  ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'doc_root_dir')
+end
+
+def get_health_check(application, node)
+  return node['nginx-app']['health_check'] if node.fetch('nginx-app', {}).fetch(application, {})['health_check'].nil?
+  node['nginx-app'][application]['health_check']
+end
+
 def get_config_name(resource)
   config_name = resource.app_name
 
@@ -123,11 +110,12 @@ def get_config_name(resource)
   config_name
 end
 
-def get_routes(attr, type)
-  routes = nil
-  if attr.attribute?(type)
-    routes = attr[type]
-  end
+def get_default_router(stackdefault, resourcedefault, deploy_dir)
+  return resourcedefault unless new_resource.default_router.nil?
+  return 'index.php' unless ::File.exist?("#{deploy_dir}/#{stackdefault}")
+  stackdefault
+end
 
-  routes
+def get_routes(application, node, type)
+  node.fetch('nginx-app', {}).fetch(application, {})[type]
 end
