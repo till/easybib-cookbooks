@@ -39,7 +39,6 @@ action :setup do
 
   config_template = new_resource.config_template
   access_log = new_resource.access_log
-  database_config = new_resource.database_config
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
   htpasswd = new_resource.htpasswd
@@ -97,7 +96,6 @@ action :setup do
       :default_router => default_router,
       :upstream_name => config_name,
       :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
-      :db_conf => database_config,
       :env_conf => env_config,
       :health_check => health_check,
       :routes_enabled => routes_enabled,
