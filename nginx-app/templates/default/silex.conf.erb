@@ -21,7 +21,7 @@ server {
     <%= @nginx_extra -%>
 <% end -%>
 
-<% if @htpasswd && !@htpasswd.empty? && File.exists?(@htpasswd) -%>
+<% if @htpasswd && !@htpasswd.empty? && File.exist?(@htpasswd) -%>
     auth_basic            "Restricted";
     auth_basic_user_file  <%= @htpasswd%>;
 <% end -%>
