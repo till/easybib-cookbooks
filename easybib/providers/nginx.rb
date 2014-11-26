@@ -83,7 +83,13 @@ def get_local_conf(new_resource)
 end
 
 def get_htpasswd(new_resource)
-  return new_resource.htpasswd unless new_resource.htpasswd.include? ':'
+  if new_resource.htpasswd.nil?
+    htpasswd = node.fetch('nginx-app', {}).fetch(application, {})['htpasswd']
+  else
+    htpasswd = new_resource.htpasswd
+  end
+
+  return htpasswd unless htpasswd.include? ':'
 
   # we have user:password format, so lets encrypt & generate file
   config_name = get_config_name(new_resource)
