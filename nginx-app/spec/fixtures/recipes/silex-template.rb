@@ -6,7 +6,6 @@ template '/tmp/config.conf' do
   group node['testdata']['group']
   helpers(EasyBib::Upstream)
   variables(
-    :php_user => node['testdata']['php_user'],
     :domain_name => node['testdata']['domain_name'],
     :doc_root => node['testdata']['doc_root'],
     :access_log => node['testdata']['access_log'],
@@ -14,7 +13,6 @@ template '/tmp/config.conf' do
     :default_router => node['testdata']['default_router'],
     :php_upstream => node['testdata']['pools'],
     :upstream_name => 'foo',
-    :db_conf => node['testdata']['db_conf'],
     :env_conf => node['testdata']['env_conf'],
     :routes_enabled => node['testdata']['routes_enabled'],
     :routes_denied => node['testdata']['routes_denied'],
