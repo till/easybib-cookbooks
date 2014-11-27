@@ -1,3 +1,5 @@
+include_recipe 'easybib::setup'
+
 node.set['rabbitmq']['job_control'] = 'upstart' if platform?('ubuntu')
 
 include_recipe 'rabbitmq'
