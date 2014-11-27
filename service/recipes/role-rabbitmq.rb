@@ -1,0 +1,4 @@
+node.set['rabbitmq']['job_control'] = 'upstart' if platform?('ubuntu')
+
+include_recipe 'rabbitmq'
+include_recipe 'rabbitmq::mgmt_console'
