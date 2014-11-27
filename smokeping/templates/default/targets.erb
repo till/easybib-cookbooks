@@ -1,12 +1,10 @@
 *** Targets ***
-probe = FPing
-
 menu = <%= @menu['menu'] %>
 title = <%= @menu['title'] %>
 remark = <%= @menu['remark'] %>
 
 <%
-@targets.each do |group|
+@targets.each do |groupname, group|
   group.each do |name, targets|
 -%>
 + <%= name %>

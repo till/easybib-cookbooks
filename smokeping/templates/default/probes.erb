@@ -1,16 +1,9 @@
 *** Probes ***
+<% @probes.each do |name, config| -%>
+<%= "+ #{name}" %>
+<% config.each do |param, value| -%>
+<%= "#{param} = #{value}" %>
 <%
-@probes.each do |probe|
-  probe.each do |k, v|
-    if k == 'name'
--%>
-<%= "+ #{v}" %>
-<%
-    else
--%>
-<%= "#{k} = #{v}" %>
-<%
-    end
   end
 end
 -%>

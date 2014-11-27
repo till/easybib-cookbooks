@@ -1,11 +1,9 @@
 include_recipe 'smokeping::service'
 include_recipe 'nginx-app::service'
 
-cookbook_file "#{node['nginx-app']['config_dir']}/conf.d/smokeping.conf" do
-  group node['nginx-app']['group']
-  source 'cgi.conf'
-  owner node['nginx-app']['user']
-  notifies :reload, 'service[nginx]'
+easybib_nginx 'smokeping' do
+  config_template 'smokeping.conf.erb'
+  notifies :restart, 'service[nginx]', :delayed
 end
 
 smokeping_dir = '/usr/share/smokeping/www'
@@ -19,25 +17,26 @@ link "#{smokeping_dir}/smokeping.cgi" do
   to '/usr/lib/cgi-bin/smokeping.cgi'
 end
 
-config = node['smokeping']['config']
+config = node['smokeping']
 
-chef_gem 'aws-sdk' unless config['aws']['access-key-id'].empty?
+chef_gem 'aws-sdk' if is_aws
 
-config['pathnames'].each do |key, path|
-  next unless path[0, 1] == '/'
+config['directories'].each do |key, path|
   directory path do
     mode 0775
     user 'smokeping'
-    group 'www-data'
-    recursive  true
+    group node['nginx-app']['group']
+    recursive true
   end
 end
+
+pathnames = config['pathnames'].merge(config['directories'])
 
 template "#{smokeping_etc}/pathnames" do
   mode 0644
   source 'pathnames.erb'
   variables(
-    :pathnames => config['pathnames']
+    :pathnames => pathnames
   )
   notifies :reload, 'service[smokeping]'
 end
