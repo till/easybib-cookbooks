@@ -16,7 +16,7 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
-    chef.add_recipe "easybib::role-gearmand"
+    chef.add_recipe "service::role-gearmand"
     #chef.json = JSON.parse(File.read("./deploy.json"))
 
     chef.log_level = :debug
