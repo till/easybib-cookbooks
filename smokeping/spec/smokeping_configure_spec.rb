@@ -40,5 +40,20 @@ describe 'smokeping_configure' do
           include('*** Targets ***')
         )
     end
+    it 'does not include tcpping or hccping' do
+      expect(chef_run).not_to include_recipe('smokeping::tcpping')
+      expect(chef_run).not_to include_recipe('smokeping::hping')
+    end
+  end
+
+  describe 'smokeping installation with probes set in config' do
+    before do
+      node.set['smokeping']['probes']['tcpping'] = { 'binary' => '/whatever' }
+      node.set['smokeping']['probes']['hping']   = { 'binary' => '/whatever_else' }
+    end
+    it 'does include hping and tcpping recipes' do
+      expect(chef_run).to include_recipe('smokeping::tcpping')
+      expect(chef_run).to include_recipe('smokeping::hping')
+    end
   end
 end

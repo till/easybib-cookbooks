@@ -1,6 +1,12 @@
 include_recipe 'smokeping::service'
 include_recipe 'nginx-app::service'
 
+include_recipe 'smokeping::tcpping' unless node.fetch('smokeping', {}).fetch('probes', {})['tcpping'].nil?
+include_recipe 'smokeping::hping' unless node.fetch('smokeping', {}).fetch('probes', {})['hping'].nil?
+
+# for nginx
+package 'fcgiwrap'
+
 easybib_nginx 'smokeping' do
   config_template 'smokeping.conf.erb'
   notifies :restart, 'service[nginx]', :delayed

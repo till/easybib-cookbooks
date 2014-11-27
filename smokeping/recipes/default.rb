@@ -17,11 +17,5 @@ end
   end
 end
 
-# for nginx
-package 'fcgiwrap'
-
-include_recipe 'smokeping::tcpping' unless node.fetch('smokeping', {}).fetch('probes', {})['tcpping'].nil?
-include_recipe 'smokeping::hping' unless node.fetch('smokeping', {}).fetch('probes', {})['hping'].nil?
-
 include_recipe 'nginx-app::server'
 include_recipe 'smokeping::configure'
