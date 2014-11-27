@@ -1,8 +1,8 @@
 include_recipe 'smokeping::service'
 include_recipe 'nginx-app::service'
 
-include_recipe 'smokeping::tcpping' unless node.fetch('smokeping', {}).fetch('probes', {})['tcpping'].nil?
-include_recipe 'smokeping::hping' unless node.fetch('smokeping', {}).fetch('probes', {})['hping'].nil?
+include_recipe 'smokeping::tcpping' unless node.fetch('smokeping', {}).fetch('probes', {})['TCPPing'].nil?
+include_recipe 'smokeping::hping' unless node.fetch('smokeping', {}).fetch('probes', {})['HPing'].nil?
 
 # for nginx
 package 'fcgiwrap'

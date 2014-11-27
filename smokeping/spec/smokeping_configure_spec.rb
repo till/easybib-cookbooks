@@ -48,8 +48,8 @@ describe 'smokeping_configure' do
 
   describe 'smokeping installation with probes set in config' do
     before do
-      node.set['smokeping']['probes']['tcpping'] = { 'binary' => '/whatever' }
-      node.set['smokeping']['probes']['hping']   = { 'binary' => '/whatever_else' }
+      node.set['smokeping']['probes']['TCPPing'] = { 'binary' => '/whatever' }
+      node.set['smokeping']['probes']['HPing']   = { 'binary' => '/whatever_else' }
     end
     it 'does include hping and tcpping recipes' do
       expect(chef_run).to include_recipe('smokeping::tcpping')
