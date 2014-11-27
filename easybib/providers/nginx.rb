@@ -85,14 +85,11 @@ end
 
 def get_htpasswd(new_resource, application)
   if new_resource.htpasswd.nil?
-    Chef::Log.info("htpasswd is nil, trying to fetch for #{application}")
     htpasswd = node.fetch('nginx-app', {}).fetch(application, {})['htpasswd']
     htpasswd = '' if htpasswd.nil?
   else
     htpasswd = new_resource.htpasswd
   end
-
-  Chef::Log.info("htpasswd is now: #{htpasswd}")
 
   return htpasswd unless htpasswd.include? ':'
 
@@ -100,9 +97,9 @@ def get_htpasswd(new_resource, application)
   config_name = get_config_name(new_resource)
   filename = "/etc/nginx/#{config_name}.htpasswd"
 
-  user, pass = new_resource.htpasswd.split(':')
+  user, pass = htpasswd.split(':')
   pass = pass.to_s.crypt(user)
-  Chef::Log.info("Rendering htpasswd to #{filename}")
+
   template filename do
     cookbook 'easybib'
     source 'empty.erb'
