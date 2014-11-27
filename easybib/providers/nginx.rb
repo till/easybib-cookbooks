@@ -87,6 +87,7 @@ def get_htpasswd(new_resource, application)
   if new_resource.htpasswd.nil?
     Chef::Log.info("htpasswd is nil, trying to fetch for #{application}")
     htpasswd = node.fetch('nginx-app', {}).fetch(application, {})['htpasswd']
+    htpasswd = '' if htpasswd.nil?
   else
     htpasswd = new_resource.htpasswd
   end
