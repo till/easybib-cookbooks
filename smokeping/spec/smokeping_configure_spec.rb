@@ -31,7 +31,7 @@ describe 'smokeping_configure' do
     it 'renders probes' do
       expect(chef_run).to render_file('/etc/smokeping/config.d/Probes')
         .with_content(
-          include("binary = /usr/bin/fping")
+          include('binary = /usr/bin/fping')
         )
     end
     it 'renders targets' do
@@ -54,6 +54,25 @@ describe 'smokeping_configure' do
     it 'does include hping and tcpping recipes' do
       expect(chef_run).to include_recipe('smokeping::tcpping')
       expect(chef_run).to include_recipe('smokeping::hping')
+    end
+  end
+
+  describe 'smokeping installation with targets set in config' do
+    before do
+      node.set['smokeping']['targets']['foogroup'] = [
+        {
+          'host' => 'foo.com',
+          'menu' => 'foo',
+          'probe' => 'fping',
+          'title' => 'footitle'
+        }
+      ]
+    end
+    it 'renders target set in config' do
+      expect(chef_run).to render_file('/etc/smokeping/config.d/Targets')
+        .with_content(
+          include('host = foo.com')
+        )
     end
   end
 end

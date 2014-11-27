@@ -5,14 +5,12 @@ remark = <%= @menu['remark'] %>
 
 <%
 @targets.each do |groupname, group|
-  group.each do |name, grouptargets|
 -%>
-+ <%= name %>
-menu = <%= name %>
-title = <%= name %>
-
-<%
-    grouptargets.each do |target|
++ <%= groupname %>
+menu = <%= groupname %>
+title = <%= groupname %>
+<%    
+  group.each do |target|
 -%>
 ++ <%= target['menu'] %>
 probe = <%= target['probe'] %>
@@ -26,10 +24,7 @@ urlformat = <%= target['urlformat'] %>
 <% end %>
 <% if target['extraargs'] %>
 extraargs = <%= target['extraargs'] %>
-<% end %>
-
-<%
-    end
+<% end 
   end
 end
 -%>
