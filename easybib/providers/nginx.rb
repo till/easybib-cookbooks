@@ -30,7 +30,8 @@ action :setup do
   cache_config = get_cache_config(new_resource, node)
 
   nginx_local_conf = get_local_conf(new_resource)
-  htpasswd = get_htpasswd(new_resource)
+
+  htpasswd = get_htpasswd(new_resource, application)
 
   health_check = get_health_check(application, node)
   routes_enabled =  get_routes(application, node, 'routes_enabled')
@@ -82,7 +83,7 @@ def get_local_conf(new_resource)
   nil
 end
 
-def get_htpasswd(new_resource)
+def get_htpasswd(new_resource, application)
   if new_resource.htpasswd.nil?
     htpasswd = node.fetch('nginx-app', {}).fetch(application, {})['htpasswd']
   else
