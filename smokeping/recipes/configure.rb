@@ -7,13 +7,15 @@ include_recipe 'smokeping::hping' unless node.fetch('smokeping', {}).fetch('prob
 # for nginx
 package 'fcgiwrap'
 
-easybib_nginx 'smokeping' do
-  config_template 'smokeping.conf.erb'
-  notifies :restart, 'service[nginx]', :delayed
-end
-
 smokeping_dir = '/usr/share/smokeping/www'
 smokeping_etc = '/etc/smokeping/config.d'
+
+easybib_nginx 'smokeping' do
+  config_template 'smokeping.conf.erb'
+  app_dir smokeping_dir
+  deploy_dir smokeping_dir
+  notifies :restart, 'service[nginx]', :delayed
+end
 
 link '/usr/share/nginx/html/smokeping' do
   to smokeping_dir
