@@ -5,14 +5,14 @@ remark = <%= @menu['remark'] %>
 
 <%
 @targets.each do |groupname, group|
-  group.each do |name, targets|
+  group.each do |name, grouptargets|
 -%>
 + <%= name %>
 menu = <%= name %>
 title = <%= name %>
 
 <%
-    targets.each do |target|
+    grouptargets.each do |target|
 -%>
 ++ <%= target['menu'] %>
 probe = <%= target['probe'] %>
