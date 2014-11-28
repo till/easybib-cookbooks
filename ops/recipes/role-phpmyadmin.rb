@@ -13,6 +13,7 @@ node['deploy'].each do |app, deploy|
 
   easybib_deploy app do
     deploy_data deploy
+    app app
   end
 
   service 'php-fpm' do
