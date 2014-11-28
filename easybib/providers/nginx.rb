@@ -19,10 +19,10 @@ action :setup do
   config_template = new_resource.config_template
   access_log = new_resource.access_log
   env_config = new_resource.env_config
-  domain_name = new_resource.domain_name
   application = new_resource.app_name
   listen_opts = new_resource.listen_opts
 
+  domain_name = get_domain_name(new_resource, node)
   deploy_dir = get_deploy_dir(new_resource, node)
   app_dir = get_app_dir(new_resource, node)
   config_name = get_config_name(new_resource)
@@ -111,6 +111,11 @@ def get_htpasswd(new_resource, application)
     )
   end
   filename
+end
+
+def get_domain_name(new_resource, node)
+  return new_resource.domain_name unless new_resource.domain_name.nil?
+  ::EasyBib::Config.get_domains(node, new_resource.app_name)
 end
 
 def get_cache_config(new_resource, node)
