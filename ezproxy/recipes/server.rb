@@ -14,14 +14,14 @@ remote_file "#{node['ezproxy']['install_dir']}/#{node['ezproxy']['bin_name']}" d
   mode '0755'
 end
 
-#ezproxy -m installs all default files, and does always exit 1 - hence ignore_failure
+# ezproxy -m installs all default files, and does always exit 1 - hence ignore_failure
 execute 'initial ezproxy run' do
   cwd node['ezproxy']['install_dir']
   command "#{node['ezproxy']['install_dir']}/#{node['ezproxy']['bin_name']} -m"
   ignore_failure true
 end
 
-#ezproxy -m installs all default files, and does always exit 1 - hence ignore_failure
+# ezproxy -m installs all default files, and does always exit 1 - hence ignore_failure
 execute 'create ezproxy init scripts' do
   cwd node['ezproxy']['install_dir']
   command "#{node['ezproxy']['install_dir']}/#{node['ezproxy']['bin_name']} -si"
@@ -40,7 +40,7 @@ end
 
 cookbook_file "#{node['ezproxy']['install_dir']}/user.txt" do
   source 'user.txt'
-  mode "0644"
+  mode '0644'
 end
 
 execute 'set up license' do
@@ -48,6 +48,5 @@ execute 'set up license' do
   command "#{node['ezproxy']['install_dir']}/#{node['ezproxy']['bin_name']} -k #{node['ezproxy']['license']}"
   not_if { node['ezproxy']['license'].nil? }
 end
-
 
 Chef::Log.warn('Not autostarting ezproxy - this recipe is only for testing!')
