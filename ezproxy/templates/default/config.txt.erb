@@ -74,26 +74,6 @@ LogFile -strftime ezp%Y%m.log
 # **************************** Database Definitions *****************************************?
 ##  See http://www.oclc.org/support/documentation/ezproxy/db/default.htm
 
-##  The following databases require no authentication,
-##  but demonstrate EZproxy functionality, and can be used for testing.
-##  Remove as desired.
-
-T Worldcat.org
-U http://worldcat.org
-DJ worldcat.org
-
-T WhatIsMyIP
-U http://whatismyip.com
-DJ whatismyip.com
-
-##  Many sites use dx.doi.org when linking from one database to another.
-##  This definition is recommended for all configurations.?
-##  See http://www.oclc.org/support/documentation/ezproxy/db/doi.htm for details 
-
-Title -hide DOI System
-URL http://dx.doi.org
-Domain doi.org
-
 
 ## **************************** OCLC Services *************************************************
 ## Some OCLC services have been pre-configured with default settings below. remove the '#' from each line 
@@ -134,7 +114,7 @@ Domain doi.org
 
 ## ************************ USER DEFINED DATABASES *************************************************
 
-## The section below is for all other user-defined databases  
+## The section below is for all other user-defined databases
 ## Please see: http://www.oclc.org/support/documentation/ezproxy/db/default.htm for configuration
 ## information for common and supported stanzas
 
@@ -143,14 +123,5 @@ Domain doi.org
 
 T EasyBib
 U http://www.easybib.com/
-D www.easybib.com
-DJ www.easybib.com
-H www.easybib.com
-HJ www.easybib.com
-
-T EasyBib (HTTPS)
-U https://www-secure.easybib.com/
-D www-secure.easybib.com
-DJ www-secure.easybib.com
-H www-secure.easybib.com
-HJ www-secure.easybib.com
+H *.easybib.com
+DJ easybib.com

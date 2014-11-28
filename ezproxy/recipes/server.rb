@@ -33,8 +33,7 @@ template "#{node['ezproxy']['install_dir']}/config.txt" do
   group 'root'
   mode '0644'
   variables(
-    :ezproxy_name => node['ezproxy']['name'],
-    :ezproxy_databases => node['ezproxy']['databases']
+    :ezproxy_name => node['ezproxy']['name']
   )
   action :create
 end
