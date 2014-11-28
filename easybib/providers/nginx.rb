@@ -1,11 +1,17 @@
 action :remove do
   config_name = get_config_name(new_resource)
-  execute "rm /etc/nginx/sites-enabled/#{config_name}.conf" do
+  file "/etc/nginx/sites-enabled/#{config_name}.conf" do
+    action :delete
     only_if do
       File.exist?("/etc/nginx/sites-enabled/#{config_name}.conf")
     end
   end
-
+  file "/etc/nginx/#{config_name}.htpasswd" do
+    action :delete
+    only_if do
+      File.exist?("/etc/nginx/#{config_name}.htpasswd")
+    end
+  end
   new_resource.updated_by_last_action(true)
 end
 
@@ -14,7 +20,6 @@ action :setup do
   access_log = new_resource.access_log
   env_config = new_resource.env_config
   domain_name = new_resource.domain_name
-  htpasswd = new_resource.htpasswd
   application = new_resource.app_name
   listen_opts = new_resource.listen_opts
 
@@ -25,6 +30,8 @@ action :setup do
   cache_config = get_cache_config(new_resource, node)
 
   nginx_local_conf = get_local_conf(new_resource)
+
+  htpasswd = get_htpasswd(new_resource, application)
 
   health_check = get_health_check(application, node)
   routes_enabled =  get_routes(application, node, 'routes_enabled')
@@ -74,6 +81,36 @@ def get_local_conf(new_resource)
     end
   end
   nil
+end
+
+def get_htpasswd(new_resource, application)
+  if new_resource.htpasswd.nil?
+    htpasswd = node.fetch('nginx-app', {}).fetch(application, {})['htpasswd']
+    htpasswd = '' if htpasswd.nil?
+  else
+    htpasswd = new_resource.htpasswd
+  end
+
+  return htpasswd unless htpasswd.include? ':'
+
+  # we have user:password format, so lets encrypt & generate file
+  config_name = get_config_name(new_resource)
+  filename = "/etc/nginx/#{config_name}.htpasswd"
+
+  user, pass = htpasswd.split(':')
+  pass = pass.to_s.crypt(user)
+
+  template filename do
+    cookbook 'easybib'
+    source 'empty.erb'
+    mode '0700'
+    owner node['nginx-app']['user']
+    group node['nginx-app']['group']
+    variables(
+      :content => "#{user}:#{pass}"
+    )
+  end
+  filename
 end
 
 def get_cache_config(new_resource, node)
