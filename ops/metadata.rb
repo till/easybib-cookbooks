@@ -8,6 +8,7 @@ version           '0.1'
 supports 'ubuntu'
 
 depends 'easybib'
+depends 'phpmyadmin'
 depends 'nginx-app'
 depends 'php-fpm'
 depends 'php-mysqli'
