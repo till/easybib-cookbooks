@@ -1,0 +1,16 @@
+text/html                      html htm shtml
+text/css                       css
+image/gif                      gif
+image/jpeg                     jpeg jpg jpe
+image/png                      png
+image/bmp                      bmp
+image/tiff                     tiff tif
+application/pdf                pdf
+application/x-javascript       js
+application/msword             doc
+application/vnd.ms-powerpoint  ppt
+application/vnd.ms-excel       xls
+application/vnd.openxmlformats docx pptx xlsx
+application/octet-stream       bin exe
+application/zip                zip
+audio/mpeg                     mp3

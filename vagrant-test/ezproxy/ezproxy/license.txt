@@ -1,0 +1,10 @@
+EZproxy (TM) License Agreement
+Copyright (c) 1993-2014 OCLC (ALL RIGHTS RESERVED)
+
+You should carefully read the terms and conditions before using this
+software. By using this software, you indicate your acceptance of this
+license agreement and warranty.
+
+The terms and conditions are available at
+
+     http://www.oclc.org/support/forms/pdf/ezproxy_terms.pdf
