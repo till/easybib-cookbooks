@@ -16,6 +16,11 @@ node['deploy'].each do |app, deploy|
     app app
   end
 
+  path = ::EasyBib::Config.get_appdata(node, app, 'app_dir')
+  phpmyadmin_config path do
+    servers node['ops']['phpmyadmin']['servers']
+  end
+
   service 'php-fpm' do
     action :reload
   end
