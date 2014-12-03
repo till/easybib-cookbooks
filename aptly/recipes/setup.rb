@@ -37,5 +37,6 @@ unless node.fetch('aptly', {}).fetch('gpg', {})['private_key'].nil?
     user 'root'
     cwd '/root'
     command 'gpg --import /root/gpgkey.asc'
+    ignore_failure true
   end
 end
