@@ -12,7 +12,6 @@ describe 'nginx-app::configure' do
 
   let(:vhost) { '/etc/nginx/sites-enabled/easybib.com.conf' }
   let(:access_log) { '/some/drive/access.log' }
-  let(:php_user) { 'some_user_account' }
   let(:stack) { 'Stack Name' }
   let(:template_name) { 'render vhost: easybib' }
   let(:fastcgi_conf) { '/etc/nginx/fastcgi_params' }
@@ -40,7 +39,6 @@ describe 'nginx-app::configure' do
           'document_root' => 'public'
         }
         node.set['nginx-app']['access_log'] = access_log
-        node.set['php-fpm']['user'] = php_user
       end
 
       it "writes virtualhost for app 'easybib'" do

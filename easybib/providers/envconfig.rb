@@ -7,6 +7,8 @@ action :create do
     path = new_resource.path
   end
 
+  path << '/' unless path.end_with?('/')
+
   if new_resource.stackname.nil?
     stackname = ::EasyBib.get_normalized_cluster_name(node).split('_').first
   else

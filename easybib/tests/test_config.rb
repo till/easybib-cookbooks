@@ -90,8 +90,8 @@ deploy_dir = \"/tmp/bla/\"
 app_dir = \"/tmp/bla/current/\"
 doc_root_dir = \"/tmp/bla/current/www/\"
 [deployed_stack]
-stackname = \"opsworks-stack\"
 environment = \"playground\"
+stackname = \"opsworks-stack\"
 [settings]
 BLA_SOMEKEY = \"somevalue\"
 BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
@@ -119,8 +119,8 @@ deploy_dir = \"/tmp/bla/\"
 app_dir = \"/tmp/bla/current/\"
 doc_root_dir = \"/tmp/bla/current/www/\"
 [deployed_stack]
-stackname = \"opsworks-stack\"
 environment = \"playground\"
+stackname = \"opsworks-stack\"
 [settings]
 BLA_SOMEKEY = \"somevalue\"
 BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
@@ -139,8 +139,8 @@ export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld bar.tld\"
 export DEPLOYED_APPLICATION_DEPLOY_DIR=\"/tmp/bla/\"
 export DEPLOYED_APPLICATION_APP_DIR=\"/tmp/bla/current/\"
 export DEPLOYED_APPLICATION_DOC_ROOT_DIR=\"/tmp/bla/current/www/\"
-export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
 export DEPLOYED_STACK_ENVIRONMENT=\"playground\"
+export DEPLOYED_STACK_STACKNAME=\"opsworks-stack\"
 export BLA_SOMEKEY=\"somevalue\"
 export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"
 export BLA_SOMEARRAY[0]=\"server1\"
@@ -155,8 +155,8 @@ fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla/\";
 fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/tmp/bla/current/www/\";
-fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
+fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
 fastcgi_param BLA_SOMEKEY \"somevalue\";
 fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";
 fastcgi_param BLA_SOMEARRAY[0] \"server1\";
@@ -184,8 +184,8 @@ fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/tmp/bla/\";
 fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/tmp/bla/current/www/\";
-fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";
-fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
+fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
+fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";\n",
                  ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
     )
   end
@@ -207,8 +207,8 @@ fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
 fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/some_path/foo/\";
-fastcgi_param DEPLOYED_STACK_STACKNAME \"vagrant\";
-fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";\n",
+fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"vagrant\";
+fastcgi_param DEPLOYED_STACK_STACKNAME \"vagrant\";\n",
                  ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
     )
   end
@@ -224,8 +224,8 @@ return [
     'doc_root_dir'=>'/tmp/bla/current/www/',
   ],
   'deployed_stack' => [
-    'stackname'=>'opsworks-stack',
     'environment'=>'playground',
+    'stackname'=>'opsworks-stack',
   ],
   'settings' => [
     'BLA_SOMEKEY'=>'somevalue',

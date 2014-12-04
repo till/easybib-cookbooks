@@ -4,7 +4,23 @@ action :create do
   mirror_name = node['aptly']['mirror_name']
   s3_mirror = "#{node['aptly']['s3_mirror']}:#{node['aptly']['s3_mirror_prefix']}"
   pw = node['aptly']['sign_pass']
-  cron_command = "SIGNING_PASS=#{pw} MIRROR_NAME=#{mirror_name} S3_APT_MIRROR=s3:#{s3_mirror} #{path}/mirror-it.rb"
+
+  template "#{path}/run.sh" do
+    source 'run.sh.erb'
+    cookbook 'aptly'
+    owner 'root'
+    group 'root'
+    mode 00700
+    variables(
+      :pw => pw,
+      :mirror_name => mirror_name,
+      :s3_mirror => s3_mirror,
+      :path => path
+      )
+    action :create
+  end
+
+  cron_command = "screen -d -m #{path}/run.sh"
 
   cron_d 'aptly_sync_launchpad' do
     action :create

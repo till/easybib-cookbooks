@@ -1,20 +1,17 @@
 *** Targets ***
 probe = FPing
-
 menu = <%= @menu['menu'] %>
 title = <%= @menu['title'] %>
 remark = <%= @menu['remark'] %>
 
 <%
-@targets.each do |group|
-  group.each do |name, targets|
+@targets.each do |groupname, group|
 -%>
-+ <%= name %>
-menu = <%= name %>
-title = <%= name %>
-
-<%
-    targets.each do |target|
++ <%= groupname %>
+menu = <%= groupname %>
+title = <%= groupname %>
+<%    
+  group.each do |target|
 -%>
 ++ <%= target['menu'] %>
 probe = <%= target['probe'] %>
@@ -28,10 +25,7 @@ urlformat = <%= target['urlformat'] %>
 <% end %>
 <% if target['extraargs'] %>
 extraargs = <%= target['extraargs'] %>
-<% end %>
-
-<%
-    end
+<% end 
   end
 end
 -%>

@@ -1,0 +1,28 @@
+<html>
+<head>
+<!--
+     NOTE:
+     To include graphics on this page, place the graphics in the public subdirectory
+  and use links such as:
+     <img src="/public/logo.gif">
+     It is important to use /public/ instead of just public/ since some EZproxy
+     login URLs are not be relative to /
+-->
+</head>
+<body>
+<p>
+This is login.htm from the docs subdirectory.  Review
+<a href="http://www.oclc.org/us/en/support/documentation/ezproxy/url/admin/">http://www.oclc.org/us/en/support/documentation/ezproxy/url/admin/</a>
+for information on how to create an administrative user account and
+<a href="http://www.oclc.org/us/en/support/documentation/ezproxy/usr/">www.oclc.org/us/en/support/documentation/ezproxy/usr/</a>
+for information on user authentication options.
+</p>
+<hr />
+<form action="/login" method="post">
+<input type="hidden" name="url" value="^U" />
+Please enter your username: <input type="text"     name="user" /><br />
+Please enter your password: <input type="password" name="pass" /><br />
+<input type="submit" value="Login" />
+</form>
+</body>
+</html>

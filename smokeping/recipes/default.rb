@@ -17,14 +17,5 @@ end
   end
 end
 
-cookbook_file 'tcpping' do
-  path   '/usr/bin/tcpping'
-  mode   '0755'
-  action :create_if_missing
-end
-
-# for nginx
-package 'fcgiwrap'
-
 include_recipe 'nginx-app::server'
 include_recipe 'smokeping::configure'

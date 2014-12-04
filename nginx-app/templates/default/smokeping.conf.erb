@@ -1,0 +1,47 @@
+server {
+  location ~ \.cgi$ {
+    include fastcgi_params;
+
+    fastcgi_pass unix:/var/run/fcgiwrap.socket;
+
+    fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  }
+
+  rewrite ^/$ /smokeping/ permanent;
+
+  location /smokeping {
+    index smokeping.cgi;
+  }
+  
+<% if !@domain_name.nil? && !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% end -%>
+
+<% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+<% end -%>
+
+<% if @htpasswd && !@htpasswd.empty? && File.exist?(@htpasswd) -%>
+    auth_basic            "Restricted";
+    auth_basic_user_file  <%= @htpasswd%>;
+<% end -%>
+
+    if ($http_x_cache_me) {
+        set $fastcgi_skipcache 0;
+    }
+
+<% if @gzip -%>
+    gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
+<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
+    :prefix => 'gzip',
+    :config => @gzip['config']
+} %>
+<% end -%>
+
+<% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+<%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
+<% end %>
+
+}
+

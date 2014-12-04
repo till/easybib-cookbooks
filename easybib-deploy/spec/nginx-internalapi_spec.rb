@@ -12,7 +12,6 @@ describe 'easybib-deploy::internal-api' do
 
   let(:vhost) { '/etc/nginx/sites-enabled/highbeam.conf' }
   let(:access_log) { '/some/drive/access.log' }
-  let(:php_user) { 'some_user_account' }
   let(:stack) { 'Stack Name' }
   let(:template_name) { '/etc/nginx/sites-enabled/highbeam.conf' }
   let(:fastcgi_conf) { '/etc/nginx/fastcgi_params' }
@@ -36,7 +35,6 @@ describe 'easybib-deploy::internal-api' do
           'document_root' => 'public',
           'domains' => ['foo.tld']
         }
-        node.set['php-fpm']['user'] = php_user
       end
 
       it "writes virtualhost for app 'easybib'" do

@@ -1,0 +1,26 @@
+# For more information on this file and the options for user
+# authentication, see:
+#      http://www.oclc.org/us/en/support/documentation/ezproxy/usr/
+#
+# Lines starting with # are comments
+#
+# This file may be updated while EZproxy is running without the need to
+# stop and restart the program.
+#
+# This file contains three fields separated by colons (:) of the form
+#
+#      username:password:options
+#
+#
+# A basic entry consists of a username and password, such as
+#
+#      someuser:somepass
+#
+# To create an administrative user, place :admin after the password.
+# For example, the following line would create a username of rdoe with
+# a password of keepsafe that has administrative access to the EZproxy server.
+#
+#      rdoe:keepsafe:admin
+
+testuser:password
+admin:password:admin
