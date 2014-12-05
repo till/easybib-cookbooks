@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'php-xdebug::default' do
 
-  let (:chef_run) do
+  let(:chef_run) do
     ChefSpec::Runner.new do |node|
       node.default['apt'] = {}
       node.default.apt['easybib'] = {}

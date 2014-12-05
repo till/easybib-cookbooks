@@ -1,27 +1,7 @@
-# Offense count: 14
-Lint/ParenthesesAsGroupedExpression:
-  Enabled: false
-
-# Offense count: 5
-# Cop supports --auto-correct.
-Lint/UnusedBlockArgument:
-  Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Lint/UnusedMethodArgument:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/FormatString:
   Enabled: false
-
-# Offense count: 397
-# Cop supports --auto-correct.
-# Configuration parameters: SupportedStyles.
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
 
 # Offense count: 3
 Style/ModuleFunction:
