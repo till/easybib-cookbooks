@@ -7,6 +7,8 @@ server {
     <%= @nginx_extra -%>
   <% end -%>
 
+  client_max_body_size <%=node['nginx-app']['client_max_body_size']%>;
+
   <% if !@domain_name.nil? && !@domain_name.empty? -%>
       server_name <%=@domain_name%>;
   <% end -%>
