@@ -9,6 +9,10 @@ server {
 
   client_max_body_size <%=node['nginx-app']['client_max_body_size']%>;
 
+  <% unless @nginx_local_conf.nil? -%>
+  <%= render @nginx_local_conf, :local => true %>
+  <% end -%>
+
   <% if !@domain_name.nil? && !@domain_name.empty? -%>
       server_name <%=@domain_name%>;
   <% end -%>
