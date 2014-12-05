@@ -1,3 +1,7 @@
+# Offense count: 17
+Metrics/AbcSize:
+  Max: 51
+
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/FormatString:
