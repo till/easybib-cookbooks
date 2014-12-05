@@ -50,7 +50,7 @@ service 'fail2ban' do
   action [:enable, :start]
 
   if (platform?('ubuntu') && node['platform_version'].to_f < 12.04) ||
-      (platform?('debian') && node['platform_version'].to_f < 7)
+     (platform?('debian') && node['platform_version'].to_f < 7)
     # status command returns non-0 value only since fail2ban 0.8.6-3 (Debian)
     status_command "/etc/init.d/fail2ban status | grep -q 'is running'"
   end
