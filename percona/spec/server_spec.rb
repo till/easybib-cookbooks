@@ -1,7 +1,7 @@
 require 'chefspec'
 
 describe 'percona::server' do
-  let (:chef_run) do
+  let(:chef_run) do
     ChefSpec::Runner.new.converge('percona::server')
   end
 

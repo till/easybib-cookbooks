@@ -21,10 +21,10 @@ describe 'smokeping_configure' do
   describe 'smokeping pathnames configuration' do
     it 'renders pathnames' do
       expect(chef_run).to render_file('/etc/smokeping/config.d/pathnames')
-      .with_content(
+        .with_content(
         include('imgcache = /var/cache/smokeping/images')
       )
-      .with_content(
+        .with_content(
         include('sendmail = /usr/sbin/sendmail')
       )
     end

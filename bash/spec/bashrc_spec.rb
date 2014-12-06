@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'bash::bashrc' do
 
-  let (:chef_run) do
+  let(:chef_run) do
     ChefSpec::Runner.new do |node|
       # fake opsworks
       node.default['opsworks'] = {}

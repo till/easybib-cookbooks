@@ -1,7 +1,7 @@
 require 'chefspec'
 
 describe 'haproxy::configure' do
-  let (:runner) do
+  let(:runner) do
     ChefSpec::Runner.new do |node|
       node.set[:opsworks][:layers][:nginxphpapp][:instances] = {}
       node.set[:opsworks][:layers][:app1][:instances] = {}
@@ -30,8 +30,8 @@ describe 'haproxy::configure' do
       }
     end
   end
-  let (:chef_run) { runner.converge('haproxy::configure') }
-  let (:node) { runner.node }
+  let(:chef_run) { runner.converge('haproxy::configure') }
+  let(:node) { runner.node }
 
   describe 'standard settings' do
     before do
