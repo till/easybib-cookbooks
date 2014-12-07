@@ -1,3 +1,3 @@
-include_recipe 'easybib::setup'
-include_recipe 'loggly::setup'
-include_recipe 'gearmand'
+Chef::Log.info('This is deprecated, please update to service::role-gearmand')
+
+include_recipe 'service::role-gearmand'
