@@ -4,7 +4,7 @@ template '/tmp/config.conf' do
   mode node['testdata']['mode']
   owner node['testdata']['owner']
   group node['testdata']['group']
-  helpers(EasyBib::Upstream)
+  helpers(EasyBib::Helpers)
   variables(
     :domain_name => node['testdata']['domain_name'],
     :doc_root => node['testdata']['doc_root'],

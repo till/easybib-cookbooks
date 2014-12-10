@@ -9,7 +9,7 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
   mode   '0755'
   owner  node['nginx-app']['user']
   group  node['nginx-app']['group']
-  helpers EasyBib::Upstream
+  helpers EasyBib::Helpers
   variables(
     :js_alias     => node['nginx-app']['js_modules'],
     :img_alias    => node['nginx-app']['img_modules'],
