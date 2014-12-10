@@ -13,13 +13,14 @@ class TestEasyBibConfig < Test::Unit::TestCase
     fake_node.set['foo']['bar']['bla']['batz'] = 'thing'
     assert_equal(
       'thing',
-      ::EasyBib::Config.node('app', 'foo', 'bar', 'bla', 'batz', fake_node)
+      ::EasyBib::Config.node(fake_node, 'app', 'foo', 'bar', 'bla', 'batz')
     )
     assert_equal(
       'content',
-      ::EasyBib::Config.node('app', 'value', fake_node)
+      ::EasyBib::Config.node(fake_node, 'app', 'value')
     )
   end
+
   def test_get_for_app
     fake_node = Chef::Node.new
     fake_node.set['value'] = 'content'
@@ -28,11 +29,11 @@ class TestEasyBibConfig < Test::Unit::TestCase
     fake_node.set['app']['foo']['bar']['bla']['batz'] = 'app-thing'
     assert_equal(
       'app-thing',
-      ::EasyBib::Config.node('app', 'foo', 'bar', 'bla', 'batz', fake_node)
+      ::EasyBib::Config.node(fake_node, 'app', 'foo', 'bar', 'bla', 'batz')
     )
     assert_equal(
       'app-content',
-      ::EasyBib::Config.node('app', 'value', fake_node)
+      ::EasyBib::Config.node(fake_node, 'app', 'value')
     )
   end
 end

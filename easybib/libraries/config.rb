@@ -2,19 +2,14 @@ module EasyBib
   module Config
     extend self
 
-    def node(app, *args)
-      # this is ugly: we can not have an optional last parameter after a splat
-      # since all "real" parameters are a string, we just pop the last from args
-      # and use it as node if its sth else
-      if args.last.is_a?(String)
-        node = self.node
-      else
-        node = args.pop
+    def node(node, app, *args)
+      if args.last.is_a?(Array)
+        # comes from EasyBib::Helpers template
+        args = args.pop
       end
-
       default = recursive_fetch(node, args)
-
       args.unshift(app)
+
       appspecific = recursive_fetch(node, args)
 
       return appspecific unless appspecific.nil?

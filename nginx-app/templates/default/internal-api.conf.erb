@@ -7,7 +7,7 @@ server {
     <%= @nginx_extra -%>
   <% end -%>
 
-  client_max_body_size <%=node['nginx-app']['client_max_body_size']%>;
+  client_max_body_size <%= fetch_node(node, @app_name, 'nginx-app', 'client_max_body_size') %>;
 
   <% unless @nginx_local_conf.nil? -%>
   <%= render @nginx_local_conf, :local => true %>
