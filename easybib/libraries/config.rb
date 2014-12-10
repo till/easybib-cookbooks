@@ -2,6 +2,25 @@ module EasyBib
   module Config
     extend self
 
+    def node(app, *args)
+      # this is ugly: we can not have an optional last parameter after a splat
+      # since all "real" parameters are a string, we just pop the last from args
+      # and use it as node if its sth else
+      if args.last.is_a?(String)
+        node = self.node
+      else
+        node = args.pop
+      end
+
+      default = recursive_fetch(node, args)
+
+      args.unshift(app)
+      appspecific = recursive_fetch(node, args)
+
+      return appspecific unless appspecific.nil?
+      default
+    end
+
     # returns only the environment settings in the json
     def get_env(format, app, node = self.node)
       return '' unless node.attribute?(app)
@@ -346,6 +365,15 @@ module EasyBib
         i += 1
       end
       ret
+    end
+
+    def recursive_fetch(hash, keys)
+      begin
+        retval = keys.reduce(hash, :fetch)
+      rescue KeyError
+        retval = nil
+      end
+      retval
     end
   end
 end
