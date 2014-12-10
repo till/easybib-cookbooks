@@ -2,6 +2,20 @@ module EasyBib
   module Config
     extend self
 
+    def node(node, app, *args)
+      if args.last.is_a?(Array)
+        # comes from EasyBib::Helpers template
+        args = args.pop
+      end
+      default = recursive_fetch(node, args)
+      args.unshift(app)
+
+      appspecific = recursive_fetch(node, args)
+
+      return appspecific unless appspecific.nil?
+      default
+    end
+
     # returns only the environment settings in the json
     def get_env(format, app, node = self.node)
       return '' unless node.attribute?(app)
@@ -346,6 +360,15 @@ module EasyBib
         i += 1
       end
       ret
+    end
+
+    def recursive_fetch(hash, keys)
+      begin
+        retval = keys.reduce(hash, :fetch)
+      rescue KeyError
+        retval = nil
+      end
+      retval
     end
   end
 end

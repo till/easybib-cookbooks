@@ -1,5 +1,6 @@
 module EasyBib
   module Upstream
+    extend self
     def render_upstream(upstreams, name = '')
       name = 'master' if name.empty?
 
