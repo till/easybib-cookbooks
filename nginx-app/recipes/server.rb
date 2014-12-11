@@ -6,7 +6,7 @@ ohai 'reload_passwd' do
   plugin 'passwd'
 end
 
-package 'nginx' do
+package node['nginx-app']['package-name'] do
   notifies :reload, 'ohai[reload_passwd]', :immediately
   notifies :enable, 'service[nginx]'
   notifies :start, 'service[nginx]'
