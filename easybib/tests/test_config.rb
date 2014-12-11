@@ -237,6 +237,23 @@ return [
     )
   end
 
+  def test_merged_config_to_shell
+    assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
+export DEPLOYED_APPLICATION_DOMAINS=\"foo.tld bar.tld\"
+export DEPLOYED_APPLICATION_DEPLOY_DIR=\"/tmp/bla/\"
+export DEPLOYED_APPLICATION_APP_DIR=\"/tmp/bla/current/\"
+export DEPLOYED_APPLICATION_DOC_ROOT_DIR=\"/tmp/bla/current/www/\"
+export DEPLOYED_STACK_ENVIRONMENT=\"playground\"
+export DEPLOYED_STACK_STACKNAME=\"some_stack\"
+export STACKVALUE_SOMEKEY=\"somevalue\"
+export BLA_SOMEKEY=\"somevalue\"
+export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"
+export BLA_SOMEARRAY[0]=\"server1\"
+export BLA_SOMEARRAY[1]=\"server2\"\n",
+                 ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_redundant_config, 'some_stack')
+    )
+  end
+
   protected
 
   def get_fakenode_config
@@ -263,6 +280,29 @@ return [
 
     fake_node.set['opsworks'] =  { 'stack' => { 'name' => 'opsworks-stack' } }
     fake_node.set['easybib_deploy'] =  { 'envtype' => 'playground' }
+
+    fake_node
+  end
+
+  def get_fakenode_redundant_config
+    fake_node = Chef::Node.new
+    fake_node.set['deploy']['some_app'] = {
+      'application' => 'some_app',
+      'domains' => ['foo.tld', 'bar.tld'],
+      'deploy_to' => '/tmp/bla',
+      'document_root' => 'www'
+    }
+    fake_node.set['some_app']['env']['bla'] = {
+      'somekey' => 'somevalue',
+      'somegroup' => {
+        'someotherkey' => 'someothervalue'
+      },
+      'somearray' => %w(server1 server2)
+    }
+    fake_node.set['some_stack']['env']['stackvalue']['somekey'] = 'somevalue'
+    fake_node.set['some_stack']['env']['bla']['somekey'] = 'this-should-not-be-here'
+    fake_node.set['opsworks']['stack']['name'] = 'some_stack'
+    fake_node.set['easybib_deploy']['envtype'] = 'playground'
 
     fake_node
   end
