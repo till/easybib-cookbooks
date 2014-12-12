@@ -95,7 +95,9 @@ server {
   <% if !@environment.nil? && !@environment.empty? -%>
       fastcgi_param BIB_ENV "<%=@environment%>";
   <% end -%>
-
+<% if node['opsworks'] -%>
+      fastcgi_param HTTPS on;
+<% end -%>
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }
