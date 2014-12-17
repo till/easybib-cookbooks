@@ -11,17 +11,17 @@ server {
 
 server {
 
-<% if !node['opsworks'] -%>
-    listen 80;
-<% else -%>
+<% if ::EasyBib.is_aws(node) -%>
     listen 443;
 
     ssl                       on;
     ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
     ssl_certificate           /etc/nginx/ssl/cert.pem;
     ssl_certificate_key       /etc/nginx/ssl/cert.key;
-    ssl_ciphers               RC4:HIGH:!aNULL:!MD5@STRENGTH;
+    ssl_ciphers               HIGH:!RC4:!eNULL:!aNULL:!MD5@STRENGTH;
     ssl_prefer_server_ciphers on;
+<% else -%>
+    listen 80;
 <% end -%>
 
 <% if @nginx_extra -%>
@@ -95,7 +95,9 @@ server {
   <% if !@environment.nil? && !@environment.empty? -%>
       fastcgi_param BIB_ENV "<%=@environment%>";
   <% end -%>
-
+<% if ::EasyBib.is_aws(node) -%>
+      fastcgi_param HTTPS on;
+<% end -%>
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }
