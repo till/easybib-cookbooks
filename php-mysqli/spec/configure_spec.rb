@@ -1,7 +1,7 @@
 require 'chefspec'
 
 describe 'php-mysqli::configure' do
-  let (:chef_run) { ChefSpec::Runner.new.converge('php-mysqli::configure') }
+  let(:chef_run) { ChefSpec::Runner.new.converge('php-mysqli::configure') }
 
   it 'creates mysqli-settings.ini which contains the correct settings' do
 

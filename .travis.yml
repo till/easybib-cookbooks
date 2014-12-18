@@ -3,11 +3,8 @@ rvm:
   - 1.9.3
 
 script:
-  - find . -type f -name "*.rb" -exec ruby -c {} > /dev/null \;
-  - rake rubocop
-  - rake test
-  - rake spec
-  - rake foodcritic
+  - make cs
+  - make test
 
 after_success:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz

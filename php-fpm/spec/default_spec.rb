@@ -11,7 +11,7 @@ describe 'php-fpm::default' do
     @shellout.stub(:error!)
   end
 
-  let (:chef_run) do
+  let(:chef_run) do
     ChefSpec::Runner.new.converge('php-fpm::default')
   end
 

@@ -2,6 +2,20 @@ module EasyBib
   module Config
     extend self
 
+    def node(node, app, *args)
+      if args.last.is_a?(Array)
+        # comes from EasyBib::Helpers template
+        args = args.pop
+      end
+      default = recursive_fetch(node, args)
+      args.unshift(app)
+
+      appspecific = recursive_fetch(node, args)
+
+      return appspecific unless appspecific.nil?
+      default
+    end
+
     # returns only the environment settings in the json
     def get_env(format, app, node = self.node)
       return '' unless node.attribute?(app)
@@ -18,15 +32,15 @@ module EasyBib
     # returns env settings and information about the stack, application env, and rds
     def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
       settings = {}
-      if node.attribute?(appname) && node[appname].attribute?('env')
-        Chef::Log.info("env settings for app #{appname} found")
-        settings = streamline_appenv(node[appname]['env'])
-      elsif !node.fetch(stackname, {})['env'].nil?
+      unless node.fetch(stackname, {})['env'].nil?
         Chef::Log.info("env settings for stack #{stackname} found")
         settings = streamline_appenv(node[stackname]['env'])
-      else
-        Chef::Log.info("no env settings found - appname was #{appname}, stack #{stackname}")
       end
+      if node.attribute?(appname) && node[appname].attribute?('env')
+        Chef::Log.info("env settings for app #{appname} found")
+        settings.merge!(streamline_appenv(node[appname]['env']))
+      end
+      Chef::Log.info("no env settings found - appname was #{appname}, stack #{stackname}") if settings.empty?
 
       unless node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
         # add configuration from the RDS resource management in opsworks
@@ -346,6 +360,15 @@ module EasyBib
         i += 1
       end
       ret
+    end
+
+    def recursive_fetch(hash, keys)
+      begin
+        retval = keys.reduce(hash, :fetch)
+      rescue KeyError
+        retval = nil
+      end
+      retval
     end
   end
 end

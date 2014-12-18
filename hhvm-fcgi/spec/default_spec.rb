@@ -9,9 +9,9 @@ describe 'hhvm-fcgi::default' do
     @shellout.stub(:error!)
   end
 
-  let (:runner) { ChefSpec::Runner.new }
-  let (:chef_run) { runner.converge('hhvm-fcgi::default') }
-  let (:node) { runner.node }
+  let(:runner) { ChefSpec::Runner.new }
+  let(:chef_run) { runner.converge('hhvm-fcgi::default') }
+  let(:node) { runner.node }
 
   describe 'standard settings' do
     it 'installs hhvm and creates the config files' do

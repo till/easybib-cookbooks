@@ -11,7 +11,7 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
-    client_max_body_size 5m;
+    client_max_body_size <%= fetch_node(node, @app_name, 'nginx-app', 'client_max_body_size') %>;
 
     # Block ad calls to /something/<script type="text/javascript">
     location ~* <script {

@@ -10,6 +10,8 @@ AllCops:
     - 'opsworks_nodejs/**/*'
     - 'vagrant-test/**/*'
     - 'test/**/*'
+    - 'erlang/**/*'
+    - 'rabbitmq/**/*'
     - 'Rakefile'
     - 'fc_sandbox/**/*'
 
@@ -60,5 +62,8 @@ Lint/UnusedBlockArgument:
 
 Lint/UnusedMethodArgument:
   Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
 
 inherit_from: .rubocop_todo.yml

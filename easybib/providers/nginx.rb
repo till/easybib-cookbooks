@@ -45,11 +45,12 @@ action :setup do
     mode '0755'
     owner node['nginx-app']['user']
     group node['nginx-app']['group']
-    helpers EasyBib::Upstream
+    helpers EasyBib::Helpers
     variables(
       :domain_name => domain_name,
       :doc_root => deploy_dir,
       :app_dir => app_dir,
+      :app_name => application,
       :access_log => access_log,
       :nginx_extra => nginx_extras,
       :nginx_local_conf => nginx_local_conf,
