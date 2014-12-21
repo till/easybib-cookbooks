@@ -7,3 +7,5 @@ apt_repository 'easybib-ppa' do
 end
 
 package 'couchdb'
+
+include_recipe 'apache-couchdb::configure'
