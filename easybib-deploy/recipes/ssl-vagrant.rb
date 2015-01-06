@@ -45,7 +45,7 @@ unless node.fetch('vagrant', {})['ssl'].nil?
     group  'root'
     variables(
       'ssl_dir' => ssl_dir,
-      'int_ip'  => int_ip,
+      'int_ip'  => int_ip
     )
     notifies :restart, 'service[nginx]'
   end
