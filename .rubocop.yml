@@ -14,6 +14,7 @@ AllCops:
     - 'rabbitmq/**/*'
     - 'Rakefile'
     - 'fc_sandbox/**/*'
+    - 'vendor/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
