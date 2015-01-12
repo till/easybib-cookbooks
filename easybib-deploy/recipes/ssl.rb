@@ -2,7 +2,6 @@ include_recipe 'nginx-lb::default'
 include_recipe 'nginx-lb::service'
 
 right_role    = node['nginx-lb']['role']
-right_cluster = node['nginx-lb']['cluster']
 nginx_dir     = node['nginx-lb']['dir']
 ssl_dir       = node['ssl-deploy']['directory']
 int_ip        = node['nginx-lb']['int_ip']
@@ -28,11 +27,6 @@ node['deploy'].each do |application, deploy|
     next
   end
 
-  unless right_cluster.include?(cluster_name.to_s)
-    Chef::Log.info('Will not deploy to: ' + cluster_name.to_s)
-    next
-  end
-
   unless deploy.key?('ssl_certificate')
     Chef::Log.info("No ssl_certificate 'key'")
     next
@@ -55,6 +49,7 @@ node['deploy'].each do |application, deploy|
 
   ssl_certificate     = deploy['ssl_certificate'].chomp
   ssl_certificate_key = deploy['ssl_certificate_key'].chomp
+  ssl_combined_key = [ssl_certificate,ssl_certificate_key].join("\n")
 
   directory ssl_dir do
     mode      '0750'
@@ -81,6 +76,17 @@ node['deploy'].each do |application, deploy|
     group  node['nginx-app']['group']
     variables(
       'ssl_key' => ssl_certificate_key
+    )
+    notifies :restart, 'service[nginx]'
+  end
+
+  template ssl_dir + '/cert.combined.pem' do
+    source 'ssl_key.erb'
+    mode   '0640'
+    owner  'root'
+    group  node['nginx-app']['group']
+    variables(
+      'ssl_key' => ssl_combined_key
     )
     notifies :restart, 'service[nginx]'
   end
