@@ -9,6 +9,8 @@ default['haproxy']['errorloc'] = {
   '504' => '5xx.http'
 }
 
+default['haproxy']['type'] = '1.4' # 1.4 or 1.5
+default['haproxy']['ssl'] = 'off' # off, on, only - on/only works only with 1.5
 default['haproxy']['ctl'] = {}
 default['haproxy']['ctl']['version'] = '1.1.0'
 default['haproxy']['ctl']['base_path'] = '/usr/local/share'

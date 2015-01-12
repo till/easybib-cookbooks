@@ -1,0 +1,25 @@
+{
+  "haproxy" : {
+    "additional_layers": {},
+    "acls": {},
+    "type": "1.5"
+  },
+  "deploy": {
+    "ssl": {
+      "ssl_certificate": "-----BEGIN CERTIFICATE-----\nMIICOzCCAaQCCQDPWkBP5VrRtDANBgkqhkiG9w0BAQUFADBiMQswCQYDVQQGEwJE\nRTEPMA0GA1UECBMGQmVybGluMQ8wDQYDVQQHEwZCZXJsaW4xGTAXBgNVBAoTEFRp\nbGwgS2xhbXBhZWNrZWwxFjAUBgNVBAMTDXZhZ3JhbnQubG9jYWwwHhcNMTIwODI0\nMTM0MTIxWhcNMTMwODI0MTM0MTIxWjBiMQswCQYDVQQGEwJERTEPMA0GA1UECBMG\nQmVybGluMQ8wDQYDVQQHEwZCZXJsaW4xGTAXBgNVBAoTEFRpbGwgS2xhbXBhZWNr\nZWwxFjAUBgNVBAMTDXZhZ3JhbnQubG9jYWwwgZ8wDQYJKoZIhvcNAQEBBQADgY0A\nMIGJAoGBAL9pcseQ0pOJ22rKP889Nr4LT9bg0oBCa/+x79TkBeBuxQ5j5QCjxKeY\ntIQNz0r1bom+fT8wRFq8kz0z/UFMdhwjXIxSYTHe3zaTB+2QrcNjp3Z7yq1wgHfk\n1pkpheg1Ob8wKZvScc6s1GWMWknlBBh2hHvxfefC3c+KJ/JxYqhBAgMBAAEwDQYJ\nKoZIhvcNAQEFBQADgYEABA6Qi6aVfBrM2ltS967WTZimhnfgN6Y+SrGfUozioOJW\nNyYPV4Dp1NjtYvdZLci2eSp2bFPLLnN7L1GYZT0F+p0cBmeTEhTsuGbFxmAxjq+g\nU7LcfYZT7505PNLLBPBl8kgfMr5aO7aAEE59h2MX2Dx/Vcea8xpqG5Pqumf4Ol0=\n-----END CERTIFICATE-----",
+      "ssl_certificate_key": "-----BEGIN RSA PRIVATE KEY-----\nMIICXgIBAAKBgQC/aXLHkNKTidtqyj/PPTa+C0/W4NKAQmv/se/U5AXgbsUOY+UA\no8SnmLSEDc9K9W6Jvn0/MERavJM9M/1BTHYcI1yMUmEx3t82kwftkK3DY6d2e8qt\ncIB35NaZKYXoNTm/MCmb0nHOrNRljFpJ5QQYdoR78X3nwt3PiifycWKoQQIDAQAB\nAoGAKPrbfwxrePjnyAo69RSG9tMXKcsCZkFSO/ENhse21mEAwV7ztVpajQMtiqQm\nQEchfk4RJIkh6Uc8QrsxulwzYN0xCa9NHuFmXXH/uVwH/+3y1SEYMeL1WNYxX4c0\nWry2E8ZFMkPbaRFrgQr9ukJhcWejcyF4V4n0kU+wCXa3FlECQQD9LCrLrCyXLZc7\n698YbbHXoBpeNKwgAFikhd+FQGbFVg366rEbkNa1ehgM4j6Mj7s97GlPdAKNcYFD\nLiaVOWh1AkEAwYy0Wo6Xucb9khf2iU2WyyAZW3fYkeMt+8zjvcfVPJGZAiQkJk8P\n7OfuwlxFN7pWvhRT3IZGA00eolLeABgnHQJBAJgYjK1HhpJcJVsuXR0D6a+s06p8\n4ltnWdmdQ6d+BT/Qbx2rGTOCVDs6WnCDCyjOwKJ3AN1myJHI+ustMqi7kHECQQCN\nakzsTXs2Vdo3wCJ1t6cRyuY8Gpi2HxMeA1ny8+stUgRFuDphcyrjoaKlh91bFl8C\nir+rRMAq8VIMsBdcYklRAkEAq2BbN3FsLrxGj49Yu4W4x9nsfNy2xZaNMoD2wz/J\npSFUjzfIc290wCoyoxSRIbYDPeEwQg2q1K/UNRdMBRw30A==\n-----END RSA PRIVATE KEY-----"
+    }
+  },
+    "opsworks": {
+      "instance": {
+        "layers": ["lb"]
+      },
+      "layers": {
+        "nginxphpapp": {
+          "instances": {
+          
+          }
+        }
+      }
+    }
+}

@@ -7,6 +7,9 @@ global
   user haproxy
   group haproxy
   stats socket /tmp/haproxy.sock level admin
+<% if @node['haproxy']['type'] == '1.5' -%>
+  tune.ssl.default-dh-param 2048
+<% end -%>
 
 defaults
   log             global
@@ -15,9 +18,15 @@ defaults
   option          dontlognull
   retries         3
   maxconn         2000
+<% if @node['haproxy']['type'] == '1.5' -%>
+  timeout connect 50000
+  timeout client  50000
+  timeout server  50000
+<% else -%>
   contimeout      50000
   clitimeout      50000
   srvtimeout      50000
+<% end -%>
   option          redispatch
   option          httpclose     # disable keepalive (HAProxy does not yet support the HTTP keep-alive mode)
   option          abortonclose  # enable early dropping of aborted requests from pending queue

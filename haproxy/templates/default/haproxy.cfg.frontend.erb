@@ -1,11 +1,14 @@
-<%
-# bind haproxy to the following parameters
-haproxy_port = 80
-haproxy_host = ""
--%>
-
 frontend http-in
-  bind <%= haproxy_host %>:<%= haproxy_port %>
+  bind *:80
+  <% unless @node['haproxy']['ssl'] == 'off'
+    certificate = "#{@node['ssl-deploy']['directory']}/cert.combined.pem"
+  -%>
+  bind *:443 ssl crt <%= certificate %>
+  http-request add-header X-Proto https if { ssl_fc }
+  <% if @node['haproxy']['ssl'] == 'only' -%>
+  redirect scheme https if !{ ssl_fc }
+  <% end
+  end -%>
   option log-separate-errors
 
   <% if !@node['haproxy']['acls'].nil? || @node['haproxy']['acls'].empty?  -%>

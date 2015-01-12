@@ -26,7 +26,7 @@ node['deploy'].each do |application, deploy|
 
   ssl_certificate     = deploy['ssl_certificate'].chomp
   ssl_certificate_key = deploy['ssl_certificate_key'].chomp
-  ssl_combined_key    = [ssl_certificate,ssl_certificate_key].join("\n")
+  ssl_combined_key    = [ssl_certificate, ssl_certificate_key].join("\n")
 
   directory ssl_dir do
     mode      '0750'
