@@ -26,6 +26,7 @@ node['deploy'].each do |application, deploy|
 
   ssl_certificate     = deploy['ssl_certificate'].chomp
   ssl_certificate_key = deploy['ssl_certificate_key'].chomp
+  ssl_combined_key    = [ssl_certificate,ssl_certificate_key].join("\n")
 
   directory ssl_dir do
     mode      '0750'
@@ -52,6 +53,17 @@ node['deploy'].each do |application, deploy|
     variables(
       'ssl_key' => ssl_certificate_key
     )
+  end
+
+  template ssl_dir + '/cert.combined.pem' do
+    source 'ssl_key.erb'
+    mode   '0640'
+    owner  'root'
+    group  node['nginx-app']['group']
+    variables(
+      'ssl_key' => ssl_combined_key
+    )
+    notifies :restart, 'service[nginx]'
   end
 
 end
