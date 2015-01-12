@@ -14,6 +14,10 @@ execute 'update pip' do
   end
 end
 
+execute 'install docutils' do
+  command "pip install docutils"
+end
+
 execute 'install python-avahi' do
   command "pip install --no-use-wheel --force-reinstall #{node['avahi']['alias']['package']}"
 end
