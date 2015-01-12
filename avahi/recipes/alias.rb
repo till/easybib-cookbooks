@@ -15,7 +15,7 @@ execute 'update pip' do
 end
 
 execute 'install docutils' do
-  command "pip install docutils"
+  command 'pip install docutils'
 end
 
 execute 'install python-avahi' do
