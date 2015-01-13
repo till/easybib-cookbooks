@@ -2,7 +2,11 @@
   "haproxy" : {
     "additional_layers": {},
     "acls": {},
+    "ssl": "on",
     "type": "1.5"
+  },
+  "ssl-deploy": {
+    "ssl-role": "lb"
   },
   "deploy": {
     "ssl": {

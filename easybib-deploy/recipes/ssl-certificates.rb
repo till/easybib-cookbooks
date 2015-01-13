@@ -2,7 +2,7 @@ ssl_dir    = node['ssl-deploy']['directory']
 
 node['deploy'].each do |application, deploy|
 
-  next unless allow_deploy(application, 'ssl', 'nginxphpapp')
+  next unless allow_deploy(application, 'ssl', node['ssl-deploy']['ssl-role'])
 
   unless deploy.key?('ssl_certificate')
     Chef::Log.info("No ssl_certificate 'key'")
@@ -63,7 +63,6 @@ node['deploy'].each do |application, deploy|
     variables(
       'ssl_key' => ssl_combined_key
     )
-    notifies :restart, 'service[nginx]'
   end
 
 end
