@@ -1,8 +1,7 @@
-include_recipe 'nginx-lb::default'
-include_recipe 'nginx-lb::service'
-nginx_dir     = node['nginx-lb']['dir']
+include_recipe 'nginx-app::service'
+nginx_dir     = node['nginx-app']['config_dir']
 ssl_dir       = node['ssl-deploy']['directory']
-int_ip        = node['nginx-lb']['int_ip']
+int_ip        = '127.0.0.1'
 
 unless node.fetch('vagrant', {})['ssl'].nil?
   deploy = node['vagrant']['ssl']
