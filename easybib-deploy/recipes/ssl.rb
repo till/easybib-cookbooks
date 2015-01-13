@@ -2,18 +2,15 @@ include_recipe 'nginx-lb::default'
 include_recipe 'nginx-lb::service'
 
 right_role    = node['nginx-lb']['role']
-right_cluster = node['nginx-lb']['cluster']
 nginx_dir     = node['nginx-lb']['dir']
 ssl_dir       = node['ssl-deploy']['directory']
 int_ip        = node['nginx-lb']['int_ip']
 
 if is_aws
   instance_roles = get_instance_roles
-  cluster_name   = get_cluster_name
 else
   Chef::Log.debug('Not running on AWS, setting defaults.')
   instance_roles = ''
-  cluster_name   = ''
 end
 
 stored_certificate = false
@@ -25,11 +22,6 @@ node['deploy'].each do |application, deploy|
   end
 
   unless instance_roles.include?(right_role)
-    next
-  end
-
-  unless right_cluster.include?(cluster_name.to_s)
-    Chef::Log.info('Will not deploy to: ' + cluster_name.to_s)
     next
   end
 
@@ -55,6 +47,7 @@ node['deploy'].each do |application, deploy|
 
   ssl_certificate     = deploy['ssl_certificate'].chomp
   ssl_certificate_key = deploy['ssl_certificate_key'].chomp
+  ssl_combined_key = [ssl_certificate, ssl_certificate_key].join("\n")
 
   directory ssl_dir do
     mode      '0750'
@@ -81,6 +74,17 @@ node['deploy'].each do |application, deploy|
     group  node['nginx-app']['group']
     variables(
       'ssl_key' => ssl_certificate_key
+    )
+    notifies :restart, 'service[nginx]'
+  end
+
+  template ssl_dir + '/cert.combined.pem' do
+    source 'ssl_key.erb'
+    mode   '0640'
+    owner  'root'
+    group  node['nginx-app']['group']
+    variables(
+      'ssl_key' => ssl_combined_key
     )
     notifies :restart, 'service[nginx]'
   end
