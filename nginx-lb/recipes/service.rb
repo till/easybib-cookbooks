@@ -1,1 +1,1 @@
-include 'nginx-app::service'
+include_recipe 'nginx-app::service'
