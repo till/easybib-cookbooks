@@ -7,3 +7,5 @@ version           '0.1'
 recipe            'avahi::default', 'Installs avahi'
 
 supports 'ubuntu'
+
+depends 'easybib'
