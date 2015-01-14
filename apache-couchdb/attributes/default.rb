@@ -8,3 +8,8 @@ default['apache-couchdb']['config'] = {
     'bind_address' => '127.0.0.1'
   }
 }
+
+default['apache-couchdb']['fauxton'] = {
+  'repository' => 'https://github.com/apache/couchdb-fauxton.git',
+  'version' => 'b61f60181ccc9d728bde5e6ad7ebbec4a4bd7b20'
+}
