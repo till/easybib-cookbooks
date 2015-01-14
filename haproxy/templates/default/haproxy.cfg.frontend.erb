@@ -11,7 +11,7 @@ frontend http-in
   end -%>
   option log-separate-errors
 
-  <% if !@node['haproxy']['acls'].nil? || @node['haproxy']['acls'].empty?  -%>
+  <% if !@node['haproxy']['acls'].nil? -%>
   #acls from node json:
     <% @node['haproxy']['acls'].each do |aclname,aclconfig| -%>
   #rule <%= aclname %>
