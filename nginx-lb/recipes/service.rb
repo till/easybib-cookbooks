@@ -1,4 +1,1 @@
-service 'nginx' do
-  supports 'status' => true, 'restart' => true
-  action :nothing
-end
+include 'nginx-app::service'
