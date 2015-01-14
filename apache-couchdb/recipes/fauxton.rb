@@ -17,5 +17,5 @@ git app_dir do
   repository node['apache-couchdb']['fauxton']['repository']
   revision node['apache-couchdb']['fauxton']['version']
   action :sync
-  notifies :run, "execute[npm_install]"
+  notifies :run, 'execute[npm_install]'
 end
