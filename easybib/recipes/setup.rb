@@ -1,7 +1,7 @@
 base_packages = [
   'htop', 'jwhois', 'multitail',
   'apache2-utils', 'strace', 'rsync',
-  'manpages', 'manpages-dev', 'nscd',
+  'manpages', 'manpages-dev',
   'git-core', 'unzip', 'realpath', 'curl'
 ]
 
@@ -16,11 +16,7 @@ chef_gem 'BibOpsworks' do
   end
 end
 
-service 'nscd' do
-  action :nothing
-  supports [:start, :stop, :restart, :reload]
-end
-
+include_recipe 'easybib::nscd'
 include_recipe 'easybib::nginxstats'
 include_recipe 'easybib::cron'
 include_recipe 'easybib::ruby'
