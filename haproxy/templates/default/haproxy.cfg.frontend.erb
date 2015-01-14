@@ -19,7 +19,7 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node['haproxy']['additional_layers'].nil? || @node['haproxy']['additional_layers'].empty?  -%>
+  <% if !@node['haproxy']['additional_layers'].nil?-%>
   #additional backends:
     <% @node['haproxy']['additional_layers'].each do |layername,layerconfig| -%>
       <% if @node['opsworks']['layers'][layername]['instances'].empty? -%>
