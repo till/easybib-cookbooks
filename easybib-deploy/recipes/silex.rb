@@ -3,24 +3,20 @@ include_recipe 'nginx-app::service'
 
 node['deploy'].each do |application, deploy|
 
-  if application == 'api'
+  case application
+  when 'api'
     next unless allow_deploy(application, 'api', 'nginxphpapp')
-  end
-
-  if application == 'discover_api'
+  when 'discover_api'
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
-  end
-
-  if application == 'featureflags'
+  when 'featureflags'
     next unless allow_deploy(application, 'featureflags', 'nginxphpapp')
-  end
-
-  if application == 'id'
+  when 'id'
     next unless allow_deploy(application, 'id', 'nginxphpapp')
-  end
-
-  if application == 'scholar'
+  when 'scholar'
     next unless allow_deploy(application, 'scholar', 'nginxphpapp')
+  else
+    Chef::Log.info("deploy::siles - #{application} skipped")
+    next
   end
 
   Chef::Log.info("deploy::#{application} - Deployment started.")
