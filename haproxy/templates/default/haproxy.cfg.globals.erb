@@ -13,7 +13,7 @@ global
   ssl-default-bind-options <%= @node['haproxy']['ssl_params']['default_bind_options'] %>
 <%  end
     unless @node['haproxy']['ssl_params']['ciphers'].nil? -%>
-  ssl-default-server-ciphers <%= @node['haproxy']['ssl_params']['ciphers'] %>
+  ssl-default-bind-ciphers <%= @node['haproxy']['ssl_params']['ciphers'] %>
 <%  end 
   end -%>
 
