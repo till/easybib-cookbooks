@@ -5,7 +5,7 @@
 <% else -%>
     <%= render "haproxy.cfg.backend.erb", :variables => {
         'layername' => 'nginxphpapp',
-        'health_check_string' => "#{node['haproxy']['health_check_method']} #{node['haproxy']['health_check_url']}",
+        'health_check' => "#{node['haproxy']['health_check_method']} #{node['haproxy']['health_check_url']}",
         'node' => @node
     } %>
 <% end -%>
