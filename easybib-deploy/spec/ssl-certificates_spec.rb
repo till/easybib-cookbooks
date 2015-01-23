@@ -24,12 +24,11 @@ describe 'easybib-deploy::ssl-certificates' do
     node.set['deploy'][ssl_role]['ssl_certificate_ca']  = dummy_cert
   end
 
-
   describe 'everything set should create all certs completely' do
     it 'does create ssl directoy' do
       expect(chef_run).to create_directory(ssl_dir)
     end
-    
+
     it 'does create certificate' do
       expect(chef_run).to create_template(ssl_dir + '/cert.pem').with(
         :user => 'root',
@@ -50,7 +49,7 @@ describe 'easybib-deploy::ssl-certificates' do
         :mode => '0640'
       )
       expect(chef_run).to render_file(ssl_dir + '/cert.combined.pem').with_content(
-        [dummy_cert,dummy_key,dummy_cert].join("\n")
+        [dummy_cert, dummy_key, dummy_cert].join("\n")
       )
     end
   end
@@ -94,7 +93,7 @@ describe 'easybib-deploy::ssl-certificates' do
         :mode => '0640'
       )
       expect(chef_run).to render_file(ssl_dir + '/cert.combined.pem').with_content(
-        [dummy_cert,dummy_key,''].join("\n")
+        [dummy_cert, dummy_key, ''].join("\n")
       )
     end
   end
