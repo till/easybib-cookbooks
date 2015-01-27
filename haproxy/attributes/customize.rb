@@ -17,3 +17,4 @@ default['haproxy']['ctl']['base_path'] = '/usr/local/share'
 default['haproxy']['log_dir'] = '/mnt/var/log/haproxy'
 default['haproxy']['ssl_params']['ciphers'] = 'DEFAULT:!AES128:!CAMELLIA128:!RC4:!MEDIUM:!LOW:!EXP!3DES:@STRENGTH'
 default['haproxy']['ssl_params']['default_bind_options'] = 'no-sslv3'
+default['haproxy']['hsts'] = nil
