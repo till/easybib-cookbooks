@@ -4,8 +4,11 @@ frontend http-in
     certificate = "#{@node['ssl-deploy']['directory']}/cert.combined.pem"
   -%>
   bind *:443 ssl crt <%= certificate %>
-  http-request add-header X-Proto https if { ssl_fc }
-  <% if @node['haproxy']['ssl'] == 'only' -%>
+  reqadd X-Forwarded-Proto:\ https if { ssl_fc }
+  <% unless @node['haproxy']['hsts'].nil? -%>
+  rspadd Strict-Transport-Security:\ max-age=<%=@node['haproxy']['hsts']%> if { ssl_fc }
+  <% end
+     if @node['haproxy']['ssl'] == 'only' -%>
   redirect scheme https if !{ ssl_fc }
   <% end
   end -%>
