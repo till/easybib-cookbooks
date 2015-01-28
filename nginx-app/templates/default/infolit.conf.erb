@@ -58,7 +58,8 @@ server {
       :cookbook => 'nginx-app',
       :variables => {
         :enabled => node['nginx-app']['browser_caching']['enabled'],
-        :config => node['nginx-app']['browser_caching']['config']
+        :config => node['nginx-app']['browser_caching']['config'],
+        :access_log => @access_log
       }
     %>
 <% end -%>

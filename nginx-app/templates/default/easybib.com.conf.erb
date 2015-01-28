@@ -80,20 +80,13 @@ end
   }
 -%>
 
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|woff|ttf|eof)$ {
-        # Prevent static content to be handled by php
-        # See easybib/issues#417
-
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
       :cookbook => 'nginx-app',
       :variables => {
         :enabled => node['nginx-app']['browser_caching']['enabled'],
-        :config => node['nginx-app']['browser_caching']['config']
+        :config => node['nginx-app']['browser_caching']['config'],
+        :access_log => @access_log
       }
     %>
 <% end -%>
