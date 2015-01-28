@@ -1,5 +1,5 @@
 <% @assets.each do |www_alias,www_dir| -%>
-    location /<%= @type %>/<%=www_alias%>/ {
+    location ^~ /<%= @type %>/<%=www_alias%>/ {
         root <%= @module_dir %>/<%=www_dir%>/www;
     }
 <% end -%>
