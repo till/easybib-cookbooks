@@ -1,7 +1,6 @@
 ssl_dir    = node['ssl-deploy']['directory']
 
 node['deploy'].each do |application, deploy|
-
   next unless allow_deploy(application, 'ssl', node['ssl-deploy']['ssl-role'])
 
   unless deploy.key?('ssl_certificate')
@@ -24,9 +23,17 @@ node['deploy'].each do |application, deploy|
     next
   end
 
+  ssl_certificate_ca = ''
+
+  if deploy.key?('ssl_certificate_ca')
+    unless deploy['ssl_certificate_ca'].nil?
+      ssl_certificate_ca = deploy['ssl_certificate_ca'].chomp
+    end
+  end
+
   ssl_certificate     = deploy['ssl_certificate'].chomp
   ssl_certificate_key = deploy['ssl_certificate_key'].chomp
-  ssl_combined_key    = [ssl_certificate, ssl_certificate_key].join("\n")
+  ssl_combined_key    = [ssl_certificate, ssl_certificate_key, ssl_certificate_ca].join("\n")
 
   directory ssl_dir do
     mode      '0750'

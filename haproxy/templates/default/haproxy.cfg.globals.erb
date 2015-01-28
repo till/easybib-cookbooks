@@ -9,7 +9,13 @@ global
   stats socket /tmp/haproxy.sock level admin
 <% if @node['haproxy']['type'] == '1.5' -%>
   tune.ssl.default-dh-param 2048
-<% end -%>
+<%  unless @node['haproxy']['ssl_params']['default_bind_options'].nil? -%>
+  ssl-default-bind-options <%= @node['haproxy']['ssl_params']['default_bind_options'] %>
+<%  end
+    unless @node['haproxy']['ssl_params']['ciphers'].nil? -%>
+  ssl-default-bind-ciphers <%= @node['haproxy']['ssl_params']['ciphers'] %>
+<%  end 
+  end -%>
 
 defaults
   log             global

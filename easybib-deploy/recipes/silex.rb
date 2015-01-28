@@ -2,25 +2,23 @@ include_recipe 'php-fpm::service'
 include_recipe 'nginx-app::service'
 
 node['deploy'].each do |application, deploy|
-
-  if application == 'api'
+  listen_opts = nil
+  case application
+  when 'api'
     next unless allow_deploy(application, 'api', 'nginxphpapp')
-  end
-
-  if application == 'discover_api'
+  when 'discover_api'
+    listen_opts = 'default_server'
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
-  end
-
-  if application == 'featureflags'
+  when 'featureflags'
     next unless allow_deploy(application, 'featureflags', 'nginxphpapp')
-  end
-
-  if application == 'id'
+  when 'id'
     next unless allow_deploy(application, 'id', 'nginxphpapp')
-  end
-
-  if application == 'scholar'
+  when 'scholar'
+    listen_opts = 'default_server'
     next unless allow_deploy(application, 'scholar', 'nginxphpapp')
+  else
+    Chef::Log.info("deploy::siles - #{application} skipped")
+    next
   end
 
   Chef::Log.info("deploy::#{application} - Deployment started.")
@@ -36,6 +34,7 @@ node['deploy'].each do |application, deploy|
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
     htpasswd "#{deploy['deploy_to']}/current/htpasswd"
+    listen_opts listen_opts
     notifies :restart, 'service[nginx]', :delayed
   end
 
