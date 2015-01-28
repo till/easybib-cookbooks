@@ -51,7 +51,6 @@ end
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
   :variables => {
-    :access_log => @access_log,
     :assets => @js_alias,
     :module_dir => module_dir,
     :type => 'js'
@@ -61,7 +60,6 @@ end
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
   :variables => {
-    :access_log => @access_log,
     :assets => @img_alias,
     :module_dir => module_dir,
     :type => 'images'
@@ -71,7 +69,6 @@ end
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
   :variables => {
-    :access_log => @access_log,
     :assets => @css_alias,
     :module_dir => module_dir,
     :type => 'css'
