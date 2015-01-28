@@ -11,6 +11,11 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
+<% if @password_protected && @password_protected.to_s == "true" -%>
+    auth_basic            "Restricted";
+    auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
+<% end -%>
+
     client_max_body_size <%= fetch_node(node, @app_name, 'nginx-app', 'client_max_body_size') %>;
 
     # Block ad calls to /something/<script type="text/javascript">
@@ -78,10 +83,7 @@ end
     location ~* \.(jpg|jpeg|gif|png|css|js|ico|woff|ttf|eof)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
-    <% if @password_protected && @password_protected.to_s == "true" -%>
-        auth_basic            "Restricted";
-        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
-    <% end -%>
+
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
@@ -97,12 +99,6 @@ end
 <% end -%>
 
     location / {
-
-    <% if @password_protected && @password_protected.to_s == "true" -%>
-        auth_basic            "Restricted";
-        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
-    <% end -%>
-
         access_log <%= @access_log %>;
 
         include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
