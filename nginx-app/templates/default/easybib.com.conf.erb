@@ -75,13 +75,6 @@ end
   }
 -%>
 
-<% node['nginx-app']['static_directories'].each do |dir| -%>
-    location ^~ /<%=dir%>/ {
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
-
     location ~* \.(jpg|jpeg|gif|png|css|js|ico|woff|ttf|eof)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
