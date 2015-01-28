@@ -97,14 +97,7 @@ default['nginx-app']['browser_caching'] = {
         'Access-Control-Allow-Origin *'
       ]
     },
-    'jpe?g|png|gif|ico|css|svg' => {
-      'expires' => 'max',
-      'headers' => [
-        'Cache-Control "public, must-revalidate, proxy-revalidate"',
-        'Pragma public'
-      ]
-    },
-    'js' => {
+    'jpe?g|png|gif|ico|css|svg|js' => {
       'expires' => 'max',
       'headers' => [
         'Cache-Control "public, must-revalidate, proxy-revalidate"',
