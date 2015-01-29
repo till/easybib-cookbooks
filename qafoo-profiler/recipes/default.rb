@@ -1,3 +1,7 @@
+user "qafoo" do
+  system true
+end
+
 apt_repository 'qafoo' do
   uri node['qafoo-profiler']['ppa']
   distribution 'debian'
