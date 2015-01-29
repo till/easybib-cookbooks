@@ -1,4 +1,4 @@
-user "qafoo" do
+user 'qafoo' do
   system true
 end
 
