@@ -16,6 +16,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+apt_repository 'haproxy' do
+  distribution  node['lsb']['codename']
+  uri           'ppa:vbernat/haproxy-1.5'
+  only_if { node['haproxy']['type'] == '1.5' }
+end
+
 package 'haproxy' do
   action :install
 end

@@ -1,3 +1,4 @@
+include_recipe 'easybib::nscd'
 include_recipe 'avahi::alias-service'
 
 ['python-avahi', 'python-pip'].each do |pkg|
@@ -12,6 +13,10 @@ execute 'update pip' do
     pip_version = cmd.stdout
     pip_version.split(' ')[1] != '1.5'
   end
+end
+
+execute 'install docutils' do
+  command 'pip install docutils'
 end
 
 execute 'install python-avahi' do

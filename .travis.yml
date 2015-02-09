@@ -2,6 +2,9 @@ language: ruby
 rvm:
   - 1.9.3
 
+sudo: false
+cache: bundler
+
 script:
   - make cs
   - make test

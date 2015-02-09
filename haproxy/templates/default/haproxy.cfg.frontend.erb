@@ -1,14 +1,20 @@
-<%
-# bind haproxy to the following parameters
-haproxy_port = 80
-haproxy_host = ""
--%>
-
 frontend http-in
-  bind <%= haproxy_host %>:<%= haproxy_port %>
+  bind *:80
+  <% unless @node['haproxy']['ssl'] == 'off'
+    certificate = "#{@node['ssl-deploy']['directory']}/cert.combined.pem"
+  -%>
+  bind *:443 ssl crt <%= certificate %>
+  reqadd X-Forwarded-Proto:\ https if { ssl_fc }
+  <% unless @node['haproxy']['hsts'].nil? -%>
+  rspadd Strict-Transport-Security:\ max-age=<%=@node['haproxy']['hsts']%> if { ssl_fc }
+  <% end
+     if @node['haproxy']['ssl'] == 'only' -%>
+  redirect scheme https if !{ ssl_fc }
+  <% end
+  end -%>
   option log-separate-errors
 
-  <% if !@node['haproxy']['acls'].nil? || @node['haproxy']['acls'].empty?  -%>
+  <% if !@node['haproxy']['acls'].nil? -%>
   #acls from node json:
     <% @node['haproxy']['acls'].each do |aclname,aclconfig| -%>
   #rule <%= aclname %>
@@ -16,7 +22,7 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node['haproxy']['additional_layers'].nil? || @node['haproxy']['additional_layers'].empty?  -%>
+  <% if !@node['haproxy']['additional_layers'].nil?-%>
   #additional backends:
     <% @node['haproxy']['additional_layers'].each do |layername,layerconfig| -%>
       <% if @node['opsworks']['layers'][layername]['instances'].empty? -%>

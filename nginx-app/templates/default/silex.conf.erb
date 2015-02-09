@@ -32,9 +32,9 @@ server {
         set $fastcgi_skipcache 0;
     }
 
-    <% unless @node.fetch('easybib-deploy', {}).fetch('scholar', {})['asset_root'].nil? -%>
+    <% unless @node.fetch('easybib_deploy', {}).fetch('scholar', {})['asset_root'].nil? -%>
 <%= render "partials/production-asset-route.erb", :cookbook => 'nginx-app', :variables => {
-    "asset_root" => @node['easybib-deploy']['scholar']['asset_root']
+    "asset_root" => @node['easybib_deploy']['scholar']['asset_root']
     } %>
     <% end %>
 
@@ -65,6 +65,16 @@ server {
         "node" => @node
     } %>
 <% end %>
+
+<% unless node['nginx-app']['browser_caching'].nil? -%>
+    <%= render 'partials/browser-caching.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :enabled => node['nginx-app']['browser_caching']['enabled'],
+        :config => node['nginx-app']['browser_caching']['config']
+      }
+    %>
+<% end -%>
 
 <% if @gzip -%>
 gzip <%= (@gzip['enabled']) ? 'on':'off' %>;

@@ -11,8 +11,9 @@ server {
   error_log /var/log/nginx/ssl.error.log;
 
   keepalive_timeout 10;
-
+  <% unless @domains.nil? -%>
   server_name <%= @domains.join(' ') %>;
+  <% end -%>
 
   location / {
     proxy_pass http://<%= @int_ip %>:80/;
