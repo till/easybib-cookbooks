@@ -125,6 +125,13 @@ T EasyBib
 U http://www.easybib.com/
 HTTPHeader Access-Control-Allow-*
 HTTPHeader Origin
+MimeFilter application/json .* javascript
 NeverProxy notebook.heroku.easybib.com
 H *.easybib.com
 DJ easybib.com
+Find http:\/\/
+Replace http://
+HTTPMethod put
+HTTPMethod delete
+HTTPMethod patch
+HTTPMethod options
