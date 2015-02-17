@@ -25,6 +25,6 @@ backend <%= @layername %>_forward
   option httpclose
   option forwardfor except 127.0.0.1
   option httpchk <%= health_check_string %>
-  <% servers.each do |name,host| -%>
+  <% @servers.each do |name,host| -%>
   server <%= name %> <%= host %>:80 weight 10 maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
-  <% end -%>
+<% end -%>
