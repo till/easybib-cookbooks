@@ -1,0 +1,30 @@
+<%
+# rise - number of successful checks to determine if the backend is 'up'
+haproxy_rise = 2
+
+# fall - number of failed checks to determine if the backend is down
+haproxy_fall = 3
+
+# in milliseconds - 10 seconds is too slow
+haproxy_check_interval = 3000
+
+# max connections
+haproxy_maxconn = 255
+
+if @health_check.is_a?(Hash)
+    health_check_string = "GET #{@health_check['url']} HTTP/1.1\\r\\nHost:\\ #{@health_check['host']}"
+else
+    health_check_string = @health_check
+end
+
+-%>
+
+backend <%= @layername %>_forward
+  balance roundrobin
+  option redispatch
+  option httpclose
+  option forwardfor except 127.0.0.1
+  option httpchk <%= health_check_string %>
+  <% servers.each do |name,host| -%>
+  server <%= name %> <%= host %>:80 weight 10 maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
+  <% end -%>
