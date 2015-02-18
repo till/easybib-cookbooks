@@ -37,6 +37,17 @@ frontend http-in
     <% end -%>
   <% end -%>
 
+  <% if !@node['haproxy']['forwarding_layers'].nil?-%>
+  #forwarding backends:
+    <% @node['haproxy']['forwarding_layers'].each do |layername,layerconfig| -%>
+        <% layerconfig['acl'].each do |aclid, acl| -%>
+  #rule <%= aclid %>
+  acl use_forward_<%= layername %> <%= acl %>
+  use_backend <%= layername %>_forward if use_forward_<%= layername %>
+      <% end -%>
+    <% end -%>
+  <% end -%>
+
   <% if !@node['opsworks']['layers']['nginxphpapp']['instances'].empty? -%>
   default_backend nginxphpapp_php_app_servers
   <% end -%>
