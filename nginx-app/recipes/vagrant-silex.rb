@@ -2,6 +2,8 @@ if is_aws
   Chef::Application.fatal!('This recipe is vagrant only')
 end
 
+include_recipe 'nginx-app::service'
+
 node['vagrant']['applications'].each do |app_name, app_config|
 
   next if app_name == 'www'
