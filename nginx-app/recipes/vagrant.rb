@@ -2,6 +2,8 @@ unless node['vagrant']
   fail 'Vagrant only!'
 end
 
+include_recipe 'nginx-app::service'
+
 app_dir = EasyBib::Config.get_appdata(node, 'www', 'app_dir')
 
 template '/etc/nginx/sites-enabled/easybib.com.conf' do
