@@ -2,7 +2,7 @@
 if !@domain_name.nil? && !@domain_name.empty?
     #convert subdomain.easybib.com to easybib\.com for regex below
     domain_name = @domain_name.split('.')
-    domain_name = domain_name[-2..-1].join('\.')
+    domain_name = domain_name[-2..-1].join('\.') if domain_name.length > 1
 else
     domain_name = 'easybib\.com'
 end
