@@ -65,7 +65,8 @@ default['nginx-app']['gzip'] = {
   'config' => {
     'comp_level' => 2,
     'min_length' => 1000,
-    'types' => 'text/plain application/x-javascript text/xml text/css application/xml application/json'
+    'types' => 'text/plain application/x-javascript text/xml text/css application/xml application/json',
+    'vary' => 'on'
   }
 }
 
@@ -92,17 +93,13 @@ default['nginx-app']['browser_caching'] = {
   'enabled' => false,
   'config' => {
     'eot|ttf|woff' => {
-      'expires' => 'max',
-      'headers' => [
-        'Access-Control-Allow-Origin *'
-      ]
+      'expires' => 'max'
     },
     'jpe?g|png|gif|ico|css|svg|js' => {
       'expires' => 'max',
       'headers' => [
         'Cache-Control "public, must-revalidate, proxy-revalidate"',
-        'Pragma public',
-        'Vary "Accept-Encoding"'
+        'Pragma public'
       ]
     }
   }

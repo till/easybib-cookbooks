@@ -47,14 +47,12 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
-<% if @gzip -%>
-gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
-<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
-    :prefix => 'gzip',
-    :config => @gzip['config']
-} %>
-<% end -%>
-
+<%= render 'partials/gzip.erb',
+    :cookbook => 'nginx-app',
+    :variables => {
+        :gzip => @gzip
+    }
+%>
     location / {
         try_files $uri $uri/ /index.html =404;
     }

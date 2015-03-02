@@ -31,13 +31,12 @@ server {
         set $fastcgi_skipcache 0;
     }
 
-<% if @gzip -%>
-    gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
-<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
-    :prefix => 'gzip',
-    :config => @gzip['config']
-} %>
-<% end -%>
+<%= render 'partials/gzip.erb',
+    :cookbook => 'nginx-app',
+    :variables => {
+        :gzip => @gzip
+    }
+%>
 
 <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
 <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
