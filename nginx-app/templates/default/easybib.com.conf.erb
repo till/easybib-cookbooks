@@ -39,6 +39,15 @@ server {
 end
 -%>
 
+<% if node['nginx-app']['disable_cors'].nil? -%>
+    <%= render 'partials/cors.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :domain_name => @domain_name
+      }
+    %>
+<% end -%>
+
 
 <%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
 

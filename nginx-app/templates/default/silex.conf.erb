@@ -32,6 +32,15 @@ server {
         set $fastcgi_skipcache 0;
     }
 
+<% if node['nginx-app']['disable_cors'].nil? -%>
+    <%= render 'partials/cors.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :domain_name => @domain_name
+      }
+    %>
+<% end -%>
+
     <% unless @node.fetch('easybib-deploy', {}).fetch('scholar', {})['asset_root'].nil? -%>
 <%= render "partials/production-asset-route.erb", :cookbook => 'nginx-app', :variables => {
     "asset_root" => @node['easybib-deploy']['scholar']['asset_root']

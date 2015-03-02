@@ -6,7 +6,6 @@ if @enabled
         expires <%= conf['expires'] %>;
 
         access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
 <%
     unless conf['headers'].nil?
       conf['headers'].each do |header|

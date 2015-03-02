@@ -30,6 +30,15 @@ server {
 
     root <%= @doc_root %>;
 
+<% if node['nginx-app']['disable_cors'].nil? -%>
+    <%= render 'partials/cors.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :domain_name => @domain_name
+      }
+    %>
+<% end -%>
+
     <%= render 'partials/status-checks.erb',
       :cookbook => 'nginx-app',
       :variables => {
@@ -49,7 +58,6 @@ server {
     location /<%=route_name%>/ {
         alias      <%= @app_dir %>app/modules/infolit/www/<%=route_name%>/;
         access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
 
@@ -74,7 +82,6 @@ server {
         alias      <%= @app_dir %>app/modules/infolit/www-src/static/;
     <% end -%>
         access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
     }
 
     <%= render 'partials/php-fpm.erb',
