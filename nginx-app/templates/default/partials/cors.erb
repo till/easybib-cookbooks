@@ -1,20 +1,29 @@
 <%
 if !@domain_name.nil? && !@domain_name.empty?
     #convert subdomain.easybib.com to easybib\.com for regex below
-    domain_name = @domain_name.split('.')
-    domain_name = domain_name[-2..-1].join('\.') if domain_name.length > 1
+    domain_names = []
+    @domain_name.split(' ').each do |domain|
+        domain = domain.split('.')
+        if domain.length > 1
+            domain = domain[-2..-1].join('\.')
+        else
+            domain = domain[0]
+        end
+        domain_names << domain
+    end
 else
-    domain_name = 'easybib\.com'
+    domain_names = ['easybib\.com']
 end
 -%>
 
     # source: http://enable-cors.org/server_nginx.html
     # if the request included an Origin: header with an origin on the whitelist,
     # then it is some kind of CORS request.
-
+    <% domain_names.each do |domain_name| %>
     if ($http_origin ~* (https?://[^/]*\.?<%= domain_name %>(:[0-9]+)?)$) {
         set $cors "true";
     }
+    <% end %>
 
     # Nginx doesn't support nested If statements, so we use string
     # concatenation to create a flag for compound conditions
