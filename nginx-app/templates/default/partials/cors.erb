@@ -16,67 +16,83 @@ else
 end
 -%>
 
+<%
     # source: http://enable-cors.org/server_nginx.html
     # if the request included an Origin: header with an origin on the whitelist,
     # then it is some kind of CORS request.
+%>
     <% domain_names.each do |domain_name| %>
     if ($http_origin ~* (https?://[^/]*\.?<%= domain_name %>(:[0-9]+)?)$) {
         set $cors "true";
     }
     <% end %>
 
+<%
     # Nginx doesn't support nested If statements, so we use string
     # concatenation to create a flag for compound conditions
 
     # OPTIONS indicates a CORS pre-flight request
-    if ($request_method = 'OPTIONS') {
+%>    if ($request_method = 'OPTIONS') {
         set $cors "${cors}options";
     }
 
+<%
     # non-OPTIONS indicates a normal CORS request
-    if ($request_method = 'GET') {
+%>    if ($request_method = 'GET') {
         set $cors "${cors}get";
     }
     if ($request_method = 'POST') {
         set $cors "${cors}post";
     }
-
+<%
     # if it's a GET or POST, set the standard CORS responses header
-    if ($cors = "trueget") {
+%>    if ($cors = "trueget") {
+<%
         # Tells the browser this origin may make cross-origin requests
         # (Here, we echo the requesting origin, which matched the whitelist.)
-        add_header 'Access-Control-Allow-Origin' "$http_origin";
+%>        add_header 'Access-Control-Allow-Origin' "$http_origin";
+<%
         # Tells the browser it may show the response, when XmlHttpRequest.withCredentials=true.
-        add_header 'Access-Control-Allow-Credentials' 'true';
-        # # Tell the browser which response headers the JS can see, besides the "simple response headers"
+%>        add_header 'Access-Control-Allow-Credentials' 'true';
+<%
+        # Tell the browser which response headers the JS can see, besides the "simple response headers"
         # add_header 'Access-Control-Expose-Headers' 'myresponseheader';
-    }
+%>    }
 
     if ($cors = "truepost") {
+<%
         # Tells the browser this origin may make cross-origin requests
         # (Here, we echo the requesting origin, which matched the whitelist.)
+%>
         add_header 'Access-Control-Allow-Origin' "$http_origin";
+<%
         # Tells the browser it may show the response, when XmlHttpRequest.withCredentials=true.
+%>
         add_header 'Access-Control-Allow-Credentials' 'true';
-        # # Tell the browser which response headers the JS can see, besides the "simple response headers"
+<%
+        # Tell the browser which response headers the JS can see, besides the "simple response headers"
         # add_header 'Access-Control-Expose-Headers' 'myresponseheader';
+%>
     }
 
-    # if it's OPTIONS, then it's a CORS preflight request so respond immediately with no response body
-    if ($cors = "trueoptions") {
+<%    # if it's OPTIONS, then it's a CORS preflight request so respond immediately with no response body
+%>    if ($cors = "trueoptions") {
+<%
         # Tells the browser this origin may make cross-origin requests
         # (Here, we echo the requesting origin, which matched the whitelist.)
+%>
         add_header 'Access-Control-Allow-Origin' "$http_origin";
-        # in a preflight response, tells browser the subsequent actual request can include user credentials (e.g., cookies)
+<%        # in a preflight response, tells browser the subsequent actual request can include user credentials (e.g., cookies)
+%>
         add_header 'Access-Control-Allow-Credentials' 'true';
-
+<%
         #
         # Return special preflight info
         #
-        
+%>
         # Tell browser to cache this pre-flight info for 20 days
         add_header 'Access-Control-Max-Age' 1728000;
-
+<%
         # Tell browser we respond to GET,POST,OPTIONS in normal CORS requests.
         #
         # Not officially needed but still included to help non-conforming browsers.
@@ -90,8 +106,9 @@ end
         #
         # We should only need this header for non-simple requests
         # methods (e.g., DELETE), or custom request methods (e.g., XMODIFY)
+%>
         add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-        
+<%
         # Tell browser we accept these headers in the actual request
         #
         # A dynamic, wide-open config would just echo back all the headers
@@ -128,7 +145,7 @@ end
         # code sets the content type as application/json, for example,
         # then that makes the header non-simple, and then your server
         # must declare that it allows the Content-Type header.
-        # 
+        #
         # Accept,Accept-Language,Content-Language -- these are the
         # "simple headers" and they are officially never
         # required. Practically, possibly required.
@@ -143,7 +160,7 @@ end
         # User-Agent,DNT -- officially, should not be required, as
         # they cannot be set as "author request headers". practically,
         # may be required.
-        # 
+        #
         # My Comment:
         #
         # The specs are contradictory, or else just confusing to me,
@@ -158,7 +175,7 @@ end
         # step 8). So this implies the browser client code must take
         # care to include all necessary headers as author request
         # headers.
-        # 
+        #
         # However, the spec for XmlHttpRequest#setRequestHeader
         # (section 4.6.2) provides a long list of headers which the
         # the browser client code is forbidden to set, including for
@@ -186,12 +203,13 @@ end
         # web and CORS to work, which at the moment you should
         # hard-code into Access-Control-Allow-Headers, although
         # official specs imply this should not be necessary.
-        # 
+        #
+%>
         add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,X-Mx-ReqToken,Keep-Alive,X-Requested-With,If-Modified-Since';
-
+<%
         # build entire response to the preflight request
         # no body in this response
-        add_header 'Content-Length' 0;
+%>        add_header 'Content-Length' 0;
         # (should not be necessary, but included for non-conforming browsers)
         add_header 'Content-Type' 'text/plain charset=UTF-8';
         # indicate successful return with no content
