@@ -11,6 +11,11 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
+<% if @password_protected && @password_protected.to_s == "true" -%>
+    auth_basic            "Restricted";
+    auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
+<% end -%>
+
     client_max_body_size <%= fetch_node(node, @app_name, 'nginx-app', 'client_max_body_size') %>;
 
     # Block ad calls to /something/<script type="text/javascript">
@@ -20,23 +25,14 @@ server {
 
     root <%= @doc_root %>;
 
-    location ~ /(doubleclick|eyeblaster|eyewonder|pointroll|unicast)/.*\.html {
-        access_log  <%= @access_log %>;
-    }
-
-<%
-['/google8a01a818524239c8.html', '/googled16040836651a26a.html', '/bsm-xd.html'].each do |route|
--%>
-    location ^~ <%= route %> {
-        access_log  <%= @access_log %>;
-    }
-<%
-end
--%>
-
-
-<%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
-
+<% if node['nginx-app']['disable_cors'].nil? -%>
+    <%= render 'partials/cors.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :domain_name => @domain_name
+      }
+    %>
+<% end -%>
     <%= render "partials/status-checks.erb",
       :cookbook => "nginx-app",
       :variables => {
@@ -51,7 +47,6 @@ end
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
   :variables => {
-    :access_log => @access_log,
     :assets => @js_alias,
     :module_dir => module_dir,
     :type => 'js'
@@ -61,7 +56,6 @@ end
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
   :variables => {
-    :access_log => @access_log,
     :assets => @img_alias,
     :module_dir => module_dir,
     :type => 'images'
@@ -71,30 +65,11 @@ end
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
   :variables => {
-    :access_log => @access_log,
     :assets => @css_alias,
     :module_dir => module_dir,
     :type => 'css'
   }
 -%>
-
-<% node['nginx-app']['static_directories'].each do |dir| -%>
-    location ^~ /<%=dir%>/ {
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
-<% end -%>
-
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|woff|ttf|eof)$ {
-        # Prevent static content to be handled by php
-        # See easybib/issues#417
-    <% if @password_protected && @password_protected.to_s == "true" -%>
-        auth_basic            "Restricted";
-        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
-    <% end -%>
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
 
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
@@ -107,14 +82,12 @@ end
 <% end -%>
 
     location / {
-
-    <% if @password_protected && @password_protected.to_s == "true" -%>
-        auth_basic            "Restricted";
-        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
-    <% end -%>
-
         access_log <%= @access_log %>;
 
+        if ( $uri ~ /(apple-touch-icon|browserconfig|favicon|mstile)(.*)\.(png|xml|ico)$) {
+            log_not_found off;
+        }
+        
         include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  <%= @upstream_name %>_phpfpm;

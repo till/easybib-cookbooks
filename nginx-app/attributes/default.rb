@@ -2,7 +2,6 @@ default['nginx-app']                       = {}
 default['nginx-app']['access_log']         = 'off'
 default['nginx-app']['user']               = 'www-data'
 default['nginx-app']['group']              = 'www-data'
-default['nginx-app']['static_directories'] = %w(js css images raw)
 default['nginx-app']['config_dir']         = '/etc/nginx'
 default['nginx-app']['conf_file']          = 'easybib.com.conf.erb'
 default['nginx-app']['package-name'] = 'nginx'
@@ -27,7 +26,6 @@ default['nginx-app']['js_modules'] = {
   'bibanalytics'    => 'bibanalytics',
   'sharing'         => 'sharing',
   'kb'              => 'kb',
-  'infolit'         => 'infolit',
   'schoolanalytics' => 'schoolanalytics',
   'students'        => 'students',
   'pearson'         => 'pearson',
@@ -37,7 +35,6 @@ default['nginx-app']['img_modules'] = {
   'notes'     => 'notebook',
   'outline'   => 'notebook',
   'paperlink' => 'paperlink',
-  'infolit'   => 'infolit',
   'braintree' => 'braintree',
   'pearson'   => 'pearson',
   'folders'   => 'folders'
@@ -49,7 +46,6 @@ default['nginx-app']['css_modules'] = {
   'bibanalytics'    => 'bibanalytics',
   'sharing'         => 'sharing',
   'kb'              => 'kb',
-  'infolit'         => 'infolit',
   'schoolanalytics' => 'schoolanalytics',
   'braintree'       => 'braintree',
   'pearson'         => 'pearson',
@@ -69,7 +65,8 @@ default['nginx-app']['gzip'] = {
   'config' => {
     'comp_level' => 2,
     'min_length' => 1000,
-    'types' => 'text/plain application/x-javascript text/xml text/css application/xml application/json'
+    'types' => 'text/plain application/x-javascript text/xml text/css application/xml application/json',
+    'vary' => 'on'
   }
 }
 
@@ -96,24 +93,13 @@ default['nginx-app']['browser_caching'] = {
   'enabled' => false,
   'config' => {
     'eot|ttf|woff' => {
-      'expires' => 'max',
-      'headers' => [
-        'Access-Control-Allow-Origin *'
-      ]
+      'expires' => 'max'
     },
-    'jpe?g|png|gif|ico|css|svg' => {
+    'jpe?g|png|gif|ico|css|svg|js' => {
       'expires' => 'max',
       'headers' => [
         'Cache-Control "public, must-revalidate, proxy-revalidate"',
         'Pragma public'
-      ]
-    },
-    'js' => {
-      'expires' => 'max',
-      'headers' => [
-        'Cache-Control "public, must-revalidate, proxy-revalidate"',
-        'Pragma public',
-        'Vary "Accept-Encoding"'
       ]
     }
   }

@@ -15,6 +15,15 @@ server {
         expires -1;
     }
 
+<% if node['nginx-app']['disable_cors'].nil? -%>
+    <%= render 'partials/cors.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :domain_name => @domain_name
+      }
+    %>
+<% end -%>
+
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
       :cookbook => 'nginx-app',
@@ -37,14 +46,12 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
-<% if @gzip -%>
-gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
-<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
-    :prefix => 'gzip',
-    :config => @gzip['config']
-} %>
-<% end -%>
-
+<%= render 'partials/gzip.erb',
+    :cookbook => 'nginx-app',
+    :variables => {
+        :gzip => @gzip
+    }
+%>
     location / {
         try_files $uri $uri/ /index.html =404;
     }

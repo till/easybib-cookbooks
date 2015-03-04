@@ -2,18 +2,18 @@
 if @enabled
   @config.each do |location, conf|
 -%>
-location ~* \.(<%= location %>)$ {
-  expires <%= conf['expires'] %>;
+    if ( $uri ~ .(<%= location %>)$  ) {
+        expires <%= conf['expires'] %>;
 <%
     unless conf['headers'].nil?
       conf['headers'].each do |header|
 -%>
-  <%= "add_header #{header}" %>;
+        <%= "add_header #{header}" %>;
 <%
       end
     end
 %>
-}
+    }
 <%
   end
 end

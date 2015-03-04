@@ -32,6 +32,15 @@ server {
         set $fastcgi_skipcache 0;
     }
 
+<% if node['nginx-app']['disable_cors'].nil? -%>
+    <%= render 'partials/cors.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :domain_name => @domain_name
+      }
+    %>
+<% end -%>
+
     <% unless @node.fetch('easybib_deploy', {}).fetch('scholar', {})['asset_root'].nil? -%>
 <%= render "partials/production-asset-route.erb", :cookbook => 'nginx-app', :variables => {
     "asset_root" => @node['easybib_deploy']['scholar']['asset_root']
@@ -76,13 +85,12 @@ server {
     %>
 <% end -%>
 
-<% if @gzip -%>
-gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
-<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
-    :prefix => 'gzip',
-    :config => @gzip['config']
-} %>
-<% end -%>
+<%= render 'partials/gzip.erb',
+    :cookbook => 'nginx-app',
+    :variables => {
+        :gzip => @gzip
+    }
+%>
 
 <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
 <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>

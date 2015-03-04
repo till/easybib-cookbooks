@@ -1,0 +1,10 @@
+<%
+if @gzip && !@gzip['enabled'].nil? -%>
+gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
+<%
+  @gzip['config'].each do |key, value|
+-%>
+gzip_<%= key %> <%= value %>;
+<%
+  end
+end -%>
