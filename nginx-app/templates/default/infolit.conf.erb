@@ -63,6 +63,7 @@ server {
         alias      <%= @app_dir %>app/modules/infolit/www-src/static/;
     <% end -%>
         access_log <%= @access_log %>;
+        add_header Access-Control-Allow-Origin *;
     }
 
     <%= render 'partials/php-fpm.erb',
