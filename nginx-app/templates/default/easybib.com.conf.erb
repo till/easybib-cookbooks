@@ -25,20 +25,6 @@ server {
 
     root <%= @doc_root %>;
 
-    location ~ /(doubleclick|eyeblaster|eyewonder|pointroll|unicast)/.*\.html {
-        access_log  <%= @access_log %>;
-    }
-
-<%
-['/google8a01a818524239c8.html', '/googled16040836651a26a.html', '/bsm-xd.html'].each do |route|
--%>
-    location ^~ <%= route %> {
-        access_log  <%= @access_log %>;
-    }
-<%
-end
--%>
-
 <% if node['nginx-app']['disable_cors'].nil? -%>
     <%= render 'partials/cors.erb',
       :cookbook => 'nginx-app',
@@ -47,10 +33,6 @@ end
       }
     %>
 <% end -%>
-
-
-<%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
-
     <%= render "partials/status-checks.erb",
       :cookbook => "nginx-app",
       :variables => {
@@ -102,6 +84,10 @@ end
     location / {
         access_log <%= @access_log %>;
 
+        if ( $uri ~ /(apple-touch-icon|browserconfig|favicon|mstile)(.*)\.(png|xml|ico)$) {
+            log_not_found off;
+        }
+        
         include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  <%= @upstream_name %>_phpfpm;

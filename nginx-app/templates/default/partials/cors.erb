@@ -1,19 +1,6 @@
 <%
-if !@domain_name.nil? && !@domain_name.empty?
-    #convert subdomain.easybib.com to easybib\.com for regex below
-    domain_names = []
-    @domain_name.split(' ').each do |domain|
-        domain = domain.split('.')
-        if domain.length > 1
-            domain = domain[-2..-1].join('\.')
-        else
-            domain = domain[0]
-        end
-        domain_names << domain
-    end
-else
-    domain_names = ['easybib\.com']
-end
+domain_names = domainstring_to_topleveldomains(@domain_name)
+domain_names.each_with_object({}) {|(k, v), h| h[k] = v.gsub('.','\.') }
 -%>
 
 <%
