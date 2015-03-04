@@ -20,4 +20,15 @@
 <%   end -%>
 <% end -%>
 
+<% if !node['haproxy']['forwarding_layers'].nil? %>
+<%   node['haproxy']['forwarding_layers'].each do |layername,layerconfig| -%>
+  <%= render "haproxy.cfg.forwardingbackend.erb", :variables => {
+      'layername' => layername,
+      'health_check' => layerconfig['health_check'],
+      'servers' => layerconfig['servers'],
+      'node' => @node
+  } %>
+<%   end -%>
+<% end -%>
+
 <%= render "haproxy.cfg.frontend.erb" %>
