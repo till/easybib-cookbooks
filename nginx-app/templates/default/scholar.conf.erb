@@ -9,10 +9,6 @@ server {
 
     access_log <%= @access_log %>;
 
-    location ~* (\.deploy_configuration) {
-        deny all;
-    }
-
 <% if !@domain_name.nil? && !@domain_name.empty? -%>
     server_name <%=@domain_name%>;
 <% end -%>
@@ -31,67 +27,70 @@ server {
     if ($http_x_cache_me) {
         set $fastcgi_skipcache 0;
     }
+    server_tokens off;
 
-    <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
-        "upstream" => @upstream_name,
-        "health_check" => @health_check
-    } %>
+    <%= render 'partials/gzip.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :gzip => @gzip
+      }
+    %>
 
-    location ~* \.js$ {
-        <% if enable_caching %>
-        expires max;
-        add_header Cache-Control "public, must-revalidate, proxy-revalidate"
-        add_header Pragma public
-        <% end %>
-    }
-
-    location ~* \.(jpg|jpeg|gif|png|css|ico|txt|svg)$ {
-        <% if enable_caching %>
-        expires max;
-        add_header Cache-Control "public, must-revalidate, proxy-revalidate"
-        add_header Pragma public
-        <% else %>
-        # Just an empty block so it is not matched by @site below
-        # See easybib/issues#417
-        <% end %>
-    }
-
-    location ~* \.(eot|ttf|woff|woff2)$ {
-        add_header Access-Control-Allow-Origin *;
-        <% if enable_caching %>
-        expires max;
-        add_header Cache-Control "public, must-revalidate, proxy-revalidate"
-        add_header Pragma public
-        <% end %>
-    }
-
-    location = / {
-        try_files @site @site;
-    }
-
-    #all other locations try other files first and go to our front controller if none of them exists
     location / {
         try_files $uri $uri/ @site;
+
+        location ~* (\.deploy_configuration) {
+            deny all;
+        }
+
+    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+    <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
+    <% end %>
+
+        <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
+            "upstream" => @upstream_name,
+            "health_check" => @health_check
+        } %>
+
+        location ~* \.js$ {
+            <% if enable_caching %>
+            expires max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate"
+            add_header Pragma public
+            <% end %>
+        }
+
+        location ~* \.(jpg|jpeg|gif|png|css|ico|txt|svg)$ {
+            <% if enable_caching %>
+            expires max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate"
+            add_header Pragma public
+            <% else %>
+            # Just an empty block so it is not matched by @site below
+            # See easybib/issues#417
+            <% end %>
+        }
+
+        location ~* \.(eot|ttf|woff|woff2)$ {
+            add_header Access-Control-Allow-Origin *;
+            <% if enable_caching %>
+            expires max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate"
+            add_header Pragma public
+            <% end %>
+        }
+
+        location = / {
+            try_files @site @site;
+        }
+
+        location ~* \.php$ {
+            fastcgi_pass  <%=@upstream_name%>_phpfpm;
+            include       fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+        }
     }
-
-    location ~* \.php$ {
-        fastcgi_pass  <%=@upstream_name%>_phpfpm;
-        include       fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
-    }
-
-<%= render 'partials/gzip.erb',
-  :cookbook => 'nginx-app',
-  :variables => {
-    :gzip => @gzip
-  }
-%>
-
-<% if !@routes_denied.nil? && !@routes_denied.empty? -%>
-<%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
-<% end %>
-
 
     location @site {
         fastcgi_pass  <%=@upstream_name%>_phpfpm;
