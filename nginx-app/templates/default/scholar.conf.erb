@@ -55,16 +55,16 @@ server {
         location ~* \.js$ {
             <% if enable_caching %>
             expires max;
-            add_header Cache-Control "public, must-revalidate, proxy-revalidate"
-            add_header Pragma public
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            add_header Pragma public;
             <% end %>
         }
 
         location ~* \.(jpg|jpeg|gif|png|css|ico|txt|svg)$ {
             <% if enable_caching %>
             expires max;
-            add_header Cache-Control "public, must-revalidate, proxy-revalidate"
-            add_header Pragma public
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            add_header Pragma public;
             <% else %>
             # Just an empty block so it is not matched by @site below
             # See easybib/issues#417
@@ -75,8 +75,8 @@ server {
             add_header Access-Control-Allow-Origin *;
             <% if enable_caching %>
             expires max;
-            add_header Cache-Control "public, must-revalidate, proxy-revalidate"
-            add_header Pragma public
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            add_header Pragma public;
             <% end %>
         }
 
