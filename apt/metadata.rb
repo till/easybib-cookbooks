@@ -36,4 +36,5 @@ attribute 'apt/caching_server',
           :description => 'Set this to true if the node is a caching server',
           :default => 'false'
 
+depends 'aptly'
 depends 'easybib'
