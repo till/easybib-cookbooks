@@ -38,3 +38,5 @@ template '/etc/default/qprofd' do
   )
   notifies :restart, 'service[qprofd]'
 end
+
+include_recipe 'qafoo-profiler::logrotate'
