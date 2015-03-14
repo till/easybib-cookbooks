@@ -9,4 +9,9 @@ cookbook_file '/etc/rsyslog.d/10-debug-helper.conf' do
   mode 0644
 end
 
+cookbook_file '/etc/rsyslog.d/01-fix-timestamp.conf' do
+  source '01-fix-timestamp.conf'
+  mode 0644
+end
+
 include_recipe 'rsyslogd::mute-cron'

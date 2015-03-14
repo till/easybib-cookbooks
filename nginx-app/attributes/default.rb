@@ -69,7 +69,7 @@ default['nginx-app']['gzip'] = {
   'config' => {
     'comp_level' => 2,
     'min_length' => 1000,
-    'types' => 'text/plain application/x-javascript text/xml text/css application/xml application/json'
+    'types' => 'text/plain application/x-javascript application/javascript text/xml text/css application/xml application/json image/svg+xml'
   }
 }
 

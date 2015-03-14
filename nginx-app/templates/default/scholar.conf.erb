@@ -1,0 +1,108 @@
+<% enable_caching = node.fetch('nginx-app', {}).fetch('browser_caching', {})['enabled'] %>
+<%= render_upstream(@php_upstream, @upstream_name) %>
+server {
+    set $fastcgi_skipcache 1; # skip by default
+
+    listen 80 <%=@listen_opts%>;
+
+    index <%=@default_router%> index.php;
+
+    access_log <%= @access_log %>;
+
+<% if !@domain_name.nil? && !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% end -%>
+
+<% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+<% end -%>
+
+<% if @htpasswd && !@htpasswd.empty? && File.exist?(@htpasswd) -%>
+    auth_basic            "Restricted";
+    auth_basic_user_file  <%= @htpasswd%>;
+<% end -%>
+
+    root <%= @doc_root%>;
+
+    if ($http_x_cache_me) {
+        set $fastcgi_skipcache 0;
+    }
+    server_tokens off;
+
+    <%= render 'partials/gzip.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :gzip => @gzip
+      }
+    %>
+
+    location / {
+        try_files $uri $uri/ @site;
+
+        location ~* (\.deploy_configuration) {
+            deny all;
+        }
+
+    <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+    <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
+    <% end %>
+
+        <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
+            "upstream" => @upstream_name,
+            "health_check" => @health_check
+        } %>
+
+        location ~* \.js$ {
+            <% if enable_caching %>
+            expires max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            add_header Pragma public;
+            <% end %>
+        }
+
+        location ~* \.(jpg|jpeg|gif|png|css|ico|txt|svg)$ {
+            <% if enable_caching %>
+            expires max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            add_header Pragma public;
+            <% else %>
+            # Just an empty block so it is not matched by @site below
+            # See easybib/issues#417
+            <% end %>
+        }
+
+        location ~* \.(eot|ttf|woff|woff2)$ {
+            add_header Access-Control-Allow-Origin *;
+            <% if enable_caching %>
+            expires max;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+            add_header Pragma public;
+            <% end %>
+        }
+
+        location = / {
+            try_files @site @site;
+        }
+
+        location ~* \.php$ {
+            fastcgi_pass  <%=@upstream_name%>_phpfpm;
+            include       fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+        }
+    }
+
+    location @site {
+        fastcgi_pass  <%=@upstream_name%>_phpfpm;
+        include       fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/<%=@default_router%>;
+
+        add_header X-Cache $upstream_cache_status;
+
+<% if @cache_config and @cache_config["enabled"] == true -%>
+        fastcgi_cache <%=@cache_config["zone"]%>;
+        fastcgi_cache_bypass $fastcgi_skipcache;
+        fastcgi_no_cache $fastcgi_skipcache;
+<% end -%>
+    }
+}

@@ -1,0 +1,8 @@
+/var/log/qprofd/*.log {
+       daily
+       rotate 4
+       copytruncate
+       compress
+       notifempty
+       missingok
+}
