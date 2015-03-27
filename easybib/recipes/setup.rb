@@ -10,6 +10,7 @@ base_packages.each do |p|
 end
 
 chef_gem 'BibOpsworks' do
+  options('--clear-sources --source http://rubygems.org/')
   action :install
   only_if do
     ::EasyBib.is_aws(node)
