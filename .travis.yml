@@ -3,23 +3,45 @@ rvm:
   - 1.9.3
 
 sudo: false
+
 cache: bundler
 
 script:
   - make cs
   - make test
 
-after_success:
+before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz
-  - travis-artifacts upload --path easybib-cookbooks.tar.gz
-  - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then travis-artifacts upload --path easybib-cookbooks.tar.gz --target-path /; fi
+  - mkdir build
+  - mv easybib-cookbooks.tar.gz build/
 
-env:
-  global:
-    - ARTIFACTS_AWS_REGION=us-east-1
-    - secure: q0O/UKJexDNbfcydbQOwyWukHQwtwu4DCXgyp07QxH9vTYmn3eodJuktETbSylYv5CgZx2A/h0xCrNwHysU2wxzfcyBk8MV4O/p1C6HrmLq/sFHBugR8mLIBcpdWTabDp7/vXvSFESTZB/l3eSO/e1bQciIx4JcKrq0tix5zryk=
-    - secure: K0UPn0v0/kUYBFXChgcBSpjcXamKs1I4oOesJwpqUSTBHL6LYQ4VrU4rMMIZAQj5K/Dnrxr23Y/YUpPcc6lkbBUNIYxG4ivoAQJ8l7QglT10JfSVj9W4gna/jTq12jM+Yco2NQN6POKA/tbZfhu/KIFCptZQ7vONW3DXSC215gQ=
-    - secure: qwyDqpP3CAf/FDU5oyuPuZpf1tUyYqGmcz//wHMFqM07ZL8BmaeUe4+MQf9gKDi9bF3MbgbqbOof6ju2hF1YWP9tgKrVz9U7b7cSBkqltNun/YSlPvG2Kfj9rk5gpw9kJxyHdvZDhCpCO/3x2sDX6m824/k+p5gKmr1KIx8xFec=
+deploy:
+  - provider: s3
+    secret_access_key:
+      secure: ZybmeOZYJpKFWdtXCB8fdbm87uZTl2e8deQwf+6Uol031rPQ+yaZ9QPWEoC1FLEyizgLHfEztVD4RuEua7Oi3zSKIL4qPaV/qqvPO3c0yspQxBXjgA8E4ZxkHbINo29HsacpUYfZb5237mw8l4QK5xL9Eo0qo67lT6TdoR/ohkI=
+    access_key_id:
+      secure: iNjBJ+OhYHCWURg830hRVOvNsZ2YhiGHRXx4/EZQeqkRDxYyO0H89GNWqxqxvazC/zniEE4FNji1Z4QIdoIx6CIrhcnQKMTumAhqvAqE5jvyxSpx1SRHr+nk6UGjiPvI7bKdOJsjGfYvxOuAD+BV146W0aEJxKCZ+25QaQzBBDA=
+    bucket:
+      secure: HkvsGXQNcWDdmVADr8SIp5V0DZjnl4yhaAGxfvlcb4ZYITdR2p4RAVL3EhR02CJ+wmY5z4DzN5em73cIgwGFChABsWD0xLdB4374FSm96pkU4yqwQjWUkuxr6aQkcyaHmEBI6GowvUTiLOcohEUL0NZVZkPhqcQLwt2Vz2bezoY=
+    skip-cleanup: true
+    local-dir: build
+    upload-dir: stable-11-10
+    detect_encoding: true
+    on:
+      branch: stable-chef-11.10
+  - provider: s3
+    secret_access_key:
+      secure: ZybmeOZYJpKFWdtXCB8fdbm87uZTl2e8deQwf+6Uol031rPQ+yaZ9QPWEoC1FLEyizgLHfEztVD4RuEua7Oi3zSKIL4qPaV/qqvPO3c0yspQxBXjgA8E4ZxkHbINo29HsacpUYfZb5237mw8l4QK5xL9Eo0qo67lT6TdoR/ohkI=
+    access_key_id:
+      secure: iNjBJ+OhYHCWURg830hRVOvNsZ2YhiGHRXx4/EZQeqkRDxYyO0H89GNWqxqxvazC/zniEE4FNji1Z4QIdoIx6CIrhcnQKMTumAhqvAqE5jvyxSpx1SRHr+nk6UGjiPvI7bKdOJsjGfYvxOuAD+BV146W0aEJxKCZ+25QaQzBBDA=
+    bucket:
+      secure: HkvsGXQNcWDdmVADr8SIp5V0DZjnl4yhaAGxfvlcb4ZYITdR2p4RAVL3EhR02CJ+wmY5z4DzN5em73cIgwGFChABsWD0xLdB4374FSm96pkU4yqwQjWUkuxr6aQkcyaHmEBI6GowvUTiLOcohEUL0NZVZkPhqcQLwt2Vz2bezoY=
+    skip-cleanup: true
+    local-dir: build
+    upload-dir: master
+    detect_encoding: true
+    on:
+      branch: master
 
 notifications:
   email:
