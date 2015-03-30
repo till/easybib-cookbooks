@@ -11,6 +11,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
   when 'featureflags'
     next unless allow_deploy(application, 'featureflags', 'nginxphpapp')
+  when 'scholar_admin'
+    next unless allow_deploy(application, 'scholar_admin', 'nginxphpapp')
   when 'id'
     next unless allow_deploy(application, 'id', 'nginxphpapp')
   else
