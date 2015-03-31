@@ -10,7 +10,7 @@ base_packages.each do |p|
 end
 
 chef_gem 'BibOpsworks' do
-  action :install
+  action :upgrade
   only_if do
     ::EasyBib.is_aws(node)
   end
