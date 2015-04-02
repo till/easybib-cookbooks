@@ -29,14 +29,21 @@ action :create do
       :envvar_file => new_resource.envvar_file,
       :envvar_json => envvar_json,
       :gearman_user => node['pecl-manager']['user']
-    )
+              )
   end
 
-  service 'pecl-manager' do
-    supports [:start, :stop, :restart, :status]
-    action :restart
+  if node.attribute?('vagrant')
+    service 'pecl-manager' do
+      supports [:start, :stop, :restart, :status]
+      action :restart
+      only_if 'test -f /vagrant_gearman/vendor/autoload.php'
+    end
+  else
+    service 'pecl-manager' do
+      supports [:start, :stop, :restart, :status]
+      action :restart
+    end
   end
 
   new_resource.updated_by_last_action(t.updated_by_last_action?)
-
 end
