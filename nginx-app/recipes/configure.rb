@@ -13,7 +13,7 @@ node['deploy'].each do |application, deploy|
 
 
   configured_domains = ::EasyBib::Config.get_domains(node, application)
-  config_file_name = configured_domains.split()[0].concat('conf')
+  config_file_name = configured_domains.split()[0] + ".conf"
   
   Chef::Log.info("nginx-app::configure - app: #{application}")
 
