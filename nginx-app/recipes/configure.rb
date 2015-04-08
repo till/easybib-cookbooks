@@ -41,7 +41,7 @@ node['deploy'].each do |application, deploy|
 
   domain_name_trim = configured_domains.split[0]
   config_name_2 = "#{domain_name_trim}.conf"
-  Chef::Log.info("nginx-app::configure - config file: #{config_name}")
+  Chef::Log.info("nginx-app::configure - config file: #{config_name_2}")
 
   template "render vhost: #{application}" do
     path   "#{nginx_config_dir}/sites-enabled/#{config_name}"
@@ -65,31 +65,6 @@ node['deploy'].each do |application, deploy|
       :doc_root           => ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir'),
       :app_dir            => ::EasyBib::Config.get_appdata(node, application, 'app_dir')
     )
-    notifies :restart, 'service[nginx]', :delayed
-  end
-
-  template "render vhost: #{application}" do
-    path   "#{nginx_config_dir}/sites-enabled/#{config_name_2}"
-    source nginx_config
-    mode   '0755'
-    owner  node['nginx-app']['user']
-    group  node['nginx-app']['group']
-    helpers EasyBib::Helpers
-    variables(
-      :domain_name        => configured_domains,
-      :js_alias           => node['nginx-app']['js_modules'],
-      :img_alias          => node['nginx-app']['img_modules'],
-      :css_alias          => node['nginx-app']['css_modules'],
-      :access_log         => app_access_log,
-      :deploy             => deploy,
-      :password_protected => password_protected,
-      :config_dir         => nginx_config_dir,
-      :php_upstream       => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
-      :upstream_name      => application,
-      :environment        => ::EasyBib.get_cluster_name(node),
-      :doc_root           => ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir'),
-      :app_dir            => ::EasyBib::Config.get_appdata(node, application, 'app_dir')
-              )
     notifies :restart, 'service[nginx]', :delayed
   end
 
