@@ -7,14 +7,12 @@ nginx_config_dir = node['nginx-app']['config_dir']
 password_protected = false
 
 nginx_config = node['nginx-app']['conf_file']
-config_name = 'easybib.com.conf'
+# config_name = 'easybib.com.conf'
 
 node['deploy'].each do |application, deploy|
-
-
   configured_domains = ::EasyBib::Config.get_domains(node, application)
-  config_file_name = configured_domains.split()[0] + ".conf"
-  
+  config_file_name = configured_domains.split[0] + '.conf'
+
   Chef::Log.info("nginx-app::configure - app: #{application}")
 
   case application
@@ -69,5 +67,4 @@ node['deploy'].each do |application, deploy|
   easybib_envconfig application do
     stackname 'easybib'
   end
-
 end
