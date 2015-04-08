@@ -11,6 +11,10 @@ config_name = 'easybib.com.conf'
 
 node['deploy'].each do |application, deploy|
 
+
+  configured_domains = ::EasyBib::Config.get_domains(node, application)
+  config_file_name = configured_domains.split()[0].concat('conf')
+  
   Chef::Log.info("nginx-app::configure - app: #{application}")
 
   case application
@@ -36,14 +40,16 @@ node['deploy'].each do |application, deploy|
     next
   end
 
+  Chef::Log.info("nginx-app::configure - file: #{config_file_name}")
   template "render vhost: #{application}" do
-    path   "#{nginx_config_dir}/sites-enabled/#{config_name}"
+    path   "#{nginx_config_dir}/sites-enabled/#{config_file_name}"
     source nginx_config
     mode   '0755'
     owner  node['nginx-app']['user']
     group  node['nginx-app']['group']
     helpers EasyBib::Helpers
     variables(
+      :server_name        => configured_domains,
       :js_alias           => node['nginx-app']['js_modules'],
       :img_alias          => node['nginx-app']['img_modules'],
       :css_alias          => node['nginx-app']['css_modules'],
