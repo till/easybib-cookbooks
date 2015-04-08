@@ -7,13 +7,9 @@ nginx_config_dir = node['nginx-app']['config_dir']
 password_protected = false
 
 nginx_config = node['nginx-app']['conf_file']
-# config_name = 'easybib.com.conf'
+config_name = 'easybib.com.conf'
 
 node['deploy'].each do |application, deploy|
-  configured_domains = ::EasyBib::Config.get_domains(node, application)
-  config_domain = configured_domains.split[0]
-  config_file_name = "#{config_domain}.conf"
-
   Chef::Log.info("nginx-app::configure - app: #{application}")
 
   case application
@@ -39,9 +35,12 @@ node['deploy'].each do |application, deploy|
     next
   end
 
-  Chef::Log.info("nginx-app::configure - file: #{config_file_name}")
+  env_conf = ::EasyBib::Config.get_env('nginx', application, node)
+  configured_domains = ::EasyBib::Config.get_domains(node, application, env_conf)
+  Chef::Log.info("nginx-app::configure - domains: #{configured_domains}")
+
   template "render vhost: #{application}" do
-    path   "#{nginx_config_dir}/sites-enabled/#{config_file_name}"
+    path   "#{nginx_config_dir}/sites-enabled/#{config_name}"
     source nginx_config
     mode   '0755'
     owner  node['nginx-app']['user']
