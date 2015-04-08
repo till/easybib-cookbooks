@@ -39,9 +39,9 @@ node['deploy'].each do |application, deploy|
   configured_domains = ::EasyBib::Config.get_domains(node, application, env_conf)
   Chef::Log.info("nginx-app::configure - domains: #{configured_domains}")
 
-  domain_name_trim = configured_domains.split[0]
-  config_name = "#{domain_name_trim}.conf"
-  Chef::Log.info("nginx-app::configure - config file: #{config_name}")
+  # domain_name_trim = configured_domains.split[0]
+  # config_name = "#{domain_name_trim}.conf"
+  # Chef::Log.info("nginx-app::configure - config file: #{config_name}")
 
   template "render vhost: #{application}" do
     path   "#{nginx_config_dir}/sites-enabled/#{config_name}"
