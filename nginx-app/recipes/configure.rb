@@ -51,7 +51,7 @@ node['deploy'].each do |application, deploy|
     group  node['nginx-app']['group']
     helpers EasyBib::Helpers
     variables(
-      :server_name        => configured_domains,
+      :domain_name        => configured_domains,
       :js_alias           => node['nginx-app']['js_modules'],
       :img_alias          => node['nginx-app']['img_modules'],
       :css_alias          => node['nginx-app']['css_modules'],
