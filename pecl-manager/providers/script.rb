@@ -32,17 +32,10 @@ action :create do
               )
   end
 
-  if node.attribute?('vagrant')
-    service 'pecl-manager' do
-      supports [:start, :stop, :restart, :status]
-      action :restart
-      only_if 'test -f /vagrant_gearman/vendor/autoload.php'
-    end
-  else
-    service 'pecl-manager' do
-      supports [:start, :stop, :restart, :status]
-      action :restart
-    end
+  service 'pecl-manager' do
+    supports [:start, :stop, :restart, :status]
+    action :restart
+    ignore_failure true
   end
 
   new_resource.updated_by_last_action(t.updated_by_last_action?)
