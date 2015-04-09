@@ -32,10 +32,17 @@ action :create do
               )
   end
 
-  service 'pecl-manager' do
-    supports [:start, :stop, :restart, :status]
-    action :restart
-    ignore_failure true
+  if node.attribute?('vagrant')
+    service 'pecl-manager' do
+      supports [:start, :stop, :restart, :status]
+      action :restart
+      ignore_failure true
+    end
+  else
+    service 'pecl-manager' do
+      supports [:start, :stop, :restart, :status]
+      action :restart
+    end
   end
 
   new_resource.updated_by_last_action(t.updated_by_last_action?)
