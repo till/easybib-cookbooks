@@ -1,0 +1,6 @@
+{
+  "box_file": "https://s3.amazonaws.com/easybibdeployment/easybib-ubuntu-14.04.1_vbox-4.3.12_chef-11.10.4_0.1.box",
+  "box_ip": "33.33.33.124",
+  "box_memory": "256",
+  "box_name": "Vagrant Cookbook Testbox"
+}

@@ -1,22 +1,20 @@
-# set box names and locations of cookbooks
-box_url  = "https://s3.amazonaws.com/easybibdeployment/easybib-ubuntu-14.04.1_vbox-4.3.12_chef-11.10.4_0.1.box"
-box_file = "easybib-ubuntu-14.04.1_vbox-4.3.12_chef-11.10.4_0.1"
+require 'json'
+vagrant_test_config = JSON.parse(File.read('./../setup.json'))
 
 Vagrant.configure("2") do |config|
   config.vm.define :web do |test_config|
-    test_config.vm.box     = box_file
-    test_config.vm.box_url = box_url
+    test_config.vm.box = vagrant_test_config['box_file']
 
     test_config.vm.hostname = "ezproxy"
-    test_config.vm.network :private_network, ip: "33.33.33.129"
+    test_config.vm.network :private_network, ip: vagrant_test_config['box_ip']
 
     test_config.vm.provider :virtualbox do |vb|
       vb.gui = :true
 
       vb.customize [
             "modifyvm", :id,
-            "--name",  "ezproxy Testbox",
-            "--memory", "512"
+            "--name",  vagrant_test_config['box_name'],
+            "--memory", vagrant_test_config['box_memory']
       ]
     end
 
