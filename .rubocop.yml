@@ -13,6 +13,7 @@ AllCops:
     - 'erlang/**/*'
     - 'rabbitmq/**/*'
     - 'Rakefile'
+    - 'supervisor/**/*'
     - 'fc_sandbox/**/*'
     - 'vendor/**/*'
 
