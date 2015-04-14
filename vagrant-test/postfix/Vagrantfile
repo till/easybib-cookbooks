@@ -17,11 +17,16 @@ Vagrant::Config.run do |config|
         "--memory", vagrant_test_config['box_memory']
     ]
 
-  config.vm.provision :shell, :path => "./../update-mirrors.sh"
+  config.vm.provision :shell, :inline => "sudo apt-spy2 fix --launchpad --country=de --commit"
+  config.vm.provision :shell, :inline => "sudo apt-get update"
 
+  config.vm.provision :shell, :inline => "apt-get update -y"
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
-    chef.add_recipe "service::role-gearmand"
+    chef.add_recipe "postfix"
+    chef.add_recipe "postfix::relay"
+    #chef.json = JSON.parse(File.read("./deploy.json"))
+
     chef.log_level = :debug
   end
 end

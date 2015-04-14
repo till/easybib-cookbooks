@@ -48,6 +48,7 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node['opsworks']['layers']['nginxphpapp']['instances'].empty? -%>
+  <% default_layer = node['haproxy']['default_layer']
+  if !@node['opsworks']['layers'][default_layer]['instances'].empty? -%>
   default_backend nginxphpapp_php_app_servers
   <% end -%>
