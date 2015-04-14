@@ -36,7 +36,6 @@ action :deploy do
     app app
   end
 
-
   easybib_gearmanw application_root_dir do
     envvar_json_source new_resource.envvar_json_source
   end
