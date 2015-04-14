@@ -21,9 +21,9 @@ action :create do
     Chef::Log.info("easybib_deploy - enabling supervisor_service #{service_name}")
 
     supervisor_service service_name do
-        action [:enable, :start]
-        command service['command']
-        autostart true
+      action [:enable, :start]
+      command service['command']
+      autostart true
     end
 
     Chef::Log.info("easybib_deploy - I just called supervisor_service for #{service_name}")

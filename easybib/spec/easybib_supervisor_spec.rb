@@ -22,14 +22,21 @@ describe 'easybib_supervisor' do
 
   describe 'easybib_supervisor actions' do
     describe 'create' do
-      before { stub_supervisor_with_one_valid_service }
+      before { stub_supervisor_with_two_services }
 
-      it 'enables a service' do
+      it 'enables the first service' do
         expect(chef_run).to enable_supervisor_service('service1-some-app')
           .with(
-          :command => 'servicecmd',
+            :command => 'service1cmd',
         )
         expect(chef_run).to start_supervisor_service('service1-some-app')
+      end
+      it 'enables the second service' do
+        expect(chef_run).to enable_supervisor_service('service2-some-app')
+          .with(
+            :command => 'service2cmd',
+        )
+        expect(chef_run).to start_supervisor_service('service2-some-app')
       end
     end
   end
@@ -50,10 +57,13 @@ def stub_supervisor_does_not_exist
   ::File.stub(:exist?).with('/some_file').and_return false
 end
 
-def stub_supervisor_with_one_valid_service
+def stub_supervisor_with_two_services
   ::File.stub(:exist?).with(anything).and_call_original
   ::File.stub(:exist?).with('/some_file').and_return true
 
   ::File.stub(:read).with(anything).and_call_original
-  ::File.stub(:read).with('/some_file').and_return '{"service1": {"command": "servicecmd"}}'
+  ::File.stub(:read).with('/some_file').and_return '{
+    "service1": {"command": "service1cmd"},
+    "service2": {"command": "service2cmd"}
+  }'
 end
