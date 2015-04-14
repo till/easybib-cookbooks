@@ -1,15 +1,20 @@
+require 'json'
+vagrant_test_config = JSON.parse(File.read('./../setup.json'))
+
 Vagrant::Config.run do |config|
 
-  config.vm.boot_mode = :gui
-  config.vm.box = "precise64"
-  config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
+  bibconfig = Bib::Vagrant::Config.new
+  vagrantconfig = bibconfig.get
 
-  config.vm.network :hostonly, "33.33.33.124"
+  config.vm.boot_mode = vagrantconfig['gui']
+  config.vm.box = vagrant_test_config['box_file']
+
+  config.vm.network :hostonly, vagrant_test_config['box_ip']
 
     config.vm.customize [
         "modifyvm", :id,
-        "--name", "Vagrant Cookbook Testbox",
-        "--memory", "256"
+        "--name", vagrant_test_config['box_name'],
+        "--memory", vagrant_test_config['box_memory']
     ]
 
   config.vm.provision :shell, :path => "./../update-mirrors.sh"
@@ -17,8 +22,6 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
     chef.add_recipe "service::role-gearmand"
-    #chef.json = JSON.parse(File.read("./deploy.json"))
-
     chef.log_level = :debug
   end
 end
