@@ -31,6 +31,12 @@ action :deploy do
     end
   end
 
+  easybib_supervisor "#{app}_supervisor" do
+    supervisor_file "#{application_root_dir}/deploy/supervisor.json"
+    app app
+  end
+
+
   easybib_gearmanw application_root_dir do
     envvar_json_source new_resource.envvar_json_source
   end
