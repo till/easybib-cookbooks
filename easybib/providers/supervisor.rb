@@ -47,7 +47,7 @@ action :create do
       'environment' => {},
       'directory' => nil,
       'umask' => nil,
-      'serverurl' => 'AUTO',
+      'serverurl' => 'AUTO'
     }
 
     config.merge!(service)

@@ -27,14 +27,14 @@ describe 'easybib_supervisor' do
       it 'enables the first service' do
         expect(chef_run).to enable_supervisor_service('service1-some-app')
           .with(
-            :command => 'service1cmd',
+            :command => 'service1cmd'
         )
         expect(chef_run).to start_supervisor_service('service1-some-app')
       end
       it 'enables the second service' do
         expect(chef_run).to enable_supervisor_service('service2-some-app')
           .with(
-            :command => 'service2cmd',
+            :command => 'service2cmd'
         )
         expect(chef_run).to start_supervisor_service('service2-some-app')
       end
