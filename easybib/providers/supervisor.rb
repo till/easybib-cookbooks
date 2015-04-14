@@ -9,7 +9,8 @@ action :create do
     next
   end
 
-  Chef::Log.info("easybib_deploy - loading supervisor services from #{supervisor_file}")
+  Chef::Log.info(
+      "easybib_deploy - loading supervisor services from #{supervisor_file}")
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 
@@ -18,15 +19,17 @@ action :create do
 
     service_name = "#{name}-#{app}"
 
-    Chef::Log.info("easybib_deploy - enabling supervisor_service #{service_name}")
+    Chef::Log.info(
+        "easybib_deploy - enabling supervisor_service #{service_name}")
 
     supervisor_service service_name do
       action [:enable, :start]
-      command service['command']
       autostart true
+      command service['command']
     end
 
-    Chef::Log.info("easybib_deploy - I just called supervisor_service for #{service_name}")
+    Chef::Log.info(
+        "easybib_deploy - started supervisor_service #{service_name}")
 
   end
 
