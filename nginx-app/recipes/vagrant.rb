@@ -37,6 +37,6 @@ easybib_envconfig 'www' do
 end
 
 easybib_supervisor 'www_supervisor' do
-  supervisor_file "#{app_dir}/deploy/supervisor.json"
+  supervisor_file "#{app_dir}deploy/supervisor.json"
   app 'www'
 end
