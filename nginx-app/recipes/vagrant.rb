@@ -38,5 +38,6 @@ end
 
 easybib_supervisor 'www_supervisor' do
   supervisor_file "#{app_dir}deploy/supervisor.json"
+  app_dir app_dir
   app 'www'
 end

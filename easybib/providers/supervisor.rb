@@ -1,5 +1,6 @@
 action :create do
   app = new_resource.app
+  app_dir = new_resource.app_dir
   supervisor_file = new_resource.supervisor_file
 
   updated = false
@@ -55,7 +56,7 @@ action :create do
     supervisor_service service_name do
       action [:enable, :start]
       autostart true
-      command config['command']
+      command "#{app_dir}/#{config['command']}"
       numprocs config['numprocs']
       numprocs_start config['numprocs_start']
       priority config['priority']

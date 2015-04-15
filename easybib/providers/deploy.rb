@@ -34,6 +34,7 @@ action :deploy do
   easybib_supervisor "#{app}_supervisor" do
     supervisor_file "#{application_root_dir}/deploy/supervisor.json"
     app app
+    app_dir application_root_dir
   end
 
   easybib_gearmanw application_root_dir do
