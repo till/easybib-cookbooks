@@ -2,6 +2,7 @@ action :create do
   app = new_resource.app
   app_dir = new_resource.app_dir
   supervisor_file = new_resource.supervisor_file
+  user = new_resource.user
 
   updated = false
 
@@ -33,7 +34,7 @@ action :create do
       'exitcodes' => [0, 2],
       'stopasgroup' => nil,
       'killasgroup' => nil,
-      'user' => nil,
+      'user' => user,
       'redirect_stderr' => false,
       'stdout_logfile' => 'AUTO',
       'stdout_logfile_maxbytes' => '50MB',
