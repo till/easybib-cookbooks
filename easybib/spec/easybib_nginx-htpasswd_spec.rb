@@ -43,7 +43,7 @@ describe 'easybib_nginx htpasswd' do
         )
       expect(chef_run).to render_file(nginx_config_generated)
         .with_content(
-        include('auth_basic_user_file  /etc/nginx/has_htpasswd_string.htpasswd;')
+          include('auth_basic_user_file  /etc/nginx/has_htpasswd_string.htpasswd;')
       )
     end
   end

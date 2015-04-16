@@ -31,14 +31,14 @@ describe 'easybib_crontab' do
       it 'creates a cronjob' do
         expect(chef_run).to create_cron_d('some-app_1')
           .with(
-          :minute => '1',
-          :hour => '2',
-          :day => '3',
-          :month => '4',
-          :weekday => '5',
-          :user => 'www-data',
-          :command => 'cronline',
-          :path => '/usr/local/bin:/usr/bin:/bin'
+            :minute => '1',
+            :hour => '2',
+            :day => '3',
+            :month => '4',
+            :weekday => '5',
+            :user => 'www-data',
+            :command => 'cronline',
+            :path => '/usr/local/bin:/usr/bin:/bin'
         )
       end
 

@@ -14,12 +14,6 @@ Style/EmptyLinesAroundBlockBody:
   Enabled: false
 
 # Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/FirstParameterIndentation:
-  Enabled: false
-
-# Offense count: 9
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/FormatString:
   Enabled: false
