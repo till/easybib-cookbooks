@@ -6,3 +6,5 @@ description       'Setup Postfix as a relay'
 version           '0.1'
 
 supports 'ubuntu'
+
+depends 'easybib'

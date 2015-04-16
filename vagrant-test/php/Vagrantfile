@@ -1,20 +1,25 @@
+require 'json'
+vagrant_test_config = JSON.parse(File.read('./../setup.json'))
+
 Vagrant::Config.run do |config|
 
-  config.vm.boot_mode = :gui
-  config.vm.box = "easybib-ubuntu-12.04.4_vbox-4.3.6_chef-11.4.4_0.1"
+  bibconfig = Bib::Vagrant::Config.new
+  vagrantconfig = bibconfig.get
 
-  config.vm.network :hostonly, "33.33.33.124"
+  config.vm.boot_mode = vagrantconfig['gui']
+  config.vm.box = vagrant_test_config['box_file']
+
+  config.vm.network :hostonly, vagrant_test_config['box_ip']
 
     config.vm.customize [
         "modifyvm", :id,
-        "--name", "Vagrant Cookbook Testbox",
-        "--memory", "256"
+        "--name", vagrant_test_config['box_name'],
+        "--memory", vagrant_test_config['box_memory']
     ]
 
   config.vm.provision :shell, :inline => "sudo apt-spy2 fix --launchpad --country=de --commit"
-  config.vm.provision :shell, :inline => "sudo apt-get update"
+  config.vm.provision :shell, :inline => "sudo apt-get update -y"
 
-  config.vm.provision :shell, :inline => "apt-get update -y"
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
     chef.add_recipe "tsung"
