@@ -16,7 +16,7 @@ action :create do
       :mirror_name => mirror_name,
       :s3_mirror => s3_mirror,
       :path => path
-      )
+    )
     action :create
   end
 

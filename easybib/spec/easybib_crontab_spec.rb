@@ -39,7 +39,7 @@ describe 'easybib_crontab' do
             :user => 'www-data',
             :command => 'cronline',
             :path => '/usr/local/bin:/usr/bin:/bin'
-        )
+          )
       end
 
       it 'not to create a cronjob for an invalid line' do

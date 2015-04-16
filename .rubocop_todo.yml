@@ -2,11 +2,6 @@
 Metrics/AbcSize:
   Max: 51
 
-# Offense count: 23
-# Cop supports --auto-correct.
-Style/ClosingParenthesisIndentation:
-  Enabled: false
-
 # Offense count: 114
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

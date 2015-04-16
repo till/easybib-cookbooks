@@ -23,10 +23,10 @@ describe 'smokeping_configure' do
       expect(chef_run).to render_file('/etc/smokeping/config.d/pathnames')
         .with_content(
           include('imgcache = /var/cache/smokeping/images')
-      )
+        )
         .with_content(
           include('sendmail = /usr/sbin/sendmail')
-      )
+        )
     end
     it 'renders probes' do
       expect(chef_run).to render_file('/etc/smokeping/config.d/Probes')

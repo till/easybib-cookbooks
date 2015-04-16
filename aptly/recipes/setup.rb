@@ -18,7 +18,7 @@ template '/etc/aptly.conf' do
   variables(
     :root_dir => node['aptly']['mirror_dir'],
     :endpoint => node['aptly']['s3_mirror']
-    )
+  )
   action :create
 end
 
@@ -30,7 +30,7 @@ unless node.fetch('aptly', {}).fetch('gpg', {})['private_key'].nil?
     mode 00600
     variables(
       :content => node['aptly']['gpg']['private_key']
-      )
+    )
     action :create
   end
   execute 'Installing private gpg key' do

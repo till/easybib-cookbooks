@@ -71,7 +71,7 @@ else
         :proxy => cacher_ipaddress,
         :port => servers[0]['apt']['cacher_port'],
         :bypass => node['apt']['cache_bypass']
-        )
+      )
       action(node['apt']['compiletime'] ? :nothing : :create)
       notifies :run, 'execute[apt-get update]', :immediately
     end

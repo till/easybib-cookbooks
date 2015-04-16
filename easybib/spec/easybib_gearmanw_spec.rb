@@ -30,7 +30,7 @@ describe 'easybib_gearmanw' do
             :dir => '/some_dir',
             :envvar_file => '/some_dir/deploy/pecl_manager_env',
             :envvar_json_source => 'some-source'
-        )
+          )
       end
     end
 
