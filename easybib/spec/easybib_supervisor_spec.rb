@@ -29,7 +29,7 @@ describe 'easybib_supervisor' do
           .with(
             :command => '/foo/bar/service1cmd',
             :user => 'some-user'
-        )
+          )
         expect(chef_run).to start_supervisor_service('service1-some-app')
       end
       it 'enables the second service' do
@@ -37,7 +37,7 @@ describe 'easybib_supervisor' do
           .with(
             :command => '/foo/bar/service2cmd',
             :user => 'some-user'
-        )
+          )
         expect(chef_run).to start_supervisor_service('service2-some-app')
       end
     end
