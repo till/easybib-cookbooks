@@ -169,7 +169,7 @@ action :add do
       new_resource.trusted,
       new_resource.arch,
       new_resource.deb_src
-      )
+    )
   else
     # build repo file
     repository = build_repo(
@@ -179,7 +179,7 @@ action :add do
       new_resource.trusted,
       new_resource.arch,
       new_resource.deb_src
-      )
+    )
   end
 
   file "/etc/apt/sources.list.d/#{new_resource.name}.list" do

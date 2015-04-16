@@ -146,7 +146,7 @@ export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"
 export BLA_SOMEARRAY[0]=\"server1\"
 export BLA_SOMEARRAY[1]=\"server2\"\n",
                  ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_config)
-    )
+                )
   end
 
   def test_config_to_nginx
@@ -162,7 +162,7 @@ fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";
 fastcgi_param BLA_SOMEARRAY[0] \"server1\";
 fastcgi_param BLA_SOMEARRAY[1] \"server2\";\n",
                  ::EasyBib::Config.get_configcontent('nginx', 'some_app', get_fakenode_config)
-    )
+                )
   end
 
   def test_config_to_nginx_empty_settings
@@ -187,7 +187,7 @@ fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/tmp/bla/current/www/\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";\n",
                  ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
-    )
+                )
   end
 
   def test_config_vagrantenv
@@ -210,7 +210,7 @@ fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/some_path/foo/\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"vagrant\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"vagrant\";\n",
                  ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
-    )
+                )
   end
 
   def test_config_to_php
@@ -234,7 +234,7 @@ return [
   ],
 ];",
                  ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
-    )
+                )
   end
 
   def test_merged_config_to_shell
@@ -251,7 +251,7 @@ export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"
 export BLA_SOMEARRAY[0]=\"server1\"
 export BLA_SOMEARRAY[1]=\"server2\"\n",
                  ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_redundant_config, 'some_stack')
-    )
+                )
   end
 
   protected

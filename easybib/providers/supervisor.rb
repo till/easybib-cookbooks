@@ -12,7 +12,7 @@ action :create do
   end
 
   Chef::Log.info(
-      "easybib_deploy - loading supervisor services from #{supervisor_file}")
+    "easybib_deploy - loading supervisor services from #{supervisor_file}")
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 
@@ -22,7 +22,7 @@ action :create do
     service_name = "#{name}-#{app}"
 
     Chef::Log.info(
-        "easybib_deploy - enabling supervisor_service #{service_name}")
+      "easybib_deploy - enabling supervisor_service #{service_name}")
 
     config = {
       'numprocs' => 1,
@@ -86,7 +86,7 @@ action :create do
     end
 
     Chef::Log.info(
-        "easybib_deploy - started supervisor_service #{service_name}")
+      "easybib_deploy - started supervisor_service #{service_name}")
 
   end
 
