@@ -15,6 +15,8 @@ module EasyBib
       return true
     end
 
+    Chef::Log.info('Instance is not in a cronjob role, skippings cronjob installs')
+
     false
   end
 

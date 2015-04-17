@@ -6,3 +6,4 @@ default['easybib_deploy']['cron_path']     = '/usr/local/bin:/usr/bin:/bin'
 default['easybib_deploy']['deploy_action'] = :reload
 default['easybib_deploy']['use_newrelic']  = 'no'
 default['easybib_deploy']['envtype']       = 'playground'
+default['easybib_deploy']['cronjob_role'] = nil
