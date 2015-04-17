@@ -13,6 +13,7 @@ AllCops:
     - 'erlang/**/*'
     - 'rabbitmq/**/*'
     - 'Rakefile'
+    - 'supervisor/**/*'
     - 'fc_sandbox/**/*'
     - 'vendor/**/*'
 
@@ -66,5 +67,8 @@ Lint/UnusedMethodArgument:
 
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
 
 inherit_from: .rubocop_todo.yml

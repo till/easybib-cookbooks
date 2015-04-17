@@ -29,7 +29,7 @@ action :create do
       :envvar_file => new_resource.envvar_file,
       :envvar_json => envvar_json,
       :gearman_user => node['pecl-manager']['user']
-              )
+    )
   end
 
   if node.attribute?('vagrant')

@@ -1,12 +1,12 @@
-# Offense count: 17
+# Offense count: 19
 Metrics/AbcSize:
   Max: 51
 
-# Offense count: 3
+# Offense count: 9
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/FormatString:
   Enabled: false
 
-# Offense count: 3
+# Offense count: 4
 Style/ModuleFunction:
   Enabled: false

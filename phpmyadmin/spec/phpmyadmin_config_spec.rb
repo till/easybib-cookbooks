@@ -30,26 +30,26 @@ describe 'phpmyadmin_config' do
     it 'does render a file with config values specified in servers' do
       expect(chef_run).to render_file('/some/other/dir/config.inc.php')
         .with_content(
-           include("$cfg['Servers'][$i]['conf'] = 'thing';")
-         )
+          include("$cfg['Servers'][$i]['conf'] = 'thing';")
+        )
     end
     it 'does render truevalue as php true' do
       expect(chef_run).to render_file('/some/other/dir/config.inc.php')
         .with_content(
-           include("$cfg['Servers'][$i]['cookie'] = true;")
-         )
+          include("$cfg['Servers'][$i]['cookie'] = true;")
+        )
     end
     it 'does render falsevalue as php false' do
       expect(chef_run).to render_file('/some/other/dir/config.inc.php')
         .with_content(
-           include("$cfg['Servers'][$i]['something'] = false;")
-         )
+          include("$cfg['Servers'][$i]['something'] = false;")
+        )
     end
     it 'does render nilvalue as php null' do
       expect(chef_run).to render_file('/some/other/dir/config.inc.php')
         .with_content(
-           include("$cfg['Servers'][$i]['nullvalue'] = null;")
-         )
+          include("$cfg['Servers'][$i]['nullvalue'] = null;")
+        )
     end
   end
 end
