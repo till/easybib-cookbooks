@@ -79,14 +79,6 @@ server {
     <%= render 'partials/php-fpm.erb',
       :cookbook => 'nginx-app',
       :variables => {
-        :index => 'search.php',
-        :location => '/search/'
-      }
-    %>
-
-    <%= render 'partials/php-fpm.erb',
-      :cookbook => 'nginx-app',
-      :variables => {
         :index => 'index.php',
         :location => '/'
       }
