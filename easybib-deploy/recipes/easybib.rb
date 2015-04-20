@@ -16,7 +16,7 @@ node['deploy'].each do |application, deploy|
     end
 
   when 'easybib_api'
-    next unless allow_deploy(application, 'easybib_api', %w(bibapi housekeeping))
+    next unless allow_deploy(application, 'easybib_api', 'bibapi')
 
   when 'gearmanworker'
     next unless allow_deploy(application, 'gearmanworker', 'gearman-worker')
