@@ -24,6 +24,12 @@ server {
         access_log  <%= @access_log %>;
     }
 
+    # VAST tag location for serving video
+    location /vmntribes-vast-tag/ {
+        proxy_pass "http://www.burstnet.com/burstmedia/display/s=27759/a=e/v=4.0S/sz=0x0V/NZ/SA/9870197013/K=videopair/RETURN-CODE/TXT/";
+        proxy_set_header Host 'www.burstnet.com';
+    }
+
 <%
 ['/google8a01a818524239c8.html', '/googled16040836651a26a.html', '/bsm-xd.html'].each do |route|
 -%>
