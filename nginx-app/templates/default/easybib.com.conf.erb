@@ -27,7 +27,8 @@ server {
     # VAST tag location for serving video
     location /vmntribes-vast-tag/ {
         proxy_pass "http://www.burstnet.com/burstmedia/display/s=27759/a=e/v=4.0S/sz=0x0V/NZ/SA/9870197013/K=videopair/RETURN-CODE/TXT/";
-        proxy_set_header Host 'www.burstnet.com';
+        proxy_set_header Host "www.burstnet.com";
+        proxy_connect_timeout 2s;
         proxy_read_timeout 3s;
         proxy_send_timeout 3s;
     }
