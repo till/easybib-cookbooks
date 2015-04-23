@@ -5,6 +5,7 @@ include_recipe 'php-phar'
 include_recipe 'php-suhosin'
 include_recipe 'php-zlib'
 include_recipe 'composer::configure'
+include_recipe 'supervisor'
 
 if node['easybib_deploy']['provide_pear']
   include_recipe 'php-pear'
