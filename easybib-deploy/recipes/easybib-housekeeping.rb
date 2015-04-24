@@ -12,8 +12,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'schoolanalytics', 'housekeeping')
   when 'sharing'
     next unless allow_deploy(application, 'sharing', 'housekeeping')
-  when 'bibapi'
-    next unless allow_deploy(application, 'bibapi', 'housekeeping')
+  when 'easybib_api'
+    next unless allow_deploy(application, 'easybib_api', 'housekeeping')
   else
     Chef::Log.info("deploy::housekeeping - #{application} (in #{cluster_name}) skipped")
     next

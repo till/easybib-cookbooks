@@ -55,7 +55,7 @@ action :create do
     config.merge!(service)
 
     supervisor_service service_name do
-      action [:enable, :start]
+      action [:enable, :restart]
       autostart true
       command "#{app_dir}/#{config['command']}"
       numprocs config['numprocs']
