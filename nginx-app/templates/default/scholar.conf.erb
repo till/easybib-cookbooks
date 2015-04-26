@@ -36,6 +36,10 @@ server {
       }
     %>
 
+<% unless @nginx_local_conf.nil? -%>
+<%= render @nginx_local_conf, :local => true %>
+<% end -%>
+
     location / {
         try_files $uri $uri/ @site;
 
