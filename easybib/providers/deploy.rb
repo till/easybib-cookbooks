@@ -2,10 +2,10 @@ action :deploy do
   app = new_resource.app
   deploy_data = new_resource.deploy_data
   cronjob_role = new_resource.cronjob_role
+  instance_roles = new_resource.instance_roles
 
-  if cronjob_role.nil?
-    cronjob_role = node['easybib_deploy']['cronjob_role']
-  end
+  cronjob_role = node['easybib_deploy']['cronjob_role'] if cronjob_role.nil?
+  instance_roles = ::EasyBib.get_instance_roles(node) if instance_roles.empty?
 
   application_root_dir = "#{deploy_data['deploy_to']}/current"
   document_root_dir = "#{application_root_dir}/#{deploy_data['document_root']}/"
@@ -31,7 +31,7 @@ action :deploy do
     app app
     only_if do
       ::EasyBib.deploy_crontab?(
-        new_resource.instance_roles,
+        instance_roles,
         cronjob_role
       )
     end
