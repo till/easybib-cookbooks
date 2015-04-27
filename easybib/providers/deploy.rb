@@ -34,12 +34,8 @@ action :deploy do
   easybib_crontab "#{app}_#{new_resource.cronjob_role}" do
     crontab_file "#{application_root_dir}/deploy/crontab"
     app app
-    only_if do
-      ::EasyBib.deploy_crontab?(
-        instance_roles,
-        cronjob_role
-      )
-    end
+    cronjob_role cronjob_role
+    instance_roles instance_roles
   end
 
   easybib_supervisor "#{app}_supervisor" do
