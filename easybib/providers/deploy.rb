@@ -26,6 +26,11 @@ action :deploy do
     app app
   end
 
+  # WARNING this has to take place before any gearman/supervisor/cronjob stuff
+  # this generates .deploy_configuration, so all php commands relying on that
+  # will fail otherwise.
+  easybib_envconfig app
+
   easybib_crontab "#{app}_#{new_resource.cronjob_role}" do
     crontab_file "#{application_root_dir}/deploy/crontab"
     app app
@@ -54,8 +59,6 @@ action :deploy do
     source 'robots.txt'
     not_if { node['easybib_deploy']['envtype'] == 'production' }
   end
-
-  easybib_envconfig app
 
   new_resource.updated_by_last_action(true)
 
