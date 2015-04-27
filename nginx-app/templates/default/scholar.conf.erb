@@ -1,5 +1,9 @@
 <% enable_caching = node.fetch('nginx-app', {}).fetch('browser_caching', {})['enabled'] %>
 <%= render_upstream(@php_upstream, @upstream_name) %>
+
+push_stream_shared_memory_size 32M;
+#push_stream_message_ttl 30s;
+
 server {
     set $fastcgi_skipcache 1; # skip by default
 
@@ -35,6 +39,10 @@ server {
         :gzip => @gzip
       }
     %>
+
+<% unless @nginx_local_conf.nil? -%>
+<%= render @nginx_local_conf, :local => true %>
+<% end -%>
 
     location / {
         try_files $uri $uri/ @site;
