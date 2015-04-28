@@ -16,6 +16,7 @@ AllCops:
     - 'supervisor/**/*'
     - 'fc_sandbox/**/*'
     - 'vendor/**/*'
+    - 'sinopia/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
