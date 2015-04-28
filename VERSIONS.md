@@ -7,7 +7,7 @@ chef_handler_sns| [1.0.0](https://github.com/onddo/chef_handler_sns-cookbook/tre
 cron| [1.3.12](https://github.com/opscode-cookbooks/cron/tree/v1.3.12) |  - We are using 1.3.0, with a backported libraries/matchers.rb from 1.3.12
 erlang | [1.5.6](https://github.com/opscode-cookbooks/erlang/commit/2af91e4650c1411fbf8e44626b1a548f777926c4) | ignored in our cs/test setup
 fail2ban | 2.2.1 | removed yum dependencies, adapted to our rubocop scheme, changed attributes/default.rb
-logrotate | [0.7.0](https://github.com/cookbooks/logrotate/releases/tag/0.7.0) | 
+logrotate | [master](https://github.com/cookbooks/logrotate/commit/d7eca3a8fef69aa489c1236ed1761c364d26fdf8) | 
 ohai| 2.0.1 |
 rabbitmq | [3.4.0](https://github.com/jjasghar/rabbitmq/commit/b71c0a068419ad10324e8d13b517fafbf373c0c3) | removed yum, ignored in our cs/test setup
 xml| [1.2.4](https://github.com/opscode-cookbooks/xml/tree/v1.2.4) |
