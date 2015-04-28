@@ -1,7 +1,7 @@
 #
 # Author:: Marius Ducea (marius@promethost.com)
 # Cookbook Name:: nodejs
-# Recipe:: default
+# Recipe:: install
 #
 # Copyright 2010-2012, Promet Solutions
 #
@@ -18,6 +18,4 @@
 # limitations under the License.
 #
 
-include_recipe 'nodejs::install'
-include_recipe 'nodejs::npm'
-include_recipe 'nodejs::npm_packages'
+include_recipe "nodejs::nodejs_from_#{node['nodejs']['install_method']}"

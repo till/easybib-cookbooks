@@ -1,9 +1,10 @@
 #
-# Author:: Marius Ducea (marius@promethost.com)
 # Cookbook Name:: nodejs
-# Recipe:: default
+# Resource:: npm
 #
-# Copyright 2010-2012, Promet Solutions
+# Author:: Sergey Balbeko <sergey@balbeko.com>
+#
+# Copyright 2012, Sergey Balbeko
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +19,15 @@
 # limitations under the License.
 #
 
-include_recipe 'nodejs::install'
-include_recipe 'nodejs::npm'
-include_recipe 'nodejs::npm_packages'
+actions :install, :uninstall
+default_action :install
+
+attribute :package, :name_attribute => true
+attribute :version, :kind_of => String
+attribute :path, :kind_of => String
+attribute :url, :kind_of => String
+attribute :json, :kind_of => [String, TrueClass]
+attribute :options, :kind_of => Array, :default => []
+
+attribute :user, :kind_of => String
+attribute :group, :kind_of => String

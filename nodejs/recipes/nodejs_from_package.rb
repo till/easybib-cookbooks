@@ -1,9 +1,11 @@
 #
+# Author:: Nathan L Smith (nlloyds@gmail.com)
 # Author:: Marius Ducea (marius@promethost.com)
 # Cookbook Name:: nodejs
-# Recipe:: default
+# Recipe:: package
 #
-# Copyright 2010-2012, Promet Solutions
+# Copyright 2012, Cramer Development, Inc.
+# Copyright 2013, Opscale
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +20,16 @@
 # limitations under the License.
 #
 
-include_recipe 'nodejs::install'
-include_recipe 'nodejs::npm'
-include_recipe 'nodejs::npm_packages'
+node.force_override['nodejs']['install_method'] = 'package' # ~FC019
+
+include_recipe 'nodejs::repo' if node['nodejs']['install_repo']
+
+unless node['nodejs']['packages']
+  Chef::Log.error 'No package for nodejs'
+  Chef::Log.warn 'Please use the source or binary method to install node'
+  return
+end
+
+node['nodejs']['packages'].each do |node_pkg|
+  package node_pkg
+end

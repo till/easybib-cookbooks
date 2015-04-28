@@ -1,7 +1,7 @@
 #
 # Author:: Marius Ducea (marius@promethost.com)
 # Cookbook Name:: nodejs
-# Recipe:: default
+# Recipe:: npm
 #
 # Copyright 2010-2012, Promet Solutions
 #
@@ -18,6 +18,17 @@
 # limitations under the License.
 #
 
+Chef::Recipe.send(:include, NodeJs::Helper)
+
+node.force_override['nodejs']['npm']['install_method'] = 'source' # ~FC019
+
 include_recipe 'nodejs::install'
-include_recipe 'nodejs::npm'
-include_recipe 'nodejs::npm_packages'
+
+dist = npm_dist
+
+ark 'npm' do
+  url dist['url']
+  checksum dist['checksum']
+  version dist['version']
+  action :install_with_make
+end
