@@ -14,5 +14,5 @@ supports 'fedora'
 
 depends 'apt'
 depends 'nodejs', '~> 2.0'
-depends 'user'
+#depends 'user'
 depends 'logrotate'
