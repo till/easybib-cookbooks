@@ -3,6 +3,6 @@ apt_repository 'percona' do
   arch         'amd64'
   distribution node['lsb']['codename']
   components   ['main']
-  keyserver    'keys.gnupg.net'
-  key          '1C4CBDCDCD2EFD2A'
+  keyserver    node['percona']['keyserver']
+  key          node['percona']['key']
 end
