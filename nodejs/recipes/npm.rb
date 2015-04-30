@@ -23,6 +23,8 @@ when 'embedded'
   include_recipe 'nodejs::install'
 when 'source'
   include_recipe 'nodejs::npm_from_source'
+when 'from_latest'
+  include_recipe 'nodejs::npm_from_latest'
 else
   Chef::Log.error('No install method found for npm')
 end
