@@ -1,9 +1,8 @@
 #
-# Author:: Marius Ducea (marius@promethost.com)
-# Cookbook Name:: nodejs
-# Recipe:: npm
+# Cookbook Name:: logrotate
+# Recipe:: default
 #
-# Copyright 2010-2012, Promet Solutions
+# Copyright 2009, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,13 +17,6 @@
 # limitations under the License.
 #
 
-case node['nodejs']['npm']['install_method']
-when 'embedded'
-  include_recipe 'nodejs::install'
-when 'source'
-  include_recipe 'nodejs::npm_from_source'
-when 'from_latest'
-  include_recipe 'nodejs::npm_from_latest'
-else
-  Chef::Log.error('No install method found for npm')
+package "logrotate" do
+  action :upgrade
 end

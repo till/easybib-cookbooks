@@ -1,0 +1,28 @@
+---
+driver:
+  name: vagrant
+  vm_hostname: sinopia-vagrant
+
+driver_config:
+  require_chef_omnibus: true
+  customize:
+    memory: 512
+    natdnsproxy1: 'on'
+    natdnshostresolver1: 'on'
+
+platforms:
+- name: ubuntu-12.04
+- name: ubuntu-14.04
+- name: centos-6.5
+- name: centos-7.0
+
+provisioner:
+    name: chef_zero
+
+suites:
+- name: default
+  run_list:
+    - recipe[sinopia]
+  attributes:
+    sinopia:
+      listen: :4873

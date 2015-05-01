@@ -1,7 +1,7 @@
 #
 # Author:: Marius Ducea (marius@promethost.com)
 # Cookbook Name:: nodejs
-# Recipe:: npm
+# Recipe:: iojs
 #
 # Copyright 2010-2012, Promet Solutions
 #
@@ -18,13 +18,6 @@
 # limitations under the License.
 #
 
-case node['nodejs']['npm']['install_method']
-when 'embedded'
-  include_recipe 'nodejs::install'
-when 'source'
-  include_recipe 'nodejs::npm_from_source'
-when 'from_latest'
-  include_recipe 'nodejs::npm_from_latest'
-else
-  Chef::Log.error('No install method found for npm')
-end
+node.default['nodejs']['engine'] = 'iojs'
+
+include_recipe 'nodejs::install'

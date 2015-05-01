@@ -16,6 +16,9 @@ AllCops:
     - 'supervisor/**/*'
     - 'fc_sandbox/**/*'
     - 'vendor/**/*'
+    - 'sinopia/**/*'
+    - 'nodejs/**/*'
+    - 'logrotate/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false

@@ -1,0 +1,84 @@
+## THIS FILE IS MANAGED BY CHEF !
+## ALL CHANGES WILL BE LOST !
+
+storage: <%= node['sinopia']['datadir'] %>
+
+users:
+  admin:
+    password: <%= Digest::SHA1.hexdigest(node['sinopia']['admin']['pass']) %>
+<% node['sinopia']['users'].each do |user,conf| %>
+  <%= user %>:
+    password: <%= Digest::SHA1.hexdigest(conf['pass']) %>
+<% end %>
+
+uplinks:
+<% node['sinopia']['repos'].each do |name,url| %>
+  <%= name %>:
+    url: <%= url %>
+<% end %>
+
+<% if node['sinopia']['timeout'] %>
+timeout: <%= node['sinopia']['timeout'] %>
+<% end %>
+<% if node['sinopia']['maxage'] %>
+maxage: <%= node['sinopia']['maxage'] %>
+<% end %>
+
+packages:
+<% node['sinopia']['filters'].each do |filter| %>
+  '<%= filter['name'] %>':
+  <% if filter['access'] %>
+    <% if filter['access'] == '@admins' %>
+    allow_access: admin <%= @admins.join(' ') %>
+    <% else %>
+    allow_access: admin <%= filter['access'].join(' ') %>
+    <% end %>
+  <% else %>
+    allow_access: all
+  <% end %>
+  <% if filter['publish'] %>
+    <% if filter['publish'] == '@admins' %>
+    allow_publish: admin <%= @admins.join(' ') %>
+    <% else %>
+    allow_publish: admin <%= filter['access'].join(' ') %>
+    <% end %>
+  <% else %>
+    allow_publish: admin
+  <% end %>
+  <% if filter['storage'] %>
+    storage: <%= filter['storage'] %>
+  <% end %>
+<% end %>
+  '*':
+  <% if node['sinopia']['strict_access'] %>
+    allow_access: admin <%= @admins.join(' ') %>
+  <% else %>
+    allow_access: all
+  <% end %>
+    allow_publish: admin <%= @admins.join(' ') %>
+    proxy: <%= node['sinopia']['mainrepo'] %>
+
+#####################################################################
+# Advanced settings
+#####################################################################
+<% if node['sinopia']['public_url'] %>
+url_prefix: <%= node['sinopia']['public_url'] %>
+<% end %>
+<% if node['sinopia']['listen'] %>
+listen: <%= node['sinopia']['listen'] %>
+<% end %>
+
+logs:
+<% node['sinopia']['logs'].each do |logset| %>
+  - <%= logset %>
+<% end %>
+<% if node['sinopia']['use_proxy'] == true %>
+
+http_proxy: <%= node['sinopia']['proxy']['http'] %>
+https_proxy: <%= node['sinopia']['proxy']['https'] %>
+no_proxy: <%= node['sinopia']['proxy']['no_proxy'].join(',') %>
+<% end %>
+<% if node['sinopia']['max_body_size'] %>
+
+max_body_size: <%= node['sinopia']['max_body_size'] %>
+<% end %>
