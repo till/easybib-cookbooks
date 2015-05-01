@@ -1,8 +1,9 @@
-default['percona']            = {}
-default['percona']['version']  = '5.5'
-default['percona']['key']      = '1C4CBDCDCD2EFD2A'
-default['percona']['user']     = 'root'
-default['percona']['password'] = ''
+default['percona']              = {}
+default['percona']['version']   = '5.5'
+default['percona']['key']       = '1C4CBDCDCD2EFD2A'
+default['percona']['keyserver'] = 'pool.sks-keyservers.net'
+default['percona']['user']      = 'root'
+default['percona']['password']  = ''
 
 # set if opsworks is not available
 set_unless['mysql']                        = {}

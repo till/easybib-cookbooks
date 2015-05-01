@@ -9,6 +9,9 @@ when '5.1'
 when '5.5'
   package 'percona-server-common-5.5'
   package 'percona-server-client-5.5'
+when '5.6'
+  package 'percona-server-common-5.6'
+  package 'percona-server-client-5.6'
 else
   # wat?
   Chef::Log.debug("Unknown version: #{node['percona']['version']}")
