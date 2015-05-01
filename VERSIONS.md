@@ -8,7 +8,7 @@ cron| [1.3.12](https://github.com/opscode-cookbooks/cron/tree/v1.3.12) |  - We a
 erlang | [1.5.6](https://github.com/opscode-cookbooks/erlang/commit/2af91e4650c1411fbf8e44626b1a548f777926c4) | ignored in our cs/test setup
 fail2ban | 2.2.1 | removed yum dependencies, adapted to our rubocop scheme, changed attributes/default.rb
 logrotate | [master](https://github.com/cookbooks/logrotate/commit/d7eca3a8fef69aa489c1236ed1761c364d26fdf8) | 
-nodejs | [2.4.0](https://github.com/redguide/nodejs/releases/tag/v2.4.0) | disabled deps on `ark`, `homebrew` and `yum-epel`
+nodejs | [2.4.0](https://github.com/redguide/nodejs/releases/tag/v2.4.0) | disabled deps on `ark`, `homebrew` and `yum-epel`, added new install method in [d606ee](https://github.com/till/easybib-cookbooks/commit/d606ee9851390458e390a44875afaecc5277c219)
 ohai| 2.0.1 |
 rabbitmq | [3.4.0](https://github.com/jjasghar/rabbitmq/commit/b71c0a068419ad10324e8d13b517fafbf373c0c3) | removed yum, ignored in our cs/test setup
 xml| [1.2.4](https://github.com/opscode-cookbooks/xml/tree/v1.2.4) |
