@@ -1,36 +1,36 @@
-require 'json'
-vagrant_test_config = JSON.parse(File.read('./../setup.json'))
+this_dir = File.dirname(__FILE__)
+require "#{File.dirname(this_dir)}/vagrant-test-library"
+
+vagrant_test_config = get_setup_json
 
 Vagrant.configure("2") do |config|
   config.vm.define :web do |test_config|
     test_config.vm.box = vagrant_test_config['box_file']
 
-    test_config.vm.hostname = "ezproxy"
+    test_config.vm.hostname = 'ezproxy'
     test_config.vm.network :private_network, ip: vagrant_test_config['box_ip']
 
     test_config.vm.provider :virtualbox do |vb|
       vb.gui = :true
 
       vb.customize [
-            "modifyvm", :id,
-            "--name",  vagrant_test_config['box_name'],
-            "--memory", vagrant_test_config['box_memory']
-      ]
+        "modifyvm", :id,
+        "--name",  vagrant_test_config['box_name']      ]
     end
 
     test_config.vm.provision "shell", inline: "apt-get update -y"
 
     test_config.vm.provision :chef_solo do |chef|
 
-        chef.cookbooks_path = "./../../"
+        chef.cookbooks_path = './../../'
         chef.log_level = :debug
-        chef.add_recipe "easybib::setup"
-        chef.add_recipe "ezproxy::server"
-        chef.add_recipe "ohai"
+        chef.add_recipe 'easybib::setup'
+        chef.add_recipe 'ezproxy::server'
+        chef.add_recipe 'ohai'
         chef.add_recipe 'avahi'
         chef.add_recipe 'avahi::alias'
         chef.add_recipe 'avahi::alias-service'
-        chef.json = JSON.parse(File.read("#{File.expand_path(File.dirname(__FILE__))}/dna.json"))
+        chef.json = get_json(this_dir + '/dna.json')
     end
   end
 end
