@@ -1,5 +1,5 @@
-Chef::Resource::RemoteFile.send(:include, NodeJs::Helper)
-Chef::Resource::Execute.send(:include, NodeJs::Helper)
+Chef::Resource.send(:include, NodeJs::Helper)
+
 node.force_override['nodejs']['npm']['install_method'] = 'from_latest'
 
 npm_bin = '/usr/bin/npm'
@@ -12,7 +12,7 @@ remote_file local_latest do
   source 'https://www.npmjs.org/install.sh'
   mode '0755'
   not_if do
-    File.exist?(local_latest) || npm_package_installed?('npm', node['nodejs']['npm']['version'])
+    npm_package_installed?('npm', node['nodejs']['npm']['version'])
   end
 end
 
