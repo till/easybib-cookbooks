@@ -33,6 +33,7 @@ default['sinopia']['confdir'] = '/etc/sinopia'
 default['sinopia']['logdir'] = '/var/log/sinopia'
 default['sinopia']['logdays'] = 30
 default['sinopia']['datadir'] = '/var/lib/sinopia'
+default['sinopia']['installdir'] = '/usr/lib/node_modules/sinopia/'
 default['sinopia']['loglevel'] = 'warn'
 
 ## NodeJS repo list options

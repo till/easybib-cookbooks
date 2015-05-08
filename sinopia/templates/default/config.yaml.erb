@@ -1,6 +1,23 @@
 ## THIS FILE IS MANAGED BY CHEF !
 ## ALL CHANGES WILL BE LOST !
 
+<% if node['sinopia']['auth'] %>
+auth:
+  <%= node['sinopia']['auth']['type'] %>:
+<% if node['sinopia']['auth']['org'] %>
+    org: <%= node['sinopia']['auth']['org'] %>
+<% end %>
+<% if node['sinopia']['auth']['client_id'] %>
+    client_id: <%= node['sinopia']['auth']['client_id'] %>
+<% end %>
+<% if node['sinopia']['auth']['client_secret'] %>
+    client_secret: <%= node['sinopia']['auth']['client_secret'] %>
+<% end %>
+<% if node['sinopia']['auth']['ttl'] %>
+    ttl: <%= node['sinopia']['auth']['ttl'] %>
+<% end %>
+<% end %>
+
 storage: <%= node['sinopia']['datadir'] %>
 
 users:
@@ -55,7 +72,7 @@ packages:
   <% else %>
     allow_access: all
   <% end %>
-    allow_publish: admin <%= @admins.join(' ') %>
+    allow_publish: admin $authenticated <%= @admins.join(' ') %>
     proxy: <%= node['sinopia']['mainrepo'] %>
 
 #####################################################################
