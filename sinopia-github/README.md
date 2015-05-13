@@ -11,6 +11,8 @@ This cookbook depends on https://github.com/mattfysh/sinopia-github
 Add a data_bag to `npm_packages/` called `packages.json`. This data_bag lists
 the packages that you want installed by `npm`.
 
+http://33.33.33.126:4873/ - use your github credentials to login
+
 ###Example data_bag
 
 ```
