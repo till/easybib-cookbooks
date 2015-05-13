@@ -1,35 +1,12 @@
-#
-# Cookbook Name:: sinopia-github
-# Resource:: sinopia-github
-#
-# Author:: A pile of puppies
-#
-# Copyright 2015
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 name 'sinopia-github'
-maintainer 'Joel Gilley'
-maintainer_email 'gilley.joel@gmail.com'
-license 'Apache License, Version 2.0'
-description 'Installs sinopia sinopia-github'
+maintainer        'JoelleGilley'
+maintainer_email  'joel.gilley@imagineeasy.com'
+license 'BSD License'
+description 'Installs sinopia-github'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.0.1'
-
 supports 'ubuntu', '>= 12.04'
 supports 'redhat'
 supports 'centos'
 supports 'fedora'
-
 depends 'sinopia'
