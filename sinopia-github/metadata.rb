@@ -1,6 +1,6 @@
 name 'sinopia-github'
-maintainer        'JoelleGilley'
-maintainer_email  'joel.gilley@imagineeasy.com'
+maintainer 'JoelleGilley'
+maintainer_email 'joel.gilley@imagineeasy.com'
 license 'BSD License'
 description 'Installs sinopia-github'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
