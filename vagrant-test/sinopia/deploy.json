@@ -1,7 +1,10 @@
 {
   "sinopia": {
     "user": "root",
-    "listen": "0.0.0.0:4873",
+    "listen": "0.0.0.0:4873"
+  },
+  "sinopia-github": {
+    "install_path": "/usr/lib/node_modules/sinopia/node_modules/",
     "auth": {
       "type": "github",
       "org": "github_org",
@@ -11,3 +14,4 @@
     }
   }
 }
+

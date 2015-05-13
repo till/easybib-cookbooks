@@ -25,13 +25,6 @@ directory node['sinopia']['datadir'] do
   group node['sinopia']['user']
 end
 
-bash 'sinopia' do
-    cwd node['sinopia']['installdir']
-    code <<-EOH
-    npm install sinopia-github
-    EOH
-end
-
 admin_add_list = []
 
 node['sinopia']['users'].each do |user, conf|
