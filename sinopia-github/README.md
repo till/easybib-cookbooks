@@ -1,3 +1,14 @@
+# Cookbook for Sinopia-Github
+
+##DESCRIPTION:
+This cookbook adds the sinopia github project to a sinopia setup
+
+##USAGE:
+web interface is here prolly: http://vagrant:4873/ - use your github credentials to login
+
+##Example deploy.json
+
+```
 {
   "sinopia": {
     "user": "root",
@@ -14,4 +25,5 @@
     }
   }
 }
+```
 

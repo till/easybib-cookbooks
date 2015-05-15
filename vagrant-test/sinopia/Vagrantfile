@@ -27,6 +27,7 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = "./../../"
     chef.add_recipe "nodejs"
     chef.add_recipe "sinopia::sinopia"
+    chef.add_recipe "sinopia-github"
     chef.json = get_json(this_dir + "/deploy.json")
 
     chef.log_level = vagrantconfig['chef_log_level']
