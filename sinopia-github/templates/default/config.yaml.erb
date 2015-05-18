@@ -51,7 +51,7 @@ packages:
     allow_access: admin <%= filter['access'].join(' ') %>
     <% end %>
   <% else %>
-    allow_access: all
+    allow_access: admin $authenticated
   <% end %>
   <% if filter['publish'] %>
     <% if filter['publish'] == '@admins' %>
@@ -70,7 +70,7 @@ packages:
   <% if node['sinopia']['strict_access'] %>
     allow_access: admin <%= @admins.join(' ') %>
   <% else %>
-    allow_access: all
+    allow_access: admin $authenticated
   <% end %>
     allow_publish: admin $authenticated <%= @admins.join(' ') %>
     proxy: <%= node['sinopia']['mainrepo'] %>
