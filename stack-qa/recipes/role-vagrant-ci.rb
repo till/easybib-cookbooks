@@ -32,13 +32,11 @@ node['deploy'].each do |app, deploy|
     notifies :run, 'execute[fix-home-dir]', :immediately
   end
 
-  deploy_user = get_deploy_user
-
-  config_dir = "#{deploy_user['home']}/.config/easybib"
+  config_dir = "#{deploy['home']}/.config/easybib"
 
   directory config_dir do
-    owner deploy_user['user']
-    group deploy_user['group']
+    owner deploy['user']
+    group deploy['group']
     mode '0755'
     action :create
     recursive true
@@ -47,8 +45,8 @@ node['deploy'].each do |app, deploy|
   # this has to be in this loop so we can access deploy and only do this
   # when apps are actually deployed ;)
   template "#{config_dir}/vagrantdefault.yml" do
-    owner deploy_user['user']
-    group deploy_user['group']
+    owner deploy['user']
+    group deploy['group']
     source 'vagrantdefault.yml.erb'
     variables(
       :config => node['stack-qa'][deploy_role]['plugin_config']['bib-vagrant']
