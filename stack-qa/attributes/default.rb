@@ -9,3 +9,5 @@ default['stack-qa']['vagrant-ci']['plugin_config'] = {
     'virtualbox_gui' => false
   }
 }
+
+default['stack-qa']['vagrant-ci']['deploy_user'] = 'vagrantci'
