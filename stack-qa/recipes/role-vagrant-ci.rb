@@ -16,6 +16,11 @@ node['deploy'].each do |app, deploy|
 
   next unless allow_deploy(app, deployable_apps, deploy_role)
 
+  easybib_deploy app do
+    deploy_data deploy
+    app app
+  end
+
   deploy_user = get_deploy_user
 
   config_dir = "#{deploy_user['home']}/.config/easybib"
@@ -45,11 +50,6 @@ node['deploy'].each do |app, deploy|
     variables(
       :config => node['stack-qa'][deploy_role]['plugin_config']['bib-vagrant']
     )
-  end
-
-  easybib_deploy app do
-    deploy_data deploy
-    app app
   end
 
 end
