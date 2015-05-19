@@ -16,7 +16,7 @@ node['deploy'].each do |app, deploy|
 
   next unless allow_deploy(app, deployable_apps, deploy_role)
 
-  deploy_user = get_deploy_user()
+  deploy_user = get_deploy_user
 
   config_dir = "#{deploy_user['home']}/.config/easybib"
 
