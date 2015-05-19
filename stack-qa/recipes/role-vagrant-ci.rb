@@ -14,14 +14,17 @@ end
 
 deploy_user_name = node['stack-qa'][deploy_role]['deploy_user']
 
+# override deploy-user so it's only used by this recipe
 node['deploy'].each do |app, deploy|
-
   next unless allow_deploy(app, deployable_apps, deploy_role)
-
-  # override deploy-user so it's only used by this recipe
   node.default['deploy'][app]['user'] = deploy_user_name
   node.default['deploy'][app]['group'] = deploy_user_name
   node.default['deploy'][app]['home'] = "/home/#{deploy_user_name}"
+end
+
+node['deploy'].each do |app, deploy|
+
+  next unless allow_deploy(app, deployable_apps, deploy_role)
 
   easybib_deploy app do
     deploy_data deploy
@@ -31,14 +34,6 @@ node['deploy'].each do |app, deploy|
   deploy_user = get_deploy_user
 
   config_dir = "#{deploy_user['home']}/.config/easybib"
-
-  # assuming we use the same key for each app
-  # file "#{deploy_user['home']}/.ssh/id_rsa" do
-  #  content deploy['scm']['ssh_key']
-  #  owner deploy_user['user']
-  #  group deploy_user['group']
-  #  mode 0600
-  # end
 
   directory config_dir do
     owner deploy_user['user']
