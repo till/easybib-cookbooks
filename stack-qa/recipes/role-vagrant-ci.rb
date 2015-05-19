@@ -22,6 +22,12 @@ node['deploy'].each do |app, deploy|
   node.default['deploy'][app]['home'] = "/home/#{deploy_user_name}"
 end
 
+execute 'fix-home-dir' do
+  command "chown -R #{deploy_user_name}:#{deploy_user_name} /home/#{deploy_user_name}"
+  user 'root'
+  action :nothing
+end
+
 node['deploy'].each do |app, deploy|
 
   next unless allow_deploy(app, deployable_apps, deploy_role)
@@ -29,6 +35,7 @@ node['deploy'].each do |app, deploy|
   easybib_deploy app do
     deploy_data deploy
     app app
+    notifies :run, 'execute[fix-home-dir]', :immediately
   end
 
   deploy_user = get_deploy_user
