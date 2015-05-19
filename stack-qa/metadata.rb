@@ -8,5 +8,6 @@ version           '0.1'
 supports 'ubuntu'
 
 depends 'easybib'
+depends 'supervisor'
 depends 'vagrant'
 depends 'virtualbox'
