@@ -16,9 +16,23 @@ node['deploy'].each do |app, deploy|
 
   next unless allow_deploy(app, deployable_apps, deploy_role)
 
+  deploy_user = get_deploy_user()
+
+  config_dir = "#{deploy_user['home']}/.config/easybib"
+
+  directory config_dir do
+    owner deploy_user['user']
+    group deploy_user['group']
+    mode '0755'
+    action :create
+    recursive true
+  end
+
   # this has to be in this loop so we can access deploy and only do this
   # when apps are actually deployed ;)
-  template "Create: #{deploy['home']}/.config/easybib/vagrantdefault.yml" do
+  template "#{config_dir}/vagrantdefault.yml" do
+    owner deploy_user['user']
+    group deploy_user['group']
     source 'vagrantdefault.yml.erb'
     variables(
       :config => node['stack-qa'][deploy_role]['plugin_config']['bib-vagrant']
