@@ -25,20 +25,20 @@ node['deploy'].each do |app, deploy|
 
   config_dir = "#{deploy_user['home']}/.config/easybib"
 
+  # assuming we use the same key for each app
+  # file "#{deploy_user['home']}/.ssh/id_rsa" do
+  #  content deploy['scm']['ssh_key']
+  #  owner deploy_user['user']
+  #  group deploy_user['group']
+  #  mode 0600
+  # end
+
   directory config_dir do
     owner deploy_user['user']
     group deploy_user['group']
     mode '0755'
     action :create
     recursive true
-  end
-
-  # assuming we use the same key for each app
-  file "#{deploy_user['home']}/.ssh/id_rsa" do
-    content deploy['scm']['ssh_key']
-    owner deploy_user['user']
-    group deploy_user['group']
-    mode 0600
   end
 
   # this has to be in this loop so we can access deploy and only do this
