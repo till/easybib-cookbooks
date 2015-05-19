@@ -6,12 +6,6 @@ include_recipe 'supervisor'
 deploy_role = 'vagrant-ci'
 deployable_apps = node['stack-qa'][deploy_role]['apps']
 
-node['stack-qa'][deploy_role]['plugins'].each do |plugin|
-  vagrant_plugin plugin do
-    action :install
-  end
-end
-
 deploy_user_name = node['stack-qa'][deploy_role]['deploy_user']
 
 # override deploy-user so it's only used by this recipe
@@ -61,4 +55,17 @@ node['deploy'].each do |app, deploy|
     )
   end
 
+end
+
+node['stack-qa'][deploy_role]['plugins'].each do |plugin|
+  execute "Install plugin: #{plugin}" do
+    command "vagrant plugin install #{plugin}"
+    user deploy_user_name
+    group deploy_user_name
+    environment('HOME' => "/home/#{deploy_user_name}",
+                'USER' => deploy_user_name)
+  end
+  vagrant_plugin plugin do
+    action :install
+  end
 end
