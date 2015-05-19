@@ -14,16 +14,14 @@ end
 
 deploy_user_name = node['stack-qa'][deploy_role]['deploy_user']
 
-# override deploy-user so it's only used by this recipe
-node.override['opsworks']['deploy_user'] = {
-  'group' => deploy_user_name,
-  'home' => "/home/#{deploy_user_name}",
-  'user'=> deploy_user_name
-}
-
 node['deploy'].each do |app, deploy|
 
   next unless allow_deploy(app, deployable_apps, deploy_role)
+
+  # override deploy-user so it's only used by this recipe
+  node.default['deploy'][application]['user'] = deploy_user_name
+  node.default['deploy'][application]['group'] = deploy_user_name
+  node.default['deploy'][application]['home'] = "/home/#{deploy_user_name}"
 
   easybib_deploy app do
     deploy_data deploy
