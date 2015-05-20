@@ -11,7 +11,7 @@ default['easybib_vagrant']['plugins'] = ['bib-vagrant', 'vagrant-cachier']
 default['easybib_vagrant']['plugin_config'] = {
   'bib-vagrant' => {
     'chef_log_level' => 'error',
-    'cookbook_path' => '~/easybib-cookbooks',
+    'cookbook_path' => 'easybib-cookbooks', # relative to the user's HOME
     'use_nfs' => false,
     'virtualbox_gui' => false
   }

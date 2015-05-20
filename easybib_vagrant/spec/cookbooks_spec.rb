@@ -14,12 +14,14 @@ describe 'easybib_vagrant' do
 
   describe 'cookbooks' do
     before do
-      node.set['easybib_vagrant']['plugin_config']['bib-vagrant']['cookbook_path'] = '/tmp/foo'
+      node.set['easybib_vagrant']['plugin_config']['bib-vagrant']['cookbook_path'] = 'tmp/foo'
       node.set['easybib_vagrant']['environment']['user'] = 'vagrantci'
+
+      Dir.stub(:home) { '/home/vagrantci '}
     end
 
-    it 'syncs the cookbooks to /tmp/foo' do
-      expect(chef_run).to sync_git('/tmp/foo').with(:user => 'vagrantci')
+    it 'syncs the cookbooks to /home/vagrantci/tmp/foo' do
+      expect(chef_run).to sync_git('/home/vagrantci/tmp/foo').with(:user => 'vagrantci')
     end
   end
 end

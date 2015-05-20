@@ -21,6 +21,8 @@ node['easybib_vagrant']['plugins'].each do |plugin|
   end
 end
 
+node.set['easybib_vagrant']['plugin_config']['bib-vagrant']['cookbook_path'] = generate_cookbook_path(home_dir, node)
+
 template "#{home_dir}/.config/easybib/vagrantdefault.yml" do
   owner vagrant_user['user']
   group vagrant_user['user']

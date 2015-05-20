@@ -19,7 +19,9 @@ describe 'easybib_vagrant' do
 
     it 'creates configuration files for root' do
       expect(chef_run).not_to render_file('/root/.ssh/config')
-      expect(chef_run).to render_file('/root/.config/easybib/vagrantdefault.yml')
+      expect(chef_run).to render_file('/root/.config/easybib/vagrantdefault.yml').with_content(
+        include('/root/easybib-cookbooks')
+      )
       expect(chef_run).to render_file('/root/.vagrant.d/Vagrantfile')
     end
   end
