@@ -8,7 +8,7 @@ default['haproxy']['errorloc'] = {
   '503' => '5xx.http',
   '504' => '5xx.http'
 }
-
+default['haproxy']['templates_directory'] = 'easybib'
 default['haproxy']['type'] = '1.4' # 1.4 or 1.5
 default['haproxy']['ssl'] = 'off' # off, on, only - on/only works only with 1.5
 default['haproxy']['ctl'] = {}
