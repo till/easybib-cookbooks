@@ -21,6 +21,7 @@ AllCops:
     - 'logrotate/**/*'
     - 'virtualbox/**/*'
     - 'vagrant/**/*'
+    - 'vendor/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
