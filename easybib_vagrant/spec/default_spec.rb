@@ -17,15 +17,13 @@ describe 'easybib_vagrant' do
       Dir.stub(:home) { '/root' }
     end
 
-    it 'creates configuration files for the user' do
-
-      expect(chef_run).not_to render_file('/root/.ssh/config')
-      expect(chef_run).to render_file('/root/.config/easybib/vagrantdefault.yml')
-      expect(chef_run).to render_file('/root/.vagrant.d/Vagrantfile')
-
+    it 'creates directories for the user' do
       expect(chef_run).to create_directory('/root/.ssh')
       expect(chef_run).to create_directory('/root/.config/easybib')
       expect(chef_run).to create_directory('/root/.vagrant.d')
+
+      expect(chef_run).to include_recipe('easybib_vagrant::cookbooks')
+      expect(chef_run).to include_recipe('easybib_vagrant::configure')
     end
   end
 
@@ -42,8 +40,8 @@ describe 'easybib_vagrant' do
       }
     end
 
-    it 'renders the /home/vagrantci/.ssh/config' do
-      expect(chef_run).to render_file('/home/vagrantci/.ssh/config')
+    it 'creates directories in /home/vagrantci/' do
+      expect(chef_run).to create_directory('/home/vagrantci/.vagrant.d')
     end
   end
 end
