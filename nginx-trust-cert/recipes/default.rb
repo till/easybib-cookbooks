@@ -1,5 +1,5 @@
 # copy the nginx ssl cert to the ca cert folder
-remote_file 'Copy certificate' do 
+remote_file 'Copy certificate' do
   path   '/usr/share/ca-certificates/nginx.crt'
   source 'file:///etc/nginx/ssl/cert.pem'
   owner  'root'
