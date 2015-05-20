@@ -17,7 +17,7 @@ describe 'easybib_vagrant' do
       node.set['easybib_vagrant']['plugin_config']['bib-vagrant']['cookbook_path'] = 'tmp/foo'
       node.set['easybib_vagrant']['environment']['user'] = 'vagrantci'
 
-      Dir.stub(:home) { '/home/vagrantci ' }
+      Dir.stub(:home) { '/home/vagrantci' }
     end
 
     it 'syncs the cookbooks to /home/vagrantci/tmp/foo' do
