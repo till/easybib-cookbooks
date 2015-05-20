@@ -1,14 +1,10 @@
-name              'ops'
+name              'easybib_vagrant'
 maintainer        'Till Klampaeckel'
 maintainer_email  'till@php.net'
 license           'BSD License'
-description       'ops infrastructure roles'
+description       'See README.md'
 version           '0.1'
 
 supports 'ubuntu'
 
 depends 'easybib'
-depends 'easybib_vagrant'
-depends 'supervisor'
-depends 'vagrant'
-depends 'virtualbox'
