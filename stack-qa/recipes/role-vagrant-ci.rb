@@ -53,6 +53,14 @@ node['deploy'].each do |app, deploy|
     )
   end
 
+  # ensure the user has access to the cookbooks used by the server
+  group "Add #{deploy_user_name} to 'aws'" do
+    append true
+    group_name 'aws'
+    members [deploy_user_name]
+    action :manage
+  end
+
 end
 
 node['stack-qa'][deploy_role]['plugins'].each do |plugin|
