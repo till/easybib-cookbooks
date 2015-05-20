@@ -8,7 +8,7 @@ node['deploy'].each do |app, deploy|
   next unless allow_deploy(app, deployable_apps, deploy_role)
   node.default['deploy'][app]['user'] = deploy_user_name
   node.default['deploy'][app]['group'] = deploy_user_name
-  node.default['deploy'][app]['home'] = ::Dir.home(deploy_user_name)
+  node.default['deploy'][app]['home'] = Dir.home(deploy_user_name)
 end
 
 execute 'fix-home-dir' do
