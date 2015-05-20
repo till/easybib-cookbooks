@@ -42,5 +42,11 @@ describe 'easybib_vagrant' do
     it 'renders the /home/vagrantci/.ssh/config' do
       expect(chef_run).to render_file('/home/vagrantci/.ssh/config')
     end
+
+    it 'renders the correct cookbook path in vagrantdefault.yml' do
+      expect(chef_run).to render_file('/home/vagrantci/.config/easybib/vagrantdefault.yml').with_content(
+        include('cookbook_path: /home/vagrantci/easybib-cookbooks')
+      )
+    end
   end
 end

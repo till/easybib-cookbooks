@@ -1,4 +1,5 @@
 Chef::Resource.send(:include, EasyBib)
+Chef::Recipe.send(:include, EasyBibVagrant::Helpers)
 
 vagrant_user = node['easybib_vagrant']['environment']
 home_dir = ::Dir.home(vagrant_user['user'])
