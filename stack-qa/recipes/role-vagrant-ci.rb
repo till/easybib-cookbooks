@@ -57,13 +57,11 @@ end
 
 node['stack-qa'][deploy_role]['plugins'].each do |plugin|
   execute "Install plugin: #{plugin}" do
+    action :run
     command "vagrant plugin install #{plugin}"
     user deploy_user_name
     group deploy_user_name
     environment('HOME' => "/home/#{deploy_user_name}",
                 'USER' => deploy_user_name)
-  end
-  vagrant_plugin plugin do
-    action :install
   end
 end
