@@ -1,0 +1,35 @@
+{
+  "name": "vagrant",
+  "version": "0.2.2",
+  "description": "Installs/Configures vagrant",
+  "long_description": "",
+  "maintainer": "Joshua Timberman",
+  "maintainer_email": "cookbooks@housepub.org",
+  "license": "Apache 2.0",
+  "platforms": {
+    "debian": ">= 6.0",
+    "ubuntu": ">= 12.04",
+    "redhat": ">= 6.3",
+    "centos": ">= 6.4"
+  },
+  "dependencies": {
+    "dmg": ">= 0.0.0",
+    "windows": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}
