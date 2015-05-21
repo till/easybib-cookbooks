@@ -42,4 +42,20 @@ if get_instance_roles.include?(deploy_role)
   }
 
   include_recipe 'easybib_vagrant'
+
+  # install public key to please keychain
+  public_key = node['stack-qa'][deploy_role]['public_key']
+  file "#{Dir.home(deploy_user_name)}/.ssh/id_dsa.pub" do
+    content public_key
+    mode 0644
+    not_if do
+      public_key.nil?
+    end
+  end
+
+  node.default['bash']['environment'] = {
+    'user' => deploy_user_name,
+    'group' => deploy_user_name
+  }
+  include_recipe 'bash::profile'
 end
