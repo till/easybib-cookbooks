@@ -9,7 +9,3 @@ include_recipe 'composer::configure'
 
 include_recipe 'nginx-app::configure'
 include_recipe 'easybib-deploy::satis'
-
-if is_aws
-  include_recipe 'newrelic' if node['easybib_deploy']['use_newrelic'] == 'yes'
-end
