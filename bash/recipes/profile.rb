@@ -1,3 +1,4 @@
+Chef::Log.info('No deploy user found. Skipping!') if node['bash']['environment']['user'].nil?
 return if node['bash']['environment']['user'].nil?
 
 include_recipe 'keychain'
