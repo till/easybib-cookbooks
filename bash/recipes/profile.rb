@@ -2,7 +2,8 @@ return if node['bash']['environment']['user'].nil?
 
 home_dir = Dir.home(node['bash']['environment']['user'])
 
-profile_file = "/usr/bin/keychain ##{home_dir}/.ssh/id_dsa"
+profile_file = "/usr/bin/keychain #{home_dir}/.ssh/id_dsa"
+profile_file << "\n"
 profile_file << "source #{home_dir}/.keychain/$HOSTNAME-sh"
 
 file "#{home_dir}/.bash_profile" do
