@@ -7,8 +7,10 @@ version           '0.1'
 
 supports 'ubuntu'
 
+depends 'bash'
 depends 'easybib'
 depends 'easybib_vagrant'
+depends 'keychain'
 depends 'supervisor'
 depends 'vagrant'
 depends 'virtualbox'
