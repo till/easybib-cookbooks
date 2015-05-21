@@ -1,24 +1,18 @@
-deploy_user = get_deploy_user
+deploy_user = node['composer']['environment']
 
-# this is an assumption, so sue me
-if deploy_user.is_a?(Hash)
-  case deploy_user['user']
-  when 'root'
-    home_dir = '/root'
-  when 'www-data'
-    home_dir = '/var/www'
-  else
-    home_dir = "/home/#{deploy_user['user']}"
-  end
-end
+Chef::Log.info("HELLO #{deploy_user['user']}")
+
+return if deploy_user['user'].nil?
+
+home_dir = Dir.home(deploy_user['user'])
 
 directory "#{home_dir}/.composer" do
   owner     deploy_user[:user]
   group     deploy_user[:group]
   mode      '0750'
   recursive true
-  only_if do
-    ::EasyBib.is_aws(node)
+  not_if do
+    node['composer']['oauth_key'].nil?
   end
 end
 
@@ -30,7 +24,7 @@ template "#{home_dir}/.composer/config.json" do
   variables(
     :oauth_key => node['composer']['oauth_key']
   )
-  only_if do
-    ::EasyBib.is_aws(node) && !node['composer']['oauth_key'].nil?
+  not_if do
+    node['composer']['oauth_key'].nil?
   end
 end
