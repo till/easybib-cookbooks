@@ -4,7 +4,10 @@ include_recipe 'php-fpm::ohai'
 include_recipe 'php-phar'
 include_recipe 'php-suhosin'
 include_recipe 'php-zlib'
+
+node.set['composer']['environment'] = get_deploy_user
 include_recipe 'composer::configure'
+
 include_recipe 'supervisor'
 
 if node['easybib_deploy']['provide_pear']
