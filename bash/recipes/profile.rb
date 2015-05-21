@@ -1,5 +1,7 @@
 return if node['bash']['environment']['user'].nil?
 
+include_recipe 'keychain'
+
 home_dir = Dir.home(node['bash']['environment']['user'])
 
 profile_file = "/usr/bin/keychain #{home_dir}/.ssh/id_dsa"

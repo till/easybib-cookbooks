@@ -43,8 +43,6 @@ if get_instance_roles.include?(deploy_role)
 
   include_recipe 'easybib_vagrant'
 
-  include_recipe 'keychain'
-
   # install public key to please keychain
   public_key = node['stack-qa'][deploy_role]['public_key']
   file "#{Dir.home(deploy_user_name)}/.ssh/id_dsa.pub" do
