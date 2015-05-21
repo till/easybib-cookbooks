@@ -1,5 +1,6 @@
 deploy_user = node['composer']['environment']
 
+Chef::Log.info('No deploy user found. Skipping!') if deploy_user['user'].nil?
 return if deploy_user['user'].nil?
 
 home_dir = Dir.home(deploy_user['user'])
