@@ -4,6 +4,8 @@ check system <%= @hostname %>
     
 check filesystem rootfs with path /
     if space usage > 80% for 5 times within 15 cycles then alert
+    if inode usage > 90% then alert
 
 check filesystem mnt with path /mnt
     if space usage > 80% for 5 times within 15 cycles then alert
+    if inode usage > 90% then alert
