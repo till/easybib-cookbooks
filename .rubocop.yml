@@ -19,6 +19,9 @@ AllCops:
     - 'sinopia/**/*'
     - 'nodejs/**/*'
     - 'logrotate/**/*'
+    - 'virtualbox/**/*'
+    - 'vagrant/**/*'
+    - 'vendor/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false

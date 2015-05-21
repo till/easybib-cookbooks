@@ -1,0 +1,41 @@
+{
+  "name": "virtualbox",
+  "description": "Installs virtualbox",
+  "long_description": "Description\n===========\n\nInstalls Virtualbox on OS X, Debian/Ubuntu or Windows.\n\nChanges\n=======\n\n## v1.0.3\n\n* Update `yum` dependency to version 3\n\n## v1.0.2\n\n* Changed libshadow-ruby18 dependency to ruby-shadow gem\n* Changed phpVirtualBox password to use \"rawpassword\" value from data bag\n* Added attribute: node['virtualbox']['webportal']['enable-apache2-default-site']\n* Fixed config.php installation directory to use node['virtualbox']['webportal']['installdir']\n\n## v1.0.1\n\n* Update install source for phpvirtualbox.\n\n## v1.0\n\n* Use platform_family attribute to expand platform support.\n* Use Oracle's VirtualBox package repositories for Debian / RHEL, and\n  the Opscode apt/yum cookbook resources accordingly.\n* Add Vbox::Helpers module in libraries/.\n* Add additional platforms supported\n* Add dependencies on required per-platform cookbooks (required for\n Chef 11's chef-solo).\n\n## v0.7.2:\n\n* Update OS X installer to use new pkg format - thanks josephholsten.\n\n## v0.7.0:\n\n* Add Windows support\n* No more \"open source edition\" - extension pack must now be downloaded\n  separately from Oracle.\n* Optionally install PHP web porta.\n\n## v0.6.0:\n\n* Install via Sun's package archive in Ubuntu\n* Optionally install open-source edition from the Ubuntu repository\n* Tested in Ubuntu 11.04\n\n## v0.5.0:\n\n* initial version, tested on OSX only\n\nRequirements\n============\n\nRequires Chef version 0.10.10+ and Ohai 0.6.10 for `platform_family`\nattribute.\n\n## Platform:\n\n* Mac OS X\n* Ubuntu and Debian, 64 bit (amd64/x86\\_64)\n* RHEL/CentOS (tested on 6.3)\n* Windows\n\nOther related platform family distributions may work.\n\n## Cookbooks\n\nYou'll also need the respective package manager cookbook for your platform:\n\n* dmg (for OS X installation)\n* apt (for Debian family)\n* yum (for RHEL family)\n* windows (for Windows installation)\n\nThese are dependencies to ensure that the recipes work when using Chef\nSolo, and because it's the right thing to do.\n\nAttributes\n==========\n\n* `node['virtualbox']['url']` - URL to the VirtualBox download file.\n  Used on Windows and OS X only to the \".exe\" or \".dmg,\" respectively.\n* `node['virtualbox']['version']` - Version of VirtualBox package to\n  install. On Windows, this is automatically detected with the\n  Vbox::Helpers module as the three-dotted version (e.g., 4.2.8). On\n  Debian and RHEL platforms, this is the version suffix for the\n  package to ensure that the correct version from the Virtualbox\n  repository is installed (e.g., 4.2).\n\nDeprecated/unused attributes:\n\n* `node['virtualbox']['urlbase']` - This is automatically\n  used/calculated in the Vbox::Helpers module and not used elsewhere.\n* `node['virtualbox']['arch']` - This was used for architecture\n  specific packages for Linux distributions, which is deprecated in\n  favor of the package repository.\n* `node['virtualbox']['open_source_edition']` - This was not used in\n  any recipe / template in this cookbook and has been removed.\n\nRecipes\n=======\n\n# default\n\nThis recipe will install VirtualBox for supported platforms. On\nWindows and OS X, the file specified by the url attribute (see above)\nwill be downloaded and installed. On Linux (Debian and RHEL families\nare supported), the appropriate OS package repository will be added\n(apt or yum, respectively), along with Oracle's VirtualBox package\nsigning key, and the package installed from the repository. The\npackages seem to handle all the kernel module recompilation, so this\nrecipe doesn't handle that.\n\n# Other recipes\n\n## user\n\nCreates a user to run the system service and web service as.  This recipe\nis implicitly included in the \"webservice\", \"webportal\", and \"systemservice\"\nrecipes.\n\n#### Attributes:\n\n* `node['virtualbox']['user']` - User name to create.  Defaults to `virtualbox`.\n* `node['virtualbox']['group']` - Group for user.  Defaults to `vboxusers`.\n\n#### Databags:\n\n* `passwords/virtualbox-user` - Must contain a \"password\" attribute which sets\n  the password for the VirtualBox user.\n\nA sample data bag looks like:\n    {\n      \"id\" : \"virtualbox-user\",\n      \"password\" : \"virtualbox\"\n    }\n\n## systemservice\n\nCreates a system service that will run virtual machines at startup.  Add UIDs of\nany machines you want started to /etc/virtualbox/machines_enabled.\n\n## webservice\n\nInstalls a web service which allows remote control of VirtualBox.  This is\nimplicity included in the \"webportal\" recipe.  Note that the webservice is\ninstalled with no authentication, so make sure you have a firewall set up\nor that you are on a trusted network!\n\n## webportal\n\nInstalls apache2 and a [phpvirtualbox](http://sourceforge.net/projects/phpvirtualbox/)\nto provide a web console to manage VirtualBox.  Note by default phpvirtualbox is\ninstalled to /var/www.  For the default install, it is recommended that you set\n`node['apache']['default_site_enabled']` to true, but you can also create your own\nsite for phpvirtualbox if you don't want to use the default site.\n\n#### Attributes:\n\n* `node['virtualbox']['webportal']['installdir']` - Directory to install phpvirtualbox to.\n  Defaults to /var/www.\n\n\nHelper Library\n==============\n\nThe Vbox::Helpers module includes two methods.\n\n* `vbox_sha256sum` - Given an absolute URL to the VirtualBox download\n  file (.exe or .dmg), the SHA256 checksum will be retrieved from the\n  VirtualBox site. This assumes the default URLs from virtualbox.org's\n  download site, and may be quite brittle if you're hosting your own\n  packages.\n\n* `vbox_version` - Given an absolute URL to the download file, the\n  version is calculated. This is used on Windows systems because the\n  \"package\" name in Windows includes the version.\n\nUsage\n=====\n\nInclude the virtualbox default recipe in a role run list. If you want\nto install from a different source URL, provide it with the url\nattribute and the version if the Vbox::Helpers library cannot determine\nit, such as:\n\n    name \"role_for_vbox\"\n    default_attributes(\n      \"virtualbox\" => {\n        \"url\" => \"http://url.to/your/vbox.pkg\",\n        \"version\" => \"4.2\"\n      })\n    run_list(\"recipe[virtualbox]\")\n\nContributions\n=============\n\nThe source for this cookbook is hosted on\n[GitHub](https://github.com/peplin/virtualbox-cookbook). If you have any issues\nwith this cookbook, please follow up there.\n\nLicense and Author\n==================\n\n* Author: Joshua Timberman <cookbooks@housepub.org>\n* Author: Ringo De Smet\n* Author: Chris Peplin\n* Author: Eric G. Wolfe <eric.wolfe@gmail.com>\n\n* Copyright 2011-2013, Joshua Timberman <cookbooks@housepub.org>\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\n",
+  "maintainer": "Bradley D Smith",
+  "maintainer_email": "bradleydsmith@gmail.com",
+  "license": "Apache 2.0",
+  "platforms": {
+    "ubuntu": ">= 0.0.0",
+    "debian": ">= 0.0.0",
+    "centos": ">= 0.0.0",
+    "redhat": ">= 0.0.0",
+    "mac_os_x": ">= 0.0.0",
+    "windows": ">= 0.0.0",
+    "fedora": ">= 0.0.0"
+  },
+  "dependencies": {
+    "dmg": ">= 0.0.0",
+    "windows": ">= 0.0.0",
+    "apt": ">= 0.0.0",
+    "yum": "~> 3.1",
+    "apache2": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "1.0.3"
+}
