@@ -25,14 +25,6 @@ node['deploy'].each do |app, deploy|
     app app
     notifies :run, 'execute[fix-home-dir]', :immediately
   end
-
-  # ensure the user has access to the cookbooks used by the server
-  group "Add #{deploy['user']} to 'aws'" do
-    append true
-    group_name 'aws'
-    members [deploy['user']]
-    action :manage
-  end
 end
 
 if get_instance_roles.include?(deploy_role)
