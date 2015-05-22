@@ -1,4 +1,4 @@
-Chef::Resource.send(:include, PhpFm::Helper)
+Chef::Resource.send(:include, PhpFpm::Helper)
 
 include_recipe 'nginx-app::server'
 
