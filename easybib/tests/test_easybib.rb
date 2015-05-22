@@ -2,7 +2,6 @@ require 'test/unit'
 require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 
-# rubocop:disable ClassLength
 class TestEasyBib < Test::Unit::TestCase
   include EasyBib
 
