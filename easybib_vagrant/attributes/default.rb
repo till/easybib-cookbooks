@@ -13,7 +13,8 @@ default['easybib_vagrant']['plugin_config'] = {
     'chef_log_level' => 'error',
     'cookbook_path' => 'easybib-cookbooks', # relative to the user's HOME
     'use_nfs' => false,
-    'virtualbox_gui' => false
+    'virtualbox_gui' => false,
+    'composer_github_token' => nil
   }
 }
 
