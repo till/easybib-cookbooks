@@ -2,7 +2,7 @@ default['hhvm-fcgi'] = {}
 
 default['hhvm-fcgi']['build'] = '' # -nightly, -dbg
 
-if ::EasyBib.use_aptly_mirror?(node)
+if ::EasyBib::Ppa.use_aptly_mirror?(node)
   default['hhvm-fcgi']['apt']['repo'] = 'http://ppa.ezbib.com/trusty55'
 else
   default['hhvm-fcgi']['apt'] = {
