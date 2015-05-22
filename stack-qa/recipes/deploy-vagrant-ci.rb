@@ -37,7 +37,10 @@ node.default['easybib_vagrant']['environment'] = {
 }
 
 # inject personal access token into vagrantdefault.yml
-if node['easybib_vagrant']['plugin_config']['bib-vagrant']['composer_github_token'].nil?
+if node
+   .fetch('easybib_vagrant', {})
+   .fetch('plugin_config', nil)
+   .fetch('bib-vagrant', nil)['composer_github_token'].nil?
   node.default['easybib_vagrant']['plugin_config']['bib-vagrant']['composer_github_token'] = node['composer']['oauth_key']
 end
 include_recipe 'easybib_vagrant'
