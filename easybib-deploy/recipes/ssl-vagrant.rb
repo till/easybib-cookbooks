@@ -48,7 +48,7 @@ unless node.fetch('vagrant', {})['ssl'].nil?
     )
     notifies :restart, 'service[nginx]'
   end
-  
+
   # copy the nginx ssl cert to the ca cert folder
   remote_file 'Copy certificate' do
     path   '/usr/share/ca-certificates/nginx.crt'
