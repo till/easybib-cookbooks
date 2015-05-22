@@ -1,6 +1,8 @@
 include_recipe 'php-fpm::service'
 include_recipe 'nginx-app::service'
 
+Chef::Resource.send(:include, EasyBib::Php)
+
 node['deploy'].each do |application, deploy|
 
   case application
@@ -48,7 +50,7 @@ node['deploy'].each do |application, deploy|
     template "#{deploy['deploy_to']}/current/config/deployconfig.yml" do
       source 'empty.erb'
       mode   0644
-      variables :content => ::EasyBib.to_php_yaml(node['bibcd']['default'])
+      variables :content => to_php_yaml(node['bibcd']['default'])
     end
 
     node['bibcd']['apps'].each do |appname, config|

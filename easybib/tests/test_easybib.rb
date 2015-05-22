@@ -6,13 +6,6 @@ require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 class TestEasyBib < Test::Unit::TestCase
   include EasyBib
 
-  def test_to_php_json
-    assert_equal(
-      "--- \nBLA: \n",
-      to_php_yaml(Chef::Node::ImmutableMash.new(['BLA']))
-    )
-  end
-
   def test_use_aptly_mirror
     fake_node = Chef::Node.new
     assert_equal(
