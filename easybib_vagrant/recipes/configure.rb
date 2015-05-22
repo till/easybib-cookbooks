@@ -38,6 +38,9 @@ template "#{home_dir}/.ssh/config" do
   group vagrant_user['group']
   source 'ssh-config.erb'
   mode 0600
+  variables(
+    :is_opsworks => is_aws
+  )
   only_if do
     is_aws
   end
