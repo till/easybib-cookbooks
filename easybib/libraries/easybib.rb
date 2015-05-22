@@ -34,6 +34,7 @@ module EasyBib
 
   def allow_deploy(application, requested_application, requested_role = nil, node = self.node)
     unless is_aws(node)
+      Chef::Log.debug('We are not running in a cloud environment, skipping deploy.')
       return false
     end
 
