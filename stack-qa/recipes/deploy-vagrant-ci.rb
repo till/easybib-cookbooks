@@ -30,11 +30,16 @@ end
 
 return unless get_instance_roles.include?(deploy_role)
 
+# set username for plugins, etc.
 node.default['easybib_vagrant']['environment'] = {
   'user' => deploy_user_name,
   'group' => deploy_user_name
 }
 
+# inject personal access token into vagrantdefault.yml
+if node['easybib_vagrant']['plugin_config']['bib-vagrant']['cookbook_path'].nil?
+  node.set['easybib_vagrant']['plugin_config']['bib-vagrant']['composer_github_token'] = node['composer']['oauth_key']
+end
 include_recipe 'easybib_vagrant'
 
 # install public key to please keychain
