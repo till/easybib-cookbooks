@@ -12,7 +12,7 @@ describe 'stack-qa::role-vagrant-ci' do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
       :platform => 'Ubuntu',
-      :version => '12.04'
+      :version => '14.04'
     )
   end
 
