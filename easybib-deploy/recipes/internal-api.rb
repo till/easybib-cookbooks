@@ -43,10 +43,7 @@ node['deploy'].each do |application, deploy|
     doc_root deploy['document_root']
     access_log      'off'
     notifies :restart, 'service[nginx]', :delayed
-  end
-
-  service 'php-fpm' do
-    action :reload
+    notifies :reload, 'service[php-fpm]', :delayed
   end
 
 end
