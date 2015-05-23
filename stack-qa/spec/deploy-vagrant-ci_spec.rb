@@ -59,7 +59,7 @@ describe 'stack-qa::deploy-vagrant-ci' do
     end
 
     it "deploys 'testapp' on 'vagrant-ci'" do
-      #expect(Chef::Log).to receive(:debug).with("Deployed: #{app}")
+      # expect(Chef::Log).to receive(:debug).with("Deployed: #{app}")
     end
 
     it 'continues to setup vagrant, .ssh/config and .bash_profile' do
