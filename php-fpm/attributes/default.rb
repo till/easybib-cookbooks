@@ -23,4 +23,4 @@ default['php-fpm']['ini'] = {
 }
 
 default['php-fpm']['packages'] = 'php5-easybib,php5-easybib-mbstring,php5-easybib-memcache'
-default['php-fm']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:easybib/php55')
+default['php-fm']['ppa'] = ::EasyBib::Ppa.ppa_mirror(node, 'ppa:easybib/php55')

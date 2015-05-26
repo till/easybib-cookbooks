@@ -39,6 +39,8 @@ action :setup do
 
   default_router = get_default_router(node['nginx-app']['default_router'], new_resource.default_router, deploy_dir)
 
+  ::Chef::Resource.send(:include, PhpFpm::Helper)
+
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook 'nginx-app'
     source config_template
@@ -56,7 +58,7 @@ action :setup do
       :nginx_local_conf => nginx_local_conf,
       :default_router => default_router,
       :upstream_name => config_name,
-      :php_upstream => ::EasyBib.get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
+      :php_upstream => get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :env_conf => env_config,
       :health_check => health_check,
       :routes_enabled => routes_enabled,
