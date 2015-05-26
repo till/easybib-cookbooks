@@ -1,20 +1,30 @@
-package 'curl'
-package 'nodejs'
+#
+# Author:: Marius Ducea (marius@promethost.com)
+# Cookbook Name:: nodejs
+# Recipe:: npm
+#
+# Copyright 2010-2012, Promet Solutions
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-npm_bin = '/usr/bin/npm'
-
-remote_file "#{Chef::Config[:file_cache_path]}/install-npm.sh" do
-  source node['nodejs']['npm']['install_url']
-  mode '0755'
-  not_if do
-    File.exist?(npm_bin)
-  end
-end
-
-execute 'Install the latest npm' do
-  command "#{Chef::Config[:file_cache_path]}/install-npm.sh"
-  environment('clean' => 'no')
-  not_if do
-    File.exist?(npm_bin)
-  end
+case node['nodejs']['npm']['install_method']
+when 'embedded'
+  include_recipe 'nodejs::install'
+when 'source'
+  include_recipe 'nodejs::npm_from_source'
+when 'from_latest'
+  include_recipe 'nodejs::npm_from_latest'
+else
+  Chef::Log.error('No install method found for npm')
 end

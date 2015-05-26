@@ -32,13 +32,6 @@ node['vagrant']['applications'].each do |app_name, app_config|
     notifies :restart, 'service[nginx]', :delayed
   end
 
-  easybib_supervisor "#{app_name}_supervisor" do
-    supervisor_file "#{app_dir}/deploy/supervisor.json"
-    app_dir app_dir
-    app app_name
-    user node['php-fpm']['user']
-  end
-
   stackname = 'easybib'
 
   if %w(scholar feature_flags).include?(app_name)
@@ -50,4 +43,10 @@ node['vagrant']['applications'].each do |app_name, app_config|
     stackname stackname
   end
 
+  easybib_supervisor "#{app_name}_supervisor" do
+    supervisor_file "#{app_dir}/deploy/supervisor.json"
+    app_dir app_dir
+    app app_name
+    user node['php-fpm']['user']
+  end
 end

@@ -1,0 +1,4 @@
+.kitchen/
+.kitchen.local.yml
+*.lock
+.coverage

@@ -1,0 +1,104 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides: virtualbox_vms
+# Required-Start:    $local_fs $syslog $remote_fs
+# Required-Stop:     $local_fs $syslog $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Control VirtualBox Virtual Machine instances
+### END INIT INFO
+#
+# Version 2008051100 by Jochem Kossen <jochem.kossen@gmail.com>
+# http://farfewertoes.com
+#
+# Released in the public domain
+#
+# This file came with a README file containing the instructions on how
+# to use this script.
+#
+
+. /lib/lsb/init-functions
+
+# Are we running from init?
+run_by_init() {
+    ([ "$previous" ] && [ "$runlevel" ]) || [ "$runlevel" = S ]
+}
+
+################################################################################
+# INITIAL CONFIGURATION
+VBOXDIR="/etc/virtualbox"
+VM_USER="root"
+
+export PATH="${PATH:+$PATH:}/bin:/usr/bin:/usr/sbin:/sbin"
+
+if [ -f $VBOXDIR/config ]; then
+    . $VBOXDIR/config
+else
+    echo "ERROR: $VBOXDIR/config does not exist. Exiting."
+    exit 1
+fi
+
+SU="su $VM_USER -c"
+VBOXMANAGE="VBoxManage -nologo"
+
+################################################################################
+# FUNCTIONS
+
+# Check for running machines every few seconds; return when all machines are
+# down
+wait_for_closing_machines() {
+    RUNNING_MACHINES=`$SU "$VBOXMANAGE list runningvms" | wc -l`
+    if [ $RUNNING_MACHINES != 0 ]; then
+        sleep 5
+        wait_for_closing_machines
+    fi
+}
+
+################################################################################
+# RUN
+case "$1" in
+    start)
+        if [ -f /etc/virtualbox/machines_enabled ]; then
+            cat /etc/virtualbox/machines_enabled | while read VM; do
+                log_action_msg "Starting VM: $VM ..."
+                $SU "$VBOXMANAGE startvm \"$VM\" -type vrdp"
+            done
+        fi
+        ;;
+    stop)
+        # NOTE: this stops all running VM's. Not just the ones listed in the
+        # config
+        $SU "$VBOXMANAGE list runningvms" | while read VM; do
+	    VM=`echo $VM | cut -f1 -d ' ' -`
+            log_action_msg "Shutting down VM: $VM ..."
+            $SU "$VBOXMANAGE controlvm \"$VM\" savestate"
+        done
+
+        wait_for_closing_machines
+        ;;
+    start-vm)
+        log_action_msg "Starting VM: $2 ..."
+        $SU "$VBOXMANAGE startvm \"$2\" -type vrdp"
+        ;;
+    stop-vm)
+        log_action_msg "Stopping VM: $2 ..."
+        $SU "$VBOXMANAGE controlvm \"$2\" acpipowerbutton"
+        ;;
+    poweroff-vm)
+        log_action_msg "Powering off VM: $2 ..."
+        $SU "$VBOXMANAGE controlvm \"$2\" poweroff"
+        ;;
+    status)
+        log_action_msg "The following virtual machines are currently running:"
+        $SU "$VBOXMANAGE list runningvms" | while read VM; do
+            echo -n "$VM ("
+            echo -n `$SU "VBoxManage showvminfo $VM|grep Name:|sed -e 's/^Name:\s*//g'"`
+            echo ')'
+        done
+        ;;
+    *)
+        log_failure_msg "Usage: $0 {start|stop|status|start-vm <VM name>|stop-vm <VM name>|poweroff-vm <VM name>}"
+        exit 3
+esac
+
+exit 0

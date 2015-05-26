@@ -11,6 +11,8 @@ when '5.1'
   package 'percona-server-server-5.1'
 when '5.5'
   package 'percona-server-server-5.5'
+when '5.6'
+  package 'percona-server-server-5.6'
 else
   fail "Unknown version: #{node['percona']['version']}"
 end

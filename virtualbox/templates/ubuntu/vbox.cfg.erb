@@ -1,0 +1,51 @@
+# --pidfile, -P:         Name of the PID file which is created when the daemon was started.
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB                 |  --host, -H           |  The host to bind to (localhost)
+VBOXWEB_HOST=localhost
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_PORT            |  --port, -p           |  The port to bind to (18083).
+VBOXWEB_PORT=18083
+
+# This setting defines the user as which vboxwebsrv will run. This setting is mandatory.
+VBOXWEB_USER=<%= node[:virtualbox][:user] %>
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_TIMEOUT         |  --timeout, -t        |  Session timeout in seconds; 0 = disable timeouts (300).
+VBOXWEB_TIMEOUT=300
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_CHECK_INTERVAL  |  --check-interval, -i | Frequency of timeout checks in seconds (5).
+VBOXWEB_CHECK_INTERVAL=5
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_THREADS         |  --threads, -T        |  Maximum number of worker threads to run in parallel (100).
+VBOXWEB_THREADS=100
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_KEEPALIVE       |  --keepalive, -k      |  Maximum number of requests before a socket will be closed (100).
+VBOXWEB_KEEPALIVE=100
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_VERBOSE         |  --verbose, -v        |  Be verbose.
+VBOXWEB_VERBOSE=true
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_LOGFILE         |  --logfile, -F        |  Name of file to write log to (no file).
+VBOXWEB_LOGFILE=<%= node[:virtualbox][:webservice][:log][:location] %>/vboxwebsrv.log
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_LOGROTATE       |  --logrotate, -R      |  Number of log files (0 disables log rotation).
+VBOXWEB_LOGROTATE=<%= node[:virtualbox][:webservice][:log][:rotate] %>
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_LOGSIZE         |  --logsize, -S        |  Maximum size of a log file to trigger rotation (bytes).
+VBOXWEB_LOGSIZE=<%= node[:virtualbox][:webservice][:log][:size] %>
+
+# vboxweb-service env var || vboxwebsrv cli arg   || description
+# VBOXWEB_LOGINTERVAL     |  --loginterval, -I    |  Maximum time interval to trigger log rotation (seconds).
+VBOXWEB_LOGINTERVAL=<%= node[:virtualbox][:webservice][:log][:interval] %>
+
+# This option defines the location of the vboxwebsrv binary (/usr/lib/virtualbox by default).
+# INSTALL_DIR=VALUE

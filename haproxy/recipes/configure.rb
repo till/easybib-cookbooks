@@ -8,7 +8,7 @@ end
 
 node['haproxy']['errorloc'].each do |code, file|
   cookbook_file "/etc/haproxy/errors/#{file}" do
-    source file
+    source "#{node['haproxy']['templates_directory']}/#{file}"
     owner 'haproxy'
     group 'haproxy'
     mode 0644

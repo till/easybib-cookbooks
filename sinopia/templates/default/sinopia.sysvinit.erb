@@ -1,0 +1,117 @@
+#! /bin/sh
+#
+# sinopia service script
+#
+# chkconfig: 345 70 45
+# description: Sinopia NPM cache & private repo server
+# processname: sinopia
+#
+
+### BEGIN INIT INFO
+# Provides: sinopia
+# Required-Start: $local_fs $remote_fs
+# Required-Stop: $local_fs $remote_fs
+# Default-Start: 2 3 4 5
+# Default-Stop: S 0 1 6
+# Short-Description: Sinopia NPM cache & private repo server
+# Description: Sinopia NPM cache & private repo server
+### END INIT INFO
+
+# Define LSB functions.
+if [ -f /lib/lsb/init-functions ]; then
+  . /lib/lsb/init-functions
+fi
+
+if [ -f /etc/init.d/functions ]; then
+  . /etc/init.d/functions
+fi
+
+NAME=sinopia
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+DAEMON=/usr/bin/${NAME}
+DIR=/var/run/sinopia
+PID=/var/run/sinopia/sinopia_server.pid
+LOCK=/var/lock/subsys/$NAME
+USER=<%= node['sinopia']['user'] %>
+GROUP=<%= node['sinopia']['user'] %>
+
+# Exit if the package is not installed
+if [ ! -x "$DAEMON" ]; then
+  echo "Couldn't find $DAEMON"
+  exit 99
+fi
+
+[ -d "$DIR" ] || mkdir "$DIR"
+chown -R $USER:$GROUP "$DIR"
+
+start()
+{
+  runuser -l "$USER" -c "$DAEMON -c <%= File.join(node['sinopia']['confdir'], 'config.yaml') %> &" && echo_success || echo_failure
+  RETVAL=$?
+  sleep 1
+  [ $RETVAL -eq 0 ] && touch $LOCK
+  ps -aefw | grep "$NAME" | grep -v " grep " | awk '{print $2}' > $PID
+  return $RETVAL
+}
+
+stop()
+{
+  killproc -p $PID
+  RETVAL="$?"
+  [ $RETVAL -eq 0 ] && rm -f $PID $LOCK
+  return "$RETVAL"
+}
+
+case "$1" in
+  start)
+    start
+    if [ "$?" -gt 0 ];
+    then
+      log_failure_msg "$NAME did not start"
+    else
+      log_success_msg "$NAME started"
+    fi
+    ;;
+  stop)
+    stop
+    if [ "$?" -gt 0 ];
+    then
+      log_failure_msg "$NAME did not stop"
+    else
+      log_success_msg "$NAME stopped"
+    fi
+    ;;
+  restart)
+    stop
+    if [ "$?" -gt 0 ];
+    then
+      log_failure_msg "$NAME did not stop"
+    else
+      sleep 5
+      start
+      if [ "$?" -gt 0 ];
+      then
+        log_failure_msg "$NAME did not start"
+      else
+        log_success_msg "$NAME restarted"
+      fi
+    fi
+    ;;
+  status)
+    PID_NUM=$(pidofproc -p $PID)
+    if [ "$?" -gt 0 ];
+    then
+      log_failure_msg "$NAME is not running"
+      exit 1
+    else
+      log_success_msg "$NAME is running ($PID_NUM)"
+      exit 0
+    fi
+    ;;
+  *)
+    echo "Usage: $NAME {start|stop|restart|status}" >&2
+    exit 3
+    ;;
+esac
+
+exit 0

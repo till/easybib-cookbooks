@@ -103,12 +103,12 @@ module EasyBib
       return node['opsworks']['deploy_user']
     end
 
-    ::Chef::Log.debug('Unknown environment. (get_deploy_user)')
+    ::Chef::Log.info('Unknown environment. (get_deploy_user)')
 
     {
-      'home' => '',
-      'group' => '',
-      'user' => ''
+      'home' => nil,
+      'group' => nil,
+      'user' => nil
     }
   end
 
