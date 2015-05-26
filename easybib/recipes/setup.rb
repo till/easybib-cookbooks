@@ -9,7 +9,8 @@ base_packages.each do |p|
   package p
 end
 
-chef_gem 'BibOpsworks' do
+chef_gem 'Remove: BibOpsworks' do
+  package_name 'BibOpsworks'
   action :remove
   only_if do
     ::EasyBib.is_aws(node)
@@ -17,7 +18,8 @@ chef_gem 'BibOpsworks' do
   ignore_failure true
 end
 
-chef_gem 'BibOpsworks' do
+chef_gem 'Update: BibOpsworks' do
+  package_name 'BibOpsworks'
   action :upgrade
   only_if do
     ::EasyBib.is_aws(node)
