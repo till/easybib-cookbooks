@@ -11,7 +11,7 @@ describe 'stack-qa::deploy-vagrant-ci' do
   let(:runner) do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
-      :platform => 'Ubuntu',
+      :platform => 'ubuntu',
       :version => '14.04'
     )
   end
