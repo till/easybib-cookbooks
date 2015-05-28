@@ -3,7 +3,7 @@
 apt| [2.5.3](https://github.com/opscode-cookbooks/apt/tree/v2.5.3) | added apt::easybib, apt::mirror.rb, apt::ppa, apt::proxy, apt::repair.rb, apt::updater.rb
 build-essential| [2.0.2](https://github.com/opscode-cookbooks/build-essential/tree/v2.0.2) |
 chef_handler| [1.1.6](https://github.com/opscode-cookbooks/chef_handler/tree/v1.1.6) |
-chef_handler_sns| [1.0.0](https://github.com/onddo/chef_handler_sns-cookbook/tree/1.0.0) |
+chef_handler_sns| [1.0.0](https://github.com/onddo/chef_handler_sns-cookbook/tree/1.0.0) | Added custom body_template
 cron| [1.3.12](https://github.com/opscode-cookbooks/cron/tree/v1.3.12) |  - We are using 1.3.0, with a backported libraries/matchers.rb from 1.3.12
 erlang | [1.5.6](https://github.com/opscode-cookbooks/erlang/commit/2af91e4650c1411fbf8e44626b1a548f777926c4) | ignored in our cs/test setup
 fail2ban | 2.2.1 | removed yum dependencies, adapted to our rubocop scheme, changed attributes/default.rb
