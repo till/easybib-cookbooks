@@ -17,4 +17,15 @@
 # limitations under the License.
 #
 
-chef_handler_sns node['chef_handler_sns']['topic_arn']
+template_location = Chef::Config[:file_cache_path] + 'chef_handler_sns_template'
+
+cookbook_file template_location do
+  source 'body_template'
+  mode   '0644'
+  owner  'root'
+end
+
+
+chef_handler_sns node['chef_handler_sns']['topic_arn'] do
+  body_template template_location
+end
