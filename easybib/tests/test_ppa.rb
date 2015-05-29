@@ -1,0 +1,36 @@
+require 'test/unit'
+require 'chef'
+require File.join(File.dirname(__FILE__), '../libraries', 'ppa.rb')
+
+class TestEasyBib < Test::Unit::TestCase
+  include EasyBib::Ppa
+
+  def test_use_aptly_mirror
+    fake_node = Chef::Node.new
+    assert_equal(
+      false,
+      use_aptly_mirror?(fake_node)
+    )
+    fake_node = Chef::Node.new
+    fake_node.set['lsb']['codename'] = 'precise'
+    fake_node.set['apt']['enable_trusty_mirror'] = true
+    assert_equal(
+      false,
+      use_aptly_mirror?(fake_node)
+    )
+    fake_node = Chef::Node.new
+    fake_node.set['lsb']['codename'] = 'trusty'
+    fake_node.set['apt']['enable_trusty_mirror'] = false
+    assert_equal(
+      false,
+      use_aptly_mirror?(fake_node)
+    )
+    fake_node = Chef::Node.new
+    fake_node.set['lsb']['codename'] = 'trusty'
+    fake_node.set['apt']['enable_trusty_mirror'] = true
+    assert_equal(
+      true,
+      use_aptly_mirror?(fake_node)
+    )
+  end
+end

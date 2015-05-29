@@ -1,13 +1,17 @@
 require 'yaml'
 
 action :add do
-  unless ::File.exist?("#{new_resource.path}/config/apps/#{new_resource.app_name}.yml")
-    Chef::Log.info "Adding #{new_resource.app_name} config to #{new_resource.path}/config/apps/#{new_resource.app_name}.yml"
 
-    template "#{new_resource.path}/config/apps/#{new_resource.app_name}.yml" do
-      cookbook 'bibcd' # if we dont set this, the template cmd would search in the calling cookbook
+  yml_file = "#{new_resource.path}/config/apps/#{new_resource.app_name}.yml"
+
+  unless ::File.exist?(yml_file)
+    Chef::Log.info "Adding #{new_resource.app_name} config to #{yml_file}"
+    Chef::Resource.send(:include, ::EasyBib::Php)
+
+    template yml_file do
+      cookbook 'bibcd'
       mode   0644
-      variables :content => ::EasyBib.to_php_yaml(new_resource.config.to_hash)
+      variables :content => to_php_yaml(new_resource.config.to_hash)
       source 'app.yml.erb'
     end
 

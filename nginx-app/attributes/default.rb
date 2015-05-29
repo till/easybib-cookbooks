@@ -6,7 +6,7 @@ default['nginx-app']['static_directories'] = %w(js css images raw)
 default['nginx-app']['config_dir']         = '/etc/nginx'
 default['nginx-app']['conf_file']          = 'easybib.com.conf.erb'
 default['nginx-app']['package-name'] = 'nginx'
-default['nginx-app']['ppa'] = ::EasyBib.ppa_mirror(node, 'ppa:easybib/remote-mirrors')
+default['nginx-app']['ppa'] = ::EasyBib::Ppa.ppa_mirror(node, 'ppa:easybib/remote-mirrors')
 default['nginx-app']['client_max_body_size'] = '5m'
 
 default['nginx-app']['extras'] = ''
