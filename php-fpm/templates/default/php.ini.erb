@@ -70,7 +70,7 @@ date.timezone = America/New_York
 define_syslog_variables  = Off
 
 [mail function]
-sendmail_path = /usr/sbin/sendmail -t -i
+sendmail_path = /usr/sbin/sendmail -t -i <%= @sendmail_params %>
 ;mail.force_extra_parameters =
 mail.add_x_header = On
 ;mail.log =
