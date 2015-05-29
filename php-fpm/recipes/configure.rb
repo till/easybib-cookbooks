@@ -84,7 +84,8 @@ template "#{etc_cli_dir}/#{conf_cli}" do
     :max_input_vars => node['php-fpm']['ini']['max-input-vars'],
     :logfile => node['php-fpm']['logfile'],
     :tmpdir => node['php-fpm']['tmpdir'],
-    :prefix => node['php-fpm']['prefix']
+    :prefix => node['php-fpm']['prefix'],
+    :sendmail_params => sendmail_params
   )
   owner node['php-fpm']['user']
   group node['php-fpm']['group']
