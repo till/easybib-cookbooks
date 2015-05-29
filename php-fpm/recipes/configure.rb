@@ -44,8 +44,13 @@ else
   display_errors = 'Off'
 end
 
-sendmail_params = nil
-sendmail_params = "-f '#{node['php-fpm']['mailsender']}'" unless node['php-fpm']['mailsender'].nil?
+if node['php-fpm']['mailsender'].nil?
+  Chef::Log.info('Not adding any sendmail params')
+  sendmail_params = nil
+else
+  sendmail_params = "-f '#{node['php-fpm']['mailsender']}'"
+  Chef::Log.info("Adding to php sendmail stmt: #{sendmail_params}")
+end
 
 template "#{etc_fpm_dir}/#{conf_fpm}" do
   mode     '0755'
