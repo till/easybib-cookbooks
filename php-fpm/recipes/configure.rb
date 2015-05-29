@@ -44,6 +44,14 @@ else
   display_errors = 'Off'
 end
 
+if node['php-fpm']['mailsender'].nil?
+  Chef::Log.info('Not adding any sendmail params')
+  sendmail_params = nil
+else
+  sendmail_params = "-f '#{node['php-fpm']['mailsender']}'"
+  Chef::Log.info("Adding to php sendmail stmt: #{sendmail_params}")
+end
+
 template "#{etc_fpm_dir}/#{conf_fpm}" do
   mode     '0755'
   source   'php.ini.erb'
@@ -56,7 +64,8 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
     :logfile => node['php-fpm']['logfile'],
     :error_log => 'syslog',
     :tmpdir => node['php-fpm']['tmpdir'],
-    :prefix => node['php-fpm']['prefix']
+    :prefix => node['php-fpm']['prefix'],
+    :sendmail_params => sendmail_params
   )
   owner    node['php-fpm']['user']
   group    node['php-fpm']['group']
@@ -75,7 +84,8 @@ template "#{etc_cli_dir}/#{conf_cli}" do
     :max_input_vars => node['php-fpm']['ini']['max-input-vars'],
     :logfile => node['php-fpm']['logfile'],
     :tmpdir => node['php-fpm']['tmpdir'],
-    :prefix => node['php-fpm']['prefix']
+    :prefix => node['php-fpm']['prefix'],
+    :sendmail_params => sendmail_params
   )
   owner node['php-fpm']['user']
   group node['php-fpm']['group']
