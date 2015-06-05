@@ -1,9 +1,5 @@
 include_recipe 'php-fpm::service'
 
-if node['xdebug']['version'] == 'latest'
-  xdebug_version = nil
-end
-
 package 'php5-easybib-xdebug' do
   action :install
 end
