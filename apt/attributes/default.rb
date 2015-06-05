@@ -1,6 +1,5 @@
 default['apt'] = {}
 default['apt']['easybib'] = {}
-default['apt']['easybib']['php'] = '5.5'
 default['apt']['easybib']['ppa'] = 'ppa:easybib/php55'
 default['apt']['upgrade-package'] = nil
 default['apt']['launchpad_api_version'] = '1.0'
