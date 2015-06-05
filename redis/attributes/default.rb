@@ -19,7 +19,7 @@ default['redis']['rdb'] = {
   'keys_changed' => 0
 }
 
-default['redis']['ppa'] = ::EasyBib::Ppa.ppa_mirror(node, 'ppa:chris-lea/redis-server')
+default['redis']['ppa'] = 'ppa:chris-lea/redis-server'
 
 # master-slave configuration, allow overriding from opsworks/upstream
 set_unless['redis']['master']             = {}
