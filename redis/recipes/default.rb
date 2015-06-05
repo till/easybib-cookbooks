@@ -1,7 +1,7 @@
 include_recipe 'aptly::gpg'
 
 apt_repository 'redis-ppa' do
-  uri           node['redis']['ppa']
+  uri           ::EasyBib::Ppa.ppa_mirror(node, node['redis']['ppa'])
   distribution  node['lsb']['codename']
   components    ['main']
 end
