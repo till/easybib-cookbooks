@@ -2,14 +2,6 @@ require 'chefspec'
 
 describe 'php-xdebug::default' do
 
-  let(:chef_run) do
-    ChefSpec::Runner.new do |node|
-      node.default['apt'] = {}
-      node.default.apt['easybib'] = {}
-      node.default.apt.easybib['php'] = '5.5'
-    end.converge(described_recipe)
-  end
-
   it 'creates xdebug-settings.ini' do
     expect(chef_run).to create_template('/opt/easybib/etc/php/xdebug-settings.ini')
   end
