@@ -23,8 +23,16 @@ template '/etc/haproxy/haproxy.cfg' do
   notifies :reload, 'service[haproxy]'
 end
 
-service 'haproxy' do
-  action [:enable, :start]
+if node['haproxy']['ssl'] == 'off'
+  service 'haproxy' do
+    action [:enable, :start]
+  end
+else
+  certificate = "#{node['ssl-deploy']['directory']}/cert.combined.pem"
+  service 'haproxy' do
+    action [:enable, :start]
+    subscribes :reload, "template[#{certificate}]"
+  end
 end
 
 execute "echo 'checking if HAProxy is not running - if so start it'" do
