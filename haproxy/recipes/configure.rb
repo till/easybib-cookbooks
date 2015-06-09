@@ -28,6 +28,9 @@ if node['haproxy']['ssl'] == 'off'
     action [:enable, :start]
   end
 else
+  # cert is generated in easybib-deploy::ssl-certificates - we can not notify
+  # there because during inital setup of lb haproxy is not there yet, so we
+  # subscribe from here.
   certificate = "#{node['ssl-deploy']['directory']}/cert.combined.pem"
   service 'haproxy' do
     action [:enable, :start]
