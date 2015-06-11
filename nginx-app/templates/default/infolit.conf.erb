@@ -1,6 +1,6 @@
 <%= render_upstream(@php_upstream, 'infolit') %>
 
-<% if node['opsworks'] -%>
+<% if ::EasyBib.is_aws(node) -%>
 
 server {
     listen 80 <%=@listen_opts%>;
@@ -16,7 +16,7 @@ server {
 
     ssl                       on;
     ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
-    ssl_certificate           /etc/nginx/ssl/cert.pem;
+    ssl_certificate           /etc/nginx/ssl/cert.combined.pem;
     ssl_certificate_key       /etc/nginx/ssl/cert.key;
     ssl_ciphers               HIGH:!RC4:!eNULL:!aNULL:!MD5@STRENGTH;
     ssl_prefer_server_ciphers on;

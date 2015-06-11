@@ -70,7 +70,7 @@ packages:
   <% if node['sinopia']['strict_access'] %>
     allow_access: admin <%= @admins.join(' ') %>
   <% else %>
-    allow_access: admin $authenticated
+    allow_access: admin $authenticated <%= @admins.join(' ') %>
   <% end %>
     allow_publish: admin $authenticated <%= @admins.join(' ') %>
     proxy: <%= node['sinopia']['mainrepo'] %>

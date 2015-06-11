@@ -1,5 +1,4 @@
 default['xdebug']            = {}
-default['xdebug']['version'] = nil
 
 default['xdebug']['config'] = {
   'scream'               => 1,
