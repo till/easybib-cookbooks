@@ -48,6 +48,7 @@ class TestEasyBib < Test::Unit::TestCase
     )
   end
 
+  # rubocop:disable Metrics/MethodLength
   def test_ppa_mirror
     fake_node = Chef::Node.new
     assert_equal(
@@ -84,4 +85,5 @@ class TestEasyBib < Test::Unit::TestCase
       ppa_mirror(fake_node, 'http://something.com')
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end
