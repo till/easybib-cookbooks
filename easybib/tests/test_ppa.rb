@@ -52,28 +52,28 @@ class TestEasyBib < Test::Unit::TestCase
     fake_node = Chef::Node.new
     assert_equal(
       'http://something.com',
-      ppa_mirror(fake_node,'http://something.com')
+      ppa_mirror(fake_node, 'http://something.com')
     )
     fake_node = Chef::Node.new
     fake_node.set['lsb']['codename'] = 'precise'
     fake_node.set['apt']['enable_ppa_mirror'] = true
     assert_equal(
       'http://something.com',
-      ppa_mirror(fake_node,'http://something.com')
+      ppa_mirror(fake_node, 'http://something.com')
     )
     fake_node = Chef::Node.new
     fake_node.set['lsb']['codename'] = 'trusty'
     fake_node.set['apt']['enable_ppa_mirror'] = false
     assert_equal(
       'http://something.com',
-      ppa_mirror(fake_node,'http://something.com')
+      ppa_mirror(fake_node, 'http://something.com')
     )
     fake_node = Chef::Node.new
     fake_node.set['lsb']['codename'] = 'trusty'
     fake_node.set['apt']['enable_ppa_mirror'] = true
     assert_equal(
       'http://ppa.ezbib.com/trusty55',
-      ppa_mirror(fake_node,'http://something.com')
+      ppa_mirror(fake_node, 'http://something.com')
     )
     fake_node = Chef::Node.new
     fake_node.set['lsb']['codename'] = 'trusty'
@@ -81,8 +81,7 @@ class TestEasyBib < Test::Unit::TestCase
     fake_node.set['apt']['ppa_mirror_version'] = '56'
     assert_equal(
       'http://ppa.ezbib.com/trusty56',
-      ppa_mirror(fake_node,'http://something.com')
+      ppa_mirror(fake_node, 'http://something.com')
     )
   end
-  
 end
