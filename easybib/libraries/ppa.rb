@@ -32,7 +32,7 @@ module EasyBib
       unless use_aptly_mirror?(node)
         return standard_repo
       end
-
+      distribution = node.fetch('lsb', {})['codename']
       repo_url(node, distribution)
     end
   end
