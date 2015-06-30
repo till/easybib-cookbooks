@@ -42,8 +42,9 @@ module EasyBib
       end
       Chef::Log.info("no env settings found - appname was #{appname}, stack #{stackname}") if settings.empty?
 
-      unless node.fetch('deploy', {}).fetch(appname, {})['database'].nil?
+      unless node.fetch('deploy', {}).fetch(appname, {}).fetch('database', {})['host'].nil?
         # add configuration from the RDS resource management in opsworks
+        Chef::Log.info('found configured rds resource, adding to envvars')
         dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
         settings.merge!(dbconfig)
       end
