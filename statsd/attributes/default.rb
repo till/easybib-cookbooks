@@ -12,9 +12,9 @@ default['librato']['metrics']['api_key'] = '123'
 default['librato']['metrics']['batch']   = 200
 
 default['statsd'] = {
-  'deploy_dir' => '/vagrant/statsd',
+  'deploy_dir' => '/opt/statsd',
   'repository' => 'git://github.com/easybiblabs/statsd.git',
   'branch' => 'deploy',
-  'user' => 'www-data',
-  'group' => 'www-data'
+  'user' => 'statsd',
+  'group' => 'statsd'
 }
