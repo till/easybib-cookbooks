@@ -28,5 +28,5 @@ git target_dir do
   user node['statsd']['user']
   group node['statsd']['group']
   not_if is_aws
-  notifies :install, "nodejs_npm[install deps]"
+  notifies :install, 'nodejs_npm[install deps]'
 end
