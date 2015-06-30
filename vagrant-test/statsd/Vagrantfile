@@ -1,0 +1,33 @@
+this_dir = File.dirname(__FILE__)
+lib_dir = File.dirname(this_dir)
+
+require "#{lib_dir}/vagrant-test-library"
+
+vagrant_test_config = get_json(lib_dir + '/setup.json')
+
+Vagrant::Config.run do |config|
+
+  bibconfig = Bib::Vagrant::Config.new
+  vagrantconfig = bibconfig.get
+
+  config.vm.boot_mode = vagrantconfig['gui']
+  config.vm.box = vagrant_test_config['box_file']
+
+  config.vm.network :hostonly, vagrant_test_config['box_ip']
+
+  config.vm.customize [
+    "modifyvm", :id,
+    "--name", vagrant_test_config['box_name']
+  ]
+
+  config.vm.provision :shell, :inline => "sudo apt-spy2 fix --launchpad --country=#{get_country} --commit"
+  config.vm.provision :shell, :inline => "sudo apt-get update -y"
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = "./../../"
+    chef.add_recipe "service::role-statsd"
+    #chef.json = get_json(this_dir + "/deploy.json")
+
+    chef.log_level = vagrantconfig['chef_log_level']
+  end
+end
