@@ -10,3 +10,11 @@ default['librato']['metrics']            = {}
 default['librato']['metrics']['email']   = 'foo@example.org'
 default['librato']['metrics']['api_key'] = '123'
 default['librato']['metrics']['batch']   = 200
+
+default['statsd'] = {
+  'deploy_dir' => '/opt/statsd',
+  'repository' => 'git://github.com/easybiblabs/statsd.git',
+  'branch' => 'deploy',
+  'user' => 'statsd',
+  'group' => 'statsd'
+}
