@@ -4,7 +4,7 @@ default['syslog']['logfiles']           = {
   '/var/log/php/slow.log' => 'notice',
   '/var/log/php/error.log' => 'error',
   '/var/log/php/fpm.log' => 'error',
-  '/var/log/supervisord/supervisord.log' => 'error'
+  '/var/log/supervisor/supervisord.log' => 'error'
 }
 
 default['syslog']['host']               = 'logs-01.loggly.com'
