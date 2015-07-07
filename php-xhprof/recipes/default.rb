@@ -1,3 +1,6 @@
+Chef::Log.info('This recipe is deprecated, please use `tideways::default`.')
+return
+
 include_recipe 'apt::easybib'
 
 # "graphviz"
