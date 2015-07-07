@@ -1,5 +1,4 @@
-Chef::Log.info('This recipe is deprecated, please use `tideways::default`.')
-return
+Chef::Log.error('This recipe is deprecated, please use `tideways::default`.')
 
 user 'qafoo' do
   system true
