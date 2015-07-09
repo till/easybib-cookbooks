@@ -52,6 +52,7 @@ describe 'easybib_supervisor' do
       end
     end
   end
+end
 
 def stub_supervisor_does_not_exist
   ::File.stub(:exist?).with(anything).and_call_original
