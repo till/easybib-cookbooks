@@ -53,7 +53,7 @@ describe 'easybib_supervisor' do
     end
   end
 
-let(:chef_run) { runner.converge('fixtures::easybib_supervisor_without_matching_role') }
+  let(:chef_run) { runner.converge('fixtures::easybib_supervisor_without_matching_role') }
 
   describe 'easybib_supervisor without matching role' do
     describe 'create' do
