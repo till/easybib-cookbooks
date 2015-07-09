@@ -11,7 +11,7 @@ action :create do
     new_resource.updated_by_last_action(updated)
     next
   end
-  
+
   unless ::EasyBib.has_role?(
     new_resource.instance_roles,
     supervisor_role

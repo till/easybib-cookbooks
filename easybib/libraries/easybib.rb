@@ -19,7 +19,7 @@ module EasyBib
 
     false
   end
-  
+
   def has_role?(instance_roles, role)
     if role.nil?
       return true

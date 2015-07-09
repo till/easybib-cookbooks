@@ -116,7 +116,7 @@ class TestEasyBib < Test::Unit::TestCase
       true
     )
   end
-  
+
   def test_has_role_no_role
     assert_equal(
       has_role?([], nil),
