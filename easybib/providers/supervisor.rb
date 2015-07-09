@@ -16,7 +16,7 @@ action :create do
     new_resource.instance_roles,
     supervisor_role
   )
-    Chef::Log.info('easybib_deploy - I did not install supervisor because instance does not have the #{supervisor_role} role')
+    Chef::Log.info("easybib_deploy - I did not install supervisor because instance does not have the #{supervisor_role} role in roles: #{instance_roles}")
     new_resource.updated_by_last_action(updated)
     next
   end
