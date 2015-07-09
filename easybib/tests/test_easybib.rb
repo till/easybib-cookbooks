@@ -2,6 +2,7 @@ require 'test/unit'
 require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 
+# rubocop:disable ClassLength
 class TestEasyBib < Test::Unit::TestCase
   include EasyBib
 
@@ -113,6 +114,27 @@ class TestEasyBib < Test::Unit::TestCase
   def test_deploy_crontab_all_roles
     assert_equal(
       deploy_crontab?(%w(role1 housekeeping), 'housekeeping'),
+      true
+    )
+  end
+
+  def test_has_role_no_role
+    assert_equal(
+      has_role?([], nil),
+      true
+    )
+  end
+
+  def test_has_role_wrong_role
+    assert_equal(
+      has_role?(%w(role1 role2), 'housekeeping'),
+      false
+    )
+  end
+
+  def test_has_role_right_role
+    assert_equal(
+      has_role?(%w(role1 housekeeping), 'housekeeping'),
       true
     )
   end
