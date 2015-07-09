@@ -52,6 +52,18 @@ describe 'easybib_supervisor' do
       end
     end
   end
+
+let(:chef_run) { runner.converge('fixtures::easybib_supervisor_without_matching_role') }
+
+  describe 'easybib_supervisor without matching role' do
+    describe 'create' do
+      before { stub_supervisor_with_two_services }
+
+      it 'does not proceed' do
+        expect(chef_run).not_to enable_supervisor_service('service1-some-app')
+      end
+    end
+  end
 end
 
 def stub_supervisor_does_not_exist
