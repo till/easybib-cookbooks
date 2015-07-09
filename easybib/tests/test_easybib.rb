@@ -116,6 +116,27 @@ class TestEasyBib < Test::Unit::TestCase
       true
     )
   end
+  
+  def test_has_role_no_role
+    assert_equal(
+      has_role?([], nil),
+      true
+    )
+  end
+
+  def test_has_role_wrong_role
+    assert_equal(
+      has_role?(%w(role1 role2), 'housekeeping'),
+      false
+    )
+  end
+
+  def test_has_role_right_role
+    assert_equal(
+      has_role?(%w(role1 housekeeping), 'housekeeping'),
+      true
+    )
+  end
 
   def test_normalized_cluster_name
     fake_node = Chef::Node.new

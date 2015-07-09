@@ -19,6 +19,18 @@ module EasyBib
 
     false
   end
+  
+  def has_role?(instance_roles, role)
+    if role.nil?
+      return true
+    end
+
+    if instance_roles.include?(role)
+      return true
+    end
+
+    false
+  end
 
   def has_env?(app, node = self.node)
     unless node.attribute?(app)
