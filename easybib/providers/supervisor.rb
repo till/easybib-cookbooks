@@ -3,6 +3,7 @@ action :create do
   app_dir = new_resource.app_dir
   supervisor_file = new_resource.supervisor_file
   supervisor_role = new_resource.supervisor_role
+  instance_roles = new_resource.instance_roles
   user = new_resource.user
 
   updated = false
@@ -13,7 +14,7 @@ action :create do
   end
 
   unless ::EasyBib.has_role?(
-    new_resource.instance_roles,
+    instance_roles,
     supervisor_role
   )
     Chef::Log.info("easybib_deploy - I did not install supervisor because instance does not have the #{supervisor_role} role in roles: #{instance_roles}")
