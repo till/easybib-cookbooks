@@ -4,5 +4,5 @@ easybib_supervisor 'some-app' do
   supervisor_file '/some_file'
   user 'some-user'
   supervisor_role 'housekeeping'
-  instance_roles ["role1", "housekeeping"]
+  instance_roles %w('role1', 'housekeeping')
 end
