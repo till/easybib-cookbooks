@@ -3,8 +3,10 @@ action :deploy do
   deploy_data = new_resource.deploy_data
   cronjob_role = new_resource.cronjob_role
   instance_roles = new_resource.instance_roles
+  supervisor_role = new_resource.supervisor_role
 
   cronjob_role = node['easybib_deploy']['cronjob_role'] if cronjob_role.nil?
+  supervisor_role = node['easybib_deploy']['supervisor_role'] if supervisor_role.nil?
   instance_roles = ::EasyBib.get_instance_roles(node) if instance_roles.empty?
 
   application_root_dir = "#{deploy_data['deploy_to']}/current"
@@ -43,6 +45,8 @@ action :deploy do
     app app
     app_dir application_root_dir
     user deploy_data['user']
+    supervisor_role supervisor_role
+    instance_roles instance_roles
   end
 
   easybib_gearmanw application_root_dir do

@@ -38,12 +38,12 @@ attribute :stopasgroup, :kind_of => [TrueClass,FalseClass], :default => nil
 attribute :killasgroup, :kind_of => [TrueClass,FalseClass], :default => nil
 attribute :user, :kind_of => [String, NilClass], :default => nil
 attribute :redirect_stderr, :kind_of => [TrueClass, FalseClass], :default => false
-attribute :stdout_logfile, :kind_of => String, :default => 'AUTO'
+attribute :stdout_logfile, :kind_of => String, :default => 'syslog'
 attribute :stdout_logfile_maxbytes, :kind_of => String, :default => '50MB'
 attribute :stdout_logfile_backups, :kind_of => Integer, :default => 10
 attribute :stdout_capture_maxbytes, :kind_of => String, :default => '0'
 attribute :stdout_events_enabled, :kind_of => [TrueClass, FalseClass], :default => false
-attribute :stderr_logfile, :kind_of => String, :default => 'AUTO'
+attribute :stderr_logfile, :kind_of => String, :default => 'syslog'
 attribute :stderr_logfile_maxbytes, :kind_of => String, :default => '50MB'
 attribute :stderr_logfile_backups, :kind_of => Integer, :default => 10
 attribute :stderr_capture_maxbytes, :kind_of => String, :default => '0'

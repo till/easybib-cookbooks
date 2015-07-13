@@ -2,11 +2,22 @@ action :create do
   app = new_resource.app
   app_dir = new_resource.app_dir
   supervisor_file = new_resource.supervisor_file
+  supervisor_role = new_resource.supervisor_role
+  instance_roles = new_resource.instance_roles
   user = new_resource.user
 
   updated = false
 
   unless ::File.exist?(supervisor_file)
+    new_resource.updated_by_last_action(updated)
+    next
+  end
+
+  unless ::EasyBib.has_role?(
+    instance_roles,
+    supervisor_role
+  )
+    Chef::Log.info("easybib_deploy - I did not install supervisor because instance does not have the #{supervisor_role} role in roles: #{instance_roles}")
     new_resource.updated_by_last_action(updated)
     next
   end
@@ -36,12 +47,12 @@ action :create do
       'killasgroup' => nil,
       'user' => user,
       'redirect_stderr' => false,
-      'stdout_logfile' => 'AUTO',
+      'stdout_logfile' => 'syslog',
       'stdout_logfile_maxbytes' => '50MB',
       'stdout_logfile_backups' => 10,
       'stdout_capture_maxbytes' => '0',
       'stdout_events_enabled' => false,
-      'stderr_logfile' => 'AUTO',
+      'stderr_logfile' => 'syslog',
       'stderr_logfile_maxbytes' => '50MB',
       'stderr_logfile_backups' => 10,
       'stderr_capture_maxbytes' => '0',

@@ -1,3 +1,5 @@
-# Qafoo Profiler
+# Deprecated!
+
+## Qafoo Profiler
 
 Setup recipe. :)
