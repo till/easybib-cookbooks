@@ -1,4 +1,4 @@
-apt_repository 'percona' do
+apt_repository 'tideways' do
   uri          node['tideways']['repository']
   arch         'amd64'
   distribution 'debian'
