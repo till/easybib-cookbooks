@@ -4,6 +4,7 @@ apt_repository 'tideways' do
   distribution 'debian'
   components   ['main']
   key          node['tideways']['key']
+  keyserver    node['tideways']['keyserver']
 end
 
 packages = ['tideways-php', 'tideways-daemon']
