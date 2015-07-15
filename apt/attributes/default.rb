@@ -1,5 +1,4 @@
 default['apt'] = {}
-default['apt']['php_mirror_version'] = '55'
 default['apt']['upgrade-package'] = nil
 default['apt']['launchpad_api_version'] = '1.0'
 default['apt']['cacher-client']['restrict_environment'] = false

@@ -7,7 +7,7 @@ module EasyBib
     end
 
     def enable_aptly_mirror?(node = self.node)
-      enable_ppa_mirror = node.fetch('apt', {}).fetch('enable_ppa_mirror', false)
+      enable_ppa_mirror = node.fetch('easybib', {}).fetch('enable_ppa_mirror', false)
       unless enable_ppa_mirror
         # enable trusty mirror is an old param, this check is for backwards compat
         enable_ppa_mirror = node.fetch('apt', {}).fetch('enable_trusty_mirror', false)
@@ -22,15 +22,15 @@ module EasyBib
 
     def php_launchpad_repo_url(node = self.node)
       prefix = 'ppa:easybib/php'
-      if node.fetch('apt', {})['php_mirror_version']
-        return prefix + node['apt']['php_mirror_version']
+      if node.fetch('easybib', {})['php_mirror_version']
+        return prefix + node['easybib']['php_mirror_version']
       end
       prefix + '55'
     end
 
     def php_mirror_repo_url(node = self.node)
       prefix = 'http://ppa.ezbib.com/mirrors/php'
-      prefix + node['apt']['php_mirror_version']
+      prefix + node['easybib']['php_mirror_version']
     end
 
     def ppa_mirror(node = self.node, standard_repo = 'easybib-php-ppa')
