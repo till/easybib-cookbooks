@@ -38,6 +38,7 @@ class TestEasyBib < Test::Unit::TestCase
 
   def test_php_mirror_repo_url
     fake_node = Chef::Node.new
+    fake_node.set['apt']['php_mirror_version'] = '55'
     assert_equal(
       'http://ppa.ezbib.com/mirrors/php55',
       php_mirror_repo_url(fake_node)
@@ -89,12 +90,14 @@ class TestEasyBib < Test::Unit::TestCase
 
   def test_php_ppa_mirror
     fake_node = Chef::Node.new
+    fake_node.set['apt']['php_mirror_version'] = '55'
     assert_equal(
       'ppa:easybib/php55',
       ppa_mirror(fake_node)
     )
     fake_node = Chef::Node.new
     fake_node.set['apt']['enable_ppa_mirror'] = false
+    fake_node.set['apt']['php_mirror_version'] = '55'
     assert_equal(
       'ppa:easybib/php55',
       ppa_mirror(fake_node, 'ppa:easybib/php55')
@@ -102,6 +105,7 @@ class TestEasyBib < Test::Unit::TestCase
     fake_node = Chef::Node.new
     fake_node.set['lsb']['codename'] = 'trusty'
     fake_node.set['apt']['enable_ppa_mirror'] = true
+    fake_node.set['apt']['php_mirror_version'] = '55'
     assert_equal(
       'http://ppa.ezbib.com/mirrors/php55',
       ppa_mirror(fake_node)
