@@ -13,8 +13,7 @@ action :create do
     variables(
       :pw => pw,
       :s3_mirror => s3_mirror,
-      :path => path,
-      :version => version
+      :path => path
     )
     action :create
   end
