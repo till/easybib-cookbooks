@@ -20,10 +20,10 @@ module EasyBib
       known_distributions.include?(distribution)
     end
 
-    def repo_url(node = self.node, distribution)
-      prefix = 'http://ppa.ezbib.com/' + distribution
-      if node.fetch('apt', {})['ppa_mirror_version']
-        return prefix + node['apt']['ppa_mirror_version']
+    def php_repo_url(node = self.node, distribution)
+      prefix = 'http://ppa.ezbib.com/mirrors/php'
+      if node.fetch('apt', {})['php_mirror_version']
+        return prefix + node['apt']['php_mirror_version']
       end
       prefix + '55'
     end
@@ -32,8 +32,10 @@ module EasyBib
       unless use_aptly_mirror?(node)
         return standard_repo
       end
-      distribution = node.fetch('lsb', {})['codename']
-      repo_url(node, distribution)
+      if (standard_repo == node['apt']['easybib']['ppa'])
+        return php_repo_url(node)
+      end
+      'http://ppa.ezbib.com/mirrors/remote-mirrors'
     end
   end
 end
