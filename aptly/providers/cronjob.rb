@@ -1,7 +1,7 @@
 action :create do
   path = new_resource.path
 
-  s3_mirror = "#{node['aptly']['s3_mirror']}:#{node['aptly']['s3_mirror_prefix']}#{version}"
+  s3_mirror = "#{node['aptly']['s3_mirror']}:#{node['aptly']['s3_mirror_prefix']}"
   pw = node['aptly']['sign_pass']
 
   template "#{path}/run.sh" do
