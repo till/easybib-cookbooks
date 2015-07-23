@@ -28,7 +28,7 @@ describe 'easybib_supervisor' do
         expect(chef_run).to create_file('/var/run/supervisor.sock').with(
           'user'  => 'root',
           'group'  => 'root',
-          'mode'   => '0755'
+          'mode'   => '755'
         )
       end
       it 'enables the first service' do
