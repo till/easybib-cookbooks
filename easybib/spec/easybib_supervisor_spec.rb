@@ -25,9 +25,8 @@ describe 'easybib_supervisor' do
       before { stub_supervisor_with_two_services }
 
       it 'has a world readable socket file' do
-        should contain_file('/var/run/supervisor.sock').with(
-          'ensure' => 'present',
-          'owner'  => 'root',
+        expect(chef_run).to create_template('/var/run/supervisor.sock').with(
+          'user'  => 'root',
           'group'  => 'root',
           'mode'   => '0755'
         )
