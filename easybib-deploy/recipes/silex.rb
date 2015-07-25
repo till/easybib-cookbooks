@@ -5,6 +5,7 @@ node['deploy'].each do |application, deploy|
   listen_opts = nil
   case application
   when 'api'
+    listen_opts = 'default_server'
     next unless allow_deploy(application, 'api', 'nginxphpapp')
   when 'discover_api'
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
@@ -13,7 +14,6 @@ node['deploy'].each do |application, deploy|
   when 'scholar_admin'
     next unless allow_deploy(application, 'scholar_admin', 'nginxphpapp')
   when 'id'
-    listen_opts = 'default_server'
     next unless allow_deploy(application, 'id', 'nginxphpapp')
   else
     Chef::Log.info("deploy::silex - #{application} skipped")
