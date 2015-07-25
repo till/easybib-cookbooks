@@ -1,5 +1,6 @@
 AllCops:
   Exclude:
+    - 'ark/**/*'
     - 'build-essential/**/*'
     - 'chef_handler/**/*'
     - 'chef_handler_sns/**/*'
