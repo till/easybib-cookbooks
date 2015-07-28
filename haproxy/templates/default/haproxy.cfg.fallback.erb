@@ -1,5 +1,10 @@
 listen application :80
   # configure a fake backend as long as there are no real ones
   # this way HAProxy will not fail on a config check
+
+  # if this fallback-config shows up in a new provisioned lb instance, please
+  # make sure that there is no unfinished configure event running on the instance
+  # before debugging this ;)
+
   balance roundrobin
   server localhost 127.0.0.1:8080 weight 1 maxconn 5 check

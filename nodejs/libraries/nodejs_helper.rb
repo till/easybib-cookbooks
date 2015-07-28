@@ -21,7 +21,12 @@ module NodeJs
       else
         cmd = Mixlib::ShellOut.new('npm list -global -json')
       end
-      JSON.parse(cmd.run_command.stdout, :max_nesting => false)
+      begin
+        JSON.parse(cmd.run_command.stdout, :max_nesting => false)
+      rescue Errno::ENOENT => err
+        Chef::Log.debug('npm call returned ENOENT, no npm installed')
+        return '{}'
+      end
     end
 
     def npm_package_installed?(package, version = nil, path = nil)

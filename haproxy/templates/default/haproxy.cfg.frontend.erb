@@ -25,7 +25,7 @@ frontend http-in
   <% if !@node['haproxy']['additional_layers'].nil?-%>
   #additional backends:
     <% @node['haproxy']['additional_layers'].each do |layername,layerconfig| -%>
-      <% if @node['opsworks']['layers'][layername]['instances'].empty? -%>
+      <% if @node.fetch('opsworks', {}).fetch('layers', {}).fetch(layername, {})['instances'].empty? -%>
   #skipping layer <%= layername %> because layer has no instances
       <% else %>
         <% layerconfig['acl'].each do |aclid, acl| -%>

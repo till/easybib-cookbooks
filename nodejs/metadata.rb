@@ -10,7 +10,7 @@ conflicts 'node'
 
 #depends 'yum-epel'
 depends 'build-essential'
-#depends 'ark'
+depends 'ark'
 depends 'apt'
 #depends 'homebrew'
 

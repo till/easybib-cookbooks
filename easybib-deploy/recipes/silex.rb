@@ -5,9 +5,9 @@ node['deploy'].each do |application, deploy|
   listen_opts = nil
   case application
   when 'api'
+    listen_opts = 'default_server'
     next unless allow_deploy(application, 'api', 'nginxphpapp')
   when 'discover_api'
-    listen_opts = 'default_server'
     next unless allow_deploy(application, 'discover_api', 'nginxphpapp')
   when 'featureflags'
     next unless allow_deploy(application, 'featureflags', 'nginxphpapp')
