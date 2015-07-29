@@ -23,6 +23,7 @@ AllCops:
     - 'virtualbox/**/*'
     - 'vagrant/**/*'
     - 'vendor/**/*'
+    - 'rails/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
