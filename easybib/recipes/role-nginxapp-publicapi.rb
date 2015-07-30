@@ -7,14 +7,11 @@ include_recipe 'php-intl'
 
 include_recipe 'easybib-deploy::easybib'
 
+include_recipe 'redis::default'
+
 if is_aws
-  package 'redis-server'
   include_recipe 'nginx-app::configure'
 else
-  # we use our recipe instead of the default package, because
-  # our recipe writes data to disk instead of memory, so it survives
-  # a vagrant suspend
-  include_recipe 'redis::default'
   include_recipe 'memcache'
   include_recipe 'nginx-app::vagrant'
 end
