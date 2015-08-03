@@ -8,12 +8,6 @@ action :create do
 
   updated = false
 
-  file node['supervisor']['socket_file'] do
-    owner 'root'
-    group 'root'
-    mode '755'
-  end
-
   unless ::File.exist?(supervisor_file)
     new_resource.updated_by_last_action(updated)
     next
