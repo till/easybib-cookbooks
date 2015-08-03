@@ -24,13 +24,6 @@ describe 'easybib_supervisor' do
     describe 'create' do
       before { stub_supervisor_with_two_services }
 
-      it 'has a world readable socket file' do
-        expect(chef_run).to create_file('/var/run/supervisor.sock').with(
-          'user'  => 'root',
-          'group'  => 'root',
-          'mode'   => '755'
-        )
-      end
       it 'enables the first service' do
         expect(chef_run).to enable_supervisor_service('service1-some-app')
           .with(
