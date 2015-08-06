@@ -50,6 +50,12 @@ deploy:
     on:
       branch: master
 
+branches:
+  only:
+  - master
+  - stable-chef-11.10
+  - stable
+
 notifications:
   email:
     on_success: never
