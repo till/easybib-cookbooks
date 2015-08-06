@@ -64,7 +64,7 @@ action :create do
   end
 
   t3 = template ssl_dir + '/cert.combined.pem' do
-    source 'emtpy.erb'
+    source 'empty.erb'
     cookbook 'easybib'
     mode   '0640'
     owner  'root'
