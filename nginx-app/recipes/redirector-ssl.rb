@@ -27,7 +27,6 @@ unless node['deploy']['redirector'].nil?
         variables(
           :domain_name => ssl_domain,
           :new_domain_name => node['redirector']['domains'][ssl_domain],
-          :deploy_data => node['deploy']['redirector'],
           :ssl_dir => node['ssl-deploy']['directory']
         )
         notifies :restart, 'service[nginx]', :delayed

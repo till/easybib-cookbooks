@@ -1,5 +1,5 @@
 server {
-    listen 443 <%=@listen_opts%>;
+    listen 443;
 
     ssl                       on;
     ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
@@ -9,11 +9,6 @@ server {
     ssl_prefer_server_ciphers on;
     server_name <%=@domain_name%>;
 <% unless @new_domain_name.nil? -%>
-
     rewrite ^ https://<%=@new_domain_name%>$request_uri? permanent;
-<% end -%>
-<% unless @locations.nil? -%>
-
-    rewrite ^ $new permanent;
 <% end -%>
 }
