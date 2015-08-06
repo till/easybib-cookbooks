@@ -1,0 +1,32 @@
+<% unless @locations.nil? -%>
+map $uri $new {
+<%
+@locations.sort.each do |old_path, new_url|
+  old_path = 'default' if old_path == '/'
+-%>
+
+    <%=old_path%> <%=new_url%>;
+<% end -%>
+}
+
+<% end -%>
+
+server {
+    listen 443 <%=@listen_opts%>;
+
+    ssl                       on;
+    ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
+    ssl_certificate           <%=@ssl_dir%>/cert.combined.pem;
+    ssl_certificate_key       <%=@ssl_dir%>/cert.key;
+    ssl_ciphers               HIGH:!RC4:!eNULL:!aNULL:!MD5@STRENGTH;
+    ssl_prefer_server_ciphers on;
+    server_name <%=@domain_name%>;
+<% unless @new_domain_name.nil? -%>
+
+    rewrite ^ https://<%=@new_domain_name%>$request_uri? permanent;
+<% end -%>
+<% unless @locations.nil? -%>
+
+    rewrite ^ $new permanent;
+<% end -%>
+}

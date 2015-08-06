@@ -4,7 +4,7 @@ describe 'easybib-deploy::ssl-certificates' do
 
   let(:runner) do
     ChefSpec::Runner.new(
-      :step_into => %w(nginx_app_config easybib_nginx)
+      :step_into => %w(nginx_app_config easybib_nginx easybib_sslcertificate)
     )
   end
   let(:chef_run)   { runner.converge(described_recipe) }
@@ -76,10 +76,6 @@ describe 'easybib-deploy::ssl-certificates' do
       expect(chef_run).not_to create_directory(ssl_dir)
     end
 
-    # FIXME: This should work, but doesnt?
-    #    it "does bail out with an error log message" do
-    #      expect(Chef::Log).to receive(:error)
-    #    end
   end
 
   describe 'ssl certificates should work without intermediate ca set' do
