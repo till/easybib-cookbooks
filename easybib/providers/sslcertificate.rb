@@ -42,32 +42,35 @@ action :create do
   end
 
   t1 = template ssl_dir + '/cert.pem' do
-    source 'ssl_key.erb'
+    source 'empty.erb'
+    cookbook 'easybib'
     mode   '0640'
     owner  'root'
     group  node['nginx-app']['group']
     variables(
-      'ssl_key' => ssl_certificate
+      'content' => ssl_certificate
     )
   end
 
   t2 = template ssl_dir + '/cert.key' do
-    source 'ssl_key.erb'
+    source 'empty.erb'
+    cookbook 'easybib'
     mode   '0640'
     owner  'root'
     group  node['nginx-app']['group']
     variables(
-      'ssl_key' => ssl_certificate_key
+      'content' => ssl_certificate_key
     )
   end
 
   t3 = template ssl_dir + '/cert.combined.pem' do
-    source 'ssl_key.erb'
+    source 'emtpy.erb'
+    cookbook 'easybib'
     mode   '0640'
     owner  'root'
     group  node['nginx-app']['group']
     variables(
-      'ssl_key' => ssl_combined_key
+      'content' => ssl_combined_key
     )
   end
 
