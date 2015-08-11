@@ -99,7 +99,9 @@ module EasyBib
 
       if ::EasyBib.is_aws(node)
         data['deploy_dir'] = node['deploy'][appname]['deploy_to']
-        data['app_dir'] = node['deploy'][appname]['deploy_to'] + '/current/'
+
+        data['app_dir'] = get_app_dir(data['deploy_dir'])
+
         data['doc_root_dir'] = "#{data['app_dir']}#{node['deploy'][appname]['document_root']}"
       else
         data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
@@ -309,6 +311,8 @@ module EasyBib
       config
     end
 
+    private
+
     def build_php_config(key, value, section = nil)
       if value.is_a?(Array)
         value = value.join("', '")
@@ -370,6 +374,14 @@ module EasyBib
         retval = nil
       end
       retval
+    end
+
+    # extracts the path where an application is deployed and attempts to resolve
+    # the `current`-symlink when possible
+    def get_app_dir(deploy_to)
+      app_dir = "#{deploy_to}/current/"
+      app_dir = ::File.readlink(app_dir) if ::Dir.exist?(app_dir)
+      app_dir
     end
   end
 end

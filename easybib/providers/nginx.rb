@@ -137,17 +137,8 @@ def get_app_dir(new_resource, node)
 end
 
 def get_deploy_dir(new_resource, node)
-  if new_resource.deploy_dir.nil?
-    deploy_dir = ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'doc_root_dir')
-  else
-    deploy_dir = new_resource.deploy_dir
-  end
-
-  if ::Dir.exist?(deploy_dir)
-    deploy_dir = ::File.readlink(deploy_dir)
-  end
-
-  deploy_dir
+  return new_resource.deploy_dir unless new_resource.deploy_dir.nil?
+  ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'doc_root_dir')
 end
 
 def get_health_check(application, node)
