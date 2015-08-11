@@ -376,12 +376,9 @@ module EasyBib
       retval
     end
 
-    # extracts the path where an application is deployed and attempts to resolve
-    # the `current`-symlink when possible
+    # extracts the path where an application is deployed
     def get_app_dir(deploy_to)
-      app_dir = "#{deploy_to}/current/"
-      app_dir = ::File.readlink(app_dir) if ::Dir.exist?(app_dir)
-      app_dir
+      "#{deploy_to}/current/"
     end
   end
 end
