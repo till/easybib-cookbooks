@@ -74,11 +74,6 @@ module EasyBib
 
       unless node.fetch(env, {}).fetch('domain', {})[appname].nil?
         Chef::Log.warn("Using old node[#{env}]['domain'][appname] domain config")
-        if (env == 'getcourse') && (appname == 'consumer')
-          # workaround to use old domain config syntax for consumer here, too
-          # deprecated, and soon to be removed.
-          return "#{node[env]['domain'][appname]} *.#{node[env]['domain'][appname]}"
-        end
         return node[env]['domain'][appname]
       end
 

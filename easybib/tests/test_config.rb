@@ -60,13 +60,6 @@ class TestEasyBibConfig < Test::Unit::TestCase
       'bla.local',
       ::EasyBib::Config.get_domains(fake_node, 'app', 'foo')
     )
-
-    fake_node = Chef::Node.new
-    fake_node.set['getcourse']['domain']['consumer'] = 'bla.local'
-    assert_equal(
-      'bla.local *.bla.local',
-      ::EasyBib::Config.get_domains(fake_node, 'consumer')
-    )
   end
 
   def test_ini_config
