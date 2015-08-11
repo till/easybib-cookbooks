@@ -50,7 +50,7 @@ node['deploy'].each do |application, deploy|
       :access_log     => 'off',
       :nginx_extra    => node['nginx-app']['extras']
     )
-    notifies :restart, 'service[nginx]', :delayed
+    notifies :reload, 'service[nginx]', :delayed
   end
 
 end

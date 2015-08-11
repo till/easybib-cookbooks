@@ -19,7 +19,7 @@ template '/etc/nginx/conf.d/cache.conf' do
     :lifetime => cache_conf['lifetime'],
     :zone => cache_conf['zone']
   )
-  notifies :restart, 'service[nginx]', :delayed
+  notifies :reload, 'service[nginx]', :delayed
   only_if do
     cache_conf['enabled'] == true
   end

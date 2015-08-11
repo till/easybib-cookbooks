@@ -29,7 +29,7 @@ unless node['deploy']['redirector'].nil?
           :new_domain_name => node['redirector']['domains'][ssl_domain],
           :ssl_dir => node['ssl-deploy']['directory']
         )
-        notifies :restart, 'service[nginx]', :delayed
+        notifies :reload, 'service[nginx]', :delayed
       end
     else
       Chef::Log.fatal("Unable to find the redirect target for the ssl-domain #{ssl_domain}, make sure to configure node['redirector']['domains']")

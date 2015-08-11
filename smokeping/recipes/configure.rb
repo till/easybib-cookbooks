@@ -14,7 +14,7 @@ easybib_nginx 'smokeping' do
   config_template 'smokeping.conf.erb'
   app_dir smokeping_dir
   deploy_dir smokeping_dir
-  notifies :restart, 'service[nginx]', :delayed
+  notifies :reload, 'service[nginx]', :delayed
 end
 
 link '/usr/share/nginx/html/smokeping' do
@@ -46,7 +46,7 @@ template "#{smokeping_etc}/pathnames" do
   variables(
     :pathnames => pathnames
   )
-  notifies :reload, 'service[smokeping]'
+  notifies :reload, 'service[smokeping]', :delayed
 end
 
 template "#{smokeping_etc}/Probes" do
@@ -55,7 +55,7 @@ template "#{smokeping_etc}/Probes" do
   variables(
     :probes => config['probes']
   )
-  notifies :reload, 'service[smokeping]'
+  notifies :reload, 'service[smokeping]', :delayed
 end
 
 template "#{smokeping_etc}/Targets" do
@@ -65,5 +65,5 @@ template "#{smokeping_etc}/Targets" do
     :menu => config['menu'],
     :targets => config['targets']
   )
-  notifies :reload, 'service[smokeping]'
+  notifies :reload, 'service[smokeping]', :delayed
 end
