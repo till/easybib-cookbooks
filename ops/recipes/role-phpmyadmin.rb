@@ -8,7 +8,7 @@ node['deploy'].each do |app, deploy|
   easybib_nginx app do
     config_template 'silex.conf.erb'
     domain_name ::EasyBib::Config.get_domains(node, app)
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]'
   end
 
   easybib_deploy app do

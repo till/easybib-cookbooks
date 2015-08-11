@@ -8,7 +8,7 @@ easybib_nginx config do
   doc_root        'www'
   access_log      access_log
   nginx_extras    'sendfile off;'
-  notifies :restart, 'service[nginx]', :delayed
+  notifies :reload, 'service[nginx]', :delayed
 end
 
 easybib_envconfig config

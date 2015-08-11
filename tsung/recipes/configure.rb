@@ -21,7 +21,7 @@ template '/etc/nginx/sites-available/tsung' do
     :root => log_dir
   )
   notifies :enable, 'service[nginx]', :immediately
-  notifies :restart, 'service[nginx]', :delayed
+  notifies :reload, 'service[nginx]', :delayed
 end
 
 # scenario

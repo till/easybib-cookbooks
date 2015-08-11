@@ -64,7 +64,7 @@ node['deploy'].each do |application, deploy|
     variables(
       'ssl_key' => ssl_certificate
     )
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   template ssl_dir + '/cert.key' do
@@ -75,7 +75,7 @@ node['deploy'].each do |application, deploy|
     variables(
       'ssl_key' => ssl_certificate_key
     )
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   template ssl_dir + '/cert.combined.pem' do
@@ -86,7 +86,7 @@ node['deploy'].each do |application, deploy|
     variables(
       'ssl_key' => ssl_combined_key
     )
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   template nginx_dir + '/sites-enabled/easybib-ssl.conf' do
@@ -99,11 +99,10 @@ node['deploy'].each do |application, deploy|
       'int_ip'  => int_ip,
       'domains' => deploy['domains']
     )
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   stored_certificate = true
-
 end
 
 ['/cert.pem', '/cert.key'].each do |f|

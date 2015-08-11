@@ -33,7 +33,7 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :app_dir      => app_dir,
     :nginx_local_conf => "#{app_dir}/deploy/nginx.conf"
   )
-  notifies :restart, 'service[nginx]', :delayed
+  notifies :reload, 'service[nginx]', :delayed
 end
 
 easybib_envconfig 'www' do

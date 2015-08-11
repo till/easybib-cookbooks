@@ -29,7 +29,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     default_router default_router
     domain_name domain_name
     nginx_local_conf "#{app_dir}/deploy/nginx.conf"
-    notifies :restart, 'service[nginx]', :delayed
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   stackname = 'easybib'

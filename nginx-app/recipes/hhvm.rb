@@ -22,7 +22,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     domain_name domain_name
     access_log node['nginx-app']['access_log']
     nginx_extras node['nginx-app']['extras']
-    notifies :restart, 'service[nginx]', :delayed
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   easybib_envconfig app_name do

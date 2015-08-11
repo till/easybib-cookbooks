@@ -13,7 +13,7 @@ if node['redirector'].attribute?('domains')
         :domain_name => domain_name,
         :new_domain_name => new_domain_name
       )
-      notifies :restart, 'service[nginx]', :delayed
+      notifies :reload, 'service[nginx]', :delayed
     end
   end
 end
@@ -29,6 +29,7 @@ if node['redirector'].attribute?('urls')
       :prefix => 'map',
       :config => node['nginx-app']['map']
     )
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   node['redirector']['urls'].each do |domain_name, locations|
@@ -41,6 +42,7 @@ if node['redirector'].attribute?('urls')
         :domain_name => domain_name,
         :locations => locations
       )
+      notifies :reload, 'service[nginx]', :delayed
     end
   end
 end

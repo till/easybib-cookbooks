@@ -23,7 +23,7 @@ unless node.fetch('vagrant', {})['ssl'].nil?
     variables(
       'ssl_key' => ssl_certificate
     )
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   template ssl_dir + '/cert.key' do
@@ -34,7 +34,7 @@ unless node.fetch('vagrant', {})['ssl'].nil?
     variables(
       'ssl_key' => ssl_certificate_key
     )
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   template nginx_dir + '/sites-enabled/easybib-ssl.conf' do
@@ -46,7 +46,7 @@ unless node.fetch('vagrant', {})['ssl'].nil?
       'ssl_dir' => ssl_dir,
       'int_ip'  => int_ip
     )
-    notifies :restart, 'service[nginx]'
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   # copy the nginx ssl cert to the ca cert folder

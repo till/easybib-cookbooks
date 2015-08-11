@@ -24,11 +24,7 @@ node['deploy'].each do |application, deploy|
     domain_name deploy['domains'].join(' ')
     htpasswd  "#{deploy['deploy_to']}/current/htpasswd"
     doc_root deploy['document_root']
-    notifies :restart, 'service[nginx]', :delayed
+    notifies :reload, 'service[nginx]', :delayed
+    notifies :reload, 'service[hhvm-fcgi]' # TODO: this is probably unnessessary
   end
-
-  service 'hhvm-fcgi' do
-    action :reload # TODO: this is probably unnessessary
-  end
-
 end
