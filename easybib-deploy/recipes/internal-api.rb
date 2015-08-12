@@ -43,7 +43,7 @@ node['deploy'].each do |application, deploy|
     doc_root deploy['document_root']
     access_log      'off'
     notifies :reload, 'service[nginx]', :delayed
-    notifies :reload, 'service[php-fpm]', :delayed
+    notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 
 end
