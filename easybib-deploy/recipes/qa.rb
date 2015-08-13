@@ -70,7 +70,7 @@ node['deploy'].each do |application, deploy|
   end
 
   service 'php-fpm' do
-    action :reload
+    action node['easybib-deploy']['php-fpm']['restart-action']
   end
 
 end
