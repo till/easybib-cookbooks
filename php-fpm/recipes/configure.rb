@@ -57,18 +57,18 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
   source   'php.ini.erb'
   variables(
     :enable_dl => 'Off',
-    :memory_limit => node['php-fpm']['memorylimit'],
+    :memory_limit => config['memorylimit'],
     :display_errors => display_errors,
-    :max_execution_time => node['php-fpm']['maxexecutiontime'],
-    :max_input_vars => node['php-fpm']['ini']['max-input-vars'],
-    :logfile => node['php-fpm']['logfile'],
+    :max_execution_time => config['maxexecutiontime'],
+    :max_input_vars => config['ini']['max-input-vars'],
+    :logfile => config['logfile'],
     :error_log => 'syslog',
-    :tmpdir => node['php-fpm']['tmpdir'],
-    :prefix => node['php-fpm']['prefix'],
+    :tmpdir => config['tmpdir'],
+    :prefix => config['prefix'],
     :sendmail_params => sendmail_params
   )
-  owner    node['php-fpm']['user']
-  group    node['php-fpm']['group']
+  owner    config['user']
+  group    config['group']
   notifies :reload, 'service[php-fpm]', :delayed
 end
 
@@ -81,14 +81,14 @@ template "#{etc_cli_dir}/#{conf_cli}" do
     :memory_limit   => '1024M',
     :display_errors => 'On',
     :max_execution_time => '-1',
-    :max_input_vars => node['php-fpm']['ini']['max-input-vars'],
-    :logfile => node['php-fpm']['logfile'],
-    :tmpdir => node['php-fpm']['tmpdir'],
-    :prefix => node['php-fpm']['prefix'],
+    :max_input_vars => config['ini']['max-input-vars'],
+    :logfile => config['logfile'],
+    :tmpdir => config['tmpdir'],
+    :prefix => config['prefix'],
     :sendmail_params => sendmail_params
   )
-  owner node['php-fpm']['user']
-  group node['php-fpm']['group']
+  owner config['user']
+  group config['group']
 end
 
 pool_dir = "#{config['prefix']}/etc/php-fpm/pool.d"
@@ -96,8 +96,8 @@ pool_dir = "#{config['prefix']}/etc/php-fpm/pool.d"
 template "#{etc_fpm_dir}/php-fpm.conf" do
   mode     '0755'
   source   'php-fpm.conf.erb'
-  owner    node['php-fpm']['user']
-  group    node['php-fpm']['group']
+  owner    config['user']
+  group    config['group']
   variables(
     :pool_dir => pool_dir
   )
@@ -132,13 +132,13 @@ end
 template '/etc/logrotate.d/php' do
   source 'logrotate.erb'
   variables(
-    :logfile => node['php-fpm']['logfile']
+    :logfile => config['logfile']
   )
   mode '0644'
   owner 'root'
   group 'root'
-  notifies :enable, 'service[php-fpm]'
-  notifies :start, 'service[php-fpm]'
+  notifies :enable, 'service[php-fpm]', :immediately
+  notifies :start, 'service[php-fpm]', :immediately
 end
 
 include_recipe 'php-fpm::monit' if is_aws
