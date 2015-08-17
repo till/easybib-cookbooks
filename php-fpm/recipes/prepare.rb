@@ -57,6 +57,7 @@ file node['php-fpm']['fpmlog'] do
   mode '0755'
   owner node['php-fpm']['user']
   group node['php-fpm']['group']
+  not_if node['php-fpm']['fpmlog'] == 'syslog'
 end
 
 directory node['php-fpm']['socketdir'] do
