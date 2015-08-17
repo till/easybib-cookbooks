@@ -4,8 +4,11 @@ default['php-fpm']['prefix'] = '/opt/easybib'
 
 default['php-fpm']['logfile'] = '/var/log/php/error.log'
 default['php-fpm']['slowlog'] = '/var/log/php/slow.log'
-default['php-fpm']['fpmlog'] = '/var/log/php/fpm.log'
 default['php-fpm']['slowlog_timeout'] = 4
+
+default['php-fpm']['fpmlog'] = '/var/log/php/fpm.log'
+default['php-fpm']['fpmlog_level'] = 'notice'
+
 default['php-fpm']['displayerrors'] = false
 default['php-fpm']['logerrors'] = true
 default['php-fpm']['maxexecutiontime'] = 60
