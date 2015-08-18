@@ -4,7 +4,8 @@ php_pecl 'opcache' do
   action :setup
 end
 
-file node['php-opcache']['settings']['error_log'] do
+file 'create opcache error_log' do
+  path node['php-opcache']['settings']['error_log']
   mode 0755
   owner node['php-fpm']['user']
   group node['php-fpm']['group']
