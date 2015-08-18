@@ -16,6 +16,4 @@ end
 
 include_recipe 'tideways'
 
-if is_aws
-  include_recipe 'php-opcache::configure'
-end
+include_recipe 'php-opcache::configure'
