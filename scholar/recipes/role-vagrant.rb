@@ -16,7 +16,6 @@ include_recipe 'nginx-app::vagrant-silex'
 
 # easybib-api + id
 include_recipe 'memcache'
-include_recipe 'php-intl'
 
 # featureflag-app
 include_recipe 'redis::default'
