@@ -1,6 +1,14 @@
 <% enable_caching = node.fetch('nginx-app', {}).fetch('browser_caching', {})['enabled'] %>
 <%= render_upstream(@php_upstream, @upstream_name) %>
 
+<% if !@redirect_name.nil? && !@redirect_name.empty? -%>
+server {
+    listen 80;
+    server_name <%=@redirect_name%>;
+    return       301 https://www.$host$request_uri;
+}
+<% end -%>
+
 server {
     set $fastcgi_skipcache 1; # skip by default
 
