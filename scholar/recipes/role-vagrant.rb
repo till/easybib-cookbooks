@@ -1,6 +1,4 @@
 include_recipe 'ohai'
-include_recipe 'avahi'
-include_recipe 'avahi::alias'
 
 # db
 include_recipe 'percona::server'
