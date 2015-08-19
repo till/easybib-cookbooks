@@ -4,6 +4,7 @@ include_recipe 'php-fpm::ohai'
 include_recipe 'php-phar'
 include_recipe 'php-suhosin'
 include_recipe 'php-zlib'
+include_recipe 'php-intl'
 
 node.set['composer']['environment'] = get_deploy_user if is_aws
 include_recipe 'composer::configure'
