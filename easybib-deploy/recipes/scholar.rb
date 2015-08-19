@@ -22,7 +22,9 @@ node['deploy'].each do |application, deploy|
 
   easybib_nginx application do
     config_template 'scholar.conf.erb'
-    domain_name deploy['domains'].join(' ')
+    redirect_name deploy['domains'].join(' ')
+    domain_names deploy['domains'].map { |domain| "www.#{domain}" }
+    domain_name domain_names.join(' ')
     doc_root deploy['document_root']
     htpasswd "#{deploy['deploy_to']}/current/htpasswd"
     nginx_local_conf "#{::EasyBib::Config.get_appdata(node, application, 'app_dir')}/deploy/nginx.conf"
