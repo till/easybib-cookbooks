@@ -9,7 +9,7 @@ module EasyBib
     end
     
     def get_www_redirect_name(domain_name)
-      return domain_name.split(' ').select { |d| d.start_with?('www.') }.map { |d| d[4..-1] }.join(' ')
+      domain_name.split(' ').select { |d| d.start_with?('www.') }.map { |d| d[4..-1] }.join(' ')
     end
   end
 end
