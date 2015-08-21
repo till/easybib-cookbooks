@@ -1,6 +1,6 @@
 <% enable_caching = node.fetch('nginx-app', {}).fetch('browser_caching', {})['enabled'] %>
 <%= render_upstream(@php_upstream, @upstream_name) %>
-<% redirect_name = @domain_name.split(' ').select { |d| d.start_with?('www.') }.map { |d| d[4..-1] }.join(' ') %>
+<% redirect_name = get_www_redirect_name(@domain_name) %>
 
 <% if !redirect_name.nil? && !redirect_name.empty? -%>
 server {
