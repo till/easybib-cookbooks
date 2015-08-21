@@ -13,10 +13,6 @@ node['deploy'].each do |application, deploy|
   easybib_deploy application do
     deploy_data deploy
     app application
+    notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]'
   end
-
-  service 'php-fpm' do
-    action :reload
-  end
-
 end

@@ -39,7 +39,7 @@ node['deploy'].each do |application, deploy|
     include_recipe 'monit::pecl-manager'
   else
     service 'php-fpm' do
-      action node['easybib_deploy']['deploy_action']
+      action node['easybib-deploy']['php-fpm']['restart-action']
     end
   end
 

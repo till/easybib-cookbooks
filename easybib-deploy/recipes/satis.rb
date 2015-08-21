@@ -10,9 +10,6 @@ node['deploy'].each do |application, deploy|
   when 'satis_s3'
     next unless allow_deploy(application, 'satis_s3', 'satis')
 
-  when 'getcourse_private_satis'
-    next unless allow_deploy(application, 'getcourse_private_satis', 'satis')
-
   else
     Chef::Log.info("deploy::satis - #{application} skipped")
     next
@@ -50,7 +47,7 @@ node['deploy'].each do |application, deploy|
       :access_log     => 'off',
       :nginx_extra    => node['nginx-app']['extras']
     )
-    notifies :restart, 'service[nginx]', :delayed
+    notifies :reload, 'service[nginx]', :delayed
   end
 
 end

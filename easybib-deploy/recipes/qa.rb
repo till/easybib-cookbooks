@@ -41,7 +41,7 @@ node['deploy'].each do |application, deploy|
     htpasswd        "#{deploy['deploy_to']}/current/htpasswd"
     doc_root        deploy['document_root']
     env_config      env_conf
-    notifies :restart, 'service[nginx]', :delayed
+    notifies :reload, 'service[nginx]', :delayed
   end
 
   case application
@@ -70,7 +70,7 @@ node['deploy'].each do |application, deploy|
   end
 
   service 'php-fpm' do
-    action :reload
+    action node['easybib-deploy']['php-fpm']['restart-action']
   end
 
 end

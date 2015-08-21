@@ -38,12 +38,19 @@ php_fpm_prepare () {
 }
 
 php_fpm_is_running () {
-    PHPFPMPSCOUNT=$(ps aux|grep [p]hp-fpm|wc -l)
-    if [ $PHPFPMPSCOUNT -gt 0 ]; then
-        return 0
-    else
+    if [ ! -r $php_fpm_PID ]; then
+        echo "No PID found."
         return 1
     fi
+
+    kill -0 `cat $php_fpm_PID`
+    if [ $? -gt 0 ]; then
+        echo "Stale PID."
+        rm $php_fpm_PID
+        return 1
+    fi
+
+    return 0
 }
 
 wait_for_pid () {

@@ -50,7 +50,7 @@ describe 'nginx-app::configure' do
 
         template_resource = chef_run.template(template_name)
         expect(template_resource).to notify('service[nginx]')
-          .to(:restart)
+          .to(:reload)
           .delayed
       end
 

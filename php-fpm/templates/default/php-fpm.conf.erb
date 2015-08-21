@@ -1,7 +1,7 @@
 [global]
 pid = <%= node["php-fpm"]["prefix"] %>/var/run/php-fpm.pid
 error_log = <%= node["php-fpm"]["fpmlog"] %>
-log_level = notice
+log_level = <%= node["php-fpm"]["fpmlog_level"] %>
 
 ; If this number of child processes exit with SIGSEGV or SIGBUS within the time
 ; interval set by emergency_restart_interval then FPM will restart. A value
