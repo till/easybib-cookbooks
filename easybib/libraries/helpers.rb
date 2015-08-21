@@ -7,7 +7,7 @@ module EasyBib
     def fetch_node(node, app, *args)
       ::EasyBib::Config.node(node, app, args)
     end
-    
+
     def get_www_redirect_name(domain_name)
       domain_name.split(' ').select { |d| d.start_with?('www.') }.map { |d| d[4..-1] }.join(' ')
     end
