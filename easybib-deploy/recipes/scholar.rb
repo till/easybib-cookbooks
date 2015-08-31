@@ -34,4 +34,5 @@ node['deploy'].each do |application, deploy|
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
     only_if application == 'scholar'
   end
+
 end
