@@ -1,7 +1,7 @@
 default['percona']              = {}
 default['percona']['version']   = '5.5'
-default['percona']['key']       = '1C4CBDCDCD2EFD2A'
-default['percona']['keyserver'] = 'pool.sks-keyservers.net'
+default['percona']['key']       = 'CD2EFD2A.asc'
+default['percona']['keyserver'] = nil
 default['percona']['user']      = 'root'
 default['percona']['password']  = ''
 
