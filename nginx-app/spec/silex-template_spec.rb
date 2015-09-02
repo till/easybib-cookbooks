@@ -131,5 +131,5 @@ def slash_is_enabled
 end
 
 def some_routes_denied(routes = '.*')
-  %r!location ~ /\(#{routes}\) {\s*deny all;\s*}!
+  %r!location ~ ^/\(#{routes}\) {\s*deny all;\s*}!
 end
