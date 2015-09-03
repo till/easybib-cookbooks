@@ -1,5 +1,5 @@
 erlang_otp_release do
-	action :install
-	destination '/var/releases'
-	# artifact ...
+  action :install
+  destination '/var/releases'
+  # artifact ...
 end
