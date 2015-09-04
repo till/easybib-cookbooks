@@ -4,12 +4,8 @@ include_recipe 'nginx-app::server'
 
 app_access_log   = node['nginx-app']['access_log']
 nginx_config_dir = node['nginx-app']['config_dir']
-
-# password protect?
-password_protected = false
-
-nginx_config = node['nginx-app']['conf_file']
-config_name = 'easybib.com.conf'
+nginx_config     = node['nginx-app']['conf_file']
+config_name      = 'easybib.com.conf'
 
 node['deploy'].each do |application, deploy|
   Chef::Log.info("nginx-app::configure - app: #{application}")
@@ -55,7 +51,6 @@ node['deploy'].each do |application, deploy|
       :css_alias          => node['nginx-app']['css_modules'],
       :access_log         => app_access_log,
       :deploy             => deploy,
-      :password_protected => password_protected,
       :config_dir         => nginx_config_dir,
       :php_upstream       => get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :upstream_name      => application,
