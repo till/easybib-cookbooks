@@ -96,8 +96,8 @@ end
 
 <%
 uncached_extensions = NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'])
-unless uncached_extensions.nil? -%>
-    location ~* \.(<%= uncached_extensions %>)$ {
+unless uncached_extensions.empty? -%>
+    location ~* \.(<%= uncached_extensions.join('|') %>)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
         access_log <%= @access_log %>;
