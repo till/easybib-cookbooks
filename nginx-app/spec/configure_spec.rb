@@ -57,7 +57,7 @@ describe 'nginx-app::configure' do
       it 'sets the correct root' do
         expect(chef_run).to render_file(vhost)
           .with_content(
-            include('root /srv/www/easybib/current/public/;')
+            include('default /srv/www/easybib/current/public/;')
           )
       end
 

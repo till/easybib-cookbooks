@@ -24,7 +24,7 @@ end
 server {
     listen 80 <%=@listen_opts%>;
 
-    access_log  <%= @access_log %>;
+    access_log <%= @access_log %>;
 
 <% if @nginx_extra -%>
     <%= @nginx_extra -%>
