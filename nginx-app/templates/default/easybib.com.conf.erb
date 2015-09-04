@@ -94,7 +94,7 @@ end
     }
 <% end -%>
 
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|woff|ttf|eof)$ {
+    location ~* \.(<%= NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'])%>)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
     <% if @password_protected && @password_protected.to_s == "true" -%>
