@@ -94,12 +94,16 @@ end
     }
 <% end -%>
 
-    location ~* \.(<%= NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'])%>)$ {
+<%
+uncached_extensions = NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'])
+unless uncached_extensions.nil? -%>
+    location ~* \.(<%= uncached_extensions %>)$ {
         # Prevent static content to be handled by php
         # See easybib/issues#417
         access_log <%= @access_log %>;
         add_header Access-Control-Allow-Origin *;
     }
+<% end -%>
 
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
