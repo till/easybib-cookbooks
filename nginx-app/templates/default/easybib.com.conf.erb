@@ -1,22 +1,16 @@
 <%= render_upstream(@php_upstream, @upstream_name) -%>
 
 <% 
-alias_map = {}
 
-@js_alias.each do |urialias, dir|
-    alias_map["js/#{urialias}"] = "#{@app_dir}app/modules/#{dir}"
+alias_config = {}
+{ 'js' => @js_alias, 'images' => @img_alias, 'css' => @css_alias }.each do |name, config|
+    alias_config = NginxApp::Helpers::merge_alias_config(alias_config, config, name, @app_dir)
 end
-@img_alias.each do |urialias, dir|
-    alias_map["images/#{urialias}"] = "#{@app_dir}app/modules/#{dir}"
-end
-@css_alias.each do |urialias, dir|
-    alias_map["css/#{urialias}"] = "#{@app_dir}app/modules/#{dir}"
-end
-%>
+-%>
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
   :variables => {
-    :alias_map => alias_map,
+    :alias_map => alias_config,
     :default_docroot => @doc_root
   }
 -%>
