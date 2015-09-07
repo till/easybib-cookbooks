@@ -26,14 +26,6 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  # clean up old config, when we deployed infolit with nginx-app::configure
-  # the webserver config was named 'easybib.com.conf' then, it now is infolit.conf
-  # this is "one time use only", can be removed in december 2014
-  file '/etc/nginx/sites-enabled/easybib.com.conf' do
-    action :delete
-    only_if { ::File.exist?('/etc/nginx/sites-enabled/easybib.com.conf') }
-  end
-
   easybib_nginx application do
     config_template config_template
     domain_name deploy['domains'].join(' ')
