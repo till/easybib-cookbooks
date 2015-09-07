@@ -9,6 +9,8 @@ include_recipe 'haproxy::logs'
 # haproxy::default and haproxy::configure are being executed/specified in the opsworks
 # recipe list, no need to have them here
 
+package "ngrep"
+
 if (node['haproxy']['type'] == '1.5')
   # haproxy does ssl if needed, just install certificates
   include_recipe 'easybib-deploy::ssl-certificates'
