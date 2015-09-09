@@ -1,16 +1,16 @@
 require 'json'
-require 'aws-sdk'
 
 module EasyBib
   module SNS
     def self.sns_notify(node)
-      args = {
-        :region => 'us-east-1',
-        :credentials => node['easybib']['sns']['credentials']
-      }
-
+      require 'aws-sdk'
       begin
-        client = ::Aws::SNS::Client.new(args)
+        args = {
+          :region => 'us-east-1',
+          :credentials => node['easybib']['sns']['credentials']
+        }
+
+        client = ::AWS::SNS::Client.new(args)
         resp = client.publish(
           :topic_arn => node['easybib']['sns']['topic'],
           :message => 'Hello world'
