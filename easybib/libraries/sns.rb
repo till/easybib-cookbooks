@@ -1,8 +1,8 @@
 require 'json'
+require 'aws-sdk'
 
 module EasyBib
   module SNS
-    require 'aws-sdk'
     def self.sns_notify(node)
       begin
         args = {
