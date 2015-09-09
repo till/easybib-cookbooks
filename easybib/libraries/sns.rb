@@ -6,9 +6,9 @@ module EasyBib
       require 'aws-sdk'
 
       if node.nil?
-        Chef::Log.error "Missing argument: node (AWS instance name)!"
+        Chef::Log.error 'Missing argument: node (AWS instance name)!'
       elsif body.nil?
-        Chef::Log::error "Missing argument: body (e-mail message body)"
+        Chef::Log.error 'Missing argument: body (e-mail message body)'
       end
 
       begin
