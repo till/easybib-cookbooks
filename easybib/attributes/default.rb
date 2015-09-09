@@ -9,3 +9,5 @@ default['easybib_deploy']['cronjob_role']  = nil
 
 default['easybib']['enable_ppa_mirror']  = false
 default['easybib']['php_mirror_version'] = '55'
+default['easybib']['sns']['topic_arn']   = nil
+default['easybib']['sns']['credentials'] = nil
