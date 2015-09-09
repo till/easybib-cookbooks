@@ -2,8 +2,8 @@ require 'json'
 
 module EasyBib
   module SNS
+    require 'aws-sdk'
     def self.sns_notify(node)
-      require 'aws-sdk-v1'
       begin
         args = {
           :region => 'us-east-1',
