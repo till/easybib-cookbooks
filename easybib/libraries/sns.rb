@@ -4,12 +4,12 @@ require 'aws-sdk'
 module EasyBib
   module SNS
     def self.sns_notify(node)
-      begin
         args = {
           :region => 'us-east-1',
           :credentials => node['easybib']['sns']['credentials']
         }
 
+      begin
         client = ::Aws::SNS::Client.new(args)
         resp = client.publish(
           :topic_arn => node['easybib']['sns']['topic'],
