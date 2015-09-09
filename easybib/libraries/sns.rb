@@ -13,7 +13,7 @@ module EasyBib
         client = ::AWS::SNS::Client.new(args)
         resp = client.publish(
           :topic_arn => node['easybib']['sns']['topic'],
-          :message => 'Hello world'
+          :message => 'You are receiving this mail because the amazon instance #{node} is spinning up.'
         )
         Chef::Log.info "notified sns with message id #{resp[:message_id]}"
       rescue ::Aws::SNS::Errors::ServiceError => e
