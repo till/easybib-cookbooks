@@ -47,7 +47,7 @@ def send_spinup_notification
   end
 
   if my_hostname.nil?
-    Chef::Log.error "can not determine hostname of this node!"
+    Chef::Log.error 'can not determine hostname of this node!'
     return
   end
 
