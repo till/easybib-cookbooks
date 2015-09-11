@@ -61,7 +61,6 @@ def send_spinup_notification
     "
 
     ::EasyBib::SNS.sns_notify(my_hostname, sns_message)
-    end
   end
 end
 
