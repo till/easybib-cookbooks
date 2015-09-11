@@ -146,6 +146,12 @@ module EasyBib
     false
   end
 
+  # Determines the hostname of the current node
+  #
+  # fail_if_nil - if true, will raise fatal if hostname cannot be
+  #               determined
+  #
+  # @return [String]
   def get_hostname(fail_if_nil = false)
     if !get_cluster_name.empty?
       instance    = get_instance

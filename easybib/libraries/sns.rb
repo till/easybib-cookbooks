@@ -2,6 +2,9 @@ require 'json'
 
 module EasyBib
   module SNS
+    # Send a spin-up notification about the current instance via SNS
+    #
+    # @return [nil]
     def self.sns_spinup_notify
       my_hostname = get_hostname(true)
 
@@ -18,6 +21,12 @@ module EasyBib
       end
     end
 
+    # Send a notification via SNS
+    #
+    # node - AWS node objects
+    # body - the actual message contents
+    #
+    # @return [nil]
     def self.sns_notify(node, body)
       require 'aws-sdk'
 
