@@ -44,6 +44,15 @@ module EasyBib
     false
   end
 
+  # Checks if an application is allowed to be deployed - if the currently to be deployed
+  # app matches the one we expect, and if the role of the instances is in an appropriate
+  # role for the app.
+  #
+  # application - current application to be deployed
+  # requested_application - app we are expecting, can also be array of names
+  # requested_role - role we are expecting, can also be array of role names. if nil, rolename=appname
+  #
+  # @return [Boolean]
   def allow_deploy(application, requested_application, requested_role = nil, node = self.node)
     unless is_aws(node)
       Chef::Log.debug('We are not running in a cloud environment, skipping deploy.')
