@@ -1,12 +1,17 @@
 include_recipe 'php-fpm::service'
 include_recipe 'nginx-app::service'
 
+supervisor_role = node['easybib_deploy']['supervisor_role']
+
 node['deploy'].each do |application, deploy|
   listen_opts = nil
+
   case application
   when 'scholar'
     listen_opts = 'default_server'
-    next unless allow_deploy(application, 'scholar', 'nginxphpapp')
+    allow_webapp = allow_deploy(application, 'scholar', 'nginxphpapp')
+    allow_consumer = allow_deploy(application, 'scholar', supervisor_role)
+    next unless allow_webapp || allow_consumer
   else
     Chef::Log.info("deploy::scholar - #{application} skipped")
     next
@@ -18,6 +23,7 @@ node['deploy'].each do |application, deploy|
   easybib_deploy application do
     deploy_data deploy
     app application
+    supervisor_role supervisor_role
   end
 
   easybib_nginx application do

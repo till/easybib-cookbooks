@@ -1,7 +1,24 @@
 <%= render_upstream(@php_upstream, @upstream_name) -%>
 
+<% 
+
+alias_config = {}
+{ 'js' => @js_alias, 'images' => @img_alias, 'css' => @css_alias }.each do |name, config|
+    alias_config = NginxApp::Helpers::merge_alias_config(alias_config, config, name, @app_dir)
+end
+-%>
+<%= render 'partials/module-assets.erb',
+  :cookbook => 'nginx-app',
+  :variables => {
+    :alias_map => alias_config,
+    :default_docroot => @doc_root
+  }
+-%>
+
 server {
     listen 80 <%=@listen_opts%>;
+
+    access_log <%= @access_log %>;
 
 <% if @nginx_extra -%>
     <%= @nginx_extra -%>
@@ -18,11 +35,7 @@ server {
         deny all;
     }
 
-    root <%= @doc_root %>;
-
-    location ~ /(doubleclick|eyeblaster|eyewonder|pointroll|unicast)/.*\.html {
-        access_log  <%= @access_log %>;
-    }
+    root $easybib_docroot;
 
     # VAST tag location for serving video
     location /vmntribes-vast-tag/ {
@@ -33,77 +46,25 @@ server {
         proxy_send_timeout 5s;
     }
 
-<%
-['/google8a01a818524239c8.html', '/googled16040836651a26a.html', '/bsm-xd.html'].each do |route|
--%>
-    location ^~ <%= route %> {
-        access_log  <%= @access_log %>;
-    }
-<%
-end
--%>
-
-
 <%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
 
     <%= render "partials/status-checks.erb",
       :cookbook => "nginx-app",
       :variables => {
-        :access_log => @access_log,
         :health_check => 'health_check.php',
         :upstream => @upstream_name
       }
     -%>
 
-<% module_dir = "#{@app_dir}app/modules" -%>
-
-<%= render 'partials/module-assets.erb',
-  :cookbook => 'nginx-app',
-  :variables => {
-    :access_log => @access_log,
-    :assets => @js_alias,
-    :module_dir => module_dir,
-    :type => 'js'
-  }
--%>
-
-<%= render 'partials/module-assets.erb',
-  :cookbook => 'nginx-app',
-  :variables => {
-    :access_log => @access_log,
-    :assets => @img_alias,
-    :module_dir => module_dir,
-    :type => 'images'
-  }
--%>
-
-<%= render 'partials/module-assets.erb',
-  :cookbook => 'nginx-app',
-  :variables => {
-    :access_log => @access_log,
-    :assets => @css_alias,
-    :module_dir => module_dir,
-    :type => 'css'
-  }
--%>
-
-<% node['nginx-app']['static_directories'].each do |dir| -%>
-    location ^~ /<%=dir%>/ {
-        access_log <%= @access_log %>;
+<%
+uncached_extensions = NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'])
+unless uncached_extensions.empty? -%>
+    location ~* \.(<%= uncached_extensions.join('|') %>)$ {
+        # Prevent static content to be handled by php
+        # See easybib/issues#417
         add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
-
-    location ~* \.(jpg|jpeg|gif|png|css|js|ico|woff|ttf|eof)$ {
-        # Prevent static content to be handled by php
-        # See easybib/issues#417
-    <% if @password_protected && @password_protected.to_s == "true" -%>
-        auth_basic            "Restricted";
-        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
-    <% end -%>
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
 
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
@@ -116,14 +77,6 @@ end
 <% end -%>
 
     location / {
-
-    <% if @password_protected && @password_protected.to_s == "true" -%>
-        auth_basic            "Restricted";
-        auth_basic_user_file  <%=node['nginx-app']['config_dir']%>/htpasswd;
-    <% end -%>
-
-        access_log <%= @access_log %>;
-
         include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
 
         fastcgi_pass  <%= @upstream_name %>_phpfpm;
