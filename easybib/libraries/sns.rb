@@ -2,6 +2,22 @@ require 'json'
 
 module EasyBib
   module SNS
+    def self.sns_spinup_notify
+      my_hostname = get_hostname(fail_if_nil = true)
+
+      if my_hostname.include?('-load')
+        sns_message = "subject: SPIN-UP notification of #{my_hostname}
+
+        The node #{my_hostname} has gone into deployment phase and will be booted shortly after.
+
+        Sincerely yours,
+        EasyBib SNS Library
+        "
+
+        ::EasyBib::SNS.sns_notify(my_hostname, sns_message)
+      end
+    end
+
     def self.sns_notify(node, body)
       require 'aws-sdk'
 

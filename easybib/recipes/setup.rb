@@ -32,40 +32,8 @@ include_recipe 'easybib::cron'
 include_recipe 'easybib::ruby'
 include_recipe 'easybib::profile'
 
-def send_spinup_notification
-  if !get_cluster_name.empty?
-    instance    = get_instance
-    my_hostname = instance['hostname']
-  else
-    # node.json
-    if node['server_name']
-      my_hostname = node['server_name']
-    # from 'ohai'
-    else
-      my_hostname = node['hostname']
-    end
-  end
-
-  if my_hostname.nil?
-    Chef::Log.error 'can not determine hostname of this node!'
-    return
-  end
-
-  if my_hostname.include?('-load')
-    sns_message = "subject: SPIN-UP notification of #{my_hostname}
-
-    The node #{my_hostname} has gone into deployment phase and will be booted shortly after.
-
-    Sincerely yours,
-    EasyBib SNS Library
-    "
-
-    ::EasyBib::SNS.sns_notify(my_hostname, sns_message)
-  end
-end
-
 if is_aws
-  send_spinup_notification
+  sns_spinup_notify
 
   include_recipe 'fail2ban'
   if node.attribute?('chef_handler_sns') &&
