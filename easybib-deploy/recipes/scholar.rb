@@ -3,10 +3,11 @@ include_recipe 'nginx-app::service'
 
 node['deploy'].each do |application, deploy|
   listen_opts = nil
+  supervisor_role = node['easybib_deploy']['supervisor_role']
   case application
   when 'scholar'
     listen_opts = 'default_server'
-    next unless allow_deploy(application, 'scholar', 'nginxphpapp')
+    next unless allow_deploy(application, 'scholar', ['nginxphpapp', supervisor_role])
   else
     Chef::Log.info("deploy::scholar - #{application} skipped")
     next
@@ -18,6 +19,7 @@ node['deploy'].each do |application, deploy|
   easybib_deploy application do
     deploy_data deploy
     app application
+    supervisor_role supervisor_role
   end
 
   easybib_nginx application do
