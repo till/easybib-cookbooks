@@ -1,7 +1,8 @@
 default['easybib-deploy'] = {
   'php-fpm' => {
     'restart-action' => :reload
-  }
+  },
+  'supervisor_role' => 'consumer'
 }
 
 default['ssl-deploy'] = {}

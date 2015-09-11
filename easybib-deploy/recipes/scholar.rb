@@ -1,9 +1,11 @@
 include_recipe 'php-fpm::service'
 include_recipe 'nginx-app::service'
 
+supervisor_role = node['easybib-deploy']['supervisor_role']
+
 node['deploy'].each do |application, deploy|
   listen_opts = nil
-  supervisor_role = node['easybib_deploy']['supervisor_role']
+
   case application
   when 'scholar'
     listen_opts = 'default_server'
