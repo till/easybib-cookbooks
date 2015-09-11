@@ -50,28 +50,34 @@ module EasyBib
       return false
     end
 
+    if requested_application.is_a?(Array)
+      allow = false
+      requested_application.each do |current_requested_application|
+        # allow if any of requested_applications is allowed, so lets use OR:
+        allow ||= allow_deploy(application, current_requested_application, requested_role, node)
+      end
+      return allow
+    end
+
+    if requested_role.is_a?(Array)
+      allow = false
+      requested_role.each do |current_requested_role|
+        allow ||= allow_deploy(application, requested_application, current_requested_role, node)
+      end
+      return allow
+    end
+
     instance_roles = get_instance_roles(node)
 
     Chef::Log.info(
       "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles}"
     )
+    if requested_role.nil?
+      requested_role = requested_application
+    end
 
     if requested_application.is_a?(String)
-      if requested_role.nil?
-        requested_role = requested_application
-      end
       return is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
-    elsif requested_application.is_a?(Array)
-      allow = false
-      requested_application.each do |current_requested_application|
-        if requested_role.nil?
-          requested_role = current_requested_application
-        end
-        allow_current = is_app_configured_for_stack(application, current_requested_application, requested_role, instance_roles)
-        # allow if any of requested_applications is allowed, so lets use OR:
-        allow ||= allow_current
-      end
-      return allow
     else
       fail 'Unknown value type supplied for requested_role in allow_deploy'
     end

@@ -97,6 +97,30 @@ class TestEasyBib < Test::Unit::TestCase
     end
   end
 
+  def test_allow_deploy_multilayer
+    # "allow_deploy with multiple app names, one correct, and multiple layers"
+    fake_node = Chef::Node.new
+    fake_node.set['opsworks']['instance']['layers'] = ['some-layer']
+    fake_node.set['opsworks']['stack']['name'] = 'some-name'
+    fake_node.set['easybib']['cluster_name'] = 'some-name'
+
+    assert_equal(
+      true,
+      allow_deploy('app', %w(app bar-app), %w(some-layer some-different-layer), fake_node)
+    )
+
+    # "allow_deploy with multiple app names, one correct, and multiple layers"
+    fake_node = Chef::Node.new
+    fake_node.set['opsworks']['instance']['layers'] = ['no-such-layer']
+    fake_node.set['opsworks']['stack']['name'] = 'some-name'
+    fake_node.set['easybib']['cluster_name'] = 'some-name'
+
+    assert_equal(
+      false,
+      allow_deploy('app', 'app', %w(some-layer some-different-layer), fake_node)
+    )
+  end
+
   def test_deploy_crontab
     assert_equal(
       deploy_crontab?([], nil),
