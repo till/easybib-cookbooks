@@ -156,11 +156,11 @@ module EasyBib
         my_hostname = node['server_name']
       # from 'ohai'
       else
-        my_hostname node['hostname']
+        my_hostname = node['hostname']
       end
     end
 
-    if fail_if_nil == true and my_hostname.nil?
+    if fail_if_nil == true && my_hostname.nil?
       Chef::Application.fatal!('Can not determine the hostname of this node!')
     end
 

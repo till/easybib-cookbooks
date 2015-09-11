@@ -3,7 +3,7 @@ require 'json'
 module EasyBib
   module SNS
     def self.sns_spinup_notify
-      my_hostname = get_hostname(fail_if_nil = true)
+      my_hostname = get_hostname(true)
 
       if my_hostname.include?('-load')
         sns_message = "subject: SPIN-UP notification of #{my_hostname}
