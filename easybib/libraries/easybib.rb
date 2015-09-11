@@ -164,7 +164,7 @@ module EasyBib
       Chef::Application.fatal!('Can not determine the hostname of this node!')
     end
 
-    return my_hostname
+    my_hostname
   end
 
   extend self
