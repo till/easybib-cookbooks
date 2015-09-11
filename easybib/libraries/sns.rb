@@ -11,7 +11,7 @@ module EasyBib
       if my_hostname.include?('-load')
         sns_message = "subject: SPIN-UP notification of #{my_hostname}
 
-        The node #{my_hostname} has gone into deployment phase and will be booted shortly after.
+        The instance #{my_hostname} has gone into deployment phase and will be booted shortly after.
 
         Sincerely yours,
         EasyBib SNS Library
