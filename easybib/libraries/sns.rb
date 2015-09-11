@@ -5,7 +5,7 @@ module EasyBib
     # Send a spin-up notification about the current instance via SNS
     #
     # @return [nil]
-    def self.sns_spinup_notify
+    def self.sns_notify_spinup
       my_hostname = get_hostname(true)
 
       if my_hostname.include?('-load')

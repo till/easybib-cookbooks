@@ -33,7 +33,7 @@ include_recipe 'easybib::ruby'
 include_recipe 'easybib::profile'
 
 if is_aws
-  sns_spinup_notify
+  sns_notify_spinup
 
   include_recipe 'fail2ban'
   if node.attribute?('chef_handler_sns') &&
