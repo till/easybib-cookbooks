@@ -59,12 +59,6 @@ def send_spinup_notification
     Sincerely yours,
     EasyBib SNS Library
     "
-
-    begin
-      ::EasyBib::SNS.sns_notify(my_hostname, sns_message)
-    rescue ::AWS::SNS::Errors::ServiceError => e
-      Chef::Log.warn "unable to send SNS notification: #{e}"
-    end
   end
 end
 
