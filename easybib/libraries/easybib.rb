@@ -161,6 +161,33 @@ module EasyBib
     false
   end
 
+  # Determines the hostname of the current node
+  #
+  # fail_if_nil - if true, will raise fatal if hostname cannot be
+  #               determined
+  #
+  # @return [String]
+  def get_hostname(fail_if_nil = false)
+    if !get_cluster_name.empty?
+      instance    = get_instance
+      my_hostname = instance['hostname']
+    else
+      # node.json
+      if node['server_name']
+        my_hostname = node['server_name']
+      # from 'ohai'
+      else
+        my_hostname = node['hostname']
+      end
+    end
+
+    if fail_if_nil == true && my_hostname.nil?
+      Chef::Application.fatal!('Can not determine the hostname of this node!')
+    end
+
+    my_hostname
+  end
+
   extend self
 end
 
