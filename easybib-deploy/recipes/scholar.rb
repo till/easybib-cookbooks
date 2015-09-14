@@ -9,9 +9,7 @@ node['deploy'].each do |application, deploy|
   case application
   when 'scholar'
     listen_opts = 'default_server'
-    allow_webapp = allow_deploy(application, 'scholar', 'nginxphpapp')
-    allow_consumer = allow_deploy(application, 'scholar', supervisor_role)
-    next unless allow_webapp || allow_consumer
+    next unless allow_deploy(application, 'scholar', ['nginxphpapp', supervisor_role])
   else
     Chef::Log.info("deploy::scholar - #{application} skipped")
     next
