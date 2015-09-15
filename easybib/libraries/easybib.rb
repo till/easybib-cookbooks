@@ -168,8 +168,8 @@ module EasyBib
   #
   # @return [String]
   def get_hostname(fail_if_nil = false)
-    if !get_cluster_name.empty?
-      instance    = get_instance
+    if !get_cluster_name(node).empty?
+      instance    = get_instance(node)
       my_hostname = instance['hostname']
     else
       # node.json
