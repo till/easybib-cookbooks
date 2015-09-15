@@ -5,7 +5,8 @@ module EasyBib
     # Send a spin-up notification about the current instance via SNS
     #
     # @return [nil]
-    def self.sns_notify_spinup(node = self.node)
+    extend self
+    def sns_notify_spinup(node = self.node)
       my_hostname = get_hostname(true)
 
       if my_hostname.include?('-load')
@@ -27,7 +28,7 @@ module EasyBib
     # body - the actual message contents
     #
     # @return [nil]
-    def self.sns_notify(node, body)
+    def sns_notify(node, body)
       require 'aws-sdk'
 
       if node.nil?
