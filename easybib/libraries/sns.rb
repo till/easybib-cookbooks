@@ -6,7 +6,7 @@ module EasyBib
     #
     # @return [nil]
     extend self
-    def sns_notify_spinup(node = self.node)
+    def sns_notify_spinup(node)
       my_hostname = 'test-bacce-load'
 
       if my_hostname.include?('-load')
