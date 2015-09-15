@@ -7,7 +7,7 @@ module EasyBib
     # @return [nil]
     extend self
     def sns_notify_spinup(node = self.node)
-      my_hostname = get_hostname(true)
+      my_hostname = ::EasyBib.get_hostname(true)
 
       if my_hostname.include?('-load')
         sns_message = "subject: SPIN-UP notification of #{my_hostname}
