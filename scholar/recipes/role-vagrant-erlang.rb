@@ -2,4 +2,4 @@ include_recipe 'ohai'
 
 include_recipe 'easybib::role-generic'
 
-include_recipe 'erlang-package'
+include_recipe 'erlang-packages'
