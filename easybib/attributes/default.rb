@@ -11,3 +11,5 @@ default['easybib']['enable_ppa_mirror']  = false
 default['easybib']['php_mirror_version'] = '55'
 default['easybib']['sns']['topic_arn']   = nil
 default['easybib']['sns']['credentials'] = nil
+# notify via sns if hostname contains this string:
+default['easybib']['sns']['notify_spinup'] = '-load'
