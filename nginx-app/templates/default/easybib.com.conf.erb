@@ -66,6 +66,12 @@ unless uncached_extensions.empty? -%>
     }
 <% end -%>
 
+    location /raw/ {
+        # Prevent any content in /raw/
+        # See easybib/issues#4837
+        add_header Access-Control-Allow-Origin *;
+    }
+
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
       :cookbook => 'nginx-app',
