@@ -10,9 +10,9 @@ module EasyBib
       my_hostname = ::EasyBib.get_hostname(node, true)
 
       if my_hostname.include?(node['easybib']['sns']['notify_spinup'])
-        sns_message = "subject: SPIN-UP notification of #{my_hostname}
+        sns_message = "SPIN-UP notification for #{my_hostname}
 
-        The instance #{my_hostname} has gone into deployment phase and will be booted shortly after.
+        The instance #{my_hostname} has just been deployed and will now be booted.
 
         Sincerely yours,
         EasyBib SNS Library
