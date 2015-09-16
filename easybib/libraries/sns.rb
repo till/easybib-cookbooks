@@ -53,7 +53,7 @@ module EasyBib
 
         client = ::AWS::SNS::Client.new(args)
         resp = client.publish(
-          :topic_arn => node['easybib']['sns']['topic'],
+          :topic_arn => node['easybib']['sns']['topic_arn'],
           :message => '#{body}'
         )
         Chef::Log.info "notified sns with message id #{resp[:message_id]}"
