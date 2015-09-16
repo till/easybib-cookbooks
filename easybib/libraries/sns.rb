@@ -9,7 +9,7 @@ module EasyBib
     def sns_notify_spinup(node = self.node)
       my_hostname = ::EasyBib.get_hostname(node, true)
 
-      if my_hostname.include?('-load')
+      if my_hostname.include?(node['easybib']['sns']['notify_spinup'])
         sns_message = "subject: SPIN-UP notification of #{my_hostname}
 
         The instance #{my_hostname} has gone into deployment phase and will be booted shortly after.
@@ -53,8 +53,8 @@ module EasyBib
 
         client = ::AWS::SNS::Client.new(args)
         resp = client.publish(
-          :topic_arn => node['easybib']['sns']['topic'],
-          :message => '#{body}'
+          :topic_arn => node['easybib']['sns']['topic_arn'],
+          :message => body
         )
         Chef::Log.info "notified sns with message id #{resp[:message_id]}"
       rescue ::AWS::SNS::Errors::ServiceError => e
