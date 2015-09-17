@@ -24,6 +24,7 @@ AllCops:
     - 'vagrant/**/*'
     - 'vendor/**/*'
     - 'rails/**/*'
+    - 'opscode-erlang/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
