@@ -18,4 +18,4 @@ sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0)
 supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3da5959ce9c2bc42287ad50b26) |
 vagrant | 0.2.2 | disabled dependency on dmg and windows
 virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2
-opscode-erlang | [master](https://github.com/opscode-cookbooks/opscode-erlang/commit/bef363d83f815761123c6dd27ef320a9a794d169) | ...
+opscode-erlang | [master](https://github.com/opscode-cookbooks/opscode-erlang/commit/bef363d83f815761123c6dd27ef320a9a794d169) | with some disabled deps
