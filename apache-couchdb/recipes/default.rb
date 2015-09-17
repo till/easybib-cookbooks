@@ -9,4 +9,3 @@ end
 package 'couchdb'
 
 include_recipe 'apache-couchdb::configure'
-include_recipe 'apache-couchdb::fauxton'
