@@ -19,3 +19,4 @@ supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3
 vagrant | 0.2.2 | disabled dependency on dmg and windows
 virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2
 opscode-erlang | [master](https://github.com/opscode-cookbooks/opscode-erlang/commit/bef363d83f815761123c6dd27ef320a9a794d169) | with some disabled deps
+runit | [master](https://github.com/hw-cookbooks/runit/commit/1ebeffa0f907811302a22b137015012ed6f11193) | dependency on packagecloud disabled
