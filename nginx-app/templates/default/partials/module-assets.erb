@@ -1,7 +1,6 @@
-<% @assets.each do |www_alias,www_dir| -%>
-    location ^~ /<%= @type %>/<%=www_alias%>/ {
-        root       <%= @module_dir %>/<%=www_dir%>/www;
-        access_log <%= @access_log %>;
-        add_header Access-Control-Allow-Origin *;
-    }
+map $uri $easybib_docroot {
+    default <%= @default_docroot %>;
+<% @alias_map.each do |www_alias, www_dir| -%>
+    ~^/<%=www_alias%>/ <%=www_dir%>/www;
 <% end -%>
+}
