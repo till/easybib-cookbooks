@@ -25,7 +25,7 @@ node['apache-couchdb']['config'].each do |section, config|
       :config => config
     )
     only_if do
-      section == 'admins' && !::File.exists?("/etc/couchdb/local.d/admins.ini")
+      section == 'admins' && !::File.exist?('/etc/couchdb/local.d/admins.ini')
     end
   end
 end
