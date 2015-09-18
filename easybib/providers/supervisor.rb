@@ -60,7 +60,8 @@ action :create do
       'environment' => {},
       'directory' => nil,
       'umask' => nil,
-      'serverurl' => 'AUTO'
+      'serverurl' => 'AUTO',
+      'process_name' => '%(program_name)s'
     }
 
     config.merge!(service)
@@ -71,6 +72,7 @@ action :create do
       command "#{app_dir}/#{config['command']}"
       numprocs config['numprocs']
       numprocs_start config['numprocs_start']
+      process_name config['process_name']
       priority config['priority']
       autostart config['autostart']
       startsecs config['startsecs']
