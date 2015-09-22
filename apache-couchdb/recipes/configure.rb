@@ -4,6 +4,13 @@ service 'couchdb' do
   supports [:start, :stop, :restart]
 end
 
+logrotate_app 'couchdb' do
+  cookbook 'logrotate'
+  path '/var/log/couchdb/*.log'
+  frequency 'daily'
+  rotate 2
+end
+
 node['apache-couchdb']['config'].each do |section, config|
   template "/etc/couchdb/local.d/#{section}.ini" do
     source 'local.ini.erb'
