@@ -10,7 +10,7 @@ directory base_path do
 end
 
 git "#{base_path}/haproxyctl" do
-  repository 'git://github.com/flores/haproxyctl.git'
+  repository 'git://github.com/easybiblabs/haproxyctl.git'
   reference node['haproxy']['ctl']['version']
   action :sync
 end
