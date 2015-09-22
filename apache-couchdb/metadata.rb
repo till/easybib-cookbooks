@@ -9,3 +9,4 @@ recipe            'apache-couchdb::default', 'Installs Apache CouchDB'
 supports 'ubuntu'
 
 depends 'apt'
+depends 'logrotate'

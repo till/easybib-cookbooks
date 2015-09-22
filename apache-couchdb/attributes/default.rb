@@ -6,6 +6,9 @@ default['apache-couchdb']['config'] = {
   'httpd' => {
     'port' => 5984,
     'bind_address' => '127.0.0.1'
+  },
+  'log_level_by_module' => {
+    'couch_httpd' => 'warning'
   }
 }
 
