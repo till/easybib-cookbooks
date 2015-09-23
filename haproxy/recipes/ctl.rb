@@ -18,3 +18,11 @@ end
 link '/etc/init.d/haproxyctl' do
   to "#{base_path}/haproxyctl/bin/haproxyctl"
 end
+
+statsd_host = node['haproxy']['ctl']['statsd']['host']
+statsd_port = node['haproxy']['ctl']['statsd']['port']
+cron_d 'haproxyctl_statsd' do
+  action :create
+  command "/usr/local/share/haproxyctl/bin/haproxyctl statsd > /dev/udp/#{statsd_host}/#{statsd_port}"
+  path node['easybib_deploy']['cron_path']
+end
