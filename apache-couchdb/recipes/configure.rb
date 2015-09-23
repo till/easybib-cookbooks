@@ -4,6 +4,13 @@ service 'couchdb' do
   supports [:start, :stop, :restart]
 end
 
+logrotate_app 'couchdb' do
+  cookbook 'logrotate'
+  path '/var/log/couchdb/*.log'
+  frequency 'daily'
+  rotate 2
+end
+
 node['apache-couchdb']['config'].each do |section, config|
   template "/etc/couchdb/local.d/#{section}.ini" do
     source 'local.ini.erb'
@@ -12,5 +19,20 @@ node['apache-couchdb']['config'].each do |section, config|
       :config => config
     )
     notifies :restart, 'service[couchdb]', :delayed
+    not_if do
+      section == 'admins'
+    end
+  end
+
+  # write admins initial
+  template "/etc/couchdb/local.d/#{section}.ini" do
+    source 'local.ini.erb'
+    variables(
+      :section => section,
+      :config => config
+    )
+    only_if do
+      section == 'admins' && !::File.exist?('/etc/couchdb/local.d/admins.ini')
+    end
   end
 end

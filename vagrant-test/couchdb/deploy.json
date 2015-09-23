@@ -1,0 +1,14 @@
+{
+  "apache-couchdb": {
+    "config": {
+      "httpd": {
+        "port": 8080,
+        "bind_address": "0.0.0.0"
+      },
+      "admins": {
+        "super-user": "secret-password",
+        "another-user": "secret123"
+      }
+    }
+  }
+}
