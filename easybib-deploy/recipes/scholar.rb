@@ -35,7 +35,7 @@ node['deploy'].each do |application, deploy|
     listen_opts listen_opts
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
-    only_if application == 'scholar'
+    only_if { application == 'scholar' }
   end
 
 end
