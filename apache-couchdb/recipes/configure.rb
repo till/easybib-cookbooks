@@ -1,8 +1,4 @@
-service 'couchdb' do
-  action :nothing
-  provider Chef::Provider::Service::Upstart
-  supports [:start, :stop, :restart]
-end
+include_recipe 'apache-couchdb::service'
 
 logrotate_app 'couchdb' do
   cookbook 'logrotate'
