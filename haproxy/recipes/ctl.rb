@@ -32,8 +32,8 @@ end
 template '/etc/haproxy/haproxyctl/instance-name' do
   source 'haproxyctl.instance-name'
   variables(
-      :stack_name => node['easybib_deploy']['envtype'],
-      :host_name  => get_hostname
+    :stack_name => node['easybib_deploy']['envtype'],
+    :host_name  => get_hostname
   )
 end
 
