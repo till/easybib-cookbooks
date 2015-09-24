@@ -19,7 +19,7 @@ link '/etc/init.d/haproxyctl' do
   to "#{base_path}/haproxyctl/bin/haproxyctl"
 end
 
-###
+### haproxyctl statsd stuff ###
 statsd_host = node['haproxy']['ctl']['statsd']['host']
 statsd_port = node['haproxy']['ctl']['statsd']['port']
 directory '/etc/haproxy/haproxyctl' do
@@ -32,8 +32,8 @@ end
 template '/etc/haproxy/haproxyctl/instance-name' do
   source 'haproxyctl.instance-name'
   variables(
-      'stack_name'  => node['easybib_deploy']['envtype'],
-      'host_name'   => get_hostname
+      :stack_name => node['easybib_deploy']['envtype'],
+      :host_name  => get_hostname
   )
 end
 
