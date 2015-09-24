@@ -41,6 +41,6 @@ end
 
 cron_d 'haproxyctl_statsd' do
   action :create
-  command "/usr/local/share/haproxyctl/bin/haproxyctl statsd > /dev/udp/#{statsd_host}/#{statsd_port}"
+  command "#{base_path}/haproxyctl/bin/haproxyctl statsd > /dev/udp/#{statsd_host}/#{statsd_port}"
   path node['easybib_deploy']['cron_path']
 end
