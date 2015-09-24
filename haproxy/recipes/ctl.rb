@@ -20,6 +20,7 @@ link '/etc/init.d/haproxyctl' do
 end
 
 ### haproxyctl statsd stuff ###
+Chef::Resource.send(:include, EasyBib)
 statsd_host = node['haproxy']['ctl']['statsd']['host']
 statsd_port = node['haproxy']['ctl']['statsd']['port']
 directory '/etc/haproxy/haproxyctl' do
@@ -34,7 +35,7 @@ template '/etc/haproxy/haproxyctl/instance-name' do
   source 'haproxyctl.instance-name.erb'
   variables(
     :stack_name => node['easybib_deploy']['envtype'],
-    :host_name  => ::EasyBib.get_hostname(node, true)
+    :host_name  => get_hostname(node, true)
   )
 end
 
