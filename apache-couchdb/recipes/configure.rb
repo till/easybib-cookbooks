@@ -24,15 +24,18 @@ node['apache-couchdb']['config'].each do |section, config|
     end
   end
 
-  # write admins initial
-  template "/etc/couchdb/local.d/#{section}.ini" do
+  # write admins
+  # this is a hack because 'local.ini' is always the last
+  # .ini file read in the chain, so we add the admins here!
+  template '/etc/couchdb/local.d/local.ini' do
     source 'local.ini.erb'
     variables(
       :section => section,
       :config => config
     )
+    notifies :restart, 'service[couchdb]', :delayed
     only_if do
-      section == 'admins' && !::File.exist?('/etc/couchdb/local.d/admins.ini')
+      section == 'admins' && !::File.exist?('/etc/couchdb/local.d/local.ini')
     end
   end
 end
