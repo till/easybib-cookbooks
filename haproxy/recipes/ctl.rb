@@ -1,3 +1,4 @@
+Chef::Resource.send(:include, EasyBib)
 base_path = node['haproxy']['ctl']['base_path']
 
 # ensure directory exists
@@ -20,7 +21,6 @@ link '/etc/init.d/haproxyctl' do
 end
 
 ### haproxyctl statsd stuff ###
-Chef::Resource.send(:include, EasyBib)
 statsd_host = node['haproxy']['ctl']['statsd']['host']
 statsd_port = node['haproxy']['ctl']['statsd']['port']
 directory '/etc/haproxy/haproxyctl' do
