@@ -7,6 +7,8 @@ node['deploy'].each do |application, deploy|
   listen_opts = nil
 
   case application
+  when 'notebook'
+    next unless allow_deploy(application, 'notebook', 'erlang')
   when 'scholar'
     listen_opts = 'default_server'
     next unless allow_deploy(application, 'scholar', ['nginxphpapp', supervisor_role])
@@ -16,7 +18,7 @@ node['deploy'].each do |application, deploy|
   end
 
   Chef::Log.info("deploy::#{application} - Deployment started.")
-  Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy[:user]} and #{deploy[:group]}")
+  Chef::Log.info("deploy::#{application} - Deploying as user: #{deploy['user']} and #{deploy['group']}")
 
   easybib_deploy application do
     deploy_data deploy
@@ -33,5 +35,7 @@ node['deploy'].each do |application, deploy|
     listen_opts listen_opts
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    only_if { application == 'scholar' }
   end
+
 end
