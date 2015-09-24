@@ -24,6 +24,7 @@ AllCops:
     - 'vagrant/**/*'
     - 'vendor/**/*'
     - 'rails/**/*'
+    - 'runit/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false

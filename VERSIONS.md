@@ -18,3 +18,4 @@ sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0)
 supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3da5959ce9c2bc42287ad50b26) |
 vagrant | 0.2.2 | disabled dependency on dmg and windows
 virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2
+runit | [master](https://github.com/hw-cookbooks/runit/commit/1ebeffa0f907811302a22b137015012ed6f11193) | dependency on packagecloud disabled
