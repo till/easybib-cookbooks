@@ -14,7 +14,7 @@ node['apache-couchdb']['config'].each do |section, config|
   if section == 'admins'
     ini_file = "#{local_dir}/local.ini"
   else
-    ini_file = "#{local_dir}/#{section.ini}"
+    ini_file = "#{local_dir}/#{section}.ini"
   end
 
   template ini_file do # ~FC022
