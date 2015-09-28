@@ -1,4 +1,4 @@
 service 'nginx' do
   supports :status => true, :restart => true, :reload => true
-  action :nothing
+  provider Chef::Provider::Service::Upstart
 end
