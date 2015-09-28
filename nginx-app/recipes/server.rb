@@ -12,4 +12,10 @@ package node['nginx-app']['package-name'] do
   notifies :start, 'service[nginx]'
 end
 
+# Nginx installs an Upstart configuration by default. If this file
+# doesn't exist, Ubuntu will fall-back to prehistoric init-system.
+file '/etc/init/nginx.conf' do
+  action :delete
+end
+
 nginx_app_config 'nginx-app: nginx.conf'
