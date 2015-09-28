@@ -1,2 +1,2 @@
 include_recipe 'easybib::setup'
-include_recipe 'easyproxy::server'
+include_recipe 'ezproxy::server'
