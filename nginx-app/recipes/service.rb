@@ -1,6 +1,7 @@
 # Nginx installs an Upstart configuration by default. If this file
 # doesn't exist, Ubuntu will fall-back to prehistoric init-system.
 service 'nginx-upstart' do
+  service_name 'nginx'
   action :stop
   provider Chef::Provider::Service::Upstart
   only_if do
