@@ -14,6 +14,7 @@ frontend http-in
   end -%>
   option log-separate-errors
 
+  tcp-request inspect-delay 30s
   <% if !@node['haproxy']['acls'].nil? -%>
   #acls from node json:
     <% @node['haproxy']['acls'].each do |aclname,aclconfig| -%>
