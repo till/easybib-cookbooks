@@ -5,7 +5,7 @@ service 'nginx-upstart' do
   action :stop
   provider Chef::Provider::Service::Upstart
   only_if do
-    ::File.exists?('/etc/init/nginx.conf')
+    ::File.exist?('/etc/init/nginx.conf')
   end
 end
 
