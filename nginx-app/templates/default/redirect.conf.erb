@@ -15,7 +15,11 @@ server {
     server_name <%=@domain_name%>;
 <% unless @new_domain_name.nil? -%>
 
+<%      if @keep_uri -%>
     rewrite ^ http://<%=@new_domain_name%>$request_uri? permanent;
+<%      else %>
+    rewrite ^ http://<%=@new_domain_name%> permanent;
+<%      end -%>
 <% end -%>
 <% unless @locations.nil? -%>
 
