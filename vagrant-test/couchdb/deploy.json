@@ -1,6 +1,9 @@
 {
   "apache-couchdb": {
     "config": {
+      "couchdb": {
+        "delayed_commits": false
+      },
       "httpd": {
         "port": 8080,
         "bind_address": "0.0.0.0"
