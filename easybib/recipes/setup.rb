@@ -5,9 +5,7 @@ base_packages = [
   'git-core', 'unzip', 'realpath', 'curl'
 ]
 
-base_packages.each do |p|
-  package p
-end
+apt_package base_packages
 
 chef_gem 'Remove: BibOpsworks' do
   package_name 'BibOpsworks'
@@ -47,15 +45,12 @@ if is_aws
   include_recipe 'apt::unattended-upgrades'
 end
 
-# landscape is buggy
-# https://bugs.launchpad.net/ubuntu/+source/pam/+bug/805423
-package 'landscape-client' do
-  action :purge
-end
+remove_packages = [
+  'landscape-client', # https://bugs.launchpad.net/ubuntu/+source/pam/+bug/805423
+  'ganglia-monitor', # opsworks installs this but we don't need it
+  'libganglia1'
+]
 
-# opsworks installs this but we don't need it
-['ganglia-monitor', 'libganglia1'].each do |p|
-  package p do
-    action :purge
-  end
+package remove_packages do
+  action :purge
 end
