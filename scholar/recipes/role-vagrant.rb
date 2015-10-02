@@ -10,6 +10,8 @@ include_recipe 'apache-couchdb'
 include_recipe 'nodejs'
 include_recipe 'nodejs::npm'
 
+package 'build-essential'
+
 include_recipe 'easybib::role-phpapp'
 include_recipe 'php-pdo_sqlite'
 include_recipe 'nginx-app::vagrant-silex'
