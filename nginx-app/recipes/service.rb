@@ -1,21 +1,27 @@
+service 'nginx-upstart' do
+  service_name 'nginx'
+  provider Chef::Provider::Service::Upstart
+  supports :status => true, :restart => true, :reload => true
+end
+
 service 'nginx' do
+  action :nothing
   provider Chef::Provider::Service::Init::Debian
   supports :status => true, :restart => true, :reload => true
 end
 
-# Nginx installs an Upstart configuration by default. If this file
-# doesn't exist, Ubuntu will fall-back to prehistoric init-system.
-service 'nginx-upstart' do
-  service_name 'nginx'
-  action :stop
-  provider Chef::Provider::Service::Upstart
-  notifies :restart, 'service[nginx]'
-  only_if do
-    ::File.exist?('/etc/init/nginx.conf')
-  end
+# Nginx installs an Upstart configuration by default. We want to
+# use the old sys-v-init system. In order to fall-back to the old
+# system, we have to stop, delete the upstart config and restart
+# the nginx service.
+upstart_config = '/etc/init/nginx'
+file upstart_config do
+  action :nothing
+  notifies :stop, 'service[nginx-upstart]', :immediately
+  only_if { ::File.exist?(upstart_config) }
 end
-
-file '/etc/init/nginx.conf' do
+file upstart_config do
   action :delete
-  ignore_failure true
+  notifies :restart, 'service[nginx]', :immediately
+  only_if { ::File.exist?(upstart_config) }
 end
