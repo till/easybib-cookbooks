@@ -4,6 +4,7 @@ service 'nginx-upstart' do
   service_name 'nginx'
   action :stop
   provider Chef::Provider::Service::Upstart
+  notifies :restart, 'service[nginx]'
   only_if do
     ::File.exist?('/etc/init/nginx.conf')
   end
@@ -17,4 +18,5 @@ end
 service 'nginx' do
   provider Chef::Provider::Service::Init::Debian
   supports :status => true, :restart => true, :reload => true
+  action :start
 end
