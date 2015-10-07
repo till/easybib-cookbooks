@@ -13,4 +13,3 @@ if is_aws
   include_recipe 'rsyslogd::mute-cron'
   include_recipe 'loggly::setup'
 end
-
