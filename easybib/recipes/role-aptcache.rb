@@ -1,4 +1,4 @@
-include_recipe 'easybib::setup'
+include_recipe 'ies::setup'
 include_recipe 'loggly::setup'
 
 if get_instance_roles.include?('aptcache')
