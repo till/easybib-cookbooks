@@ -1,13 +1,4 @@
-base_packages = [
-  'htop', 'jwhois', 'multitail',
-  'apache2-utils', 'strace', 'rsync',
-  'manpages', 'manpages-dev',
-  'git-core', 'unzip', 'realpath', 'curl'
-]
-
-base_packages.each do |p|
-  package p
-end
+include_recipe 'ies::setup-basepackages'
 
 chef_gem 'Remove: BibOpsworks' do
   package_name 'BibOpsworks'
@@ -37,19 +28,6 @@ if is_aws
   include_recipe 'fail2ban'
   include_recipe 'easybib::opsworks-fixes'
   include_recipe 'apt::unattended-upgrades'
-end
-
-# landscape is buggy
-# https://bugs.launchpad.net/ubuntu/+source/pam/+bug/805423
-package 'landscape-client' do
-  action :purge
-end
-
-# opsworks installs this but we don't need it
-['ganglia-monitor', 'libganglia1'].each do |p|
-  package p do
-    action :purge
-  end
 end
 
 include_recipe 'loggly::setup'

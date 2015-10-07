@@ -3,5 +3,5 @@ if is_aws
   ::EasyBib::SNS.sns_notify_spinup(node) if node['opsworks']['activity'] == 'setup'
 
   # chef_handler_sns notifies of broken/failed chef runs
-  include_recipe 'chef_handler_sns::default' unless node.fetch('chef_handler_sns', {}).['topic_arn'].nil?
+  include_recipe 'chef_handler_sns::default' unless node.fetch('chef_handler_sns', {})['topic_arn'].nil?
 end
