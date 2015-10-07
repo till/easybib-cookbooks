@@ -1,22 +1,5 @@
 include_recipe 'ies::setup-basepackages'
-
-chef_gem 'Remove: BibOpsworks' do
-  package_name 'BibOpsworks'
-  action :remove
-  only_if do
-    ::EasyBib.is_aws(node)
-  end
-  ignore_failure true
-end
-
-chef_gem 'Update: BibOpsworks' do
-  package_name 'BibOpsworks'
-  action :upgrade
-  only_if do
-    ::EasyBib.is_aws(node)
-  end
-end
-
+include_recipe 'ies::setup-bibopsworks' if is_aws
 include_recipe 'easybib::nscd'
 include_recipe 'easybib::nginxstats'
 include_recipe 'easybib::cron'
