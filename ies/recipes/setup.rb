@@ -59,3 +59,5 @@ end
     action :purge
   end
 end
+
+include_recipe 'loggly::setup'
