@@ -1,5 +1,4 @@
-include_recipe 'ies::setup'
-include_recipe 'rsyslogd::mute-cron'
+include_recipe 'ies::role-generic'
 
 include_recipe 'haproxy::ctl'
 include_recipe 'haproxy::hatop'

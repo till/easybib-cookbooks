@@ -1,4 +1,4 @@
-include_recipe 'ies::setup'
+include_recipe 'ies::role-generic'
 
 node.set['rabbitmq']['job_control'] = 'upstart' if platform?('ubuntu')
 

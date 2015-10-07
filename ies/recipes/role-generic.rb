@@ -9,6 +9,8 @@ if is_aws
   include_recipe 'fail2ban'
   include_recipe 'ies::opsworks-fixes'
   include_recipe 'apt::unattended-upgrades'
+  include_recipe 'postfix'
+  include_recipe 'rsyslogd::mute-cron'
+  include_recipe 'loggly::setup'
 end
 
-include_recipe 'loggly::setup'

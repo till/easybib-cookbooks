@@ -1,4 +1,3 @@
-include_recipe 'ies::setup'
-include_recipe 'rsyslogd::mute-cron'
+Chef::Log.warn('Using deprecated easybib::role-generic')
+include_recipe 'ies::role-generic'
 include_recipe 'nginx-app::server'
-include_recipe 'postfix' if is_aws
