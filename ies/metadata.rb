@@ -5,6 +5,7 @@ license           'BSD License'
 description       'Our generic setup and install scripts across all stacks'
 version           '0.1'
 recipe            'ies::setup', 'Base package sets for all instances'
+recipe            'ies::setup-sns', 'Set up SNS notifications for our instances'
 
 supports 'ubuntu'
 

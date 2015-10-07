@@ -33,16 +33,8 @@ include_recipe 'easybib::ruby'
 include_recipe 'easybib::profile'
 
 if is_aws
-  if node['opsworks']['activity'] == 'setup'
-    ::EasyBib::SNS.sns_notify_spinup(node)
-  end
-
+  include_recipe 'ies::setup-sns'
   include_recipe 'fail2ban'
-  if node.attribute?('chef_handler_sns') &&
-     node['chef_handler_sns'].attribute?('topic_arn') &&
-     !node['chef_handler_sns']['topic_arn'].nil?
-    include_recipe 'chef_handler_sns::default'
-  end
   include_recipe 'easybib::opsworks-fixes'
   include_recipe 'apt::unattended-upgrades'
 end
