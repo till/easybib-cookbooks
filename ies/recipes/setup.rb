@@ -1,6 +1,6 @@
 include_recipe 'ies::setup-basepackages'
 include_recipe 'ies::setup-bibopsworks' if is_aws
-include_recipe 'easybib::nscd'
+include_recipe 'ies::nscd'
 include_recipe 'easybib::nginxstats'
 include_recipe 'easybib::cron'
 include_recipe 'easybib::ruby'
