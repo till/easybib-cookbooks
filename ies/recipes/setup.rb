@@ -1,15 +1,13 @@
 include_recipe 'ies::setup-basepackages'
 include_recipe 'ies::setup-bibopsworks' if is_aws
 include_recipe 'ies::nscd'
-include_recipe 'easybib::nginxstats'
-include_recipe 'easybib::cron'
-include_recipe 'easybib::ruby'
-include_recipe 'easybib::profile'
+include_recipe 'ies::cron-mailto'
+include_recipe 'ies::ruby-defaultgemrc'
 
 if is_aws
   include_recipe 'ies::setup-sns'
   include_recipe 'fail2ban'
-  include_recipe 'easybib::opsworks-fixes'
+  include_recipe 'ies::opsworks-fixes'
   include_recipe 'apt::unattended-upgrades'
 end
 
