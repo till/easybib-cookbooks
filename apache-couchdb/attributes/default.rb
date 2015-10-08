@@ -15,6 +15,9 @@ default['apache-couchdb']['config'] = {
   },
   'compactions' => {
     '_default' => '[{db_fragmentation, "70%"}, {view_fragmentation, "60%"}, {from, "07:00"}, {to, "11:00"}]'
+  },
+  'admins' => {
+      'monitoring' => 'Eezuvu3a'
   }
 }
 
@@ -22,5 +25,3 @@ default['apache-couchdb']['fauxton'] = {
   'repository' => 'https://github.com/apache/couchdb-fauxton.git',
   'version' => 'b61f60181ccc9d728bde5e6ad7ebbec4a4bd7b20'
 }
-
-default['apache-couchdb']['monitoring']['replication']['credentials'] = ''
