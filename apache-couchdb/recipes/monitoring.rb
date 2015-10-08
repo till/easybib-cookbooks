@@ -10,5 +10,5 @@ end
 
 password = node['apache-couchdb']['config']['admins']['monitoring']
 cron_d 'couchdb_replication' do
-  command "#{bin_path} -a 'monitoring:#{password}'"
+  command "#{bin_path} -a 'monitoring:#{password}' | logger"
 end
