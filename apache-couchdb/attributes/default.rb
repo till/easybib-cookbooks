@@ -22,3 +22,5 @@ default['apache-couchdb']['fauxton'] = {
   'repository' => 'https://github.com/apache/couchdb-fauxton.git',
   'version' => 'b61f60181ccc9d728bde5e6ad7ebbec4a4bd7b20'
 }
+
+default['apache-couchdb']['monitoring']['replication']['credentials'] = ''
