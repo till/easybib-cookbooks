@@ -1,4 +1,5 @@
 include_recipe 'apache-couchdb::service'
+include_recipe 'apache-couchdb::monitoring'
 
 logrotate_app 'couchdb' do
   cookbook 'logrotate'
