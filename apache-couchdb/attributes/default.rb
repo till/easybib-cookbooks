@@ -17,7 +17,7 @@ default['apache-couchdb']['config'] = {
     '_default' => '[{db_fragmentation, "70%"}, {view_fragmentation, "60%"}, {from, "07:00"}, {to, "11:00"}]'
   },
   'admins' => {
-      'monitoring' => 'Eezuvu3a'
+      'monitoring' => ''
   }
 }
 
