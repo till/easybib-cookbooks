@@ -8,7 +8,7 @@ template bin_path do
   group 'root'
 end
 
-credentials = node['apache-couchdb']['config']['admins']['monitoring']
+password = node['apache-couchdb']['config']['admins']['monitoring']
 cron_d 'couchdb_replication' do
-  command "#{bin_path} -a '#{credentials}'"
+  command "#{bin_path} -a 'monitoring:#{password}'"
 end
