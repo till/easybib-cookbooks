@@ -118,8 +118,10 @@ if __name__ == '__main__':
                         help='Basic HTTP authentication string as "username:password"')
     args = parser.parse_args()
 
+    auth = args.auth or <%= credentials %>
+
     try:
-        status = main(args.host, args.replicator, args.auth, args.age_timeout)
+        status = main(args.host, args.replicator, auth, args.age_timeout)
     except Exception as e:
         print 'REPLICATION STATUS UNKNOWN - Python exception %s' % str(e)
         status = UNKNOWN
