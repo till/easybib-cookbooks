@@ -8,4 +8,4 @@ recipe            'avahi::default', 'Installs avahi'
 
 supports 'ubuntu'
 
-depends 'easybib'
+depends 'ies'

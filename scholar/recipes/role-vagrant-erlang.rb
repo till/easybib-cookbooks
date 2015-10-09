@@ -1,6 +1,7 @@
 include_recipe 'ohai'
 
-include_recipe 'easybib::role-generic'
+include_recipe 'ies::role-generic'
+include_recipe 'nginx-app::server'
 
 include_recipe 'erlang-packages::aptrepo'
 
