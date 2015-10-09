@@ -80,4 +80,13 @@ Style/HashSyntax:
 Style/EmptyLinesAroundBlockBody:
   Enabled: false
 
+Style/ExtraSpacing:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Performance/StringReplacement:
+  Enabled: false
+
 inherit_from: .rubocop_todo.yml
