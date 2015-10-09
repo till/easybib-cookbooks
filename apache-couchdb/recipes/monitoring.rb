@@ -10,7 +10,7 @@ template bin_path do
   owner 'root'
   group 'root'
   variables(
-    credentials = credentials
+    :credentials => credentials
   )
 end
 
