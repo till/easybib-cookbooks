@@ -90,7 +90,7 @@ when "amazon", "centos", "debian", "fedora", "redhat", "ubuntu"
 
   service "supervisor" do
     supports :status => true, :restart => true
-    action :nothing
+    action [:disable, :stop]
   end
 when "smartos"
   directory "/opt/local/share/smf/supervisord" do
