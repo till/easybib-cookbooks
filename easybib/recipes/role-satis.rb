@@ -1,5 +1,4 @@
-include_recipe 'easybib::setup'
-include_recipe 'loggly::setup'
+include_recipe 'ies::role-generic'
 include_recipe 'php-fpm'
 include_recipe 'php-phar'
 include_recipe 'php-posix'
