@@ -118,7 +118,7 @@ if __name__ == '__main__':
                         help='Basic HTTP authentication string as "username:password"')
     args = parser.parse_args()
 
-    auth = args.auth or <%= @credentials %>
+    auth = args.auth or '<%= @credentials %>'
 
     try:
         status = main(args.host, args.replicator, auth, args.age_timeout)
