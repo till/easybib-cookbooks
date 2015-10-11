@@ -3,8 +3,6 @@ template "#{node['php-fpm']['prefix']}/etc/php/mysqli-settings.ini" do
   source 'mysqli.ini.erb'
   variables(
     'name' => 'mysqli',
-    'directives' => {
-      'reconnect' => node['php-mysqli']['reconnect']
-    }
+    'directives' => node['php-mysqli']['settings']
   )
 end

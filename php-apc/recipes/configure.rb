@@ -1,6 +1,6 @@
 include_recipe 'php-fpm::service'
 
-apc_attributes = node['php-apc'].to_hash
+apc_attributes = node['php-apc']['settings'].to_hash
 if is_aws
   apc_attributes = { 'stat' => 0,
                      'slam_defense' => 1,
