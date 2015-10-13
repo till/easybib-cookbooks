@@ -7,5 +7,6 @@ version           '0.1'
 
 depends 'apt'
 depends 'php'
+depends 'php-fpm'
 
 supports 'ubuntu'

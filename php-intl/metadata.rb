@@ -7,5 +7,4 @@ supports 'ubuntu'
 
 depends 'apt'
 depends 'php-fpm'
-depends 'php'
-license           'BSD License'
+license 'BSD License'

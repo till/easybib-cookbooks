@@ -7,7 +7,7 @@ describe 'php-mysqli::configure' do
 
     chef_run = ChefSpec::Runner.new.converge('php-mysqli::configure')
 
-    conf = "mysqli.reconnect = 1\n"
+    conf = "mysqli.reconnect=1\n"
     expect(chef_run).to render_file('/opt/easybib/etc/php/mysqli-settings.ini').with_content(conf)
   end
 end

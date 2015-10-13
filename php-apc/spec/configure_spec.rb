@@ -19,13 +19,12 @@ describe 'php-apc::configure' do
 
   it 'it contains production settings' do
 
-    conf = "apc.ttl=0\n"
-    conf << "apc.mmap_file_mask=/dev/zero\n"
-    conf << "apc.shm_size=70M\n"
-    conf << "\n"
-    conf << "apc.stat=0\n"
+    conf = "apc.stat=0\n"
     conf << "apc.slam_defense=1\n"
     conf << "apc.max_file_size=2M\n"
+    conf << "apc.ttl=0\n"
+    conf << "apc.mmap_file_mask=/dev/zero\n"
+    conf << "apc.shm_size=70M\n"
 
     expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini').with_content(conf)
   end
