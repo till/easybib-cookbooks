@@ -1,0 +1,24 @@
+# Apache CouchDB - a RESTful document oriented database
+
+description "Start the system-wide CouchDB instance"
+author "Jason Gerard DeRose <jason@system76.com>"
+
+start on filesystem and static-network-up
+stop on deconfiguring-networking
+respawn
+
+pre-start script
+    mkdir -p /var/run/couchdb || /bin/true
+    chown -R couchdb:couchdb /var/run/couchdb /etc/couchdb/local.*
+end script
+
+script
+  HOME=<%=@database_dir%>
+  export HOME
+  cd $HOME
+  exec su couchdb -c /usr/bin/couchdb
+end script
+
+post-stop script
+    rm -rf /var/run/couchdb/*
+end script
