@@ -28,7 +28,7 @@ describe 'stack-qa::role-vagrant-ci' do
     end
 
     it 'includes the desired cookbooks' do
-      expect(chef_run).to include_recipe('easybib::role-generic')
+      expect(chef_run).to include_recipe('ies::role-generic')
       expect(chef_run).to include_recipe('virtualbox')
       expect(chef_run).to include_recipe('vagrant')
       expect(chef_run).to include_recipe('stack-qa::deploy-vagrant-ci')

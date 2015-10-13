@@ -1,4 +1,4 @@
-include_recipe 'easybib::nscd'
+include_recipe 'ies::nscd'
 
 # installs avahi-daemon
 package 'avahi-daemon'

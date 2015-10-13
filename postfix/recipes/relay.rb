@@ -43,6 +43,6 @@ execute 'postmap' do
 end
 
 service 'postfix' do
-  supports :status => true, :restart => true, :reload => true, :check => true, :reload => true
+  supports :status => true, :restart => true, :reload => true, :check => true
   action [:enable, :reload]
 end

@@ -1,4 +1,4 @@
-include_recipe 'easybib::nscd'
+include_recipe 'ies::nscd'
 include_recipe 'avahi::alias-service'
 
 ['python-avahi', 'python-pip'].each do |pkg|

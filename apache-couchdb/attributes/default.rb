@@ -9,6 +9,15 @@ default['apache-couchdb']['config'] = {
   },
   'log_level_by_module' => {
     'couch_httpd' => 'warning'
+  },
+  'daemons' => {
+    'compaction_daemon' => '{couch_compaction_daemon, start_link, []}'
+  },
+  'compactions' => {
+    '_default' => '[{db_fragmentation, "70%"}, {view_fragmentation, "60%"}, {from, "07:00"}, {to, "11:00"}]'
+  },
+  'admins' => {
+    'monitoring' => ''
   }
 }
 

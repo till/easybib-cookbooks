@@ -8,7 +8,8 @@ template "#{node['php-fpm']['prefix']}/etc/php/xdebug-settings.ini" do
   source 'xdebug.ini.erb'
   mode   '0644'
   variables(
-    :config => node['xdebug']['config']
+    :name => 'xdebug',
+    :directives => node['xdebug']['settings']
   )
   notifies :reload, 'service[php-fpm]', :delayed
 end
