@@ -1,5 +1,5 @@
 Chef::Resource.send(:include, EasyBib)
-bin_path = '/usr/local/bin/check_couchdb.erb'
+bin_path = '/usr/local/bin/check_couchdb'
 monitoring_user = 'monitoring'
 monitoring_pass = node['apache-couchdb']['config']['admins'][monitoring_user]
 credentials = "#{monitoring_user}:#{monitoring_pass}"
