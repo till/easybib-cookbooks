@@ -12,4 +12,5 @@ if is_aws
   include_recipe 'postfix'
   include_recipe 'rsyslogd::mute-cron'
   include_recipe 'loggly::setup'
+  include_recipe 'monit::service'
 end
