@@ -1,2 +1,2 @@
 default['php-mysqli'] = {}
-default['php-mysqli']['reconnect'] = 1
+default['php-mysqli']['settings']['reconnect'] = 1

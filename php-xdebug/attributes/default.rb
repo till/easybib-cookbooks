@@ -1,6 +1,6 @@
 default['xdebug']            = {}
 
-default['xdebug']['config'] = {
+default['xdebug']['settings'] = {
   'scream'               => 1,
   'show_exception_trace' => 0,
   'remote_enable'        => 1,

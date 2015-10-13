@@ -1,1 +1,3 @@
-mysqli.reconnect = <%=@reconnect%>
+<% @directives.each do |k,v| -%>
+<%= "#{@name}.#{k}=#{v}" %>
+<% end -%>
