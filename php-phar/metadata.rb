@@ -5,6 +5,7 @@ license           'BSD License'
 description       'Installs ext/phar for PHP'
 version           '0.1'
 
+depends 'php'
 depends 'php-fpm'
 depends 'apt'
 

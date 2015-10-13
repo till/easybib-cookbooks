@@ -1,16 +1,18 @@
 include_recipe 'php-fpm::service'
 
-is_cloud = is_aws
+apc_attributes = node['php-apc']['settings'].to_hash
+if is_aws
+  apc_attributes = { 'stat' => 0,
+                     'slam_defense' => 1,
+                     'max_file_size' => '2M' }.merge(apc_attributes)
+end
 
 template "#{node['php-fpm']['prefix']}/etc/php/apc-settings.ini" do
   source 'apc.ini.erb'
   mode   '0644'
   variables(
-    :is_cloud      => is_cloud,
-    :stat          => node['php-apc']['stat'],
-    :slam_defense  => node['php-apc']['slam_defense'],
-    :shm_size      => node['php-apc']['shm_size'],
-    :max_file_size => node['php-apc']['max_file_size']
+    'name' => 'apc',
+    'directives' => apc_attributes
   )
   notifies :reload, 'service[php-fpm]', :delayed
 end
