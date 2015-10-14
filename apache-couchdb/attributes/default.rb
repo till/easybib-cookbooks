@@ -3,6 +3,13 @@ default['apache-couchdb'] = {
 }
 
 default['apache-couchdb']['config'] = {
+  'couchdb' => {
+    'database_dir' => '/var/lib/couchdb',
+    'view_index_dir' => '/var/lib/couchdb'
+  },
+  'couch_httpd_auth' => {
+    'require_valid_user' => false
+  },
   'httpd' => {
     'port' => 5984,
     'bind_address' => '127.0.0.1'
@@ -15,9 +22,6 @@ default['apache-couchdb']['config'] = {
   },
   'compactions' => {
     '_default' => '[{db_fragmentation, "70%"}, {view_fragmentation, "60%"}, {from, "07:00"}, {to, "11:00"}]'
-  },
-  'admins' => {
-    'monitoring' => ''
   }
 }
 
