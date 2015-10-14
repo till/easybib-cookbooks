@@ -7,8 +7,10 @@ template '/etc/aliases' do
     :aliases => node['postfix']['aliases'],
     :email   => node['sysop_email']
   )
+  not_if { node['sysop_email'].nil? }
 end
 
 execute 'update aliases' do
   command 'newaliases'
+  not_if { node['sysop_email'].nil? }
 end
