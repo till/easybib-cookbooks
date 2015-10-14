@@ -1,7 +1,6 @@
 include_recipe 'ies::setup-basepackages'
 include_recipe 'ies::setup-bibopsworks' if is_aws
 include_recipe 'ies::nscd'
-include_recipe 'ies::cron-mailto'
 include_recipe 'ies::ruby-defaultgemrc'
 
 if is_aws
