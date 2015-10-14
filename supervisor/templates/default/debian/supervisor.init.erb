@@ -140,7 +140,7 @@ case "$1" in
     ;;
   restart)
     echo -n "Restarting $DESC: "
-    start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE || echo "INFO: no running instance of supervisord detected."
+    start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
     [ -n "$DODTIME" ] && sleep $DODTIME
     start-stop-daemon --start --quiet --pidfile $PIDFILE \
         --startas $DAEMON -- $DAEMON_OPTS

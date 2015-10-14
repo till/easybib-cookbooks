@@ -12,5 +12,6 @@ depends 'hhvm-fcgi'
 depends 'apt'
 depends 'aptly'
 depends 'easybib'
+depends 'supervisor'
 
 supports 'ubuntu'
