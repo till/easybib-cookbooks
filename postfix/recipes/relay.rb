@@ -26,7 +26,8 @@ template "#{etc_path}/main.cf" do
     :etc_path    => etc_path,
     :ips         => ips,
     :my_hostname => my_hostname,
-    :relay_host  => relay_host
+    :relay_host  => relay_host,
+    :my_destination => my_hostname
   )
 end
 
