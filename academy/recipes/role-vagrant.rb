@@ -8,3 +8,7 @@ include_recipe 'nodejs'
 include_recipe 'avahi'
 include_recipe 'service::role-rabbitmq'
 include_recipe 'php-xdebug'
+
+package 'build-essential'
+package 'g++'
+
