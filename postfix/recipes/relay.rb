@@ -14,7 +14,7 @@ else
   my_hostname = node['hostname']
 end
 
-relay_host = node['postfix']['relay'][0]['host']
+relay_host = node['postfix']['relay']['host']
 
 etc_path = '/etc/postfix'
 
@@ -36,10 +36,15 @@ end
 template "#{etc_path}/sasl/passwd" do
   source 'passwd.erb'
   mode   '0600'
+  variables(
+    :relay    => [node['postfix']['relay']]
+  )
+  not_if { relay_host.nil? }
 end
 
 execute 'postmap' do
   command "postmap #{etc_path}/sasl/passwd"
+  not_if { relay_host.nil? }
 end
 
 service 'postfix' do

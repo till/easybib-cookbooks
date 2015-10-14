@@ -1,7 +1,9 @@
+<% unless @relay_host.nil? %>
 relayhost = <%= @relay_host %>
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:<%= @etc_path %>/sasl/passwd
 smtp_sasl_security_options =
+<% end %>
 smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
 biff = no
 append_dot_mydomain = no
