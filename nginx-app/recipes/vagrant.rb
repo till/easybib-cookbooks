@@ -7,6 +7,7 @@ Chef::Resource.send(:include, EasyBib::Config)
 Chef::Resource.send(:include, PhpFpm::Helper)
 
 include_recipe 'nginx-app::service'
+include_recipe 'supervisor'
 
 app_dir = EasyBib::Config.get_appdata(node, 'www', 'app_dir')
 
