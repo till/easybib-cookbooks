@@ -5,7 +5,7 @@ bin_path = '/usr/local/bin/check_couchdb'
 # this is an assumption for what is to follow!
 monitoring_user = 'monitoring'
 
-if node.fetch('apache-couchdb', nil).fetch('config', nil).fetch('admins', nil).fetch('monitoring_user', nil)
+unless node['apache-couchdb']['config'].fetch('admins', {})[monitoring_user].nil?
   monitoring_pass = node['apache-couchdb']['config']['admins'][monitoring_user]
   credentials = "#{monitoring_user}:#{monitoring_pass}"
 
