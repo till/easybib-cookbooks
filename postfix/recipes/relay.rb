@@ -1,20 +1,13 @@
-ips = ['127.0.0.0/8']
+ips         = ['127.0.0.0/8']
+relay_host  = node['postfix']['relay']['host']
+etc_path    = '/etc/postfix'
+my_hostname = get_hostname(node)
 
-if !get_cluster_name.empty?
-
+if is_aws
   instance = get_instance
-
   ips.push(instance['ip'])
   ips.push(instance['private_ip'])
-
-  my_hostname = instance['hostname']
-else
-  my_hostname = node['hostname']
 end
-
-relay_host = node['postfix']['relay']['host']
-
-etc_path = '/etc/postfix'
 
 # install main.cf
 template "#{etc_path}/main.cf" do
@@ -23,10 +16,10 @@ template "#{etc_path}/main.cf" do
   mode   '0644'
   source 'main.cf.erb'
   variables(
-    :etc_path    => etc_path,
-    :ips         => ips,
-    :my_hostname => my_hostname,
-    :relay_host  => relay_host,
+    :etc_path       => etc_path,
+    :ips            => ips,
+    :my_hostname    => my_hostname,
+    :relay_host     => relay_host,
     :my_destination => my_hostname
   )
 end
@@ -36,7 +29,7 @@ template "#{etc_path}/sasl/passwd" do
   source 'passwd.erb'
   mode   '0600'
   variables(
-    :relay    => [node['postfix']['relay']]
+    :relay => [node['postfix']['relay']]
   )
   not_if { relay_host.nil? }
 end
