@@ -5,7 +5,8 @@ template '/etc/aliases' do
   group  'root'
   variables(
     :aliases => node['postfix']['aliases'],
-    :email   => 'root'
+    :email => 'root',
+    :sysop_email => node['sysop_email']
   )
   not_if { node['sysop_email'].nil? }
 end
