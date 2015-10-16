@@ -6,7 +6,7 @@ smtp_sasl_security_options =
 <% end %>
 smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
 biff = no
-append_dot_mydomain = no
+append_dot_mydomain = yes
 readme_directory = no
 myhostname = <%= @my_hostname %>
 mynetworks = <%= @ips.join(', ') %>
