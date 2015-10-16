@@ -6,6 +6,11 @@ smtp_sasl_security_options = noanonymous
 smtp_tls_security_level = encrypt
 smtp_tls_note_starttls_offer = yes
 <% end %>
+<% if @rewrite_address %>
+sender_canonical_classes = envelope_sender, header_sender
+sender_canonical_maps =  regexp:<%= @etc_path %>/sender_canonical_maps
+smtp_header_checks = regexp:<%= @etc_path %>/header_check
+<% end %>
 smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
 biff = no
 append_dot_mydomain = no
