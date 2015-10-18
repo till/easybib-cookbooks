@@ -2,7 +2,7 @@ default['ies-mysql'] = {}
 default['ies-mysql']['version'] = '5.6'
 
 default['ies-mysql']['server-config'] = {
-  'user' => 'root'
+  'user' => 'root',
   'password' => '',
   'port' => 3306,
   'bind-address' => '0.0.0.0',
