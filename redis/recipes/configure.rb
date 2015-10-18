@@ -16,8 +16,8 @@ end
 file '/etc/logrotate.d/redis' do
   action :delete
   only_if do
-     File.exist?('/etc/logrotate.d/redis')
-   end
+    File.exist?('/etc/logrotate.d/redis')
+  end
 end
 
 template '/etc/logrotate.d/redis-server' do
