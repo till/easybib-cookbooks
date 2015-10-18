@@ -7,22 +7,23 @@ mysql_service server_config['instance-name'] do
   bind_address server_config['bind-address']
   port server_config['port']
   initial_root_password server_config['password']
+  provider Chef::Provider::MysqlServiceUpstart
   action [:create, :start]
 end
 
 mysql_client server_config['instance-name'] do
-  package_version mysql_version
+  version mysql_version
   action :create
 end
 
 config = node['ies-mysql']['mysqld-config']
 
-file config['log-slow-queries'] do
+file config['slow_query_log_file'] do
   owner 'mysql'
-  group 'adm'
+  group 'mysql'
   action :create_if_missing
   only_if do
-    config['log-slow-queries']
+    config['slow_query_log_file']
   end
 end
 

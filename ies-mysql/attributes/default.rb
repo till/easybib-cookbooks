@@ -11,11 +11,14 @@ default['ies-mysql']['server-config'] = {
 
 default['ies-mysql']['mysqld-config'] = {
   'interactive_timeout' => 300,
-  'log-queries-not-using-indexes' => '',
-  'log-slow-queries' => '/var/log/mysql/log-slow-queries.log',
+  'slow_query_log' => '1',
+  'slow_query_log_file' => '/var/log/mysql/log-slow-queries.log',
+  'log_queries_not_using_indexes' => '1',
+  'log_slow_admin_statements' => '1',
+  'long_query_time' => 5,
   'wait_timeout' => 60,
   'innodb_buffer_pool_size' => '512M',
   'innodb_flush_log_at_trx_commit' => 0,
   'innodb_flush_method' => 'O_DIRECT',
-  'skip-name-resolve' => ''
+  'skip_name_resolve' => '1'
 }
