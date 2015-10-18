@@ -12,7 +12,15 @@ template '/etc/redis/redis.conf' do
   notifies :restart, 'service[redis-server]', :immediately
 end
 
-template '/etc/logrotate.d/redis' do
+# cleans up old logrotate file to remove duplicate warning
+file '/etc/logrotate.d/redis' do
+  action :delete
+  only_if do
+     File.exist?('/etc/logrotate.d/redis')
+   end
+end
+
+template '/etc/logrotate.d/redis-server' do
   source 'logrotate.erb'
   mode '0644'
   owner 'root'
