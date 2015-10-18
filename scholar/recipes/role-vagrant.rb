@@ -1,9 +1,8 @@
 include_recipe 'ohai'
 
 # db
-include_recipe 'percona::server'
-include_recipe 'percona::client'
-include_recipe 'percona::dev'
+include_recipe 'ies-mysql'
+include_recipe 'ies-mysql::dev'
 include_recipe 'apache-couchdb'
 
 # frontend
