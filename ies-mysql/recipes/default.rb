@@ -16,6 +16,8 @@ mysql_client server_config['instance-name'] do
   action :create
 end
 
+include_recipe 'ies-mysql::client'
+
 config = node['ies-mysql']['mysqld-config']
 
 file config['slow_query_log_file'] do

@@ -2,14 +2,15 @@ require 'chefspec'
 
 describe 'ies-mysql::default' do
   let(:runner) do
-    ChefSpec::Runner.new
+    ChefSpec::Runner.new(:log_level => :error)
   end
 
   let(:chef_run) { runner.converge(described_recipe) }
 
   it 'it installs the server and the client' do
     expect(chef_run).to create_mysql_service('vagrant')
-    expect(chef_run).to create_mysql_client('vagrant')
+
+    expect(chef_run).to include_recipe 'ies-mysql::client'
   end
 
   it 'it configures mysql' do
