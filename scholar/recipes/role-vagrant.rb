@@ -1,4 +1,5 @@
 include_recipe 'ohai'
+include_recipe 'supervisor'
 
 # db
 include_recipe 'ies-mysql'
