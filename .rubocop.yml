@@ -25,6 +25,7 @@ AllCops:
     - 'vendor/**/*'
     - 'rails/**/*'
     - 'runit/**/*'
+    - 'mysql/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
