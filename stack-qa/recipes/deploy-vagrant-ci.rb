@@ -55,7 +55,7 @@ file "#{deploy_user_home}/.ssh/id_dsa.pub" do
   end
 end
 
-# START elements to setup git_updater 
+# START elements to setup git_updater
 # Install git_update_scrupt.sh from files directory
 cookbook_file '/opt/vagrant/bin/update_github_sources.sh' do
   source 'update_github_sources.sh'
