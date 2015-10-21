@@ -18,6 +18,7 @@ C_GIT=`which git`
 # sudo command
 C_SUDO=`which sudo`
 
+# this should be automated by chef, I don't know how yet
 V_USER='vagrantci'
 
 for V_FILE in ${L_PATHS}

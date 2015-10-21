@@ -65,14 +65,12 @@ cookbook_file '/opt/vagrant/bin/update_github_sources.sh' do
   action :create
 end
 
-# setup git_update_script cron to run as deploy_user_name (has git creds)
+# setup git_update_script cron to run as root, script will pick up user with git creds
 cron 'cookbooks_report' do
   action :create
   minute '15'
   hour '1'
   day '*'
-  user deploy_user_name
-  home '#{deploy_user_home}/'
   command '/opt/vagrant/bin/update_github_sources.sh'
 end
 # END elements to setup git_updater
