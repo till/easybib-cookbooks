@@ -11,11 +11,11 @@ user = <%= @user %>
 group = <%= @group %>
 
 pm = dynamic
-pm.max_children = 100
-pm.start_servers = 30
-pm.min_spare_servers = 10
-pm.max_spare_servers = 100
-pm.max_requests = 500
+pm.max_children = 8
+pm.start_servers = 4
+pm.min_spare_servers = 4
+pm.max_spare_servers = 8
+pm.max_requests = 128
 pm.status_path = /fpm_status_<%= @pool_name %>
 
 ping.path = /fpm_ping_<%= @pool_name %>
