@@ -1,6 +1,6 @@
 include_recipe 'ohai'
-include_recipe 'percona::server'
-include_recipe 'percona::dev'
+include_recipe 'ies-mysql'
+include_recipe 'ies-mysql::dev'
 include_recipe 'easybib::role-phpapp'
 include_recipe 'nginx-app::vagrant'
 include_recipe 'php-pdo_sqlite'

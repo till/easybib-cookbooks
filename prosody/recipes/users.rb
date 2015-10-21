@@ -36,7 +36,7 @@ if node['prosody']['storage'] == 'sql'
   case driver
   when 'mysql'
 
-    include_recipe 'percona::client' if is_aws
+    include_recipe 'ies-mysql::client' if is_aws
 
     mysql_command = 'mysql -u %s -h %s' % [db_conf['username'], db_conf['hostname']]
     unless db_conf['password'].empty?

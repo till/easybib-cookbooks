@@ -24,7 +24,7 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = "./../../"
     chef.log_level = vagrantconfig['chef_log_level']
     chef.add_recipe "easybib::setup"
-    chef.add_recipe "percona::server"
+    chef.add_recipe "ies-mysql"
     chef.add_recipe "prosody"
     chef.json = get_json(this_dir + "/prosody.json")
   end
