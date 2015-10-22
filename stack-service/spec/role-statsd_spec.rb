@@ -29,12 +29,7 @@ describe 'stack-service::role-statsd' do
     before do
       node.set['opsworks'] = {
         'instance' => {
-          'layers' => [
-            'mothership',
-            'borg',
-            'muddership',
-            'statsd'
-          ]
+          'layers' => %w(mothership borg muddership statsd)
         }
       }
       node.set['deploy'] = [
