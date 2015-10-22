@@ -55,6 +55,26 @@ file "#{deploy_user_home}/.ssh/id_dsa.pub" do
   end
 end
 
+# START elements to setup git_updater
+# Install git_update_scrupt.sh from files directory
+cookbook_file '/opt/vagrant/bin/update_github_sources.sh' do
+  source 'update_github_sources.sh'
+  owner deploy_user_name
+  group deploy_user_name
+  mode '0755'
+  action :create
+end
+
+# setup git_update_script cron to run as root, script will pick up user with git creds
+cron_d 'update_github_sources' do
+  action :create
+  minute '15'
+  hour '1'
+  day '*'
+  command '/opt/vagrant/bin/update_github_sources.sh'
+end
+# END elements to setup git_updater
+
 node.default['bash']['environment'] = {
   'user' => deploy_user_name,
   'group' => deploy_user_name
