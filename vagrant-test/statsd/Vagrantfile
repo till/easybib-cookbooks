@@ -25,8 +25,7 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./../../"
-    chef.add_recipe "service::role-statsd"
-    #chef.json = get_json(this_dir + "/deploy.json")
+    chef.add_recipe "stack-service::role-statsd"
 
     chef.log_level = vagrantconfig['chef_log_level']
   end

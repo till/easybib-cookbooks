@@ -1,4 +1,4 @@
-name 'service'
+name 'stack-service'
 maintainer 'Till Klampaeckel'
 maintainer_email 'till@php.net'
 license 'BSD-2-Clause'
