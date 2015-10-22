@@ -27,6 +27,6 @@ git target_dir do
   revision node['statsd']['branch']
   user node['statsd']['user']
   group node['statsd']['group']
-  not_if is_aws
+  not_if { is_aws }
   notifies :install, 'nodejs_npm[install deps]'
 end
