@@ -49,7 +49,7 @@ include_recipe 'easybib_vagrant'
 public_key = node['stack-qa'][deploy_role]['public_key']
 file "#{deploy_user_home}/.ssh/id_dsa.pub" do
   content public_key
-  mode 0644
+  mode 0600
   not_if do
     public_key.nil?
   end
