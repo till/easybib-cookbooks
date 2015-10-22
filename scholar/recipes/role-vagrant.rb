@@ -26,4 +26,4 @@ include_recipe 'redis::default'
 # ssl
 include_recipe 'easybib-deploy::ssl-vagrant'
 
-include_recipe 'service::role-rabbitmq'
+include_recipe 'stack-service::role-rabbitmq'
