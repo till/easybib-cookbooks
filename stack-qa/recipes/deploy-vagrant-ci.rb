@@ -66,7 +66,7 @@ cookbook_file '/opt/vagrant/bin/update_github_sources.sh' do
 end
 
 # setup git_update_script cron to run as root, script will pick up user with git creds
-cron 'cookbooks_report' do
+cron_d 'update_github_sources' do
   action :create
   minute '15'
   hour '1'
