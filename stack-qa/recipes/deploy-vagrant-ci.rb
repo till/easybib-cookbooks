@@ -45,19 +45,11 @@ if node
 end
 include_recipe 'easybib_vagrant'
 
-# remove key files
-file "#{deploy_user_home}/.ssh/id_dsa.pub" do
-  action :delete
-  ignore_failure true
-end
-file "#{deploy_user_home}/.ssh/id_dsa" do
-  action :delete
-  ignore_failure true
-end
-
 # install public key to please keychain
 public_key = node['stack-qa'][deploy_role]['public_key']
-file "#{deploy_user_home}/.ssh/id_dsa.pub" do
+user_key_path = "#{deploy_user_home}/.ssh/id_dsa.pub"
+file "user_key_path-#{deploy_user_name}" do
+  path user_key_path
   content public_key
   mode 0600
   owner deploy_user_name
