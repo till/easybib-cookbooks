@@ -50,6 +50,8 @@ public_key = node['stack-qa'][deploy_role]['public_key']
 file "#{deploy_user_home}/.ssh/id_dsa.pub" do
   content public_key
   mode 0600
+  owner deploy_user_name
+  group deploy_user_name
   not_if do
     public_key.nil?
   end
