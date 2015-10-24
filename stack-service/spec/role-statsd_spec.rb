@@ -18,31 +18,16 @@ describe 'stack-service::role-statsd' do
 
   let(:chef_run) { runner.converge(described_recipe) }
 
-  describe 'on localhost' do
-    it 'includes nodejs' do
+  describe 'stack-service::role-statsd' do
+    before do
+      node.set['easybib'] = {
+        'cluster_name' => 'vagrant-test'
+      }
+    end
+    it 'includes all recipes' do
+      expect(chef_run).to include_recipe('ies::role-generic')
       expect(chef_run).to include_recipe('nodejs')
       expect(chef_run).to include_recipe('statsd')
-    end
-  end
-
-  describe 'on OpsWorks' do
-    before do
-      node.set['opsworks'] = {
-        'instance' => {
-          'layers' => %w(mothership borg muddership statsd)
-        }
-      }
-      node.set['deploy'] = [
-        'statsd' => {
-          'user' => 'till',
-          'home' => '/home/till',
-          'group' => 'till'
-        }
-      ]
-    end
-
-    it 'does not include nodejs' do
-      expect(chef_run).not_to include_recipe('nodejs')
     end
   end
 end

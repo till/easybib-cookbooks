@@ -1,13 +1,3 @@
-if !is_aws
-  include_recipe 'nodejs'
-else
-  # override deploy-user so it's only used by this recipe
-  node['deploy'].each do |app, deploy|
-    next unless allow_deploy(app, 'statsd', 'nodejs-app')
-    node.default['deploy'][app]['user'] = node['statsd']['user']
-    node.default['deploy'][app]['group'] = node['statsd']['group']
-    node.default['deploy'][app]['home'] = node['statsd']['deploy_dir']
-  end
-end
-
+include_recipe 'ies::role-generic'
+include_recipe 'nodejs'
 include_recipe 'statsd'
