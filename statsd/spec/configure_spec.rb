@@ -31,6 +31,9 @@ describe 'statsd::configure' do
     conf << "    token: '123',\n"
     conf << "    source: '#{stack_name.gsub!(' ', '-')}',\n"
     conf << "    batchSize: 200\n"
+    conf << "  },\n"
+    conf << "  log: {\n"
+    conf << "    backend: 'syslog'\n"
     conf << "  }\n"
     conf << "}\n"
 
