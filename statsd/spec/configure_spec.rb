@@ -25,6 +25,7 @@ describe 'statsd::configure' do
     conf << "  port: 8125,\n"
     conf << "  mgmt_address: '127.0.0.1',\n"
     conf << "  backends: ['statsd-librato-backend'],\n"
+    conf << "  deleteIdleStats: true,\n"
     conf << "  librato: {\n"
     conf << "    email: 'foo@example.org',\n"
     conf << "    token: '123',\n"
