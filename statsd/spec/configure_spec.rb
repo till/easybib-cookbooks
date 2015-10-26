@@ -2,21 +2,24 @@ require 'chefspec'
 
 describe 'statsd::configure' do
 
+  let(:stack_name) { 'chef spec run' }
+
   let(:chef_run) do
     ChefSpec::Runner.new do |node|
       # fake opsworks
       node.default['opsworks'] = {}
       node.default.opsworks['stack'] = {}
-      node.default.opsworks.stack['name'] = 'chef spec run'
+      node.default.opsworks.stack['name'] = stack_name
     end.converge(described_recipe)
   end
 
-  it 'creates /etc/statsd/config.js' do
-    expect(chef_run).to render_file('/etc/statsd/config.js')
+  let(:config) { '/etc/statsd/localConfig.js' }
+
+  it 'creates the config' do
+    expect(chef_run).to render_file(config)
   end
 
   it 'it contains the correct settings' do
-
     # before you think twice - this is javascript, not JSON
     conf  = "{\n"
     conf << "  port: 8125,\n"
@@ -25,11 +28,11 @@ describe 'statsd::configure' do
     conf << "  librato: {\n"
     conf << "    email: 'foo@example.org',\n"
     conf << "    token: '123',\n"
-    conf << "    source: 'chef-spec-run',\n"
+    conf << "    source: '#{stack_name.gsub!(' ', '-')}',\n"
     conf << "    batchSize: 200\n"
     conf << "  }\n"
     conf << "}\n"
 
-    expect(chef_run).to render_file('/etc/statsd/config.js').with_content(conf)
+    expect(chef_run).to render_file(config).with_content(conf)
   end
 end
