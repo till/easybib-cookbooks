@@ -2,6 +2,7 @@
   port: <%= @statsd["port"] %>,
   mgmt_address: '127.0.0.1',
   backends: ['statsd-librato-backend'],
+  deleteIdleStats: true,
   librato: {
     email: '<%= @metrics["email"] -%>',
     token: '<%= @metrics["api_key"] -%>',

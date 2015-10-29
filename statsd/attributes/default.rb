@@ -2,8 +2,6 @@ default['librato'] = {}
 
 default['librato']['statsd']            = {}
 default['librato']['statsd']['etc_dir'] = '/etc/statsd'
-default['librato']['statsd']['user']    = 'root'
-default['librato']['statsd']['group']   = 'root'
 default['librato']['statsd']['port']    = 8125
 
 default['librato']['metrics']            = {}
@@ -15,6 +13,11 @@ default['statsd'] = {
   'deploy_dir' => '/opt/statsd',
   'repository' => 'git://github.com/easybiblabs/statsd.git',
   'branch' => 'deploy',
-  'user' => 'statsd',
-  'group' => 'statsd'
+  'user' => '_statsd',
+  'group' => '_statsd',
+  'version' => '0.7.2-8',
+  'repo' => {
+    'package_cloud_user' => 'till',
+    'package_cloud_repo' => 'ies-statsd'
+  }
 }
