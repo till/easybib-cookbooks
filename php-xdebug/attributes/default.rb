@@ -1,5 +1,3 @@
-default['xdebug']            = {}
-
 default['xdebug']['settings'] = {
   'scream'               => 1,
   'show_exception_trace' => 0,
