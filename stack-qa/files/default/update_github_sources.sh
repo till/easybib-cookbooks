@@ -19,13 +19,15 @@ C_GIT=`which git`
 C_SUDO=`which sudo`
 
 # this should be automated by chef, I don't know how yet
-V_USER='vagrantci'
+# V_USER='vagrantci'
+# will not use, using divination instead
 
 for V_FILE in ${L_PATHS}
 do
 	V_ACTION_PATH="${T_PROJECT_PATH}${V_FILE}/current"
 	V_LOGFILE="${T_LOG_PATH}${T_DATE}_${V_FILE}.log"
 	V_GROUP=`stat -c '%G' ${V_ACTION_PATH}`
+	V_USER=`stat -c '%U' ${V_ACTION_PATH}`
 
 	# devine current branch
 	# V_BRANCH=`sudo -u "${V_USER}" -g "${V_GROUP}" bash -c "cd \"${V_ACTION_PATH}\" && ${C_GIT} rev-parse --abbrev-ref HEAD"`
