@@ -5,7 +5,7 @@ include_recipe 'route53'
 
 route53_record 'create a record' do
   host_name = get_hostname(node, true)
-  stack_name = get_cluster_name(node)
+  stack_name = get_normalized_cluster_name(node)
   zone_name = node['ies-route53']['zone-name']
   name "#{host_name}.#{stack_name}.#{zone_name}"
   value Net::HTTP.get(URI.parse('http://169.254.169.254/latest/meta-data/public-ipv4'))
