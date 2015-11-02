@@ -10,7 +10,7 @@ route53_record 'create a record' do
   name "#{host_name}.#{stack_name}.#{zone_name}"
   value Net::HTTP.get(URI.parse('http://169.254.169.254/latest/meta-data/public-ipv4'))
   type  'A'
-  ttl   120
+  ttl                   node['ies-route53']['zone']['ttl']
   zone_id               node['ies-route53']['zone']['id']
   aws_access_key_id     node['ies-route53']['zone']['custom_access_key']
   aws_secret_access_key node['ies-route53']['zone']['custom_secret_key']
