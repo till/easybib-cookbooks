@@ -26,6 +26,7 @@ AllCops:
     - 'rails/**/*'
     - 'runit/**/*'
     - 'mysql/**/*'
+    - 'route53/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
