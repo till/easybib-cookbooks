@@ -10,10 +10,10 @@ end
 
 rewrite_address = node['postfix']['rewrite_address'] && !node['sysop_email'].nil?
 
-if node['postfix']['relay']['full_host'].nil?
-  relay_host = node['postfix']['relay']['host']
+if node.fetch('postfix', {}).fetch('relay', {})['full_host'].nil?
+  relay_host = node.fetch('postfix', {}).fetch('relay', {})['host']
 else
-  relay_host = node['postfix']['relay']['full_host']
+  relay_host = node.fetch('postfix', {}).fetch('relay', {})['full_host']
 end
 
 # install main.cf
