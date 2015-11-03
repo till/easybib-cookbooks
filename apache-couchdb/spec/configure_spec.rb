@@ -10,6 +10,8 @@ describe 'apache-couchdb::configure' do
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node)     { runner.node }
 
+  let(:local_dir) { '/etc/couchdb/local.d' }
+
   describe 'files' do
     it 'includes apache-couchdb::monitoring' do
       expect(chef_run).to include_recipe('apache-couchdb::monitoring')
@@ -22,6 +24,7 @@ describe 'apache-couchdb::configure' do
         'foo' => 'bar',
         'foobar' => 'test123'
       }
+      node.set['apache-couchdb']['config']['till'] = 'foo'
     end
 
     it 'sets up admin accounts in local.ini' do
@@ -29,8 +32,14 @@ describe 'apache-couchdb::configure' do
       conf << "foo = bar\n"
       conf << 'foobar = test123'
 
-      expect(chef_run).to render_file('/etc/couchdb/local.d/local.ini')
+      expect(chef_run).to render_file("#{local_dir}/local.ini")
         .with_content(conf)
+    end
+
+    it 'sets up local.ini, till.ini and NOT admins.ini' do
+      expect(chef_run).to render_file("#{local_dir}/local.ini")
+      expect(chef_run).to render_file("#{local_dir}/till.ini")
+      expect(chef_run).not_to render_file("#{local_dir}/admins.ini")
     end
   end
 end
