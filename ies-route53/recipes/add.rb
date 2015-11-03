@@ -5,7 +5,7 @@ include_recipe 'route53'
 host_name = get_hostname(node, true)
 stack_name = get_normalized_cluster_name(node)
 zone_name = node['ies-route53']['zone']['name']
-region_id = node['opsworks']['instance']['availability_zone']
+region_id = node['opsworks']['instance']['region']
 public_ip = node['opsworks']['instance']['ip']
 
 route53_record 'create a record' do
