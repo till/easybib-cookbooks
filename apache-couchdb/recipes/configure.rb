@@ -25,7 +25,7 @@ node['apache-couchdb']['config'].each do |section, config|
       )
       notifies :restart, 'service[couchdb]', :delayed
       only_if do
-        section == 'admins' && !::File.exist?(ini_file)
+        section == 'admins' && !::File.exist?("#{local_dir}/local.ini")
       end
     end
 
