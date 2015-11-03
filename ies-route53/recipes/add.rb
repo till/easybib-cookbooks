@@ -1,4 +1,3 @@
-require 'net/http'
 Chef::Resource.send(:include, EasyBib)
 
 include_recipe 'route53'
@@ -6,8 +5,8 @@ include_recipe 'route53'
 host_name = get_hostname(node, true)
 stack_name = get_normalized_cluster_name(node)
 zone_name = node['ies-route53']['zone']['name']
-region_id = Net::HTTP.get(URI.parse('http://169.254.169.254/latest/meta-data/placement/availability-zone'))
-public_ip = Net::HTTP.get(URI.parse('http://169.254.169.254/latest/meta-data/public-ipv4'))
+region_id = node['opsworks']['instance']['availability_zone']
+public_ip = node['opsworks']['instance']['ip']
 
 route53_record 'create a record' do
   name                  "#{host_name}.#{stack_name}.#{region_id}.#{zone_name}"
