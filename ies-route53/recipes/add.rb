@@ -7,9 +7,10 @@ stack_name = get_normalized_cluster_name(node)
 zone_name = node['ies-route53']['zone']['name']
 region_id = node['opsworks']['instance']['region']
 public_ip = node['opsworks']['instance']['ip']
+record_name = "#{host_name}.#{stack_name}.#{region_id}.#{zone_name}"
 
 route53_record 'create a record' do
-  name                  "#{host_name}.#{stack_name}.#{region_id}.#{zone_name}"
+  name                  record_name
   value                 public_ip
   type                  'A'
   ttl                   node['ies-route53']['zone']['ttl']
