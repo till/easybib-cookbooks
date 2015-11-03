@@ -1,3 +1,4 @@
+include_recipe 'ies-route53::add' if is_aws
 include_recipe 'ies::setup-basepackages'
 include_recipe 'ies::setup-bibopsworks' if is_aws
 include_recipe 'ies::nscd'
