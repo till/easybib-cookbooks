@@ -20,6 +20,9 @@ describe 'apache-couchdb::configure' do
 
   describe 'configuration' do
     before do
+      # the following assumes it's the first time the setup is ran
+      allow(File).to receive(:exist?).and_call_original
+
       node.set['apache-couchdb']['config']['admins'] = {
         'foo' => 'bar',
         'foobar' => 'test123'
@@ -40,6 +43,19 @@ describe 'apache-couchdb::configure' do
       expect(chef_run).to render_file("#{local_dir}/local.ini")
       expect(chef_run).to render_file("#{local_dir}/till.ini")
       expect(chef_run).not_to render_file("#{local_dir}/admins.ini")
+    end
+  end
+
+  describe 'repeat deployment' do
+    before do
+      allow(File).to receive(:exist?).and_call_original
+      allow(File).to receive(:exist?)
+        .with("#{local_dir}/local.ini")
+        .and_return(true)
+    end
+
+    it 'does not overwrite an existing local.ini' do
+      expect(chef_run).not_to render_file("#{local_dir}/local.ini")
     end
   end
 end
