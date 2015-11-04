@@ -1,4 +1,5 @@
 include_recipe 'apt::ppa'
+include_recipe 'apache-couchdb::service'
 
 apt_repository 'easybib-ppa' do
   uri           ::EasyBib::Ppa.ppa_mirror(node, node['apache-couchdb']['ppa'])
@@ -11,5 +12,4 @@ package 'couchdb' do
   notifies :start, 'service[couchdb]', :immediately
 end
 
-include_recipe 'apache-couchdb::service'
-include_recipe 'apache-couchdb::configure'
+# include_recipe 'apache-couchdb::configure'
