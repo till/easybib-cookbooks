@@ -1,5 +1,5 @@
-include_recipe 'apache-couchdb::service'
-include_recipe 'apache-couchdb::monitoring'
+require 'net/http'
+require 'json'
 
 logrotate_app 'couchdb' do
   cookbook 'logrotate'
@@ -8,39 +8,13 @@ logrotate_app 'couchdb' do
   rotate 2
 end
 
-local_dir = '/etc/couchdb/local.d'
+couchdb_config = node['apache-couchdb']['config']
 
-node['apache-couchdb']['config'].each do |section, config|
-
-  if section == 'admins'
-
-    # write admins
-    # this is a hack because 'local.ini' is always the last
-    # .ini file read in the chain, so we add the admins here!
-    template "#{local_dir}/local.ini" do
-      source 'local.ini.erb'
-      variables(
-        :section => section,
-        :config => config
-      )
-      notifies :restart, 'service[couchdb]', :delayed
-      only_if do
-        section == 'admins' && !::File.exist?("#{local_dir}/local.ini")
-      end
-    end
-
-    next
-  end
-
-  template "#{local_dir}/#{section}.ini" do
-    source 'local.ini.erb'
-    variables(
-      :section => section,
-      :config => config
-    )
-    notifies :restart, 'service[couchdb]', :delayed
-    not_if do
-      section == 'admins'
-    end
-  end
+apache_couchdb_config 'instance' do
+  config couchdb_config
+  host couchdb_config['httpd']['bind_address']
+  port couchdb_config['httpd']['port']
+  instance ::EasyBib.get_instance(node)
 end
+
+include_recipe 'apache-couchdb::monitoring'

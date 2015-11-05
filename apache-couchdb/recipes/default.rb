@@ -1,5 +1,4 @@
 include_recipe 'apt::ppa'
-include_recipe 'apache-couchdb::service'
 
 apt_repository 'easybib-ppa' do
   uri           ::EasyBib::Ppa.ppa_mirror(node, node['apache-couchdb']['ppa'])
@@ -7,9 +6,14 @@ apt_repository 'easybib-ppa' do
   components    ['main']
 end
 
-package 'couchdb' do
-  action :install
-  notifies :start, 'service[couchdb]', :immediately
+file '/etc/couchdb/local.ini' do
+  action :nothing
 end
 
-# include_recipe 'apache-couchdb::configure'
+package 'couchdb' do
+  action :install
+  notifies :delete, 'file[/etc/couchdb/local.ini]', :immediately
+end
+
+include_recipe 'apache-couchdb::service'
+include_recipe 'apache-couchdb::configure'
