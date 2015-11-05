@@ -6,6 +6,14 @@ apt_repository 'easybib-ppa' do
   components    ['main']
 end
 
-package 'couchdb'
+file '/etc/couchdb/local.ini' do
+  action :nothing
+end
 
+package 'couchdb' do
+  action :install
+  notifies :delete, 'file[/etc/couchdb/local.ini]', :immediately
+end
+
+include_recipe 'apache-couchdb::service'
 include_recipe 'apache-couchdb::configure'
