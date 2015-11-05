@@ -1,5 +1,5 @@
 global
-<% if (node.fetch('lsb', {})['codename'] == 'trusty') -%>
+<% if (@node.fetch('lsb', {})['codename'] == 'trusty') -%>
   log /dev/log    local1
 <% else -%>
   log 127.0.0.1   local1 notice
