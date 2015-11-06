@@ -9,8 +9,8 @@
         "bind_address": "0.0.0.0"
       },
       "admins": {
-        "super-user": "secret-password",
-        "another-user": "secret123"
+        "super-user": "-pbkdf2-b9e65447fea64dc5d1d66d966ad4c9ba2581bdc7,00ae0f7c0c4aac694bbc19ba666a6c89,10",
+        "another-user": "-pbkdf2-40323b386077ef96f85d816a52b07e754adddf1b,277998ca472803e385c2dfaf92613598,10"
       }
     }
   }
