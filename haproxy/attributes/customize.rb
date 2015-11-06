@@ -25,4 +25,3 @@ default['haproxy']['acl']['inspect_delay'] = '30s'
 default['haproxy']['logging']['address'] = '127.0.0.1'
 default['haproxy']['logging']['port'] = '23231'
 default['haproxy']['logging']['protocol'] = 'udp'
-
