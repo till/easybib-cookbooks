@@ -17,6 +17,7 @@ node['apache-couchdb']['config'].each do |section, config|
     config.each do |user, pw|
       unless pw.start_with?('-pbkdf2-')
         Chef::Log.error('Unencrypted passwords in node attr will lead to couch restart on each deploy!')
+        Chef::Log.error('See apache-couchdb/docs/pbkdf2.rb for a helper script to encrypt')
       end
     end
   else
