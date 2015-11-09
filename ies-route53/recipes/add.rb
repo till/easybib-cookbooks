@@ -3,11 +3,13 @@ Chef::Resource.send(:include, EasyBib)
 node.force_override['route53']['fog_version'] = '1.33.0'  # ~FC019
 include_recipe 'route53'
 
+instance = get_instance
+
 host_name = get_hostname(node, true)
 stack_name = get_normalized_cluster_name(node)
 zone_name = node['ies-route53']['zone']['name']
-region_id = node['opsworks']['instance']['region']
-public_ip = node['opsworks']['instance']['ip']
+region_id = instance['region']
+public_ip = instance['ip']
 record_name = "#{host_name}.#{stack_name}.#{region_id}.#{zone_name}"
 
 route53_record 'create a record' do
@@ -20,9 +22,7 @@ route53_record 'create a record' do
   aws_secret_access_key node['ies-route53']['zone']['custom_secret_key']
   overwrite true
   action :create
-  is_aws do
-    not_if do
-      node.fetch('ies-route53', {}).fetch('zone', {}).fetch('id', {}).nil?
-    end
+  not_if do
+    node.fetch('ies-route53', {}).fetch('zone', {}).fetch('id', {}).nil?
   end
 end
