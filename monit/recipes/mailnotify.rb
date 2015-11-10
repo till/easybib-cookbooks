@@ -1,15 +1,7 @@
-template '/etc/monit/conf.d/mailnotify.monitrc' do
-  source 'mailnotify.monit.erb'
-  mode   '0644'
-  owner  'root'
-  group  'root'
-  variables(
-    'host'     => node['monit']['mailhost'],
-    'mailuser' => node['monit']['mailuser'],
-    'mailpass' => node['monit']['mailpass'],
-    'mailsender' => node['monit']['mailsender'],
-    'recipients' => node['monit']['notification_recipients']
-  )
+file '/etc/monit/conf.d/mailnotify.monitrc' do
+  content 'set alert root@localhost but not on { pid ppid nonexist instance timestamp }'
+  mode '0644'
+  owner 'root'
+  group 'root'
   notifies :restart, 'service[monit]'
-  not_if { node['monit']['notification_recipients'].nil? }
 end
