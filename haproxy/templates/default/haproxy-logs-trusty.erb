@@ -2,8 +2,12 @@ $ModLoad omfwd
 
 if ( $programname == 'haproxy' ) then {
 	if ( $syslogseverity-text == 'error' ) then <%= @node['haproxy']['log_dir'] %>/haproxy.log
-<% Unless @node['haproxy']['logging']['address'].nil? %>
+<% Unless node['haproxy'].nil? %>
+	<% Unless node['haproxy']['logging'].nil? %>
+		<% Unless node['haproxy']['logging']['address'].nil? %>
 	action( type="omfwd" Target="<%= @node['haproxy']['logging']['address'] %>" Port="<%= @node['haproxy']['logging']['port'] %>" Protocol="<%= @node['haproxy']['logging']['protocol'] %>" )
+		<% End%>
+	<% End%>
 <% End%>
 	stop
 }
