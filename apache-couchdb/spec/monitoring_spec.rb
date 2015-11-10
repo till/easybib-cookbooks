@@ -24,8 +24,9 @@ describe 'apache-couchdb::configure' do
 
   describe 'setup monitoring' do
     before do
-      node.set['apache-couchdb']['config']['admins'] = {
-        'monitoring' => 'test123'
+      node.set['apache-couchdb']['monitoring'] = {
+        'user' => 'monitoring',
+        'pass' => 'test123'
       }
     end
 
