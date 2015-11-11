@@ -41,6 +41,11 @@ action :setup do
 
   ::Chef::Resource.send(:include, PhpFpm::Helper)
 
+  execute 'nginx_configtest' do
+    command '/usr/sbin/nginx -t'
+    action :nothing
+  end
+
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
     cookbook 'nginx-app'
     source config_template
@@ -68,6 +73,7 @@ action :setup do
       :cache_config => cache_config,
       :gzip => node['nginx-app']['gzip']
     )
+    notifies :run, 'execute[nginx_configtest]', :immediately
   end
 
   # this _should_ work by returning the updated-value of the template provider.
