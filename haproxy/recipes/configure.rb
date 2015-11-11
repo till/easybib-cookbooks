@@ -1,9 +1,5 @@
 include_recipe 'haproxy::service'
 
-if node['haproxy']['logging']['enabled'] == true
-  include_recipe 'haproxy::logs'
-end
-
 directory '/etc/haproxy/errors/' do
   recursive true
   mode '0755'
