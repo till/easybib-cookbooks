@@ -1,21 +1,16 @@
-puts "*** POOP ***"
-puts node.fetch('lsb', {}).fetch('codename', {})
-puts node.fetch('lsb', {})
-puts "*** END POOPING ***"
-
 if node.fetch('lsb', {}).fetch('codename', {}) == 'precise' || node.fetch('lsb', {}).fetch('codename', {}) == 'trusty'
   # trusty has different log routing, it wont work there
   include_recipe 'rsyslogd'
 
   template '/etc/rsyslog.d/10-haproxy.conf' do
-    only_if { node['lsb']['codename']=='precise' }
+    only_if { node['lsb']['codename'] == 'precise' }
     source 'haproxy-logs.erb'
     mode '0644'
     notifies :restart, 'service[rsyslog]'
   end
 
   template '/etc/rsyslog.d/49-haproxy.conf' do
-    only_if { node['lsb']['codename']=='trusty' }
+    only_if { node['lsb']['codename'] == 'trusty' }
     source 'haproxy-logs-trusty.erb'
     mode '0644'
     notifies :restart, 'service[rsyslog]'
