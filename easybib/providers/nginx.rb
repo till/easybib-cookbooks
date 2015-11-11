@@ -41,7 +41,8 @@ action :setup do
 
   ::Chef::Resource.send(:include, PhpFpm::Helper)
 
-  execute 'nginx_configtest' do
+  execute_name = "nginx_configtest_#{config_name}"
+  execute execute_name do
     command '/usr/sbin/nginx -t'
     action :nothing
   end
@@ -73,7 +74,7 @@ action :setup do
       :cache_config => cache_config,
       :gzip => node['nginx-app']['gzip']
     )
-    notifies :run, 'execute[nginx_configtest]', :immediately
+    notifies :run, "execute[#{execute_name}]", :immediately
   end
 
   # this _should_ work by returning the updated-value of the template provider.
