@@ -1,6 +1,8 @@
 <%= render "haproxy.cfg.globals.erb" %>
+<%
+  sub_index = node.fetch('haproxy',{}).fetch('default_layer',{})
 
-<% if node['opsworks']['layers'][node['haproxy']['default_layer']]['instances'].empty? -%>
+  if node.fetch('opsworks',{}).fetch('layers', {}).fetch(sub_index, {}).fetch('instances', {}).nil? -%>
     <%= render "haproxy.cfg.fallback.erb" %>
 <% else -%>
     <%= render "haproxy.cfg.backend.erb", :variables => {

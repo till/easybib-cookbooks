@@ -17,6 +17,7 @@ end
 
 template '/etc/haproxy/haproxy.cfg' do
   source 'haproxy.easybib.cfg.erb'
+  # source 'haproxy.cfg.frontend.erb'
   owner 'root'
   group 'root'
   mode 0644

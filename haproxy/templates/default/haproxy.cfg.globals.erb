@@ -1,10 +1,6 @@
 global
-<% if (@node.fetch('lsb', {})['codename'] == 'trusty') -%>
-  log /dev/log    local1
-<% else -%>
   log 127.0.0.1   local1 notice
   #log loghost    local0 info
-<% end -%>
   maxconn 4096
   #debug
   #quiet
