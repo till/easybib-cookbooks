@@ -75,7 +75,7 @@ describe 'silex-config-template' do
       node.set['opsworks']['stack']['name']  = 'rspec'
     end
 
-    it 'does redirect / to another location' do
+    it 'does not redirect / to another location' do
       expect(chef_run).not_to render_file(config_filename)
         .with_content(slash_is_redirected)
     end
