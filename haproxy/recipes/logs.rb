@@ -1,5 +1,4 @@
 if node.fetch('lsb', {}).fetch('codename', {}) == 'precise' || node.fetch('lsb', {}).fetch('codename', {}) == 'trusty'
-  # trusty has different log routing, it wont work there
   include_recipe 'rsyslogd'
 
   template '/etc/rsyslog.d/10-haproxy.conf' do
