@@ -63,6 +63,7 @@ node['deploy'].each do |application, deploy|
       :doc_root           => ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir'),
       :app_dir            => ::EasyBib::Config.get_appdata(node, application, 'app_dir')
     )
+    notifies :run, 'execute[configtest]', :immediately
     notifies :reload, 'service[nginx]', :delayed
   end
 
