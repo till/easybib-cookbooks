@@ -22,3 +22,6 @@ default['haproxy']['ssl_params']['default_bind_options'] = 'no-sslv3'
 default['haproxy']['hsts'] = nil
 default['haproxy']['default_layer'] = 'nginxphpapp'
 default['haproxy']['acl']['inspect_delay'] = '30s'
+default['haproxy']['logging']['address'] = '127.0.0.1'
+default['haproxy']['logging']['port'] = '23231'
+default['haproxy']['logging']['protocol'] = 'udp'

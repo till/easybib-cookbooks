@@ -1,21 +1,22 @@
+
 frontend http-in
   bind *:80
-  <% unless @node['haproxy']['ssl'] == 'off'
+  <% unless @node.fetch('haproxy',{}).fetch('ssl', 'off') == 'off'
     certificate = "#{@node['ssl-deploy']['directory']}/cert.combined.pem"
   -%>
   bind *:443 ssl crt <%= certificate %>
   reqadd X-Forwarded-Proto:\ https if { ssl_fc }
-  <% unless @node['haproxy']['hsts'].nil? -%>
-  rspadd Strict-Transport-Security:\ max-age=<%=@node['haproxy']['hsts']%> if { ssl_fc }
+  <% unless @node.fetch('haproxy',{}).fetch('hsts',{}).nil? -%>
+  rspadd Strict-Transport-Security:\ max-age=<%=@node.fetch('haproxy',{}).fetch('hsts',{})%> if { ssl_fc }
   <% end
-     if @node['haproxy']['ssl'] == 'only' -%>
+     if @node.fetch('haproxy',{}).fetch('ssl',{}) == 'only' -%>
   redirect scheme https if !{ ssl_fc }
   <% end
   end -%>
   option log-separate-errors
 
   tcp-request inspect-delay <%= node.fetch('haproxy', {}).fetch('acl', {}).fetch('inspect_delay', '30s') %>
-  <% if !@node['haproxy']['acls'].nil? -%>
+  <% if !@node.fetch('haproxy',{}).fetch('acls',{}).empty? -%>
   #acls from node json:
     <% @node['haproxy']['acls'].each do |aclname,aclconfig| -%>
   #rule <%= aclname %>
@@ -23,13 +24,13 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node['haproxy']['additional_layers'].nil?-%>
+  <% if !@node.fetch('haproxy',{}).fetch('additional_layers',{}).empty?-%>
   #additional backends:
     <% @node['haproxy']['additional_layers'].each do |layername,layerconfig| -%>
-      <% if @node.fetch('opsworks', {}).fetch('layers', {}).fetch(layername, {})['instances'].empty? -%>
+      <% if @node.fetch('opsworks', {}).fetch('layers', {}).fetch(layername, {}).fetch('instances', {}).nil? -%>
   #skipping layer <%= layername %> because layer has no instances
       <% else %>
-        <% layerconfig['acl'].each do |aclid, acl| -%>
+        <% layerconfig.fetch('acl',{}).each do |aclid, acl| -%>
   #rule <%= aclid %>
   acl use_<%= layername %> <%= acl %>
   use_backend <%= layername %>_php_app_servers if use_<%= layername %>
@@ -38,10 +39,10 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node['haproxy']['forwarding_layers'].nil?-%>
+  <% if !@node.fetch('haproxy',{}).fetch('forwarding_layers', {}).empty?-%>
   #forwarding backends:
     <% @node['haproxy']['forwarding_layers'].each do |layername,layerconfig| -%>
-        <% layerconfig['acl'].each do |aclid, acl| -%>
+        <% layerconfig.fetch('acl',{}).each do |aclid, acl| -%>
   #rule <%= aclid %>
   acl use_forward_<%= layername %> <%= acl %>
   use_backend <%= layername %>_forward if use_forward_<%= layername %>
@@ -49,7 +50,7 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% default_layer = node['haproxy']['default_layer']
-  if !@node['opsworks']['layers'][default_layer]['instances'].empty? -%>
+  <% default_layer = node.fetch('haproxy',{}).fetch('default_layer',{})
+  if !@node.fetch('opsworks', {}).fetch('layers', {}).fetch(default_layer, {}).fetch('instances', {}).empty? -%>
   default_backend nginxphpapp_php_app_servers
   <% end -%>
