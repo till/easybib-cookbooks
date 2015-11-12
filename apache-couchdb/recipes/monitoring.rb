@@ -2,11 +2,9 @@ Chef::Resource.send(:include, EasyBib)
 
 bin_path = '/usr/local/bin/check_couchdb'
 
-# this is an assumption for what is to follow!
-monitoring_user = 'monitoring'
-
-unless node['apache-couchdb']['config'].fetch('admins', {})[monitoring_user].nil?
-  monitoring_pass = node['apache-couchdb']['config']['admins'][monitoring_user]
+unless node['apache-couchdb']['monitoring']['user'].empty?
+  monitoring_user = node['apache-couchdb']['monitoring']['user']
+  monitoring_pass = node['apache-couchdb']['monitoring']['pass']
   credentials = "#{monitoring_user}:#{monitoring_pass}"
 
   template bin_path do
