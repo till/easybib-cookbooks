@@ -67,6 +67,20 @@ describe 'silex-config-template' do
         .with_content(slash_is_redirected)
     end
   end
+
+  describe 'some routes enabled including slash' do
+    before do
+      node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route', '/']
+      node.set['testdata']['routes_denied']  = nil
+      node.set['opsworks']['stack']['name']  = 'rspec'
+    end
+
+    it 'does redirect / to another location' do
+      expect(chef_run).not_to render_file(config_filename)
+        .with_content(slash_is_redirected)
+    end
+  end
+
   describe 'some routes disabled' do
     before do
       node.set['testdata']['routes_enabled'] = nil
