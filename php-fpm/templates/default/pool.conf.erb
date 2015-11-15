@@ -16,9 +16,9 @@ pm.start_servers = 30
 pm.min_spare_servers = 10
 pm.max_spare_servers = 100
 pm.max_requests = 500
-pm.status_path = /fpm_status_<%= @pool_name %>
+pm.status_path = /fpm_status
 
-ping.path = /fpm_ping_<%= @pool_name %>
+ping.path = /fpm_ping
 ping.response = p0ng
 
 ;request_terminate_timeout = 0
