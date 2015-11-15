@@ -53,8 +53,6 @@ describe 'silex-config-template' do
       fixture << "        deny         all;\n"
       fixture << "    }\n"
 
-      # fixture = "fpm_status|fpm_ping"
-
       expect(chef_run).to render_file(config_filename)
         .with_content(fixture)
     end
@@ -122,6 +120,7 @@ describe 'silex-config-template' do
         .with_content(slash_is_redirected)
     end
   end
+
   describe 'some routes enabled, some disabled' do
     before do
       node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route']
@@ -151,6 +150,8 @@ describe 'silex-config-template' do
   end
 
 end
+
+private
 
 def slash_is_redirected(target = 'http://easybib.com/company/contact')
   %r!location = / {\s* return 301 #{target};\s*}!
