@@ -40,11 +40,12 @@ location ~ ^/(<%= @routes_enabled.join('|') %>) {
             fastcgi_param BIB_ENV "<%=::EasyBib.get_cluster_name(node)%>";
     <% end -%>
     }
-
+<% unless @routes_enabled.include?('/') %>
     location = / {
         return 301 <%=node["nginx-app"]["contact_url"] %>;
     }
-    
+<% end -%>
+
     location ~ .* {
         deny all;
     }

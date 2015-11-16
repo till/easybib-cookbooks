@@ -15,6 +15,7 @@ http {
     default_type    application/octet-stream;
 
     access_log      off;
+    log_format debug_referer_log '$http_x_forwarded_for - [$time_local] ' '"$request" $status $http_host $body_bytes_sent "$http_referer" ' '"$http_user_agent"' ;
 
     # fruitkid domain names are to long for 64
     server_names_hash_bucket_size 128;

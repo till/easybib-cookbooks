@@ -15,9 +15,8 @@
     }
 
     location ~ ^/(fpm_status|fpm_ping)$ {
-        include       fastcgi_params;
-        fastcgi_pass  <%=@upstream%>_phpfpm;
-        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
-        allow         127.0.0.1;
-        deny          all;
+        include      fastcgi_params;
+        fastcgi_pass <%=@upstream%>_phpfpm;
+        allow        127.0.0.1;
+        deny         all;
     }

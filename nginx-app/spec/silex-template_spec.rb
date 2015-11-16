@@ -34,9 +34,27 @@ describe 'silex-config-template' do
       expect(chef_run).not_to render_file(config_filename)
         .with_content(some_routes_denied)
     end
+  end
+
+  describe 'php setup' do
     it 'does route / to php' do
       expect(chef_run).to render_file(config_filename)
         .with_content(slash_is_enabled)
+    end
+
+    it 'sets up fpm_status and fpm_ping' do
+      upstream = 'foo' # see fixture::silex-template
+
+      # this needs to be indented according to the partial
+      fixture = "    location ~ ^/(fpm_status|fpm_ping)$ {\n"
+      fixture << "        include      fastcgi_params;\n"
+      fixture << "        fastcgi_pass #{upstream}_phpfpm;\n"
+      fixture << "        allow        127.0.0.1;\n"
+      fixture << "        deny         all;\n"
+      fixture << "    }\n"
+
+      expect(chef_run).to render_file(config_filename)
+        .with_content(fixture)
     end
   end
 
@@ -67,6 +85,20 @@ describe 'silex-config-template' do
         .with_content(slash_is_redirected)
     end
   end
+
+  describe 'some routes enabled including slash' do
+    before do
+      node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route', '/']
+      node.set['testdata']['routes_denied']  = nil
+      node.set['opsworks']['stack']['name']  = 'rspec'
+    end
+
+    it 'does not redirect / to another location' do
+      expect(chef_run).not_to render_file(config_filename)
+        .with_content(slash_is_redirected)
+    end
+  end
+
   describe 'some routes disabled' do
     before do
       node.set['testdata']['routes_enabled'] = nil
@@ -88,6 +120,7 @@ describe 'silex-config-template' do
         .with_content(slash_is_redirected)
     end
   end
+
   describe 'some routes enabled, some disabled' do
     before do
       node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route']
@@ -117,6 +150,8 @@ describe 'silex-config-template' do
   end
 
 end
+
+private
 
 def slash_is_redirected(target = 'http://easybib.com/company/contact')
   %r!location = / {\s* return 301 #{target};\s*}!
