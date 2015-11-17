@@ -1,4 +1,5 @@
 include_recipe 'easybib::role-phpapp'
+include_recipe 'supervisor'
 
 if is_aws
   include_recipe 'easybib-deploy::ssl-certificates'
