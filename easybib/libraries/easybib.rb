@@ -191,6 +191,6 @@ module EasyBib
   extend self
 end
 
-class Chef::Recipe
-  include EasyBib
-end
+Chef::Provider.send(:include, ::EasyBib)
+Chef::Recipe.send(:include, ::EasyBib)
+Chef::Resource.send(:include, ::EasyBib)

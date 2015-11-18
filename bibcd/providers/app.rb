@@ -6,7 +6,6 @@ action :add do
 
   unless ::File.exist?(yml_file)
     Chef::Log.info "Adding #{new_resource.app_name} config to #{yml_file}"
-    Chef::Resource.send(:include, ::EasyBib::Php)
 
     template yml_file do
       cookbook 'bibcd'

@@ -39,8 +39,6 @@ action :setup do
 
   default_router = get_default_router(node['nginx-app']['default_router'], new_resource.default_router, deploy_dir)
 
-  ::Chef::Resource.send(:include, PhpFpm::Helper)
-
   execute_name = "nginx_configtest_#{config_name}"
   execute execute_name do
     command '/usr/sbin/nginx -t'

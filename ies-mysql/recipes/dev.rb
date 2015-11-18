@@ -1,5 +1,3 @@
-Chef::Resource.send(:include, EasyBib)
-
 # Grant root access from *!
 # Obviously not a good idea in production.
 

@@ -10,3 +10,7 @@ module PhpFpm
     end
   end
 end
+
+Chef::Provider.send(:include, ::PhpFpm::Helper)
+Chef::Recipe.send(:include, ::PhpFpm::Helper)
+Chef::Resource.send(:include, ::PhpFpm::Helper)

@@ -377,3 +377,7 @@ module EasyBib
     end
   end
 end
+
+Chef::Provider.send(:include, ::EasyBib::Config)
+Chef::Recipe.send(:include, ::EasyBib::Config)
+Chef::Resource.send(:include, ::EasyBib::Config)
