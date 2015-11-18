@@ -14,10 +14,13 @@ action :create do
     next
   end
 
-  unless ::EasyBib.has_role?(
-    instance_roles,
-    supervisor_role
-  )
+  deploy_supervisor = true
+  # do always deploy supervisor in vagrant, ignore roles
+  if ::EasyBib.is_aws(node)
+    deploy_supervisor = ::EasyBib.has_role?(instance_roles, supervisor_role)
+  end
+
+  if deploy_supervisor
     Chef::Log.info("easybib_deploy - I did not install supervisor because instance does not have the #{supervisor_role} role in roles: #{instance_roles}")
     new_resource.updated_by_last_action(updated)
     next
