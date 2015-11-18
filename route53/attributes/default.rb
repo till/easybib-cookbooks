@@ -1,1 +1,1 @@
-default['route53']['fog_version'] = '1.27'
+default['route53']['aws_sdk_version'] = '2.0.46'

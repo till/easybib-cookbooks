@@ -1,3 +1,19 @@
+## v0.5.6
+* Put constants in provider namespace
+## v0.5.5
+* Install aws-sdk-core at compile time
+## v0.5.4
+* Import aws-sdk-core at beginning of provider
+## v0.5.3
+* Add throttling error
+## v0.5.2
+* Add sleep and retry for record update lock
+## v0.5.1
+* Change delete record in provider to behave gracefully when the record doesn't exist
+## v0.5.0
+* Change provider to use the AWS SDK v2 gem instead of fog
+## v0.4.2
+* fix the provider to correctly identify existing records
 ## v0.4.0
 * make "name" the name_attribute of a resource
 * depends on xml to support installing nokogiri and fog dependency

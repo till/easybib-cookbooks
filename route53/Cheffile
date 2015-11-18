@@ -4,5 +4,3 @@ site 'https://supermarket.getchef.com/api/v1'
 
 cookbook 'route53', path: '.'
 cookbook 'route53_test', path: './test/integration/cookbooks/route53_test'
-
-cookbook 'xml'

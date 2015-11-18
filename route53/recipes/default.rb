@@ -16,13 +16,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-include_recipe 'xml::ruby'
-
-chef_gem "fog" do
+chef_gem "aws-sdk-core" do
+  compile_time true
   action :install
-  version node['route53']['fog_version']
+  version node['route53']['aws_sdk_version']
 end
+
+require 'aws-sdk-core'
+
+# Putting this in library causes an error since gem is not available when
+# libraries are loaded
+# 'defined?' is for chefspec warnings since file may be loaded multiple times
+::Chef::Provider::RECORD_WAIT_TIME = 20 unless defined? ::Chef::Provider::RECORD_WAIT_TIME
+::Chef::Provider::RECORD_WAIT_TRIES = 10 unless defined? ::Chef::Provider::RECORD_WAIT_TRIES
+::Chef::Provider::ROUTE53_ERRORS = [
+  Aws::Route53::Errors::PriorRequestNotComplete,
+  Aws::Route53::Errors::Throttling
+] unless defined? ::Chef::Provider::ROUTE53_ERRORS
 
 require 'rubygems'
 Gem.clear_paths
