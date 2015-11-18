@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 chef_gem "aws-sdk-core" do
+  compile_time false if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time)
   action :install
   version node['route53']['aws_sdk_version']
 end
