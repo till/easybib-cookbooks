@@ -1,5 +1,3 @@
-Chef::Resource.send(:include, PhpFpm::Helper)
-
 include_recipe 'nginx-app::server'
 
 app_access_log   = node['nginx-app']['access_log']
