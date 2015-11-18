@@ -13,3 +13,7 @@ module EasyBibVagrant
     end
   end
 end
+
+Chef::Provider.send(:include, ::EasyBibVagrant::Helpers)
+Chef::Recipe.send(:include, ::EasyBibVagrant::Helpers)
+Chef::Resource.send(:include, ::EasyBibVagrant::Helpers)

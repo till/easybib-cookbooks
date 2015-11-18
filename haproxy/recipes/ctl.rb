@@ -1,4 +1,3 @@
-Chef::Resource.send(:include, EasyBib)
 base_path = node['haproxy']['ctl']['base_path']
 
 # ensure directory exists

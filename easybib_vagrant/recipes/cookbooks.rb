@@ -1,5 +1,3 @@
-Chef::Recipe.send(:include, EasyBibVagrant::Helpers)
-
 local_path = generate_cookbook_path(
   Dir.home(node['easybib_vagrant']['environment']['user'])
 )
