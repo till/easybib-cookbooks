@@ -5,6 +5,7 @@ action :create do
   supervisor_role = new_resource.supervisor_role
   instance_roles = new_resource.instance_roles
   user = new_resource.user
+  supervisor_role = node['easybib_deploy']['supervisor_role'] if supervisor_role.nil?
 
   updated = false
 
