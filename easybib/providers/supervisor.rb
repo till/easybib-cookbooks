@@ -5,6 +5,7 @@ action :create do
   supervisor_role = new_resource.supervisor_role
   instance_roles = new_resource.instance_roles
   user = new_resource.user
+  instance_roles = ::EasyBib.get_instance_roles(node) if instance_roles.empty ?
   supervisor_role = node['easybib_deploy']['supervisor_role'] if supervisor_role.nil?
 
   updated = false
@@ -14,20 +15,21 @@ action :create do
     next
   end
 
+  # do always deploy supervisor in vagrant, ignore roles, so default to true
   deploy_supervisor = true
-  # do always deploy supervisor in vagrant, ignore roles
   if ::EasyBib.is_aws(node)
+    # but if we are in aws, decide upon the roles of the instance
     deploy_supervisor = ::EasyBib.has_role?(instance_roles, supervisor_role)
   end
 
-  if deploy_supervisor
-    Chef::Log.info("easybib_deploy - I did not install supervisor because instance does not have the #{supervisor_role} role in roles: #{instance_roles}")
+  unless deploy_supervisor
+    Chef::Log.info("easybib_supervisor - I did not install supervisor because instance does not have the #{supervisor_role} role in roles: #{instance_roles}")
     new_resource.updated_by_last_action(updated)
     next
   end
 
   Chef::Log.info(
-    "easybib_deploy - loading supervisor services from #{supervisor_file}")
+    "easybib_supervisor - loading supervisor services from #{supervisor_file}")
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 
@@ -37,7 +39,7 @@ action :create do
     service_name = "#{name}-#{app}"
 
     Chef::Log.info(
-      "easybib_deploy - enabling supervisor_service #{service_name}")
+      "easybib_supervisor - enabling supervisor_service #{service_name}")
 
     config = {
       'numprocs' => 1,
@@ -103,7 +105,7 @@ action :create do
     end
 
     Chef::Log.info(
-      "easybib_deploy - started supervisor_service #{service_name}")
+      "easybib_supervisor - started supervisor_service #{service_name}")
 
   end
 
