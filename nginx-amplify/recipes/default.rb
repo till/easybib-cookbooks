@@ -1,6 +1,6 @@
 apt_repository 'nginx-amplify' do
   key node['nginx-amplify']['apt']['key']
-  uri ::EasyBib::Ppa.ppa_mirror(node, node['nginx-amplify']['apt']['repository'])
+  uri node['nginx-amplify']['apt']['repository']
   distribution node['lsb']['codename']
   components ['amplify-agent']
 end

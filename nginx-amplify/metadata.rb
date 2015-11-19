@@ -6,6 +6,5 @@ description       'Installs and configures an nginx-amplify.'
 version           '0.1'
 
 depends 'apt'
-depends 'easybib'
 
 supports 'ubuntu'
