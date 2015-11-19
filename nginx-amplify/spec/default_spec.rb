@@ -9,9 +9,17 @@ describe 'nginx-amplify::default' do
   let(:node)     { runner.node }
 
   describe 'default' do
-    it 'installs the agent' do
+    it 'discovers the repository' do
       expect(chef_run).to add_apt_repository('nginx-amplify')
-      expect(chef_run).to install_package('nginx-amplify-agent')
+    end
+
+    it 'installs the agent' do
+      expect(chef_run).to upgrade_package('nginx-amplify-agent')
+    end
+
+    it 'installs a specific version of the agent' do
+      node.set['nginx-amplify']['version'] = '0.23-1'
+      expect(chef_run).to install_package('nginx-amplify-agent').with(:version => '0.23-1')
     end
 
     it 'includes configure and service' do
