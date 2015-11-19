@@ -26,6 +26,12 @@ describe 'nginx-amplify::configure' do
     it 'includes service' do
       expect(chef_run).to include_recipe 'nginx-amplify::service'
     end
+
+    it 'sets the correct hostname' do
+      node.set['nginx-amplify']['hostname'] = 'box.example.org'
+      expect(chef_run).to render_file('/etc/amplify-agent/agent.conf')
+        .with_content('hostname = box.example.org')
+    end
   end
 
   describe 'without api_key (default)' do

@@ -6,6 +6,7 @@ template '/etc/amplify-agent/agent.conf' do
   owner 'www-data'
   variables(
     :api_key => node['nginx-amplify']['api_key'],
+    :hostname => node['nginx-amplify']['hostname'],
     :uuid => nil
   )
   not_if do
