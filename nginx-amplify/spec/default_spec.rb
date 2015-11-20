@@ -9,6 +9,12 @@ describe 'nginx-amplify::default' do
   let(:node)     { runner.node }
 
   describe 'default' do
+    before do
+      Mixlib::ShellOut.stub(:new).and_return(
+        double(:run_command => nil, :error! => nil, :stdout => 'uuid', :stderr => '')
+      )
+    end
+
     it 'discovers the repository' do
       expect(chef_run).to add_apt_repository('nginx-amplify')
     end

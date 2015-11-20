@@ -10,3 +10,4 @@ fc_sandbox
 .kitchen/
 .kitchen.local.yml
 easybib-cookbooks.tar.gz
+*.pyc
