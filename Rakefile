@@ -21,6 +21,9 @@ Rake::TestTask.new do |t|
   t.pattern = '**/**/tests/test_*.rb'
 end
 
+# to run all specs for a cookbook: rake spec[cookbook] - eg rake spec[easybib]
+# to run all specs for a single cb spec: rake[cookbook,spec] - eg rake spec[easybib,easybib_deploy]
+
 desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
 
