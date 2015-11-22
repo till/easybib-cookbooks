@@ -4,7 +4,7 @@ action :generate do
   extension = nil
 
   if new_resource.load_extension
-    extension = [new_resource.extension_path => new_resource.zend]
+    extension = [new_resource.extension_path => new_resource.zend_extension]
   end
 
   tm = template file do
