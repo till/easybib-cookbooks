@@ -7,7 +7,7 @@ action :generate do
     extension = [new_resource.extension_path => new_resource.zend]
   end
 
-  template file do
+  tm = template file do
     source 'extension.ini.erb'
     mode   '0644'
     variables(
@@ -16,4 +16,6 @@ action :generate do
     )
     notifies :reload, 'service[php-fpm]', :delayed
   end
+
+  last_updated = true if tm.updated_by_last_action?
 end
