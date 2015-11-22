@@ -1,6 +1,10 @@
 #!/usr/bin/env rake
 # encoding: utf-8
 
+# to run all testsuites for a single cookbook: rake test[cookbook] - eg rake test[easybib]
+# to run all specs for a cookbook: rake spec[cookbook] - eg rake spec[easybib]
+# to run all specs for a single cb spec: rake[cookbook,spec] - eg rake spec[easybib,easybib_deploy]
+
 require 'bundler'
 require 'rake'
 require 'rake/testtask'
@@ -10,19 +14,27 @@ require 'yaml'
 Bundler.setup
 
 task :default => [
-  :test,
-  :spec,
-  :rubocop,
-  :foodcritic
+  :test
 ]
 
-desc 'Run tests'
-Rake::TestTask.new do |t|
-  t.pattern = '**/**/tests/test_*.rb'
+task :test, :cookbook do |t, args|
+  task(:unittest).invoke(args.cookbook)
+  task(:spec).invoke(args.cookbook)
+  task(:rubocop).invoke(args.cookbook)
+  task(:foodcritic).invoke(args.cookbook)
 end
+desc 'Run tests'
 
-# to run all specs for a cookbook: rake spec[cookbook] - eg rake spec[easybib]
-# to run all specs for a single cb spec: rake[cookbook,spec] - eg rake spec[easybib,easybib_deploy]
+task :unittest, :cookbook do |t, args|
+  Rake::TestTask.new('testtask') do |raketask|
+    if args.cookbook.nil?
+      raketask.pattern = '**/**/tests/test_*.rb'
+    else
+      raketask.pattern = "#{args.cookbook}/**/tests/test_*.rb"
+    end
+  end
+  task('testtask').execute
+end
 
 desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
@@ -43,14 +55,18 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
 end
 
 desc 'Runs foodcritic linter'
-task :foodcritic do
+task :foodcritic, [:cookbook] do |t, args|
+  args.with_defaults(:cookbook => nil)
+
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
     epic_fail = %w( )
     ignore_rules = %w( )
 
-    cookbooks = find_cookbooks('.')
-
-    cb = cookbooks.join(' ')
+    if args.cookbook.nil?
+      cb = find_cookbooks('.').join(' ')
+    else
+      cb = args.cookbook
+    end
 
     fc_command = 'bundle exec foodcritic -C --chef-version 11 -f any -P '
     fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
@@ -65,7 +81,6 @@ task :foodcritic do
         exit 1
       end
     end
-    puts '.'
   else
     puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is < 1.9.2."
   end
@@ -116,11 +131,16 @@ if !ENV['TRAVIS'] && File.exist?(current_dir + '/.kitchen.yml')
 end
 
 require 'rubocop/rake_task'
-# no autocorrect in travis
-if ENV['TRAVIS']
-  RuboCop::RakeTask.new
-else
-  RuboCop::RakeTask.new do |task|
+RuboCop::RakeTask.new(:rubocop, :cookbook)  do |task, args|
+  unless ENV['TRAVIS']
+    # no autocorrect in travis
     task.options = ['--auto-correct']
   end
+  if args.cookbook.nil?
+    cookbooks = find_cookbooks('.').map! { |cb| "#{cb}/**/*.rb" }
+    pattern = %w(Rakefile Gemfile) + cookbooks
+  else
+    pattern = ["#{args.cookbook}/**/*.rb"]
+  end
+  task.patterns = pattern
 end
