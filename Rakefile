@@ -16,7 +16,7 @@ task :default => [
   :foodcritic
 ]
 
-desc "Run tests"
+desc 'Run tests'
 Rake::TestTask.new do |t|
   t.pattern = '**/**/tests/test_*.rb'
 end
@@ -24,7 +24,7 @@ end
 desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
 
-  args.with_defaults( :cookbook => '*', :recipe => '*', :output_file => nil )
+  args.with_defaults(:cookbook => '*', :recipe => '*', :output_file => nil)
 
   file_list = FileList["#{args.cookbook}/spec/#{args.recipe}_spec.rb"]
 
@@ -39,51 +39,33 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
   t.pattern = file_list
 end
 
-desc "Runs foodcritic linter"
+desc 'Runs foodcritic linter'
 task :foodcritic do
-  if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
-    sandbox = File.join(File.dirname(__FILE__), 'fc_sandbox')
-
-    epic_fail = %w{ }
-    ignore_rules = %w{ }
+  if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
+    epic_fail = %w( )
+    ignore_rules = %w( )
 
     cookbooks = find_cookbooks('.')
 
-    cookbooks.each do |cb|
-      print "."
-      prepare_foodcritic_sandbox(sandbox, cb)
+    cb = cookbooks.join(' ')
 
-      verbose(false)
-
-      fc_command = "bundle exec foodcritic -C --chef-version 11 -f any"
-      fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
-      fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
-      fc_command << " #{sandbox}"
-      sh fc_command do |ok, res|
-        unless ok
-          puts "Cookbook: #{cb}"
-          puts "Command failed: #{fc_command}"
-          puts res
-          exit 1
-        end
+    fc_command = 'bundle exec foodcritic -C --chef-version 11 -f any -P '
+    fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
+    fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
+    fc_command << " #{cb}"
+    verbose(false)
+    sh fc_command do |ok, res|
+      unless ok
+        puts "Cookbook: #{cb}"
+        puts "Command failed: #{fc_command}"
+        puts res
+        exit 1
       end
     end
-    puts "."
+    puts '.'
   else
     puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is < 1.9.2."
   end
-end
-
-private
-
-def prepare_foodcritic_sandbox(sandbox, cookbook)
-  files = %w(*.md *.rb attributes definitions files libraries providers recipes resources templates)
-
-  opts = {:verbose => false}
-
-  rm_rf sandbox, opts
-  mkdir_p sandbox, opts
-  cp_r Dir.glob("#{cookbook}/{#{files.join(',')}}"), sandbox, opts
 end
 
 private
@@ -102,7 +84,7 @@ def find_cookbooks(all_your_base)
 
   end
 
-  return cookbooks
+  cookbooks
 end
 
 private
@@ -111,9 +93,9 @@ private
 def find_all_ignored
   skipped = []
 
-  rubocop = YAML.load_file("./.rubocop.yml")
-  rubocop["AllCops"]["Exclude"].each do |ignored|
-    skipped << ignored.split("/")[0]
+  rubocop = YAML.load_file('./.rubocop.yml')
+  rubocop['AllCops']['Exclude'].each do |ignored|
+    skipped << ignored.split('/')[0]
   end
 
   skipped
@@ -126,7 +108,7 @@ if !ENV['TRAVIS'] && File.exist?(current_dir + '/.kitchen.yml')
     require 'kitchen/rake_tasks'
     Kitchen::RakeTasks.new
   rescue LoadError
-    puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
+    puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
   end
 end
 
@@ -135,7 +117,7 @@ require 'rubocop/rake_task'
 if ENV['TRAVIS']
   RuboCop::RakeTask.new
 else
-  RuboCop::RakeTask.new() do |task|
-    task.options = ["--auto-correct"]
+  RuboCop::RakeTask.new do |task|
+    task.options = ['--auto-correct']
   end
 end
