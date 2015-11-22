@@ -26,11 +26,11 @@ end
 desc 'Run tests'
 
 task :unittest, :cookbook do |t, args|
-  Rake::TestTask.new('testtask') do
+  Rake::TestTask.new('testtask') do |raketask|
     if args.cookbook.nil?
-      t.pattern = '**/**/tests/test_*.rb'
+      raketask.pattern = '**/**/tests/test_*.rb'
     else
-      t.pattern = "#{args.cookbook}/**/tests/test_*.rb"
+      raketask.pattern = "#{args.cookbook}/**/tests/test_*.rb"
     end
   end
   task('testtask').execute
