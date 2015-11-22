@@ -1,3 +1,5 @@
+default['php']['ppa']['package_prefix'] = 'php5-easybib'
+
 default['php-apc'] = {}
 default['php-apc']['settings']['ttl'] = 0
 default['php-apc']['settings']['mmap_file_mask'] = '/dev/zero'
