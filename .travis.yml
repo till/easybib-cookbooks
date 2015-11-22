@@ -14,11 +14,9 @@ sudo: false
 cache: bundler
 
 script:
-  - ls -laR
+  - find . -name vendor
   - make cs
-  - ls -laR
   - make test
-  - ls -laR
 
 before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
