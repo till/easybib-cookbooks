@@ -1,0 +1,48 @@
+require_relative 'spec_helper.rb'
+
+describe 'php::module-apc' do
+
+  let(:chef_run) do
+    ChefSpec::Runner.new(:step_into => ['php_config']) do |node|
+      # fake opsworks
+      node.default['opsworks']['stack']['name'] = 'chef-spec-run'
+      node.default['opsworks']['instance']['layers'] = []
+      node.default['php']['ppa']['package_prefix'] = 'php5-easybib'
+      node.default['php-fpm']['prefix'] = '/opt/easybib'
+    end.converge(described_recipe)
+  end
+
+  it 'adds ppa mirror configuration' do
+    expect(chef_run).to include_recipe('apt::easybib')
+    expect(chef_run).to include_recipe('apt::ppa')
+  end
+
+  it 'adds php-fpm service definition' do
+    expect(chef_run).to include_recipe('php-fpm::service')
+  end
+
+  it 'installs the apc module' do
+    expect(chef_run).to install_package('php5-easybib-apcu')
+  end
+
+  it 'creates apc-settings.ini' do
+    expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini')
+  end
+
+  it 'it contains production settings' do
+    conf = "apc.stat=\"0\"\n"
+    conf << "apc.slam_defense=\"1\"\n"
+    conf << "apc.max_file_size=\"2M\"\n"
+    conf << "apc.ttl=\"0\"\n"
+    conf << "apc.mmap_file_mask=\"/dev/zero\"\n"
+    conf << "apc.shm_size=\"70M\"\n"
+
+    expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini').with_content(conf)
+  end
+
+  it 'reloads php-fpm' do
+    template_resource = chef_run.template('/opt/easybib/etc/php/apc-settings.ini')
+    expect(template_resource).to notify('service[php-fpm]').to(:reload).delayed
+  end
+
+end
