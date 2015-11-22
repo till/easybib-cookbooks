@@ -55,7 +55,6 @@ action :setup do
     group 'root'
     mode '0644'
     variables(
-      :name => name,
       :extensions => extensions,
       :directives => directives
     )

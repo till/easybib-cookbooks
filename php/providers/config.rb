@@ -17,5 +17,5 @@ action :generate do
     notifies :reload, 'service[php-fpm]', :delayed
   end
 
-  last_updated = true if tm.updated_by_last_action?
+  new_resource.updated_by_last_action(tm.updated_by_last_action?)
 end
