@@ -43,14 +43,18 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
 end
 
 desc 'Runs foodcritic linter'
-task :foodcritic do
+task :foodcritic, [:cookbook] do |t, args|
+  args.with_defaults(:cookbook => nil)
+
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
     epic_fail = %w( )
     ignore_rules = %w( )
 
-    cookbooks = find_cookbooks('.')
-
-    cb = cookbooks.join(' ')
+    if args.cookbook.nil?
+      cb = find_cookbooks('.').join(' ')
+    else
+      cb = args.cookbook
+    end
 
     fc_command = 'bundle exec foodcritic -C --chef-version 11 -f any -P '
     fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
@@ -65,7 +69,6 @@ task :foodcritic do
         exit 1
       end
     end
-    puts '.'
   else
     puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is < 1.9.2."
   end
