@@ -1,19 +1,3 @@
-# php_composer
-
- * actions: `:setup`, `:install`
- * `:install`: runs `php composer.phar install`
- * `:setup`: installs the `composer.phar`
-
-## Example
-
-    php_composer "/tmp" do
-      action [:setup, :install]
-    end
-
-Note: the example requires that there is a `composer.json` file in `/tmp`.
-
-On top of that, composer needs a couple utilities installed an in path. Please see my `vagrant-test::default` recipe.
-
 # php_pear
 
  * actions: `:install`, `:install_if_missing`, `:uninstall`, `:upgrade`
