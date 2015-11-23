@@ -25,6 +25,8 @@ module EasyBib
       end
     end
 
+    private
+
     # Send a notification via SNS
     #
     # node - AWS node objects
