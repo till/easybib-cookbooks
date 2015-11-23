@@ -36,7 +36,7 @@ module EasyBib
     def sns_notify(node, body)
       if body.nil?
         Chef::Log.error 'Missing argument: body (e-mail message body)'
-        return
+        return false
       end
 
       if node['easybib']['sns']['topic_arn'].nil?
