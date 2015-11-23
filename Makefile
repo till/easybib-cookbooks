@@ -5,5 +5,5 @@ cs:
 	$(rake) foodcritic
 
 test:
-	$(rake) test
+	$(rake) unittest
 	$(rake) spec
