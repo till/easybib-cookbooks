@@ -1,3 +1,3 @@
 include_recipe 'php::dependencies-ppa'
 
-php_ppapackage 'intl'
+php_ppa_package 'intl'

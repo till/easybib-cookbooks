@@ -15,4 +15,4 @@ end
 
 include_recipe 'tideways'
 
-include_recipe 'php-opcache::configure'
+include_recipe 'php::module-opcache'
