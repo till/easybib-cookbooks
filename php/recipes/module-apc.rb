@@ -8,7 +8,7 @@ if is_aws
                      'max_file_size' => '2M' }.merge(apc_attributes)
 end
 
-php_ppapackage 'apc' do
+php_ppa_package 'apc' do
   config apc_attributes
   package_name 'apcu'
 end
