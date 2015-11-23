@@ -32,6 +32,8 @@ describe 'php::module-apc' do
   # while we could test this using the php_ppa_package matcher, I opted to step into
   # them to test the actual result - this is because of the unique is_aws config merge
   # in the recipe, which I want to test if it ends up in the actual config rightfully.
+  # If you want to see a test sample how this usually should be done, see module-mysqli_spec.rb
+  # since the actual config generation part is already tested in provider-config_spec.rb
   it 'it contains production settings' do
     conf = "apc.stat=\"0\"\n"
     conf << "apc.slam_defense=\"1\"\n"
