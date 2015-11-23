@@ -3,7 +3,7 @@ require_relative 'spec_helper.rb'
 describe 'php::module-apc' do
 
   let(:chef_run) do
-    ChefSpec::Runner.new(:step_into => ['php_config']) do |node|
+    ChefSpec::Runner.new(:step_into => %w(php_ppa_package php_config)) do |node|
       # fake opsworks
       node.default['opsworks']['stack']['name'] = 'chef-spec-run'
       node.default['opsworks']['instance']['layers'] = []
@@ -29,6 +29,9 @@ describe 'php::module-apc' do
     expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini')
   end
 
+  # while we could test this using the php_ppa_package matcher, I opted to step into
+  # them to test the actual result - this is because of the unique is_aws config merge
+  # in the recipe, which I want to test if it ends up in the actual config rightfully.
   it 'it contains production settings' do
     conf = "apc.stat=\"0\"\n"
     conf << "apc.slam_defense=\"1\"\n"
@@ -38,11 +41,6 @@ describe 'php::module-apc' do
     conf << "apc.shm_size=\"70M\"\n"
 
     expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini').with_content(conf)
-  end
-
-  it 'reloads php-fpm' do
-    template_resource = chef_run.template('/opt/easybib/etc/php/apc-settings.ini')
-    expect(template_resource).to notify('service[php-fpm]').to(:reload).delayed
   end
 
 end
