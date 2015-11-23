@@ -1,4 +1,5 @@
 require 'json'
+require 'aws-sdk'
 
 module EasyBib
   module SNS
@@ -6,7 +7,9 @@ module EasyBib
     #
     # @return [nil]
     extend self
-    def sns_notify_spinup(node = self.node)
+    def sns_notify_spinup(node, client)
+      @client = client
+
       my_hostname = ::EasyBib.get_hostname(node, true)
 
       if my_hostname.include?(node['easybib']['sns']['notify_spinup'])
@@ -18,7 +21,7 @@ module EasyBib
         EasyBib SNS Library
         "
 
-        ::EasyBib::SNS.sns_notify(node, sns_message)
+        sns_notify(node, sns_message)
       end
     end
 
@@ -29,34 +32,28 @@ module EasyBib
     #
     # @return [nil]
     def sns_notify(node, body)
-      require 'aws-sdk'
-
-      if node.nil?
-        Chef::Log.error 'Missing argument: node (AWS instance name)!'
-        return
-      elsif body.nil?
+      if body.nil?
         Chef::Log.error 'Missing argument: body (e-mail message body)'
-        return
-      elsif node.fetch('easybib', {}).fetch('sns', {})['topic_arn'].nil?
-        Chef::Log.error 'Missing attribute: topic_arn (SNS topic)'
         return
       end
 
-      begin
-        args = {
-          :region => 'us-east-1',
-          :credentials => ''
-        }
+      if node['easybib']['sns']['topic_arn'].nil?
+        Chef::Log.error 'Missing attribute: topic_arn (SNS topic)'
+        return false
+      end
 
-        client = ::AWS::SNS::Client.new(args)
-        resp = client.publish(
+      begin
+        resp = @client.publish(
           :topic_arn => node['easybib']['sns']['topic_arn'],
           :message => body
         )
         Chef::Log.info "notified sns with message id #{resp[:message_id]}"
       rescue ::AWS::SNS::Errors::ServiceError => e
         Chef::Log.warn "unable to send SNS notification: #{e}"
+        return false
       end
+
+      true
     end
   end
 end
