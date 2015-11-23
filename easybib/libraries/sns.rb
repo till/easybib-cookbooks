@@ -38,17 +38,14 @@ module EasyBib
         Chef::Log.error 'Missing argument: body (e-mail message body)'
         return
       elsif node.fetch('easybib', {}).fetch('sns', {})['topic_arn'].nil?
-        Chef::Log.error 'Mssing attribute: topic_arn (SNS topic)'
-        return
-      elsif node.fetch('easybib', {}).fetch('sns', {})['credentials'].nil?
-        Chef::Log.error 'Missing attribute: credentials (SNS credentials)'
+        Chef::Log.error 'Missing attribute: topic_arn (SNS topic)'
         return
       end
 
       begin
         args = {
           :region => 'us-east-1',
-          :credentials => node['easybib']['sns']['credentials']
+          :credentials => ''
         }
 
         client = ::AWS::SNS::Client.new(args)
