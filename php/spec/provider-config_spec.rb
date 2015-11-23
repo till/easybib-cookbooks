@@ -17,7 +17,7 @@ describe 'php_config' do
       node.override['php']['ppa']['package_prefix'] = 'php-ppa-prefix'
       node.override['php-fpm']['prefix'] = '/prefix/dir'
       node.default['config-spec']['name'] = 'modulename'
-      node.default['config-spec']['config'] = { 'key' => 'value' }
+      node.default['config-spec']['config'] = { 'key' => 'value', 'modulename.secondkey' => 'value2' }
       # node['config-spec']['prefix_dir'] is fetched from ['php-fpm']['prefix'] which is set above
       node.default['config-spec']['extension_path'] = nil
       node.default['config-spec']['load_extension'] = false
@@ -28,13 +28,18 @@ describe 'php_config' do
   let(:node)     { runner.node }
 
   describe 'default values' do
-    it 'generates the config' do
+    it 'generates the config and adds module name to keys if needed' do
       config_filename = '/prefix/dir/etc/php/modulename-settings.ini'
 
-      fixture = 'modulename.key="value"'
+      expect(chef_run).to render_file(config_filename)
+        .with_content(/^modulename.key="value"/)
+    end
+
+    it 'generates the config and does not add module name if already existing' do
+      config_filename = '/prefix/dir/etc/php/modulename-settings.ini'
 
       expect(chef_run).to render_file(config_filename)
-        .with_content(fixture)
+        .with_content(/^modulename.secondkey="value2"/)
     end
   end
 
