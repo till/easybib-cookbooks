@@ -2,14 +2,14 @@ if defined?(ChefSpec)
   if ChefSpec.respond_to?(:define_matcher)
     # ChefSpec >= 4.1
     ChefSpec.define_matcher :php_config
-    ChefSpec.define_matcher :php_ppapackage
+    ChefSpec.define_matcher :php_ppa_package
     ChefSpec.define_matcher :php_pear
     ChefSpec.define_matcher :php_pecl
   elsif defined?(ChefSpec::Runner) &&
         ChefSpec::Runner.respond_to?(:define_runner_method)
     # ChefSpec < 4.1
     ChefSpec::Runner.define_runner_method :php_config
-    ChefSpec::Runner.define_runner_method :php_ppapackage
+    ChefSpec::Runner.define_runner_method :php_ppa_package
     ChefSpec::Runner.define_runner_method :php_pear
     ChefSpec::Runner.define_runner_method :php_pecl
   end
@@ -18,8 +18,8 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:php_config, :generate, resource_name)
   end
 
-  def install_php_ppapackage(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:php_ppapackage, :install, resource_name)
+  def install_php_ppa_package(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:php_ppa_package, :install, resource_name)
   end
 
   def install_php_pear(resource_name)

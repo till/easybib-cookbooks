@@ -1,3 +1,3 @@
 include_recipe 'php::dependencies-ppa'
 
-php_ppapackage 'gearman'
+php_ppa_package 'gearman'

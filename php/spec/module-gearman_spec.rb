@@ -12,6 +12,6 @@ describe 'php::module-gearman' do
   end
 
   it 'installs and configures the extension' do
-    expect(chef_run).to install_php_ppapackage('gearman')
+    expect(chef_run).to install_php_ppa_package('gearman')
   end
 end

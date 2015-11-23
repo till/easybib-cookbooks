@@ -1,6 +1,6 @@
 require_relative 'spec_helper.rb'
 
-describe 'php_ppapackage' do
+describe 'php_ppa_package' do
 
   let(:cookbook_paths) do
     [
@@ -12,16 +12,16 @@ describe 'php_ppapackage' do
   let(:runner) do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
-      :step_into => %w(php_ppapackage)
+      :step_into => %w(php_ppa_package)
     ) do |node|
       node.override['php']['ppa']['package_prefix'] = 'php-ppa-prefix'
       node.override['php-fpm']['prefix'] = '/prefix/dir'
-      node.default['ppapackage-spec']['name'] = 'modulename'
-      node.default['ppapackage-spec']['packagename'] = 'modulename'
-      node.default['ppapackage-spec']['config'] = nil
+      node.default['ppa_package-spec']['name'] = 'modulename'
+      node.default['ppa_package-spec']['packagename'] = 'modulename'
+      node.default['ppa_package-spec']['config'] = nil
     end
   end
-  let(:chef_run) { runner.converge('fixtures::php-ppapackage') }
+  let(:chef_run) { runner.converge('fixtures::php-ppa_package') }
   let(:node)     { runner.node }
 
   describe 'without config, no separate name' do
@@ -41,7 +41,7 @@ describe 'php_ppapackage' do
 
   describe 'with config, no separate name' do
     before do
-      node.set['ppapackage-spec']['config'] = { 'key' => 'value' }
+      node.set['ppa_package-spec']['config'] = { 'key' => 'value' }
     end
 
     it 'installs the module' do
@@ -65,8 +65,8 @@ describe 'php_ppapackage' do
 
   describe 'with config, with separate name' do
     before do
-      node.set['ppapackage-spec']['config'] = { 'key' => 'value' }
-      node.set['ppapackage-spec']['packagename'] = 'packagename'
+      node.set['ppa_package-spec']['config'] = { 'key' => 'value' }
+      node.set['ppa_package-spec']['packagename'] = 'packagename'
     end
 
     it 'installs the module' do
