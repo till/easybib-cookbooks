@@ -1,6 +1,6 @@
 include_recipe 'easybib::role-phpapp'
 
-include_recipe 'php-mysqli::configure'
+include_recipe 'php::module-mysqli'
 include_recipe 'php::module-gearman'
 include_recipe 'php-posix'
 include_recipe 'php-poppler-pdf'
