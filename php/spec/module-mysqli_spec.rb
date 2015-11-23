@@ -12,7 +12,7 @@ describe 'php::module-mysqli' do
   end
 
   it 'installs and configures the extension' do
-    expect(chef_run).to install_php_ppapackage('mysqli')
+    expect(chef_run).to install_php_ppa_package('mysqli')
       .with(:config => { 'reconnect' => 1 })
   end
 end

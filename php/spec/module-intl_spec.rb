@@ -12,6 +12,6 @@ describe 'php::module-intl' do
   end
 
   it 'installs and configures the extension' do
-    expect(chef_run).to install_php_ppapackage('intl')
+    expect(chef_run).to install_php_ppa_package('intl')
   end
 end
