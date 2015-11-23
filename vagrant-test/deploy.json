@@ -50,8 +50,5 @@
                 "lb"
             ]
         }
-    },
-    "newrelic": {
-        "license": ""
     }
 }
