@@ -45,7 +45,7 @@ unless node['php-fpm']['packages'].empty?
 end
 
 include_recipe 'php-fpm::configure'
-include_recipe 'php-apc::default'
+include_recipe 'php::module-apc'
 
 expected_prefix = '/usr/local/bin'
 install_prefix = "#{node['php-fpm']['prefix']}/bin"
