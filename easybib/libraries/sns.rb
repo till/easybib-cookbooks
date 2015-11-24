@@ -1,5 +1,4 @@
 require 'json'
-require 'aws-sdk'
 
 module EasyBib
   module SNS
@@ -34,6 +33,8 @@ module EasyBib
     #
     # @return [nil]
     def sns_notify(node, body)
+      require 'aws-sdk'
+
       if body.nil?
         Chef::Log.error 'Missing argument: body (e-mail message body)'
         return false
