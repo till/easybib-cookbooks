@@ -1,31 +1,4 @@
-this_dir = File.dirname(__FILE__)
-require "#{File.dirname(this_dir)}/vagrant-test-library"
+ENV['recipe_runlist'] = 'easybib::setup,ies-mysql,prosody'
+ENV['chef_json'] = "#{File.dirname(__FILE__)}/prosody.json"
 
-vagrant_test_config = get_setup_json
-
-Vagrant::Config.run do |config|
-
-  bibconfig = Bib::Vagrant::Config.new
-  vagrantconfig = bibconfig.get
-
-  config.vm.boot_mode = vagrantconfig['gui']
-  config.vm.box = vagrant_test_config['box_file']
-
-  config.vm.network :hostonly, vagrant_test_config['box_ip']
-
-  config.vm.customize [
-    "modifyvm", :id,
-    "--name", vagrant_test_config['box_name']
-  ]
-
-  config.vm.provision :shell, :inline => "apt-get update -y"
-
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = "./../../"
-    chef.log_level = vagrantconfig['chef_log_level']
-    chef.add_recipe "easybib::setup"
-    chef.add_recipe "ies-mysql"
-    chef.add_recipe "prosody"
-    chef.json = get_json(this_dir + "/prosody.json")
-  end
-end
+require_relative '../vagrant-provision'
