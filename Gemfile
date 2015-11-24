@@ -9,4 +9,5 @@ gem 'test-kitchen', '~>1.0.0.beta.3'
 gem 'rubocop', '~>0.34.0'
 gem 'faraday', '0.8.9'
 gem 'travis-artifacts', '~>0.2.2'
+gem 'aws-sdk', '~>1.0'
 gem 'kitchen-vagrant', :group => :integration
