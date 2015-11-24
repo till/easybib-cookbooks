@@ -22,7 +22,7 @@ route53_record 'create a record' do
   aws_secret_access_key node['ies-route53']['zone']['custom_secret_key']
   overwrite true
   action :create
-  not_if do
-    node.fetch('ies-route53', {}).fetch('zone', {}).fetch('id', {}).nil?
+  only_if do
+    dns_enabled?
   end
 end
