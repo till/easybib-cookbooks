@@ -13,6 +13,7 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'scholar_admin', 'nginxphpapp')
   when 'scholar'
     listen_opts = 'default_server'
+    supervisor_role = node['easybib_deploy']['supervisor_role']
     next unless allow_deploy(application, 'scholar', ['nginxphpapp', supervisor_role])
   else
     Chef::Log.info("deploy::scholar - #{application} skipped")
