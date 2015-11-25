@@ -5,8 +5,6 @@ node['deploy'].each do |application, deploy|
   listen_opts = nil
 
   case application
-  when 'notebook'
-    next unless allow_deploy(application, 'notebook', 'erlang')
   when 'scholar_admin'
     next unless allow_deploy(application, 'scholar_admin', 'nginxphpapp')
   when 'scholar'
@@ -41,7 +39,6 @@ node['deploy'].each do |application, deploy|
     listen_opts listen_opts
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
-    not_if { application == 'notebook' }
   end
 
 end
