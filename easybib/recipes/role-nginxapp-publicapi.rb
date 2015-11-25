@@ -2,7 +2,7 @@ include_recipe 'easybib::role-phpapp'
 
 include_recipe 'php::module-gearman'
 include_recipe 'php::module-zip'
-include_recipe 'php-zlib'
+include_recipe 'php::module-zlib'
 
 include_recipe 'easybib-deploy::easybib'
 
