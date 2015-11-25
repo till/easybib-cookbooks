@@ -5,7 +5,7 @@ Vagrant.configure('2') do |config|
   vagrant_config = Bib::Vagrant::Config.new.get
 
   config.vm.box = vagrant_test_config['box_file']
-  config.vm.box_version = vagrant_test_config['box_version']
+  config.vm.box_version = vagrant_test_config['box_version'] unless vagrant_test_config['box_version'].empty?
   config.vm.network 'private_network', ip: vagrant_test_config['box_ip']
 
   config.vm.provider 'virtualbox' do |vb|
