@@ -4,6 +4,7 @@ describe 'easybib-deploy::infolit' do
 
   let(:runner) do
     ChefSpec::Runner.new(
+      :log_level => :error,
       :step_into => %w(nginx_app_config easybib_nginx)
     )
   end
