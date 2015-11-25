@@ -29,3 +29,9 @@ default['php-xdebug']['settings'] = {
   'remote_connect_back'  => 1,
   'idekey'               => 'XDEBUG_PHPSTORM'
 }
+
+default['php-phar']['settings']  = {
+  'detect_unicode' => 'Off',
+  'readonly' => 'Off',
+  'require_hash' => 'Off'
+}
