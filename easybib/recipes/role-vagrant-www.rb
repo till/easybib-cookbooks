@@ -4,7 +4,7 @@ include_recipe 'ies-mysql::dev'
 include_recipe 'php::module-pdo_sqlite'
 
 include_recipe 'ohai'
-include_recipe 'php-xdebug'
+include_recipe 'php::module-xdebug'
 include_recipe 'memcache'
 
 include_recipe 'easybib::role-nginxapp-api'

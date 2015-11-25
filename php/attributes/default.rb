@@ -20,3 +20,12 @@ default['php-opcache']['settings'] = {
   'max_wasted_percentage' => 10,
   'error_log' => nil
 }
+
+default['php-xdebug']['settings'] = {
+  'scream'               => 1,
+  'show_exception_trace' => 0,
+  'remote_enable'        => 1,
+  'remote_handler'       => 'dbgp',
+  'remote_connect_back'  => 1,
+  'idekey'               => 'XDEBUG_PHPSTORM'
+}

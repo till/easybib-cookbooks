@@ -7,7 +7,7 @@ include_recipe 'php::module-pdo_sqlite'
 include_recipe 'nodejs'
 include_recipe 'avahi'
 include_recipe 'stack-service::role-rabbitmq'
-include_recipe 'php-xdebug'
+include_recipe 'php::module-xdebug'
 
 package 'build-essential'
 package 'g++'
