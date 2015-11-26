@@ -34,7 +34,7 @@ template '/etc/haproxy/haproxyctl/instance-name' do
   source 'haproxyctl.instance-name.erb'
   variables(
     :stack_name => node['easybib_deploy']['envtype'],
-    :host_name  => get_hostname(node, true)
+    :host_name  => "#{get_normalized_cluster_name(node)}_lb"
   )
 end
 

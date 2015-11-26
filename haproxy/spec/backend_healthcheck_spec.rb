@@ -1,4 +1,4 @@
-require 'chefspec'
+require_relative 'spec_helper.rb'
 
 describe 'haproxy::configure' do
   let(:runner) do
