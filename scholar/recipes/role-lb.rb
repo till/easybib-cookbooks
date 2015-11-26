@@ -1,4 +1,2 @@
-include_recipe 'ies::role-generic'
-include_recipe 'easybib-deploy::ssl-certificates'
-include_recipe 'haproxy'
-include_recipe 'haproxy::ctl'
+Chef::Log.warn('DEPRECATED: This setup is still still not using the new stack-* cookbooks!')
+include_recipe 'stack-scholar::role-lb'

@@ -1,3 +1,3 @@
-include_recipe 'supervisor'
-include_recipe 'easybib::role-phpapp'
-include_recipe 'easybib-deploy::scholar'
+Chef::Log.warn('DEPRECATED: This setup is still still not using the new stack-* cookbooks!')
+include_recipe 'stack-scholar::role-scholar'
+
