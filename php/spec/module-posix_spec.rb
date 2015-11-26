@@ -7,8 +7,7 @@ describe 'php::module-posix' do
   end
 
   it 'adds ppa mirror configuration' do
-    expect(chef_run).to include_recipe('apt::ppa')
-    expect(chef_run).to include_recipe('apt::easybib')
+    expect(chef_run).to include_recipe('php::dependencies-ppa')
   end
 
   it 'installs and configures the extension' do
