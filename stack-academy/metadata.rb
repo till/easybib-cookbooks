@@ -1,0 +1,18 @@
+name              'stack-academy'
+maintainer        'Till Klampaeckel'
+maintainer_email  'till@php.net'
+license           'BSD License'
+description       'Academy Stack'
+version           '0.1'
+
+supports 'ubuntu'
+
+depends 'easybib'
+depends 'nginx-app'
+depends 'ies'
+depends 'ohai'
+depends 'ies-mysql'
+depends 'php'
+depends 'nodejs'
+depends 'avahi'
+depends 'stack-service'
