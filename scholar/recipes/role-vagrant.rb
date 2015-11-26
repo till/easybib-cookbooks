@@ -15,7 +15,7 @@ package 'build-essential'
 package 'g++'
 
 include_recipe 'easybib::role-phpapp'
-include_recipe 'php-pdo_sqlite'
+include_recipe 'php::module-pdo_sqlite'
 include_recipe 'nginx-app::vagrant-silex'
 
 # easybib-api + id
