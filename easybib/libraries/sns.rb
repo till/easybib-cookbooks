@@ -6,7 +6,8 @@ module EasyBib
     #
     # @return [nil]
     extend self
-    def sns_notify_spinup(node, client)
+    def sns_notify_spinup(node, client = nil)
+      client = create_client if client.nil?
       @client = client
 
       my_hostname = ::EasyBib.get_hostname(node, true)
@@ -57,6 +58,11 @@ module EasyBib
       end
 
       true
+    end
+
+    def create_client
+      require 'aws-sdk'
+      ::AWS::SNS::Client.new(:region => 'us-east-1')
     end
   end
 end
