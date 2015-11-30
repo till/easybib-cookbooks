@@ -1,5 +1,5 @@
 vagrant_user = node['easybib_vagrant']['environment']
-home_dir = ::Dir.home(vagrant_user['user'])
+home_dir = vagrant_user['home']
 
 ['.config/easybib', '.ssh', '.vagrant.d'].each do |path|
   directory "#{home_dir}/#{path}" do

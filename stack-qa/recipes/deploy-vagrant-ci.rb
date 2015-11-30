@@ -35,7 +35,8 @@ return unless get_instance_roles.include?(deploy_role)
 # set username for plugins, etc.
 node.default['easybib_vagrant']['environment'] = {
   'user' => deploy_user_name,
-  'group' => deploy_user_name
+  'group' => deploy_user_name,
+  'home' => deploy_user_home
 }
 
 # inject personal access token into vagrantdefault.yml

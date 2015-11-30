@@ -1,5 +1,5 @@
 vagrant_user = node['easybib_vagrant']['environment']
-home_dir = Dir.home(vagrant_user['user'])
+home_dir = vagrant_user['home']
 
 template "#{home_dir}/.vagrant.d/Vagrantfile" do
   owner vagrant_user['user']

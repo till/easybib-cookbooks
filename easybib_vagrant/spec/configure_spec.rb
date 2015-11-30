@@ -13,10 +13,6 @@ describe 'easybib_vagrant' do
   let(:node)     { runner.node }
 
   describe 'configure' do
-    before do
-      Dir.stub(:home) { '/root' }
-    end
-
     it 'creates configuration files for root' do
       expect(chef_run).not_to render_file('/root/.ssh/config')
       expect(chef_run).to render_file('/root/.config/easybib/vagrantdefault.yml').with_content(
@@ -28,14 +24,13 @@ describe 'easybib_vagrant' do
 
   describe 'configure/opsworks' do
     before do
-      Dir.stub(:home) { '/home/vagrantci' }
-
       node.set['opsworks'] = {
         'super' => 'cool'
       }
       node.set['easybib_vagrant']['environment'] = {
         'user' => 'vagrantci',
-        'group' => 'vagrantci'
+        'group' => 'vagrantci',
+        'home' => '/home/vagrantci'
       }
     end
 
