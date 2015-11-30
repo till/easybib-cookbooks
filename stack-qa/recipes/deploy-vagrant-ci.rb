@@ -84,6 +84,7 @@ end
 
 node.default['bash']['environment'] = {
   'user' => deploy_user_name,
-  'group' => deploy_user_name
+  'group' => deploy_user_name,
+  'home' => deploy_user_home
 }
 include_recipe 'bash::profile'

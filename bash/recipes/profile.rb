@@ -3,7 +3,7 @@ return if node['bash']['environment']['user'].nil?
 
 include_recipe 'keychain'
 
-home_dir = Dir.home(node['bash']['environment']['user'])
+home_dir = node['bash']['environment']['home']
 
 profile_file = "/usr/bin/keychain #{home_dir}/.ssh/id_dsa"
 profile_file << "\n"
@@ -14,4 +14,7 @@ file "#{home_dir}/.bash_profile" do
   mode 0644
   owner node['bash']['environment']['user']
   group node['bash']['environment']['group']
+  not_if do
+    node['bash']['environment']['home'].nil?
+  end
 end
