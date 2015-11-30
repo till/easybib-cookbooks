@@ -13,10 +13,6 @@ describe 'easybib_vagrant' do
   let(:node)     { runner.node }
 
   describe 'default' do
-    before do
-      Dir.stub(:home) { '/root' }
-    end
-
     it 'creates directories for the user' do
       expect(chef_run).to create_directory('/root/.ssh')
       expect(chef_run).to create_directory('/root/.config/easybib')
@@ -29,14 +25,13 @@ describe 'easybib_vagrant' do
 
   describe 'default/opsworks' do
     before do
-      Dir.stub(:home) { '/home/vagrantci' }
-
       node.set['opsworks'] = {
         'super' => 'cool'
       }
       node.set['easybib_vagrant']['environment'] = {
         'user' => 'vagrantci',
-        'group' => 'vagrantci'
+        'group' => 'vagrantci',
+        'home' => '/home/vagrantci'
       }
     end
 

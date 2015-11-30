@@ -1,7 +1,8 @@
 # override this to install for a specific account
 default['easybib_vagrant']['environment'] = {
   'user' => 'root',
-  'group' => 'root'
+  'group' => 'root',
+  'home' => '/root'
 }
 
 # required plugins, they are installed for the above user

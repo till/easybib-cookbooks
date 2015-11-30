@@ -1,8 +1,10 @@
-deploy_role = node['stack-qa']['deploy_role']
+user = StackQa::DeployUser.new(node)
+
+deploy_role = user.get_role
 deployable_apps = node['stack-qa'][deploy_role]['apps']
 
-deploy_user_name = node['stack-qa'][deploy_role]['deploy_user']
-deploy_user_home = Dir.home(deploy_user_name)
+deploy_user_name = user.get_user
+deploy_user_home = user.get_home
 
 # override deploy-user so it's only used by this recipe
 node['deploy'].each do |app, deploy|
@@ -33,7 +35,8 @@ return unless get_instance_roles.include?(deploy_role)
 # set username for plugins, etc.
 node.default['easybib_vagrant']['environment'] = {
   'user' => deploy_user_name,
-  'group' => deploy_user_name
+  'group' => deploy_user_name,
+  'home' => deploy_user_home
 }
 
 # inject personal access token into vagrantdefault.yml
@@ -81,6 +84,7 @@ end
 
 node.default['bash']['environment'] = {
   'user' => deploy_user_name,
-  'group' => deploy_user_name
+  'group' => deploy_user_name,
+  'home' => deploy_user_home
 }
 include_recipe 'bash::profile'

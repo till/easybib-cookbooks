@@ -1,4 +1,5 @@
 default['bash']['environment'] = {
   'user' => nil,
-  'group' => nil
+  'group' => nil,
+  'home' => nil
 }
