@@ -13,3 +13,7 @@ package node['nginx-app']['package-name'] do
 end
 
 nginx_app_config 'nginx-app: nginx.conf'
+
+# Patch /etc/logrotate.d/nginx so rotating the logs doesn't fail.
+# See: https://bugs.launchpad.net/nginx/+bug/1450770
+template('/etc/logrotate.d/nginx') { source 'nginx.logrotate.erb' }
