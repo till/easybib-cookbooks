@@ -32,5 +32,9 @@ describe 'nginx-app::server' do
       expect(chef_run).to create_template('/etc/nginx/nginx.conf')
       expect(chef_run).to run_execute('delete default vhost')
     end
+
+    it 'patches logrotate configuration file' do
+      expect(chef_run).to render_file('/etc/logrotate.d/nginx')
+    end
   end
 end
