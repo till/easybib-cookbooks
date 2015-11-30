@@ -1,8 +1,10 @@
-deploy_role = node['stack-qa']['deploy_role']
+user = StackQa::DeployUser.new(node)
+
+deploy_role = user.get_role
 deployable_apps = node['stack-qa'][deploy_role]['apps']
 
-deploy_user_name = node['stack-qa'][deploy_role]['deploy_user']
-deploy_user_home = Dir.home(deploy_user_name)
+deploy_user_name = user.get_user
+deploy_user_home = user.get_home
 
 # override deploy-user so it's only used by this recipe
 node['deploy'].each do |app, deploy|
