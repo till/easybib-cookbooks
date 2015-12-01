@@ -41,7 +41,7 @@ action :create do
   end
 
   node['easybib_vagrant']['plugin_config'].each do |plugin,|
-    execute "Install plugin: #{plugin}" do
+    bash "Install plugin: #{plugin}" do
       action :run
       command "vagrant plugin install #{plugin}"
       user username
