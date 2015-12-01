@@ -7,6 +7,9 @@ version           '0.1'
 
 supports 'ubuntu'
 
-depends 'easybib'
+depends 'stack-easybib'
 depends 'easybib-deploy'
+depends 'memcache'
 depends 'nginx-app'
+depends 'php'
+depends 'redis'
