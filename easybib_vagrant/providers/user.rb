@@ -54,7 +54,7 @@ action :create do
     user username
     action :sync
   end
-  
+
   profile_file <<-EOH
 /usr/bin/keychain #{home_dir}/.ssh/id_dsa
 source #{home_dir}/.keychain/$HOSTNAME-sh
@@ -66,5 +66,5 @@ EOH
     owner node['bash']['environment']['user']
     group node['bash']['environment']['group']
   end
-  
+
 end
