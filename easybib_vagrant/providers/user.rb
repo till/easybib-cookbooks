@@ -20,7 +20,7 @@ action :create do
     only_if { is_aws }
   end
 
-  config = node['easybib_vagrant']['plugin_config']['bib-vagrant']
+  config = node['easybib_vagrant']['plugin_config']['bib-vagrant'].to_hash
   config['composer_github_token'] = composer_token
 
   template "#{home_dir}/.config/easybib/vagrantdefault.yml" do
