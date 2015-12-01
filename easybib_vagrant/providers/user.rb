@@ -15,6 +15,7 @@ action :create do
 
   template "#{home_dir}/.ssh/config" do
     owner username
+    cookbook 'easybib_vagrant'
     source 'ssh-config-opsworks.erb'
     mode 0600
     only_if { is_aws }
@@ -25,6 +26,7 @@ action :create do
 
   template "#{home_dir}/.config/easybib/vagrantdefault.yml" do
     owner username
+    cookbook 'easybib_vagrant'
     source 'vagrantdefault.yml.erb'
     variables(
       :config => config
@@ -33,6 +35,7 @@ action :create do
 
   template "#{home_dir}/.vagrant.d/Vagrantfile" do
     owner username
+    cookbook 'easybib_vagrant'
     source 'Vagrantfile.erb'
     mode 0644
   end
