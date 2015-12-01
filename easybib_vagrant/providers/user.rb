@@ -6,7 +6,9 @@ action :create do
   home_dir = ::Dir.home(username) if home_dir.nil?
 
   ['.config/easybib', '.ssh', '.vagrant.d'].each do |path|
-    directory "#{home_dir}/#{path}" do
+    dir = "#{home_dir}/#{path}"
+    Chef::Log.info("DIR is #{dir}, user is #{username}")
+    directory dir do
       mode 0700
       owner username
       recursive true
