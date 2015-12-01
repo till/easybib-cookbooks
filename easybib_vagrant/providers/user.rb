@@ -2,12 +2,10 @@ action :create do
   username = new_resource.username
   home_dir = new_resource.home_dir
   composer_token = new_resource.composer_token
-
-  home_dir = ::Dir.home(username) if home_dir.nil?
+  Chef::Log.info("easybib_vagrant_user: home_dir is #{home_dir}, user is #{username}")
 
   ['.config/easybib', '.ssh', '.vagrant.d'].each do |path|
     dir = "#{home_dir}/#{path}"
-    Chef::Log.info("DIR is #{dir}, user is #{username}")
     directory dir do
       mode 0700
       owner username

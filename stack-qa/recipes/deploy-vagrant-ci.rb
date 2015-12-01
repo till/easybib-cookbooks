@@ -11,5 +11,6 @@ node['deploy'].each do |app, deploy|
 
   easybib_vagrant_user deploy['user'] do
     composer_token node['composer']['oauth_key']
+    home_dir deploy['home']
   end
 end

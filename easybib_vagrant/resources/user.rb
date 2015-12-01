@@ -2,6 +2,6 @@ actions :create
 
 default_action :create
 
-attribute :username, :default => '', :name_attribute => true
+attribute :username, :name_attribute => true, :required => true
 attribute :composer_token, :kind_of => String, :default => ''
-attribute :home_dir, :kind_of => String, :default => nil
+attribute :home_dir, :kind_of => String, :required => true
