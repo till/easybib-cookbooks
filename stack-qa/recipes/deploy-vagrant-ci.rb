@@ -4,10 +4,10 @@ deployable_apps = node['stack-qa'][deploy_role]['apps']
 node['deploy'].each do |app, deploy|
   next unless allow_deploy(app, deployable_apps, deploy_role)
 
-  deploy.set['user'] = 'vagrant-ci'
-  deploy.set['group'] = 'vagrant-ci'
-  deploy.set['home'] = '/home/vagrant-ci'
-  deploy.set['shell'] = '/bin/bash'
+  node.override['deploy'][app]['user'] = 'vagrant-ci'
+  node.override['deploy'][app]['group'] = 'vagrant-ci'
+  node.override['deploy'][app]['home'] = '/home/vagrant-ci'
+  deploy = node['deploy'][app]
 
   opsworks_deploy_user do
     deploy_data deploy
