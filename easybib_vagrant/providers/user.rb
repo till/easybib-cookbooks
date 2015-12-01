@@ -55,13 +55,12 @@ action :create do
     action :sync
   end
 
-  profile_file <<-EOH
-/usr/bin/keychain #{home_dir}/.ssh/id_dsa
-source #{home_dir}/.keychain/$HOSTNAME-sh
-EOH
-
-  file "#{home_dir}/.bash_profile" do
-    content profile_file
+  template "#{home_dir}/.bash_profile" do
+    source 'bash-profile.erb'
+    cookbook 'easybib_vagrant'
+    variables(
+      :home_dir => home_dir
+    )
     mode 0644
     owner node['bash']['environment']['user']
     group node['bash']['environment']['group']
