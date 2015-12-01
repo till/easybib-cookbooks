@@ -7,8 +7,10 @@ version           '0.1'
 
 supports 'ubuntu'
 
+depends 'apache-solr'
 depends 'easybib'
 depends 'easybib-deploy'
+depends 'ies'
 depends 'php'
 depends 'nginx-app'
 depends 'memcache'
