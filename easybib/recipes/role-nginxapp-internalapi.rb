@@ -1,7 +1,2 @@
-include_recipe 'easybib::role-phpapp'
-
-if is_aws
-  include_recipe 'easybib-deploy::internal-api'
-else
-  include_recipe 'nginx-app::sitescraper'
-end
+Chef::Log.warn('DEPRECATED: This setup is still still not using the new stack-* cookbooks!')
+include_recipe 'stack-citationapi::role-nginxphpapp'
