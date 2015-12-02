@@ -5,6 +5,9 @@ action :create do
 
   nginx_user = new_resource.nginx_user || node['nginx-app']['user']
   nginx_group = new_resource.nginx_group || node['nginx-app']['group']
+
+  error_log = new_resource.error_log || node['nginx-app']['error_log']
+  
   enable_fastcgi = new_resource.enable_fastcgi
 
   # this is a hack to maximize - currently only
@@ -36,7 +39,8 @@ action :create do
     group nginx_group
     variables(
       :nginx_user => nginx_user,
-      :processes => processes
+      :processes => processes,
+      :error_log => error_log
     )
   end
 

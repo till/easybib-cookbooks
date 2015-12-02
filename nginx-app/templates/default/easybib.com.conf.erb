@@ -19,9 +19,6 @@ server {
     listen 80 <%=@listen_opts%>;
 
     access_log <%= @access_log %>;
-<% if !node.fetch('nginx-app', {}).fetch('logging',{}).fetch('address',{}).empty? -%>
-    access_log syslog:server=<%= @node['nginx-app']['logging']['address'] %>:<%= @node['nginx-app']['logging']['port'] %>;
-<% end -%>
 
 <% if @nginx_extra -%>
     <%= @nginx_extra -%>
