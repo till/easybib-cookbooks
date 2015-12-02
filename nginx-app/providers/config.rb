@@ -7,7 +7,7 @@ action :create do
   nginx_group = new_resource.nginx_group || node['nginx-app']['group']
 
   error_log = new_resource.error_log || node['nginx-app']['error_log']
-  
+
   enable_fastcgi = new_resource.enable_fastcgi
 
   # this is a hack to maximize - currently only
