@@ -14,7 +14,7 @@ include_recipe 'bower'
 package 'build-essential'
 package 'g++'
 
-include_recipe 'easybib::role-phpapp'
+include_recipe 'stack-easybib::role-phpapp'
 include_recipe 'php::module-pdo_sqlite'
 include_recipe 'nginx-app::vagrant-silex'
 
