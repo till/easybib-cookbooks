@@ -4,19 +4,17 @@ default['easybib_vagrant']['environment'] = {
   'group' => 'root'
 }
 
-# required plugins, they are installed for the above user
-default['easybib_vagrant']['plugins'] = ['bib-vagrant', 'vagrant-cachier']
-
-# plugin configuration
+# vagrant plugins
 default['easybib_vagrant']['plugin_config'] = {
   'bib-vagrant' => {
     'chef_log_level' => 'error',
-    'cookbook_path' => 'easybib-cookbooks', # relative to the user's HOME
+    'cookbook_path' => '~/easybib-cookbooks',
     'use_nfs' => false,
-    'virtualbox_gui' => false,
-    'composer_github_token' => nil
+    'virtualbox_gui' => false
+  },
+  'vagrant-cachier' => {
   }
 }
 
-# path to cookbooks
+# cookbook repo
 default['easybib_vagrant']['cookbooks'] = 'https://github.com/till/easybib-cookbooks.git'

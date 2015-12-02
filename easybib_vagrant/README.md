@@ -1,3 +1,3 @@
 # easybib vagrant
 
-WIP Vagrant setup for CI and developer machines.
+Vagrant setup for CI machine.

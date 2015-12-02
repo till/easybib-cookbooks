@@ -1,21 +1,8 @@
-require 'chefspec'
+require_relative 'spec_helper.rb'
 
 describe 'stack-qa::deploy-vagrant-ci' do
 
-  let(:cookbook_paths) do
-    [
-      File.expand_path("#{File.dirname(__FILE__)}/../../")
-    ]
-  end
-
-  let(:runner) do
-    ChefSpec::Runner.new(
-      :cookbook_path => cookbook_paths,
-      :platform => 'ubuntu',
-      :version => '14.04'
-    )
-  end
-
+  let(:runner)   { ChefSpec::Runner.new }
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node)     { runner.node }
 
@@ -24,48 +11,18 @@ describe 'stack-qa::deploy-vagrant-ci' do
 
   describe 'deploy-vagrant-ci' do
     before do
-      node.set['stack-qa']['vagrant-ci'] = {
-        'apps' => [app],
-        'deploy_user' => user
-      }
-
-      # general stack info
-      node.set['applications'] = [
-        {
-          'name' => app,
-          'slug_name' => app,
-          'application_type' => 'other'
-        }
-      ]
-
-      # when an app is being deployed
-      node.set['deploy'] = {
-        app => {
-          'application' => app,
-          'application_type' => 'other'
-        }
-      }
-
-      # current instance
-      node.set['opsworks'] = {
-        'instance' => {
-          'layers' => [
-            'vagrant-ci'
-          ]
-        }
-      }
-
-      Dir.stub(:home) { "/home/#{user}" }
+      node.set['stack-qa']['vagrant-ci']['deploy']['opsworks-layer'] = 'vagrant-ci'
+      node.set['stack-qa']['vagrant-ci']['deploy']['user'] = user
+      node.set['stack-qa']['vagrant-ci']['deploy']['group'] = user
+      node.set['stack-qa']['vagrant-ci']['deploy']['home'] = '/home/vagrant-ci'
+      node.set['stack-qa']['vagrant-ci']['apps'] = [app]
+      node.set['deploy'][app]['application'] = app
+      node.set['opsworks']['instance']['layers'] = ['vagrant-ci']
     end
 
-    it "deploys 'testapp' on 'vagrant-ci'" do
-      # expect(Chef::Log).to receive(:debug).with("Deployed: #{app}")
-    end
-
-    it 'continues to setup vagrant, .ssh/config and .bash_profile' do
-      expect(chef_run).to include_recipe('easybib_vagrant')
-      expect(chef_run).to render_file("/home/#{user}/.ssh/config")
-      expect(chef_run).to include_recipe('bash::profile')
+    it 'deploys the vagrant apps' do
+      expect(chef_run).to deploy_easybib_deploy(app)
+      expect(chef_run).to create_easybib_vagrant_user(user)
     end
   end
 end
