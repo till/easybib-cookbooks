@@ -31,7 +31,7 @@ if !php_bin.empty?
 
   end
 else
-  Ohai::Log.error('No PHP on this server.')
+  Ohai::Log.info('No PHP on this server.')
 end
 
 unless languages[:php_fpm][:pear_bin].nil?
