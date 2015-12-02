@@ -24,9 +24,6 @@ node['deploy'].each do |application, deploy|
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
 
-  when 'sitescraper'
-    next unless allow_deploy(application, 'sitescraper')
-
   when 'research_app'
     next unless allow_deploy(application, 'research_app', 'research_app')
 
