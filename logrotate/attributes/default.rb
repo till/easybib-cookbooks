@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: logrotate
-# Recipe:: default
+# Attribute:: default
 #
-# Copyright 2009-2013, Chef Software, Inc.
+# Copyright 2013, Chef
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,19 +17,22 @@
 # limitations under the License.
 #
 
-package 'logrotate'
+default['logrotate']['global'] = {
+  'weekly' => true,
+  'rotate' => 4,
+  'create' => '',
 
-directory "/etc/logrotate.d" do
-  owner "root"
-  group "root"
-  mode "0755"
-  action :create
-end
+  '/var/log/wtmp' => {
+    'missingok' => true,
+    'monthly' => true,
+    'create' => '0664 root utmp',
+    'rotate' => 1
+  },
 
-if platform? "solaris2" # ~FC023 style preference
-  cron "logrotate" do
-    minute "35"
-    hour "7"
-    command "/usr/sbin/logrotate /etc/logrotate.conf"
-  end
-end
+  '/var/log/btmp' => {
+    'missingok' => true,
+    'monthly' => true,
+    'create' => '0660 root utmp',
+    'rotate' => 1
+  }
+}
