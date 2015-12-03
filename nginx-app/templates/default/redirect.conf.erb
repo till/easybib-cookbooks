@@ -5,7 +5,7 @@ map $uri $new {
   old_path = 'default' if old_path == '/'
 -%>
 
-    <%=old_path%> <%=new_url%>;
+    <%=old_path%> "<%=new_url%>";
 <% end -%>
 }
 
