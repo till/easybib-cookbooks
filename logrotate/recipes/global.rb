@@ -17,19 +17,14 @@
 # limitations under the License.
 #
 
-package 'logrotate'
+include_recipe 'logrotate::default'
 
-directory "/etc/logrotate.d" do
-  owner "root"
-  group "root"
-  mode "0755"
-  action :create
-end
+parsed_configuration = CookbookLogrotate::LogrotateConfiguration.from_hash(node['logrotate']['global'].to_hash)
 
-if platform? "solaris2" # ~FC023 style preference
-  cron "logrotate" do
-    minute "35"
-    hour "7"
-    command "/usr/sbin/logrotate /etc/logrotate.conf"
-  end
+template '/etc/logrotate.conf' do
+  source 'logrotate-global.erb'
+  mode   '0644'
+  variables(
+    :configuration => parsed_configuration
+  )
 end
