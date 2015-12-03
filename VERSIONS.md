@@ -8,7 +8,7 @@ chef_handler_sns| [1.0.0](https://github.com/onddo/chef_handler_sns-cookbook/tre
 cron| [1.3.12](https://github.com/opscode-cookbooks/cron/tree/v1.3.12) |  - We are using 1.3.0, with a backported libraries/matchers.rb from 1.3.12
 erlang | [1.5.6](https://github.com/opscode-cookbooks/erlang/commit/2af91e4650c1411fbf8e44626b1a548f777926c4) | ignored in our cs/test setup
 fail2ban | 2.2.1 | removed yum dependencies, adapted to our rubocop scheme, changed attributes/default.rb
-logrotate | [master](https://github.com/cookbooks/logrotate/commit/d7eca3a8fef69aa489c1236ed1761c364d26fdf8) | 
+logrotate | [master](https://github.com/stevendanna/logrotate/commit/7d9b87791f8e7ba64e23121c0faddad7779d45ba) |
 mysql | [6.1.2](https://github.com/chef-cookbooks/mysql/commit/4ba145f2d6e5fd710ba586bc86d9f78e35fbfa60) | disabled yum and smf deps
 nodejs | [2.4.0](https://github.com/redguide/nodejs/releases/tag/v2.4.0) | disabled deps on `homebrew` and `yum-epel`, added new install method in [d606ee](https://github.com/till/easybib-cookbooks/commit/d606ee9851390458e390a44875afaecc5277c219) and a minor [bugfix](https://github.com/till/easybib-cookbooks/commit/da0895e9f3813d7bf6e646fec2615a4756e3039d)
 ohai| 2.0.1 |
