@@ -66,7 +66,6 @@ describe 'nginx-app::redirector' do
           )
 
         locations.each do |from, to|
-          from = 'default' if from == '/'
           expect(chef_run).to render_file("#{conf_dir}/urls-#{domain_name}.conf")
             .with_content(
               include("#{from} #{to};")
