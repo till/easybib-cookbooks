@@ -39,7 +39,7 @@ if node['redirector'].attribute?('domains_no_uri')
 end
 
 if node['redirector'].attribute?('urls')
-  node['redirector']['urls'].each do |domain_name, path, new_domain_name|
+  node['redirector']['urls'].each do |domain_name, rewrites|
     template "#{vhost_dir}/urls-#{domain_name}.conf" do
       source 'single-redirect.conf.erb'
       mode '0644'
@@ -47,8 +47,7 @@ if node['redirector'].attribute?('urls')
       group node['nginx-app']['group']
       variables(
         :domain_name => domain_name,
-        :new_domain_name => new_domain_name,
-        :path => path
+        :rewrites => rewrites
       )
       notifies :reload, 'service[nginx]', :delayed
     end
