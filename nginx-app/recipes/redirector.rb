@@ -48,8 +48,7 @@ if node['redirector'].attribute?('urls')
       variables(
         :domain_name => domain_name,
         :new_domain_name => new_domain_name,
-        :path => path,
-        :keep_uri => true
+        :path => path
       )
       notifies :reload, 'service[nginx]', :delayed
     end
