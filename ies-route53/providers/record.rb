@@ -34,7 +34,12 @@ def overwrite
 end
 
 action :create do
-  require 'aws-sdk'
+  begin
+    require 'aws-sdk-v1'
+  rescue
+    Chef::Application.fatal!('aws-sdk-v1 missing!')
+  end
+
   AWS.config(aws)
 
   def same_record?(record)
