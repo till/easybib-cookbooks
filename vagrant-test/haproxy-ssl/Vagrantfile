@@ -1,44 +1,4 @@
-require 'json'
-vagrant_test_config = JSON.parse(File.read('./../setup.json'))
+ENV['recipe_runlist'] = 'easybib-deploy::ssl-certificates,haproxy'
+ENV['chef_json'] = "#{File.dirname(__FILE__)}/web-dna.json"
 
-Vagrant.configure('2') do |config|
-
-  bibconfig = Bib::Vagrant::Config.new
-  vagrantconfig = bibconfig.get
-
-  config.vm.define :vagrant do |vagrant_config|
-    vagrant_config.vm.box = vagrant_test_config['box_file']
-
-    vagrant_config.vm.hostname = 'vagrant'
-    vagrant_config.vm.network :private_network, :ip => vagrant_test_config['box_ip']
-
-    vagrant_config.vm.provider :virtualbox do |vb|
-      vb.gui = vagrantconfig['gui']
-
-      vb.customize [
-        'modifyvm', :id,
-        '--name', vagrant_test_config['box_name'],
-        '--memory', vagrant_test_config['box_memory']
-      ]
-    end
-
-    dna = JSON.parse(File.read("#{File.expand_path(File.dirname(__FILE__))}/web-dna.json"))
-
-    # uncomment the next line and re-run provision if you end up with a
-    # "Failed to fetch mirror://mirrors.ubuntu.com/mirrors.txt" error:
-    # vagrant_config.vm.provision "shell", inline: "apt-spy2 fix --commit"
-
-    vagrant_config.vm.provision 'shell', :inline => 'apt-get update -y'
-
-    vagrant_config.vm.provision :chef_solo do |chef|
-
-      chef.cookbooks_path = vagrantconfig['cookbook_path']
-      chef.log_level = :debug
-
-      chef.add_recipe 'easybib-deploy::ssl-certificates'
-      chef.add_recipe 'haproxy'
-
-      chef.json = dna
-    end
-  end
-end
+require_relative '../vagrant-provision'

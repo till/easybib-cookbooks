@@ -20,9 +20,47 @@ describe 'easybib_supervisor-without-matching-role' do
 
   let(:chef_run) { runner.converge('fixtures::easybib_supervisor_without_matching_role') }
 
-  describe 'easybib_supervisor without matching role' do
+  describe 'easybib_supervisor without matching role, set explicit in cookbook' do
     describe 'create' do
-      before { stub_supervisor_with_two_services }
+      before do
+        stub_supervisor_with_two_services
+        node.set['opsworks'] = {} # to have is_aws true
+      end
+
+      it 'does not proceed' do
+        expect(chef_run).not_to enable_supervisor_service('service1-some-app')
+      end
+    end
+  end
+end
+
+describe 'easybib_supervisor-without-matching-role-implicit' do
+
+  let(:cookbook_paths) do
+    [
+      File.expand_path("#{File.dirname(__FILE__)}/../../"),
+      File.expand_path("#{File.dirname(__FILE__)}/")
+    ]
+  end
+
+  let(:runner) do
+    ChefSpec::Runner.new(
+      :cookbook_path => cookbook_paths,
+      :step_into => ['easybib_supervisor']
+    )
+  end
+
+  let(:node) { runner.node }
+
+  let(:chef_run) { runner.converge('fixtures::easybib_supervisor_implicit_attributes') }
+
+  describe 'easybib_supervisor without matching role, roles fetched from json' do
+    describe 'create' do
+      before do
+        stub_supervisor_with_two_services
+        node.set['opsworks']['instance']['layers'] = %w(role1 role2)
+        node.set['easybib_deploy']['supervisor_role'] = 'some-other-role'
+      end
 
       it 'does not proceed' do
         expect(chef_run).not_to enable_supervisor_service('service1-some-app')

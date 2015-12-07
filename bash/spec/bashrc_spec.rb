@@ -3,7 +3,9 @@ require 'chefspec'
 describe 'bash::bashrc' do
 
   let(:chef_run) do
-    ChefSpec::Runner.new do |node|
+    ChefSpec::Runner.new(
+      :log_level => :error
+    ) do |node|
       # fake opsworks
       node.default['opsworks'] = {}
       node.default.opsworks['stack'] = {}

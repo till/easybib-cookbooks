@@ -1,5 +1,6 @@
 {
-  "box_file": "imagineeasy-ubuntu-14.04.3_virtualbox-4.3.26r98988_chef-11.10.4_1",
+  "box_file": "ies/vagrant-ubuntu_14.04.3-chef_11.10.4",
+  "box_version": ">=2.0.9",
   "box_ip": "33.33.33.126",
   "box_name": "Vagrant Cookbook Testbox"
 }

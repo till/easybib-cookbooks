@@ -6,7 +6,6 @@ action :deploy do
   supervisor_role = new_resource.supervisor_role
 
   cronjob_role = node['easybib_deploy']['cronjob_role'] if cronjob_role.nil?
-  supervisor_role = node['easybib_deploy']['supervisor_role'] if supervisor_role.nil?
   instance_roles = ::EasyBib.get_instance_roles(node) if instance_roles.empty?
 
   application_root_dir = "#{deploy_data['deploy_to']}/current"

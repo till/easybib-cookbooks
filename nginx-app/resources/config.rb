@@ -8,3 +8,4 @@ attribute :cookbook, :kind_of => String, :default => 'nginx-app'
 attribute :template, :kind_of => String, :default => 'nginx.conf.erb'
 attribute :nginx_user, :kind_of => String
 attribute :nginx_group, :kind_of => String
+attribute :error_log, :kind_of => String

@@ -1,8 +1,6 @@
 include_recipe 'php-fpm::service'
 include_recipe 'nginx-app::service'
 
-Chef::Resource.send(:include, EasyBib::Php)
-
 node['deploy'].each do |application, deploy|
 
   case application

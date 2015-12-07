@@ -1,27 +1,4 @@
-require 'json'
-vagrant_test_config = JSON.parse(File.read('./../setup.json'))
+ENV['recipe_runlist'] = 'stack-service::role-gearmand'
+ENV['chef_json'] = ''
 
-Vagrant::Config.run do |config|
-
-  bibconfig = Bib::Vagrant::Config.new
-  vagrantconfig = bibconfig.get
-
-  config.vm.boot_mode = vagrantconfig['gui']
-  config.vm.box = vagrant_test_config['box_file']
-
-  config.vm.network :hostonly, vagrant_test_config['box_ip']
-
-    config.vm.customize [
-        "modifyvm", :id,
-        "--name", vagrant_test_config['box_name'],
-        "--memory", vagrant_test_config['box_memory']
-    ]
-
-  config.vm.provision :shell, :path => "./../update-mirrors.sh"
-
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = "./../../"
-    chef.add_recipe "stack-service::role-gearmand"
-    chef.log_level = :debug
-  end
-end
+require_relative '../vagrant-provision'

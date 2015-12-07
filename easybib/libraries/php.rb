@@ -10,3 +10,7 @@ module EasyBib
     end
   end
 end
+
+Chef::Provider.send(:include, ::EasyBib::Php)
+Chef::Recipe.send(:include, ::EasyBib::Php)
+Chef::Resource.send(:include, ::EasyBib::Php)

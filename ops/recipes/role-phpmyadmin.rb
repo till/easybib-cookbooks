@@ -1,5 +1,5 @@
 include_recipe 'easybib::role-phpapp'
-include_recipe 'php-mysqli::configure'
+include_recipe 'php::module-mysqli'
 
 node['deploy'].each do |app, deploy|
 

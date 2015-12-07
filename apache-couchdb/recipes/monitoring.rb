@@ -1,5 +1,3 @@
-Chef::Resource.send(:include, EasyBib)
-
 bin_path = '/usr/local/bin/check_couchdb'
 
 unless node['apache-couchdb']['monitoring']['user'].empty?
