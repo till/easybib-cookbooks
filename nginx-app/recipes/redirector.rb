@@ -52,7 +52,7 @@ if node['redirector'].attribute?('urls')
     notifies :reload, 'service[nginx]', :delayed
   end
 
-  node['redirector']['urls'].each do |domain_name, locations|
+  node['redirector']['urls'].each do |domain_name, new_domain_name|
     template "#{vhost_dir}/urls-#{domain_name}.conf" do
       source 'redirect.conf.erb'
       mode '0644'
@@ -60,7 +60,8 @@ if node['redirector'].attribute?('urls')
       group node['nginx-app']['group']
       variables(
         :domain_name => domain_name,
-        :locations => locations
+        :new_domain_name => new_domain_name,
+        :keep_uri => true
       )
       notifies :reload, 'service[nginx]', :delayed
     end
