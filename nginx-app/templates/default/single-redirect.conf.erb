@@ -1,0 +1,6 @@
+server {
+    listen 80 <%=@listen_opts%>;
+    server_name <%=@domain_name%>;
+
+    rewrite <%=@path%> http://<%=@new_domain_name%> permanent;
+}
