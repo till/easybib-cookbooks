@@ -41,7 +41,7 @@ end
 if node['redirector'].attribute?('urls')
   node['redirector']['urls'].each do |domain_name, rewrites|
     template "#{vhost_dir}/urls-#{domain_name}.conf" do
-      source 'single-redirect.conf.erb'
+      source 'redirect-single.conf.erb'
       mode '0644'
       owner node['nginx-app']['user']
       group node['nginx-app']['group']
