@@ -1,0 +1,8 @@
+server {
+    listen 80 <%=@listen_opts%>;
+    server_name <%=@domain_name%>;
+
+    <% @rewrites.each do |location, target| -%>
+    rewrite <%=location%> http://<%=target%> permanent;
+    <% end -%>
+}

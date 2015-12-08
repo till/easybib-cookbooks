@@ -1,10 +1,6 @@
 <% unless @locations.nil? -%>
 map $uri $new {
-<%
-@locations.sort.each do |old_path, new_url|
-  old_path = 'default' if old_path == '/'
--%>
-
+<% @locations.sort.each do |old_path, new_url| -%>
     <%=old_path%> <%=new_url%>;
 <% end -%>
 }
