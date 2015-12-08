@@ -1,4 +1,4 @@
-require 'chefspec'
+require_relative 'spec_helper'
 
 describe 'nginx-app::redirector' do
 
