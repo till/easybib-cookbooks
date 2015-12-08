@@ -41,7 +41,7 @@ describe 'nginx-app::redirector' do
     before do
       node.set['redirector']['urls'] = {
         'john-doe.example.org' => {
-          '/' => 'http://example.com'
+          '/' => 'example.com'
         }
       }
     end
