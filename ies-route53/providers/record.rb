@@ -57,6 +57,7 @@ action :create do
         Chef::Log.info("Update record: #{name}")
         batch << AWS::Route53::DeleteRequest.new(name, type)
         batch << AWS::Route53::CreateRequest.new(name, type, :ttl => ttl, :resource_records => [{ :value => value }])
+        new_resource.updated_by_last_action(true)
       else
         Chef.Log.warn("Update required, but override not set: #{name}")
       end
@@ -64,11 +65,11 @@ action :create do
   else
     Chef::Log.info("Creating new record: #{name}")
     batch << AWS::Route53::CreateRequest.new(name, type, :ttl => ttl, :resource_records => [{ :value => value }])
+    new_resource.updated_by_last_action(true)
   end
 
   begin
     batch.call
-    new_resource.updated_by_last_action(updated)
   rescue
     Chef::Application.fatal!('Change batch failed!')
   end
