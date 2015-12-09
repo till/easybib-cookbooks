@@ -1,7 +1,2 @@
-include_recipe 'easybib::role-phpapp'
-
-if is_aws
-  include_recipe 'easybib-deploy::silex'
-else
-  include_recipe 'nginx-app::vagrant-silex'
-end
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-api::role-nginxphpapp'

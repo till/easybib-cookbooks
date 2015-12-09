@@ -1,2 +1,2 @@
-include_recipe 'ies::role-generic'
-include_recipe 'apache-couchdb'   # default.rb includes configure.rb, which includes service.rb
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-scholar::role-couchdb'

@@ -1,1 +1,2 @@
-include_recipe 'ops::role-phpmyadmin'
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-ops::role-pma'

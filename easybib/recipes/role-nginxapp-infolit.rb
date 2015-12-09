@@ -1,10 +1,2 @@
-include_recipe 'easybib::role-phpapp'
-include_recipe 'supervisor'
-
-if is_aws
-  include_recipe 'easybib-deploy::ssl-certificates'
-  include_recipe 'nodejs::npm_from_source' # for frontend assets build in before_symlink.rb
-  include_recipe 'easybib-deploy::infolit'
-else
-  include_recipe 'nginx-app::vagrant'
-end
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-academy::role-nginxphpapp'

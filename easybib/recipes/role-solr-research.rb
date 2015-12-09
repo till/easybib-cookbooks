@@ -1,5 +1,2 @@
-include_recipe 'ies::role-generic'
-include_recipe 'nginx-app::server'
-
-include_recipe 'apache-solr'
-include_recipe 'easybib-deploy::research-solr'
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-research::role-solr'

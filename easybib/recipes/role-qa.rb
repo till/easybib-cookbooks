@@ -1,8 +1,2 @@
-include_recipe 'easybib::role-phpapp'
-
-include_recipe 'php::module-posix'
-if is_aws
-  include_recipe 'easybib-deploy::qa'
-else
-  include_recipe 'nginx-app::qa'
-end
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-qa::role-qa'
