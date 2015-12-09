@@ -32,22 +32,4 @@ node['vagrant']['applications'].each do |app_name, app_config|
     nginx_local_conf "#{app_dir}/deploy/nginx.conf"
     notifies :reload, 'service[nginx]', :delayed
   end
-
-  stackname = 'easybib'
-
-  if %w(scholar feature_flags).include?(app_name)
-    stackname = 'scholar'
-  end
-
-  easybib_envconfig app_name do
-    # we are using stackname easybib since both is served from www-vagrant
-    stackname stackname
-  end
-
-  easybib_supervisor "#{app_name}_supervisor" do
-    supervisor_file "#{app_dir}/deploy/supervisor.json"
-    app_dir app_dir
-    app app_name
-    user node['php-fpm']['user']
-  end
 end
