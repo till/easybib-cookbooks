@@ -1,7 +1,23 @@
 ohai Cookbook
 =============
+[![Build Status](https://travis-ci.org/chef-cookbooks/ohai.svg?branch=master)](http://travis-ci.org/chef-cookbooks/ohai)
+[![Cookbook Version](https://img.shields.io/cookbook/v/ohai.svg)](https://supermarket.chef.io/cookbooks/ohai)
+
 Creates a configured plugin path for distributing custom Ohai plugins, and reloads them via Ohai within the context of a Chef Client run during the compile phase (if needed).
 
+
+Requirements
+------------
+#### Platforms
+- Debian/Ubuntu
+- RHEL/CentOS/Scientific/Amazon/Oracle
+- Windows
+
+#### Chef
+- Chef 11+
+
+#### Cookbooks
+- none
 
 Attributes
 ----------
@@ -21,7 +37,7 @@ The execution of the custom plugins occurs within the recipe during the compile 
 
 For information on how to write custom plugins for Ohai, please see the Chef wiki pages.
 
-http://wiki.opscode.com/display/chef/Writing+Ohai+Plugins
+http://wiki.chef.io/display/chef/Writing+Ohai+Plugins
 
 *PLEASE NOTE* - This recipe reloads the Ohai plugins a 2nd time during the Chef run if:
 
@@ -40,6 +56,12 @@ Create hints file.  You can find usage examples at `test/cookbooks/ohai_test/rec
   -  `hint_name` - The name of hints file and key. Should be string, default is name of resource.
   -  `content` - Values of hints. It will be used as automatic attributes. Should be Hash, default is empty Hash class.
 
+#### ChefSpec Matchers
+
+You can check for the creation or deletion of ohai hints with chefspec using these custom matches:
+
+ - create_ohai_hint
+ - delete_ohai_hint
 
 Example
 -------
@@ -48,12 +70,11 @@ For an example implementation, inspect the ohai_plugin.rb recipe in the nginx co
 
 License & Authors
 -----------------
-- Author:: Joshua Timberman (<joshua@opscode.com>)
-- Author:: Seth Chisamore (<schisamo@opscode.com>)
 
-```text
-Copyright:: 2010-2011, Opscode, Inc
+**Author:** Cookbook Engineering Team (<cookbooks@chef.io>)
 
+**Copyright:** 2011-2015, Chef Software, Inc.
+```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
