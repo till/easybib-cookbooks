@@ -27,7 +27,7 @@ describe 'ies-route53::add' do
 
     describe 'skip' do
       it 'it does not call route53_record when no zone is set' do
-        expect(chef_run).not_to create_route53_record('create a record')
+        expect(chef_run).not_to create_ies_route53_record('create a record')
       end
     end
 
@@ -43,7 +43,7 @@ describe 'ies-route53::add' do
       end
 
       it 'creates a record' do
-        expect(chef_run).to create_route53_record('spec.chefspec.local.vagrant.local')
+        expect(chef_run).to create_ies_route53_record('spec.chefspec.local.vagrant.local')
           .with(
             :name => 'spec.chefspec.local.vagrant.local',
             :value => '127.0.0.8',
