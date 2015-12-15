@@ -10,7 +10,7 @@ region_id = instance['region']
 public_ip = instance['ip']
 record_name = "#{host_name}.#{stack_name}.#{region_id}.#{zone_name}"
 
-route53_record 'create a record' do
+ies_route53_record 'create a record' do
   name                  record_name
   value                 public_ip
   type                  'A'
