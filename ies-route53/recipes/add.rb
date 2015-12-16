@@ -1,5 +1,3 @@
-node.force_override['route53']['fog_version'] = '1.33.0'  # ~FC019
-
 instance = get_instance
 
 host_name = get_hostname(node, true)
