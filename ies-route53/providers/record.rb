@@ -1,3 +1,9 @@
+begin
+  require 'aws-sdk-v1'
+rescue
+  Chef::Application.fatal!('aws-sdk-v1 missing!')
+end
+
 def credentials
   {
     :aws_access_key_id => new_resource.aws_access_key_id,
@@ -43,12 +49,6 @@ def record
 end
 
 action :create do
-  begin
-    require 'aws-sdk-v1'
-  rescue
-    Chef::Application.fatal!('aws-sdk-v1 missing!')
-  end
-
   AWS.config(aws)
 
   def same_record?(record)
