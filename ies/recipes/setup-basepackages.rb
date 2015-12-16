@@ -4,7 +4,7 @@
 base_packages = [
   'htop', 'jwhois', 'multitail',
   'apache2-utils', 'strace', 'rsync',
-  'manpages', 'manpages-dev',
+  'manpages', 'manpages-dev', 'sysstat',
   'git-core', 'unzip', 'realpath', 'curl'
 ]
 
