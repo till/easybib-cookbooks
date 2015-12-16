@@ -1,5 +1,4 @@
 node.force_override['route53']['fog_version'] = '1.33.0'  # ~FC019
-include_recipe 'route53'
 
 instance = get_instance
 
