@@ -1,4 +1,2 @@
-include_recipe 'ies::role-generic'
-include_recipe 'nodejs'
-include_recipe 'sinopia::sinopia'
-include_recipe 'sinopia-github'
+Chef::Log.warn('DEPRECATED: This setup is still using role-nginxapp-sitescraper')
+include_recipe 'stack-qa::role-npm-proxy'

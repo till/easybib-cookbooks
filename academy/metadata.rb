@@ -7,12 +7,4 @@ version           '0.1'
 
 supports 'ubuntu'
 
-depends 'easybib'
-depends 'nginx-app'
-depends 'ies'
-depends 'ohai'
-depends 'ies-mysql'
-depends 'php'
-depends 'nodejs'
-depends 'avahi'
-depends 'stack-service'
+depends 'stack-academy'

@@ -1,0 +1,16 @@
+name              'stack-research'
+maintainer        'Till Klampaeckel'
+maintainer_email  'till@php.net'
+license           'BSD License'
+description       'research roles'
+version           '0.1'
+
+supports 'ubuntu'
+
+depends 'apache-solr'
+depends 'easybib-deploy'
+depends 'ies'
+depends 'php'
+depends 'nginx-app'
+depends 'memcache'
+depends 'stack-easybib'

@@ -1,2 +1,2 @@
-include_recipe 'ies::role-generic'
-include_recipe 'easybib-deploy::prosody'
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-qa::role-prosody'

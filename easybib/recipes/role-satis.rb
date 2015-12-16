@@ -1,10 +1,2 @@
-include_recipe 'ies::role-generic'
-include_recipe 'php-fpm'
-include_recipe 'php::module-phar'
-include_recipe 'php::module-posix'
-
-node.set['composer']['environment'] = get_deploy_user
-include_recipe 'composer::configure'
-
-include_recipe 'nginx-app::configure'
-include_recipe 'easybib-deploy::satis'
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-qa::role-satis'

@@ -1,12 +1,2 @@
-include_recipe 'easybib::role-phpapp'
-
-include_recipe 'php::module-gearman'
-
-include_recipe 'easybib-deploy::research'
-
-if is_aws
-  include_recipe 'nginx-app::configure'
-else
-  include_recipe 'memcache'
-  include_recipe 'nginx-app::vagrant'
-end
+Chef::Log.warn('DEPRECATED: This setup is still not using the new stack-* cookbooks!')
+include_recipe 'stack-research::role-nginxphpapp'
