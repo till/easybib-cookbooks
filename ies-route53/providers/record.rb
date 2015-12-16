@@ -1,12 +1,8 @@
-def aws
+def credentials
   {
     :aws_access_key_id => new_resource.aws_access_key_id,
     :aws_secret_access_key => new_resource.aws_secret_access_key
   }
-end
-
-def zone_id
-  @zone_id ||= new_resource.zone_id
 end
 
 def name
@@ -32,6 +28,20 @@ def overwrite
   @overwrite ||= new_resource.overwrite
 end
 
+def zone
+  r53 = AWS::Route53.new(credentials)
+  r53.hosted_zones.each do |zone|
+    if zone.name == name
+      return zone
+    end
+  end
+  Chef::Application.fatal!("Zone does not exist: #{name}")
+end
+
+def record
+  zone.rrsets[name, type]
+end
+
 action :create do
   begin
     require 'aws-sdk-v1'
@@ -45,7 +55,6 @@ action :create do
     record.resource_records[0][:value] == value && record.ttl == ttl
   end
 
-  record = AWS::Route53::HostedZone.new(zone_id).rrsets[name, type]
   batch = AWS::Route53::ChangeBatch.new(zone_id)
 
   if record.exists?
