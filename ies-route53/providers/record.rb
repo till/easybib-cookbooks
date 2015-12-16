@@ -49,13 +49,11 @@ def record
 end
 
 action :create do
-  AWS.config(aws)
-
   def same_record?(record)
     record.resource_records[0][:value] == value && record.ttl == ttl
   end
 
-  batch = AWS::Route53::ChangeBatch.new(zone_id)
+  batch = AWS::Route53::ChangeBatch.new(zone.hosted_zone_id)
 
   if record.exists?
     if same_record?(record)
