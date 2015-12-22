@@ -2,7 +2,7 @@
 # Cookbook Name:: ohai
 # Recipe:: default
 #
-# Copyright 2011, Opscode, Inc
+# Copyright 2011-2015, Chef Software, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ Chef::Log.info("ohai plugins will be at: #{node['ohai']['plugin_path']}")
 # This is done during the compile phase so new plugins can be used in
 # resources later in the run.
 node['ohai']['plugins'].each_pair do |source_cookbook, path|
-
   rd = remote_directory "#{node['ohai']['plugin_path']} for cookbook #{source_cookbook}" do
     path node['ohai']['plugin_path']
     cookbook source_cookbook
@@ -50,6 +49,4 @@ end
 
 # Reload ohai if the client's plugin_path did not contain
 # node['ohai']['plugin_path'], or new plugins were loaded
-if reload_ohai
-  resource.run_action(:reload)
-end
+resource.run_action(:reload) if reload_ohai

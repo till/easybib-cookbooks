@@ -10,6 +10,6 @@ Shindo.tests do
   end
 
   tests('exists hints file').returns(true) { ::File.exist?('/etc/chef/ohai/hints/test.json') }
-  tests('exists hints data').returns(Hash["a", 'hogehoge']) { @ohai.hint?(:test) }
+  tests('exists hints data').returns(Hash['a', 'hogehoge']) { @ohai.hint?(:test) }
   tests('includes hint at node data').returns('Ohai Chefs!') { @node['automatic']['test_hint'] }
 end

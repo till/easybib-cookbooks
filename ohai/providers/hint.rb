@@ -3,14 +3,14 @@ def why_run_supported?
 end
 
 def build_ohai_hint_path
-  ::File.join(node[:ohai][:hints_path], "#{new_resource.name}.json")
+  ::File.join(node['ohai']['hints_path'], "#{new_resource.name}.json")
 end
 
 use_inline_resources
 
 action :create do
   if @current_resource.content != new_resource.content
-    directory node[:ohai][:hints_path] do
+    directory node['ohai']['hints_path'] do
       action :create
       recursive true
     end
@@ -25,7 +25,11 @@ end
 def load_current_resource
   @current_resource = Chef::Resource::OhaiHint.new(new_resource.name)
   if ::File.exist?(build_ohai_hint_path)
-    @current_resource.content(JSON.parse(::File.read(build_ohai_hint_path)))
+    begin
+      @current_resource.content(JSON.parse(::File.read(build_ohai_hint_path)))
+    rescue JSON::ParserError
+      @current_resource.content(nil)
+    end
   else
     @current_resource.content(nil)
   end
