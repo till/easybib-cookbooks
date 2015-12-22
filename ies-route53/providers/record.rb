@@ -42,7 +42,7 @@ action :create do
     end
   else
     Chef::Log.info("Creating new record for: #{fqdn}")
-    record.update
+    zone.rrsets.create(@name, @type, :ttl => @ttl, :resource_records => [{ :value => @value }])
     new_resource.updated_by_last_action(true)
   end
 end
