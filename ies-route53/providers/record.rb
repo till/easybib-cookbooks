@@ -23,11 +23,11 @@ action :create do
 
   zone = r53.hosted_zones.find { |z| z.id == zone_id }
 
-  fqdn = @name + '.' + zone
+  fqdn = @name + '.' + zone.name
   record = zone.rrsets[fqdn, @type]
   Chef::Log.info("Selected record for update: #{fqdn}")
 
-  if rrset.exists?
+  if record.exists?
     if same_record?(record)
       Chef::Log.info("Unchanged, not updating: #{fqdn}")
     else
@@ -42,7 +42,7 @@ action :create do
     end
   else
     Chef::Log.info("Creating new record for: #{fqdn}")
-    record.create
+    record.update
     new_resource.updated_by_last_action(true)
   end
 end
