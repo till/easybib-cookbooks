@@ -7,10 +7,12 @@ end
 action :create do
   Chef::Log.info('Calling IES-Route53 Record-Update...')
 
-  r53 = AWS::Route53.new(
-    :aws_access_key_id => new_resource.aws_access_key_id,
-    :aws_secret_access_key => new_resource.aws_secret_access_key
+  route_53_credential_provider = AWS::Core::CredentialProviders::StaticProvider.new(
+    :access_key_id => new_resource.aws_access_key_id,
+    :secret_access_key => new_resource.aws_secret_access_key
   )
+
+  r53 = AWS::Route53.new(:credential_provider => route_53_credential_provider)
 
   zone_id = new_resource.zone_id
   overwrite = new_resource.overwrite
