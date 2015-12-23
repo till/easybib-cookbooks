@@ -1,7 +1,7 @@
 require 'aws-sdk-v1'
 
 def same_record?(record)
-  record.resource_records[:value] == @value && record.ttl == @ttl && record.type == @type
+  record.name == @name && record.ttl == @ttl && record.type == @type
 end
 
 action :create do
