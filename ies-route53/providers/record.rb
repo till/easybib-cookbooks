@@ -5,7 +5,7 @@ def same_record?(record)
 end
 
 action :create do
-  Chef::Log.info('Calling IES-Route53 Record-Update...')
+  Chef::Log.info('Preparing IES-Route53 Record Update...')
 
   route_53_credential_provider = AWS::Core::CredentialProviders::StaticProvider.new(
     :access_key_id => new_resource.aws_access_key_id,
@@ -25,7 +25,6 @@ action :create do
 
   fqdn = @name + '.' + zone.name
   record = zone.rrsets[fqdn, @type]
-  Chef::Log.info("Selected record for update: #{fqdn}")
 
   if record.exists?
     if same_record?(record)
