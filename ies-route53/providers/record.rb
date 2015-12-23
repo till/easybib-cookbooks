@@ -1,9 +1,5 @@
 require 'aws-sdk-v1'
 
-def same_record?(record)
-  record.name == @name && record.ttl == @ttl && record.type == @type
-end
-
 action :create do
   Chef::Log.info('Preparing IES-Route53 Record Update...')
 
@@ -27,17 +23,13 @@ action :create do
   record = zone.rrsets[fqdn, @type]
 
   if record.exists?
-    if same_record?(record)
-      Chef::Log.info("Unchanged, not updating: #{fqdn}")
+    if overwrite
+      Chef::Log.info("Updating record: #{fqdn}")
+      record.resource_records = [{ :value => @value }]
+      record.update
+      new_resource.updated_by_last_action(true)
     else
-      if overwrite
-        Chef::Log.info("Overwriting already existing record: #{fqdn}")
-        record.resource_records = [{ :value => @value }]
-        record.update
-        new_resource.updated_by_last_action(true)
-      else
-        Chef::Log.warn("Skipping update! OVERWRITE is not set: #{fqdn}")
-      end
+      Chef::Log.warn("Skipping update! OVERWRITE is not set: #{fqdn}")
     end
   else
     Chef::Log.info("Creating new record for: #{fqdn}")
