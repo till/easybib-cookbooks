@@ -18,7 +18,6 @@ action :create do
   @value = new_resource.value
 
   zone = r53.hosted_zones.find { |z| z.id == zone_id }
-
   fqdn = @name + '.' + zone.name
   record = zone.rrsets[fqdn, @type]
 
