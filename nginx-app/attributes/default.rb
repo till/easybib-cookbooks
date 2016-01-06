@@ -10,8 +10,7 @@ default['nginx-app']['ppa'] = 'ppa:nginx/stable'
 default['nginx-app']['client_max_body_size'] = '5m'
 
 default['nginx-app']['error_log'] = 'syslog:server=unix:/dev/log error'
-# default['nginx-app']['access_log'] = 'syslog:server=127.0.0.1:23232'
-default['nginx-app']['access_log'] = 'off'
+default['nginx-app']['access_log'] = 'syslog:server=127.0.0.1:23232'
 
 default['nginx-app']['extras'] = ''
 
