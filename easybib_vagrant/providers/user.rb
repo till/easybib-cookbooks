@@ -43,7 +43,7 @@ action :create do
   node['easybib_vagrant']['plugin_config'].each_key do |plugin|
     bash "Install plugin: #{plugin}" do
       action :run
-      command "vagrant plugin install #{plugin}"
+      command "vagrant plugin install #{plugin} | logger -t vagrant-ci-setup"
       user username
     end
   end
@@ -62,8 +62,7 @@ action :create do
       :home_dir => home_dir
     )
     mode 0644
-    owner node['bash']['environment']['user']
-    group node['bash']['environment']['group']
+    owner username
   end
 
   new_resource.updated_by_last_action(true)
