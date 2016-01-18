@@ -1,6 +1,6 @@
-require 'aws-sdk-v1'
-
 action :create do
+  require 'aws-sdk-v1' rescue nil
+
   Chef::Log.info('Preparing IES-Route53 Record Update...')
 
   route_53_credential_provider = AWS::Core::CredentialProviders::StaticProvider.new(
