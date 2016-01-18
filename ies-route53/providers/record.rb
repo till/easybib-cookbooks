@@ -17,22 +17,23 @@ action :create do
   @type = new_resource.type
   @value = new_resource.value
 
-  zone = r53.hosted_zones.find { |z| z.id == zone_id }
-  fqdn = @name + '.' + zone.name
-  record = zone.rrsets[fqdn, @type]
+  record_model = ::IesRoute53::Record.new(route53, zone_id, @type, @ttl)
 
-  if record.exists?
+  updated = false
+
+  if record_model.exists?(@name)
     if overwrite
-      Chef::Log.info("Updating record: #{fqdn}")
-      record.resource_records = [{ :value => @value }]
-      record.update
-      new_resource.updated_by_last_action(true)
+      Chef::Log.info("Updating record!")
+      record_model.update(@name, @value)
+      updated = true
     else
-      Chef::Log.warn("Skipping update! OVERWRITE is not set: #{fqdn}")
+      Chef::Log.warn("Skipping update! OVERWRITE is not set!")
     end
   else
-    Chef::Log.info("Creating new record for: #{fqdn}")
-    zone.rrsets.create(@name, @type, :ttl => @ttl, :resource_records => [{ :value => @value }])
-    new_resource.updated_by_last_action(true)
+    Chef::Log.info("Creating new record for!")
+    record_model.add(@name, @value)
+    updated = true
   end
+
+  new_resource.updated_by_last_action(updated)
 end
