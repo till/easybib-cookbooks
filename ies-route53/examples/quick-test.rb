@@ -18,9 +18,9 @@ route53_client = AWS::Route53.new(:credential_provider => route_53_credential_pr
 model = ::IesRoute53::Record.new(route53_client, zone_id, 'A', 3600)
 
 if model.exists?(server_name)
-  puts "Updating..."
+  puts 'Updating...'
   model.update(server_name, '127.0.0.2')
 else
-  puts "Writing new ..."
+  puts 'Writing new ...'
   model.add(server_name, '127.0.0.1')
 end
