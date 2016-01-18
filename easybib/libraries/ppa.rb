@@ -50,3 +50,7 @@ module EasyBib
     end
   end
 end
+
+Chef::Provider.send(:include, ::EasyBib::Ppa)
+Chef::Recipe.send(:include, ::EasyBib::Ppa)
+Chef::Resource.send(:include, ::EasyBib::Ppa)

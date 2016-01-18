@@ -7,6 +7,7 @@ default['nginx-app']['config_dir']         = '/etc/nginx'
 default['nginx-app']['conf_file']          = 'easybib.com.conf.erb'
 default['nginx-app']['package-name'] = 'nginx'
 default['nginx-app']['ppa'] = 'ppa:nginx/stable'
+default['nginx-app']['key'] = 'C300EE8C.key'
 default['nginx-app']['client_max_body_size'] = '5m'
 
 default['nginx-app']['error_log'] = 'syslog:server=unix:/dev/log error'
