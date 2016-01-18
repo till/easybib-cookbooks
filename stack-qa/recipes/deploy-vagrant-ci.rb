@@ -27,7 +27,7 @@ node['deploy'].each do |app, deploy|
     app app
   end
 
-  package 'keychain' #needed by easybib_vagrant_user
+  package 'keychain' # needed by easybib_vagrant_user
 
   easybib_vagrant_user deploy['user'] do
     composer_token node['composer']['oauth_key']
