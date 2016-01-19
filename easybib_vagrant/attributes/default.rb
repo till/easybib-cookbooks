@@ -14,6 +14,10 @@ default['easybib_vagrant']['plugin_config'] = {
   },
   'vagrant-cachier' => {
   }
+  'vagrant-faster' => {
+  }
+  'landrush' => {
+  }
 }
 
 # cookbook repo
