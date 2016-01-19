@@ -10,4 +10,4 @@ attribute :nginx_user, :kind_of => String
 attribute :nginx_group, :kind_of => String
 attribute :error_log, :kind_of => String
 attribute :error_echo_port, :kind_of => String
-attribute :acces_echo_port, :kind_of => String
+attribute :access_echo_port, :kind_of => String

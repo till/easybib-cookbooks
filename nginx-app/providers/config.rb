@@ -8,9 +8,8 @@ action :create do
 
   error_log = new_resource.error_log || node['nginx-app']['error_log']
   error_echo_port = new_resource.error_echo_port || node['nginx-app']['error_echo_port']
-  acces_echo_port = new_resource.acces_echo_port || node['nginx-app']['acces_echo_port']
+  acces_echo_port = new_resource.acces_echo_port || node['nginx-app']['access_echo_port']
 
-  error_log_address = 
   enable_fastcgi = new_resource.enable_fastcgi
 
   # this is a hack to maximize - currently only
