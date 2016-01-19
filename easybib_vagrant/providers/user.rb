@@ -41,10 +41,8 @@ action :create do
   end
 
   node['easybib_vagrant']['plugin_config'].each_key do |plugin|
-    bash "Install plugin: #{plugin}" do
-      action :run
-      code "vagrant plugin install #{plugin} 2>&1 | logger -t vagrant-ci-setup"
-      user username
+    execute "Install plugin: #{plugin}" do
+      command "su #{username} -l -c 'bash vagrant plugin install #{plugin} 2>&1 | logger -t vagrant-ci-setup'"
     end
   end
 
