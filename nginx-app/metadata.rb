@@ -7,6 +7,7 @@ version           '0.1'
 recipe            'nginx-app::server', 'Installs Nginx'
 recipe            'nginx-app::configure', 'Configures virtualhost, etc.'
 
+depends 'rsyslogd'
 depends 'php-fpm'
 depends 'hhvm-fcgi'
 depends 'apt'

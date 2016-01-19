@@ -1,5 +1,6 @@
 include_recipe 'nginx-app::ppa'
 include_recipe 'nginx-app::service'
+include_recipe 'nginx-app::logs'
 
 ohai 'reload_passwd' do
   action :nothing

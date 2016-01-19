@@ -1,0 +1,10 @@
+$ModLoad omfwd
+
+if ( $programname == 'nginx' ) then {
+    if ( $syslogseverity-text == 'error' ) then {
+        action( type="omfwd" Target="<%= @node['nginx-app']['error_log']['address'] %>" Port="<%= @node['nginx-app']['error_log']['port'] %>" Protocol="<%= @node['nginx-app']['error_log']['protocol'] %>" )
+    } else {
+        action( type="omfwd" Target="<%= @node['nginx-app']['access_log']['address'] %>" Port="<%= @node['nginx-app']['access_log']['port'] %>" Protocol="<%= @node['nginx-app']['access_log']['protocol'] %>" )
+    }
+    stop
+}
