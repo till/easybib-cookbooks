@@ -13,9 +13,9 @@ default['easybib_vagrant']['plugin_config'] = {
     'virtualbox_gui' => false
   },
   'vagrant-cachier' => {
-  }
+  },
   'vagrant-faster' => {
-  }
+  },
   'landrush' => {
   }
 }
