@@ -7,5 +7,4 @@ version           '0.1'
 
 supports 'ubuntu'
 
-depends 'route53'
 depends 'easybib'
