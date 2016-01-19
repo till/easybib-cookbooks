@@ -1,6 +1,5 @@
 include_recipe 'nginx-app::ppa'
 include_recipe 'nginx-app::service'
-include_recipe 'nginx-app::logs'
 
 ohai 'reload_passwd' do
   action :nothing
@@ -14,6 +13,8 @@ package node['nginx-app']['package-name'] do
 end
 
 nginx_app_config 'nginx-app: nginx.conf'
+
+include_recipe 'nginx-app::rsyslogs'
 
 # Patch /etc/logrotate.d/nginx so rotating the logs doesn't fail.
 # See: https://bugs.launchpad.net/nginx/+bug/1450770
