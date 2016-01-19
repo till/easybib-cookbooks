@@ -14,6 +14,8 @@ default['easybib_vagrant']['plugin_config'] = {
   },
   'vagrant-cachier' => {
   },
+  'vagrant-hosts' => {
+  },
   'vagrant-faster' => {
   },
   'landrush' => {
