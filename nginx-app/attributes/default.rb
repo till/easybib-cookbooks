@@ -10,11 +10,15 @@ default['nginx-app']['ppa'] = 'ppa:nginx/stable'
 default['nginx-app']['key'] = 'C300EE8C.key'
 default['nginx-app']['client_max_body_size'] = '5m'
 
-default['nginx-app']['error_log'] = 'syslog:server=unix:/dev/log error'
-default['nginx-app']['access_log'] = 'syslog:server=unix:/dev/log'
-default['nginx-app']['logging']['address'] = '127.0.0.1'
-default['nginx-app']['logging']['port'] = '23231'
-default['nginx-app']['logging']['protocol'] = 'udp'
+default['nginx-app']['error_log'] = 'syslog:server=unix:/dev/log,tag=nginx_error error'
+default['nginx-app']['error_log']['address'] = '127.0.0.1'
+default['nginx-app']['error_log']['port'] = '23232'
+default['nginx-app']['error_log']['protocol'] = 'udp'
+
+default['nginx-app']['access_log'] = 'syslog:server=unix:/dev/log,tag=nginx_access'
+default['nginx-app']['access_log']['address'] = '127.0.0.1'
+default['nginx-app']['access_log']['port'] = '23233'
+default['nginx-app']['access_log']['protocol'] = 'udp'
 
 default['nginx-app']['extras'] = ''
 
