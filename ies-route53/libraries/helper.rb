@@ -3,7 +3,7 @@ module IesRoute53
     def dns_enabled?(node = self.node)
       zone_config = node.fetch('ies-route53', {}).fetch('zone', {})
 
-      %w(id name custom_access_key custom_secret_key).each do |attrib|
+      %w(id custom_access_key custom_secret_key).each do |attrib|
         unless zone_config.key?(attrib)
           return false
         end
