@@ -10,8 +10,11 @@ default['nginx-app']['ppa'] = 'ppa:nginx/stable'
 default['nginx-app']['key'] = 'C300EE8C.key'
 default['nginx-app']['client_max_body_size'] = '5m'
 
-default['nginx-app']['error_log'] = '/var/log/nginx/error.log error'
-default['nginx-app']['access_log'] = 'off'
+default['nginx-app']['error_log'] = 'syslog:server=unix:/dev/log,tag=nginx_error error'
+default['nginx-app']['error_echo_port'] = '23232'
+
+default['nginx-app']['access_log'] = 'syslog:server=unix:/dev/log,tag=nginx_access'
+default['nginx-app']['access_echo_port'] = '23233'
 
 default['nginx-app']['extras'] = ''
 
