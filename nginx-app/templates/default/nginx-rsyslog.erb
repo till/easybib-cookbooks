@@ -1,9 +1,8 @@
 $ModLoad omfwd
-
 if $msg contains 'nginx_access' then {
-   action( type="omfwd" Target="127.0.0.1" Port="<%=@node['nginx-app']['access_echo_port'] %>" Protocol="udp")
+   action( type="omfwd" Target="127.0.0.1" Port="<%=@node.fetch('nginx-app', {}).fetch('access_echo_port', {}) %>" Protocol="udp")
    stop
 } else if $msg contains 'nginx_error' or $msg contains 'PHP' then {
-   action( type="omfwd" Target="127.0.0.1" Port="<%=@node['nginx-app']['error_echo_port'] %>" Protocol="udp")
+   action( type="omfwd" Target="127.0.0.1" Port="<%=@node.fetch('nginx-app', {}).fetch('error_echo_port', {}) %>" Protocol="udp")
    stop
 }
