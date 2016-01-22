@@ -23,6 +23,7 @@ AllCops:
     - 'virtualbox/**/*'
     - 'vagrant/**/*'
     - 'vendor/**/*'
+    - 'papertrail/**/*'
     - 'rails/**/*'
     - 'rsyslog/**/*'
     - 'runit/**/*'
