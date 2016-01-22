@@ -24,9 +24,9 @@ AllCops:
     - 'vagrant/**/*'
     - 'vendor/**/*'
     - 'rails/**/*'
+    - 'rsyslog/**/*'
     - 'runit/**/*'
     - 'mysql/**/*'
-    - 'route53/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
