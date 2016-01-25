@@ -23,10 +23,11 @@ AllCops:
     - 'virtualbox/**/*'
     - 'vagrant/**/*'
     - 'vendor/**/*'
+    - 'papertrail/**/*'
     - 'rails/**/*'
+    - 'rsyslog/**/*'
     - 'runit/**/*'
     - 'mysql/**/*'
-    - 'route53/**/*'
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false

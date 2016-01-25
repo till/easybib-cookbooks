@@ -13,3 +13,4 @@ easybib-cookbooks.tar.gz
 *.pyc
 .idea/*
 .todo
+vagrant-test/php/deploy.json
