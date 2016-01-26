@@ -1,0 +1,6 @@
+{
+    "papertrail": {
+        "remote_host": "logs-host-please-change.papertrailapp.com",
+        "remote_port": "private-port-here"
+    }
+}

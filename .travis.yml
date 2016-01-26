@@ -50,6 +50,7 @@ branches:
   - stable
 
 notifications:
+  webhooks: http://cd.deploy.ezbib.com/travis/update-cookbooks
   email:
     on_success: never
     on_failure: always

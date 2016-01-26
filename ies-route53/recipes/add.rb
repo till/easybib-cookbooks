@@ -1,18 +1,8 @@
-node.force_override['route53']['fog_version'] = '1.33.0'  # ~FC019
-include_recipe 'route53'
-
 instance = get_instance
 
-host_name = get_hostname(node, true)
-stack_name = get_normalized_cluster_name(node)
-zone_name = node['ies-route53']['zone']['name']
-region_id = instance['region']
-public_ip = instance['ip']
-record_name = "#{host_name}.#{stack_name}.#{region_id}.#{zone_name}"
-
-route53_record 'create a record' do
-  name                  record_name
-  value                 public_ip
+ies_route53_record 'create a record' do
+  name                  get_record_name
+  value                 instance['ip']
   type                  'A'
   ttl                   node['ies-route53']['zone']['ttl']
   zone_id               node['ies-route53']['zone']['id']

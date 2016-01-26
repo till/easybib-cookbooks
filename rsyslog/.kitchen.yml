@@ -1,0 +1,58 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.7
+  - name: centos-7.1
+  - name: debian-7.8
+    run_list:
+    - recipe[apt]
+  - name: debian-8.1
+    run_list:
+    - recipe[apt]
+  - name: fedora-21
+  - name: ubuntu-12.04
+    run_list:
+      - recipe[apt::default]
+  - name: ubuntu-14.04
+    run_list:
+      - recipe[apt::default]
+  - name: ubuntu-15.04
+    run_list:
+      - recipe[apt::default]
+
+suites:
+  - name: default
+    run_list:
+      - recipe[rsyslog::default]
+  - name: relp
+    run_list:
+      - recipe[rsyslog::default]
+    attributes:
+      rsyslog:
+        use_relp: true
+  - name: client
+    run_list:
+      - recipe[rsyslog_test::client]
+    attributes:
+      rsyslog:
+        server_ip: 10.0.0.50
+        custom_remote:
+            - server: 10.0.0.45
+              logs: auth.*,mail.*
+              port: 555
+              protocol: udp
+            - server: 10.1.1.33
+              logs: authpriv.*,cron.*,daemon.*
+              port: 654
+              protocol: tcp
+              remote_template: RSYSLOG_SyslogProtocol23Format
+  - name: server
+    run_list:
+      - recipe[rsyslog_test::server]
+  - name: input_file_provider
+    run_list:
+      - recipe[rsyslog_test::input_file_provider]

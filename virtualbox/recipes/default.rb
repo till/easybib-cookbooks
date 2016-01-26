@@ -51,6 +51,7 @@ when 'debian'
     components ['contrib']
   end
 
+  package 'linux-headers-generic'
   package "virtualbox-#{node['virtualbox']['version']}"
   package 'dkms'
 

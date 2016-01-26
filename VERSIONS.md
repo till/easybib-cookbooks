@@ -11,13 +11,14 @@ fail2ban | 2.2.1 | removed yum dependencies, adapted to our rubocop scheme, chan
 logrotate | [master](https://github.com/stevendanna/logrotate/commit/7d9b87791f8e7ba64e23121c0faddad7779d45ba) |
 mysql | [6.1.2](https://github.com/chef-cookbooks/mysql/commit/4ba145f2d6e5fd710ba586bc86d9f78e35fbfa60) | disabled yum and smf deps
 nodejs | [2.4.0](https://github.com/redguide/nodejs/releases/tag/v2.4.0) | disabled deps on `homebrew` and `yum-epel`, added new install method in [d606ee](https://github.com/till/easybib-cookbooks/commit/d606ee9851390458e390a44875afaecc5277c219) and a minor [bugfix](https://github.com/till/easybib-cookbooks/commit/da0895e9f3813d7bf6e646fec2615a4756e3039d)
-ohai| [2.0.4](https://github.com/chef-cookbooks/ohai/commit/bc6b53ff9807cd02d5cea86f18470a81e7678771) |  
+ohai| [2.0.4](https://github.com/chef-cookbooks/ohai/commit/bc6b53ff9807cd02d5cea86f18470a81e7678771) |
 rabbitmq | [3.4.0](https://github.com/jjasghar/rabbitmq/commit/b71c0a068419ad10324e8d13b517fafbf373c0c3) | removed yum, ignored in our cs/test setup
 xml| [1.2.4](https://github.com/opscode-cookbooks/xml/tree/v1.2.4) |
+papertrail | [0.0.7](https://github.com/librato/papertrail-cookbook/releases/tag/0.0.7) |
 python | [master](https://github.com/poise/python/commit/56424ab64b06f584c13dba2dbb1cc5369faf20f4) |
+rsyslog | [2.2.0](https://github.com/chef-cookbooks/rsyslog/releases/tag/v2.2.0) | 2.2.0 because 3.0.0+ is Chef 12+ only
 sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0) | removed dependency `user` cookbook
 supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3da5959ce9c2bc42287ad50b26) |
 vagrant | 0.2.2 | disabled dependency on dmg and windows
 virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2
 runit | [master](https://github.com/hw-cookbooks/runit/commit/1ebeffa0f907811302a22b137015012ed6f11193) | dependency on packagecloud disabled
-route53 | [0.4.0](https://github.com/hw-cookbooks/route53) |
