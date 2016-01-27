@@ -3,6 +3,22 @@ if node['papertrail']['remote_port'].nil?
 else
   Chef::Log.info("Setting up papertrail: #{node['papertrail']['remote_host']}:#{node['papertrail']['remote_port']}")
   node.set['papertrail']['hostname_name'] = get_record_name
+
+  # configure file watchers
+  watch_files = []
+
+  if is_aws && get_instance_roles(node).include?('nginxphpapp')
+    watch_files += [
+      { :filename => '/var/log/nginx/error.log', :tag => 'nginx' },
+      { :filename => '/var/log/php/slow.log', :tag => 'php-fpm' },
+      { :filename => '/var/log/php/error.log', :tag => 'php-fpm' },
+      { :filename => '/var/log/php/fpm.log', :tag => 'php-fpm' },
+      { :filename => '/var/log/supervisor/supervisord.log', :tag => 'supervisor' }
+    ]
+  end
+
+  node.set['papertrail']['watch_files'] = watch_files
+
   include_recipe 'papertrail'
 
   # this can be delete later, previously setup in loggly::setup
