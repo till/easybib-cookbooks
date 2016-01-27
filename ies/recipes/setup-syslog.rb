@@ -23,6 +23,15 @@ else
     ]
   end
 
+  if is_aws && get_instance_roles(node).include?('rabbitmq-server')
+    watch_files += [
+      { :filename => '/var/log/rabbitmq/startup_log', :tag => 'rabbitmq' },
+      { :filename => '/var/log/rabbitmq/startup_err', :tag => 'rabbitmq' },
+      { :filename => '/var/log/rabbitmq/shutdown_log', :tag => 'rabbitmq' },
+      { :filename => '/var/log/rabbitmq/shutdown_err', :tag => 'rabbitmq' }
+    ]
+  end
+
   node.set['papertrail']['watch_files'] = watch_files
 
   include_recipe 'papertrail'
