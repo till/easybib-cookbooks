@@ -17,6 +17,12 @@ else
     ]
   end
 
+  if is_aws && get_instance_roles(node).include?('couchdb')
+    watch_files += [
+      { :filename => '/var/log/couchdb/couch.log', :tag => 'couchdb' }
+    ]
+  end
+
   node.set['papertrail']['watch_files'] = watch_files
 
   include_recipe 'papertrail'
