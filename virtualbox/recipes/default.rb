@@ -51,7 +51,11 @@ when 'debian'
     components ['contrib']
   end
 
-  package 'linux-headers-generic'
+  # we need it for the currently running kernel, so package sometimes wont work
+  execute "install current kernel headers" do
+    command 'apt-get install --reinstall -y linux-headers-`uname -r`'
+  end
+
   package "virtualbox-#{node['virtualbox']['version']}"
   package 'dkms'
 
