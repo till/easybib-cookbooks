@@ -29,8 +29,7 @@ if is_aws
     # AWS auto-formats its volumes with ext3. We want ext4 for performance
     # reasons. If we find an ext3 formatted xvdc device, we assume that the
     # volume is "new" (as in: has no data yet) and format it with ext4.
-    command 'file -sL /dev/xvdc | grep "\<ext3\>" && mkfs.ext4 /dev/xvdc'
-    ignore_failure true
+    command '(([[ -a /dev/xvdc ]] && file -sL /dev/xvdc | grep "\<ext3\>") && mkfs.ext4 /dev/xvdc) || true'
     only_if do
       File.exist?('/dev/xvdc')
     end
