@@ -1,6 +1,3 @@
-# Cookbook Name:: vagrant
-# Recipe:: mac_os_x
-
 # Copyright 2015 Joshua Timberman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-vagrant_url = node['vagrant']['url'] || vagrant_package_uri
-vagrant_checksum = node['vagrant']['checksum'] || vagrant_sha256sum
 
-dmg_package 'Vagrant' do
-  source vagrant_url
-  checksum vagrant_checksum
-  type 'pkg'
-  package_id 'com.vagrant.vagrant'
-  action :install
+if defined?(ChefSpec)
+  ChefSpec.define_matcher(:vagrant_plugin)
+
+  def install_vagrant_plugin(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:vagrant_plugin, :install, resource_name)
+  end
+
+  def uninstall_vagrant_plugin(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:vagrant_plugin, :uninstall, resource_name)
+  end
+
+  def remove_vagrant_plugin(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:vagrant_plugin, :remove, resource_name)
+  end
 end

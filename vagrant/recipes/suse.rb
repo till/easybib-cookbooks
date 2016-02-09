@@ -1,5 +1,5 @@
 # Cookbook Name:: vagrant
-# Recipe:: mac_os_x
+# Recipe:: suse
 
 # Copyright 2015 Joshua Timberman
 #
@@ -14,13 +14,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-vagrant_url = node['vagrant']['url'] || vagrant_package_uri
-vagrant_checksum = node['vagrant']['checksum'] || vagrant_sha256sum
 
-dmg_package 'Vagrant' do
-  source vagrant_url
-  checksum vagrant_checksum
-  type 'pkg'
-  package_id 'com.vagrant.vagrant'
-  action :install
-end
+Chef::Log.debug 'SUSE is not specifically supported by Vagrant, going to try anyway as if we were RHEL (rpm install).' if platform_family?('suse')
+
+include_recipe 'vagrant::rhel'
