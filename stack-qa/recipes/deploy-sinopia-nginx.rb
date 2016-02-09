@@ -8,7 +8,7 @@ node['deploy'].each do |application, deploy|
     sinopia_listener = node['sinopia']['listen']
   end
 
-  template nginx_dir + '/sites-enabled/sinopia-forward.conf' do
+  template '/etc/nginx/sites-enabled/sinopia-forward.conf' do
     source 'nginx-sinopia.conf.erb'
     mode   '0644'
     owner  'root'
