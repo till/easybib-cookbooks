@@ -17,7 +17,7 @@ xml| [1.2.4](https://github.com/opscode-cookbooks/xml/tree/v1.2.4) |
 papertrail | [0.0.7](https://github.com/librato/papertrail-cookbook/releases/tag/0.0.7) |
 python | [master](https://github.com/poise/python/commit/56424ab64b06f584c13dba2dbb1cc5369faf20f4) |
 rsyslog | [2.2.0](https://github.com/chef-cookbooks/rsyslog/releases/tag/v2.2.0) | 2.2.0 because 3.0.0+ is Chef 12+ only
-sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0) | removed dependency `user` cookbook
+sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0) | removed dependency `user` cookbook, fix: use user resource
 supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3da5959ce9c2bc42287ad50b26) |
 vagrant | [0.4.2](https://github.com/jtimberman/vagrant-cookbook/releases/tag/v0.4.2) | disabled dependency on dmg and windows, removed tests and matcher, removed vagrant_plugin
 virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2

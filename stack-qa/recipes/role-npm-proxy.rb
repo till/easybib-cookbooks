@@ -1,6 +1,6 @@
 include_recipe 'ies::role-generic'
 include_recipe 'nodejs'
-include_recipe 'sinopia::sinopia'
+include_recipe 'sinopia'
 include_recipe 'sinopia-github'
 include_recipe 'nginx-app::configure'
 include_recipe 'stack-qa::deploy-sinopia-nginx'
