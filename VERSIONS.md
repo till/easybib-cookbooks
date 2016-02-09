@@ -22,3 +22,4 @@ supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3
 vagrant | [0.4.2](https://github.com/jtimberman/vagrant-cookbook/releases/tag/v0.4.2) | disabled dependency on dmg and windows, removed tests and matcher
 virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2
 runit | [master](https://github.com/hw-cookbooks/runit/commit/1ebeffa0f907811302a22b137015012ed6f11193) | dependency on packagecloud disabled
+
