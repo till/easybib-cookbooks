@@ -1,0 +1,4 @@
+ENV['recipe_runlist'] = 'stack-service::role-rabbitmq'
+ENV['chef_json'] = "#{File.dirname(__FILE__)}/test.json"
+
+require_relative '../vagrant-provision'

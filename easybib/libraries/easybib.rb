@@ -116,7 +116,7 @@ module EasyBib
     if node['easybib'] && node['easybib']['cluster_name']
       return node['easybib']['cluster_name']
     end
-    if is_aws
+    if is_aws(node)
       ::Chef::Log.error('Unknown environment. (get_cluster_name) - returning unknown')
       return ''
     else

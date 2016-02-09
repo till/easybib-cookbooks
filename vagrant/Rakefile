@@ -1,5 +1,5 @@
 # Cookbook Name:: vagrant
-# Recipe:: mac_os_x
+# Rakefile
 
 # Copyright 2015 Joshua Timberman
 #
@@ -14,13 +14,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-vagrant_url = node['vagrant']['url'] || vagrant_package_uri
-vagrant_checksum = node['vagrant']['checksum'] || vagrant_sha256sum
 
-dmg_package 'Vagrant' do
-  source vagrant_url
-  checksum vagrant_checksum
-  type 'pkg'
-  package_id 'com.vagrant.vagrant'
-  action :install
+require 'rubocop/rake_task'
+require 'foodcritic'
+require 'rspec/core/rake_task'
+
+RuboCop::RakeTask.new do |rubocop|
+  rubocop.options = ['-D']
 end
+
+FoodCritic::Rake::LintTask.new
+
+RSpec::Core::RakeTask.new
+
+desc 'Run Rubocop and Foodcritic style checks'
+task style: [:rubocop, :foodcritic]
+
+desc 'Run all style checks and unit tests'
+task test: [:style, :spec]
+
+task default: :test

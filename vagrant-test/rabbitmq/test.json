@@ -1,0 +1,5 @@
+{
+    "rabbitmq": {
+        "logdir": "/var/log/rabbitmq2"
+    }
+}

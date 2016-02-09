@@ -11,3 +11,26 @@ end
 
 include_recipe 'rabbitmq::virtualhost_management'
 include_recipe 'rabbitmq::user_management'
+
+if node['rabbitmq']['logdir'].nil?
+  Chef::Log.debug('Standard log dir not set, no need to mangle.')
+  return
+end
+
+std_log_dir = '/var/log/rabbitmq'
+
+# clean-up and re-direct
+directory std_log_dir do
+  recursive true
+  action :delete
+  only_if do
+    node['rabbitmq']['logdir'] != std_log_dir
+  end
+end
+
+link std_log_dir do
+  to node['rabbitmq']['logdir']
+  only_if do
+    node['rabbitmq']['logdir'] != std_log_dir
+  end
+end
