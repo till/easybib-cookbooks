@@ -19,6 +19,6 @@ python | [master](https://github.com/poise/python/commit/56424ab64b06f584c13dba2
 rsyslog | [2.2.0](https://github.com/chef-cookbooks/rsyslog/releases/tag/v2.2.0) | 2.2.0 because 3.0.0+ is Chef 12+ only
 sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0) | removed dependency `user` cookbook
 supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3da5959ce9c2bc42287ad50b26) |
-vagrant | [0.4.2](https://github.com/jtimberman/vagrant-cookbook/releases/tag/v0.4.2) | disabled dependency on dmg and windows
+vagrant | [0.4.2](https://github.com/jtimberman/vagrant-cookbook/releases/tag/v0.4.2) | disabled dependency on dmg and windows, removed tests and matcher
 virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2
 runit | [master](https://github.com/hw-cookbooks/runit/commit/1ebeffa0f907811302a22b137015012ed6f11193) | dependency on packagecloud disabled
