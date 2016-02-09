@@ -1,7 +1,7 @@
 # Cookbook Name:: vagrant
-# Recipe:: mac_os_x
+# Recipe:: install_plugins
 
-# Copyright 2015 Joshua Timberman
+# Copyright 2013, Joshua Timberman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-vagrant_url = node['vagrant']['url'] || vagrant_package_uri
-vagrant_checksum = node['vagrant']['checksum'] || vagrant_sha256sum
 
-dmg_package 'Vagrant' do
-  source vagrant_url
-  checksum vagrant_checksum
-  type 'pkg'
-  package_id 'com.vagrant.vagrant'
-  action :install
+node['vagrant']['plugins'].each do |plugin|
+  if plugin.respond_to?(:keys)
+    vagrant_plugin plugin['name'] do
+      user node['vagrant']['user'] if node['vagrant']['user']
+      password node['vagrant']['password'] if node['vagrant']['password']
+      version plugin['version'] if plugin['version']
+    end
+  else
+    vagrant_plugin plugin do
+      user node['vagrant']['user'] if node['vagrant']['user']
+      password node['vagrant']['password'] if node['vagrant']['password']
+    end
+
+  end
 end

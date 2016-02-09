@@ -1,0 +1,36 @@
+AllCops:
+  Include:
+    - Berksfile
+    - Gemfile
+    - Rakefile
+    - Thorfile
+    - Guardfile
+    - Policyfile.rb
+  Exclude:
+    - vendor/**
+
+AlignParameters:
+  Enabled: false
+Documentation:
+  Enabled: false
+Encoding:
+  Enabled: false
+ClassLength:
+  Enabled: false
+CyclomaticComplexity:
+  Enabled: false
+MethodLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+LineLength:
+  Enabled: false
+PerceivedComplexity:
+  Enabled: false
+Style/FileName:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Style/SingleSpaceBeforeFirstArg:
+  Exclude:
+    - '**/metadata.rb'

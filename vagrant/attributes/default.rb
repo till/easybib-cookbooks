@@ -1,4 +1,6 @@
-#
+# Cookbook Name:: vagrant
+# Attributes:: default
+
 # Author:: Joshua Timberman <opensource@housepub.org>
 # Copyright (c) 2013-2014, Joshua Timberman
 # License:: Apache License, Version 2.0
@@ -14,10 +16,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-default['vagrant']['version']     = '1.6.5'
-default['vagrant']['url']         = vagrant_package_uri(node['vagrant']['version'])
-default['vagrant']['checksum']    = vagrant_sha256sum(node['vagrant']['version'])
+return unless %w(darwin windows linux).include?(node['os'])
+default_version = '1.7.4'
+
+default['vagrant']['version']     = default_version
+default['vagrant']['msi_version'] = default_version
+
+# the URL and checksum are calculated from the package version by helper methods
+# in the recipe if you# don't override them in a wrapper cookbook
+default['vagrant']['url']         = nil
+default['vagrant']['checksum']    = nil
+
 default['vagrant']['plugins']     = []
-default['vagrant']['msi_version'] = ''
+default['vagrant']['user']        = nil
+# password is required on Windows if you want to install plugins as another user
+default['vagrant']['password']    = nil
