@@ -39,3 +39,11 @@ mysql_config 'vagrant-settings' do
   )
   notifies :restart, "mysql_service[#{instance}]"
 end
+
+# begin SUPER SUCKY HACKARIFIC
+if File.exists? "/vagrant"
+  user = "vagrant"
+  template "/home/#{user}/.my.cnf" do
+    source 'vagrant-user.cnf.erb'
+  end
+end

@@ -1,0 +1,5 @@
+[client]
+port = <%= node['ies-mysql']['server-config']['port'] %>
+user = <%= node['ies-mysql']['server-config']['user'] %>
+password = <%= node['ies-mysql']['server-config']['password'] %>
+socket = /run/mysql-<%= node['ies-mysql']['server-config']['instance-name'] %>/mysqld.sock
