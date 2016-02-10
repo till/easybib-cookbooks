@@ -11,6 +11,6 @@ ies_route53_record 'create a record' do
   overwrite true
   action :create
   only_if do
-    dns_enabled?
+    dns_enabled? && !instance['ip'].nil?
   end
 end
