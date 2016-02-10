@@ -41,9 +41,7 @@ mysql_config 'vagrant-settings' do
 end
 
 # begin SUPER SUCKY HACKARIFIC
-if File.exists? "/vagrant"
-  user = "vagrant"
-  template "/home/#{user}/.my.cnf" do
-    source 'vagrant-user.cnf.erb'
-  end
+template "/home/vagrant/.my.cnf" do
+  source 'vagrant-user.cnf.erb'
+  only_if { ::File.exist?('/vagrant') }
 end
