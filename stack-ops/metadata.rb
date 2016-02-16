@@ -9,4 +9,5 @@ supports 'ubuntu'
 
 depends 'stack-easybib'
 depends 'php'
+depends 'phpmyadmin'
 depends 'smokeping'
