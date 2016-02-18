@@ -48,3 +48,10 @@ template '/home/vagrant/.my.cnf' do
             :mysql_instance => node['ies-mysql']['server-config']['instance-name'])
   only_if { ::File.exist?('/vagrant') }
 end
+template '/root/.my.cnf' do
+  source 'vagrant-user.cnf.erb'
+  variables(:mysql_user => node['ies-mysql']['server-config']['user'],
+            :mysql_pass => node['ies-mysql']['server-config']['password'],
+            :mysql_instance => node['ies-mysql']['server-config']['instance-name'])
+  only_if { ::File.exist?('/vagrant') }
+end
