@@ -21,7 +21,7 @@ include_recipe 'nginx-app::vagrant-silex'
 # easybib-api + id
 include_recipe 'memcache'
 
-# featureflag-app
+# realtime
 include_recipe 'redis::default'
 
 # ssl
