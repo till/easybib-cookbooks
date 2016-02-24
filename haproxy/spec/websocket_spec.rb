@@ -20,18 +20,12 @@ describe 'haproxy::configure' do
         :websocket_layers => {
           :nodeapp => {
             :port => 8123,
-            :health_check =>
-              'GET / HTTP/1.1rnHost:\ ws.domain.comrnConnection:\ Upgrade\r\nUpgrade:\ ' \
-              'websocket\r\nSec-WebSocket-Key:\ haproxy\r\nSec-WebSocket-Version:\ 13\r\n' \
-              'Sec-WebSocket-Protocol:\ echo-protocol http-check expect status 101',
-            :servers => {
-              'node-app1' => 'node.app1.tld:8123',
-              'node-app2' => 'node.app2.tld:8123'
+            :health_check => {
+              :url => '/foo?bar=123',
+              :host => 'ws.example.com'
             }
           }
-        },
-        :health_check_method => 'GET',
-        :health_check_url => '/health'
+        }
       }
     end
   end
@@ -56,6 +50,10 @@ describe 'haproxy::configure' do
         'server php-app-server-1 php.app.server.1.tld:80 weight 10 maxconn 255 rise 2 fall 3 check inter 3000',
         'server node-app-server-1 node.app.server.1.tld:8123 weight 10 maxconn 10000 rise 2 fall 3 check inter 3000',
         'server node-app-server-2 node.app.server.2.tld:8123 weight 10 maxconn 10000 rise 2 fall 3 check inter 3000',
+        'GET /foo?bar=123 HTTP/1.1\r\nHost:\ ws.example.com\r\nConnection:\ Upgrade\r\nUpgrade:\ ' \
+          'websocket\r\nSec-WebSocket-Key:\ haproxy\r\nSec-WebSocket-Version:\ 13\r\n' \
+          'Sec-WebSocket-Protocol:\ echo-protocol',
+        'http-check expect status 101',
         # frontend
         'use_backend nodeapp_websocket_app_servers if hdr_connection_upgrade hdr_upgrade_websocket'
       ]
