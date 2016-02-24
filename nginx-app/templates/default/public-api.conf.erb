@@ -1,13 +1,5 @@
 <%= render_upstream(@php_upstream, @upstream_name) -%>
 
-<%= render 'partials/module-assets.erb',
-  :cookbook => 'nginx-app',
-  :variables => {
-    :alias_map => alias_config,
-    :default_docroot => @doc_root
-  }
--%>
-
 server {
     listen 80 <%=@listen_opts%>;
 
@@ -23,21 +15,7 @@ server {
 
     client_max_body_size <%= fetch_node(node, @app_name, 'nginx-app', 'client_max_body_size') %>;
 
-    # Block ad calls to /something/<script type="text/javascript">
-    location ~* <script {
-        deny all;
-    }
-
     root <%= @doc_root %>;
-
-    # VAST tag location for serving video
-    location /vmntribes-vast-tag/ {
-        proxy_pass "http://www.burstnet.com/burstmedia/display/s=27759/a=e/v=4.0S/sz=0x0V/NZ/SA/9870197013/K=videopair/RETURN-CODE/TXT/";
-        proxy_set_header Host "www.burstnet.com";
-        proxy_connect_timeout 5s;
-        proxy_read_timeout 5s;
-        proxy_send_timeout 5s;
-    }
 
 <%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
 
@@ -59,34 +37,24 @@ unless uncached_extensions.empty? -%>
     }
 <% end -%>
 
-    location /raw/ {
-        # Prevent any content in /raw/
-        # See easybib/issues#4837
-        add_header Access-Control-Allow-Origin *;
-    }
-
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
       :cookbook => 'nginx-app',
       :variables => {
+        :node => node,
         :enabled => node['nginx-app']['browser_caching']['enabled'],
         :config => node['nginx-app']['browser_caching']['config']
       }
     %>
 <% end -%>
-
-    location / {
-        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
-
-        fastcgi_pass  <%= @upstream_name %>_phpfpm;
-        fastcgi_index index.php;
-
-    <% unless @environment.empty? -%>
-        fastcgi_param BIB_ENV "<%=@environment%>";
-    <% end -%>
-        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
-
-        index  index.php index.html index.htm;
-    }
+<% unless node['nginx-app']['citation-apis'].nil? and node['nginx-app']['citation-apis']['routes_enabled'].nil? -%>
+    <%= render 'partials/php-routes-specific-routes.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :node => node,
+        :upstream => @upstream_name,
+        :routes_enabled => node['nginx-app']['citation-apis']['routes_enabled']
+      }
+    %>
+<% end -%>
 }
-

@@ -1,23 +1,20 @@
-include_recipe 'nginx-app::server'
+include_recipe 'php-fpm::service'
+include_recipe 'nginx-app::service'
 
 cluster_name = get_cluster_name
+config_name = ''
 
 node['deploy'].each do |application, deploy|
-  Chef::Log.info("nginx-app::configure - app: #{application}")
 
   case application
-  when 'easybib'
-    nginxphpapp_allowed = allow_deploy(application, 'easybib', 'nginxphpapp')
-    unless nginxphpapp_allowed
-      Chef::Log.info("deploy::#{application} - skipping easybib, allow_deploy mismatch")
-      next
-    end
-
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
-
+    config_name = 'easybib-api.conf.erb'
+  when 'citation_apis'
+    next unless allow_deploy(application, 'citation_apis', 'citation-apis')
+    config_name = 'public-api.conf.erb'
   else
-    Chef::Log.info("deploy::#{application} (in #{cluster_name}) skipped.")
+    Chef::Log.info("deploy::#{application} using wrong deploy recipe in: #{cluster_name}")
     next
   end
 
@@ -30,11 +27,14 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
-    config_template 'internal-api.conf.erb'
-    domain_name deploy['domains'].join(' ')
-    doc_root deploy['document_root']
+    config_template config_name
+    domain_name     deploy['domains'].join(' ')
+    doc_root        deploy['document_root']
     access_log      'off'
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    only_if do
+      config_name != ''
+    end
   end
 end
