@@ -18,6 +18,7 @@ backend <%= @layername %>_websocket_app_servers
   option redispatch
   option forwardfor except 127.0.0.1
   option httpchk <%= @health_check %>
+  timeout tunnel 3600s
   acl hdr_connection_upgrade hdr(Connection)                 -i upgrade
   acl hdr_upgrade_websocket  hdr(Upgrade)                    -i websocket
   acl hdr_websocket_key      hdr_cnt(Sec-WebSocket-Key)      eq 1
