@@ -8,9 +8,8 @@ node['deploy'].each do |application, deploy|
   case application
   when 'easybib'
     nginxphpapp_allowed = allow_deploy(application, 'easybib', 'nginxphpapp')
-    testapp_allowed     = allow_deploy(application, 'easybib', 'testapp')
-    if !nginxphpapp_allowed && !testapp_allowed
-      Chef::Log.info('nginx-app::configure - skipping easybib, allow_deploy mismatch')
+    unless nginxphpapp_allowed
+      Chef::Log.info("deploy::#{application} - skipping easybib, allow_deploy mismatch")
       next
     end
 
