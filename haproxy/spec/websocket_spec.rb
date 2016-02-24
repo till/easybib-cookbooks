@@ -16,7 +16,6 @@ describe 'haproxy::configure' do
           'private_dns_name' => 'node.app.server.2.tld'
         }
       }
-      ##### XXX TODO: timeout tunnel        3600s (in "defaults")
       node.set[:haproxy] = {
         :websocket_layers => {
           :nodeapp => {
@@ -54,7 +53,7 @@ describe 'haproxy::configure' do
 
       expected =  [
         # backend
-        'server php-app-server-1 php.app.server.1.tld:80 weight 10 maxconn 10000 rise 2 fall 3 check inter 3000',
+        'server php-app-server-1 php.app.server.1.tld:80 weight 10 maxconn 255 rise 2 fall 3 check inter 3000',
         'server node-app-server-1 node.app.server.1.tld:8123 weight 10 maxconn 10000 rise 2 fall 3 check inter 3000',
         'server node-app-server-2 node.app.server.2.tld:8123 weight 10 maxconn 10000 rise 2 fall 3 check inter 3000',
         # frontend
