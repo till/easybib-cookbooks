@@ -38,7 +38,6 @@
   <%= render "haproxy.cfg.websocketbackend.erb", :variables => {
       'layername' => layername,
       'health_check' => layerconfig['health_check'],
-      'servers' => layerconfig['servers'],
       'port' => layerconfig['port'],
       'node' => @node
   } %>
