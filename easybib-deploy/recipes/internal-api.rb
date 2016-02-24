@@ -24,6 +24,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'worldcat')
   when 'yahooboss'
     next unless allow_deploy(application, 'yahooboss')
+  when 'citation_apis'
+    next unless allow_deploy(application, 'citation_apis', 'citation-apis')
   else
     Chef::Log.info("deploy::internal-api - #{application} (in #{cluster_name}) skipped")
     next
