@@ -12,9 +12,15 @@ haproxy_check_interval = 3000
 haproxy_maxconn = 10000
 
 if @health_check.is_a?(Hash)
-    health_check_string = "GET #{@health_check['url']} HTTP/1.1\\r\\nHost:\\ #{@health_check['host']}" \
-        "\\r\\nConnection:\\ Upgrade\\r\\nUpgrade:\\ websocket\\r\\nSec-WebSocket-Key:\\ haproxy" \
-        "\\r\\nSec-WebSocket-Version:\\ 13\\r\\nSec-WebSocket-Protocol:\\ echo-protocol"
+    health_check_string = [
+        "GET #{@health_check['url']} HTTP/1.1",
+        "Host:\\ #{@health_check['host']}",
+        'Connection:\\ Upgrade',
+        'Upgrade:\\ websocket',
+        'Sec-WebSocket-Key:\\ haproxy',
+        'Sec-WebSocket-Version:\\ 13',
+        'Sec-WebSocket-Protocol:\\ echo-protocol'
+    ].join('\\r\\n')
 else
     health_check_string = @health_check
 end
