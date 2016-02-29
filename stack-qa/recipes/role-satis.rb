@@ -6,5 +6,5 @@ include_recipe 'php::module-posix'
 node.set['composer']['environment'] = get_deploy_user
 include_recipe 'composer::configure'
 
-include_recipe 'nginx-app::configure'
-include_recipe 'easybib-deploy::satis'
+include_recipe 'nginx-app::server'
+include_recipe 'stack-qa::deploy-satis'

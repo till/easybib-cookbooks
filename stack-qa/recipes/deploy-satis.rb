@@ -11,11 +11,11 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'satis_s3', 'satis')
 
   else
-    Chef::Log.info("deploy::satis - #{application} skipped")
+    Chef::Log.info("stack-qa::deploy-satis - #{application} skipped")
     next
   end
 
-  Chef::Log.info("deploy::satis - Deploying as user: #{deploy['user']} and #{deploy['group']} to #{deploy['deploy_to']}")
+  Chef::Log.info("stack-qa::deploy-satis - Deploying as user: #{deploy['user']} and #{deploy['group']} to #{deploy['deploy_to']}")
 
   easybib_deploy application do
     deploy_data deploy
@@ -35,8 +35,8 @@ node['deploy'].each do |application, deploy|
   doc_root = ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir')
 
   template "/etc/nginx/sites-enabled/#{application}.conf" do
-    cookbook 'nginx-app'
-    source 'satis.conf.erb'
+    cookbook 'stack-qa'
+    source 'nginx-satis.conf.erb'
     mode   '0755'
     owner  node['nginx-app']['user']
     group  node['nginx-app']['group']
