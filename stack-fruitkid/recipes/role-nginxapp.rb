@@ -1,4 +1,4 @@
-include_recipe 'stack-easybib::role-phpapp'
+include_recipe 'stack-fruitkid::role-phpapp'
 
 include_recipe 'php::module-gearman'
 
