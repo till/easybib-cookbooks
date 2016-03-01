@@ -1,13 +1,5 @@
 <%= render_upstream(@php_upstream, @upstream_name) -%>
 
-<%= render 'partials/module-assets.erb',
-  :cookbook => 'nginx-app',
-  :variables => {
-    :alias_map => alias_config,
-    :default_docroot => @doc_root
-  }
--%>
-
 server {
     listen 80 <%=@listen_opts%>;
 
@@ -89,4 +81,3 @@ unless uncached_extensions.empty? -%>
         index  index.php index.html index.htm;
     }
 }
-
