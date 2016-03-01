@@ -1,4 +1,6 @@
 action :undeploy do
+  # executing undeploy event from chef
+
   app = new_resource.app
   deploy_data = new_resource.deploy_data
   cronjob_role = new_resource.cronjob_role
