@@ -70,8 +70,6 @@ end
 action :delete do
   app = new_resource.app
 
-  updated = false
-
   execute 'Clear old cron.d files' do
     # rm will exit with 1 if no old cron.d files existed
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
@@ -80,7 +78,6 @@ action :delete do
   end
 
   execute 'Clear old crontab' do
-    updated = true
     user node['nginx-app']['user']
     # crontab will exit with 130 if crontab has already been cleared
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
@@ -91,6 +88,6 @@ action :delete do
     end
   end
 
-  new_resource.updated_by_last_action(updated)
+  new_resource.updated_by_last_action(true)
 
 end
