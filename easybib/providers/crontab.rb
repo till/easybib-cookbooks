@@ -1,7 +1,9 @@
 action :create do
   app = new_resource.app
   crontab_file = new_resource.crontab_file
-
+  crontab_user = new_resource.crontab_user
+  crontab_path = new_resource.crontab_path
+  
   updated = false
 
   unless ::File.exist?(crontab_file)
@@ -10,10 +12,10 @@ action :create do
   end
 
   execute 'Clear old crontab' do
-    user node['nginx-app']['user']
+    user crontab_user
     # crontab will exit with 130 if crontab has already been cleared
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
-    command "crontab -u #{node['nginx-app']['user']} -r; true"
+    command "crontab -u #{crontab_user} -r; true"
     ignore_failure true
     only_if do
       ::File.exist?(crontab_file)
@@ -51,9 +53,9 @@ action :create do
         day crontab[3]
         month crontab[4]
         weekday crontab[5]
-        user node['nginx-app']['user']
+        user crontab_user
         command crontab[6]
-        path node['easybib_deploy']['cron_path']
+        path crontab_path
       end
 
       Chef::Log.info("easybib_deploy - I just called cron_d for #{cron_name}")
@@ -69,23 +71,24 @@ end
 
 action :delete do
   app = new_resource.app
+  crontab_user = new_resource.crontab_user
+
+  execute 'Clear old crontab' do
+    user crontab_user
+    # crontab will exit with 130 if crontab has already been cleared
+    # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
+    command "crontab -u #{crontab_user} -r; true"
+    ignore_failure true
+    only_if do
+      ::File.exist?(crontab_file)
+    end
+  end
 
   execute 'Clear old cron.d files' do
     # rm will exit with 1 if no old cron.d files existed
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
     command "rm /etc/cron.d/#{app}_*; true"
     ignore_failure true
-  end
-
-  execute 'Clear old crontab' do
-    user node['nginx-app']['user']
-    # crontab will exit with 130 if crontab has already been cleared
-    # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
-    command "crontab -u #{node['nginx-app']['user']} -r; true"
-    ignore_failure true
-    only_if do
-      ::File.exist?(crontab_file)
-    end
   end
 
   new_resource.updated_by_last_action(true)

@@ -5,6 +5,7 @@ default['easybib_deploy']['provide_pear']  = false
 default['easybib_deploy']['cron_path']     = '/usr/local/bin:/usr/bin:/bin'
 default['easybib_deploy']['envtype']       = 'playground'
 default['easybib_deploy']['cronjob_role']  = nil
+default['easybib_deploy']['cronjob_user']  = 'root'
 default['easybib_deploy']['supervisor_role'] = 'consumer'
 default['easybib']['enable_ppa_mirror']  = false
 default['easybib']['php_mirror_version'] = '55'
