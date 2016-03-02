@@ -69,7 +69,7 @@ end
 
 action :delete do
   app = new_resource.app
-  crontab_user = new_resource.crontab_user || 'nobody'
+  crontab_user = new_resource.crontab_user
 
   execute 'Clear old crontab' do
     user crontab_user

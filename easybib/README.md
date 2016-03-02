@@ -30,7 +30,7 @@ return [
 
 ### deployed_stack
 * stackname: the stacks shortname
-* environment: environment - playground/production on opsworks, vagrant on vagrant (might be helpful for automatic decision which config to use) 
+* environment: environment - playground/production on opsworks, vagrant on vagrant (might be helpful for automatic decision which config to use)
 
 ### settings
 Application specific settings. Those are taken from the stack json, node[appname]['env']. The containing array has all keys flattened and uppercased (since not all output formats support multidimensional arrays).
@@ -48,9 +48,9 @@ For example, this stack json:
       }
     }
  ```
- 
- will result in 
- 
+
+ will result in
+
  ```
    'settings' => [
     'ENV_DIR_TMP'=>"/tmp",
@@ -58,9 +58,9 @@ For example, this stack json:
     'AWS_SECRET_KEY'=>"BAR",
   ],
  ```
- 
+
  ## Stack Settings for Vagrant
- 
+
  ```
  {
    "vagrant": {
@@ -79,3 +79,7 @@ For example, this stack json:
    }
  }
  ```
+
+ ## attributes
+
+  * `crontab_user`: the user to clear the crontab for
