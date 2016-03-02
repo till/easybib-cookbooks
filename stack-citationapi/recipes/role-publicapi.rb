@@ -9,7 +9,7 @@ include_recipe 'easybib-deploy::easybib'
 include_recipe 'redis::default'
 
 if is_aws
-  include_recipe 'nginx-app::configure'
+  include_recipe 'easybib-deploy::citation-api'
 else
   include_recipe 'memcache'
   include_recipe 'nginx-app::vagrant'
