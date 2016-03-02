@@ -114,6 +114,26 @@ action :create do
 end
 
 action :delete do
+  app = new_resource.app
+  # get the file
+  supervisor_file = new_resource.supervisor_file
+  # unless supervisor_file exists
+  unless ::File.exist?(supervisor_file)
+    new_resource.updated_by_last_action(true)
+    next
+  end
+  # read the configuration
+  supervisor_config = JSON.parse(::File.read(supervisor_file))
+  # parse through each named configuration service
+  supervisor_config.each do |name, service|
+    # build the service_name
+    service_name = "#{name}-#{app}"
+    # call supervisor_service with :stop, :disable
+    # attempt to do without building the config.
+    supervisor_service service_name do
+      action [:stop, :disable]
+    end
+  end
 
   new_resource.updated_by_last_action(true)
 end
