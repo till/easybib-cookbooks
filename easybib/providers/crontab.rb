@@ -2,8 +2,7 @@ action :create do
   app = new_resource.app
   crontab_file = new_resource.crontab_file
   crontab_user = new_resource.crontab_user
-  crontab_path = new_resource.crontab_path
-  
+
   updated = false
 
   unless ::File.exist?(crontab_file)
@@ -53,9 +52,9 @@ action :create do
         day crontab[3]
         month crontab[4]
         weekday crontab[5]
-        user crontab_user
+        user node['nginx-app']['user']
         command crontab[6]
-        path crontab_path
+        path node['easybib_deploy']['cron_path']
       end
 
       Chef::Log.info("easybib_deploy - I just called cron_d for #{cron_name}")
