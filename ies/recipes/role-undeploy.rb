@@ -1,5 +1,5 @@
-unless is_aws && node.fetch('nginx-app', {})['user'].nil?
-  crontab_user = node.fetch('nginx-app', {})['user']
+unless is_aws && get_instance_roles(node).include?('nginxphpapp')
+  crontab_user = node.fetch('nginx-app', {})['user'] || 'nobody'
   node['deploy'].each do |application, deploy|
     easybib_crontab application do
       crontab_user crontab_user
