@@ -1,7 +1,6 @@
 action :create do
   app = new_resource.app
   crontab_file = new_resource.crontab_file
-  crontab_user = new_resource.crontab_user
 
   updated = false
 
@@ -11,10 +10,10 @@ action :create do
   end
 
   execute 'Clear old crontab' do
-    user crontab_user
+    user node['nginx-app']['user']
     # crontab will exit with 130 if crontab has already been cleared
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
-    command "crontab -u #{crontab_user} -r; true"
+    command "crontab -u #{node['nginx-app']['user']} -r; true"
     ignore_failure true
     only_if do
       ::File.exist?(crontab_file)
