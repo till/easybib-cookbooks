@@ -77,9 +77,6 @@ action :delete do
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
     command "crontab -u #{crontab_user} -r; true"
     ignore_failure true
-    only_if do
-      ::File.exist?(crontab_file)
-    end
   end
 
   execute 'Clear old cron.d files' do
