@@ -70,7 +70,6 @@ end
 action :delete do
   app = new_resource.app
   crontab_user = new_resource.crontab_user
-  crontab_file = new_resource.crontab_file
 
   execute 'Clear old crontab' do
     user crontab_user
@@ -78,9 +77,6 @@ action :delete do
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
     command "crontab -u #{crontab_user} -r; true"
     ignore_failure true
-    only_if do
-      ::File.exist?(crontab_file)
-    end
   end
 
   execute 'Clear old cron.d files' do
