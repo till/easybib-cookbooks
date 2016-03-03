@@ -8,4 +8,10 @@ node['deploy'].each do |application, deploy|
     crontab_user node['easybib_deploy']['crontab_user']
     action :delete
   end
+
+  easybib_supervisor application do
+    app application
+    supervisor_file supervisor_file "#{application_root_dir}/deploy/supervisor.json"
+    action :delete
+  end
 end
