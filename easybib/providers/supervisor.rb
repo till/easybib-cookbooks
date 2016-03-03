@@ -117,12 +117,8 @@ action :delete do
   app = new_resource.app
   # get the deploy data
   deploy_data = new_resource.deploy_data
-  # divine the deploy location
-  application_root_dir = "#{deploy_data['deploy_to']}/current"
-  # further divine the document root data
-  document_root_dir = "#{application_root_dir}/#{deploy_data['document_root']}/"
-  # finally divine the supervisor file
-  supervisor_file "#{application_root_dir}/deploy/supervisor.json"
+  # divine the suervisor configuration location
+  supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
 
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
