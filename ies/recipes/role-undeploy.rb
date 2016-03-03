@@ -11,6 +11,7 @@ node['deploy'].each do |application, deploy|
 
   easybib_supervisor application do
     app application
+    deploy_data deploy
     action :delete
   end
 end
