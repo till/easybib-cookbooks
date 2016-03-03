@@ -20,6 +20,7 @@ action :setup do
   access_log = new_resource.access_log
   application = new_resource.app_name
   listen_opts = new_resource.listen_opts
+  cookbook = new_resource.cookbook
 
   domain_name = get_domain_name(new_resource, node)
   deploy_dir = get_deploy_dir(new_resource, node)
@@ -45,7 +46,7 @@ action :setup do
   end
 
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
-    cookbook 'nginx-app'
+    cookbook cookbook
     source config_template
     mode '0755'
     owner node['nginx-app']['user']

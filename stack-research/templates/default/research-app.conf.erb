@@ -1,24 +1,5 @@
 <%= render_upstream(@php_upstream, @upstream_name) -%>
 
-<% 
-
-alias_config = {}
-{
-  'js' => fetch_node(node, @appname, 'nginx-app', 'js_modules'),
-  'images' => fetch_node(node, @appname, 'nginx-app', 'img_modules'),
-  'css' => fetch_node(node, @appname, 'nginx-app', 'css_modules')
-}.each do |name, config|
-    alias_config = NginxApp::Helpers::merge_alias_config(alias_config, config, name, @app_dir)
-end
--%>
-<%= render 'partials/module-assets.erb',
-  :cookbook => 'nginx-app',
-  :variables => {
-    :alias_map => alias_config,
-    :default_docroot => @doc_root
-  }
--%>
-
 server {
     listen 80 <%=@listen_opts%>;
 
@@ -39,16 +20,7 @@ server {
         deny all;
     }
 
-    root $easybib_docroot;
-
-    # VAST tag location for serving video
-    location /vmntribes-vast-tag/ {
-        proxy_pass "http://www.burstnet.com/burstmedia/display/s=27759/a=e/v=4.0S/sz=0x0V/NZ/SA/9870197013/K=videopair/RETURN-CODE/TXT/";
-        proxy_set_header Host "www.burstnet.com";
-        proxy_connect_timeout 5s;
-        proxy_read_timeout 5s;
-        proxy_send_timeout 5s;
-    }
+    root <%= @doc_root %>;
 
 <%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
 
@@ -69,12 +41,6 @@ unless uncached_extensions.empty? -%>
         add_header Access-Control-Allow-Origin *;
     }
 <% end -%>
-
-    location /raw/ {
-        # Prevent any content in /raw/
-        # See easybib/issues#4837
-        add_header Access-Control-Allow-Origin *;
-    }
 
 <% unless node['nginx-app']['browser_caching'].nil? -%>
     <%= render 'partials/browser-caching.erb',
@@ -109,6 +75,6 @@ unless uncached_extensions.empty? -%>
 <% end %>
 
 <% if !@routes_denied.nil? && !@routes_denied.empty? -%>
-  <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app' %>
+  <%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
 <% end %>
 }
