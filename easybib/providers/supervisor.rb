@@ -78,6 +78,11 @@ action :create do
     Chef::Log.info(
       "easybib_supervisor - started supervisor_service #{service_name}")
 
+    search_path = "/etc/supervisor.d/*-#{app}.conf"
+    Chef::Log.info("easybib_supervisor - searching for conf in #{search_path}")
+    Dir.glob(search_path).each do|file|
+      Chef::Log.info("easybib_supervisor - found supervisor conf file #{file}")
+    end
   end
 
   new_resource.updated_by_last_action(updated)
@@ -99,18 +104,6 @@ action :delete do
     new_resource.updated_by_last_action(true)
     next
   end
-  # read the configuration
-  # supervisor_config = JSON.parse(::File.read(supervisor_file))
-  # parse through each named configuration service
-  # supervisor_config.each do |name, service|
-  # build the service_name
-  # service_name = "#{name}-#{app}"
-  # call supervisor_service with :stop, :disable
-  # attempt to do without building the config.
-  # supervisor_service service_name do
-  #  action [:stop, :disable]
-  # end
-  # end
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 
