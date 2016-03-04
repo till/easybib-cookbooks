@@ -35,7 +35,10 @@ action :create do
 
   search_path = "/etc/supervisor.d/*-#{app}.conf"
   Chef::Log.info("WIP easybib_supervisor - searching for conf in #{search_path}")
-  conf_files = Dir.glob(search_path)
+  conf_files = []
+  Dir.glob(search_path).each do|file|
+    conf_files.push(File.basename(file, '.conf'))
+  end
 
   supervisor_config.each do |name, service|
     updated = true
