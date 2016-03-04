@@ -8,4 +8,10 @@ node['deploy'].each do |application, deploy|
     crontab_user node['easybib_deploy']['crontab_user']
     action :delete
   end
+
+  easybib_supervisor application do
+    app application
+    deploy_data deploy
+    action :delete
+  end
 end
