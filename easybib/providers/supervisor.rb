@@ -41,36 +41,7 @@ action :create do
     Chef::Log.info(
       "easybib_supervisor - enabling supervisor_service #{service_name}")
 
-    config = {
-      'numprocs' => 1,
-      'numprocs_start' => 0,
-      'priority' => 999,
-      'autostart' => true,
-      'startsecs' => 1,
-      'startretries' => 3,
-      'exitcodes' => [0, 2],
-      'stopasgroup' => nil,
-      'killasgroup' => nil,
-      'user' => user,
-      'redirect_stderr' => false,
-      'stdout_logfile' => 'syslog',
-      'stdout_logfile_maxbytes' => '50MB',
-      'stdout_logfile_backups' => 10,
-      'stdout_capture_maxbytes' => '0',
-      'stdout_events_enabled' => false,
-      'stderr_logfile' => 'syslog',
-      'stderr_logfile_maxbytes' => '50MB',
-      'stderr_logfile_backups' => 10,
-      'stderr_capture_maxbytes' => '0',
-      'stderr_events_enabled' => false,
-      'environment' => {},
-      'directory' => nil,
-      'umask' => nil,
-      'serverurl' => 'AUTO',
-      'process_name' => '%(program_name)s'
-    }
-
-    config.merge!(service)
+    config = build_supervisor_config(service)
 
     supervisor_service service_name do
       action [:enable, :restart]
@@ -148,36 +119,7 @@ action :delete do
     Chef::Log.info(
       "easybib_supervisor - DISABLING supervisor_service #{service_name}")
 
-    config = {
-      'numprocs' => 1,
-      'numprocs_start' => 0,
-      'priority' => 999,
-      'autostart' => true,
-      'startsecs' => 1,
-      'startretries' => 3,
-      'exitcodes' => [0, 2],
-      'stopasgroup' => nil,
-      'killasgroup' => nil,
-      'user' => user,
-      'redirect_stderr' => false,
-      'stdout_logfile' => 'syslog',
-      'stdout_logfile_maxbytes' => '50MB',
-      'stdout_logfile_backups' => 10,
-      'stdout_capture_maxbytes' => '0',
-      'stdout_events_enabled' => false,
-      'stderr_logfile' => 'syslog',
-      'stderr_logfile_maxbytes' => '50MB',
-      'stderr_logfile_backups' => 10,
-      'stderr_capture_maxbytes' => '0',
-      'stderr_events_enabled' => false,
-      'environment' => {},
-      'directory' => nil,
-      'umask' => nil,
-      'serverurl' => 'AUTO',
-      'process_name' => '%(program_name)s'
-    }
-
-    config.merge!(service)
+    config = build_supervisor_config(service)
 
     Chef::Log.info(
       "easybib_supervisor - #{app_dir}/#{config['command']}")
@@ -220,4 +162,37 @@ action :delete do
   end
 
   new_resource.updated_by_last_action(true)
+end
+
+def build_supervisor_config(service_config)
+  config = {
+    'numprocs' => 1,
+    'numprocs_start' => 0,
+    'priority' => 999,
+    'autostart' => true,
+    'startsecs' => 1,
+    'startretries' => 3,
+    'exitcodes' => [0, 2],
+    'stopasgroup' => nil,
+    'killasgroup' => nil,
+    'user' => user,
+    'redirect_stderr' => false,
+    'stdout_logfile' => 'syslog',
+    'stdout_logfile_maxbytes' => '50MB',
+    'stdout_logfile_backups' => 10,
+    'stdout_capture_maxbytes' => '0',
+    'stdout_events_enabled' => false,
+    'stderr_logfile' => 'syslog',
+    'stderr_logfile_maxbytes' => '50MB',
+    'stderr_logfile_backups' => 10,
+    'stderr_capture_maxbytes' => '0',
+    'stderr_events_enabled' => false,
+    'environment' => {},
+    'directory' => nil,
+    'umask' => nil,
+    'serverurl' => 'AUTO',
+    'process_name' => '%(program_name)s'
+  }
+
+  config.merge!(service_config)
 end
