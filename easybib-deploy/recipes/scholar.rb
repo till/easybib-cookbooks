@@ -7,6 +7,12 @@ node['deploy'].each do |application, deploy|
   case application
   when 'scholar_admin'
     next unless allow_deploy(application, 'scholar_admin', 'nginxphpapp')
+  when 'scholar_realtime'
+    if node['haproxy']['websocket_layers'].nil?
+      next
+    end
+
+    next unless allow_deploy(application, 'scholar_realtime', node['haproxy']['websocket_layers'].keys)
   when 'scholar'
     listen_opts = 'default_server'
     supervisor_role = node['easybib_deploy']['supervisor_role']
@@ -22,6 +28,10 @@ node['deploy'].each do |application, deploy|
   easybib_deploy application do
     deploy_data deploy
     app application
+  end
+
+  if application == 'scholar_realtime'
+    next
   end
 
   if application == 'scholar'
