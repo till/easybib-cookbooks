@@ -9,5 +9,4 @@ if is_aws
   include_recipe 'postfix::relay'
 else
   include_recipe 'memcache'
-  include_recipe 'nginx-app::vagrant'
 end
