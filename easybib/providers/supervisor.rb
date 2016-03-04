@@ -41,7 +41,7 @@ action :create do
     Chef::Log.info(
       "easybib_supervisor - enabling supervisor_service #{service_name}")
 
-    config = build_supervisor_config(service)
+    config = build_supervisor_config(service, user)
 
     supervisor_service service_name do
       action [:enable, :restart]
@@ -119,7 +119,7 @@ action :delete do
     Chef::Log.info(
       "easybib_supervisor - DISABLING supervisor_service #{service_name}")
 
-    config = build_supervisor_config(service)
+    config = build_supervisor_config(service, user)
 
     Chef::Log.info(
       "easybib_supervisor - #{app_dir}/#{config['command']}")
@@ -164,7 +164,7 @@ action :delete do
   new_resource.updated_by_last_action(true)
 end
 
-def build_supervisor_config(service_config)
+def build_supervisor_config(service_config, user)
   config = {
     'numprocs' => 1,
     'numprocs_start' => 0,
