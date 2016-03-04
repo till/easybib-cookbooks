@@ -1,0 +1,48 @@
+<%
+# rise - number of successful checks to determine if the backend is 'up'
+haproxy_rise = 2
+
+# fall - number of failed checks to determine if the backend is down
+haproxy_fall = 3
+
+# in milliseconds - 10 seconds is too slow
+haproxy_check_interval = 3000
+
+# max connections
+haproxy_maxconn = 10000
+
+if @health_check.is_a?(Hash)
+    health_check_string = [
+        "GET #{@health_check['url']} HTTP/1.1",
+        "Host:\\ #{@health_check['host']}",
+        'Connection:\\ Upgrade',
+        'Upgrade:\\ websocket',
+        'Sec-WebSocket-Key:\\ haproxy',
+        'Sec-WebSocket-Version:\\ 13',
+        'Sec-WebSocket-Protocol:\\ echo-protocol'
+    ].join('\\r\\n')
+else
+    health_check_string = @health_check
+end
+
+-%>
+
+backend <%= @layername %>_websocket_app_servers
+  balance roundrobin
+  option redispatch
+  option forwardfor except 127.0.0.1
+  option httpchk <%= health_check_string %>
+  http-check expect status 101
+  timeout tunnel 3600s
+  acl hdr_connection_upgrade hdr(Connection)                 -i upgrade
+  acl hdr_upgrade_websocket  hdr(Upgrade)                    -i websocket
+  acl hdr_websocket_key      hdr_cnt(Sec-WebSocket-Key)      eq 1
+  acl hdr_websocket_version  hdr_cnt(Sec-WebSocket-Version)  eq 1
+  <%
+instances = @node.fetch('opsworks', {}).fetch('layers', {}).fetch(@layername, {})['instances']
+unless instances.nil?
+  instances.each do |name,backend| -%>
+  server <%= name %> <%= backend['private_dns_name'] %>:<%= @port %> weight <%= backend['backends'] || 10 %> maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
+<% end
+end
+-%>

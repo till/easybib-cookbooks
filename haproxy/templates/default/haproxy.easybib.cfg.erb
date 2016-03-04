@@ -33,4 +33,15 @@
 <%   end -%>
 <% end -%>
 
+<% if !node['haproxy']['websocket_layers'].nil? %>
+<%   node['haproxy']['websocket_layers'].each do |layername,layerconfig| -%>
+  <%= render "haproxy.cfg.websocketbackend.erb", :variables => {
+      'layername' => layername,
+      'health_check' => layerconfig['health_check'],
+      'port' => layerconfig['port'],
+      'node' => @node
+  } %>
+<%   end -%>
+<% end -%>
+
 <%= render "haproxy.cfg.frontend.erb" %>
