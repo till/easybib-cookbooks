@@ -33,6 +33,10 @@ action :create do
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 
+  search_path = "/etc/supervisor.d/*-#{app}.conf"
+  Chef::Log.info("WIP easybib_supervisor - searching for conf in #{search_path}")
+  conf_files = Dir.glob(search_path)
+
   supervisor_config.each do |name, service|
     updated = true
 
@@ -75,14 +79,12 @@ action :create do
       serverurl config['serverurl']
     end
 
-    Chef::Log.info(
-      "easybib_supervisor - started supervisor_service #{service_name}")
+    Chef::Log.info("easybib_supervisor - started supervisor_service #{service_name}")
+    conf_files.delete("#{service_name}.conf")
+  end
 
-    search_path = "/etc/supervisor.d/*-#{app}.conf"
-    Chef::Log.info("easybib_supervisor - searching for conf in #{search_path}")
-    Dir.glob(search_path).each do|file|
-      Chef::Log.info("easybib_supervisor - found supervisor conf file #{file}")
-    end
+  conf_files.each do|file|
+    Chef::Log.info("WIP easybib_supervisor - found supervisor conf file #{file}")
   end
 
   new_resource.updated_by_last_action(updated)
