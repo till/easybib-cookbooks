@@ -120,22 +120,106 @@ action :delete do
   # divine the suervisor configuration location
   supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
 
+  app = new_resource.app
+  app_dir = new_resource.app_dir
+  supervisor_file = new_resource.supervisor_file
+  supervisor_role = new_resource.supervisor_role
+  instance_roles = new_resource.instance_roles
+  user = new_resource.user
+  instance_roles = get_instance_roles(node) if instance_roles.empty?
+  supervisor_role = node['easybib_deploy']['supervisor_role'] if supervisor_role.nil?
+
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
     new_resource.updated_by_last_action(true)
     next
   end
   # read the configuration
-  supervisor_config = JSON.parse(::File.read(supervisor_file))
+  # supervisor_config = JSON.parse(::File.read(supervisor_file))
   # parse through each named configuration service
-  supervisor_config.each do |name, service|
+  # supervisor_config.each do |name, service|
     # build the service_name
-    service_name = "#{name}-#{app}"
+    # service_name = "#{name}-#{app}"
     # call supervisor_service with :stop, :disable
     # attempt to do without building the config.
+    # supervisor_service service_name do
+    #  action [:stop, :disable]
+    # end
+  # end
+
+  supervisor_config = JSON.parse(::File.read(supervisor_file))
+
+  supervisor_config.each do |name, service|
+    service_name = "#{name}-#{app}"
+    Chef::Log.info(
+      "easybib_supervisor - DISABLING supervisor_service #{service_name}")
+
+    config = {
+      'numprocs' => 1,
+      'numprocs_start' => 0,
+      'priority' => 999,
+      'autostart' => true,
+      'startsecs' => 1,
+      'startretries' => 3,
+      'exitcodes' => [0, 2],
+      'stopasgroup' => nil,
+      'killasgroup' => nil,
+      'user' => user,
+      'redirect_stderr' => false,
+      'stdout_logfile' => 'syslog',
+      'stdout_logfile_maxbytes' => '50MB',
+      'stdout_logfile_backups' => 10,
+      'stdout_capture_maxbytes' => '0',
+      'stdout_events_enabled' => false,
+      'stderr_logfile' => 'syslog',
+      'stderr_logfile_maxbytes' => '50MB',
+      'stderr_logfile_backups' => 10,
+      'stderr_capture_maxbytes' => '0',
+      'stderr_events_enabled' => false,
+      'environment' => {},
+      'directory' => nil,
+      'umask' => nil,
+      'serverurl' => 'AUTO',
+      'process_name' => '%(program_name)s'
+    }
+
+    config.merge!(service)
+
     supervisor_service service_name do
       action [:stop, :disable]
+      autostart true
+      command "#{app_dir}/#{config['command']}"
+      numprocs config['numprocs']
+      numprocs_start config['numprocs_start']
+      process_name config['process_name']
+      priority config['priority']
+      autostart config['autostart']
+      startsecs config['startsecs']
+      startretries config['startretries']
+      exitcodes config['exitcodes']
+      stopasgroup config['stopasgroup']
+      killasgroup config['killasgroup']
+      user config['user']
+      redirect_stderr config['redirect_stderr']
+      stdout_logfile config['stdout_logfile']
+      stdout_logfile_maxbytes config['stdout_logfile_maxbytes']
+      stdout_logfile_backups config['stdout_logfile_backups']
+      stdout_capture_maxbytes config['stdout_capture_maxbytes']
+      stdout_events_enabled config['stdout_events_enabled']
+      stderr_logfile config['stderr_logfile']
+      stderr_logfile_maxbytes config['stderr_logfile_maxbytes']
+      stderr_logfile_backups config['stderr_logfile_backups']
+      stderr_capture_maxbytes config['stderr_capture_maxbytes']
+      stderr_events_enabled config['stderr_events_enabled']
+      environment config['environment']
+      directory config['directory']
+      umask config['umask']
+      serverurl config['serverurl']
     end
+
+    Chef::Log.info(
+      "easybib_supervisor - started supervisor_service #{service_name}")
+
   end
 
   new_resource.updated_by_last_action(true)
