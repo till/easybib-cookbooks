@@ -33,8 +33,10 @@ action :create do
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 
+  # build an array of preexisting supervisord conf files
+  #  - there is probably a more advanced way of doing this
   search_path = "/etc/supervisor.d/*-#{app}.conf"
-  Chef::Log.info("WIP easybib_supervisor - searching for conf in #{search_path}")
+  Chef::Log.info("easybib_supervisor [WIP] - searching for conf in #{search_path}")
   conf_files = []
   Dir.glob(search_path).each do|file|
     conf_files.push(file.split('/').last)
@@ -45,8 +47,7 @@ action :create do
 
     service_name = "#{name}-#{app}"
 
-    Chef::Log.info(
-      "easybib_supervisor - enabling supervisor_service #{service_name}")
+    Chef::Log.info("easybib_supervisor - enabling supervisor_service #{service_name}")
 
     config = build_supervisor_config(service, user)
 
@@ -83,20 +84,16 @@ action :create do
     end
 
     Chef::Log.info("easybib_supervisor - started supervisor_service #{service_name}")
+
+    # remove this configuration from the array of found supervisord config files
     conf_files.delete("#{service_name}.conf")
   end
 
+  # we should be left with an empty array or the orphaned files
   conf_files.each do|file_name|
-    Chef::Log.info("WIP easybib_supervisor - found orphan supervisor conf file #{file_name}")
-    service_name = file_name.split('.').first
-    service_group = service_name + ':*'
-    Chef::Log.info("WIP easybib_supervisor - stopping and disabling service group #{service_group}")
-    supervisor_service service_group do
-      action [:stop]
-    end
-    supervisor_service service_name do
-      action [:disable]
-    end
+    Chef::Log.info("easybib_supervisor [WIP] - found orphan supervisor conf file #{file_name}")
+    supervisor_stopndisable(file_name.split('.').first)
+    Chef::Log.info("easybib_supervisor [WIP] - orphan #{service_name} removed")
   end
 
   new_resource.updated_by_last_action(updated)
@@ -105,13 +102,8 @@ end
 
 action :delete do
   app = new_resource.app
-  # get the deploy data
   deploy_data = new_resource.deploy_data
-  # divine the suervisor configuration location
   supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
-  app_dir = "#{deploy_data['deploy_to']}/current"
-
-  user = new_resource.user
 
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
@@ -120,52 +112,10 @@ action :delete do
   end
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
-
   supervisor_config.each do |name, service|
     service_name = "#{name}-#{app}"
-    Chef::Log.info(
-      "easybib_supervisor - DISABLING supervisor_service #{service_name}")
-
-    config = build_supervisor_config(service, user)
-
-    Chef::Log.info(
-      "easybib_supervisor - #{app_dir}/#{config['command']}")
-
-    supervisor_service service_name do
-      action [:stop, :disable]
-      autostart true
-      command "#{app_dir}/#{config['command']}"
-      numprocs config['numprocs']
-      numprocs_start config['numprocs_start']
-      process_name config['process_name']
-      priority config['priority']
-      autostart config['autostart']
-      startsecs config['startsecs']
-      startretries config['startretries']
-      exitcodes config['exitcodes']
-      stopasgroup config['stopasgroup']
-      killasgroup config['killasgroup']
-      user config['user']
-      redirect_stderr config['redirect_stderr']
-      stdout_logfile config['stdout_logfile']
-      stdout_logfile_maxbytes config['stdout_logfile_maxbytes']
-      stdout_logfile_backups config['stdout_logfile_backups']
-      stdout_capture_maxbytes config['stdout_capture_maxbytes']
-      stdout_events_enabled config['stdout_events_enabled']
-      stderr_logfile config['stderr_logfile']
-      stderr_logfile_maxbytes config['stderr_logfile_maxbytes']
-      stderr_logfile_backups config['stderr_logfile_backups']
-      stderr_capture_maxbytes config['stderr_capture_maxbytes']
-      stderr_events_enabled config['stderr_events_enabled']
-      environment config['environment']
-      directory config['directory']
-      umask config['umask']
-      serverurl config['serverurl']
-    end
-
-    Chef::Log.info(
-      "easybib_supervisor - started supervisor_service #{service_name}")
-
+    supervisor_stopndisable(service_name)
+    Chef::Log.info("easybib_supervisor - #{service_name} deleted")
   end
 
   new_resource.updated_by_last_action(true)
@@ -202,4 +152,18 @@ def build_supervisor_config(service_config, user)
   }
 
   config.merge!(service_config)
+end
+
+def supervisor_stopndisable(service_name)
+  service_group = "#{service_name}:*"
+  # supervisord :stop can control a service group with service_name:* !
+  Chef::Log.info("easybib_supervisor [WIP] - attempting stop on #{service_group}")
+  supervisor_service service_group do
+    action [:stop]
+  end
+  # but :disable can only deal with service_name !
+  Chef::Log.info("easybib_supervisor [WIP] - attempting disable on #{service_name}")
+  supervisor_service service_name do
+    action [:disable]
+  end
 end
