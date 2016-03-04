@@ -119,15 +119,7 @@ action :delete do
   deploy_data = new_resource.deploy_data
   # divine the suervisor configuration location
   supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
-
-  app = new_resource.app
-  app_dir = new_resource.app_dir
-  supervisor_file = new_resource.supervisor_file
-  supervisor_role = new_resource.supervisor_role
-  instance_roles = new_resource.instance_roles
   user = new_resource.user
-  instance_roles = get_instance_roles(node) if instance_roles.empty?
-  supervisor_role = node['easybib_deploy']['supervisor_role'] if supervisor_role.nil?
 
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
