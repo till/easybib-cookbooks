@@ -119,6 +119,8 @@ action :delete do
   deploy_data = new_resource.deploy_data
   # divine the suervisor configuration location
   supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
+  app_dir = "#{deploy_data['deploy_to']}/current"
+
   user = new_resource.user
 
   # unless supervisor_file exists
@@ -176,6 +178,9 @@ action :delete do
     }
 
     config.merge!(service)
+
+    Chef::Log.info(
+      "easybib_supervisor - #{app_dir}/#{config['command']}")
 
     supervisor_service service_name do
       action [:stop, :disable]
