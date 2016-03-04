@@ -138,13 +138,13 @@ action :delete do
   # supervisor_config = JSON.parse(::File.read(supervisor_file))
   # parse through each named configuration service
   # supervisor_config.each do |name, service|
-    # build the service_name
-    # service_name = "#{name}-#{app}"
-    # call supervisor_service with :stop, :disable
-    # attempt to do without building the config.
-    # supervisor_service service_name do
-    #  action [:stop, :disable]
-    # end
+  # build the service_name
+  # service_name = "#{name}-#{app}"
+  # call supervisor_service with :stop, :disable
+  # attempt to do without building the config.
+  # supervisor_service service_name do
+  #  action [:stop, :disable]
+  # end
   # end
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
