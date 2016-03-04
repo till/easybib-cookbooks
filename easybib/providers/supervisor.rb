@@ -87,7 +87,7 @@ action :create do
   end
 
   conf_files.each do|file_name|
-    Chef::Log.info("WIP easybib_supervisor - found orphan supervisor conf file #{file}")
+    Chef::Log.info("WIP easybib_supervisor - found orphan supervisor conf file #{file_name}")
     service_group = file_name.split('.').first + ':*'
     Chef::Log.info("WIP easybib_supervisor - stopping and disabling service group #{service_group}")
     supervisor_service service_group do
