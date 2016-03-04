@@ -36,7 +36,7 @@ action :create do
   # build an array of preexisting supervisord conf files
   #  - there is probably a more advanced way of doing this
   search_path = "/etc/supervisor.d/*-#{app}.conf"
-  Chef::Log.info("easybib_supervisor [WIP] - searching for conf in #{search_path}")
+  Chef::Log.info("easybib_supervisor - searching for conf in #{search_path}")
   conf_files = []
   Dir.glob(search_path).each do|file|
     conf_files.push(file.split('/').last)
@@ -91,10 +91,10 @@ action :create do
 
   # we should be left with an empty array or the orphaned files
   conf_files.each do|file_name|
-    Chef::Log.info("easybib_supervisor [WIP] - found orphan supervisor conf file #{file_name}")
+    Chef::Log.info("easybib_supervisor - found orphan supervisor conf file #{file_name}")
     service_name = file_name.split('.').first
     supervisor_stopndisable(service_name)
-    Chef::Log.info("easybib_supervisor [WIP] - orphan #{service_name} removed")
+    Chef::Log.info("easybib_supervisor - orphan #{service_name} removed")
   end
 
   new_resource.updated_by_last_action(updated)
@@ -158,12 +158,12 @@ end
 def supervisor_stopndisable(service_name)
   service_group = "#{service_name}:*"
   # supervisord :stop can control a service group with service_name:* !
-  Chef::Log.info("easybib_supervisor [WIP] - attempting stop on #{service_group}")
+  Chef::Log.info("easybib_supervisor - attempting stop on #{service_group}")
   supervisor_service service_group do
     action [:stop]
   end
   # but :disable can only deal with service_name !
-  Chef::Log.info("easybib_supervisor [WIP] - attempting disable on #{service_name}")
+  Chef::Log.info("easybib_supervisor - attempting disable on #{service_name}")
   supervisor_service service_name do
     action [:disable]
   end
