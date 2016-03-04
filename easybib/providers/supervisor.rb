@@ -92,7 +92,8 @@ action :create do
   # we should be left with an empty array or the orphaned files
   conf_files.each do|file_name|
     Chef::Log.info("easybib_supervisor [WIP] - found orphan supervisor conf file #{file_name}")
-    supervisor_stopndisable(file_name.split('.').first)
+    service_name = file_name.split('.').first
+    supervisor_stopndisable(service_name)
     Chef::Log.info("easybib_supervisor [WIP] - orphan #{service_name} removed")
   end
 
