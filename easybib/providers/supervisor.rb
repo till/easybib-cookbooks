@@ -86,8 +86,13 @@ action :create do
     conf_files.delete("#{service_name}.conf")
   end
 
-  conf_files.each do|file|
-    Chef::Log.info("WIP easybib_supervisor - found supervisor conf file #{file}")
+  conf_files.each do|file_name|
+    Chef::Log.info("WIP easybib_supervisor - found orphan supervisor conf file #{file}")
+    service_group = file_name.split('.').first + ':*'
+    Chef::Log.info("WIP easybib_supervisor - stopping and disabling service group #{service_group}")
+    supervisor_service service_group do
+      action [:stop, :disable]
+    end
   end
 
   new_resource.updated_by_last_action(updated)
