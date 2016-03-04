@@ -37,7 +37,7 @@ action :create do
   Chef::Log.info("WIP easybib_supervisor - searching for conf in #{search_path}")
   conf_files = []
   Dir.glob(search_path).each do|file|
-    conf_files.push(File.basename(file, '.conf'))
+    conf_files.push(file.split('/').last)
   end
 
   supervisor_config.each do |name, service|
