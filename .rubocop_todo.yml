@@ -35,13 +35,6 @@ Style/ModuleFunction:
     - 'easybib/libraries/upstream.rb'
     - 'xhprof.io/libraries/xhprof.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Enabled: false
-
 # Offense count: 2
 Style/ZeroLengthPredicate:
   Exclude:
