@@ -66,3 +66,26 @@ action :create do
   new_resource.updated_by_last_action(updated)
 
 end
+
+action :delete do
+  app = new_resource.app
+  crontab_user = new_resource.crontab_user
+
+  execute 'Clear old crontab' do
+    user crontab_user
+    # crontab will exit with 130 if crontab has already been cleared
+    # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
+    command "crontab -u #{crontab_user} -r; true"
+    ignore_failure true
+  end
+
+  execute 'Clear old cron.d files' do
+    # rm will exit with 1 if no old cron.d files existed
+    # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
+    command "rm /etc/cron.d/#{app}_*; true"
+    ignore_failure true
+  end
+
+  new_resource.updated_by_last_action(true)
+
+end
