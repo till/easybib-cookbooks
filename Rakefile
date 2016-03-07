@@ -27,11 +27,11 @@ desc 'Run tests'
 
 task :unittest, :cookbook do |t, args|
   Rake::TestTask.new('testtask') do |raketask|
-    if args.cookbook.nil?
-      raketask.pattern = '**/**/tests/test_*.rb'
-    else
-      raketask.pattern = "#{args.cookbook}/**/tests/test_*.rb"
-    end
+    raketask.pattern = if args.cookbook.nil?
+                         '**/**/tests/test_*.rb'
+                       else
+                         "#{args.cookbook}/**/tests/test_*.rb"
+                       end
   end
   task('testtask').execute
 end
@@ -62,11 +62,11 @@ task :foodcritic, [:cookbook] do |t, args|
     epic_fail = %w( )
     ignore_rules = %w( )
 
-    if args.cookbook.nil?
-      cb = find_cookbooks('.').join(' ')
-    else
-      cb = args.cookbook
-    end
+    cb = if args.cookbook.nil?
+           find_cookbooks('.').join(' ')
+         else
+           args.cookbook
+         end
 
     fc_command = 'bundle exec foodcritic -C --chef-version 11 -f any -P '
     fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
@@ -95,7 +95,7 @@ def find_cookbooks(all_your_base)
 
   Dir.entries(all_your_base).select do |entry|
     next unless File.directory?(File.join(all_your_base, entry))
-    next if (entry[0, 1] == '.')
+    next if entry[0, 1] == '.'
     next if skip.include?(entry)
 
     cookbooks.push(entry)
