@@ -84,11 +84,11 @@ module EasyBib
     # rubocop:disable Metrics/PerceivedComplexity
     def get_appdata(node, appname, attribute = nil)
       data = {}
-      if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
-        data['appname'] = appname
-      else
-        data['appname'] = node['deploy'][appname]['application']
-      end
+      data['appname'] = if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
+                          appname
+                        else
+                          node['deploy'][appname]['application']
+                        end
 
       data['domains'] = get_domains(node, appname)
 
@@ -102,7 +102,7 @@ module EasyBib
         data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
 
         if node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
-          fail "node[vagrant][applications][#{appname}][doc_root_location] is not set - fix web_dna.json!"
+          raise "node[vagrant][applications][#{appname}][doc_root_location] is not set - fix web_dna.json!"
         end
 
         data['doc_root_dir'] = node['vagrant']['applications'][appname]['doc_root_location']
@@ -118,7 +118,7 @@ module EasyBib
       end
 
       value = data[attribute]
-      fail "Could not get #{attribute} for #{appname}!" if value.nil? || value.empty?
+      raise "Could not get #{attribute} for #{appname}!" if value.nil? || value.empty?
 
       value
     end
@@ -150,7 +150,7 @@ module EasyBib
 
     # converts hash in a string, formatted as envvars, php, ini
     def to_configformat(format, data)
-      fail 'No Config supplied' if data.nil?
+      raise 'No Config supplied' if data.nil?
       config = generate_start(format)
       data.each_pair do |main_section, section_data|
         Chef::Log.info("Config: Processing section #{main_section}")
@@ -230,7 +230,7 @@ module EasyBib
       config = ''
       section_data.each_pair do |config_key, config_value|
         unless config_value.is_a?(String) || config_value.is_a?(Array)
-          fail "section_data for #{config_key} is not a string or an array!"
+          raise "section_data for #{config_key} is not a string or an array!"
         end
         config << build_config(format, config_key, config_value, section)
       end
@@ -268,7 +268,7 @@ module EasyBib
         return { section => part_data.to_s }
       end
 
-      fail "I have no idea how to deal with config item #{section}."
+      raise "I have no idea how to deal with config item #{section}."
     end
 
     def build_config(format, var, value, section = nil)
@@ -286,14 +286,14 @@ module EasyBib
       when 'php'
         build_php_config(var, value, section)
       else
-        fail "Unknown configuration type: #{format}."
+        raise "Unknown configuration type: #{format}."
       end
     end
 
     def validate_value(value)
       if value.is_a?(String)
-        fail "The character \" is not supported as a value in the config" if value.match('"')
-        fail "The character \' is not supported as a value in the config" if value.match("'")
+        raise 'The character " is not supported as a value in the config' if value =~ '"'
+        raise "The character \' is not supported as a value in the config" if value =~ "'"
       end
     end
 

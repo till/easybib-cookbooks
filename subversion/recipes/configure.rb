@@ -1,13 +1,13 @@
 node['subversion']['users'].each do |user|
 
-  case user
-  when 'root'
-    home_dir = '/root'
-  when 'www-data'
-    home_dir = '/var/www'
-  else
-    home_dir = "/home/#{user}"
-  end
+  home_dir = case user
+             when 'root'
+               '/root'
+             when 'www-data'
+               '/var/www'
+             else
+               "/home/#{user}"
+             end
 
   directory "#{home_dir}/.subversion" do
     owner user
