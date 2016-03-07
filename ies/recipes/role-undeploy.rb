@@ -11,7 +11,7 @@ node['deploy'].each do |application, deploy|
 
   easybib_supervisor application do
     app application
-    app_dir = EasyBib::Config.get_appdata(node, application, 'deploy_to')
+    app_dir = EasyBib::Config.get_appdata(node, 'www', 'app_dir')
     supervisor_file "#{app_dir}/current/deploy/supervisor.json"
     action :delete
   end
