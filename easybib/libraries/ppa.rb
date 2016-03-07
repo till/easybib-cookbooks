@@ -34,7 +34,7 @@ module EasyBib
     end
 
     def ppa_mirror(node = self.node, standard_repo = 'easybib-php-ppa')
-      if (standard_repo == 'easybib-php-ppa')
+      if standard_repo == 'easybib-php-ppa'
         if use_aptly_mirror?(node)
           return php_mirror_repo_url(node)
         else
