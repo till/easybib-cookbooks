@@ -3,11 +3,11 @@ include_recipe 'php-fpm::service'
 
 if is_aws
   hostname = "#{node['opsworks']['instance']['hostname']}.#{get_normalized_cluster_name}"
-  if hostname.index('playground')
-    environment = 'staging'
-  else
-    environment = 'production'
-  end
+  environment = if hostname.index('playground')
+                  'staging'
+                else
+                  'production'
+                end
 else
   hostname = node['fqdn']
   environment = 'development'

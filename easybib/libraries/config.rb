@@ -84,11 +84,11 @@ module EasyBib
     # rubocop:disable Metrics/PerceivedComplexity
     def get_appdata(node, appname, attribute = nil)
       data = {}
-      if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
-        data['appname'] = appname
-      else
-        data['appname'] = node['deploy'][appname]['application']
-      end
+      data['appname'] = if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
+                          appname
+                        else
+                          node['deploy'][appname]['application']
+                        end
 
       data['domains'] = get_domains(node, appname)
 

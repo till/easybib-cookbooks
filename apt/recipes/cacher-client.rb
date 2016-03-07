@@ -57,11 +57,11 @@ if get_instance_roles.include?('aptcache')
 else
   if servers.length > 0
     Chef::Log.info("apt-cacher-ng server found on #{servers[0]}.")
-    if servers[0]['apt']['cacher_interface']
-      cacher_ipaddress = interface_ipaddress(servers[0], servers[0]['apt']['cacher_interface'])
-    else
-      cacher_ipaddress = servers[0].ipaddress
-    end
+    cacher_ipaddress = if servers[0]['apt']['cacher_interface']
+                         interface_ipaddress(servers[0], servers[0]['apt']['cacher_interface'])
+                       else
+                         servers[0].ipaddress
+                       end
     t = template '/etc/apt/apt.conf.d/01proxy' do
       source '01proxy.erb'
       owner 'root'

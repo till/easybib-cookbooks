@@ -12,11 +12,11 @@ action :create do
 
   # this is a hack to maximize - currently only
   # in use in nginx-lb
-  if node['cpu']['total'] > 1
-    processes = (node['cpu']['total']) - 1
-  else
-    processes = 1
-  end
+  processes = if node['cpu']['total'] > 1
+                (node['cpu']['total']) - 1
+              else
+                1
+              end
 
   last_updated = false
 
