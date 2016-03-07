@@ -3,6 +3,9 @@ unless is_aws
 end
 
 node['deploy'].each do |application, deploy|
+
+  application_root_dir = "#{deploy_data['deploy_to']}/current"
+
   easybib_crontab application do
     app application
     crontab_user node['easybib_deploy']['crontab_user']
@@ -11,7 +14,7 @@ node['deploy'].each do |application, deploy|
 
   easybib_supervisor application do
     app application
-    supervisor_file "#{deploy['deploy_to']}/current/deploy/supervisor.json"
+    supervisor_file "#{application_root_dir}/deploy/supervisor.json"
     action :delete
   end
 end
