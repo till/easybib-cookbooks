@@ -1,12 +1,89 @@
-# Offense count: 19
+# Offense count: 23
 Metrics/AbcSize:
-  Max: 51
+  Max: 42
+
+# Offense count: 2
+# Cop supports --auto-correct.
+Performance/RedundantMatch:
+  Exclude:
+    - 'easybib/libraries/config.rb'
+
+# Offense count: 16
+# Cop supports --auto-correct.
+# Configuration parameters: SingleLineConditionsOnly.
+Style/ConditionalAssignment:
+  Exclude:
+    - 'apt/recipes/cacher-client.rb'
+    - 'easybib-deploy/recipes/scholar.rb'
+    - 'easybib/libraries/config.rb'
+    - 'easybib/libraries/easybib.rb'
+    - 'easybib/providers/envconfig.rb'
+    - 'nginx-app/providers/config.rb'
+    - 'nginx-app/recipes/hhvm.rb'
+    - 'nginx-app/recipes/vagrant-silex.rb'
+    - 'php-fpm/recipes/configure.rb'
+    - 'php/providers/ppa_package.rb'
+    - 'postfix/recipes/relay.rb'
+    - 'stack-citationapi/recipes/deploy-vagrant.rb'
+    - 'stack-qa/recipes/deploy-sinopia-nginx.rb'
+    - 'subversion/recipes/configure.rb'
+    - 'tideways/recipes/configure.rb'
 
 # Offense count: 9
 # Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: format, sprintf, percent
 Style/FormatString:
+  Exclude:
+    - 'apt/providers/repository.rb'
+    - 'easybib/libraries/config.rb'
+    - 'prosody/recipes/storage.rb'
+    - 'prosody/recipes/users.rb'
+    - 'rds/recipes/backup.rb'
+
+# Offense count: 2
+Style/IfInsideElse:
+  Exclude:
+    - 'apt/recipes/cacher-client.rb'
+    - 'easybib/libraries/easybib.rb'
+
+# Offense count: 6
+Style/ModuleFunction:
+  Exclude:
+    - 'easybib/libraries/config.rb'
+    - 'easybib/libraries/easybib.rb'
+    - 'easybib/libraries/ppa.rb'
+    - 'easybib/libraries/sns.rb'
+    - 'easybib/libraries/upstream.rb'
+    - 'xhprof.io/libraries/xhprof.rb'
+
+# Offense count: 1
+# Cop supports --auto-correct.
+# Configuration parameters: AllowSafeAssignment.
+Style/ParenthesesAroundCondition:
+  Exclude:
+    - 'easybib/libraries/ppa.rb'
+
+# Offense count: 16
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: only_raise, only_fail, semantic
+Style/SignalException:
+  Exclude:
+    - 'easybib/libraries/config.rb'
+    - 'easybib/libraries/easybib.rb'
+    - 'nginx-app/recipes/vagrant.rb'
+    - 'php/providers/pear.rb'
+    - 'php/providers/pecl.rb'
+    - 'stack-citationapi/recipes/role-vagrant-publicapi.rb'
+
+# Offense count: 1
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
+# SupportedStyles: single_quotes, double_quotes
+Style/StringLiterals:
   Enabled: false
 
-# Offense count: 4
-Style/ModuleFunction:
-  Enabled: false
+# Offense count: 2
+Style/ZeroLengthPredicate:
+  Exclude:
+    - 'apt/recipes/cacher-client.rb'
