@@ -88,7 +88,7 @@ module EasyBib
     if requested_application.is_a?(String)
       return is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
     else
-      fail 'Unknown value type supplied for requested_role in allow_deploy'
+      raise 'Unknown value type supplied for requested_role in allow_deploy'
     end
   end
 

@@ -1,5 +1,5 @@
 unless node['vagrant']
-  fail 'Vagrant only!'
+  raise 'Vagrant only!'
 end
 
 include_recipe 'nginx-app::service'
