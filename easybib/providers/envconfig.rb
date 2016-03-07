@@ -1,19 +1,19 @@
 action :create do
   app = new_resource.app
 
-  if new_resource.path.nil?
-    path = ::EasyBib::Config.get_appdata(node, app, 'app_dir')
-  else
-    path = new_resource.path
-  end
+  path = if new_resource.path.nil?
+           ::EasyBib::Config.get_appdata(node, app, 'app_dir')
+         else
+           new_resource.path
+         end
 
   path << '/' unless path.end_with?('/')
 
-  if new_resource.stackname.nil?
-    stackname = ::EasyBib.get_normalized_cluster_name(node).split('_').first
-  else
-    stackname = new_resource.stackname
-  end
+  stackname = if new_resource.stackname.nil?
+                ::EasyBib.get_normalized_cluster_name(node).split('_').first
+              else
+                new_resource.stackname
+              end
 
   Chef::Log.info("writing envconfig for #{app} to #{path}, stackname #{stackname}")
 

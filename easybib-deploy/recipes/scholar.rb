@@ -30,15 +30,11 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  if application == 'scholar_realtime'
-    next
-  end
-
-  if application == 'scholar'
-    config_template = 'scholar.conf.erb'
-  else
-    config_template = 'silex.conf.erb'
-  end
+  config_template = if application == 'scholar'
+                      'scholar.conf.erb'
+                    else
+                      'silex.conf.erb'
+                    end
 
   easybib_nginx application do
     config_template config_template

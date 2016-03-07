@@ -176,12 +176,12 @@ module EasyBib
       my_hostname = instance['hostname']
     else
       # node.json
-      if node['server_name']
-        my_hostname = node['server_name']
-      # from 'ohai'
-      else
-        my_hostname = node['hostname']
-      end
+      my_hostname = if node['server_name']
+                      node['server_name']
+                    # from 'ohai'
+                    else
+                      node['hostname']
+                    end
     end
 
     if fail_if_nil == true && my_hostname.nil?

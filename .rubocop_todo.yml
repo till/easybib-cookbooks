@@ -8,27 +8,6 @@ Performance/RedundantMatch:
   Exclude:
     - 'easybib/libraries/config.rb'
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: SingleLineConditionsOnly.
-Style/ConditionalAssignment:
-  Exclude:
-    - 'apt/recipes/cacher-client.rb'
-    - 'easybib-deploy/recipes/scholar.rb'
-    - 'easybib/libraries/config.rb'
-    - 'easybib/libraries/easybib.rb'
-    - 'easybib/providers/envconfig.rb'
-    - 'nginx-app/providers/config.rb'
-    - 'nginx-app/recipes/hhvm.rb'
-    - 'nginx-app/recipes/vagrant-silex.rb'
-    - 'php-fpm/recipes/configure.rb'
-    - 'php/providers/ppa_package.rb'
-    - 'postfix/recipes/relay.rb'
-    - 'stack-citationapi/recipes/deploy-vagrant.rb'
-    - 'stack-qa/recipes/deploy-sinopia-nginx.rb'
-    - 'subversion/recipes/configure.rb'
-    - 'tideways/recipes/configure.rb'
-
 # Offense count: 9
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: format, sprintf, percent

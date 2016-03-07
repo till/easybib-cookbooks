@@ -10,11 +10,11 @@ end
 
 rewrite_address = node['postfix']['rewrite_address'] && !node['sysop_email'].nil?
 
-if node['postfix']['relay']['full_host'].nil?
-  relay_host = node['postfix']['relay']['host']
-else
-  relay_host = node['postfix']['relay']['full_host']
-end
+relay_host = if node['postfix']['relay']['full_host'].nil?
+               node['postfix']['relay']['host']
+             else
+               node['postfix']['relay']['full_host']
+             end
 
 # install main.cf
 template "#{etc_path}/main.cf" do
