@@ -22,8 +22,3 @@ Style/ModuleFunction:
     - 'easybib/libraries/sns.rb'
     - 'easybib/libraries/upstream.rb'
     - 'xhprof.io/libraries/xhprof.rb'
-
-# Offense count: 2
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'apt/recipes/cacher-client.rb'
