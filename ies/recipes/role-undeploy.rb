@@ -11,8 +11,13 @@ node['deploy'].each do |application, deploy|
 
   easybib_supervisor application do
     app application
-    app_dir = EasyBib::Config.get_appdata(node, 'www', 'app_dir')
-    supervisor_file "#{app_dir}/current/deploy/supervisor.json"
+    deploy_data deploy
+    Chef::Log.info('undeploy WIP application ' + application.inspect)
+
+    Chef::Log.info('undeploy WIP deploy ' + deploy.inspect)
+
+    supervisor_file "#{deploy['deploy_to']}/current/deploy/supervisor.json"
+    puts application
     action :delete
   end
 end
