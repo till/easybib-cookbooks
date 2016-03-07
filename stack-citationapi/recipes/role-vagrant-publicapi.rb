@@ -1,4 +1,4 @@
-fail 'This recipe is vagrant only' if is_aws
+raise 'This recipe is vagrant only' if is_aws
 
 include_recipe 'stack-citationapi::role-publicapi'
 include_recipe 'php::module-xdebug'

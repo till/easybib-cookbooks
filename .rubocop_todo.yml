@@ -42,19 +42,6 @@ Style/ParenthesesAroundCondition:
   Exclude:
     - 'easybib/libraries/ppa.rb'
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'easybib/libraries/config.rb'
-    - 'easybib/libraries/easybib.rb'
-    - 'nginx-app/recipes/vagrant.rb'
-    - 'php/providers/pear.rb'
-    - 'php/providers/pecl.rb'
-    - 'stack-citationapi/recipes/role-vagrant-publicapi.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
