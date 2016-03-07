@@ -103,8 +103,7 @@ end
 
 action :delete do
   app = new_resource.app
-  deploy_data = new_resource.deploy_data
-  supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
+  supervisor_file = new_resource.supervisor_file
 
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
