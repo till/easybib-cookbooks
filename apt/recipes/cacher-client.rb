@@ -43,7 +43,7 @@ if node['apt']
   end
 end
 
-unless Chef::Config[:solo] || servers.length > 0
+unless Chef::Config[:solo] || !servers.empty?
   query = 'apt_caching_server:true'
   query += " AND chef_environment:#{node.chef_environment}" if node['apt']['cacher-client']['restrict_environment']
   Chef::Log.debug("apt::cacher-client searching for '#{query}'")
@@ -54,7 +54,7 @@ if get_instance_roles.include?('aptcache')
   # instance provisioning would fail here - accessing aptcache while aptcache is
   # still being set up is a somewhat stupid idea.
   Chef::Log.info('Skipping aptcache configuration: Aptcache should not use itself.')
-elsif servers.length > 0
+elsif !servers.empty?
   Chef::Log.info("apt-cacher-ng server found on #{servers[0]}.")
   cacher_ipaddress = if servers[0]['apt']['cacher_interface']
                        interface_ipaddress(servers[0], servers[0]['apt']['cacher_interface'])
