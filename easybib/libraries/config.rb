@@ -292,8 +292,8 @@ module EasyBib
 
     def validate_value(value)
       if value.is_a?(String)
-        raise 'The character " is not supported as a value in the config' if value.match('"')
-        raise "The character \' is not supported as a value in the config" if value.match("'")
+        raise 'The character " is not supported as a value in the config' if value =~ '"'
+        raise "The character \' is not supported as a value in the config" if value =~ "'"
       end
     end
 
