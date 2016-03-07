@@ -13,12 +13,6 @@ Style/FormatString:
     - 'prosody/recipes/users.rb'
     - 'rds/recipes/backup.rb'
 
-# Offense count: 2
-Style/IfInsideElse:
-  Exclude:
-    - 'apt/recipes/cacher-client.rb'
-    - 'easybib/libraries/easybib.rb'
-
 # Offense count: 6
 Style/ModuleFunction:
   Exclude:
