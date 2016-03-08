@@ -11,6 +11,7 @@ action :create do
   updated = false
 
   unless ::File.exist?(supervisor_file)
+    Chef::Log.info("easybib_supervisor - supervisor file was not found #{supervisor_file}")
     new_resource.updated_by_last_action(updated)
     next
   end
@@ -107,7 +108,8 @@ action :delete do
 
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
-    new_resource.updated_by_last_action(true)
+    Chef::Log.info("easybib_supervisor - supervisor file was not found #{supervisor_file}")
+    new_resource.updated_by_last_action(updated)
     next
   end
 
