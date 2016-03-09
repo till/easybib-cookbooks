@@ -11,6 +11,7 @@ action :create do
   updated = false
 
   unless ::File.exist?(supervisor_file)
+    Chef::Log.info("easybib_supervisor - supervisor file was not found #{supervisor_file}")
     new_resource.updated_by_last_action(updated)
     next
   end
@@ -103,11 +104,11 @@ end
 
 action :delete do
   app = new_resource.app
-  deploy_data = new_resource.deploy_data
-  supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
+  supervisor_file = new_resource.supervisor_file
 
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
+    Chef::Log.info("easybib_supervisor - supervisor file was not found #{supervisor_file}")
     new_resource.updated_by_last_action(true)
     next
   end
