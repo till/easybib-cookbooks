@@ -50,6 +50,18 @@ frontend http-in
     <% end -%>
   <% end -%>
 
+  <% if !@node.fetch('haproxy',{}).fetch('websocket_layers', {}).empty?-%>
+  # websocket backends
+    <% @node['haproxy']['websocket_layers'].each do |layername,layerconfig| -%>
+  # routing based on websocket protocol header
+  acl hdr_connection_upgrade hdr(Connection)  -i upgrade
+  acl hdr_upgrade_websocket  hdr(Upgrade)     -i websocket
+  use_backend <%= layername %>_websocket_app_servers if hdr_connection_upgrade hdr_upgrade_websocket
+    <% end -%>
+  <% end -%>
+
+
+
   <% default_layer = node.fetch('haproxy',{}).fetch('default_layer',{})
   if !@node.fetch('opsworks', {}).fetch('layers', {}).fetch(default_layer, {}).fetch('instances', {}).empty? -%>
   default_backend nginxphpapp_php_app_servers
