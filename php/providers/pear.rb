@@ -4,7 +4,7 @@ def initialize(*args)
   pear = pear_run('which pear').strip
 
   if pear.empty?
-    fail Chef::Exceptions::ShellCommandFailed, 'PEAR is not installed, or not in the path.'
+    raise Chef::Exceptions::ShellCommandFailed, 'PEAR is not installed, or not in the path.'
   end
 
   @pear_cmd = pear
@@ -22,7 +22,7 @@ def pear_run(cmd)
   # Chef::Log.debug("StdErr: #{cmd.stderr}")
 
   if cmd.exitstatus > 0
-    fail "Failed: #{cmd.command}, StdOut: #{cmd.stdout}, StdErr: #{cmd.stderr}"
+    raise "Failed: #{cmd.command}, StdOut: #{cmd.stdout}, StdErr: #{cmd.stderr}"
   end
 
   out
@@ -51,7 +51,7 @@ def pear_cmd(pear, action, package, force, channel, version)
   command_alias = "#{pear} channel-info #{channel}|grep -a Alias|awk '{print $2}'"
   channel_alias = pear_run(command_alias)
   if channel_alias.empty?
-    fail "Could not find alias for #{channel}"
+    raise "Could not find alias for #{channel}"
   end
   Chef::Log.debug("Channel: #{channel}, Alias: #{channel_alias}")
 

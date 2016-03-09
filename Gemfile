@@ -6,6 +6,6 @@ gem 'foodcritic', '~>5.0.0'
 gem 'chefspec', '~>3.4.0'
 gem 'fauxhai', '~>2.3.0'
 gem 'test-kitchen', '~>1.0.0.beta.3'
-gem 'rubocop', '~>0.34.0'
+gem 'rubocop', '~>0.37.0'
 gem 'aws-sdk', '~>1.0'
 gem 'kitchen-vagrant', :group => :integration

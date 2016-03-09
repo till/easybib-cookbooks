@@ -1,12 +1,30 @@
-# Offense count: 19
+# Offense count: 23
 Metrics/AbcSize:
-  Max: 51
+  Max: 42
+
+# Offense count: 2
+# Cop supports --auto-correct.
+Performance/RedundantMatch:
+  Exclude:
+    - 'easybib/libraries/config.rb'
 
 # Offense count: 9
 # Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: format, sprintf, percent
 Style/FormatString:
-  Enabled: false
+  Exclude:
+    - 'apt/providers/repository.rb'
+    - 'easybib/libraries/config.rb'
+    - 'prosody/recipes/storage.rb'
+    - 'prosody/recipes/users.rb'
+    - 'rds/recipes/backup.rb'
 
-# Offense count: 4
+# Offense count: 6
 Style/ModuleFunction:
-  Enabled: false
+  Exclude:
+    - 'easybib/libraries/config.rb'
+    - 'easybib/libraries/easybib.rb'
+    - 'easybib/libraries/ppa.rb'
+    - 'easybib/libraries/sns.rb'
+    - 'easybib/libraries/upstream.rb'
+    - 'xhprof.io/libraries/xhprof.rb'

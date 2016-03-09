@@ -38,7 +38,7 @@ action :create do
   search_path = "/etc/supervisor.d/*-#{app}.conf"
   Chef::Log.info("easybib_supervisor - searching for conf in #{search_path}")
   conf_files = []
-  Dir.glob(search_path).each do|file|
+  Dir.glob(search_path).each do |file|
     conf_files.push(file.split('/').last)
   end
 
@@ -90,7 +90,7 @@ action :create do
   end
 
   # we should be left with an empty array or the orphaned files
-  conf_files.each do|file_name|
+  conf_files.each do |file_name|
     Chef::Log.info("easybib_supervisor - found orphan supervisor conf file #{file_name}")
     service_name = file_name.split('.').first
     supervisor_stopndisable(service_name)

@@ -67,12 +67,12 @@ end
 action :compile do
 
   if new_resource.source_dir.empty?
-    fail "Missing 'source_dir'."
+    raise "Missing 'source_dir'."
   end
 
   source_dir = new_resource.source_dir
   unless ::File.exist?(source_dir)
-    fail "The 'source_dir' does not exist: #{source_dir}"
+    raise "The 'source_dir' does not exist: #{source_dir}"
   end
 
   extension = new_resource.name
