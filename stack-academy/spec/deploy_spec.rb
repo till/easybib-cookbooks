@@ -1,6 +1,6 @@
 require 'chefspec'
 
-describe 'easybib-deploy::infolit' do
+describe 'stack-academy::deploy' do
 
   let(:runner) do
     ChefSpec::Runner.new(
