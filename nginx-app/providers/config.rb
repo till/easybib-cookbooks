@@ -10,14 +10,6 @@ action :create do
 
   enable_fastcgi = new_resource.enable_fastcgi
 
-  # this is a hack to maximize - currently only
-  # in use in nginx-lb
-  processes = if node['cpu']['total'] > 1
-                (node['cpu']['total']) - 1
-              else
-                1
-              end
-
   last_updated = false
 
   tfp = template '/etc/nginx/fastcgi_params' do
@@ -39,7 +31,6 @@ action :create do
     group nginx_group
     variables(
       :nginx_user => nginx_user,
-      :processes => processes,
       :error_log => error_log
     )
   end
