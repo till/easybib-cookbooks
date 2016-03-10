@@ -9,12 +9,4 @@ include_recipe 'haproxy::logs'
 
 package 'ngrep'
 
-if node['haproxy']['type'] == '1.5'
-  # haproxy does ssl if needed, just install certificates
-  include_recipe 'easybib-deploy::ssl-certificates'
-else
-  # our default haproxy version is 1.4, without ssl support
-  # so install nginx as ssl wrapper
-  include_recipe 'nginx-lb'
-  include_recipe 'easybib-deploy::ssl'
-end
+include_recipe 'easybib-deploy::ssl-certificates'
