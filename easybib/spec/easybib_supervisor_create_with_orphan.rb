@@ -54,7 +54,7 @@ def stub_supervisor_with_one_service_and_one_orphan
     "service1": {"command": "service1cmd"}
   }'
 
-  Dir.stub(:glob).with(anything,anything).and_call_original
+  Dir.stub(:glob).with(anything, anything).and_call_original
   Dir.stub(:glob).with(anything).and_call_original
   Dir.stub(:glob).with('/etc/supervisor.d/*-some-app.conf').and_return(['/etc/supervisor.d/oprphaned-service-some-app.conf'])
 end
