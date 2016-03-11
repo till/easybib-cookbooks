@@ -16,36 +16,39 @@ describe 'easybib_supervisor - disable' do
     )
   end
 
-  # supervisor.json 1 service
-  # 2 supervisor commands running on the server
-
   let(:node) { runner.node }
 
-  let(:chef_run) { runner.converge('fixtures::easybib_supervisor_disable') }
+  let(:chef_run) { runner.converge('fixtures::easybib_supervisor_create_with_orphan') }
 
   describe 'easybib_supervisor' do
-    describe 'delete' do
+    describe 'create' do
       before do
-        stub_supervisor_with_one_service
+        stub_supervisor_with_one_service_and_one_orphan
         node.set['opsworks'] = {} # to have is_aws true
       end
 
-      it 'deletes all supervisors' do
-        expect(chef_run).to stop_supervisor_service('service1-some-app:*')
-        expect(chef_run).to disable_supervisor_service('service1-some-app')
+      it 'enables the first supervisor' do
+        expect(chef_run).to enable_supervisor_service('service1-some-app')
+          .with(
+            :command => '/foo/bar/service1cmd',
+            :user => 'some-user'
+          )
+        expect(chef_run).to restart_supervisor_service('service1-some-app')
+      end
+
+      it 'deletes the orphan supervisor' do
+        expect(chef_run).to stop_supervisor_service('oprphan-service-some-app:*')
+        expect(chef_run).to disable_supervisor_service('oprphan-service-some-app')
       end
     end
   end
 end
 
-def stub_supervisor_does_not_exist
-  ::File.stub(:exist?).with(anything).and_call_original
-  ::File.stub(:exist?).with('/some_file').and_return false
-end
-
-def stub_supervisor_with_one_service
+def stub_supervisor_with_one_service_and_one_orphan
   ::File.stub(:exist?).with(anything).and_call_original
   ::File.stub(:exist?).with('/deploy/supervisor.json').and_return true
+  
+  ::File.stub(:exist?).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return true
 
   ::File.stub(:read).with(anything).and_call_original
   ::File.stub(:read).with('/deploy/supervisor.json').and_return '{
