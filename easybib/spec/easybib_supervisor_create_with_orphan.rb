@@ -25,6 +25,7 @@ describe 'easybib_supervisor - disable' do
       before do
         stub_supervisor_with_one_service_and_one_orphan
         node.set['opsworks'] = {} # to have is_aws true
+
       end
 
       it 'enables the first supervisor' do
@@ -37,11 +38,8 @@ describe 'easybib_supervisor - disable' do
       end
 
       it 'deletes the orphan supervisor' do
-          ::File.stub(:exist?).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return true
-  ::File.stub(:read?).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return '{ }'
-
-        expect(chef_run).to stop_supervisor_service('oprphan-service-some-app:*')
-        expect(chef_run).to disable_supervisor_service('oprphan-service-some-app')
+        expect(chef_run).to stop_supervisor_service('oprphaned-service-some-app:*')
+        expect(chef_run).to disable_supervisor_service('oprphaned-service-some-app')
       end
     end
   end
@@ -56,7 +54,7 @@ def stub_supervisor_with_one_service_and_one_orphan
     "service1": {"command": "service1cmd"}
   }'
 
-  #::File.stub(:read).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return true
-  ::Dir.stub(:glob){['/etc/supervisor.d/oprphan-service-some-app.conf']}
-
+  Dir.stub(:glob).with(anything,anything).and_call_original
+  Dir.stub(:glob).with(anything).and_call_original
+  Dir.stub(:glob).with('/etc/supervisor.d/*-some-app.conf').and_return(['/etc/supervisor.d/oprphaned-service-some-app.conf'])
 end
