@@ -37,6 +37,9 @@ describe 'easybib_supervisor - disable' do
       end
 
       it 'deletes the orphan supervisor' do
+          ::File.stub(:exist?).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return true
+  ::File.stub(:read?).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return '{ }'
+
         expect(chef_run).to stop_supervisor_service('oprphan-service-some-app:*')
         expect(chef_run).to disable_supervisor_service('oprphan-service-some-app')
       end
@@ -47,11 +50,13 @@ end
 def stub_supervisor_with_one_service_and_one_orphan
   ::File.stub(:exist?).with(anything).and_call_original
   ::File.stub(:exist?).with('/deploy/supervisor.json').and_return true
-  
-  ::File.stub(:exist?).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return true
 
   ::File.stub(:read).with(anything).and_call_original
   ::File.stub(:read).with('/deploy/supervisor.json').and_return '{
     "service1": {"command": "service1cmd"}
   }'
+
+  #::File.stub(:read).with('/etc/supervisor.d/oprphan-service-some-app.conf').and_return true
+  ::Dir.stub(:glob){['/etc/supervisor.d/oprphan-service-some-app.conf']}
+
 end
