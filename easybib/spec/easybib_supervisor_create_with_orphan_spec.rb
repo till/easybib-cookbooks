@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe 'easybib_supervisor - enable with orphan service' do
+describe 'easybib_supervisor - create new service with orphan service' do
 
   let(:cookbook_paths) do
     [
