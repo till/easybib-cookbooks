@@ -2,9 +2,6 @@ action :deploy do
   configured_apps = new_resource.apps
   deployments = new_resource.deployments
 
-  nginx_restart = new_resource.nginx_restart
-  php_restart = new_resource.php_restart
-
   did_we_deploy = false
 
   debug_log("#{new_resource.stack} (OpsWorks Stack)")
@@ -45,8 +42,8 @@ action :deploy do
         doc_root deploy['document_root']
         htpasswd "#{deploy['deploy_to']}/current/htpasswd"
         nginx_local_conf "#{app_dir}/deploy/nginx.conf"
-        notifies nginx_restart, 'service[nginx]', :delayed
-        notifies php_restart, 'service[php-fpm]', :delayed
+        notifies :reload, 'service[nginx]', :delayed
+        notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
       end
     end
   end
