@@ -1,10 +1,9 @@
 include_recipe 'php-fpm::service'
 include_recipe 'nginx-app::service'
 
-node['stack-academy']['applications'].each do |application, settings|
-  easybib_deploy_manager application do |variable|
-    app_data settings
-    app_dir app_dir
-    deployments node['deploy']
-  end
+easybib_deploy_manager get_cluster_name do
+  apps node['stack-academy']['applications']
+  deployments node['deploy']
+  nginx_restart :reload
+  php_restart node['easybib-deploy']['php-fpm']['restart-action']
 end

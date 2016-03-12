@@ -2,9 +2,8 @@ actions :deploy
 
 default_action :deploy
 
-attribute :app, :kind_of => String, :name_attribute => true
-attribute :app_data, :kind_of => Hash
-attribute :app_dir, :kind_of => String
+attribute :stack, :kind_of => String, :name_attribute => true
+attribute :apps, :kind_of => Hash
 attribute :deployments, :kind_of => Hash
-attribute :php_restart, :default => :restart
-attribute :nginx_restart, :default => :reload
+attribute :nginx_restart
+attribute :php_restart
