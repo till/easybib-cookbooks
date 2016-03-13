@@ -24,7 +24,6 @@ node['deploy'].each do |application, deploy|
     config_template config_template
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
-    nginx_local_conf "#{::EasyBib::Config.get_appdata(node, application, 'app_dir')}/deploy/nginx.conf"
     listen_opts nil
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed

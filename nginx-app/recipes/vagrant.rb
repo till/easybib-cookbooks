@@ -27,8 +27,7 @@ template '/etc/nginx/sites-enabled/easybib.com.conf' do
     :upstream_name => 'www',
     :environment  => get_cluster_name(node),
     :doc_root     => get_appdata(node, 'www', 'doc_root_dir'),
-    :app_dir      => app_dir,
-    :nginx_local_conf => "#{app_dir}/deploy/nginx.conf"
+    :app_dir      => app_dir
   )
   notifies :reload, 'service[nginx]', :delayed
 end
