@@ -1,18 +1,15 @@
 name              'apt'
-maintainer        'Till Klampaeckel'
-maintainer_email  'till@php.net'
+maintainer        'Chef Software, Inc.'
+maintainer_email  'cookbooks@opscode.com'
 license           'Apache 2.0'
-description       'Configures apt and apt services'
-version           '2.5.3'
+description       'Configures apt and apt services and LWRPs for managing apt repositories and preferences'
+long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+version           '2.6.1'
 recipe            'apt', 'Runs apt-get update during compile phase and sets up preseed directories'
-recipe            'apt::proxy', 'Set up an APT proxy'
-recipe            'apt::ppa', 'Setup the tools needed to initialize PPAs'
-recipe            'apt::repair', 'Install apt-repair-sources'
-
 recipe            'apt::cacher-ng', 'Set up an apt-cacher-ng caching proxy'
 recipe            'apt::cacher-client', 'Client for the apt::cacher-ng caching proxy'
 
-%w(ubuntu).each do |os|
+%w{ ubuntu debian }.each do |os|
   supports os
 end
 
@@ -35,6 +32,3 @@ attribute 'apt/key_proxy',
 attribute 'apt/caching_server',
           :description => 'Set this to true if the node is a caching server',
           :default => 'false'
-
-depends 'aptly'
-depends 'easybib'

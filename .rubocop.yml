@@ -1,5 +1,6 @@
 AllCops:
   Exclude:
+    - 'apt/**/*'
     - 'ark/**/*'
     - 'build-essential/**/*'
     - 'chef_handler/**/*'

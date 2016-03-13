@@ -43,24 +43,20 @@ if node['apt']
   end
 end
 
-unless Chef::Config[:solo] || !servers.empty?
+unless Chef::Config[:solo] || servers.length > 0
   query = 'apt_caching_server:true'
   query += " AND chef_environment:#{node.chef_environment}" if node['apt']['cacher-client']['restrict_environment']
   Chef::Log.debug("apt::cacher-client searching for '#{query}'")
   servers += search(:node, query)
 end
 
-if get_instance_roles.include?('aptcache')
-  # instance provisioning would fail here - accessing aptcache while aptcache is
-  # still being set up is a somewhat stupid idea.
-  Chef::Log.info('Skipping aptcache configuration: Aptcache should not use itself.')
-elsif !servers.empty?
+if servers.length > 0
   Chef::Log.info("apt-cacher-ng server found on #{servers[0]}.")
-  cacher_ipaddress = if servers[0]['apt']['cacher_interface']
-                       interface_ipaddress(servers[0], servers[0]['apt']['cacher_interface'])
-                     else
-                       servers[0].ipaddress
-                     end
+  if servers[0]['apt']['cacher_interface']
+    cacher_ipaddress = interface_ipaddress(servers[0], servers[0]['apt']['cacher_interface'])
+  else
+    cacher_ipaddress = servers[0].ipaddress
+  end
   t = template '/etc/apt/apt.conf.d/01proxy' do
     source '01proxy.erb'
     owner 'root'
@@ -70,7 +66,7 @@ elsif !servers.empty?
       :proxy => cacher_ipaddress,
       :port => servers[0]['apt']['cacher_port'],
       :bypass => node['apt']['cache_bypass']
-    )
+      )
     action(node['apt']['compiletime'] ? :nothing : :create)
     notifies :run, 'execute[apt-get update]', :immediately
   end

@@ -6,6 +6,6 @@ description       'Installs ext/suhosin for PHP'
 version           '0.1'
 
 depends 'php-fpm'
-depends 'apt'
+depends 'ies-apt'
 
 supports 'ubuntu'
