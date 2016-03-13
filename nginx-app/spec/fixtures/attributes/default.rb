@@ -9,7 +9,6 @@ default['testdata']['access_log'] = 'off'
 default['testdata']['nginx_extra'] = nil
 default['testdata']['default_router'] = 'app_router'
 default['testdata']['upstream'] = 'app_upstream'
-default['testdata']['env_conf'] = nil
 default['testdata']['routes_enabled'] = nil
 default['testdata']['routes_denied'] = nil
 default['testdata']['htpasswd'] = nil
