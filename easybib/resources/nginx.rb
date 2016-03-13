@@ -9,7 +9,6 @@ attribute :doc_root, :kind_of => String, :default => 'www'
 attribute :access_log, :kind_of => String, :default => 'off'
 attribute :domain_name, :kind_of => String, :default => nil
 attribute :nginx_extras, :kind_of => String, :default => nil
-attribute :nginx_local_conf, :kind_of => String, :default => nil
 attribute :htpasswd, :kind_of => String, :default => nil
 attribute :deploy_dir, :kind_of => String, :default => nil
 attribute :app_dir, :kind_of => String, :default => nil

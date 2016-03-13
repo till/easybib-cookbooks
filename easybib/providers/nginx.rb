@@ -28,8 +28,6 @@ action :setup do
   nginx_extras = get_nginx_extras(new_resource, node)
   cache_config = get_cache_config(new_resource, node)
 
-  nginx_local_conf = get_local_conf(new_resource)
-
   htpasswd = get_htpasswd(new_resource, application)
 
   health_check = get_health_check(application, node)
@@ -37,6 +35,8 @@ action :setup do
   routes_denied  =  get_routes(application, node, 'routes_denied')
 
   default_router = get_default_router(node['nginx-app']['default_router'], new_resource.default_router, deploy_dir)
+
+  nginx_local_conf = get_local_conf("#{app_dir}/deploy/nginx.conf")
 
   execute_name = "nginx_configtest_#{config_name}"
   execute execute_name do
@@ -80,12 +80,8 @@ action :setup do
 
 end
 
-def get_local_conf(new_resource)
-  unless new_resource.nginx_local_conf.nil?
-    if ::File.exist?(new_resource.nginx_local_conf)
-      return new_resource.nginx_local_conf
-    end
-  end
+def get_local_conf(nginx_local_conf)
+  return nginx_local_conf if ::File.exist?(nginx_local_conf)
   nil
 end
 
