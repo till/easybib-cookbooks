@@ -23,9 +23,6 @@
         include       fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
-<% if @env_conf && !@env_conf.empty? -%>
-        <%=@env_conf-%>
-<% end -%>
     }
 
     location @site {
@@ -41,7 +38,4 @@
         fastcgi_no_cache $fastcgi_skipcache;
 <% end -%>
 
-<% if @env_conf && !@env_conf.empty? -%>
-        <%=@env_conf%>
-<% end -%>
     }

@@ -18,7 +18,6 @@ end
 action :setup do
   config_template = new_resource.config_template
   access_log = new_resource.access_log
-  env_config = new_resource.env_config
   application = new_resource.app_name
   listen_opts = new_resource.listen_opts
 
@@ -63,7 +62,6 @@ action :setup do
       :default_router => default_router,
       :upstream_name => config_name,
       :php_upstream => get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
-      :env_conf => env_config,
       :health_check => health_check,
       :routes_enabled => routes_enabled,
       :routes_denied => routes_denied,
