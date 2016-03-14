@@ -1,4 +1,4 @@
-include_recipe 'apt::ppa'
+include_recipe 'ies-apt::ppa'
 
 apt_repository 'erlang-packages' do
   uri           'http://packages.erlang-solutions.com/ubuntu'

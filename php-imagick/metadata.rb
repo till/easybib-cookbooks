@@ -7,5 +7,5 @@ version           '0.1'
 
 supports 'ubuntu'
 
-depends 'apt'
+depends 'ies-apt'
 depends 'php'

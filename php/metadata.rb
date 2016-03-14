@@ -5,6 +5,6 @@ version           '0.1'
 license           'BSD License'
 supports          'ubuntu'
 
-depends 'apt'
+depends 'ies-apt'
 depends 'php-fpm'
 depends 'ohai'

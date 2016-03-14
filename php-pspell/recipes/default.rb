@@ -1,4 +1,3 @@
-include_recipe 'apt::ppa'
-include_recipe 'apt::easybib'
+include_recipe 'ies-apt::easybib'
 
 package 'php5-easybib-pspell'

@@ -45,7 +45,7 @@ def extract_fingerprints_from_cmd(cmd)
   so = Mixlib::ShellOut.new(cmd)
   so.run_command
   so.stdout.split(/\n/).map do |t|
-    if z = t.match(/^ +Key fingerprint = ([0-9A-F ]+)/) # rubocop:disable AssignmentInCondition
+    if z = t.match(/^ +Key fingerprint = ([0-9A-F ]+)/)
       z[1].split.join
     end
   end.compact
@@ -169,7 +169,7 @@ action :add do
       new_resource.trusted,
       new_resource.arch,
       new_resource.deb_src
-    )
+      )
   else
     # build repo file
     repository = build_repo(
@@ -179,7 +179,7 @@ action :add do
       new_resource.trusted,
       new_resource.arch,
       new_resource.deb_src
-    )
+      )
   end
 
   file "/etc/apt/sources.list.d/#{new_resource.name}.list" do
@@ -194,7 +194,7 @@ action :add do
 end
 
 action :remove do
-  if ::File.exist?("/etc/apt/sources.list.d/#{new_resource.name}.list")
+  if ::File.exists?("/etc/apt/sources.list.d/#{new_resource.name}.list")
     Chef::Log.info "Removing #{new_resource.name} repository from /etc/apt/sources.list.d/"
     file "/etc/apt/sources.list.d/#{new_resource.name}.list" do
       action :delete

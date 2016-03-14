@@ -1,4 +1,4 @@
-include_recipe 'apt::easybib'
+include_recipe 'ies-apt::easybib'
 
 package 'php5-easybib-suhosin' do
   only_if do
