@@ -4,7 +4,7 @@ node['deploy'].each do |application, deploy|
   when 'research_app'
     next unless allow_deploy(application, 'research_app', 'research_app')
   else
-    Chef::Log.info("deploy::#{application} - stack-research skipped")
+    Chef::Log.info("stack-research::deploy-research - #{application} (in stack-citationapi) skipped")
     next
   end
 
@@ -20,7 +20,6 @@ node['deploy'].each do |application, deploy|
   easybib_nginx application do
     cookbook 'stack-research'
     config_template 'research-app.conf.erb'
-    access_log      'off'
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end

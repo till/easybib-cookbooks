@@ -10,10 +10,6 @@ include_recipe 'php::module-intl'
 node.set['composer']['environment'] = get_deploy_user if is_aws
 include_recipe 'composer::configure'
 
-if node['easybib_deploy']['provide_pear']
-  include_recipe 'php-pear'
-end
-
 include_recipe 'tideways'
 
 include_recipe 'php::module-opcache'
