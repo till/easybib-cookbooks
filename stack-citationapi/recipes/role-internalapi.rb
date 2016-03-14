@@ -1,4 +1,4 @@
-include_recipe 'stack-easybib::role-phpapp'
+include_recipe 'stack-citationapi::role-phpapp'
 
 if is_aws
   include_recipe 'easybib-deploy::internal-api'

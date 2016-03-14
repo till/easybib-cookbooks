@@ -13,6 +13,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
   app_dir            = app_config['app_root_location']
 
   easybib_nginx app_name do
+    cookbook 'stack-citationapi'
     config_template template
     deploy_dir doc_root_location
     default_router default_router
