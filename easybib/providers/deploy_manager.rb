@@ -34,8 +34,6 @@ action :deploy do
       config_template = app_data['nginx']
       next if config_template.nil? # no nginx
 
-      app_dir = get_appdata(node, application, 'app_dir')
-
       easybib_nginx application do
         config_template config_template
         domain_name deploy['domains'].join(' ')
