@@ -10,5 +10,6 @@ default['syslog']['logfiles']           = {
 default['syslog']['host']               = 'logs-01.loggly.com'
 default['syslog']['poll']               = 10
 
-set_unless['loggly']['token'] = 'example'
-set_unless['loggly']['input']  = 1
+default['loggly']['token'] = 'example'
+default['loggly']['input']  = 1
+default['loggly']['ca_file'] = '/etc/ssl/certs/logs-01.loggly.com_sha12.crt'
