@@ -1,8 +1,7 @@
 <%= render_upstream(@php_upstream, @upstream_name) -%>
 
 <% 
-
-alias_config = StackEasybib::Helpers::merge_alias_config(@app_dir, node)
+alias_config = StackEasyBib::Helpers::merge_alias_config(node, @app_dir)
 -%>
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
@@ -79,25 +78,20 @@ unless uncached_extensions.empty? -%>
   %>
 <% end -%>
 
-<% if @routes_enabled.nil? || @routes_enabled.empty? -%>
-  <%= render "partials/php-routes-default.erb", :cookbook => 'nginx-app', :variables => {
-    "php_bypass_static_content" => true,
-    "routes_enabled" => @routes_enabled,
-    "upstream" => @upstream_name,
-    "env_conf" => @env_conf,
-    "access_log" => @access_log,
-    "default_router" => @default_router,
-    "node" => @node
-  } %>
-<% else -%>
-  <%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
-    "php_bypass_static_content" => true,
-    "routes_enabled" => @routes_enabled,
-    "upstream" => @upstream_name,
-    "env_conf" => @env_conf,
-    "access_log" => @access_log,
-    "default_router" => @default_router,
-    "node" => @node
-  } %>
-<% end %>
+<%
+@environment = EasyBib.get_cluster_name(node)
+%>
+    location / {
+        include <%=node['nginx-app']['config_dir']%>/fastcgi_params;
+
+        fastcgi_pass  <%= @app_name %>_phpfpm;
+        fastcgi_index index.php;
+
+    <% unless @environment.empty? -%>
+        fastcgi_param BIB_ENV "<%=@environment%>";
+    <% end -%>
+        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+
+        index  index.php index.html index.htm;
+    }
 }

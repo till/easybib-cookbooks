@@ -3,9 +3,6 @@ node['deploy'].each do |application, deploy|
   when 'easybib'
     next unless allow_deploy(application, 'easybib', 'nginxphpapp')
 
-  when 'easybib_api'
-    next unless allow_deploy(application, 'easybib_api', 'bibapi')
-
   when 'gearmanworker'
     next unless allow_deploy(application, 'gearmanworker', 'gearman-worker')
 
@@ -25,10 +22,6 @@ node['deploy'].each do |application, deploy|
   case application
   when 'gearmanworker'
     include_recipe 'monit::pecl-manager'
-    # else
-    #   service 'php-fpm' do
-    #     action node['easybib-deploy']['php-fpm']['restart-action']
-    #   end
   end
 
   easybib_nginx application do
