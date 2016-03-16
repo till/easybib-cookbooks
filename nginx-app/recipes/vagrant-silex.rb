@@ -8,11 +8,11 @@ node['vagrant']['applications'].each do |app_name, app_config|
 
   next if app_name == 'www'
 
-  if app_config.attribute?('default_router')
-    default_router = app_config['default_router']
-  else
-    default_router = 'index.php'
-  end
+  default_router = if app_config.attribute?('default_router')
+                     app_config['default_router']
+                   else
+                     'index.php'
+                   end
 
   template = 'silex.conf.erb'
 
@@ -28,7 +28,6 @@ node['vagrant']['applications'].each do |app_name, app_config|
     deploy_dir doc_root_location
     default_router default_router
     domain_name domain_name
-    nginx_local_conf "#{app_dir}/deploy/nginx.conf"
     notifies :reload, 'service[nginx]', :delayed
   end
 

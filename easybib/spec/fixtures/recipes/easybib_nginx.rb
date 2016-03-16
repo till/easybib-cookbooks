@@ -6,7 +6,6 @@ easybib_nginx 'api' do
   domain_name 'some_domainname'
   deploy_dir '/some_path'
   app_dir '/some_other_path'
-  env_config 'some_env'
 end
 
 easybib_nginx 'domainadmin' do
@@ -14,5 +13,4 @@ easybib_nginx 'domainadmin' do
   domain_name 'manage.example.org'
   deploy_dir '/some_path'
   app_dir '/some_other_path'
-  env_config 'some_env'
 end

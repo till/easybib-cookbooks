@@ -1,6 +1,6 @@
  Package | External Version | Comment
 ------------ | ------------- | -------------
-apt| [2.5.3](https://github.com/opscode-cookbooks/apt/tree/v2.5.3) | added apt::easybib, apt::mirror.rb, apt::ppa, apt::proxy, apt::repair.rb, apt::updater.rb
+apt| [2.6.1](https://github.com/opscode-cookbooks/apt/tree/v2.6.1) | 
 ark| [0.9.0](https://github.com/burtlo/ark/tree/v0.9.0) |  removed 7-zip and windows dep
 build-essential| [2.0.2](https://github.com/opscode-cookbooks/build-essential/tree/v2.0.2) |
 chef_handler| [1.1.6](https://github.com/opscode-cookbooks/chef_handler/tree/v1.1.6) |

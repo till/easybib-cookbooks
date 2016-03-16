@@ -1,6 +1,6 @@
-include_recipe 'apt::ppa'
+include_recipe 'ies-apt::ppa'
 
-apt_repository 'easybib-ppa' do
+apt_repository 'easybib-couchdb-ppa' do
   uri           ::EasyBib::Ppa.ppa_mirror(node, node['apache-couchdb']['ppa'])
   distribution  node['lsb']['codename']
   components    ['main']

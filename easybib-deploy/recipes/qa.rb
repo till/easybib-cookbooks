@@ -31,14 +31,11 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  env_conf = ::EasyBib::Config.get_env('nginx', application, node)
-
   easybib_nginx application do
     config_template 'silex.conf.erb'
     domain_name     deploy['domains'].join(' ')
     htpasswd        "#{deploy['deploy_to']}/current/htpasswd"
     doc_root        deploy['document_root']
-    env_config      env_conf
     notifies :reload, 'service[nginx]', :delayed
   end
 

@@ -1,5 +1,11 @@
 apt Cookbook
 ============
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/opscode-cookbooks/apt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Cookbook Version](http://img.shields.io/cookbook/v/apt.svg)][cookbook]
+[![Build Status](http://img.shields.io/travis/opscode-cookbooks/apt.svg)][travis]
+
+[cookbook]: https://community.opscode.com/cookbooks/apt
+[travis]: http://travis-ci.org/opscode-cookbooks/apt
 
 This cookbook includes recipes to execute apt-get update to ensure the local APT package cache is up to date. There are recipes for managing the apt-cacher-ng caching proxy and proxy clients. It also includes a LWRP for managing APT repositories in /etc/apt/sources.list.d as well as an LWRP for pinning packages via /etc/apt/preferences.d.
 
@@ -15,8 +21,11 @@ If your Chef version is earlier than 10.16.4, use version 1.7.0 of this cookbook
 ### Platform
 Please refer to the [TESTING file](TESTING.md) to see the currently (and passing) tested platforms. The release was tested on:
 
+* Ubuntu 10.04
 * Ubuntu 12.04
 * Ubuntu 13.04
+* Debian 7.1
+* Debian 6.0 (have with manual testing)
 
 May work with or without modification on other Debian derivatives.
 
@@ -118,15 +127,12 @@ apt_repository 'zenoss' do
 end
 ```
 
-Add the Nginx PPA, grabbing the key from keyserver:
+Add the Nginx PPA, autodetect the key and repository url:
 
 ```ruby
 apt_repository 'nginx-php' do
-  uri          'http://ppa.launchpad.net/nginx/php5/ubuntu'
+  uri          'ppa:nginx/stable'
   distribution node['lsb']['codename']
-  components   ['main']
-  keyserver    'keyserver.ubuntu.com'
-  key          'C300EE8C'
 end
 ```
 

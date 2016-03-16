@@ -1,5 +1,6 @@
 AllCops:
   Exclude:
+    - 'apt/**/*'
     - 'ark/**/*'
     - 'build-essential/**/*'
     - 'chef_handler/**/*'
@@ -29,7 +30,7 @@ AllCops:
     - 'runit/**/*'
     - 'mysql/**/*'
 
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 
 Style/RegexpLiteral:
@@ -92,4 +93,6 @@ Metrics/ModuleLength:
 Performance/StringReplacement:
   Enabled: false
 
+Style/SpaceAroundOperators:
+  Enabled: false
 inherit_from: .rubocop_todo.yml

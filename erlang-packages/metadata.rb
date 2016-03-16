@@ -9,4 +9,4 @@ recipe            'erlang-packages::aptrepo', 'adds aptrepo'
 
 supports 'ubuntu'
 
-depends 'apt'
+depends 'ies-apt'

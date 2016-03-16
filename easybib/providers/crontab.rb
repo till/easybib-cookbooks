@@ -29,7 +29,7 @@ action :create do
 
   Chef::Log.info("easybib_deploy - importing cronjobs from #{crontab_file}")
 
-  create_crontab = ::EasyBib.deploy_crontab?(
+  create_crontab = deploy_crontab?(
     new_resource.instance_roles,
     new_resource.cronjob_role
   )

@@ -30,22 +30,17 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  if application == 'scholar_realtime'
-    next
-  end
-
-  if application == 'scholar'
-    config_template = 'scholar.conf.erb'
-  else
-    config_template = 'silex.conf.erb'
-  end
+  config_template = if application == 'scholar'
+                      'scholar.conf.erb'
+                    else
+                      'silex.conf.erb'
+                    end
 
   easybib_nginx application do
     config_template config_template
     domain_name deploy['domains'].join(' ')
     doc_root deploy['document_root']
     htpasswd "#{deploy['deploy_to']}/current/htpasswd"
-    nginx_local_conf "#{::EasyBib::Config.get_appdata(node, application, 'app_dir')}/deploy/nginx.conf"
     listen_opts listen_opts
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed

@@ -13,7 +13,6 @@ template '/tmp/config.conf' do
     :default_router => node['testdata']['default_router'],
     :php_upstream => node['testdata']['pools'],
     :upstream_name => 'foo',
-    :env_conf => node['testdata']['env_conf'],
     :routes_enabled => node['testdata']['routes_enabled'],
     :routes_denied => node['testdata']['routes_denied'],
     :htpasswd => node['testdata']['htpasswd']

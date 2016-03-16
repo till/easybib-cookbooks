@@ -1,7 +1,6 @@
-# forward to loggly: https://easybib.loggly.com
 $template LogglyFormat,"<%%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= @logglydata %>] %msg%\n"
 
-$DefaultNetstreamDriverCAFile /etc/ssl/certs/loggly.full.pem
+$DefaultNetstreamDriverCAFile <%= @ca_file %>
 $ActionSendStreamDriver gtls
 $ActionSendStreamDriverMode 1
 $ActionSendStreamDriverAuthMode x509/name

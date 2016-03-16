@@ -11,6 +11,7 @@ action :create do
   updated = false
 
   unless ::File.exist?(supervisor_file)
+    Chef::Log.info("easybib_supervisor - supervisor file was not found #{supervisor_file}")
     new_resource.updated_by_last_action(updated)
     next
   end
@@ -38,7 +39,7 @@ action :create do
   search_path = "/etc/supervisor.d/*-#{app}.conf"
   Chef::Log.info("easybib_supervisor - searching for conf in #{search_path}")
   conf_files = []
-  Dir.glob(search_path).each do|file|
+  Dir.glob(search_path).each do |file|
     conf_files.push(file.split('/').last)
   end
 
@@ -90,7 +91,7 @@ action :create do
   end
 
   # we should be left with an empty array or the orphaned files
-  conf_files.each do|file_name|
+  conf_files.each do |file_name|
     Chef::Log.info("easybib_supervisor - found orphan supervisor conf file #{file_name}")
     service_name = file_name.split('.').first
     supervisor_stopndisable(service_name)
@@ -103,11 +104,11 @@ end
 
 action :delete do
   app = new_resource.app
-  deploy_data = new_resource.deploy_data
-  supervisor_file = "#{deploy_data['deploy_to']}/current/deploy/supervisor.json"
+  supervisor_file = new_resource.supervisor_file
 
   # unless supervisor_file exists
   unless ::File.exist?(supervisor_file)
+    Chef::Log.info("easybib_supervisor - supervisor file was not found #{supervisor_file}")
     new_resource.updated_by_last_action(true)
     next
   end

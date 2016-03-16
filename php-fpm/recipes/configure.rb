@@ -38,11 +38,11 @@ etc_fpm_dir = "#{config['prefix']}/etc"
 conf_cli    = 'php-cli.ini'
 conf_fpm    = 'php.ini'
 
-if config['user'] == 'vagrant'
-  display_errors = 'On'
-else
-  display_errors = 'Off'
-end
+display_errors = if config['user'] == 'vagrant'
+                   'On'
+                 else
+                   'Off'
+                 end
 
 if node['php-fpm']['mailsender'].nil?
   Chef::Log.info('Not adding any sendmail params')

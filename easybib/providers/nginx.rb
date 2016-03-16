@@ -18,9 +18,9 @@ end
 action :setup do
   config_template = new_resource.config_template
   access_log = new_resource.access_log
-  env_config = new_resource.env_config
   application = new_resource.app_name
   listen_opts = new_resource.listen_opts
+  cookbook = new_resource.cookbook
 
   domain_name = get_domain_name(new_resource, node)
   deploy_dir = get_deploy_dir(new_resource, node)
@@ -28,8 +28,6 @@ action :setup do
   config_name = get_config_name(new_resource)
   nginx_extras = get_nginx_extras(new_resource, node)
   cache_config = get_cache_config(new_resource, node)
-
-  nginx_local_conf = get_local_conf(new_resource)
 
   htpasswd = get_htpasswd(new_resource, application)
 
@@ -39,6 +37,8 @@ action :setup do
 
   default_router = get_default_router(node['nginx-app']['default_router'], new_resource.default_router, deploy_dir)
 
+  nginx_local_conf = get_local_conf("#{app_dir}/deploy/nginx.conf")
+
   execute_name = "nginx_configtest_#{config_name}"
   execute execute_name do
     command '/usr/sbin/nginx -t'
@@ -46,7 +46,7 @@ action :setup do
   end
 
   template "/etc/nginx/sites-enabled/#{config_name}.conf" do
-    cookbook 'nginx-app'
+    cookbook cookbook
     source config_template
     mode '0755'
     owner node['nginx-app']['user']
@@ -63,7 +63,6 @@ action :setup do
       :default_router => default_router,
       :upstream_name => config_name,
       :php_upstream => get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
-      :env_conf => env_config,
       :health_check => health_check,
       :routes_enabled => routes_enabled,
       :routes_denied => routes_denied,
@@ -82,12 +81,8 @@ action :setup do
 
 end
 
-def get_local_conf(new_resource)
-  unless new_resource.nginx_local_conf.nil?
-    if ::File.exist?(new_resource.nginx_local_conf)
-      return new_resource.nginx_local_conf
-    end
-  end
+def get_local_conf(nginx_local_conf)
+  return nginx_local_conf if ::File.exist?(nginx_local_conf)
   nil
 end
 

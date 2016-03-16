@@ -29,7 +29,7 @@ action :add do
     new_resource.glob || new_resource.package_name,
     new_resource.pin,
     new_resource.pin_priority
-  )
+    )
 
   preference_dir = directory '/etc/apt/preferences.d' do
     owner 'root'
@@ -39,7 +39,14 @@ action :add do
     action :nothing
   end
 
-  preference_file = file "/etc/apt/preferences.d/#{new_resource.name}" do
+  preference_old_file = file "/etc/apt/preferences.d/#{new_resource.name}" do
+    action :nothing
+    if ::File.exists?("/etc/apt/preferences.d/#{new_resource.name}")
+      Chef::Log.warn "Replacing #{new_resource.name} with #{new_resource.name}.pref in /etc/apt/preferences.d/"
+    end
+  end
+
+  preference_file = file "/etc/apt/preferences.d/#{new_resource.name}.pref" do
     owner 'root'
     group 'root'
     mode 00644
@@ -50,10 +57,12 @@ action :add do
   preference_dir.run_action(:create)
   # write out the preference file, replace it if it already exists
   preference_file.run_action(:create)
+  # remove preference files from previous apt cookbook version
+  preference_old_file.run_action(:delete)
 end
 
 action :remove do
-  if ::File.exist?("/etc/apt/preferences.d/#{new_resource.name}")
+  if ::File.exists?("/etc/apt/preferences.d/#{new_resource.name}")
     Chef::Log.info "Un-pinning #{new_resource.name} from /etc/apt/preferences.d/"
     file "/etc/apt/preferences.d/#{new_resource.name}" do
       action :delete
