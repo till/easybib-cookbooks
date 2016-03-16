@@ -5,14 +5,9 @@ include_recipe 'php-fpm::ohai'
 include_recipe 'php::module-phar'
 include_recipe 'php::module-zlib'
 include_recipe 'php::module-intl'
+include_recipe 'php::module-opcache'
 
 node.set['composer']['environment'] = get_deploy_user if is_aws
 include_recipe 'composer::configure'
 
-if node['easybib_deploy']['provide_pear']
-  include_recipe 'php-pear'
-end
-
 include_recipe 'tideways'
-
-include_recipe 'php::module-opcache'
