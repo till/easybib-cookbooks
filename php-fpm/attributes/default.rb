@@ -19,6 +19,8 @@ default['php-fpm']['tmpdir'] = '/tmp/php'
 default['php-fpm']['socketdir'] = '/var/run/php-fpm'
 
 default['php-fpm']['pools'] = ['www-data']
+default['php-fpm']['type'] = 'dynamic'
+default['php-fpm']['max_children'] = 100
 
 # this is a wip - unify all configuration for php.ini
 default['php-fpm']['ini'] = {

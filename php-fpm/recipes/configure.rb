@@ -121,6 +121,8 @@ config['pools'].each do |pool_name|
       :pool_name => pool_name,
       :user => config['user'],
       :group => config['group'],
+      :type => config['type'],
+      :max_children => config['max_children'],
       :socket_dir => config['socketdir'],
       :slowlog_timeout => config['slowlog_timeout'],
       :slowlog => config['slowlog']
