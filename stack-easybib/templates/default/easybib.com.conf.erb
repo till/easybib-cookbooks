@@ -1,7 +1,7 @@
 <%= render_upstream(@php_upstream, @upstream_name) -%>
 
 <% 
-alias_config = StackEasyBib::Helpers::merge_alias_config(node, @app_dir)
+alias_config = ::StackEasyBib::Helpers.merge_alias_config(node, @app_dir)
 -%>
 <%= render 'partials/module-assets.erb',
   :cookbook => 'nginx-app',
