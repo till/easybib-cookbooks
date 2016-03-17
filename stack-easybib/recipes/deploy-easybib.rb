@@ -24,6 +24,12 @@ node['deploy'].each do |application, deploy|
     include_recipe 'monit::pecl-manager'
   end
 
+  # clean up old config before migration
+  file '/etc/nginx/sites-enabled/easybib.com.conf' do
+    action :delete
+    ignore_failure true
+  end
+
   easybib_nginx application do
     cookbook 'stack-easybib'
     config_template 'easybib.com.conf.erb'
