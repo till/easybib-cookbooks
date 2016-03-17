@@ -44,13 +44,13 @@ server {
 
 <%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
 
-    <%= render "partials/status-checks.erb",
-      :cookbook => "nginx-app",
-      :variables => {
-        :health_check => 'health_check.php',
-        :upstream => @upstream_name
-      }
-    -%>
+<%= render "partials/status-checks.erb",
+  :cookbook => "nginx-app",
+  :variables => {
+    :health_check => 'health_check.php',
+    :upstream => @upstream_name
+  }
+-%>
 
 <%
 uncached_extensions = NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'])
