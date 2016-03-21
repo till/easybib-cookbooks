@@ -59,6 +59,52 @@ describe 'stack-easybib::role-nginxapp' do
             include('default /srv/www/easybib/current/public/;')
           )
       end
+
+      it 'sets the correct upstream' do
+        expect(chef_run).to render_file(vhost)
+          .with_content(
+            include("unix:/var/run/php-fpm/#{node['php-fpm']['pools'][0]}")
+          )
+          .with_content(
+            include('upstream easybib_phpfpm {')
+          )
+      end
+
+      it 'sets the correct BIB_ENV' do
+        expect(chef_run).to render_file(vhost)
+          .with_content(
+            include("fastcgi_param BIB_ENV \"#{stack}\";")
+          )
+      end
+
+      it 'sets the correct SCRIPT_FILENAME' do
+        expect(chef_run).to render_file(vhost)
+          .with_content(
+            include('fastcgi_param SCRIPT_FILENAME $document_root/index.php;')
+          )
+      end
+
+      it 'not not configure access-logging' do
+        expect(chef_run).to_not render_file(vhost)
+          .with_content(
+            include("access_log #{access_log};")
+          )
+      end
+
+      describe 'pools' do
+        before do
+          node.set['php-fpm']['pools'] = %w(www1 www2 www3)
+        end
+
+        it 'creates three upstreams' do
+          node['php-fpm']['pools'].each do |pool_name|
+            expect(chef_run).to render_file(vhost)
+              .with_content(
+                include("unix:/var/run/php-fpm/#{pool_name}")
+              )
+          end
+        end
+      end
     end
   end
 end

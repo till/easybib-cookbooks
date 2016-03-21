@@ -16,6 +16,12 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
+  # clean up old config before migration
+  file '/etc/nginx/sites-enabled/easybib.com.conf' do
+    action :delete
+    ignore_failure true
+  end
+
   easybib_nginx application do
     cookbook 'stack-citationapi'
     config_template 'formatting-api.conf.erb'

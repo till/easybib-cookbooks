@@ -3,9 +3,6 @@ node['deploy'].each do |application, deploy|
   when 'easybib'
     next unless allow_deploy(application, 'easybib', 'nginxphpapp')
 
-  when 'gearmanworker'
-    next unless allow_deploy(application, 'gearmanworker', 'gearman-worker')
-
   else
     Chef::Log.info("stack-easybib::deploy-easybib - #{application} skipped")
     next
@@ -17,11 +14,6 @@ node['deploy'].each do |application, deploy|
   easybib_deploy application do
     deploy_data deploy
     app application
-  end
-
-  case application
-  when 'gearmanworker'
-    include_recipe 'monit::pecl-manager'
   end
 
   # clean up old config before migration
