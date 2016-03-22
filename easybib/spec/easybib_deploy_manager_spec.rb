@@ -13,11 +13,10 @@ describe 'easybib_deploy_manager' do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
       :log_level => :debug,
-      :step_into => [
-        'easybib_deploy_manager',
-        'easybib_deploy',
-        'easybib_nginx'
-      ]
+      :step_into => %w(
+        easybib_deploy_manager
+        easybib_deploy
+        easybib_nginx)
     )
   end
 
