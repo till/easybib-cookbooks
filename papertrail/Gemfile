@@ -1,4 +1,12 @@
 source "http://rubygems.org"
 
-gem 'chefspec', git: 'git://github.com/acrmp/chefspec.git'
-gem 'librarian-chef'
+group :style do
+  gem 'foodcritic'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
+end
+
+group :unit do
+  gem 'chefspec', '~> 4'
+  gem 'berkshelf'
+end

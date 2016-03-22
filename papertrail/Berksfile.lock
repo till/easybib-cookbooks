@@ -1,0 +1,12 @@
+DEPENDENCIES
+  papertrail
+    path: .
+    metadata: true
+  rsyslog
+
+GRAPH
+  compat_resource (12.9.0)
+  papertrail (0.0.7)
+    rsyslog (>= 0.0.0)
+  rsyslog (4.0.0)
+    compat_resource (>= 0.0.0)
