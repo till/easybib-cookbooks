@@ -3,6 +3,7 @@ if defined?(ChefSpec)
     # ChefSpec >= 4.1
     ChefSpec.define_matcher :easybib_crontab
     ChefSpec.define_matcher :easybib_deploy
+    ChefSpec.define_matcher :easybib_deploy_manager
     ChefSpec.define_matcher :easybib_envconfig
     ChefSpec.define_matcher :easybib_gearmanw
     ChefSpec.define_matcher :easybib_nginx
@@ -13,6 +14,7 @@ if defined?(ChefSpec)
     # ChefSpec < 4.1
     ChefSpec::Runner.define_runner_method :easybib_crontab
     ChefSpec::Runner.define_runner_method :easybib_deploy
+    ChefSpec::Runner.define_runner_method :easybib_deploy_manager
     ChefSpec::Runner.define_runner_method :easybib_envconfig
     ChefSpec::Runner.define_runner_method :easybib_gearmanw
     ChefSpec::Runner.define_runner_method :easybib_nginx
@@ -26,6 +28,10 @@ if defined?(ChefSpec)
 
   def deploy_easybib_deploy(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:easybib_deploy, :deploy, resource_name)
+  end
+
+  def deploy_easybib_deploy_manager(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:easybib_deploy_manager, :deploy, resource_name)
   end
 
   def create_easybib_envconfig(resource_name)
