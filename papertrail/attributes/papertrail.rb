@@ -61,3 +61,4 @@ default['papertrail']['queue_file_name'] = 'papertrailqueue'
 #   node['papertrail']['watch_files'] =
 #              [{:filename => "/var/log/myapp.log", :tag => "myapp:"}]
 #
+default['papertrail']['watch_files'] = {}
