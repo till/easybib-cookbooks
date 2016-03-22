@@ -5,7 +5,7 @@ describe 'stack-academy::deploy' do
   let(:runner) do
     ChefSpec::Runner.new(
       :log_level => :error,
-      :step_into => %w(nginx_app_config easybib_nginx)
+      :step_into => %w(easybib_deploy_manager nginx_app_config easybib_nginx)
     )
   end
   let(:chef_run) { runner.converge(described_recipe) }
