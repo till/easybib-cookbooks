@@ -1,10 +1,10 @@
 node['deploy'].each do |application, deploy|
 
   case application
-  when 'citation_apis'
-    next unless allow_deploy(application, 'citation_apis', 'citation-apis')
+  when 'sitescraper'
+    next unless allow_deploy(application, 'sitescraper')
   else
-    Chef::Log.info("stack-citationapi::deploy-citation-data-api - #{application} (in stack-citationapi) skipped")
+    Chef::Log.info("stack-citationapi::deploy-sitescraper - #{application} (in stack-citationapi) skipped")
     next
   end
 
@@ -18,7 +18,7 @@ node['deploy'].each do |application, deploy|
 
   easybib_nginx application do
     cookbook 'stack-citationapi'
-    config_template 'data-api.erb'
+    config_template 'sitescraper.conf.erb'
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
