@@ -1,7 +1,4 @@
-include_recipe 'stack-citationapi::role-phpapp'
+Chef::Log.warn('This stack still uses the old stack-citationapi::role-internalapi recipe!!!')
 
-if is_aws
-  include_recipe 'easybib-deploy::internal-api'
-else
-  include_recipe 'nginx-app::sitescraper'
-end
+include_recipe 'stack-citationapi::role-citation-data-api'
+include_recipe 'stack-citationapi::role-sitescraper'
