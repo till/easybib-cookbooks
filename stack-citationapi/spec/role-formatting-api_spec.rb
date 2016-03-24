@@ -1,6 +1,6 @@
 require 'chefspec'
 
-describe 'stack-citationapi::role-publicapi' do
+describe 'stack-citationapi::role-formatting-api' do
 
   let(:runner) do
     ChefSpec::Runner.new(
