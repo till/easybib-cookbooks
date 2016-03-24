@@ -1,2 +1,2 @@
-include_recipe 'stack-citationapi::role-phpapp'
-include_recipe 'stack-citationapi::deploy-citation-data-api'
+include_recipe 'stack-citationapi::role-citation-data-api'
+include_recipe 'stack-citationapi::role-sitescraper'
