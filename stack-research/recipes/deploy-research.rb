@@ -17,6 +17,12 @@ node['deploy'].each do |application, deploy|
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]'
   end
 
+  # clean up old config before migration
+  file '/etc/nginx/sites-enabled/easybib.com.conf' do
+    action :delete
+    ignore_failure true
+  end
+
   easybib_nginx application do
     cookbook 'stack-research'
     config_template 'research-app.conf.erb'

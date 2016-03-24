@@ -63,20 +63,19 @@ module EasyBib
     end
 
     def is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
-      case application
-      when requested_application
+      if application == requested_application
         unless instance_roles.include?(requested_role)
           irs = instance_roles.inspect
           Chef::Log.info("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
           return false
         end
-      else
-        Chef::Log.info("deploy #{requested_application} - #{application} skipped")
-        return false
+
+        Chef::Log.info("deploy #{requested_application} - allowing deploy")
+        return true
       end
 
-      Chef::Log.info("deploy #{requested_application} - allowing deploy")
-      true
+      Chef::Log.info("deploy #{requested_application} - #{application} skipped")
+      false
     end
 
     private :is_app_configured_for_stack

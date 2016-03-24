@@ -14,7 +14,7 @@ nodejs | [2.4.0](https://github.com/redguide/nodejs/releases/tag/v2.4.0) | disab
 ohai| [2.0.4](https://github.com/chef-cookbooks/ohai/commit/bc6b53ff9807cd02d5cea86f18470a81e7678771) |
 rabbitmq | [3.4.0](https://github.com/jjasghar/rabbitmq/commit/b71c0a068419ad10324e8d13b517fafbf373c0c3) | removed yum, ignored in our cs/test setup
 xml| [1.2.4](https://github.com/opscode-cookbooks/xml/tree/v1.2.4) |
-papertrail | [0.0.7](https://github.com/librato/papertrail-cookbook/releases/tag/0.0.7) |
+papertrail | [#21](https://github.com/librato/papertrail-cookbook/pull/21) | PR 21 is 0.0.7 + priority fix
 python | [master](https://github.com/poise/python/commit/56424ab64b06f584c13dba2dbb1cc5369faf20f4) |
 rsyslog | [2.2.0](https://github.com/chef-cookbooks/rsyslog/releases/tag/v2.2.0) | 2.2.0 because 3.0.0+ is Chef 12+ only
 sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0) | removed dependency `user` cookbook, fix: use user resource

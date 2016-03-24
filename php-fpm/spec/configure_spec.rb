@@ -23,6 +23,7 @@ describe 'php-fpm::configure' do
   describe 'pool configuration' do
     before do
       node.set['php-fpm']['pools'] = %w('app1', 'app2', 'app3')
+      node.set['php-fpm']['max_children'] = 99
     end
 
     it 'creates three pool configurations' do
@@ -33,6 +34,25 @@ describe 'php-fpm::configure' do
           )
       end
     end
+
+    it 'sets correct max_childrens' do
+      node['php-fpm']['pools'].each do |pool_name|
+        expect(chef_run).to render_file("#{pool_dir}/#{pool_name}.conf")
+          .with_content(
+            include('pm.max_children = 99')
+          )
+      end
+    end
+
+    it 'sets correct type' do
+      node['php-fpm']['pools'].each do |pool_name|
+        expect(chef_run).to render_file("#{pool_dir}/#{pool_name}.conf")
+          .with_content(
+            include('pm = dynamic')
+          )
+      end
+    end
+
   end
 
 end

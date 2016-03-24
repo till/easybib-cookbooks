@@ -10,8 +10,8 @@ listen.mode = 0666
 user = <%= @user %>
 group = <%= @group %>
 
-pm = dynamic
-pm.max_children = 100
+pm = <%= @type %>
+pm.max_children = <%= @max_children %>
 pm.start_servers = 30
 pm.min_spare_servers = 10
 pm.max_spare_servers = 100

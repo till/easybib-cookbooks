@@ -69,7 +69,7 @@ if node['papertrail']['watch_files'] && node['papertrail']['watch_files'].length
     group "root"
     mode "0644"
     variables(:watch_files => watch_file_array)
-    notifies :restart, resources(:service => syslogger)
+    notifies :restart, "service[#{syslogger}]"
   end
 end
 
@@ -82,7 +82,9 @@ unless hostname_name.empty? && hostname_cmd.empty?
   if !hostname_name.empty?
     name = hostname_name
   else
-    name = %x{#{hostname_cmd}}.chomp
+    cmd = Mixlib::ShellOut.new(hostname_cmd)
+    cmd.run_command
+    name = cmd.stdout.chomp
   end
 
   template "#{syslogdir}/61-fixhostnames.conf" do
@@ -91,7 +93,7 @@ unless hostname_name.empty? && hostname_cmd.empty?
     group "root"
     mode "0644"
     variables({:name => name})
-    notifies  :restart, resources(:service => syslogger)
+    notifies :restart, "service[#{syslogger}]"
   end
 end
 
@@ -105,5 +107,5 @@ template "#{syslogdir}/65-papertrail.conf" do
               :port => node['papertrail']['remote_port'],
               :fixhostname => node['papertrail']['fixhostname']
             })
-  notifies  :restart, resources(:service => syslogger)
+  notifies :restart, "service[#{syslogger}]"
 end

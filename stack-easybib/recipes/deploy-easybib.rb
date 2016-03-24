@@ -1,10 +1,10 @@
 node['deploy'].each do |application, deploy|
-
   case application
-  when 'easybib_api'
-    next unless allow_deploy(application, 'easybib_api', 'bibapi')
+  when 'easybib'
+    next unless allow_deploy(application, 'easybib', 'nginxphpapp')
+
   else
-    Chef::Log.info("stack-citationapi::deploy-citation-formatting-api - #{application} (in stack-citationapi) skipped")
+    Chef::Log.info("stack-easybib::deploy-easybib - #{application} skipped")
     next
   end
 
@@ -23,10 +23,9 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
-    cookbook 'stack-citationapi'
-    config_template 'formatting-api.conf.erb'
+    cookbook 'stack-easybib'
+    config_template 'easybib.com.conf.erb'
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
-
 end
