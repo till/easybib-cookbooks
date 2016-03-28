@@ -1,6 +1,6 @@
 require_relative 'spec_helper.rb'
 
-describe 'stack-citationapi::role-sitescraper' do
+describe 'stack-citationapi::role-citation-data-api' do
 
   let(:runner) do
     ChefSpec::Runner.new
@@ -9,11 +9,11 @@ describe 'stack-citationapi::role-sitescraper' do
   let(:node)     { runner.node }
   before do
     node.set['opsworks']['stack']['name'] = 'Stack'
-    node.set['opsworks']['instance']['layers'] = ['sitescraper']
+    node.set['opsworks']['instance']['layers'] = ['citation_api']
     node.set['opsworks']['instance']['hostname'] = 'host'
     node.set['opsworks']['instance']['ip'] = '127.0.0.1'
-    node.set['deploy']['sitescraper'] = {
-      'deploy_to' => '/srv/www/sitescraper',
+    node.set['deploy']['citation_apis'] = {
+      'deploy_to' => '/srv/www/citation_apis',
       'document_root' => 'public'
     }
   end
