@@ -6,7 +6,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
                      'index.php'
                    end
 
-  template = 'silex.conf.erb'
+  template = 'default-web-nginx.conf.erb'
 
   domain_name        = app_config['domain_name']
   doc_root_location  = app_config['doc_root_location']

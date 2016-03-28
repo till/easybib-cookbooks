@@ -24,7 +24,7 @@ node['deploy'].each do |application, deploy|
 
   easybib_nginx application do
     cookbook 'stack-citationapi'
-    config_template 'formatting-api.conf.erb'
+    config_template 'default-web-nginx.conf.erb'
     notifies :reload, 'service[nginx]', :delayed
     notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end

@@ -1,8 +1,6 @@
 <%= render_upstream(@php_upstream, @upstream_name) %>
 
 server {
-    set $fastcgi_skipcache 1; # skip by default
-
     listen 80 <%=@listen_opts%>;
 
     index <%=@default_router%> index.php;
@@ -26,17 +24,14 @@ server {
     auth_basic_user_file  <%= @htpasswd%>;
 <% end -%>
 
+  client_max_body_size <%= fetch_node(node, @app_name, 'nginx-app', 'client_max_body_size') %>;
+
+  <% unless @nginx_local_conf.nil? -%>
+  <%= render @nginx_local_conf, :local => true %>
+  <% end -%>
+
     root <%= @doc_root%>;
-
-    if ($http_x_cache_me) {
-        set $fastcgi_skipcache 0;
-    }
-
-    <% unless @node.fetch('easybib_deploy', {}).fetch('scholar', {})['asset_root'].nil? -%>
-<%= render "partials/production-asset-route.erb", :cookbook => 'nginx-app', :variables => {
-    "asset_root" => @node['easybib_deploy']['scholar']['asset_root']
-    } %>
-    <% end %>
+<%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
 
 <%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
         "upstream" => @upstream_name,
