@@ -1,4 +1,4 @@
-require 'chefspec'
+require_relative 'spec_helper.rb'
 
 describe 'stack-easybib::role-nginxapp' do
 
@@ -19,8 +19,6 @@ describe 'stack-easybib::role-nginxapp' do
   describe 'deployment' do
     before do
       stub_command('rm -f /etc/nginx/sites-enabled/default').and_return(true)
-      # DEBUG: why isnt ohai doing this? maybe some setup missing
-      node.set['lsb']['codename'] = 'trusty'
       node.set['deploy'] = {}
       node.set['easybib']['cluster_name'] = stack
       node.set['opsworks']['stack']['name'] = stack

@@ -4,22 +4,12 @@ include_recipe 'php::module-mysqli'
 include_recipe 'php::module-gearman'
 include_recipe 'php::module-posix'
 include_recipe 'php::module-poppler-pdf'
-include_recipe 'easybib-deploy::easybib'
-include_recipe 'pecl-manager::vagrant'
-
-unless is_aws
+if is_aws
+  include_recipe 'stack-easybib::deploy-gearman-worker'
+else
   # we use our recipe instead of the default package, because
   # our recipe writes data to disk instead of memory, so it survives
   # a vagrant suspend
   include_recipe 'redis::default'
-
-  gearmanconf_root_dir = ::File.expand_path(node['easybib_deploy']['gearman_root'])
-  import_file_path = "#{gearmanconf_root_dir}/deploy/#{node['easybib_deploy']['gearman_file']}"
-
-  pecl_manager_script 'Setting up Pecl Manager Script for vagrant' do
-    dir gearmanconf_root_dir
-    envvar_file import_file_path
-    envvar_json_source node['easybib_deploy']['env_source']
-    only_if { ::File.exist?(import_file_path) }
-  end
+  include_recipe 'pecl-manager::vagrant'
 end
