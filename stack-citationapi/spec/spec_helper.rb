@@ -1,7 +1,7 @@
 require 'chefspec'
+require_relative 'shared/nginx-config.rb'
 
 RSpec.configure do |c|
   c.platform = 'ubuntu'
-  c.version = '12.04'
-  #  c.log_level = :debug
+  c.version = '14.04'
 end
