@@ -9,4 +9,4 @@ unless node['haproxy']['websocket_layers'].nil?
   end
 end
 
-include_recipe 'easybib-deploy::scholar'
+include_recipe 'stack-scholar::deploy'

@@ -9,7 +9,6 @@ include_recipe 'apache-couchdb'
 # frontend
 include_recipe 'nodejs'
 include_recipe 'nodejs::npm'
-include_recipe 'bower'
 
 package 'build-essential'
 package 'g++'
