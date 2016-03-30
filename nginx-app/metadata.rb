@@ -9,7 +9,6 @@ recipe            'nginx-app::configure', 'Configures virtualhost, etc.'
 
 depends 'rsyslogd'
 depends 'php-fpm'
-depends 'hhvm-fcgi'
 depends 'apt'
 depends 'aptly'
 depends 'easybib'
