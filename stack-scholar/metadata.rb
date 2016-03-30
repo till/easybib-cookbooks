@@ -9,7 +9,6 @@ supports 'ubuntu'
 
 depends 'nginx-app'
 depends 'easybib-deploy'
-depends 'bash'
 depends 'ies-mysql'
 depends 'redis'
 depends 'memcache'
