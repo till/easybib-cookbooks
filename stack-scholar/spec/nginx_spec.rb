@@ -29,7 +29,7 @@ describe 'stack-scholar::deploy' do
       node.set['deploy']['scholar'] = {
         'deploy_to' => '/srv/www/scholar',
         'document_root' => 'docroot',
-        'domains' => [ domain ]
+        'domains' => [domain]
       }
 
       node.set['infolit']['domain'] = domain
