@@ -1,0 +1,23 @@
+#!/bin/bash
+TIMESTAMP=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+TMP_FILE="/tmp/fpm-stats"
+
+METRICS_CALL="`which aws` cloudwatch put-metric-data \
+  --region <%= @region %> \
+  --dimensions StackId=<%= @stackname %>,InstanceId=<%= @instancename %> \
+  --namespace phpfpm \
+  --timestamp ${TIMESTAMP}"
+
+
+curl -s -L http://localhost/fpm_status > ${TMP_FILE}
+
+# make sure the file shows correct data
+grep -q accepted ${TMP_FILE} || exit
+
+METRICS="ListenQueue MaxListenQueue ListenQueueLen IdleProcesses ActiveProcesses TotalProcesses MaxActiveProcesses MaxChildrenReached SlowRequests"
+
+for METRIC in ${METRICS[@]}; do
+    FPM_METRIC_NAME=`echo ${METRIC}|sed 's/\([A-Z]\)/ \L\1/g;s/^ //g'`
+    ${METRICS_CALL} --metric-name ${METRIC} --unit Count \
+      --value $(grep -e "^${FPM_METRIC_NAME}" ${TMP_FILE} | awk -F: '{printf "%i", $2}')
+done
