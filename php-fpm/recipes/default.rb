@@ -74,3 +74,5 @@ bins.each do |php_bin|
   end
 
 end
+
+include_recipe 'php-fpm::cloudwatch'
