@@ -12,7 +12,10 @@ describe 'php-fpm::default' do
   end
 
   let(:chef_run) do
-    ChefSpec::Runner.new.converge('php-fpm::default')
+    ChefSpec::Runner.new(
+      :platform => 'ubuntu',
+      :version => '14.04'
+    ).converge('php-fpm::default')
   end
 
   it 'installs php5-easybib' do
