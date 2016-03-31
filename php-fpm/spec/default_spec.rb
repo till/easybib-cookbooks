@@ -18,8 +18,6 @@ describe 'php-fpm::default' do
     @shellout.stub(:run_command)
     @shellout.stub(:exitstatus)
     @shellout.stub(:error!)
-    node.set['opsworks']['stack']['name'] = 'Stack'
-    node.set['opsworks']['instance']['hostname'] = 'host'
   end
 
   it 'installs php5-easybib' do
