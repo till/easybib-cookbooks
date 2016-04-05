@@ -43,7 +43,7 @@ describe 'php-fpm::cloudwatch' do
     # this will not work in the state it's in
     # https://github.com/sethvargo/chefspec/pull/547#issuecomment-68649062
     # I do not fully understand but I am vaguely understanding that chefspec
-    # always assumes notification 
+    # always assumes notification
     # it 'does not notifies cron_d' do
     #   conscript_resource = chef_run.template(conscript_name)
     #   expect(conscript_resource).to_not notifies('cron_d[phpfpm-cloudwatch]')
