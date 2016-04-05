@@ -10,8 +10,8 @@ template cronscript do
   owner  'root'
   group  'root'
   variables(
-    'instancename' => get_hostname.gsub(/\W/, '_'),
-    'stackname' => get_cluster_name.gsub(/\W/, '_'),
+    'instancename' => get_record_name.gsub(/\.|\W/, '_'),
+    'stackname' => get_normalized_cluster_name.gsub(/\.|\W/, '_'),
     'region' => node['opsworks']['instance']['region']
   )
 end
