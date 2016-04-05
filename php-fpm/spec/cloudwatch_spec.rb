@@ -10,14 +10,10 @@ describe 'php-fpm::cloudwatch' do
     node.set['opsworks']['instance']['hostname'] = 'host'
   end
 
-  it 'installs awscli' do
-    expect(chef_run).to install_package('awscli')
-  end
-
   it 'creates cronjob script' do
     expect(chef_run).to render_file('/opt/easybib/bin/phpfpm-cloudwatch.sh')
       .with_content(
-        include('dimensions StackId=Stack')
+        include('dimensions StackId=stack,InstanceId=host_stack')
       )
   end
 
