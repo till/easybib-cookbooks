@@ -1,6 +1,7 @@
-cronscript = '/opt/easybib/bin/phpfpm-cloudwatch.sh'
 
-package 'awscli'
+cronscript = "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh"
+
+include_recipe 'awscli'
 
 template cronscript do
   source 'cloudwatch.sh.erb'
