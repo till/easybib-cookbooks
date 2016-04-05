@@ -19,6 +19,6 @@ describe 'php-fpm::cloudwatch' do
   end
 
   it 'inits cronjob' do
-    expect(chef_run).to create_cron_d('phpfpm-cloudwatch')
+    expect(chef_run).to nothing_cron_d('phpfpm-cloudwatch')
   end
 end

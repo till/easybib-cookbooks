@@ -19,5 +19,5 @@ template cronscript do
     'stackname' => get_normalized_cluster_name.gsub(/\.|\W/, '_'),
     'region' => node['opsworks']['instance']['region']
   )
-  notifies :create, 'cron_d[phpfpm-cloudwatch]'
+  notifies :create, 'cron_d[phpfpm-cloudwatch]', :immediately
 end
