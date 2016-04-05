@@ -1,7 +1,6 @@
 
 cronscript = "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh"
 
-include_recipe 'python'
 include_recipe 'awscli'
 
 template cronscript do
