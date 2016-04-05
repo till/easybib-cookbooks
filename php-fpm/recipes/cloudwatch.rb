@@ -1,6 +1,6 @@
-cronscript = "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh"
+include_recipe 'awscli' if node['php-fpm']['cloudwatch']
 
-include_recipe 'awscli'
+cronscript = "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh"
 
 cron_d 'phpfpm-cloudwatch' do
   action :nothing
@@ -20,4 +20,5 @@ template cronscript do
     'region' => node['opsworks']['instance']['region']
   )
   notifies :create, 'cron_d[phpfpm-cloudwatch]', :immediately
+  only_if { node['php-fpm']['cloudwatch'] }
 end

@@ -75,4 +75,4 @@ bins.each do |php_bin|
 
 end
 
-include_recipe 'php-fpm::cloudwatch' if is_aws && node['php-fpm']['cloudwatch']
+include_recipe 'php-fpm::cloudwatch' if is_aws
