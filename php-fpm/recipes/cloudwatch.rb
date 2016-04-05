@@ -1,7 +1,13 @@
-
 cronscript = "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh"
 
 include_recipe 'awscli'
+
+cron_d 'phpfpm-cloudwatch' do
+  action :nothing
+  minute '*'
+  user 'www-data'
+  command cronscript
+end
 
 template cronscript do
   source 'cloudwatch.sh.erb'
@@ -13,11 +19,5 @@ template cronscript do
     'stackname' => get_normalized_cluster_name.gsub(/\.|\W/, '_'),
     'region' => node['opsworks']['instance']['region']
   )
-end
-
-cron_d 'phpfpm-cloudwatch' do
-  action :create
-  minute '*'
-  user 'www-data'
-  command cronscript
+  notifies :create, 'cron_d[phpfpm-cloudwatch]'
 end
