@@ -18,9 +18,6 @@ node['deploy'].each do |application, deploy|
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
 
-  when 'gearmanworker'
-    next unless allow_deploy(application, 'gearmanworker', 'gearman-worker')
-
   else
     Chef::Log.info("deploy::easybib - #{application} (in #{cluster_name}) skipped")
     next
@@ -34,13 +31,8 @@ node['deploy'].each do |application, deploy|
     app application
   end
 
-  case application
-  when 'gearmanworker'
-    include_recipe 'monit::pecl-manager'
-  else
-    service 'php-fpm' do
-      action node['easybib-deploy']['php-fpm']['restart-action']
-    end
+  service 'php-fpm' do
+    action node['easybib-deploy']['php-fpm']['restart-action']
   end
 
 end

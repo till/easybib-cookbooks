@@ -1,6 +1,6 @@
 require 'chefspec'
 
-describe 'easybib-deploy::scholar' do
+describe 'stack-scholar::deploy' do
 
   let(:runner)   { ChefSpec::Runner.new }
   let(:chef_run) { runner.converge(described_recipe) }
