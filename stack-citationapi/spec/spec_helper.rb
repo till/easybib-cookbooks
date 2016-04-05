@@ -1,4 +1,5 @@
 require 'chefspec'
+require_relative 'shared/nginx-config.rb'
 
 RSpec.configure do |c|
   c.platform = 'ubuntu'
