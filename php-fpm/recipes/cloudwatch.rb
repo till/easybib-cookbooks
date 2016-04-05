@@ -11,7 +11,7 @@ template cronscript do
   variables(
     'instancename' => get_hostname.gsub(/\W/, '_'),
     'stackname' => get_cluster_name.gsub(/\W/, '_'),
-    'region' => 'us-east-1'
+    'region' => node['opsworks']['instance']['region']
   )
 end
 
