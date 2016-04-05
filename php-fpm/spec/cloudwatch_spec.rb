@@ -7,7 +7,7 @@ describe 'php-fpm::cloudwatch' do
 
   before do
     node.set['opsworks']['stack']['name'] = 'Stack'
-    node.set['opsworks']['stack']['name'] = 'Stack'
+    node.set['opsworks']['instance']['hostname'] = 'host'
     node.set['php-fpm']['cloudwatch'] = true
   end
 
