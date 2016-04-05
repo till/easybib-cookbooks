@@ -11,7 +11,7 @@ describe 'php-fpm::cloudwatch' do
   end
 
   it 'creates cronjob script' do
-    expect(chef_run).to render_file('/opt/easybib/bin/phpfpm-cloudwatch.sh')
+    expect(chef_run).to render_file("#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh")
       .with_content(
         include('dimensions StackId=stack,InstanceId=host_stack')
       )
