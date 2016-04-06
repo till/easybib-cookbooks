@@ -2,11 +2,11 @@ require 'chefspec'
 
 describe 'stack-scholar::deploy' do
 
-  let(:runner) {
+  let(:runner) do
     ChefSpec::Runner.new(
       :step_into => %w(easybib_deploy_manager)
     )
-  }
+  end
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node)     { runner.node }
   let(:deploy_data) { { 'deploy_to' => '/bla/dir', 'document_root' => 'www', 'domains' => ['foo.tld'] } }
