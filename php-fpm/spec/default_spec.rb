@@ -1,6 +1,15 @@
 require 'chefspec'
 
 describe 'php-fpm::default' do
+  let(:runner) do
+    ChefSpec::Runner.new(
+      :platform => 'ubuntu',
+      :version => '14.04'
+    )
+  end
+  let(:chef_run) { runner.converge(described_recipe) }
+  let(:node) { runner.node }
+
   before do
     stub_command('apt-get install -s php5-easybib-apcu').and_return(1)
     stub_command('apt-get install -s php5-easybib-apc').and_return(0)
@@ -9,10 +18,6 @@ describe 'php-fpm::default' do
     @shellout.stub(:run_command)
     @shellout.stub(:exitstatus)
     @shellout.stub(:error!)
-  end
-
-  let(:chef_run) do
-    ChefSpec::Runner.new.converge('php-fpm::default')
   end
 
   it 'installs php5-easybib' do

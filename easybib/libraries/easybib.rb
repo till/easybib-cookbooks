@@ -72,10 +72,11 @@ module EasyBib
   end
 
   def get_instance(node = self.node)
-    if node['opsworks']
+    if node.fetch('opsworks', {})['instance']
       return node['opsworks']['instance']
     end
     ::Chef::Log.debug('Unknown environment. (get_instance)')
+    false
   end
 
   def is_aws(node = self.node)
@@ -92,18 +93,18 @@ module EasyBib
   #
   # @return [String]
   def get_hostname(node = self.node, fail_if_nil = false)
-    if !get_cluster_name(node).empty?
-      instance    = get_instance(node)
-      my_hostname = instance['hostname']
-    else
-      # node.json
-      my_hostname = if node['server_name']
-                      node['server_name']
-                    # from 'ohai'
-                    else
-                      node['hostname']
-                    end
+    opsworks_hostname = false
+    if get_instance(node)
+      opsworks_hostname = get_instance(node)['hostname']
     end
+    my_hostname = if opsworks_hostname
+                    opsworks_hostname
+                  elsif node['server_name']
+                    node['server_name']
+                  # from 'ohai'
+                  else
+                    node['hostname']
+                  end
 
     if fail_if_nil == true && my_hostname.nil?
       Chef::Application.fatal!('Can not determine the hostname of this node!')

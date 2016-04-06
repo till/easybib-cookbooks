@@ -44,11 +44,11 @@ display_errors = if config['user'] == 'vagrant'
                    'Off'
                  end
 
-if node['php-fpm']['mailsender'].nil?
+if config['mailsender'].nil?
   Chef::Log.info('Not adding any sendmail params')
   sendmail_params = nil
 else
-  sendmail_params = "-f '#{node['php-fpm']['mailsender']}'"
+  sendmail_params = "-f '#{config['mailsender']}'"
   Chef::Log.info("Adding to php sendmail stmt: #{sendmail_params}")
 end
 
