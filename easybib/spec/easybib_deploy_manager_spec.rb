@@ -12,7 +12,7 @@ describe 'easybib_deploy_manager' do
   let(:runner) do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
-      :log_level => :debug,
+      :log_level => :error,
       :step_into => %w(
         easybib_deploy_manager
         easybib_deploy

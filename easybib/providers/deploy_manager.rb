@@ -29,9 +29,11 @@ def debug_log(msg)
   Chef::Log.info("easybib_deploy_manager: #{msg}")
 end
 
-# Hash: deployments
-# String: app_name
-# Hash: app_data
+# Run deployments
+#
+# deployments - Hash, from OpsWorks
+# app_name - String
+# app_data - Hash
 def run_deploys(deployments, app_name, app_data)
   did_we_deploy = false
 
@@ -55,18 +57,30 @@ def run_deploys(deployments, app_name, app_data)
 
     did_we_deploy = true
 
-    config_template = app_data['nginx']
+    config_template = app_data.fetch('nginx', nil)
     next if config_template.nil? # no nginx
+
+    listen_opts = get_additional('listen_opts', app_data)
 
     easybib_nginx application do
       config_template config_template
       domain_name deploy['domains'].join(' ')
       doc_root deploy['document_root']
       htpasswd "#{deploy['deploy_to']}/current/htpasswd"
+      listen_opts listen_opts
       notifies :reload, 'service[nginx]', :delayed
       notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
     end
   end
 
   did_we_deploy
+end
+
+# Extracts optional "listen_opts" for "easybib_nginx"
+#
+# data - Hash
+#
+# Returns a string or nil.
+def get_additional(key, data)
+  data.fetch('nginx_config', {}).fetch(key, nil)
 end
