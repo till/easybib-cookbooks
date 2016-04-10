@@ -40,7 +40,7 @@ def run_deploys(deployments, app_name, app_data)
   deployments.each do |application, deploy|
 
     if application != app_name
-      debug_log("#{application} skipped")
+      debug_log("#{application} skipped: #{app_name}")
       next
     end
 
