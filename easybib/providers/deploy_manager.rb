@@ -13,8 +13,7 @@ action :deploy do
   else
     debug_log('Apps & deployments')
     applications.each do |app_name, app_data|
-      raise "'layer' missing for '#{app_name}'" unless app_data.key?('layer')
-      raise "'nginx' missing for '#{app_name}'" unless app_data.key?('nginx')
+      validate_app_data(app_data)
 
       did_we_deploy = run_deploys(deployments, app_name, app_data)
     end
@@ -83,4 +82,11 @@ end
 # Returns a string or nil.
 def get_additional(key, data)
   data.fetch('nginx_config', {}).fetch(key, nil)
+end
+
+def validate_app_data(app_data)
+  raise 'Must be a hash!' unless app_data.is_a?(Hash)
+
+  raise "'layer' missing for '#{app_name}'" unless app_data.key?('layer')
+  raise "'nginx' missing for '#{app_name}'" unless app_data.key?('nginx')
 end

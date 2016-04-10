@@ -7,7 +7,7 @@ node.set['stack-scholar']['applications']['scholar']['layer'] = [
 ]
 
 unless node['haproxy']['websocket_layers'].nil?
-  node.set['stack-scholar']['applications']['scholar_realtime'] = node['haproxy']['websocket_layers'].keys
+  node.set['stack-scholar']['applications']['scholar_realtime']['layer'] = node['haproxy']['websocket_layers'].keys
 end
 
 Chef::Log.info(node['stack-scholar']['applications'])
