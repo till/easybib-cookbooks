@@ -1,18 +1,18 @@
 action :deploy do
-  apps = new_resource.apps
+  applications = new_resource.apps
   deployments = new_resource.deployments
 
   did_we_deploy = false
 
   debug_log("#{new_resource.stack} (OpsWorks Stack)")
 
-  if apps.empty?
+  if applications.empty?
     debug_log('No apps configured')
   elsif deployments.empty?
     debug_log('No deployments')
   else
     debug_log('Apps & deployments')
-    apps.each do |app_name, app_data|
+    applications.each do |app_name, app_data|
       raise "'layer' missing for '#{app_name}'" unless app_data.key?('layer')
       raise "'nginx' missing for '#{app_name}'" unless app_data.key?('nginx')
 
