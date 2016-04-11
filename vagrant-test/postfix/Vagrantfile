@@ -1,4 +1,4 @@
-ENV['recipe_runlist'] = 'postfix,postfix::relay'
+ENV['recipe_runlist'] = 'postfix,postfix::relay,monit::service'
 ENV['chef_json'] = File.expand_path(File.dirname(__FILE__) + '/amazon-ses.json')
 
 require_relative '../vagrant-provision'

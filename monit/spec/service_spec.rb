@@ -30,4 +30,28 @@ describe 'monit::service' do
       expect(file).to notify('service[monit]')
     end
   end
+
+  describe 'Amazon SES integration' do
+    before do
+      node.set['monit'] = {
+        :mailsender => 'root@localhost',
+        :mailhost => 'localhost',
+        :mailpass => 'changeme',
+        :mailport => 25,
+        :mailuser => 'account',
+        :notification_recipients => ['root@localhost']
+      }
+    end
+
+    it 'does not create the standard configuration' do
+      expect(chef_run).not_to render_file(notification)
+    end
+
+    it 'creates a configuration from a template' do
+      expect(chef_run).to create_template(notification)
+
+      template = chef_run.template(notification)
+      expect(template).to notify('service[monit]')
+    end
+  end
 end
