@@ -1,5 +1,5 @@
-file '/etc/monit/conf.d/mailnotify.monitrc' do
-  content 'set alert root@localhost but not on { pid ppid nonexist instance timestamp }'
+cookbook_file '/etc/monit/conf.d/mailnotify.monitrc' do
+  source 'mailnotify.monitrc'
   mode '0644'
   owner 'root'
   group 'root'
