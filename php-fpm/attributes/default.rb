@@ -22,6 +22,8 @@ default['php-fpm']['pools'] = ['www-data']
 default['php-fpm']['type'] = 'dynamic'
 default['php-fpm']['max_children'] = 100
 
+default['php-fpm']['cloudwatch'] = false
+
 # this is a wip - unify all configuration for php.ini
 default['php-fpm']['ini'] = {
   'max-input-vars' => 10_000
