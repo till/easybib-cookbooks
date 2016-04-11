@@ -9,7 +9,7 @@ module EasyBib
         return true
       end
 
-      Chef::Log.info('Instance is not in a cronjob role, skippings cronjob installs')
+      debug_log('Instance is not in a cronjob role, skippings cronjob installs')
 
       false
     end
@@ -25,7 +25,7 @@ module EasyBib
     # @return [Boolean]
     def allow_deploy(application, requested_application, requested_role = nil, node = self.node)
       unless ::EasyBib.is_aws(node)
-        Chef::Log.debug('We are not running in a cloud environment, skipping deploy.')
+        debug_log('We are not running in a cloud environment, skipping deploy.')
         return false
       end
 
@@ -48,7 +48,7 @@ module EasyBib
 
       instance_roles = ::EasyBib.get_instance_roles(node)
 
-      Chef::Log.info(
+      debug_log(
         "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles}"
       )
       if requested_role.nil?
@@ -57,28 +57,32 @@ module EasyBib
 
       if requested_application.is_a?(String)
         return is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
-      else
-        raise 'Unknown value type supplied for requested_role in allow_deploy'
       end
+
+      raise 'Unknown value type supplied for requested_role in allow_deploy'
     end
 
     def is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)
       if application == requested_application
         unless instance_roles.include?(requested_role)
           irs = instance_roles.inspect
-          Chef::Log.info("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
+          debug_log("deploy #{requested_application} - skipping: #{requested_role} is not in (#{irs})")
           return false
         end
 
-        Chef::Log.info("deploy #{requested_application} - allowing deploy")
+        debug_log("deploy #{requested_application} - allowing deploy")
         return true
       end
 
-      Chef::Log.info("deploy #{requested_application} - #{application} skipped")
+      debug_log("deploy #{requested_application} - #{application} skipped")
       false
     end
 
-    private :is_app_configured_for_stack
+    def debug_log(msg)
+      Chef::Log.info(msg)
+    end
+
+    private :is_app_configured_for_stack, :debug_log
   end
 end
 
