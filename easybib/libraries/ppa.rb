@@ -48,6 +48,9 @@ module EasyBib
     end
 
     def php_mirror_repo_url(node = self.node)
+      if node.fetch('easybib', {})['php_mirror_override']
+        return node['easybib']['php_mirror_override']
+      end
       prefix = 'http://ppa.ezbib.com/mirrors/php'
       prefix + node['easybib']['php_mirror_version']
     end
