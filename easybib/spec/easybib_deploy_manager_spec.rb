@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require 'chefspec'
 
 describe 'easybib_deploy_manager' do
 
@@ -11,6 +11,8 @@ describe 'easybib_deploy_manager' do
 
   let(:runner) do
     ChefSpec::Runner.new(
+      :platform => 'ubuntu',
+      :version => '14.04',
       :cookbook_path => cookbook_paths,
       :log_level => :error,
       :step_into => %w(
