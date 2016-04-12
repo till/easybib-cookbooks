@@ -16,7 +16,7 @@ if [ -f /etc/default/php-fpm ]; then
 fi
 
 prefix=<%= node["php-fpm"]["prefix"]%>
-exec_prefix=${prefix}
+exec_prefix=<%= node["php-fpm"]["exec_prefix"] %>
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
 php_fpm_CONF=${prefix}/etc/php-fpm.conf
