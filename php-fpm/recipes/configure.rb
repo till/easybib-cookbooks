@@ -33,10 +33,8 @@ include_recipe 'php-fpm::service'
 
 config = node['php-fpm']
 
-etc_cli_dir = "#{config['prefix']}/etc"
-etc_fpm_dir = "#{config['prefix']}/etc"
-conf_cli    = 'php-cli.ini'
-conf_fpm    = 'php.ini'
+conf_cli = "#{config['prefix']}/#{config['cli_config']}"
+conf_fpm = "#{config['prefix']}/#{config['fpm_config']}"
 
 display_errors = if config['user'] == 'vagrant'
                    'On'
@@ -52,7 +50,7 @@ else
   Chef::Log.info("Adding to php sendmail stmt: #{sendmail_params}")
 end
 
-template "#{etc_fpm_dir}/#{conf_fpm}" do
+template conf_fpm do
   mode     '0755'
   source   'php.ini.erb'
   variables(
@@ -71,7 +69,7 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
   notifies :reload, 'service[php-fpm]', :delayed
 end
 
-template "#{etc_cli_dir}/#{conf_cli}" do
+template conf_cli do
   mode '0755'
   source 'php.ini.erb'
   variables(
