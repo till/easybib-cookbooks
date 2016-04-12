@@ -50,6 +50,12 @@ else
   Chef::Log.info("Adding to php sendmail stmt: #{sendmail_params}")
 end
 
+execute 'update-alternatives' do
+  command '/usr/bin/update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm5.6 0'
+  creates '/usr/sbin/php-fpm'
+  action :nothing
+end
+
 template conf_fpm do
   mode     '0755'
   source   'php.ini.erb'
@@ -67,6 +73,7 @@ template conf_fpm do
   owner    config['user']
   group    config['group']
   notifies :reload, 'service[php-fpm]', :delayed
+  notifies :run, 'execute[update-alternatives]', :immediately
 end
 
 template conf_cli do
@@ -87,6 +94,7 @@ template conf_cli do
   group config['group']
 end
 
+etc_fpm_dir = File.dirname(conf_fpm)
 pool_dir = "#{config['prefix']}/etc/php-fpm/pool.d"
 
 template "#{etc_fpm_dir}/php-fpm.conf" do
