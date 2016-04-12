@@ -1,4 +1,4 @@
-ENV['recipe_runlist'] = 'easybib::role-phpapp,papertrail'
+ENV['recipe_runlist'] = 'stack-easybib::role-phpapp'
 ENV['chef_json'] = "#{File.dirname(__FILE__)}/deploy.json"
 
 require_relative '../vagrant-provision'
