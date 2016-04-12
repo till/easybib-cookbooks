@@ -53,7 +53,7 @@ server {
 -%>
 
 <%
-uncached_extensions = NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'])
+uncached_extensions = NginxApp::Helpers::uncached_static_extensions(node['nginx-app']['browser_caching'], node['stack-easybib']['static_extensions'])
 unless uncached_extensions.empty? -%>
     location ~* \.(<%= uncached_extensions.join('|') %>)$ {
         # Prevent static content to be handled by php
