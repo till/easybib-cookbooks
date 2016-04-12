@@ -3,6 +3,9 @@ default['php-fpm'] = {}
 default['php-fpm']['prefix'] = '/opt/easybib'
 default['php-fpm']['exec_prefix'] = '/opt/easybib'
 
+default['php-fpm']['fpm_config'] = 'etc/php.ini'
+default['php-fpm']['cli_config'] = 'etc/php-cli.ini'
+
 default['php-fpm']['logfile'] = '/var/log/php/error.log'
 default['php-fpm']['slowlog'] = '/var/log/php/slow.log'
 default['php-fpm']['slowlog_timeout'] = 4
