@@ -1,8 +1,0 @@
-#!/usr/local/bin/php
-<?php
-
-$pid = posix_getpid();
-$processGroup = posix_getpgid($pid);
-file_put_contents('<%= @pid_file %>', "$pid\n$processGroup\n");
-
-system("<%= @cmd %> 2>&1 | logger -t <%= @name %>");
