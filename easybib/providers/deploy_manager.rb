@@ -1,20 +1,19 @@
 action :deploy do
-  apps = new_resource.apps
+  applications = new_resource.apps
   deployments = new_resource.deployments
 
   did_we_deploy = false
 
   debug_log("#{new_resource.stack} (OpsWorks Stack)")
 
-  if apps.empty?
+  if applications.empty?
     debug_log('No apps configured')
   elsif deployments.empty?
     debug_log('No deployments')
   else
     debug_log('Apps & deployments')
-    apps.each do |app_name, app_data|
-      raise "'layer' missing for '#{app_name}'" unless app_data.key?('layer')
-      raise "'nginx' missing for '#{app_name}'" unless app_data.key?('nginx')
+    applications.each do |app_name, app_data|
+      validate_app_data(app_data)
 
       did_we_deploy = run_deploys(deployments, app_name, app_data)
     end
@@ -29,16 +28,18 @@ def debug_log(msg)
   Chef::Log.info("easybib_deploy_manager: #{msg}")
 end
 
-# Hash: deployments
-# String: app_name
-# Hash: app_data
+# Run deployments
+#
+# deployments - Hash, from OpsWorks
+# app_name - String
+# app_data - Hash
 def run_deploys(deployments, app_name, app_data)
   did_we_deploy = false
 
   deployments.each do |application, deploy|
 
     if application != app_name
-      debug_log("#{application} skipped")
+      debug_log("#{application} skipped: #{app_name}")
       next
     end
 
@@ -55,18 +56,37 @@ def run_deploys(deployments, app_name, app_data)
 
     did_we_deploy = true
 
-    config_template = app_data['nginx']
+    config_template = app_data.fetch('nginx', nil)
     next if config_template.nil? # no nginx
+
+    listen_opts = get_additional('listen_opts', app_data)
 
     easybib_nginx application do
       config_template config_template
       domain_name deploy['domains'].join(' ')
       doc_root deploy['document_root']
       htpasswd "#{deploy['deploy_to']}/current/htpasswd"
+      listen_opts listen_opts
       notifies :reload, 'service[nginx]', :delayed
       notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
     end
   end
 
   did_we_deploy
+end
+
+# Extracts optional "listen_opts" for "easybib_nginx"
+#
+# data - Hash
+#
+# Returns a string or nil.
+def get_additional(key, data)
+  data.fetch('nginx_config', {}).fetch(key, nil)
+end
+
+def validate_app_data(app_data)
+  raise 'Must be a hash!' unless app_data.is_a?(Hash)
+
+  raise "'layer' missing for '#{app_name}'" unless app_data.key?('layer')
+  raise "'nginx' missing for '#{app_name}'" unless app_data.key?('nginx')
 end

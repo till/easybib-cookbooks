@@ -1,0 +1,56 @@
+{
+  "scholar_admin": {
+    "deploy_to": "/srv/www/scholar_admin",
+    "chef_provider": "Timestamped",
+    "keep_releases": 5,
+    "current_path": "/srv/www/scholar_admin/current",
+    "document_root": "web",
+    "ignore_bundler_groups": ["test", "development"],
+    "absolute_document_root": "/srv/www/scholar_admin/current/web/",
+    "rake": "/usr/local/bin/rake",
+    "migrate": false,
+    "migrate_command": "",
+    "rails_env": "production",
+    "action": "deploy",
+    "user": "deploy",
+    "group": "deploy",
+    "shell": "/no/login",
+    "home": "/var/www",
+    "sleep_before_restart": 0,
+    "stack": {
+      "needs_reload": true
+    },
+    "enable_submodules": true,
+    "shallow_clone": false,
+    "delete_cached_copy": true,
+    "purge_before_symlink": ["log", "tmp/pids", "public/system"],
+    "create_dirs_before_symlink": ["tmp", "public", "config"],
+    "symlink_before_migrate": {},
+    "symlinks": {
+      "system": "public/system",
+      "pids": "tmp/pids",
+      "log": "log"
+    },
+    "environment": {
+      "HOME": "/var/www"
+    },
+    "environment_variables": {},
+    "ssl_support": false,
+    "application": "scholar_admin",
+    "application_type": "other",
+    "auto_bundle_on_deploy": true,
+    "deploying_user": "arn:aws:iam::12345:user/till",
+    "domains": ["example.org", "scholar_admin"],
+    "mounted_at": null,
+    "restart_command": "echo 'restarting app'",
+    "ssl_certificate": null,
+    "ssl_certificate_key": null,
+    "ssl_certificate_ca": null,
+    "scm": {
+      "scm_type": "s3",
+      "repository": "https://deploy/zip",
+      "user": "",
+      "password": ""
+    }
+  }
+}
