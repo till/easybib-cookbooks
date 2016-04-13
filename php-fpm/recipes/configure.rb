@@ -109,6 +109,14 @@ directory pool_dir do
   recursive true
 end
 
+# default pool setup by PHP package
+file "#{pool_dir}/www.conf" do
+  action :delete
+  only_if do
+    File.exist?("#{pool_dir}/www.conf") && !config['pools'].include?('www')
+  end
+end
+
 config['pools'].each do |pool_name|
   template "#{pool_dir}/#{pool_name}.conf" do
     mode '0644'
