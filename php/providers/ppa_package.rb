@@ -1,10 +1,13 @@
 action :install do
   name = new_resource.name
 
+  package_prefix = new_resource.package_prefix
+  package_prefix = node['php']['ppa']['package_prefix'] if package_prefix.nil?
+
   package_name = if new_resource.package_name.nil?
-                   "#{node['php']['ppa']['package_prefix']}-#{name}"
+                   "#{package_prefix}-#{name}"
                  else
-                   "#{node['php']['ppa']['package_prefix']}-#{new_resource.package_name}"
+                   "#{package_prefix}-#{new_resource.package_name}"
                  end
 
   p = package package_name do
