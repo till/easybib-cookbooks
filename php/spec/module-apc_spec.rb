@@ -61,4 +61,14 @@ describe 'php::module-apc' do
       expect(chef_run).to render_file('/opt/easybib/etc/php/99-apc-settings.ini')
     end
   end
+
+  describe 'custom prefix' do
+    before do
+      node.set['php-apc']['package_prefix'] = 'php-special'
+    end
+
+    it 'installs the php-special-apcu module' do
+      expect(chef_run).to install_package('php-special-apcu')
+    end
+  end
 end

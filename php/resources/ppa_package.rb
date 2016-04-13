@@ -3,3 +3,4 @@ default_action :install
 
 attribute :name, :kind_of => String, :named_attribute => true
 attribute :package_name, :kind_of => String, :default => nil
+attribute :package_prefix, :kind_of => String, :default => nil

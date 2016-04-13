@@ -10,6 +10,7 @@ end
 
 php_ppa_package 'apc' do
   package_name 'apcu'
+  package_prefix node['php-apc']['package_prefix']
 end
 
 php_config 'apc' do
