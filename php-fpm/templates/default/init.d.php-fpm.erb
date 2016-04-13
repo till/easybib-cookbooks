@@ -20,8 +20,8 @@ exec_prefix=<%= node["php-fpm"]["exec_prefix"] %>
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
 php_fpm_CONF=${prefix}/etc/php-fpm.conf
-php_fpm_SOCKETS=<%= node['php-fpm']['socketdir'] %>
-php_fpm_PID=${prefix}/var/run/php-fpm.pid
+php_fpm_SOCKETS=<%= node["php-fpm"]["socketdir"] %>
+php_fpm_PID=<%= node["php-fpm"]["pid"] %>
 
 whoami=`whoami`
 runas=<%= node["php-fpm"]["user"]%>
