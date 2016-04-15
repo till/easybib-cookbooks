@@ -1,0 +1,1 @@
+set alert root@localhost but not on { pid ppid nonexist instance timestamp }

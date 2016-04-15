@@ -5,6 +5,7 @@ smtp_sasl_password_maps = hash:<%= @etc_path %>/sasl/passwd
 smtp_sasl_security_options = noanonymous
 smtp_tls_security_level = encrypt
 smtp_tls_note_starttls_offer = yes
+smtp_generic_maps = hash:<%= @etc_path %>/generic
 <% end %>
 <% if @rewrite_address %>
 sender_canonical_classes = envelope_sender, header_sender
@@ -20,7 +21,7 @@ mynetworks = <%= @ips.join(', ') %>
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = /etc/mailname
-mydestination = <%= @my_destination %>, <%= @my_destination %>.localdomain, localhost.localdomain, localhost
+mydestination = <%= @my_destination.join(', ') %>
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = loopback-only

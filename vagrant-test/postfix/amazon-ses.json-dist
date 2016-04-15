@@ -1,0 +1,10 @@
+{
+  "postfix": {
+    "relay": {
+      "full_host": "[email-smtp.us-east-1.amazonaws.com]:25",
+      "host": "email-smtp.us-east-1.amazonaws.com",
+      "pass": "--PLEASE-CHANGE-ME--",
+      "user": "--PLEASE-CHANGE-ME--"
+    }
+  }
+}
