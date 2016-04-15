@@ -1,0 +1,85 @@
+<%= render_upstream(@php_upstream, @upstream_name) %>
+
+server {
+    listen 80 <%=@listen_opts%>;
+
+    index <%=@default_router%> index.php;
+
+    access_log <%= @access_log %>;
+
+    location ~* (\.deploy_configuration) {
+        deny all;
+    }
+
+<% if !@domain_name.nil? && !@domain_name.empty? -%>
+    server_name <%=@domain_name%>;
+<% end -%>
+
+<% if @nginx_extra -%>
+    <%= @nginx_extra -%>
+<% end -%>
+
+<% if @htpasswd && !@htpasswd.empty? && File.exist?(@htpasswd) -%>
+    auth_basic            "Restricted";
+    auth_basic_user_file  <%= @htpasswd%>;
+<% end -%>
+
+  client_max_body_size <%= fetch_node(node, @app_name, 'nginx-app', 'client_max_body_size') %>;
+
+  <% unless @nginx_local_conf.nil? -%>
+  <%= render @nginx_local_conf, :local => true %>
+  <% end -%>
+
+    root <%= @doc_root%>;
+<%= render "partials/silence-notfound.erb", :cookbook => "nginx-app" -%>
+
+<%= render "partials/status-checks.erb", :cookbook => 'nginx-app', :variables => {
+        "upstream" => @upstream_name,
+        "health_check" => @health_check
+    } %>
+
+    <% if @routes_enabled.nil? || @routes_enabled.empty? -%>
+<%= render "partials/php-routes-default.erb", :cookbook => 'nginx-app', :variables => {
+        "php_bypass_static_content" => true,
+        "routes_enabled" => @routes_enabled,
+        "upstream" => @upstream_name,
+        "env_conf" => @env_conf,
+        "access_log" => @access_log,
+        "default_router" => @default_router,
+        "node" => @node,
+        "cache_config" => @cache_config
+    } %>
+    <% else -%>
+<%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
+        "php_bypass_static_content" => true,
+        "routes_enabled" => @routes_enabled,
+        "upstream" => @upstream_name,
+        "env_conf" => @env_conf,
+        "access_log" => @access_log,
+        "default_router" => @default_router,
+        "node" => @node
+    } %>
+<% end %>
+
+<% unless node['nginx-app']['browser_caching'].nil? -%>
+    <%= render 'partials/browser-caching.erb',
+      :cookbook => 'nginx-app',
+      :variables => {
+        :enabled => node['nginx-app']['browser_caching']['enabled'],
+        :config => node['nginx-app']['browser_caching']['config']
+      }
+    %>
+<% end -%>
+
+<% if @gzip -%>
+gzip <%= (@gzip['enabled']) ? 'on':'off' %>;
+<%= render 'generic-conf.erb', :cookbook => 'nginx-app', :variables => {
+    :prefix => 'gzip',
+    :config => @gzip['config']
+} %>
+<% end -%>
+
+<% if !@routes_denied.nil? && !@routes_denied.empty? -%>
+<%= render "partials/routes-denied.erb", :cookbook => 'nginx-app'  %>
+<% end %>
+}

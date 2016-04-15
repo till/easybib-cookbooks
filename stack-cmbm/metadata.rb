@@ -7,6 +7,9 @@ version           '0.1'
 
 supports 'ubuntu'
 
+depends 'ark'
+depends 'easybib'
 depends 'ies'
 depends 'ies-mysql'
-depends 'rvm'
+depends 'nginx-app'
+depends 'supervisor'
