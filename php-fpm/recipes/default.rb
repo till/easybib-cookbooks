@@ -30,6 +30,7 @@
 #
 
 include_recipe 'ies-apt::easybib'
+include_recipe 'ies-apt::ondrejphp'
 
 include_recipe 'php-fpm::prepare'
 
