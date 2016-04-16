@@ -1,3 +1,5 @@
+default['php']['ppa']['name'] = 'easybib-ppa'
+default['php']['ppa']['uri'] = ::EasyBib::Ppa.ppa_mirror(node)
 default['php']['ppa']['package_prefix'] = 'php5-easybib'
 
 default['php-apc'] = {}
