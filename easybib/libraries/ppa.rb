@@ -1,11 +1,29 @@
 module EasyBib
   module Ppa
     extend self
+
+    def ppa_mirror(node = self.node, standard_repo = 'easybib-php-ppa')
+      if standard_repo == 'easybib-php-ppa'
+        if use_aptly_mirror?(node)
+          return php_mirror_repo_url(node)
+        end
+
+        return php_launchpad_repo_url(node)
+      end
+
+      unless use_aptly_mirror?(node)
+        return standard_repo
+      end
+
+      'http://ppa.ezbib.com/mirrors/remote-mirrors'
+    end
+
     def use_aptly_mirror?(node = self.node)
       distribution = node.fetch('lsb', {})['codename']
       enable_aptly_mirror?(node) && is_known_distribution?(distribution)
     end
 
+    private
     def enable_aptly_mirror?(node = self.node)
       enable_ppa_mirror = node.fetch('easybib', {}).fetch('enable_ppa_mirror', false)
       unless enable_ppa_mirror
@@ -31,22 +49,6 @@ module EasyBib
     def php_mirror_repo_url(node = self.node)
       prefix = 'http://ppa.ezbib.com/mirrors/php'
       prefix + node['easybib']['php_mirror_version']
-    end
-
-    def ppa_mirror(node = self.node, standard_repo = 'easybib-php-ppa')
-      if standard_repo == 'easybib-php-ppa'
-        if use_aptly_mirror?(node)
-          return php_mirror_repo_url(node)
-        else
-          return php_launchpad_repo_url(node)
-        end
-      end
-
-      unless use_aptly_mirror?(node)
-        return standard_repo
-      end
-
-      'http://ppa.ezbib.com/mirrors/remote-mirrors'
     end
   end
 end
