@@ -24,6 +24,7 @@ module EasyBib
     end
 
     private
+
     def enable_aptly_mirror?(node = self.node)
       enable_ppa_mirror = node.fetch('easybib', {}).fetch('enable_ppa_mirror', false)
       unless enable_ppa_mirror
@@ -53,6 +54,4 @@ module EasyBib
   end
 end
 
-Chef::Provider.send(:include, ::EasyBib::Ppa)
 Chef::Recipe.send(:include, ::EasyBib::Ppa)
-Chef::Resource.send(:include, ::EasyBib::Ppa)
