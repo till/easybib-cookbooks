@@ -17,7 +17,7 @@ action :generate do
       :ext_name => new_resource.name,
       :ini_suffix => new_resource.suffix
     )
-   end
+  end
 
   config = ::Php::Config.new(new_resource.name, new_resource.config)
   extension = {}
