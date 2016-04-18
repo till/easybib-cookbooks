@@ -11,15 +11,6 @@ end
 include_recipe 'ies::role-generic'
 include_recipe 'nodejs'
 include_recipe 'redis'
-include_recipe 'supervisor'
-include_recipe 'nginx-app::server'
 include_recipe 'stack-cmbm::deploy-ruby'
 include_recipe 'stack-cmbm::deploy-puma'
 include_recipe 'stack-cmbm::deploy-nginxapp'
-
-cookbook_file '/home/vagrant/.zshrc' do
-  source 'zshrc'
-  user 'vagrant'
-  group 'vagrant'
-  mode '0600'
-end

@@ -1,3 +1,6 @@
+include_recipe 'nginx-app::server'
+include_recipe 'supervisor'
+
 user = if is_aws
          'www-data'
        else

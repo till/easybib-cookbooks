@@ -1,5 +1,3 @@
-include_recipe 'ark'
-
 ruby_version = node['ruby']['version']
 ruby_install_version = node['ruby_install']['version']
 file_cache_path = Chef::Config['file_cache_path']
@@ -30,9 +28,7 @@ cookbook_file '/root/.gemrc' do
   mode '0644'
 end
 
-execute 'install bundler' do
-  command 'gem install bundler'
-end
+gem_package 'bundler'
 
 execute 'install gems' do
   command 'cd /vagrant_cmbm && bundle install'
