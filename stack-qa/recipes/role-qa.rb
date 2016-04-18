@@ -1,4 +1,4 @@
-include_recipe 'stack-easybib::role-phpapp'
+include_recipe 'ies::role-phpapp'
 
 include_recipe 'php::module-posix'
 if is_aws

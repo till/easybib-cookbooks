@@ -7,7 +7,7 @@ version           '0.1'
 
 supports 'ubuntu'
 
-depends 'stack-easybib'
+depends 'ies'
 depends 'php'
 depends 'phpmyadmin'
 depends 'smokeping'

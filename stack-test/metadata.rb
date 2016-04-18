@@ -1,7 +1,7 @@
 name 'stack-test'
 
 depends 'supervisor'
-depends 'stack-easybib'
+depends 'ies'
 depends 'easybib'
 depends 'easybib-deploy'
 depends 'php-fpm'
