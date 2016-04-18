@@ -1,7 +1,7 @@
 require_relative 'spec_helper.rb'
 require_relative 'shared/nginx-config.rb'
 
-describe 'stack-cmbm::deploy-nginxapp' do
+describe 'stack-cmbm::deploy-vagrant' do
 
   let(:runner) do
     ChefSpec::Runner.new(
