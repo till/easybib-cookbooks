@@ -121,4 +121,15 @@ describe 'php_config' do
       expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/modulename.ini')
     end
   end
+
+  describe 'load priority' do
+    before do
+      node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
+      node.set['config-spec']['load_priority'] = 10
+    end
+
+    it 'creates a .ini file with load priority' do
+      expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/10-modulename-settings.ini')
+    end
+  end
 end
