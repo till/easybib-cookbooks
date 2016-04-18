@@ -12,6 +12,7 @@ describe 'php::module-xdebug' do
 
   it 'installs and configures the extension' do
     expect(chef_run).to install_php_ppa_package('xdebug')
+    expect(chef_run).to generate_php_config('xdebug')
       .with(:config => node['php-xdebug']['settings'])
   end
 end

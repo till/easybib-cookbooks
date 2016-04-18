@@ -12,6 +12,7 @@ describe 'php::module-phar' do
 
   it 'installs and configures the extension' do
     expect(chef_run).to install_php_ppa_package('phar')
+    expect(chef_run).to generate_php_config('phar')
       .with(:config => node['php-phar']['settings'])
   end
 end

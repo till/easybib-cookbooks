@@ -9,6 +9,10 @@ if is_aws
 end
 
 php_ppa_package 'apc' do
-  config apc_attributes
   package_name 'apcu'
+end
+
+php_config 'apc' do
+  config apc_attributes
+  notifies :reload, 'service[php-fpm]', :delayed
 end

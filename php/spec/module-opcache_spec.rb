@@ -20,7 +20,9 @@ describe 'php::module-opcache' do
 
     it 'installs and configures the extension' do
       expect(chef_run).to install_php_ppa_package('opcache')
-        .with(:config =>  node['php-opcache']['settings'])
+
+      expect(chef_run).to generate_php_config('opcache')
+        .with(:config => node['php-opcache']['settings'])
     end
 
     it 'creates the logfile with correct permission' do
