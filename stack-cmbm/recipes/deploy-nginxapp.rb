@@ -1,6 +1,7 @@
 include_recipe 'nginx-app::server'
 include_recipe 'supervisor'
 
+# Under which `user` should supervisor start and run the `puma` process.
 user = if is_aws
          'www-data'
        else
