@@ -1,5 +1,8 @@
-include_recipe 'nginx-app::server'
-include_recipe 'supervisor'
+user = if is_aws
+         'www-data'
+       else
+         'vagrant'
+       end
 
 node['vagrant']['applications'].each do |app_name, app_config|
 
@@ -39,7 +42,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     startretries 3
     stopsignal 'TERM'
     stopwaitsecs 10
-    user 'vagrant'
+    user user
     redirect_stderr false
     stdout_logfile 'syslog'
     stdout_logfile_maxbytes '50MB'
