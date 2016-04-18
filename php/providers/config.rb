@@ -1,5 +1,12 @@
 action :generate do
-  file = "#{new_resource.prefix_dir}/etc/php/#{new_resource.name}-settings.ini"
+  file = format(
+    '%{prefix}/%{config_dir}/%{ext_name}%{ini_suffix}.ini',
+    :prefix => new_resource.prefix_dir,
+    :config_dir => new_resource.config_dir,
+    :ext_name => new_resource.name,
+    :ini_suffix => new_resource.suffix
+  )
+
   config = ::Php::Config.new(new_resource.name, new_resource.config)
   extension = {}
 
