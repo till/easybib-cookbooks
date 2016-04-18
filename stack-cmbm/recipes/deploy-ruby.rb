@@ -23,6 +23,13 @@ execute 'install ruby-2.2.3' do
   end
 end
 
+cookbook_file '/root/.gemrc' do
+  source 'gemrc'
+  user 'root'
+  group 'root'
+  mode '0644'
+end
+
 execute 'install bundler' do
   command 'gem install bundler'
 end

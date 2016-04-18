@@ -1,6 +1,0 @@
-#!/bin/bash
-APP=$1; STATEFILE=$2; CMD=$3;
-
-source /etc/profile.d/rvm.sh
-cd $APP
-exec bundle exec pumactl --state $STATEFILE $CMD
