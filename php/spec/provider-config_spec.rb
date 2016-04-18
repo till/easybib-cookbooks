@@ -110,4 +110,15 @@ describe 'php_config' do
         .with_content(fixture)
     end
   end
+
+  describe 'another path' do
+    before do
+      node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
+      node.set['config-spec']['ini_suffix'] = ''
+    end
+
+    it 'creates a .ini file' do
+      expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/modulename.ini')
+    end
+  end
 end
