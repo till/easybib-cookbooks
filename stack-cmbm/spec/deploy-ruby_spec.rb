@@ -39,12 +39,4 @@ describe 'stack-cmbm::deploy-ruby' do
   it 'installs bundler' do
     expect(chef_run).to install_gem_package('bundler')
   end
-
-  it 'installs all gem dependencies' do
-    expect(chef_run).to run_execute('install gems')
-  end
-
-  it 'runs app setup' do
-    expect(chef_run).to run_execute('setup app')
-  end
 end

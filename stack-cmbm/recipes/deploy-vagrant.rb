@@ -1,13 +1,9 @@
+Chef::Application.fatal!('This recipe is vagrant only!') if is_aws
+
 include_recipe 'nginx-app::server'
 include_recipe 'supervisor'
 
 # Under which `user` should supervisor start and run the `puma` process.
-user = if is_aws
-         'www-data'
-       else
-         'vagrant'
-       end
-
 node['vagrant']['applications'].each do |app_name, app_config|
 
   default_router = if app_config.attribute?('default_router')
@@ -36,7 +32,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
   supervisor_service 'puma_supervisor' do
     action [:enable, :restart]
     autostart true
-    command "puma -C #{app_dir}/config/puma.rb /vagrant_cmbm/config.ru"
+    command "puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru"
     numprocs 1
     numprocs_start 0
     priority 999
@@ -46,7 +42,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     startretries 3
     stopsignal 'TERM'
     stopwaitsecs 10
-    user user
+    user 'vagrant'
     redirect_stderr false
     stdout_logfile 'syslog'
     stdout_logfile_maxbytes '50MB'
@@ -59,5 +55,17 @@ node['vagrant']['applications'].each do |app_name, app_config|
     stderr_capture_maxbytes '0'
     stderr_events_enabled false
     serverurl 'AUTO'
+  end
+
+  execute 'setup app' do
+    command "cd #{app_dir} && bundle exec rake db:setup ads:populate"
+  end
+
+  # Deploy a specially crafted zshrc on Vagrant for development.
+  cookbook_file '/home/vagrant/.zshrc' do
+    source 'zshrc'
+    user 'vagrant'
+    group 'vagrant'
+    mode '0600'
   end
 end

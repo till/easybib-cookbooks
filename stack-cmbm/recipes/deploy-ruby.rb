@@ -29,11 +29,3 @@ cookbook_file '/root/.gemrc' do
 end
 
 gem_package 'bundler'
-
-execute 'install gems' do
-  command 'cd /vagrant_cmbm && bundle install'
-end
-
-execute 'setup app' do
-  command 'cd /vagrant_cmbm && bundle exec rake db:setup ads:populate'
-end
