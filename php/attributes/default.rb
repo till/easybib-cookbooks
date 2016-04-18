@@ -2,6 +2,9 @@ default['php']['ppa']['name'] = 'easybib-ppa'
 default['php']['ppa']['uri'] = ::EasyBib::Ppa.ppa_mirror(node)
 default['php']['ppa']['package_prefix'] = 'php5-easybib'
 
+default['php']['extensions']['config_dir'] = 'etc/php'
+default['php']['extensions']['ini_suffix'] = '-settings'
+
 default['php-apc'] = {}
 default['php-apc']['settings']['ttl'] = 0
 default['php-apc']['settings']['mmap_file_mask'] = '/dev/zero'
