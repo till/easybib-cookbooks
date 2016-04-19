@@ -61,7 +61,6 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
     :display_errors => display_errors,
     :max_execution_time => config['maxexecutiontime'],
     :max_input_vars => config['ini']['max-input-vars'],
-    :logfile => config['logfile'],
     :error_log => 'syslog',
     :tmpdir => config['tmpdir'],
     :prefix => config['prefix'],
@@ -82,7 +81,6 @@ template "#{etc_cli_dir}/#{conf_cli}" do
     :display_errors => 'On',
     :max_execution_time => '-1',
     :max_input_vars => config['ini']['max-input-vars'],
-    :logfile => config['logfile'],
     :tmpdir => config['tmpdir'],
     :prefix => config['prefix'],
     :sendmail_params => sendmail_params
