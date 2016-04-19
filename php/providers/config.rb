@@ -9,11 +9,12 @@ action :generate do
       :ini_suffix => new_resource.suffix
     )
   else
+    raise 'load_priority must be >= 0 && <=99' if new_resource.load_priority > 99
     file = format(
       '%{prefix}/%{config_dir}/%{load_priority}-%{ext_name}%{ini_suffix}.ini',
       :prefix => new_resource.prefix_dir,
       :config_dir => new_resource.config_dir,
-      :load_priority => new_resource.load_priority.to_s,
+      :load_priority => new_resource.load_priority.to_s.rjust(2, '0'),
       :ext_name => new_resource.name,
       :ini_suffix => new_resource.suffix
     )
