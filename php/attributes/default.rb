@@ -9,14 +9,18 @@ default['php-apc'] = {}
 default['php-apc']['settings']['ttl'] = 0
 default['php-apc']['settings']['mmap_file_mask'] = '/dev/zero'
 default['php-apc']['settings']['shm_size'] = '70M'
+default['php-apc']['load_priority'] = nil
 
 default['php-mysqli']['settings']['reconnect'] = 1
+default['php-mysqli']['load_priority'] = nil
 
 default['php-tidy']['settings']['clean_output'] = 0
+default['php-tidy']['load_priority'] = nil
 
 default['php-soap']['settings']['wsdl_cache_enabled'] = 1
 default['php-soap']['settings']['wsdl_cache_ttl'] = 86_400
 default['php-soap']['settings']['wsdl_cache_limit'] = 5
+default['php-soap']['load_priority'] = nil
 
 default['php-opcache']['settings'] = {
   'memory_consumption' => 500,
@@ -31,6 +35,7 @@ default['php-opcache']['settings'] = {
   'max_wasted_percentage' => 10,
   'error_log' => nil
 }
+default['php-opcache']['load_priority'] = nil
 
 default['php-xdebug']['settings'] = {
   'scream'               => 1,
@@ -40,9 +45,11 @@ default['php-xdebug']['settings'] = {
   'remote_connect_back'  => 1,
   'idekey'               => 'XDEBUG_PHPSTORM'
 }
+default['php-xdebug']['load_priority'] = nil
 
 default['php-phar']['settings']  = {
   'detect_unicode' => 'Off',
   'readonly' => 'Off',
   'require_hash' => 'Off'
 }
+default['php-phar']['load_priority'] = nil
