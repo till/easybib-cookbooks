@@ -13,6 +13,7 @@ php_ppa_package 'apc' do
 end
 
 php_config 'apc' do
+  load_priority 20
   config apc_attributes
   config_dir node['php']['extensions']['config_dir']
   suffix node['php']['extensions']['ini_suffix']

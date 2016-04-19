@@ -5,6 +5,7 @@ module_config = node['php-opcache']['settings']
 php_ppa_package 'opcache'
 
 php_config 'opcache' do
+  load_priority 10
   config module_config
   config_dir node['php']['extensions']['config_dir']
   suffix node['php']['extensions']['ini_suffix']
