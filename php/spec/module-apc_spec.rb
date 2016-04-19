@@ -46,12 +46,14 @@ describe 'php::module-apc' do
     expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini').with_content(conf)
   end
 
-  describe 'load_priority test' do
+  describe 'with load_priority set' do
     before do
       node.set['php-apc']['load_priority'] = 99
     end
-    it 'creates a .ini file with load priority' do
+    it 'does not create soap-settings.ini without load_priority' do
       expect(chef_run).to_not render_file('/opt/easybib/etc/php/apc-settings.ini')
+    end
+    it 'creates soap-settings.ini with load_priority' do
       expect(chef_run).to render_file('/opt/easybib/etc/php/99-apc-settings.ini')
     end
   end
