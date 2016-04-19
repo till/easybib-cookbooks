@@ -79,28 +79,6 @@ mail.add_x_header = On
 ; http://php.net/sql.safe-mode
 sql.safe_mode = Off
 
-[MySQLi]
-mysqli.max_persistent = 0
-;mysqli.allow_local_infile = On
-mysqli.allow_persistent = Off
-mysqli.max_links = -1
-mysqli.cache_size = 2000
-mysqli.default_port = 3306
-mysqli.default_socket =
-mysqli.default_host =
-mysqli.default_user =
-mysqli.default_pw =
-mysqli.reconnect = Off
-
-[mysqlnd]
-mysqlnd.collect_statistics = On
-mysqlnd.collect_memory_statistics = Off
-;mysqlnd.net_cmd_buffer_size = 2048
-;mysqlnd.net_read_buffer_size = 32768
-
-[bcmath]
-bcmath.scale = 0
-
 [Session]
 session.save_handler = files
 session.save_path = "<%= @tmpdir %>"
