@@ -7,6 +7,7 @@ cron_d 'phpfpm-cloudwatch' do
   minute '*'
   user 'www-data'
   command cronscript
+  path '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 end
 
 template cronscript do
