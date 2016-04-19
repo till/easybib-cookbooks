@@ -2,15 +2,17 @@ require_relative 'spec_helper.rb'
 
 describe 'php::module-apc' do
 
-  let(:chef_run) do
+  let(:runner) do
     ChefSpec::Runner.new(:step_into => %w(php_ppa_package php_config)) do |node|
       # fake opsworks
       node.default['opsworks']['stack']['name'] = 'chef-spec-run'
       node.default['opsworks']['instance']['layers'] = []
       node.default['php']['ppa']['package_prefix'] = 'php5-easybib'
       node.default['php-fpm']['prefix'] = '/opt/easybib'
-    end.converge(described_recipe)
+    end
   end
+  let(:chef_run) { runner.converge(described_recipe) }
+  let(:node)     { runner.node }
 
   it 'adds ppa mirror configuration' do
     expect(chef_run).to include_recipe('php::dependencies-ppa')
@@ -44,4 +46,15 @@ describe 'php::module-apc' do
     expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini').with_content(conf)
   end
 
+  describe 'with load_priority set' do
+    before do
+      node.set['php-apc']['load_priority'] = 99
+    end
+    it 'does not create soap-settings.ini without load_priority' do
+      expect(chef_run).to_not render_file('/opt/easybib/etc/php/apc-settings.ini')
+    end
+    it 'creates soap-settings.ini with load_priority' do
+      expect(chef_run).to render_file('/opt/easybib/etc/php/99-apc-settings.ini')
+    end
+  end
 end
