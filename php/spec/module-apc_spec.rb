@@ -51,6 +51,7 @@ describe 'php::module-apc' do
       node.set['php-apc']['load_priority'] = 99
     end
     it 'creates a .ini file with load priority' do
+      expect(chef_run).to_not render_file('/opt/easybib/etc/php/apc-settings.ini')
       expect(chef_run).to render_file('/opt/easybib/etc/php/99-apc-settings.ini')
     end
   end
