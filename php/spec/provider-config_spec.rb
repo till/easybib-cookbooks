@@ -128,21 +128,12 @@ describe 'php_config' do
       node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
     end
 
-    describe 'with load_priority set to string "05"' do
+    describe 'with load_priority set to string "5"' do
       before do
-        node.set['config-spec']['load_priority'] = '05'
+        node.set['config-spec']['load_priority'] = '5'
       end
       it 'raises chef validation failed exception' do
         expect { chef_run }.to raise_error(Chef::Exceptions::ValidationFailed)
-      end
-    end
-
-    describe 'with load_priority set to 05' do
-      before do
-        node.set['config-spec']['load_priority'] = 05
-      end
-      it 'creates a .ini file with prefix of 05-' do
-        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/05-modulename-settings.ini')
       end
     end
 
@@ -150,8 +141,8 @@ describe 'php_config' do
       before do
         node.set['config-spec']['load_priority'] = 500
       end
-      it 'creates a .ini file with prefix of 500-' do
-        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/500-modulename-settings.ini')
+      it 'raises RuntimeError exception' do
+        expect { chef_run }.to raise_error(RuntimeError)
       end
     end
 
