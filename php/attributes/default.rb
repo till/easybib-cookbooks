@@ -12,6 +12,12 @@ default['php-apc']['settings']['shm_size'] = '70M'
 
 default['php-mysqli']['settings']['reconnect'] = 1
 
+default['php-tidy']['settings']['clean_output'] = 0
+
+default['php-soap']['settings']['wsdl_cache_enabled'] = 1
+default['php-soap']['settings']['wsdl_cache_ttl'] = 86_400
+default['php-soap']['settings']['wsdl_cache_limit'] = 5
+
 default['php-opcache']['settings'] = {
   'memory_consumption' => 500,
   'interned_strings_buffer' => 8,

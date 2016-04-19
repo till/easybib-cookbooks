@@ -45,6 +45,8 @@ end
 
 include_recipe 'php-fpm::configure'
 include_recipe 'php::module-apc'
+include_recipe 'php::module-soap'
+include_recipe 'php::module-tidy'
 
 expected_prefix = '/usr/local/bin'
 install_prefix = "#{node['php-fpm']['prefix']}/bin"
