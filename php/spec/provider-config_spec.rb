@@ -123,13 +123,55 @@ describe 'php_config' do
   end
 
   describe 'load priority' do
+
     before do
       node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
-      node.set['config-spec']['load_priority'] = 10
     end
 
-    it 'creates a .ini file with load priority' do
-      expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/10-modulename-settings.ini')
+    describe 'with load_priority set to 05' do
+      before do
+        node.set['config-spec']['load_priority'] = '05'
+      end
+      it 'does something stupid' do
+        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/modulename-settings.ini')
+      end
     end
+
+    describe 'with load_priority set to 05' do
+      before do
+        node.set['config-spec']['load_priority'] = 05
+      end
+      it 'creates a .ini file with prefix of 05-' do
+        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/05-modulename-settings.ini')
+      end
+    end
+
+    describe 'with load_priority set to 500' do
+      before do
+        node.set['config-spec']['load_priority'] = 500
+      end
+      it 'creates a .ini file with prefix of 500-' do
+        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/500-modulename-settings.ini')
+      end
+    end
+
+    describe 'with load_priority set to 50' do
+      before do
+        node.set['config-spec']['load_priority'] = 50
+      end
+      it 'creates a .ini file with prefix of 50-' do
+        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/50-modulename-settings.ini')
+      end
+    end
+
+    describe 'with load_priority set to 5' do
+      before do
+        node.set['config-spec']['load_priority'] = 5
+      end
+      it 'creates a .ini file with prefix of 05-' do
+        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/05-modulename-settings.ini')
+      end
+    end
+
   end
 end
