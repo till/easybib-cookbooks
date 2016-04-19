@@ -39,4 +39,14 @@ describe 'php::module-soap' do
       )
     expect(chef_run).to render_file('/opt/easybib/etc/php/soap-settings.ini')
   end
+
+  describe 'load priority' do
+    before do
+      node.set['php-soap']['load_priority'] = 99
+    end
+    it 'creates soap-settings.ini with load_priority' do
+      expect(chef_run).to render_file('/opt/easybib/etc/php/99-soap-settings.ini')
+    end
+  end
+
 end
