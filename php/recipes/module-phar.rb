@@ -2,7 +2,11 @@ include_recipe 'php::dependencies-ppa'
 
 module_config = node['php-phar']['settings']
 
-php_ppa_package 'phar'
+php_ppa_package 'phar' do
+  only_if do
+    node['php']['ppa']['package_prefix'] == 'php5-easybib'
+  end
+end
 
 php_config 'phar' do
   config module_config
