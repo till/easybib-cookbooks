@@ -1,5 +1,5 @@
 include_recipe 'supervisor'
-include_recipe 'stack-easybib::role-phpapp'
+include_recipe 'ies::role-phpapp'
 
 unless node['haproxy']['websocket_layers'].nil?
   if has_role?(get_instance_roles, node['haproxy']['websocket_layers'].keys.first)

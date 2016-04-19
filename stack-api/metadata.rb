@@ -7,6 +7,6 @@ version           '0.1'
 
 supports 'ubuntu'
 
-depends 'stack-easybib'
 depends 'easybib-deploy'
+depends 'ies'
 depends 'nginx-app'
