@@ -110,4 +110,59 @@ describe 'php_config' do
         .with_content(fixture)
     end
   end
+
+  describe 'another path' do
+    before do
+      node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
+      node.set['config-spec']['ini_suffix'] = ''
+    end
+
+    it 'creates a .ini file' do
+      expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/modulename.ini')
+    end
+  end
+
+  describe 'load priority' do
+
+    before do
+      node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
+    end
+
+    describe 'with load_priority set to string "5"' do
+      before do
+        node.set['config-spec']['load_priority'] = '5'
+      end
+      it 'raises chef validation failed exception' do
+        expect { chef_run }.to raise_error(Chef::Exceptions::ValidationFailed)
+      end
+    end
+
+    describe 'with load_priority set to 500' do
+      before do
+        node.set['config-spec']['load_priority'] = 500
+      end
+      it 'raises RuntimeError exception' do
+        expect { chef_run }.to raise_error(RuntimeError)
+      end
+    end
+
+    describe 'with load_priority set to 50' do
+      before do
+        node.set['config-spec']['load_priority'] = 50
+      end
+      it 'creates a .ini file with prefix of 50-' do
+        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/50-modulename-settings.ini')
+      end
+    end
+
+    describe 'with load_priority set to 5' do
+      before do
+        node.set['config-spec']['load_priority'] = 5
+      end
+      it 'creates a .ini file with prefix of 05-' do
+        expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/05-modulename-settings.ini')
+      end
+    end
+
+  end
 end

@@ -2,8 +2,14 @@ include_recipe 'php::dependencies-ppa'
 
 module_config = node['php-opcache']['settings']
 
-php_ppa_package 'opcache' do
+php_ppa_package 'opcache'
+
+php_config 'opcache' do
   config module_config
+  load_priority node['php-opcache']['load_priority']
+  config_dir node['php']['extensions']['config_dir']
+  suffix node['php']['extensions']['ini_suffix']
+  notifies :reload, 'service[php-fpm]', :delayed
 end
 
 file 'create opcache error_log' do

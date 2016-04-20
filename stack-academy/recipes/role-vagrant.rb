@@ -1,7 +1,7 @@
 include_recipe 'ohai'
 include_recipe 'ies-mysql'
 include_recipe 'ies-mysql::dev'
-include_recipe 'stack-easybib::role-phpapp'
+include_recipe 'ies::role-phpapp'
 include_recipe 'nginx-app::vagrant'
 include_recipe 'php::module-pdo_sqlite'
 include_recipe 'nodejs'

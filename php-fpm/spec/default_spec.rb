@@ -25,6 +25,23 @@ describe 'php-fpm::default' do
     expect(chef_run).to install_package('php5-easybib')
   end
 
+  describe 'php.ini refactoring' do
+    it 'includes module recipes for soap & tidy' do
+      expect(chef_run).to include_recipe 'php::module-soap'
+      expect(chef_run).to include_recipe 'php::module-tidy'
+    end
+
+    it 'does not install soap & tidy' do
+      expect(chef_run).not_to install_php_ppa_package('soap')
+      expect(chef_run).not_to install_php_ppa_package('tidy')
+    end
+
+    it 'sets up configuration for soap & tidy' do
+      expect(chef_run).to generate_php_config('soap')
+      expect(chef_run).to generate_php_config('tidy')
+    end
+  end
+
   # it "creates symlinks to all the binaries" do
   #  Mixlib::ShellOut.stub(:new).and_return(@shellout)
   #  ["pear", "peardev", "pecl", "phar", "phar.phar", "php-config", "phpize"].each do |bin|

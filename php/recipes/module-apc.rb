@@ -9,6 +9,13 @@ if is_aws
 end
 
 php_ppa_package 'apc' do
-  config apc_attributes
   package_name 'apcu'
+end
+
+php_config 'apc' do
+  config apc_attributes
+  load_priority node['php-apc']['load_priority']
+  config_dir node['php']['extensions']['config_dir']
+  suffix node['php']['extensions']['ini_suffix']
+  notifies :reload, 'service[php-fpm]', :delayed
 end

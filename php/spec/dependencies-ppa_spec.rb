@@ -6,6 +6,7 @@ describe 'php::dependencies-ppa' do
 
   it 'adds ppa mirror configuration' do
     expect(chef_run).to include_recipe('ies-apt::ppa')
-    expect(chef_run).to include_recipe('ies-apt::easybib')
+    expect(chef_run).to include_recipe('aptly::gpg')
+    expect(chef_run).to add_apt_repository('easybib-ppa')
   end
 end

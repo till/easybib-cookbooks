@@ -79,28 +79,6 @@ mail.add_x_header = On
 ; http://php.net/sql.safe-mode
 sql.safe_mode = Off
 
-[MySQLi]
-mysqli.max_persistent = 0
-;mysqli.allow_local_infile = On
-mysqli.allow_persistent = Off
-mysqli.max_links = -1
-mysqli.cache_size = 2000
-mysqli.default_port = 3306
-mysqli.default_socket =
-mysqli.default_host =
-mysqli.default_user =
-mysqli.default_pw =
-mysqli.reconnect = Off
-
-[mysqlnd]
-mysqlnd.collect_statistics = On
-mysqlnd.collect_memory_statistics = Off
-;mysqlnd.net_cmd_buffer_size = 2048
-;mysqlnd.net_read_buffer_size = 32768
-
-[bcmath]
-bcmath.scale = 0
-
 [Session]
 session.save_handler = files
 session.save_path = "<%= @tmpdir %>"
@@ -127,28 +105,3 @@ session.use_trans_sid = 0
 session.hash_function = 0
 session.hash_bits_per_character = 5
 url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=fakeentry"
-
-[Tidy]
-;tidy.default_config = <%= @prefix %>/lib/php/default.tcfg
-tidy.clean_output = Off
-
-[soap]
-soap.wsdl_cache_enabled=1
-soap.wsdl_cache_dir="<%= @tmpdir %>"
-soap.wsdl_cache_ttl=86400
-soap.wsdl_cache_limit = 5
-
-[sysvshm]
-;sysvshm.init_mem = 10000
-
-<% if @hhvm %>
-[hhvm]
-pid = /var/run/hhvm/pid
-hhvm.server.port = <%= @hhvm_port %>
-hhvm.server.type = fastcgi
-hhvm.server.default_document = index.php
-hhvm.repo.central.path = /var/run/hhvm/hhvm.hhb
-
-hhvm.log.use_log_file = true
-hhvm.log.file="<%= @logfile %>"
-<% end %>

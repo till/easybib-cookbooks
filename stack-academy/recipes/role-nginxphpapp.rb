@@ -1,4 +1,4 @@
-include_recipe 'stack-easybib::role-phpapp'
+include_recipe 'ies::role-phpapp'
 include_recipe 'supervisor'
 
 include_recipe 'easybib-deploy::ssl-certificates'
