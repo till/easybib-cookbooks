@@ -64,5 +64,5 @@ frontend http-in
 
   <% default_layer = node.fetch('haproxy',{}).fetch('default_layer',{})
   if !@node.fetch('opsworks', {}).fetch('layers', {}).fetch(default_layer, {}).fetch('instances', {}).empty? -%>
-  default_backend nginxphpapp_php_app_servers
+  default_backend <%= default_layer %>_php_app_servers
   <% end -%>
