@@ -1,6 +1,5 @@
 include_recipe 'php::dependencies-ppa'
 
-node.override['php-tidy']['settings']['default_config'] = "#{node['php-fpm']['tmpdir']}/lib/php/default.tcfg"
 module_config = node['php-tidy']['settings']
 
 php_ppa_package 'tidy' do
