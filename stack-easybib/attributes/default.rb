@@ -24,3 +24,5 @@ normal['nginx-app']['browser_caching']['config']['css|svg|map|js'] = {
     'Vary "Accept-Encoding"'
   ]
 }
+
+default['easybib']['nginx-app']['disable-404'] = false
