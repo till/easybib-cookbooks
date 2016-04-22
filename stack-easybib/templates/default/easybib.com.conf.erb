@@ -68,6 +68,10 @@ unless uncached_extensions.empty? -%>
         add_header Access-Control-Allow-Origin *;
     }
 
+    location /crossdomain.xml {
+        add_header Access-Control-Allow-Origin *;
+    }
+
 <% unless node['nginx-app']['browser_caching'].nil? -%>
   <%= render 'partials/browser-caching.erb',
     :cookbook => 'nginx-app',
