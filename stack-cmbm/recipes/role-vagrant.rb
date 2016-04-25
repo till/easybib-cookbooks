@@ -9,7 +9,3 @@ include_recipe 'stack-cmbm::role-nginxapp'
 
 # Configure nginx and supervisor
 include_recipe 'stack-cmbm::deploy-vagrant'
-
-execute 'install gems' do
-  command 'cd /vagrant_cmbm && bundle install'
-end

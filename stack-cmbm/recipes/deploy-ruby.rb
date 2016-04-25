@@ -1,31 +1,79 @@
-ruby_version = node['ruby']['version']
-ruby_install_version = node['ruby_install']['version']
-file_cache_path = Chef::Config['file_cache_path']
+user = if is_aws
+         'root'
+       else
+         'vagrant'
+       end
 
-remote_file "#{file_cache_path}/ruby-install-#{ruby_install_version}.tar.gz" do
-  source "https://codeload.github.com/postmodern/ruby-install/tar.gz/v#{ruby_install_version}"
+home = if is_aws
+         '/root'
+       else
+         "/home/#{user}"
+       end
+
+# Use `rbenv` to manage multiple Ruby version.
+# https://github.com/rbenv/rbenv
+git "#{home}/.rbenv" do
+  repository 'https://github.com/rbenv/rbenv.git'
+  revision node['ruby']['rbenv']['version']
+  user user
+  group user
+  action :sync
 end
 
-execute 'unpack ruby-install archive' do
-  command "cd #{file_cache_path}; tar zxvf ruby-install-#{ruby_install_version}.tar.gz"
+# Ensure that the `rbenv` plugin directory exists.
+directory "#{home}/.rbenv/plugins" do
+  user user
+  group user
+  mode '0755'
+  action :create
 end
 
-execute 'install ruby-install' do
-  command "cd #{file_cache_path}/ruby-install-#{ruby_install_version}; make install"
+# Use rbenv plugin `ruby-build` to be able to install basically any Ruby version using rbenv.
+# https://github.com/rbenv/ruby-build
+git "#{home}/.rbenv/plugins/ruby-build" do
+  repository 'https://github.com/rbenv/ruby-build.git'
+  revision 'v20160426'
+  action :sync
 end
 
-execute 'install ruby-2.2.3' do
-  command "ruby-install --system ruby #{ruby_version} -- --disable-install-rdoc"
-  not_if do
-    File.exist?('/usr/local/bin/ruby')
+# Compile rbenv bash extensions for better overall performance of rbenv.
+execute 'compile rbenv bash extension' do
+  command "cd #{home}/.rbenv && src/configure && make -C src"
+end
+
+execute 'fix permissions' do
+  command "chown -R #{user}:#{user} #{home}/.rbenv"
+end
+
+# rbenv requires specific environment variables, such as $PATH.
+%w(bash zsh).each do |shell|
+  cookbook_file "#{home}/.#{shell}rc" do
+    source "#{shell}rc"
+    user user
+    group user
+    mode '0600'
   end
 end
 
-cookbook_file '/root/.gemrc' do
-  source 'gemrc'
-  user 'root'
-  group 'root'
-  mode '0644'
+# Install Ruby version required by AWS OpsWorks.
+ruby_opsworks = node.fetch('ruby', {}).fetch('rubies', {}).fetch('opsworks', '')
+execute "install ruby-#{ruby_opsworks} for opsworks-agent" do
+  command "su #{user} -l -c '#{home}/.rbenv/bin/rbenv install #{ruby_opsworks}'"
+  not_if do
+    Dir.exists?("#{home}/.rbenv/versions/#{ruby_opsworks}")
+  end
 end
 
-gem_package 'bundler'
+# Make the OpsWorks Ruby version the global system default.
+execute "set ruby-#{ruby_opsworks} as global default" do
+  command "su #{user} -l -c '#{home}/.rbenv/bin/rbenv global #{ruby_opsworks}'"
+end
+
+# Install the Ruby version required by our CMBM app.
+ruby_cmbm = node.fetch('ruby', {}).fetch('rubies', {}).fetch('cmbm', '')
+execute "install ruby-#{ruby_cmbm} for CMBM" do
+  command "su #{user} -l -c '#{home}/.rbenv/bin/rbenv install #{ruby_cmbm}'"
+  not_if do
+    Dir.exists?("#{home}/.rbenv/versions/#{ruby_cmbm}")
+  end
+end
