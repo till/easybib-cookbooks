@@ -19,24 +19,4 @@ describe 'stack-cmbm::deploy-ruby' do
       }
     }
   end
-
-  it 'downloads the install-ruby archive' do
-    expect(chef_run).to create_remote_file("#{file_cache_path}/ruby-install-#{ruby_install_version}.tar.gz")
-  end
-
-  it 'unpacks ruby-install archive' do
-    expect(chef_run).to run_execute('unpack ruby-install archive')
-  end
-
-  it 'installs ruby-install' do
-    expect(chef_run).to run_execute('install ruby-2.2.3')
-  end
-
-  it 'creates gemrc' do
-    expect(chef_run).to create_cookbook_file('/root/.gemrc')
-  end
-
-  it 'installs bundler' do
-    expect(chef_run).to install_gem_package('bundler')
-  end
 end

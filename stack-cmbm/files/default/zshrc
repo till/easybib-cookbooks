@@ -65,4 +65,7 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall%
 
+export PATH=~/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
+
 cd /vagrant_cmbm

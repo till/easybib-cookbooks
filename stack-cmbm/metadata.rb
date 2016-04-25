@@ -9,6 +9,8 @@ supports 'ubuntu'
 
 depends 'ark'
 depends 'easybib'
+depends 'easybib-deploy'
+depends 'haproxy'
 depends 'ies'
 depends 'ies-mysql'
 depends 'nginx-app'
