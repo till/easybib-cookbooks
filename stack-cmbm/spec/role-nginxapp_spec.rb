@@ -17,22 +17,21 @@ describe 'stack-cmbm::role-nginxapp' do
     }
   end
 
-  it 'our basic setup recipe' do
-    expect(chef_run).to include_recipe('ies::role-generic')
-  end
-
-  it 'pulls in nodejs/redis' do
-    expect(chef_run).to include_recipe('nodejs')
-    expect(chef_run).to include_recipe('redis')
-  end
-
   it 'pulls in all package dependencies' do
     [
-      'libxml2', 'libmysqlclient-dev', 'autoconf', 'bison', 'build-essential', 'libssl-dev', 'libyaml-dev',
-      'libreadline6-dev', 'zlib1g-dev', 'libncurses5-dev', 'libffi-dev', 'libgdbm3', 'libgdbm-dev', 'libreadline-dev',
-      'qt5-default', 'libqt5webkit5-dev', 'gstreamer1.0-plugins-base', 'gstreamer1.0-tools'
+        'libxml2', 'libmysqlclient-dev', 'autoconf', 'bison', 'build-essential', 'libssl-dev', 'libyaml-dev',
+        'libreadline6-dev', 'zlib1g-dev', 'libncurses5-dev', 'libffi-dev', 'libgdbm3', 'libgdbm-dev', 'libreadline-dev',
+        'qt5-default', 'libqt5webkit5-dev', 'gstreamer1.0-plugins-base', 'gstreamer1.0-tools'
     ].each do |p|
       expect(chef_run).to install_package(p)
     end
+  end
+
+  it 'includes all required recipes' do
+    expect(chef_run).to include_recipe('ies::role-generic')
+    expect(chef_run).to include_recipe('nodejs')
+    expect(chef_run).to include_recipe('redis')
+    expect(chef_run).to include_recipe('stack-cmbm::deploy-ruby')
+    expect(chef_run).to include_recipe('stack-cmbm::deploy-puma')
   end
 end

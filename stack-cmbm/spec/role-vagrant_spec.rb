@@ -17,15 +17,10 @@ describe 'stack-cmbm::role-vagrant' do
     }
   end
 
-  it 'installs all gem dependencies' do
-    expect(chef_run).to run_execute('install gems')
-  end
-
-  it 'runs app setup' do
-    expect(chef_run).to run_execute('setup app')
-  end
-
-  it 'installs the zshrc' do
-    expect(chef_run).to create_cookbook_file('/home/vagrant/.zshrc')
+  it 'includes all required recipes' do
+    expect(chef_run).to include_recipe('ies-mysql')
+    expect(chef_run).to include_recipe('ies-mysql::dev')
+    expect(chef_run).to include_recipe('stack-cmbm::role-nginxapp')
+    expect(chef_run).to include_recipe('stack-cmbm::deploy-vagrant')
   end
 end
