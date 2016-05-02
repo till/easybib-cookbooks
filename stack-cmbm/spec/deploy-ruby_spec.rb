@@ -23,22 +23,22 @@ describe 'stack-cmbm::deploy-ruby' do
     }
   end
 
-  it "syncs the git repository for rbenv" do
+  it 'syncs the git repository for rbenv' do
     expect(chef_run).to sync_git(rbenv_home)
   end
 
-  it "syncs the git repository of ruby-build" do
+  it 'syncs the git repository of ruby-build' do
     expect(chef_run).to create_directory("#{rbenv_home}/plugins")
     expect(chef_run).to sync_git("#{rbenv_home}/plugins/ruby-build")
   end
 
   it 'creates the rc-files with rbenv requirements' do
     expect(chef_run).to render_file("#{home}/.bashrc")
-                            .with_content('export PATH=~/.rbenv/bin:$PATH')
-                            .with_content('eval "$(rbenv init -)"')
+      .with_content('export PATH=~/.rbenv/bin:$PATH')
+      .with_content('eval "$(rbenv init -)"')
     expect(chef_run).to render_file("#{home}/.zshrc")
-                            .with_content('export PATH=~/.rbenv/bin:$PATH')
-                            .with_content('eval "$(rbenv init -)"')
+      .with_content('export PATH=~/.rbenv/bin:$PATH')
+      .with_content('eval "$(rbenv init -)"')
   end
 
   it 'installs all required ruby-versions' do

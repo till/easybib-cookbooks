@@ -18,7 +18,7 @@ home = if is_aws
 rbenv_home = "#{home}/.rbenv"
 rbenv_paths = [
   %(#{rbenv_home}/bin),
-  %(#{rbenv_home}/shims),
+  %(#{rbenv_home}/shims)
 ].join(':')
 path = "#{rbenv_paths}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
@@ -39,18 +39,18 @@ node['vagrant']['applications'].each do |app_name, app_config|
   ruby_cmbm = node.fetch('ruby', {}).fetch('rubies', {}).fetch('cmbm', '')
   execute 'install bundler' do
     command "su #{user} -l -c '#{home}/.rbenv/versions/#{ruby_cmbm}/bin/gem install bundler'"
-    environment ({"PATH" => path, "HOME" => home, "USER" => user})
+    environment('PATH' => path, 'HOME' => home, 'USER' => user)
   end
 
   execute 'install gem dependencies' do
     command "su #{user} -l -c 'cd #{app_dir} && #{home}/.rbenv/versions/#{ruby_cmbm}/bin/bundle install'"
-    environment ({"PATH" => path, "HOME" => home, "USER" => user})
+    environment('PATH' => path, 'HOME' => home, 'USER' => user)
   end
 
   execute 'setup app' do
     cwd app_dir
     user user
-    environment ({"PATH" => path, "HOME" => home, "USER" => user})
+    environment('PATH' => path, 'HOME' => home, 'USER' => user)
     command "export RBENV_VERSION=#{ruby_cmbm} && #{home}/.rbenv/versions/#{ruby_cmbm}/bin/bundle exec rake db:setup"
   end
 
@@ -69,7 +69,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     action [:enable, :restart]
     autostart true
     command "#{rbenv_home}/shims/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru"
-    environment ({"PATH" => path, "RBENV_VERSION" => ruby_cmbm})
+    environment('PATH' => path, 'RBENV_VERSION' => ruby_cmbm)
     numprocs 1
     numprocs_start 0
     priority 999

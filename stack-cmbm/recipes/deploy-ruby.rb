@@ -57,23 +57,23 @@ end
 
 # Install Ruby version required by AWS OpsWorks.
 ruby_opsworks = node.fetch('ruby', {}).fetch('rubies', {}).fetch('opsworks', '')
-execute "install ruby-version for opsworks-agent" do
+execute 'install ruby-version for opsworks-agent' do
   command "su #{user} -l -c '#{home}/.rbenv/bin/rbenv install #{ruby_opsworks}'"
   not_if do
-    Dir.exists?("#{home}/.rbenv/versions/#{ruby_opsworks}")
+    Dir.exist?("#{home}/.rbenv/versions/#{ruby_opsworks}")
   end
 end
 
 # Make the OpsWorks Ruby version the global system default.
-execute "set ruby-version for OpsWorks as global default" do
+execute 'set ruby-version for OpsWorks as global default' do
   command "su #{user} -l -c '#{home}/.rbenv/bin/rbenv global #{ruby_opsworks}'"
 end
 
 # Install the Ruby version required by our CMBM app.
 ruby_cmbm = node.fetch('ruby', {}).fetch('rubies', {}).fetch('cmbm', '')
-execute "install ruby-version for CMBM" do
+execute 'install ruby-version for CMBM' do
   command "su #{user} -l -c '#{home}/.rbenv/bin/rbenv install #{ruby_cmbm}'"
   not_if do
-    Dir.exists?("#{home}/.rbenv/versions/#{ruby_cmbm}")
+    Dir.exist?("#{home}/.rbenv/versions/#{ruby_cmbm}")
   end
 end
