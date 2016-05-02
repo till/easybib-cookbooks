@@ -6,6 +6,3 @@ include_recipe 'ies-mysql::dev'
 
 # Pull in the production role-* recipe.
 include_recipe 'stack-cmbm::role-nginxapp'
-
-# Configure nginx and supervisor
-include_recipe 'stack-cmbm::deploy-vagrant'

@@ -33,5 +33,6 @@ describe 'stack-cmbm::role-nginxapp' do
     expect(chef_run).to include_recipe('redis')
     expect(chef_run).to include_recipe('stack-cmbm::deploy-ruby')
     expect(chef_run).to include_recipe('stack-cmbm::deploy-puma')
+    expect(chef_run).to include_recipe('stack-cmbm::deploy-nginxapp')
   end
 end
