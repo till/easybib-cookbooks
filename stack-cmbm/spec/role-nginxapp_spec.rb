@@ -19,9 +19,9 @@ describe 'stack-cmbm::role-nginxapp' do
 
   it 'pulls in all package dependencies' do
     [
-        'libxml2', 'libmysqlclient-dev', 'autoconf', 'bison', 'build-essential', 'libssl-dev', 'libyaml-dev',
-        'libreadline6-dev', 'zlib1g-dev', 'libncurses5-dev', 'libffi-dev', 'libgdbm3', 'libgdbm-dev', 'libreadline-dev',
-        'qt5-default', 'libqt5webkit5-dev', 'gstreamer1.0-plugins-base', 'gstreamer1.0-tools'
+      'libxml2', 'libmysqlclient-dev', 'autoconf', 'bison', 'build-essential', 'libssl-dev', 'libyaml-dev',
+      'libreadline6-dev', 'zlib1g-dev', 'libncurses5-dev', 'libffi-dev', 'libgdbm3', 'libgdbm-dev', 'libreadline-dev',
+      'qt5-default', 'libqt5webkit5-dev', 'gstreamer1.0-plugins-base', 'gstreamer1.0-tools'
     ].each do |p|
       expect(chef_run).to install_package(p)
     end
