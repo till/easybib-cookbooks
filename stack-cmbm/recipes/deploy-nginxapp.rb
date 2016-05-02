@@ -1,5 +1,3 @@
-Chef::Application.fatal!('This recipe is vagrant only!') if is_aws
-
 include_recipe 'nginx-app::server'
 include_recipe 'supervisor'
 
@@ -21,8 +19,13 @@ rbenv_paths = [
   %(#{rbenv_home}/shims)
 ].join(':')
 path = "#{rbenv_paths}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+applications = if is_aws
+                 node['deploy']
+               else
+                 node['vagrant']['applications']
+               end
 
-node['vagrant']['applications'].each do |app_name, app_config|
+applications.each do |app_name, app_config|
 
   default_router = if app_config.attribute?('default_router')
                      app_config['default_router']
