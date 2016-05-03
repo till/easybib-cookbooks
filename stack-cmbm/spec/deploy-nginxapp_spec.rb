@@ -32,10 +32,6 @@ describe 'stack-cmbm::deploy-nginxapp' do
       expect(chef_run).to include_recipe('supervisor')
     end
 
-    it 'installs bundler' do
-      expect(chef_run).to run_execute('install bundler')
-    end
-
     it 'installs all gem dependencies' do
       expect(chef_run).to run_execute('install gem dependencies')
     end
