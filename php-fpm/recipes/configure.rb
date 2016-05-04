@@ -50,10 +50,23 @@ else
   Chef::Log.info("Adding to php sendmail stmt: #{sendmail_params}")
 end
 
+# this may or may not work
+php_version = node['php']['ppa']['package_prefix'].gsub('php', '')
+
+alternatives = []
+alternatives << '/usr/bin/update-alternatives'
+alternatives << '--install'
+alternatives << '/usr/sbin/php-fpm'
+alternatives << 'php-fpm'
+alternatives << "/usr/sbin/php-fpm#{php_version}"
+alternatives << '0'
+
 execute 'update-alternatives' do
-  command '/usr/bin/update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm5.6 0'
-  creates '/usr/sbin/php-fpm'
+  command alternatives.join(' ')
   action :nothing
+  not_if do
+    node['php']['ppa']['package_prefix'] == 'php5-easybib'
+  end
 end
 
 template conf_fpm do
