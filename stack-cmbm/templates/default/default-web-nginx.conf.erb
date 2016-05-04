@@ -1,8 +1,6 @@
 server {
     listen 80 <%=@listen_opts%>;
 
-    index <%=@default_router%> index.php;
-
     access_log <%= @access_log %>;
 
     location ~* (\.deploy_configuration) {
