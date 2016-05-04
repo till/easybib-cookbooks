@@ -45,7 +45,7 @@ applications.each do |app_name, app_config|
   end
 
   execute 'install gem dependencies' do
-    command "su #{user} -l -c 'cd #{app_dir} && #{home}/.rbenv/versions/#{ruby}/bin/bundle install'"
+    command "su #{user} -l -c 'cd #{app_dir} && #{home}/.rbenv/versions/#{app_ruby}/bin/bundle install'"
     environment('PATH' => path, 'HOME' => home, 'USER' => user)
   end
 
@@ -53,7 +53,12 @@ applications.each do |app_name, app_config|
     cwd app_dir
     user user
     environment('PATH' => path, 'HOME' => home, 'USER' => user)
-    command "export RBENV_VERSION=#{ruby} && #{home}/.rbenv/versions/#{ruby}/bin/bundle exec rake db:setup"
+    command "export RBENV_VERSION=#{app_ruby} && #{home}/.rbenv/versions/#{app_ruby}/bin/bundle exec rake db:setup"
+  end
+
+  easybib_deploy app_name do
+    deploy_data app_config
+    app app_name
   end
 
   easybib_nginx app_name do
@@ -64,8 +69,6 @@ applications.each do |app_name, app_config|
     domain_name domain_name
     notifies :reload, 'service[nginx]', :delayed
   end
-
-  easybib_envconfig app_name
 
   supervisor_service 'puma_supervisor' do
     action [:enable, :restart]

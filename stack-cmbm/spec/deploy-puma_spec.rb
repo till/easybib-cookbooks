@@ -14,7 +14,8 @@ describe 'stack-cmbm::deploy-puma' do
         :app_root_location => '/vagrant_cmbm',
         :doc_root_location => '/vagrant_cmbm/public',
         :default_router => '',
-        :domain_name => 'cmbm.bib'
+        :domain_name => 'cmbm.bib',
+        :ruby_version => '2.2.3'
       }
     }
   end
