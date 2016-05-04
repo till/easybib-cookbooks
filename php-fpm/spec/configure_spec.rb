@@ -53,6 +53,32 @@ describe 'php-fpm::configure' do
       end
     end
 
+    describe 'update-alternatives' do
+      before do
+        node.set['php']['ppa']['package_prefix'] = 'php8.5'
+      end
+
+      it 'runs update-alternatives' do
+        resource = chef_run.template('/opt/easybib/etc/php.ini')
+        expect(resource).to notify('execute[update-alternatives]')
+      end
+
+      it 'finds update-alternatives for the correct version' do
+        alternatives = []
+        alternatives << '/usr/bin/update-alternatives'
+        alternatives << '--install'
+        alternatives << '/usr/sbin/php-fpm'
+        alternatives << 'php-fpm'
+        alternatives << '/usr/sbin/php-fpm8.5'
+        alternatives << '0'
+
+        resource = chef_run.execute('update-alternatives')
+        expect(resource.command).to eq(alternatives.join(' '))
+
+        expect(chef_run).not_to run_execute('update-alternatives')
+      end
+    end
+
   end
 
 end
