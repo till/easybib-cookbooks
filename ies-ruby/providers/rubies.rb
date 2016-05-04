@@ -59,7 +59,7 @@ action :install do
       action :sync
     end
 
-    # Compile rbenv bash extensions for better overall performance of rbenv.
+    # Compile rbenv Bash extensions for better overall performance of rbenv.
     execute 'compile rbenv bash extension' do
       command "cd #{rbenv_home}/ && src/configure && make -C src"
       user rbenv_user
@@ -67,13 +67,12 @@ action :install do
     end
 
     # rbenv requires specific environment variables, such as $PATH.
-    %w(bash zsh).each do |shell|
-      cookbook_file "#{home}/.#{shell}rc" do
-        source "#{shell}rc"
-        user rbenv_user
-        group rbenv_user
-        mode '0600'
-      end
+    cookbook_file '/etc/profile.d/rbenv.sh' do
+      cookbook 'ies-ruby'
+      source 'bashrc'
+      user 'root'
+      group 'root'
+      mode '644'
     end
 
     execute 'install opsworks mandatory ruby' do      # ~FC005
