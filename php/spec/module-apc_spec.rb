@@ -1,18 +1,22 @@
 require_relative 'spec_helper.rb'
 
 describe 'php::module-apc' do
-
   let(:runner) do
-    ChefSpec::Runner.new(:step_into => %w(php_ppa_package php_config)) do |node|
-      # fake opsworks
-      node.default['opsworks']['stack']['name'] = 'chef-spec-run'
-      node.default['opsworks']['instance']['layers'] = []
-      node.default['php']['ppa']['package_prefix'] = 'php5-easybib'
-      node.default['php-fpm']['prefix'] = '/opt/easybib'
-    end
+    ChefSpec::Runner.new(
+      :step_into => %w(php_ppa_package php_config)
+    )
   end
+
+  let(:node) { runner.node }
   let(:chef_run) { runner.converge(described_recipe) }
-  let(:node)     { runner.node }
+
+  before do
+    # fake opsworks
+    node.default['opsworks']['stack']['name'] = 'chef-spec-run'
+    node.default['opsworks']['instance']['layers'] = []
+    node.default['php']['ppa']['package_prefix'] = 'php5-easybib'
+    node.default['php-fpm']['prefix'] = '/opt/easybib'
+  end
 
   it 'adds ppa mirror configuration' do
     expect(chef_run).to include_recipe('php::dependencies-ppa')
@@ -55,6 +59,16 @@ describe 'php::module-apc' do
     end
     it 'creates soap-settings.ini with load_priority' do
       expect(chef_run).to render_file('/opt/easybib/etc/php/99-apc-settings.ini')
+    end
+  end
+
+  describe 'custom prefix' do
+    before do
+      node.set['php-apc']['package_prefix'] = 'php-special'
+    end
+
+    it 'installs the php-special-apcu module' do
+      expect(chef_run).to install_package('php-special-apcu')
     end
   end
 end

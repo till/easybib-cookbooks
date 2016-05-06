@@ -1,6 +1,11 @@
 default['php-fpm'] = {}
 
 default['php-fpm']['prefix'] = '/opt/easybib'
+default['php-fpm']['exec_prefix'] = '/opt/easybib'
+
+default['php-fpm']['fpm_config'] = 'etc/php.ini'
+default['php-fpm']['cli_config'] = 'etc/php-cli.ini'
+default['php-fpm']['pool_dir'] = 'etc/php-fpm/pool.d'
 
 default['php-fpm']['logfile'] = '/var/log/php/error.log'
 default['php-fpm']['slowlog'] = '/var/log/php/slow.log'
@@ -16,6 +21,8 @@ default['php-fpm']['memorylimit'] = '512M'
 default['php-fpm']['user'] = 'www-data'
 default['php-fpm']['group'] = 'www-data'
 default['php-fpm']['tmpdir'] = '/tmp/php'
+
+default['php-fpm']['pid'] = '/opt/easybib/var/run/php-fpm.pid'
 default['php-fpm']['socketdir'] = '/var/run/php-fpm'
 
 default['php-fpm']['pools'] = ['www-data']
