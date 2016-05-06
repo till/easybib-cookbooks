@@ -40,7 +40,7 @@ applications.each do |app_name, app_config|
   app_dir            = app_config['app_root_location']
   app_ruby           = app_config['ruby_version']
 
-  ies_ruby_rubies app_ruby do
+  ies_ruby_deploy app_ruby do
     rbenv_user user
   end
 

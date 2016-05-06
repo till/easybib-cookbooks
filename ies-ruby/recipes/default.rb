@@ -2,7 +2,7 @@ desired_ruby_version = node.fetch('ies-ruby', {}).fetch('ruby', {}).fetch('desir
 gem_dependencies = node.fetch('ies-ruby', {}).fetch('ruby', {}).fetch('gems', [])
 Chef::Application.fatal!('No desired Ruby version selected via node-attributes!') unless desired_ruby_version
 
-ies_ruby_rubies desired_ruby_version
+ies_ruby_deploy desired_ruby_version
 
 ies_ruby_gems desired_ruby_version do
   gems gem_dependencies
