@@ -6,6 +6,7 @@ default['php']['extensions']['config_dir'] = 'etc/php'
 default['php']['extensions']['ini_suffix'] = '-settings'
 
 default['php-apc'] = {}
+# custom prefix for package: php-apcu, instead of php5.6-apcu
 default['php-apc']['package_prefix'] = nil
 default['php-apc']['settings']['ttl'] = 0
 default['php-apc']['settings']['mmap_file_mask'] = '/dev/zero'
