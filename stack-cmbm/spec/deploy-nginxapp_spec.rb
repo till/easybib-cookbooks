@@ -33,6 +33,10 @@ describe 'stack-cmbm::deploy-nginxapp' do
       expect(chef_run).to include_recipe('supervisor')
     end
 
+    it 'uses ies-ruby to install a desired Ruby version while leaving OpsWorks in tact' do
+      expect(chef_run).to install_ies_ruby_deploy('2.2.3')
+    end
+
     it 'installs all gem dependencies' do
       expect(chef_run).to run_execute('install gem dependencies')
     end

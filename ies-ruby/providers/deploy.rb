@@ -95,7 +95,7 @@ action :install do
     end
   end
 
-  execute 'installing bundler' do
+  execute 'install bundler' do
     command "su #{rbenv_user} -l -c '#{home}/.rbenv/versions/#{desired_ruby}/bin/gem install bundler'"
     environment('PATH' => path, 'HOME' => home, 'USER' => rbenv_user)
   end
@@ -108,13 +108,16 @@ action :remove do
     action :delete
   end
 
+  cookbook_file '/etc/profile.d/rbenv.sh' do
+    source 'bashrc'
+    action :delete
+  end
+
   new_resource.updated_by_last_action(true)
 end
 
 action :reinstall do
   desired_ruby = new_resource.desired_ruby
-
-  new_resource.updated_by_last_action(false)
 
   ies_ruby_rubies desired_ruby do
     action :remove
@@ -123,4 +126,6 @@ action :reinstall do
   ies_ruby_rubies desired_ruby do
     action :install
   end
+
+  new_resource.updated_by_last_action(true)
 end
