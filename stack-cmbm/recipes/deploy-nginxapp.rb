@@ -38,9 +38,8 @@ applications.each do |app_name, app_config|
   domain_name        = app_config['domain_name']
   doc_root_location  = app_config['doc_root_location']
   app_dir            = app_config['app_root_location']
-  app_ruby           = app_config['ruby_version']
+  app_ruby           = node.fetch('stack-cmbm', {}).fetch('desired_rubies', {}).fetch(app_name, '')
   db_node            = node.fetch('deploy', {}).fetch(app_name, {}).fetch('database', {})
-
 
   ies_ruby_deploy app_ruby do
     rbenv_user user
