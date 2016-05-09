@@ -39,6 +39,8 @@ applications.each do |app_name, app_config|
   doc_root_location  = app_config['doc_root_location']
   app_dir            = app_config['app_root_location']
   app_ruby           = app_config['ruby_version']
+  db_node            = node.fetch('deploy', {}).fetch(app_name, {}).fetch('database', {})
+
 
   ies_ruby_deploy app_ruby do
     rbenv_user user
@@ -78,7 +80,13 @@ applications.each do |app_name, app_config|
     action [:enable, :restart]
     autostart true
     command "#{rbenv_home}/shims/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru"
-    environment('PATH' => path, 'RBENV_VERSION' => app_ruby)
+    environment(
+      'PATH' => path, 'RBENV_VERSION' => app_ruby,
+      'DB_DATABASE' => db_node.fetch('name', ''),
+      'DB_HOST' => db_node.fetch('address', ''),
+      'DB_USER' => db_node.fetch('username', ''),
+      'DB_PASS' => db_node.fetch('password', '')
+    )
     numprocs 1
     numprocs_start 0
     priority 999
