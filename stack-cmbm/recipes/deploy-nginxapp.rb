@@ -40,6 +40,7 @@ applications.each do |app_name, app_config|
   app_dir            = app_config['app_root_location']
   app_ruby           = node.fetch('stack-cmbm', {}).fetch('desired_rubies', {}).fetch(app_name, '')
   db_node            = node.fetch('deploy', {}).fetch(app_name, {}).fetch('database', {})
+  smtp_node          = node.fetch('postfix', {}).fetch('relay')
 
   ies_ruby_deploy app_ruby do
     rbenv_user user
@@ -80,11 +81,23 @@ applications.each do |app_name, app_config|
     autostart true
     command "#{rbenv_home}/shims/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru"
     environment(
+      # Required by rbenv
       'PATH' => path, 'RBENV_VERSION' => app_ruby,
+
+      # CMBM application configuration
+      'RACK_ENV' => node.fetch('stack-cmbm', {}).fetch('environments', {}).fetch(app_name, ''),
+
+      # Rails database configuration
       'DB_DATABASE' => db_node.fetch('name', ''),
       'DB_HOST' => db_node.fetch('address', ''),
       'DB_USER' => db_node.fetch('username', ''),
-      'DB_PASS' => db_node.fetch('password', '')
+      'DB_PASS' => db_node.fetch('password', ''),
+
+      # Rails mail-relay configuration
+      'SMTP_HOST' => smtp_node.fetch('hostname', ''),
+      'SMTP_PORT' => smtp_node.fetch('port', 25),
+      'SMTP_USERNAME' => smtp_node.fetch('user', ''),
+      'SMTP_PASSWORD' => smtp_node.fetch('pass', '')
     )
     numprocs 1
     numprocs_start 0
