@@ -4,6 +4,7 @@ Chef::Application.fatal!('This recipe is vagrant only!') if is_aws
 include_recipe 'ies-mysql'
 include_recipe 'ies-mysql::dev'
 include_recipe 'ies-zsh'
+include_recipe 'redis'
 
 # Pull in the production role-* recipe.
 include_recipe 'stack-cmbm::role-nginxapp'

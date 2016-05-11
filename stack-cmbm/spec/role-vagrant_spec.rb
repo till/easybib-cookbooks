@@ -23,5 +23,6 @@ describe 'stack-cmbm::role-vagrant' do
     expect(chef_run).to include_recipe('ies-mysql::dev')
     expect(chef_run).to include_recipe('stack-cmbm::role-nginxapp')
     expect(chef_run).to include_recipe('ies-zsh')
+    expect(chef_run).to include_recipe('redis')
   end
 end

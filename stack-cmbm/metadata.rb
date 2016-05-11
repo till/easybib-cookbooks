@@ -7,7 +7,6 @@ version           '0.1'
 
 supports 'ubuntu'
 
-depends 'ark'
 depends 'easybib'
 depends 'easybib-deploy'
 depends 'haproxy'
