@@ -46,18 +46,6 @@ applications.each do |app_name, app_config|
     rbenv_user user
   end
 
-  execute 'install gem dependencies' do
-    command "su #{user} -l -c 'cd #{app_dir} && #{home}/.rbenv/versions/#{app_ruby}/bin/bundle install'"
-    environment('PATH' => path, 'HOME' => home, 'USER' => user)
-  end
-
-  execute 'setup app' do
-    cwd app_dir
-    user user
-    environment('PATH' => path, 'HOME' => home, 'USER' => user)
-    command "export RBENV_VERSION=#{app_ruby} && #{home}/.rbenv/versions/#{app_ruby}/bin/bundle exec rake db:setup"
-  end
-
   if is_aws
     easybib_deploy app_name do
       deploy_data app_config
