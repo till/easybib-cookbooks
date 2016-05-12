@@ -88,6 +88,11 @@ action :install do
     command "su #{rbenv_user} -l -c '#{rbenv_home}/bin/rbenv global #{opsworks_mandatory_ruby}'"
   end
 
+  execute 'install bundler for opsworks mandatory ruby' do
+    command "su #{rbenv_user} -l -c '#{home}/.rbenv/versions/#{opsworks_mandatory_ruby}/bin/gem install bundler'"
+    environment('PATH' => path, 'HOME' => home, 'USER' => rbenv_user)
+  end
+
   execute 'install desired ruby-version' do
     command "su #{rbenv_user} -l -c '#{rbenv_home}/bin/rbenv install #{desired_ruby}'"
     not_if do
@@ -95,7 +100,7 @@ action :install do
     end
   end
 
-  execute 'install bundler' do
+  execute 'install bundler for desired ruby' do
     command "su #{rbenv_user} -l -c '#{home}/.rbenv/versions/#{desired_ruby}/bin/gem install bundler'"
     environment('PATH' => path, 'HOME' => home, 'USER' => rbenv_user)
   end

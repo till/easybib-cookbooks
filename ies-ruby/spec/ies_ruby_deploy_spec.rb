@@ -55,10 +55,6 @@ describe 'ies_ruby_deploy' do
       it 'installs the desired Ruby version' do
         expect(chef_run).to run_execute('install desired ruby-version')
       end
-
-      it 'installs bundler' do
-        expect(chef_run).to run_execute('install bundler')
-      end
     end
     describe 'remove' do
       it 'removes the bashrc file from /etc/profile.d/' do

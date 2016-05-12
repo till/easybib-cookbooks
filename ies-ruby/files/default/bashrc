@@ -1,4 +1,4 @@
-if [[ ! $PATH =~ '.rbenv/bin' ]]; then
-    export PATH=~/.rbenv/bin:$PATH
+if [[ ! $PATH =~ ~/.rbenv/bin ]]; then
+    export PATH=~/.rbenv/bin:~/.rbenv/shims/:$PATH
     eval "$(~/.rbenv/bin/rbenv init -)"
 fi
