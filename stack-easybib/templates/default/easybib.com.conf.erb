@@ -82,6 +82,10 @@ unless uncached_extensions.empty? -%>
   %>
 <% end -%>
 
+<% unless @nginx_local_conf.nil? -%>
+<%= render @nginx_local_conf, :local => true %>
+<% end -%>
+
 <%
 @environment = EasyBib.get_cluster_name(node)
 %>
