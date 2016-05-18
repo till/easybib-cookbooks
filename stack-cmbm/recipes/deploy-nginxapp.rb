@@ -2,23 +2,11 @@ include_recipe 'nginx-app::server'
 include_recipe 'supervisor'
 
 user = if is_aws
-         'root'
+         node.fetch('nginx-app', {}).fetch('user', 'www-data')
        else
          'vagrant'
        end
 
-home = if is_aws
-         '/root'
-       else
-         "/home/#{user}"
-       end
-
-rbenv_home = "#{home}/.rbenv"
-rbenv_paths = [
-  %(#{rbenv_home}/bin),
-  %(#{rbenv_home}/shims)
-].join(':')
-path = "#{rbenv_paths}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 applications = if is_aws
                  node['deploy']
                else
@@ -26,12 +14,6 @@ applications = if is_aws
                end
 
 applications.each do |app_name, app_config|
-
-  default_router = if app_config.attribute?('default_router')
-                     app_config['default_router']
-                   else
-                     'index.php'
-                   end
 
   template = 'default-web-nginx.conf.erb'
 
@@ -42,8 +24,10 @@ applications.each do |app_name, app_config|
   db_node            = node.fetch('deploy', {}).fetch(app_name, {}).fetch('database', {})
   smtp_node          = node.fetch('postfix', {}).fetch('relay')
 
-  ies_ruby_deploy app_ruby do
-    rbenv_user user
+  ies_rbenv_deploy 'deploy ruby' do
+    rbenv_users [user]
+    rubies [app_ruby]
+    gems ['bundler']
   end
 
   if is_aws
@@ -59,7 +43,6 @@ applications.each do |app_name, app_config|
     cookbook 'stack-cmbm'
     config_template template
     deploy_dir doc_root_location
-    default_router default_router
     domain_name domain_name
     notifies :reload, 'service[nginx]', :delayed
   end
@@ -67,11 +50,8 @@ applications.each do |app_name, app_config|
   supervisor_service 'puma_supervisor' do
     action [:enable, :restart]
     autostart true
-    command "#{rbenv_home}/shims/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru"
+    command "bash -l -c '~/.rbenv/shims/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru'"
     environment(
-      # Required by rbenv
-      'PATH' => path, 'RBENV_VERSION' => app_ruby,
-
       # CMBM application configuration
       'RACK_ENV' => node.fetch('stack-cmbm', {}).fetch('environments', {}).fetch(app_name, ''),
 
@@ -90,8 +70,8 @@ applications.each do |app_name, app_config|
     numprocs 1
     numprocs_start 0
     priority 999
-    autostart true
-    autorestart true
+    autostart false     # Todo: set to true
+    autorestart false   # Todo: set to true
     startsecs 0
     startretries 3
     stopsignal 'TERM'
