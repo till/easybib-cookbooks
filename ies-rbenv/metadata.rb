@@ -1,4 +1,4 @@
-name              'ies-ruby'
+name              'ies-rbenv'
 maintainer        'Brian Wiborg'
 maintainer_email  'brian.wiborg@imagineeasy.com'
 license           'BSD 2-clause'
