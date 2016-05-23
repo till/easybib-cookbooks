@@ -9,6 +9,6 @@ include_recipe 'avahi'
 include_recipe 'stack-service::role-rabbitmq'
 include_recipe 'php::module-xdebug'
 
-package 'wkhtmltopdf'
+package 'libxrender1'
 package 'build-essential'
 package 'g++'
