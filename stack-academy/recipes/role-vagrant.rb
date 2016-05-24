@@ -4,7 +4,9 @@ include_recipe 'ies-mysql::dev'
 include_recipe 'ies::role-phpapp'
 
 node['vagrant']['applications'].each do |app_name, app_data|
-  easybib_envconfig app_name
+  easybib_envconfig app_name do
+    stackname 'easybib'
+  end
 
   app_dir = app_data['doc_root_location']
 
@@ -20,6 +22,7 @@ node['vagrant']['applications'].each do |app_name, app_data|
     app_dir app_dir
     app app_name
     user node['php-fpm']['user']
+    ignore_failure true
   end
 end
 
