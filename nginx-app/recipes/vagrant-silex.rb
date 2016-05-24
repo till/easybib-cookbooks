@@ -3,6 +3,7 @@ if is_aws
 end
 
 include_recipe 'nginx-app::service'
+include_recipe 'supervisor'
 
 node['vagrant']['applications'].each do |app_name, app_config|
 
