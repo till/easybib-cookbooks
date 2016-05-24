@@ -13,7 +13,6 @@ recipe            'php-fpm::monit', 'php-fpm monit monitoring'
 
 supports 'ubuntu'
 
-depends 'ies-apt'
 depends 'easybib'
 depends 'monit'
 depends 'ohai'

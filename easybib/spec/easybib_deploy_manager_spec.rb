@@ -103,6 +103,33 @@ describe 'easybib_deploy_manager' do
       %w( app_number_one app_number_two).each do |application|
         expect(@chef_run).to deploy_easybib_deploy(application)
         expect(@chef_run).to setup_easybib_nginx(application)
+          .with(
+            :cookbook => 'nginx-app'
+          )
+      end
+    end
+
+    context 'deploys an app with extended cookbook/nginx conf' do
+      before do
+        node.set['fixtures']['applications'] = {
+          :app_number_one => {
+            :layer => 'app-server',
+            :nginx => {
+              :cookbook => 'stack-academy',
+              :conf => 'infolit.conf.erb'
+            }
+          }
+        }
+
+        @chef_run = runner.converge('fixtures::easybib_deploy_manager')
+      end
+
+      it 'runs easybib_nginx' do
+        expect(@chef_run).to setup_easybib_nginx('app_number_one')
+          .with(
+            :cookbook => 'stack-academy',
+            :config_template => 'infolit.conf.erb'
+          )
       end
     end
   end

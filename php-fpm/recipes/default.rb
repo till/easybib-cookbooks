@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe 'ies-apt::easybib'
+include_recipe 'php::dependencies-ppa'
 
 include_recipe 'php-fpm::prepare'
 
@@ -49,11 +49,12 @@ include_recipe 'php::module-soap'
 include_recipe 'php::module-tidy'
 
 expected_prefix = '/usr/local/bin'
-install_prefix = "#{node['php-fpm']['prefix']}/bin"
+install_prefix = "#{node['php-fpm']['exec_prefix']}/bin"
 
 phps = ['/usr/bin/php', "#{expected_prefix}/php"]
 
 phps.each do |php_bin|
+  next if install_prefix == '/usr/bin'
   link php_bin do
     to "#{install_prefix}/php"
     only_if do
@@ -65,7 +66,7 @@ end
 bins = ['pear', 'peardev', 'pecl', 'phar', 'phar.phar', 'php-config', 'phpize']
 
 bins.each do |php_bin|
-
+  next if install_prefix == '/usr/bin'
   real_bin = "#{install_prefix}/#{php_bin}"
 
   link "#{expected_prefix}/#{php_bin}" do

@@ -33,10 +33,8 @@ include_recipe 'php-fpm::service'
 
 config = node['php-fpm']
 
-etc_cli_dir = "#{config['prefix']}/etc"
-etc_fpm_dir = "#{config['prefix']}/etc"
-conf_cli    = 'php-cli.ini'
-conf_fpm    = 'php.ini'
+conf_cli = "#{config['prefix']}/#{config['cli_config']}"
+conf_fpm = "#{config['prefix']}/#{config['fpm_config']}"
 
 display_errors = if config['user'] == 'vagrant'
                    'On'
@@ -52,7 +50,26 @@ else
   Chef::Log.info("Adding to php sendmail stmt: #{sendmail_params}")
 end
 
-template "#{etc_fpm_dir}/#{conf_fpm}" do
+# this may or may not work
+php_version = node['php']['ppa']['package_prefix'].gsub('php', '')
+
+alternatives = []
+alternatives << '/usr/bin/update-alternatives'
+alternatives << '--install'
+alternatives << '/usr/sbin/php-fpm'
+alternatives << 'php-fpm'
+alternatives << "/usr/sbin/php-fpm#{php_version}"
+alternatives << '0'
+
+execute 'update-alternatives' do
+  command alternatives.join(' ')
+  action :nothing
+  not_if do
+    node['php']['ppa']['package_prefix'] == 'php5-easybib'
+  end
+end
+
+template conf_fpm do
   mode     '0755'
   source   'php.ini.erb'
   variables(
@@ -69,9 +86,10 @@ template "#{etc_fpm_dir}/#{conf_fpm}" do
   owner    config['user']
   group    config['group']
   notifies :reload, 'service[php-fpm]', :delayed
+  notifies :run, 'execute[update-alternatives]', :immediately
 end
 
-template "#{etc_cli_dir}/#{conf_cli}" do
+template conf_cli do
   mode '0755'
   source 'php.ini.erb'
   variables(
@@ -89,7 +107,8 @@ template "#{etc_cli_dir}/#{conf_cli}" do
   group config['group']
 end
 
-pool_dir = "#{config['prefix']}/etc/php-fpm/pool.d"
+etc_fpm_dir = File.dirname(conf_fpm)
+pool_dir = "#{config['prefix']}/#{config['pool_dir']}"
 
 template "#{etc_fpm_dir}/php-fpm.conf" do
   mode     '0755'
@@ -107,6 +126,14 @@ directory pool_dir do
   group config['group']
   action :create
   recursive true
+end
+
+# default pool setup by PHP package
+file "#{pool_dir}/www.conf" do
+  action :delete
+  only_if do
+    File.exist?("#{pool_dir}/www.conf") && !config['pools'].include?('www')
+  end
 end
 
 config['pools'].each do |pool_name|
