@@ -56,12 +56,18 @@ def run_deploys(deployments, app_name, app_data)
 
     did_we_deploy = true
 
-    config_template = app_data.fetch('nginx', nil)
+    nginx_config = app_data.fetch('nginx', nil)
+    next if nginx_config.nil? # no nginx
+
+    config_template = get_template(nginx_config)
     next if config_template.nil? # no nginx
+
+    config_cookbook = get_cookbook(nginx_config)
 
     listen_opts = get_additional('listen_opts', app_data)
 
     easybib_nginx application do
+      cookbook config_cookbook
       config_template config_template
       domain_name deploy['domains'].join(' ')
       doc_root deploy['document_root']
@@ -82,6 +88,30 @@ end
 # Returns a string or nil.
 def get_additional(key, data)
   data.fetch('nginx_config', {}).fetch(key, nil)
+end
+
+# data - mixed (Hash or String)
+#
+# Return string
+def get_cookbook(data)
+  default_cookbook = 'nginx-app'
+
+  if data.is_a?(String)
+    return default_cookbook
+  end
+
+  data.fetch('cookbook', default_cookbook)
+end
+
+# data - mixed (Hash or String)
+#
+# Returns a string or nil
+def get_template(data)
+  if data.is_a?(String)
+    return data
+  end
+
+  data.fetch('conf', nil)
 end
 
 def validate_app_data(app_data)

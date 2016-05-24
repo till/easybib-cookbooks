@@ -1,7 +1,10 @@
 default['stack-academy']['applications'] = {
   :infolit => {
     :layer => 'nginxphpapp',
-    :nginx => 'infolit.conf.erb'
+    :nginx => {
+      :cookbook => 'nginx-app',
+      :conf => 'infolit.conf.erb'
+    }
   },
   :rr_webeval => {
     :layer => 'nginxphpapp',
