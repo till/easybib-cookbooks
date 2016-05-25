@@ -123,7 +123,7 @@ end
 
 def get_cache_config(new_resource, node)
   return new_resource.cache_config unless new_resource.cache_config.nil?
-  node['nginx-app']['cache']
+  node['nginx-app']['browser_caching']
 end
 
 def get_nginx_extras(new_resource, node)
