@@ -59,6 +59,5 @@ class TestHelpers < Test::Unit::TestCase
     config = Chef::Node::ImmutableMash.new('list' => %w(eot jpg))
     result = ::NginxApp::Helpers.uncached_static_extensions(cache_config, config['list'])
     assert_equal(%w(jpg), result)
-
   end
 end

@@ -15,7 +15,7 @@ module NginxApp
 
       # make sure we are dealing with a plain array, no chef node attr
       # to fix devops-151
-      static_extensions = [].concat(static_extensions) if static_extensions.kind_of?(Chef::Node::ImmutableArray)
+      static_extensions = [].concat(static_extensions) if static_extensions.is_a?(Chef::Node::ImmutableArray)
 
       if caching_config['enabled']
         caching_config['config'].each do |key, value|
