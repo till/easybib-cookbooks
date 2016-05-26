@@ -1,4 +1,4 @@
-default['stack-easybib']['static_extensions'] = %w(jpg jpeg gif png css js ico woff ttf eot map ico svg)
+default['stack-easybib']['static_extensions'] = %w(jpg jpeg gif png css js ico woff ttf eot map ico svg htm swf xml)
 
 normal['nginx-app']['browser_caching']['enabled'] = false
 normal['nginx-app']['browser_caching']['config']['eot|ttf|woff'] = {
