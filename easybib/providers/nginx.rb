@@ -123,12 +123,12 @@ end
 
 def get_cache_config(new_resource, node)
   return new_resource.cache_config unless new_resource.cache_config.nil?
-  node['nginx-app']['browser_caching']
+  node.fetch('nginx-app', {}).fetch('browser_caching', {})
 end
 
 def get_nginx_extras(new_resource, node)
   return new_resource.nginx_extras unless new_resource.nginx_extras.nil?
-  node['nginx-app']['extras']
+  node.fetch('nginx-app', {}).fetch('extras', {})
 end
 
 def get_app_dir(new_resource, node)
@@ -143,7 +143,7 @@ end
 
 def get_health_check(application, node)
   return node['nginx-app']['health_check'] if node.fetch('nginx-app', {}).fetch(application, {})['health_check'].nil?
-  node['nginx-app'][application]['health_check']
+  node.fetch('nginx-app', {}).fetch(application, {}).fetch('health_check', {})
 end
 
 def get_config_name(resource)
