@@ -1,5 +1,9 @@
 include_recipe 'ies::role-generic'
 
+# Rotate RabbitMQ logs in /mnt/logs/rabbitmq.
+# See: https://imagineeasy.atlassian.net/browse/DEVOPS-150
+include_recipe 'logrotate::global'
+
 node.set['rabbitmq']['job_control'] = 'upstart' if platform?('ubuntu')
 
 include_recipe 'rabbitmq'
