@@ -113,8 +113,8 @@ server {
 
         add_header X-Cache $upstream_cache_status;
 
-<% if @cache_config and @cache_config["enabled"] == true -%>
-        fastcgi_cache <%=@cache_config["zone"]%>;
+<% if @nginx_caching and @nginx_caching["enabled"] == true -%>
+        fastcgi_cache <%=@nginx_caching["zone"]%>;
         fastcgi_cache_bypass $fastcgi_skipcache;
         fastcgi_no_cache $fastcgi_skipcache;
 <% end -%>
