@@ -47,6 +47,11 @@ module EasyBib
         Chef::Log.info('found configured rds resource, adding to envvars')
         dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
         settings.merge!(dbconfig)
+        if dbconfig['db']['database'] && dbconfig['db']['host'] && dbconfig['db']['port'] && dbconfig['db']['username'] && dbconfig['db']['password']
+          db_type = dbconfig['db']['type'] == 'mysql' ? 'mysql2' : dbconfig['db']['type']
+          db_url = "#{db_type}://#{dbconfig['db']['username']}:#{dbconfig['db']['password']}@#{dbconfig['db']['host']}:#{dbconfig['db']['port']}/#{dbconfig['db']['database']}?reconnect=#{dbconfig['db']['reconnect']}"
+          settings.merge!('database' => { 'url' => db_url } )
+        end
       end
 
       data = {
