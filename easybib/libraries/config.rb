@@ -46,12 +46,9 @@ module EasyBib
         # add configuration from the RDS resource management in opsworks
         Chef::Log.info('found configured rds resource, adding to envvars')
         dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
+        dbconfig = append_database_url_to_dbconfig(dbconfig)
+
         settings.merge!(dbconfig)
-        if dbconfig['db']['database'] && dbconfig['db']['host'] && dbconfig['db']['port'] && dbconfig['db']['username'] && dbconfig['db']['password']
-          db_type = dbconfig['db']['type'] == 'mysql' ? 'mysql2' : dbconfig['db']['type']
-          db_url = "#{db_type}://#{dbconfig['db']['username']}:#{dbconfig['db']['password']}@#{dbconfig['db']['host']}:#{dbconfig['db']['port']}/#{dbconfig['db']['database']}?reconnect=#{dbconfig['db']['reconnect']}"
-          settings.merge!('database' => { 'url' => db_url } )
-        end
       end
 
       data = {
@@ -379,6 +376,26 @@ module EasyBib
     # extracts the path where an application is deployed
     def get_app_dir(deploy_to)
       "#{deploy_to}/current/"
+    end
+
+    def append_database_url_to_dbconfig(dbconfig)
+      return unless dbconfig
+
+      return dbconfig unless dbconfig['DB_DATABASE']
+      return dbconfig unless dbconfig['DB_HOST']
+      return dbconfig unless dbconfig['DB_PORT']
+      return dbconfig unless dbconfig['DB_USERNAME']
+      return dbconfig unless dbconfig['DB_PASSWORD']
+
+      db_type = dbconfig['DB_TYPE'] == 'mysql' ? 'mysql2' : dbconfig['DB_TYPE']
+
+      db_url = "#{db_type}://#{dbconfig['DB_USERNAME']}:#{dbconfig['DB_PASSWORD']}@" \
+               "#{dbconfig['DB_HOST']}:#{dbconfig['DB_PORT']}/" \
+               "#{dbconfig['DB_DATABASE']}?reconnect=#{dbconfig['DB_RECONNECT']}"
+
+      dbconfig['DATABASE_URL'] = db_url
+
+      dbconfig
     end
   end
 end

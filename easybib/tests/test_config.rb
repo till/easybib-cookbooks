@@ -94,14 +94,19 @@ BLA_SOMEARRAY[1] = \"server2\"\n",
     )
   end
 
+  # rubocop:disable Metrics/MethodLength
   def test_config_with_rds_to_ini
     # IMPORTANT: Do not use port as string, since we want to check if no
     # Fixnum to string error happens
     fake_node = get_fakenode_config
     fake_node.set['deploy']['some_app']['database'] = {
+      'type' => 'mysql',
       'host' => 'some.db.tld',
-      'user' => 'dbuser',
-      'port' => 1234
+      'username' => 'dbuser',
+      'password' => 'somepass',
+      'database' => 'somedb',
+      'port' => 1234,
+      'reconnect' => true
     }
 
     assert_equal(
@@ -119,12 +124,18 @@ BLA_SOMEKEY = \"somevalue\"
 BLA_SOMEGROUP_SOMEOTHERKEY = \"someothervalue\"
 BLA_SOMEARRAY[0] = \"server1\"
 BLA_SOMEARRAY[1] = \"server2\"
+DB_TYPE = \"mysql\"
 DB_HOST = \"some.db.tld\"
-DB_USER = \"dbuser\"
-DB_PORT = \"1234\"\n",
+DB_USERNAME = \"dbuser\"
+DB_PASSWORD = \"somepass\"
+DB_DATABASE = \"somedb\"
+DB_PORT = \"1234\"
+DB_RECONNECT = \"true\"
+DATABASE_URL = \"mysql2://dbuser:somepass@some.db.tld:1234/somedb?reconnect=true\"\n",
       ::EasyBib::Config.get_configcontent('ini', 'some_app', fake_node)
     )
   end
+  # rubocop:enable Metrics/MethodLength
 
   def test_config_to_shell
     assert_equal("export DEPLOYED_APPLICATION_APPNAME=\"some_app\"
