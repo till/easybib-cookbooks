@@ -2,5 +2,5 @@ name 'fakesqs'
 
 supports 'ubuntu'
 
-depends 'ruby-brightbox'
+depends 'easybib'
 depends 'supervisor'

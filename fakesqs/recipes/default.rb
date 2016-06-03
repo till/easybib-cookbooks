@@ -1,4 +1,4 @@
-include_recipe 'ruby-brightbox'
+include_recipe 'supervisor'
 
 unless is_aws
   ::Chef::Log.info('SQS - installing fake_sqs...')
