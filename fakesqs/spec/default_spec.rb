@@ -5,7 +5,7 @@ describe 'fakesqs::default' do
     ChefSpec::Runner.new(:log_level => :error)
   end
 
-  let(:chef_run) { runner.converge( described_recipe ) }
+  let(:chef_run) { runner.converge(described_recipe) }
 
   it 'it starts the fakesqs service via supervisord' do
     expect(chef_run).to enable_supervisor_service('fake_sqs')
