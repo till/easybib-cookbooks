@@ -23,6 +23,7 @@ applications.each do |app_name, app_config|
   app_ruby           = node.fetch('stack-cmbm', {}).fetch('desired_rubies', {}).fetch(app_name, '')
   db_node            = node.fetch('deploy', {}).fetch(app_name, {}).fetch('database', {})
   smtp_node          = node.fetch('postfix', {}).fetch('relay')
+  gem_home           = node.fetch('cmbm', {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
 
   ies_rbenv_deploy 'deploy ruby' do
     rbenv_users [user]
@@ -50,7 +51,7 @@ applications.each do |app_name, app_config|
   supervisor_service 'puma_supervisor' do
     action [:enable, :restart]
     autostart true
-    command "bash -l -c '~/.rbenv/shims/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru'"
+    command "bash -l -c '#{gem_home}/bin/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru'"
     environment(
       # CMBM application configuration
       'RACK_ENV' => node.fetch('stack-cmbm', {}).fetch('environments', {}).fetch(app_name, ''),
