@@ -27,4 +27,5 @@ include_recipe 'redis::default'
 # ssl
 include_recipe 'easybib-deploy::ssl-vagrant'
 
-include_recipe 'stack-service::role-rabbitmq'
+# fake sqs for local simulation of aws sqs
+include_recipe 'fakesqs'
