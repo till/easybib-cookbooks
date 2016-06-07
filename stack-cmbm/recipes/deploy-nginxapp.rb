@@ -17,9 +17,10 @@ applications.each do |app_name, app_config|
 
   template = 'default-web-nginx.conf.erb'
 
-  domain_name        = app_config['domain_name']
-  doc_root_location  = app_config['doc_root_location']
-  app_dir            = app_config['app_root_location']
+  app_data           = ::EasyBib::Config.get_appdata(node, app_name)
+  domain_name        = app_data['domains']
+  doc_root_location  = app_data['doc_root_dir']
+  app_dir            = app_data['app_dir']
   app_ruby           = node.fetch('stack-cmbm', {}).fetch('desired_rubies', {}).fetch(app_name, '')
   db_node            = node.fetch('deploy', {}).fetch(app_name, {}).fetch('database', {})
   smtp_node          = node.fetch('postfix', {}).fetch('relay')
@@ -51,14 +52,14 @@ applications.each do |app_name, app_config|
   supervisor_service 'puma_supervisor' do
     action [:enable, :restart]
     autostart true
-    command "bash -l -c '#{gem_home}/bin/puma -C #{app_dir}/config/puma.rb /#{app_dir}/config.ru'"
+    command "bash -l -c '#{gem_home}/bin/puma -C #{app_dir}/config/puma.rb #{app_dir}/config.ru'"
     environment(
       # CMBM application configuration
       'RACK_ENV' => node.fetch('stack-cmbm', {}).fetch('environments', {}).fetch(app_name, ''),
 
       # Rails database configuration
-      'DB_DATABASE' => db_node.fetch('name', ''),
-      'DB_HOST' => db_node.fetch('address', ''),
+      'DB_DATABASE' => db_node.fetch('database', ''),
+      'DB_HOST' => db_node.fetch('host', ''),
       'DB_USER' => db_node.fetch('username', ''),
       'DB_PASS' => db_node.fetch('password', ''),
 
