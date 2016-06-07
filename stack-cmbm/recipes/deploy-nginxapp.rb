@@ -56,6 +56,7 @@ applications.each do |app_name, app_config|
     environment(
       # CMBM application configuration
       'RACK_ENV' => node.fetch('stack-cmbm', {}).fetch('environments', {}).fetch(app_name, ''),
+      'DEFAULT_LAYOUT' => 'bibme',
 
       # Rails database configuration
       'DB_DATABASE' => db_node.fetch('database', ''),
@@ -64,7 +65,7 @@ applications.each do |app_name, app_config|
       'DB_PASS' => db_node.fetch('password', ''),
 
       # Rails mail-relay configuration
-      'SMTP_HOST' => smtp_node.fetch('hostname', ''),
+      'SMTP_HOST' => smtp_node.fetch('host', ''),
       'SMTP_PORT' => smtp_node.fetch('port', 25),
       'SMTP_USERNAME' => smtp_node.fetch('user', ''),
       'SMTP_PASSWORD' => smtp_node.fetch('pass', '')
