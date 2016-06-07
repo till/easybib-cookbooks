@@ -52,7 +52,7 @@ applications.each do |app_name, app_config|
   supervisor_service 'puma_supervisor' do
     action [:enable, :restart]
     autostart true
-    command "bash -l -c 'source #{app_dir}/.deploy_configuration.sh; #{gem_home}/bin/puma -C #{app_dir}/config/puma.rb #{app_dir}/config.ru'"
+    command "bash -l -c 'cd #{app_dir}; source .deploy_configuration.sh; #{gem_home}/bin/puma -C config/puma.rb config.ru'"
     environment(
       # CMBM application configuration
       'RACK_ENV' => node.fetch('stack-cmbm', {}).fetch('environments', {}).fetch(app_name, ''),
