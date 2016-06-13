@@ -22,8 +22,6 @@ applications.each do |app_name, app_config|
   doc_root_location  = app_data['doc_root_dir']
   app_dir            = app_data['app_dir']
   app_ruby           = node.fetch('stack-cmbm', {}).fetch('desired_rubies', {}).fetch(app_name, '')
-  db_node            = node.fetch('deploy', {}).fetch(app_name, {}).fetch('database', {})
-  smtp_node          = node.fetch('postfix', {}).fetch('relay')
   gem_home           = node.fetch('cmbm', {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
 
   ies_rbenv_deploy 'deploy ruby' do

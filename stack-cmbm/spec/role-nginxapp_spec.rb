@@ -10,10 +10,7 @@ describe 'stack-cmbm::role-nginxapp' do
     node.set[:vagrant][:applications] = {
       :cmbm => {
         :app_root_location => '/vagrant_cmbm',
-        :doc_root_location => '/vagrant_cmbm/public',
-        :default_router => '',
-        :domain_name => 'cmbm.bib',
-        :ruby_version => '2.2.3'
+        :doc_root_location => '/vagrant_cmbm/public'
       }
     }
   end

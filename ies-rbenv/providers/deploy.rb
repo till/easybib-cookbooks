@@ -141,7 +141,7 @@ action :install do
 
     # Ensure correct ownership of all installed rubies.
     directory install_to
-    execute 'ensure correct ownership and permissions and set sticky bit' do
+    execute 'rly ensure correct ownership and permissions and set sticky bit' do
       command "chown -R #{rbenv_owner}:#{rbenv_group} #{install_to}; chmod -R g+w #{install_to}/versions"
     end
 

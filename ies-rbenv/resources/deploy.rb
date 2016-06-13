@@ -8,6 +8,6 @@ attribute :rbenv_version, :kind_of => String, :default => node['ies-rbenv']['rbe
 attribute :ruby_build_version, :kind_of => String, :default => node['ies-rbenv']['ruby-build']['version']
 attribute :install_to, :kind_of => String, :default => node['ies-rbenv']['rbenv']['install_to']
 attribute :opsworks_ruby, :kind_of => String, :default => node['ies-rbenv']['rbenv']['opsworks']['ruby']
-attribute :rbenv_users, :kind_of => Array
+attribute :rbenv_users, :kind_of => Array, :default => []
 attribute :rubies, :kind_of => Array
 attribute :gems, :kind_of => Array
