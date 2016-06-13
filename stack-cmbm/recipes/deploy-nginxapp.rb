@@ -21,8 +21,8 @@ applications.each do |app_name, app_config|
   domain_name        = app_data['domains']
   doc_root_location  = app_data['doc_root_dir']
   app_dir            = app_data['app_dir']
-  app_ruby           = node.fetch('stack-cmbm', {}).fetch('desired_rubies', {}).fetch(app_name, '')
-  gem_home           = node.fetch('cmbm', {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
+  app_ruby           = node.fetch(app_name, {}).fetch('env', {}).fetch('ruby', {}).fetch('version', '')
+  gem_home           = node.fetch(app_name, {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
 
   ies_rbenv_deploy 'deploy ruby' do
     rbenv_users [user]

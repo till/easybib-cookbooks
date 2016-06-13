@@ -14,13 +14,16 @@ describe 'stack-cmbm::deploy-nginxapp' do
   let(:app_config_shortname) { 'cmbm' }
   let(:template_name) { "/etc/nginx/sites-enabled/#{app_config_shortname}.conf" }
 
-  let(:template_name) { "/etc/nginx/sites-enabled/#{app_config_shortname}.conf" }
-
   before do
     node.set[:vagrant][:applications] = {
       :cmbm => {
         :app_root_location => '/vagrant_cmbm',
-        :doc_root_location => '/vagrant_cmbm/public'
+        :doc_root_location => '/vagrant_cmbm/public',
+        :env => {
+          :ruby => {
+            :version => '2.2.3'
+          }
+        }
       }
     }
     node.set[:etc][:passwd][:vagrant][:dir] = '/home/vagrant'   # because OHAI is not around
