@@ -56,8 +56,8 @@ applications.each do |app_name, app_config|
     numprocs 1
     numprocs_start 0
     priority 999
-    autostart false     # Todo: set to true
-    autorestart false   # Todo: set to true
+    autostart true
+    autorestart true
     startsecs 0
     startretries 3
     stopsignal 'TERM'
