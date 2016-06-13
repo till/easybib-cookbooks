@@ -69,6 +69,23 @@ execute 'update-alternatives' do
   end
 end
 
+#
+# An attempt to make sure that the php prefix given is the prefix
+# chosen for php-cli at the end of an install
+php_package_prefix = node['php']['ppa']['package_prefix'].gsub(/php/, '')
+php_alternatives = []
+php_alternatives << '/usr/bin/update-alternatives'
+php_alternatives << '--set'
+php_alternatives << 'php'
+php_alternatives << "/usr/bin/php#{php_package_prefix}"
+execute 'update-cli-alternatives' do
+  Chef::Log.info("Choosing alternative php with #{php_alternatives.join(' ')} !!! ")
+  command php_alternatives.join(' ')
+  action :nothing
+end
+# End of something
+#
+
 template conf_fpm do
   mode     '0755'
   source   'php.ini.erb'
@@ -87,6 +104,7 @@ template conf_fpm do
   group    config['group']
   notifies :reload, 'service[php-fpm]', :delayed
   notifies :run, 'execute[update-alternatives]', :immediately
+  notifies :run, 'execute[update-cli-alternatives]', :delayed
 end
 
 template conf_cli do
