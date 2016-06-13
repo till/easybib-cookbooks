@@ -7,7 +7,7 @@ include_recipe 'memcache'
 
 include_recipe 'stack-easybib::role-phpapp'
 include_recipe 'nginx-app::vagrant-silex'
-include_recipe 'stack-easybib::role-nginxapp'
+include_recipe 'stack-easybib::role-nginxphpapp'
 include_recipe 'stack-service::role-gearmand'
 include_recipe 'stack-easybib::role-gearmanw'
 include_recipe 'nodejs::npm'
