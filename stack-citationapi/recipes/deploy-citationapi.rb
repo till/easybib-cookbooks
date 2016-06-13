@@ -10,6 +10,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
   when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
+  when 'forms'
+    next unless allow_deploy(application, 'forms')
   else
     Chef::Log.info("stack-citationapi::deploy-citationapi - #{application} (in stack-citationapi) skipped")
     next
