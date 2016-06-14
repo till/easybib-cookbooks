@@ -61,6 +61,18 @@ describe 'php-fpm::configure' do
       it 'runs update-alternatives' do
         resource = chef_run.template('/opt/easybib/etc/php.ini')
         expect(resource).to notify('execute[update-alternatives]')
+        expect(resource).to notify('execute[update-cli-alternatives]')
+      end
+
+      it 'sets the correct target on update-alternatives' do
+        resource_fpm = chef_run.execute('update-alternatives')
+        resource_cli = chef_run.execute('update-cli-alternatives')
+
+        expect(resource_fpm.command).to include('--install')
+        expect(resource_fpm.command).to include('/usr/sbin/php-fpm8.5')
+
+        expect(resource_cli.command).to include('--set')
+        expect(resource_cli.command).to include('/usr/bin/php8.5')
       end
 
       it 'finds update-alternatives for the correct version' do
@@ -76,6 +88,7 @@ describe 'php-fpm::configure' do
         expect(resource.command).to eq(alternatives.join(' '))
 
         expect(chef_run).not_to run_execute('update-alternatives')
+        expect(chef_run).not_to run_execute('update-cli-alternatives')
       end
     end
 
