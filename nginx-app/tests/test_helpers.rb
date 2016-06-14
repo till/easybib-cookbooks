@@ -35,7 +35,7 @@ class TestHelpers < Test::Unit::TestCase
   end
 
   def test_uncached_static_extensions
-    cache_config = {
+    browser_cache_config = {
       'enabled' => false,
       'config' => {
         'eot|ttf|woff' => {
@@ -48,11 +48,16 @@ class TestHelpers < Test::Unit::TestCase
     result = ::NginxApp::Helpers.uncached_static_extensions(nil)
     assert_equal(%w(jpg jpeg gif png css js ico woff ttf eot), result)
 
-    result = ::NginxApp::Helpers.uncached_static_extensions(cache_config)
+    result = ::NginxApp::Helpers.uncached_static_extensions(browser_cache_config)
     assert_equal(%w(jpg jpeg gif png css js ico woff ttf eot), result)
 
-    cache_config['enabled'] = true
-    result = ::NginxApp::Helpers.uncached_static_extensions(cache_config)
+    browser_cache_config['enabled'] = true
+    result = ::NginxApp::Helpers.uncached_static_extensions(browser_cache_config)
     assert_equal(%w(jpg jpeg gif png css ico), result)
+
+    # test for devops-151: make sure we are able to deal with ImmutableMash input
+    config = Chef::Node::ImmutableMash.new('list' => %w(eot jpg))
+    result = ::NginxApp::Helpers.uncached_static_extensions(browser_cache_config, config['list'])
+    assert_equal(%w(jpg), result)
   end
 end

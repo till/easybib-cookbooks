@@ -5,6 +5,7 @@ license 'BSD-2-Clause'
 description 'Role recipes for the service stack'
 
 depends 'gearmand'
+depends 'logrotate'
 depends 'rabbitmq'
 depends 'statsd'
 depends 'nodejs'

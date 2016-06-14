@@ -61,7 +61,7 @@ default['nginx-app']['css_modules'] = {
   'folders'         => 'folders'
 }
 
-default['nginx-app']['cache'] = {
+default['nginx-app']['nginx_caching'] = {
   'enabled' => false,
   'lifetime' => '5m',
   'methods' => 'GET',

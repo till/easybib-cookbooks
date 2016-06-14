@@ -1,6 +1,6 @@
 require_relative 'spec_helper.rb'
 
-describe 'stack-easybib::role-nginxapp' do
+describe 'stack-easybib::role-nginxphpapp' do
 
   let(:runner) do
     ChefSpec::Runner.new(

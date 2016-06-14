@@ -1,6 +1,6 @@
 include_recipe 'nginx-app::service'
 
-cache_conf = node['nginx-app']['cache']
+cache_conf = node['nginx-app']['browser_caching']
 
 directory cache_conf['path'] do
   owner node['nginx-app']['owner']

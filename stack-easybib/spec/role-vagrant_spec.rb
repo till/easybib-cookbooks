@@ -29,8 +29,8 @@ describe 'stack-easybib::role-vagrant' do
   end
 
   it 'should run the default easybib setup, but use the vagrant config generation' do
-    expect(chef_run).to include_recipe('stack-easybib::role-nginxapp')
-    expect(chef_run).to include_recipe('stack-easybib::deploy-easybib-vagrant')
+    expect(chef_run).to include_recipe('stack-easybib::role-nginxphpapp')
+    expect(chef_run).to include_recipe('stack-easybib::deploy-webapps-vagrant')
     expect(chef_run).not_to include_recipe('stack-easybib::deploy-easybib')
     expect(chef_run).to setup_easybib_nginx('www')
       .with(

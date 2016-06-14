@@ -69,6 +69,23 @@ execute 'update-alternatives' do
   end
 end
 
+#
+# An attempt to make sure that the php prefix given is the prefix
+# chosen for php-cli at the end of an install
+php_alternatives = []
+php_alternatives << '/usr/bin/update-alternatives'
+php_alternatives << '--set'
+php_alternatives << 'php'
+php_alternatives << "/usr/bin/php#{php_version}"
+
+execute 'update-cli-alternatives' do
+  command php_alternatives.join(' ')
+  action :nothing
+  not_if do
+    node['php']['ppa']['package_prefix'] == 'php5-easybib'
+  end
+end
+
 template conf_fpm do
   mode     '0755'
   source   'php.ini.erb'
@@ -87,6 +104,7 @@ template conf_fpm do
   group    config['group']
   notifies :reload, 'service[php-fpm]', :delayed
   notifies :run, 'execute[update-alternatives]', :immediately
+  notifies :run, 'execute[update-cli-alternatives]', :delayed
 end
 
 template conf_cli do

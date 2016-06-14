@@ -14,5 +14,5 @@ attribute :deploy_dir, :kind_of => String, :default => nil
 attribute :app_dir, :kind_of => String, :default => nil
 attribute :default_router, :kind_of => String, :default => nil
 attribute :listen_opts, :kind_of => String, :default => nil
-attribute :cache_config, :kind_of => Hash, :default => nil
+attribute :nginx_caching, :kind_of => Hash, :default => nil
 attribute :cookbook, :kind_of => String, :default => 'nginx-app'

@@ -47,7 +47,7 @@ server {
         "access_log" => @access_log,
         "default_router" => @default_router,
         "node" => @node,
-        "cache_config" => @cache_config
+        "nginx_caching" => @nginx_caching
     } %>
     <% else -%>
 <%= render "partials/php-routes-specific-routes.erb", :cookbook => 'nginx-app', :variables => {
