@@ -4,14 +4,20 @@ user = if is_aws
          'vagrant'
        end
 
+applications = if is_aws
+                 node['deploy'].keys
+               else
+                 node['vagrant']['applications'].keys
+               end
+
 template '/etc/puma.conf' do
   source 'puma.conf.erb'
   user 'root'
   group 'root'
   mode '0755'
   variables(
-    :apps => node.fetch('puma', {}).fetch('apps', []),
-    :user => user
+    :user => user,
+    :apps => applications
   )
 end
 
