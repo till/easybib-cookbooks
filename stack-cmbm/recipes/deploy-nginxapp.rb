@@ -48,7 +48,7 @@ applications.each do |app_name, app_config|
     notifies :reload, 'service[nginx]', :delayed
   end
 
-  supervisor_service 'puma_supervisor' do
+  supervisor_service "#{app_name}_supervisor" do
     action [:enable, :restart]
     autostart true
     command "bash -l -c 'cd #{app_dir}; source .deploy_configuration.sh; #{gem_home}/bin/puma -C config/puma.rb config.ru'"
