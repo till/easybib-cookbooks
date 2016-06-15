@@ -45,6 +45,7 @@ applications.each do |app_name, app_config|
     config_template template
     deploy_dir doc_root_location
     domain_name domain_name
+    app_dir app_dir
     notifies :reload, 'service[nginx]', :delayed
   end
 
