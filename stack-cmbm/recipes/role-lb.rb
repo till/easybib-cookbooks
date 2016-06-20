@@ -1,5 +1,3 @@
-Chef::Application.fatal('Not implemented!')
-
 include_recipe 'ies::role-generic'
 
 include_recipe 'haproxy::ctl'
