@@ -137,6 +137,9 @@ action :install do
       command "bash -l -c '#{install_to}/bin/rbenv install -s #{ruby_version}'"
       user rbenv_owner
       group rbenv_group
+      only_if do
+        ruby_version
+      end
     end
 
     # Ensure correct ownership of all installed rubies.
