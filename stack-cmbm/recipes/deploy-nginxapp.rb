@@ -24,6 +24,8 @@ applications.each do |app_name, app_config|
   app_ruby           = node.fetch(app_name, {}).fetch('env', {}).fetch('ruby', {}).fetch('version', '')
   gem_home           = node.fetch(app_name, {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
 
+  next if app_name == 'ssl'
+
   Chef::Log.info("ies_rbenv_deploy: deploying #{app_ruby} for #{app_name} (GEM_HOME=#{gem_home})")
   ies_rbenv_deploy 'deploy ruby' do
     rbenv_users [user]
