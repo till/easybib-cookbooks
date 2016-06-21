@@ -11,5 +11,4 @@ end
 include_recipe 'ies::role-generic'
 include_recipe 'nodejs'
 include_recipe 'redis'
-# include_recipe 'stack-cmbm::deploy-puma'
 include_recipe 'stack-cmbm::deploy-nginxapp'
