@@ -1,7 +1,7 @@
 node['deploy'].each do |application, deploy|
   case application
   when 'easybib'
-    unless allow_deploy(application, 'easybib', 'nginxphpapp') || allow_deploy(application, 'easybib', 'housekeeping')
+    unless allow_deploy(application, 'easybib', %w(nginxphpapp housekeeping))
       Chef::Log.info("stack-easybib::deploy-easybib - #{application} skipped")
       next
     end
