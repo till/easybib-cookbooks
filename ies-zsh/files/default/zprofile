@@ -1,0 +1,2 @@
+source /etc/profile
+
