@@ -1,9 +1,9 @@
 node['deploy'].each do |application, deploy|
   case application
-  when 'schoolseasybibcom'
-    next unless allow_deploy(application, 'schoolseasybibcom', 'schools.easybib.com')
+  when 'edu'
+    next unless allow_deploy(application, 'edu')
   when 'webeval'
-    next unless allow_deploy(application, 'webeval', 'webeval')
+    next unless allow_deploy(application, 'webeval')
   else
     Chef::Log.info("stack-easybib::deploy-silexapps - #{application} skipped")
     next
