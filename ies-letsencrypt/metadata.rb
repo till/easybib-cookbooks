@@ -1,4 +1,4 @@
-name              'letsencrypt'
+name              'ies-letsencrypt'
 maintainer        'Till Klampaeckel'
 maintainer_email  'till@php.net'
 license           'Apache-2.0'
