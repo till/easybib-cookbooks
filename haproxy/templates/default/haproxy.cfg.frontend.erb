@@ -1,33 +1,36 @@
-
+<%
+haproxy_cfg = @node.fetch('haproxy', {})
+opsworks_layers = @node.fetch('opsworks', {}).fetch('layers', {})
+%>
 frontend http-in
   bind *:80
-  <% unless @node.fetch('haproxy',{}).fetch('ssl', 'off') == 'off'
+  <% unless haproxy_cfg.fetch('ssl', 'off') == 'off'
     certificate = "#{@node['ssl-deploy']['directory']}/cert.combined.pem"
   -%>
   bind *:443 ssl crt <%= certificate %>
   reqadd X-Forwarded-Proto:\ https if { ssl_fc }
-  <% unless @node.fetch('haproxy',{}).fetch('hsts',{}).nil? -%>
-  rspadd Strict-Transport-Security:\ max-age=<%=@node.fetch('haproxy',{}).fetch('hsts',{})%> if { ssl_fc }
+  <% unless haproxy_cfg.fetch('hsts', nil).nil? -%>
+  rspadd Strict-Transport-Security:\ max-age=<%=haproxy_cfg['hsts']%> if { ssl_fc }
   <% end
-     if @node.fetch('haproxy',{}).fetch('ssl',{}) == 'only' -%>
+     if haproxy_cfg.fetch('ssl', 'off') == 'only' -%>
   redirect scheme https if !{ ssl_fc }
   <% end
   end -%>
   option log-separate-errors
 
-  tcp-request inspect-delay <%= node.fetch('haproxy', {}).fetch('acl', {}).fetch('inspect_delay', '30s') %>
-  <% if !@node.fetch('haproxy',{}).fetch('acls',{}).empty? -%>
+  tcp-request inspect-delay <%= haproxy_cfg.fetch('acl', {}).fetch('inspect_delay', '30s') %>
+  <% if !haproxy_cfg.fetch('acls',{}).empty? -%>
   #acls from node json:
-    <% @node['haproxy']['acls'].each do |aclname,aclconfig| -%>
+    <% haproxy_cfg['acls'].each do |aclname,aclconfig| -%>
   #rule <%= aclname %>
   <%= aclconfig %>
     <% end -%>
   <% end -%>
 
-  <% if !@node.fetch('haproxy',{}).fetch('additional_layers',{}).empty?-%>
+  <% if !haproxy_cfg.fetch('additional_layers',{}).empty?-%>
   #additional backends:
-    <% @node['haproxy']['additional_layers'].each do |layername,layerconfig| -%>
-      <% if @node.fetch('opsworks', {}).fetch('layers', {}).fetch(layername, {}).fetch('instances', {}).nil? -%>
+    <% haproxy_cfg['additional_layers'].each do |layername,layerconfig| -%>
+      <% if opsworks_layers.fetch(layername, {}).fetch('instances', {}).empty? -%>
   #skipping layer <%= layername %> because layer has no instances
       <% else %>
         <% layerconfig.fetch('acl',{}).each do |aclid, acl| -%>
@@ -39,9 +42,9 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node.fetch('haproxy',{}).fetch('forwarding_layers', {}).empty?-%>
+  <% if !haproxy_cfg.fetch('forwarding_layers', {}).empty?-%>
   #forwarding backends:
-    <% @node['haproxy']['forwarding_layers'].each do |layername,layerconfig| -%>
+    <% haproxy_cfg['forwarding_layers'].each do |layername,layerconfig| -%>
         <% layerconfig.fetch('acl',{}).each do |aclid, acl| -%>
   #rule <%= aclid %>
   acl use_forward_<%= layername %> <%= acl %>
@@ -50,9 +53,9 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-  <% if !@node.fetch('haproxy',{}).fetch('websocket_layers', {}).empty?-%>
+  <% if !haproxy_cfg.fetch('websocket_layers', {}).empty?-%>
   # websocket backends
-    <% @node['haproxy']['websocket_layers'].each do |layername,layerconfig| -%>
+    <% haproxy_cfg['websocket_layers'].each do |layername,layerconfig| -%>
   # routing based on websocket protocol header
   acl hdr_connection_upgrade hdr(Connection)  -i upgrade
   acl hdr_upgrade_websocket  hdr(Upgrade)     -i websocket
@@ -62,7 +65,7 @@ frontend http-in
 
 
 
-  <% default_layer = node.fetch('haproxy',{}).fetch('default_layer',{})
-  if !@node.fetch('opsworks', {}).fetch('layers', {}).fetch(default_layer, {}).fetch('instances', {}).empty? -%>
+  <% default_layer = haproxy_cfg.fetch('default_layer',{})
+  if !opsworks_layers.fetch(default_layer, {}).fetch('instances', {}).empty? -%>
   default_backend <%= default_layer %>_php_app_servers
   <% end -%>
