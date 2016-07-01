@@ -9,10 +9,10 @@ frontend http-in
   -%>
   bind *:443 ssl crt <%= certificate %>
   reqadd X-Forwarded-Proto:\ https if { ssl_fc }
-  <% unless haproxy_cfg.fetch('hsts',{}).nil? -%>
-  rspadd Strict-Transport-Security:\ max-age=<%=haproxy_cfg.fetch('hsts',{})%> if { ssl_fc }
+  <% unless haproxy_cfg.fetch('hsts', nil).nil? -%>
+  rspadd Strict-Transport-Security:\ max-age=<%=haproxy_cfg['hsts']%> if { ssl_fc }
   <% end
-     if haproxy_cfg.fetch('ssl',{}) == 'only' -%>
+     if haproxy_cfg.fetch('ssl', 'off') == 'only' -%>
   redirect scheme https if !{ ssl_fc }
   <% end
   end -%>
@@ -30,7 +30,7 @@ frontend http-in
   <% if !haproxy_cfg.fetch('additional_layers',{}).empty?-%>
   #additional backends:
     <% haproxy_cfg['additional_layers'].each do |layername,layerconfig| -%>
-      <% if opsworks_layers.fetch(layername, {}).fetch('instances', {}).nil? -%>
+      <% if opsworks_layers.fetch(layername, {}).fetch('instances', {}).empty? -%>
   #skipping layer <%= layername %> because layer has no instances
       <% else %>
         <% layerconfig.fetch('acl',{}).each do |aclid, acl| -%>
