@@ -8,6 +8,8 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'citation_apis', 'citation-apis')
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
+  when 'pdf_autocite'
+    next unless allow_deploy(application, 'pdf_autocite')
   when 'sitescraper'
     next unless allow_deploy(application, 'sitescraper')
   when 'forms'

@@ -8,6 +8,7 @@ version           '0.1'
 supports 'ubuntu'
 
 depends 'composer'
+depends 'gearmand'
 depends 'easybib-deploy'
 depends 'ies'
 depends 'haproxy'
