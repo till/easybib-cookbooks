@@ -63,7 +63,9 @@ frontend http-in
     <% end -%>
   <% end -%>
 
-
+  # Handle LE requests and forward them locally
+  acl is_letsencrypt path_beg -i /.well-known/acme-challenge/
+  use_backend letsencrypt if is_letsencrypt
 
   <% default_layer = haproxy_cfg.fetch('default_layer',{})
   if !opsworks_layers.fetch(default_layer, {}).fetch('instances', {}).empty? -%>

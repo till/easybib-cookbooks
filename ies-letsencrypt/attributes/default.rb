@@ -1,3 +1,7 @@
-default['letsencrypt'] = {
-  :certbot_dl => 'https://dl.eff.org/certbot-auto'
+default['ies-letsencrypt'] = {
+  :domains => [],
+  :certbot => {
+    :port => 54321,
+    :download => 'https://dl.eff.org/certbot-auto'
+  }
 }
