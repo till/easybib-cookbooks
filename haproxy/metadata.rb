@@ -6,4 +6,6 @@ version           '0.2'
 depends 'rsyslogd'
 depends 'monit'
 depends 'easybib'
+depends 'ies-letsencrypt'
+
 license           'BSD License'
