@@ -30,4 +30,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     app app_name
     user node['php-fpm']['user']
   end
+
+  easybib_gearmanw app_dir
+
 end
