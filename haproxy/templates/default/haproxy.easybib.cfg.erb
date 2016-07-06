@@ -1,4 +1,8 @@
 <%= render "haproxy.cfg.globals.erb" %>
+<%= render "haproxy.cfg.backend-letsencrypt.erb", :variables => {
+    'certbot_port' => node['ies-letsencrypt']['certbot']['port']
+  }
+%>
 <%
   sub_index = node.fetch('haproxy',{}).fetch('default_layer',{})
 
