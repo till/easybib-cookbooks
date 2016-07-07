@@ -11,10 +11,24 @@ opts = [
   "--http-01-port #{le_conf['certbot']['port']}"
 ]
 
+# install cronjob script
+template le_conf['certbot']['cron'] do
+  source 'certbot-cronjob.sh.erb'
+  mode 0755
+  owner 'root'
+  group 'root'
+  variables(
+    :certbot_bin => certbot_bin,
+    :etc_dir => '/etc/letsencrypt',
+    :opts => opts
+  )
+end
+
 cron_d 'certbot_renewal' do
-  command "#{certbot_bin} #{opts.join(' ')}"
+  command "#{le_conf['certbot']['cron']} |& logger -t letsencrypt"
+  hour '5,8,11'
   minute 30
-  hour '5,8'
+  path '/usr/local/bin:/usr/bin'
   not_if do
     le_conf['domains'].empty?
   end

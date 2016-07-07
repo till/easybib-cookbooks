@@ -21,16 +21,19 @@ describe 'ies-letsencrypt::renewal' do
       node.set['ies-letsencrypt']['certbot']['port'] = 31_337
     end
 
+    it 'installs the cronjob wrapper' do
+      expect(chef_run).to create_template('/usr/local/bin/certbot-crobjob')
+    end
+
     it 'installs the auto-renewal cronjob' do
       expect(chef_run).to create_cron_d('certbot_renewal')
     end
 
-    it 'uses the correct port and all domains' do
+    it 'uses the correct command' do
       resource = chef_run.cron_d('certbot_renewal')
       cmd = resource.command
 
-      expect(cmd).to start_with('/opt/le/certbot')
-      expect(cmd).to include('--http-01-port 31337')
+      expect(cmd).to start_with('/usr/local/bin/certbot-crobjob')
     end
   end
 end
