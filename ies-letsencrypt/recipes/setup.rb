@@ -17,6 +17,7 @@ opts = [
   '--agree-tos --renew-by-default',
   '--non-interactive',
   '--no-self-upgrade',
+  '--quiet',
   "--standalone --http-01-port #{le_conf['certbot']['port']}"
 ]
 

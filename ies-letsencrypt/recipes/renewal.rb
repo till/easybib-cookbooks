@@ -7,6 +7,7 @@ opts = [
   '--non-interactive',
   '--renew-by-default',
   '--no-self-upgrade',
+  '--quiet',
   "--http-01-port #{le_conf['certbot']['port']}"
 ]
 
