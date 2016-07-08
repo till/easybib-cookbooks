@@ -25,7 +25,7 @@ template le_conf['certbot']['cron'] do
 end
 
 cron_d 'certbot_renewal' do
-  command "#{le_conf['certbot']['cron']} |& logger -t letsencrypt"
+  command "#{le_conf['certbot']['cron']} 2>&1 | logger -t letsencrypt"
   hour '5,8,11'
   minute 30
   path '/usr/local/bin:/usr/bin'
