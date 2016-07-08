@@ -1,7 +1,7 @@
 le_conf = node['ies-letsencrypt']
 certbot_bin = le_conf['certbot']['bin']
 
-etc_dir = '/etc/letsencrypt'
+etc_dir = le_conf['certbot']['etc']
 
 template "#{etc_dir}/cli.ini" do
   source 'cli.ini.erb'

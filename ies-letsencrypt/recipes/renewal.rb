@@ -19,7 +19,7 @@ template le_conf['certbot']['cron'] do
   group 'root'
   variables(
     :certbot_bin => certbot_bin,
-    :etc_dir => '/etc/letsencrypt',
+    :etc_dir => le_conf['certbot']['etc'],
     :opts => opts
   )
 end
