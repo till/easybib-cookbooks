@@ -1,4 +1,5 @@
-certbot_bin = '/usr/local/bin/certbot-auto'
+le_conf = node['ies-letsencrypt']
+certbot_bin = le_conf['certbot']['bin']
 
 cookbook_file certbot_bin do
   source 'certbot-auto'
@@ -8,4 +9,6 @@ cookbook_file certbot_bin do
 end
 
 # update certbot and install dependencies
-execute "#{certbot_bin} --non-interactive --os-packages-only"
+execute 'certbot_update' do
+  command "#{certbot_bin} --non-interactive --os-packages-only"
+end

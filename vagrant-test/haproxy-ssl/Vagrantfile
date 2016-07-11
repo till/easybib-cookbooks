@@ -1,4 +1,4 @@
-ENV['recipe_runlist'] = 'easybib-deploy::ssl-certificates,haproxy,letsencrypt'
+ENV['recipe_runlist'] = 'easybib-deploy::ssl-certificates,haproxy,ies-letsencrypt'
 ENV['chef_json'] = "#{File.dirname(__FILE__)}/web-dna.json"
 
 require_relative '../vagrant-provision'
