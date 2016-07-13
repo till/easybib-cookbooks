@@ -13,7 +13,16 @@ node['vagrant']['applications'].each do |app_name, app_data|
   doc_root_location  = app_data['doc_root_location']
   app_dir            = app_data['app_root_location']
   tmp_dir            = "#{app_dir}/tmp"
+  user               = 'vagrant'
+  app_ruby           = node.fetch(app_name, {}).fetch('env', {}).fetch('ruby', {}).fetch('version', '')
   gem_home           = node.fetch(app_name, {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
+
+  Chef::Log.info("ies_rbenv_deploy: deploying #{app_ruby} for #{app_name} (GEM_HOME=#{gem_home})")
+  ies_rbenv_deploy 'deploy ruby' do
+    rbenv_users [user]
+    rubies [app_ruby]
+    gems ['bundler']
+  end
 
   easybib_nginx app_name do
     cookbook 'stack-cmbm'
