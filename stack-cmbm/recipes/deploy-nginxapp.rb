@@ -20,6 +20,8 @@ applications.each do |app_name, app_config|
     next unless allow_deploy(app_name, 'cm', 'nginxapp_cm')
   when 'bm'
     next unless allow_deploy(app_name, 'bm', 'nginxapp_bm')
+  when 'cmbm'
+    next unless allow_deploy(app_name, 'cmbm', 'cmbm')
   else
     Chef::Log.info("stack-cmbm::deploy-nginxapp - #{app_name} skipped.")
     next
