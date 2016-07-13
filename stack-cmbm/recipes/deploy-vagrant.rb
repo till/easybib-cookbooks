@@ -1,5 +1,5 @@
 node['vagrant']['applications'].each do |app_name, app_data|
-  next unless %w(cmbm).include?(app_name)
+  next unless %w(cm bm).include?(app_name)
 
   default_router = if app_data.attribute?('default_router')
                      app_data['default_router']
@@ -36,6 +36,7 @@ node['vagrant']['applications'].each do |app_name, app_data|
   directory tmp_dir do
     mode '0777'
     action :create
+    ignore_failure true
   end
 
   supervisor_service "#{app_name}_supervisor" do
