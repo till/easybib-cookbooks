@@ -1,4 +1,3 @@
-Chef::Log.info('# POOP START #############################################')
 node['vagrant']['applications'].each do |app_name, app_data|
   next unless %w(cmbm).include?(app_name)
 
@@ -57,8 +56,4 @@ node['vagrant']['applications'].each do |app_name, app_data|
     stderr_events_enabled false
     serverurl 'AUTO'
   end
-
-  Chef::Log.info('# POOP stuff #############################################')
-
 end
-Chef::Log.info('# POOP END ###############################################')
