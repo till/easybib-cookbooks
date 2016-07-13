@@ -15,3 +15,6 @@ include_recipe 'nodejs::npm'
 # dev dependencies last
 include_recipe 'php::module-pdo_sqlite'
 include_recipe 'php::module-xdebug'
+
+# fake sqs for local simulation of aws sqs
+include_recipe 'fakesqs'
