@@ -1,14 +1,15 @@
-node['vagrant']['applications'].each do |app_name, app_data|
+node['vagrant']['applications'].each do |app_name, app_config|
   next unless %w(cm bm).include?(app_name)
 
-  default_router = if app_data.attribute?('default_router')
-                     app_data['default_router']
+  default_router = if app_config.attribute?('default_router')
+                     app_config['default_router']
                    else
                      'index.php'
                    end
 
   template = 'default-web-nginx.conf.erb'
 
+  app_data           = ::EasyBib::Config.get_appdata(node, app_name)
   domain_name        = app_data['domain_name']
   doc_root_location  = app_data['doc_root_location']
   app_dir            = app_data['app_root_location']
@@ -16,6 +17,8 @@ node['vagrant']['applications'].each do |app_name, app_data|
   user               = 'vagrant'
   app_ruby           = node.fetch(app_name, {}).fetch('env', {}).fetch('ruby', {}).fetch('version', '')
   gem_home           = node.fetch(app_name, {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
+
+  easybib_envconfig app_name
 
   Chef::Log.info("ies_rbenv_deploy: deploying #{app_ruby} for #{app_name} (GEM_HOME=#{gem_home})")
   ies_rbenv_deploy 'deploy ruby' do
