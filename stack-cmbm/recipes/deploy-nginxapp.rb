@@ -21,7 +21,7 @@ applications.each do |app_name, app_config|
   when 'bm'
     next unless allow_deploy(app_name, 'bm', 'nginxapp_bm')
   when 'cmbm'
-    next unless allow_deploy(app_name, 'cmbm', 'cmbm')
+    next if is_aws
   else
     Chef::Log.info("stack-cmbm::deploy-nginxapp - #{app_name} skipped.")
     next
