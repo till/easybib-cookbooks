@@ -1,0 +1,33 @@
+#!/bin/bash
+
+etc='<%=@etc_dir%>'
+config_file="$etc/cli.ini"
+limit=30
+
+DOMAIN=`grep "^\s*domains" $config_file | sed "s/^\s*domains\s*=\s*//" | sed 's/(\s*)\|,.*$//'`
+echo $DOMAIN
+
+COMBINED="/etc/nginx/ssl/cert.combined.pem"
+
+CERT_FILE="$etc/live/$DOMAIN/fullchain.pem"
+KEY_FILE="$etc/live/$DOMAIN/privkey.pem"
+
+if [ ! -f $CERT_FILE ]; then
+  echo "[ERROR] certificate file not found for domain $domain."
+  exit 1;
+fi
+
+EXP=$(date -d "`openssl x509 -in $CERT_FILE -text -noout|grep "Not After"|cut -c 25-`" +%s)
+NOW=$(date -d "now" +%s)
+DAYS=$(echo \( $EXP - $NOW \) / 86400 |bc)
+
+if [ "$EXP" -gt "$limit" ] ; then
+  echo "The certificate is up to date, no need for renewal ($DAYS days left)."
+  exit 0;
+fi
+
+<%=@certbot_bin%> <%=@opts.join(' ')%>
+
+# todo
+# 1. combine cert: sudo bash -c "cat $CERT_FILE $KEY_FILE > $COMBINED"
+# 2. reload haproxy: service haproxy reload

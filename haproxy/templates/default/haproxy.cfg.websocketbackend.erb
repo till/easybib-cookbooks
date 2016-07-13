@@ -29,8 +29,6 @@ end
 
 backend <%= @layername %>_websocket_app_servers
   balance roundrobin
-  option redispatch
-  option forwardfor except 127.0.0.1
   option httpchk <%= health_check_string %>
   http-check expect status 101
   timeout tunnel 3600s

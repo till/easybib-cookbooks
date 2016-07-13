@@ -21,9 +21,6 @@ end
 
 backend <%= @layername %>_php_app_servers
   balance roundrobin
-  option redispatch
-  option httpclose
-  option forwardfor except 127.0.0.1
   option httpchk <%= health_check_string %>
   <%
 instances = @node.fetch('opsworks', {}).fetch('layers', {}).fetch(@layername, {})['instances']

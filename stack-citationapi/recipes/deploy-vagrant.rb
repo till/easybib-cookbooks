@@ -1,5 +1,5 @@
 node['vagrant']['applications'].each do |app_name, app_config|
-  next unless %w(formatting-api citation-apis).include?(app_name)
+  next unless %w(pdf-autocite formatting-api citation-apis).include?(app_name)
 
   default_router = if app_config.attribute?('default_router')
                      app_config['default_router']
@@ -9,9 +9,9 @@ node['vagrant']['applications'].each do |app_name, app_config|
 
   template = 'default-web-nginx.conf.erb'
 
-  domain_name        = app_config['domain_name']
-  doc_root_location  = app_config['doc_root_location']
-  app_dir            = app_config['app_root_location']
+  domain_name        = ::EasyBib::Config.get_appdata(node, app_name, 'domains')
+  doc_root_location  = ::EasyBib::Config.get_appdata(node, app_name, 'doc_root_dir')
+  app_dir            = ::EasyBib::Config.get_appdata(node, app_name, 'app_dir')
 
   easybib_nginx app_name do
     cookbook 'stack-citationapi'
@@ -30,4 +30,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     app app_name
     user node['php-fpm']['user']
   end
+
+  easybib_gearmanw app_dir
+
 end
