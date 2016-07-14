@@ -9,7 +9,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
 
   template = 'default-web-nginx.conf.erb'
 
-  app_data           = ::EasyBib::Config.get_appdata(node, app_name)
+  # app_data           = ::EasyBib::Config.get_appdata(node, app_name)
   app_data           = app_config
   domain_name        = app_data['domain_name']
   doc_root_location  = app_data['doc_root_location']
@@ -46,7 +46,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
   supervisor_service "#{app_name}_supervisor" do
     action [:enable, :restart]
     autostart true
-    command "bash -l -c 'cd #{app_dir}; source .deploy_configuration.sh; #{gem_home}/puma -C config/puma.rb config.ru'"
+    command "bash -l -c 'cd #{app_dir}; source .deploy_configuration.sh; #{gem_home}/bin/puma -C config/puma.rb config.ru'"
     numprocs 1
     numprocs_start 0
     priority 999
