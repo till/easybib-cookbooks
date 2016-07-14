@@ -10,6 +10,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
   template = 'default-web-nginx.conf.erb'
 
   app_data           = ::EasyBib::Config.get_appdata(node, app_name)
+  app_data           = app_config
   domain_name        = app_data['domain_name']
   doc_root_location  = app_data['doc_root_location']
   app_dir            = app_data['app_root_location']
@@ -37,7 +38,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
   end
 
   directory tmp_dir do
-    mode '0777'
+    mode '01777'
     action :create
     ignore_failure true
   end
