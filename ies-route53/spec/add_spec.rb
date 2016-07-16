@@ -54,5 +54,25 @@ describe 'ies-route53::add' do
           )
       end
     end
+
+    describe 'credential auto discovery' do
+      before do
+        node.set['ies-route53']['zone'] = {
+          'ttl' => 2,
+          'id' => 'bar'
+        }
+      end
+
+      it "doesn't need access key id and secret" do
+        expect(chef_run).to create_ies_route53_record('spec.chefspec.local')
+          .with(
+            :name => 'spec.chefspec.local',
+            :value => '127.0.0.8',
+            :type => 'A',
+            :ttl => 2,
+            :zone_id => 'bar'
+          )
+      end
+    end
   end
 end
