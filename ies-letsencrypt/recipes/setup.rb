@@ -3,6 +3,14 @@ certbot_bin = le_conf['certbot']['bin']
 
 etc_dir = le_conf['certbot']['etc']
 
+directory etc_dir do
+  mode 0755
+  owner 'root'
+  group 'root'
+  recursive true
+  action :create
+end
+
 template "#{etc_dir}/cli.ini" do
   source 'cli.ini.erb'
   mode   0644
