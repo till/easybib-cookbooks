@@ -1,9 +1,16 @@
 le_conf = node['ies-letsencrypt']
 certbot_bin = le_conf['certbot']['bin']
+certbot_cron = le_conf['certbot']['cron']
+
+execute 'certbot_setup' do
+  command certbot_cron
+  action :nothing
+end
 
 opts = [
   'certonly',
   '--standalone',
+  '--agree-tos',
   '--non-interactive',
   '--renew-by-default',
   '--no-self-upgrade',
@@ -12,7 +19,7 @@ opts = [
 ]
 
 # install cronjob script
-template le_conf['certbot']['cron'] do
+template certbot_cron do
   source 'certbot-cronjob.sh.erb'
   mode 0755
   owner 'root'
@@ -23,10 +30,11 @@ template le_conf['certbot']['cron'] do
     :opts => opts,
     :ssl_dir => le_conf['ssl_dir']
   )
+  notifies :run, 'execute[certbot_setup]', :immediately
 end
 
 cron_d 'certbot_renewal' do
-  command "#{le_conf['certbot']['cron']} 2>&1 | logger -t letsencrypt"
+  command "#{certbot_cron} 2>&1 | logger -t letsencrypt"
   hour '5,8,11'
   minute 30
   path '/usr/local/bin:/usr/bin'

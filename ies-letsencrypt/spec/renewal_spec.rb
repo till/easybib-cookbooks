@@ -23,6 +23,10 @@ describe 'ies-letsencrypt::renewal' do
       node.set['ies-letsencrypt']['ssl_dir'] = '/home/till/ssl'
     end
 
+    it 'has an initial setup command to get certificates' do
+      expect(chef_run).not_to run_execute('certbot_setup')
+    end
+
     it 'installs the cronjob wrapper' do
       expect(chef_run).to render_file('/opt/le/cron')
       expect(chef_run).to render_file('/opt/le/cron')
