@@ -8,6 +8,7 @@ version           '0.1'
 supports 'ubuntu'
 
 depends 'nginx-app'
+depends 'easybib-deploy'
 depends 'ies-mysql'
 depends 'redis'
 depends 'memcache'
