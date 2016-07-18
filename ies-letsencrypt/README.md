@@ -20,4 +20,11 @@ Certificates end up in `/etc/letsencrypt/live/example.org`.
 
  * creates certificate for all domains specified
  * combines/dumps all data into `/etc/nginx/ssl/cert.combined.pem`
- * please note: **adding** another domain is a manual process
+ * reloads HaProxy (but it's forgiving about that)
+
+## Limitations
+
+ * the first run may **fail**:
+   * missing DNS entries pointing to the instance
+   * manually run `ies-letsencrypt` via OpsWorks `execute_recipe`
+ * **adding** another domain to an existing setup is a manual process
