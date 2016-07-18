@@ -11,6 +11,14 @@ directory etc_dir do
   action :create
 end
 
+directory le_conf['ssl_dir'] do
+  owner 'root'
+  group 'www-data'
+  mode 0750
+  recursive true
+  action :create
+end
+
 template "#{etc_dir}/cli.ini" do
   source 'cli.ini.erb'
   mode   0644

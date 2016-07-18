@@ -20,6 +20,7 @@ describe 'ies-letsencrypt::renewal' do
       node.set['ies-letsencrypt']['certbot']['bin'] = '/opt/le/certbot'
       node.set['ies-letsencrypt']['certbot']['cron'] = '/opt/le/cron'
       node.set['ies-letsencrypt']['certbot']['port'] = 31_337
+      node.set['ies-letsencrypt']['ssl_dir'] = '/home/till/ssl'
     end
 
     it 'installs the cronjob wrapper' do
@@ -37,6 +38,13 @@ describe 'ies-letsencrypt::renewal' do
       cmd = resource.command
 
       expect(cmd).to start_with('/opt/le/cron')
+    end
+
+    it 'uses the correct ssl dir' do
+      expect(chef_run).to render_file('/opt/le/cron')
+        .with_content(
+          include('COMBINED="/home/till/ssl/cert.combined.pem"')
+        )
     end
   end
 end

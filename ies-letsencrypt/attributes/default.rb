@@ -6,5 +6,6 @@ default['ies-letsencrypt'] = {
     :etc => '/etc/letsencrypt',
     :port => 54_321,
     :download => 'https://dl.eff.org/certbot-auto'
-  }
+  },
+  :ssl_dir => '/etc/nginx/ssl'
 }

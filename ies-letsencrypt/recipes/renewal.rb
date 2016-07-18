@@ -20,7 +20,8 @@ template le_conf['certbot']['cron'] do
   variables(
     :certbot_bin => certbot_bin,
     :etc_dir => le_conf['certbot']['etc'],
-    :opts => opts
+    :opts => opts,
+    :ssl_dir => le_conf['ssl_dir']
   )
 end
 

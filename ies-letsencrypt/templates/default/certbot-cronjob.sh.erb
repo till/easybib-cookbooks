@@ -7,7 +7,7 @@ limit=30
 DOMAIN=`grep "^\s*domains" $config_file | sed "s/^\s*domains\s*=\s*//" | sed 's/(\s*)\|,.*$//'`
 echo $DOMAIN
 
-COMBINED="/etc/nginx/ssl/cert.combined.pem"
+COMBINED="<%=@ssl_dir%>/cert.combined.pem"
 
 CERT_FILE="$etc/live/$DOMAIN/fullchain.pem"
 KEY_FILE="$etc/live/$DOMAIN/privkey.pem"
@@ -26,8 +26,13 @@ if [ "$EXP" -gt "$limit" ] ; then
   exit 0;
 fi
 
-<%=@certbot_bin%> <%=@opts.join(' ')%>
+echo "$EXP left, we'll attempt to renew."
 
-# todo
-# 1. combine cert: sudo bash -c "cat $CERT_FILE $KEY_FILE > $COMBINED"
-# 2. reload haproxy: service haproxy reload
+<%=@certbot_bin%> <%=@opts.join(' ')%>
+if [ $? -ne 0 ] ; then
+  echo "Error occurred."
+  exit 1;
+fi
+
+cat $CERT_FILE $KEY_FILE > $COMBINED
+service haproxy reload
