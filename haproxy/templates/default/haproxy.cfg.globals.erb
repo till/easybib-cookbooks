@@ -36,3 +36,4 @@ defaults
 <% @node['haproxy']['errorloc'].each do |error_code,error_file| %>
   errorfile <%= error_code %> /etc/haproxy/errors/<%= error_file %>
 <% end %>
+  http-request del-header Proxy               # https://httpoxy.org/
