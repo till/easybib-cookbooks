@@ -11,22 +11,23 @@ describe 'stack-cmbm::deploy-nginxapp' do
   let(:chef_run)  { runner.converge(described_recipe) }
   let(:node)      { runner.node }
 
-  let(:app_config_shortname) { 'cmbm' }
+  let(:app_config_shortname) { 'cm' }
   let(:template_name) { "/etc/nginx/sites-enabled/#{app_config_shortname}.conf" }
 
   before do
-    node.set[:vagrant][:applications] = {
-      :cmbm => {
-        :app_root_location => '/vagrant_cmbm',
-        :doc_root_location => '/vagrant_cmbm/public',
-        :env => {
-          :ruby => {
-            :version => '2.2.3'
-          }
+    node.set['opsworks']['instance']['layers'] = ['nginxapp_cm']
+    node.set[:deploy][:cm] = {
+      :application => 'cm',
+      :deploy_to => '/srv/cm',
+      :deploy_dir => '/srv/cm',
+      :document_root => 'www',
+      :env => {
+        :ruby => {
+          :version => '2.2.3'
         }
       }
     }
-    node.set[:etc][:passwd][:vagrant][:dir] = '/home/vagrant'   # because OHAI is not around
+    node.set[:etc][:passwd]['www-data'][:dir] = '/srv/www/cm'   # because OHAI is not around
   end
 
   it 'includes all required recipes' do
@@ -54,7 +55,7 @@ describe 'stack-cmbm::deploy-nginxapp' do
   it 'sets the correct root' do
     expect(chef_run).to render_file(template_name)
       .with_content(
-        include('root /vagrant_cmbm/public/;')
+        include('root /srv/cm/current/www/;')
       )
   end
 end

@@ -1,9 +1,20 @@
 module IesRoute53
   module Helper
-    def dns_enabled?(node = self.node)
-      zone_config = node.fetch('ies-route53', {}).fetch('zone', {})
+    def get_aws_config(node = self.node)
+      config = get_zone_config(node)
 
-      %w(id custom_access_key custom_secret_key).each do |attrib|
+      {
+        :access_key => config.fetch('custom_access_key', nil),
+        :secret => config.fetch('custom_secret_key', nil),
+        :zone_id => config.fetch('id', nil)
+      }
+    end
+
+    def dns_enabled?(node = self.node)
+      zone_config = get_zone_config(node)
+
+      # custom_access_key & custom_secret_key are optional
+      %w(id).each do |attrib|
         unless zone_config.key?(attrib)
           return false
         end
@@ -14,6 +25,12 @@ module IesRoute53
       end
 
       true
+    end
+
+    private
+
+    def get_zone_config(node)
+      node.fetch('ies-route53', {}).fetch('zone', {})
     end
   end
 end

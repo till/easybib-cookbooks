@@ -1,4 +1,4 @@
-%w(www edu webeval).each do |app|
+%w(edu www webeval).each do |app|
 
   next if node['vagrant']['applications'].fetch(app, nil).nil?
   template = (app == 'www') ? 'easybib.com.conf.erb' : 'silex.conf.erb'

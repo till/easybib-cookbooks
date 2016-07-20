@@ -14,3 +14,4 @@ easybib-cookbooks.tar.gz
 .idea/*
 .todo
 vagrant-test/php/deploy.json
+cookbooks-*.tar.gz

@@ -8,6 +8,8 @@ node['deploy'].each do |application, deploy|
   case application
   when 'account_expiration'
     next unless allow_deploy(application, 'account_expiration', 'housekeeping')
+  when 'easybib'
+    next unless allow_deploy(application, 'easybib', 'housekeeping')
   when 'schoolanalytics'
     next unless allow_deploy(application, 'schoolanalytics', 'housekeeping')
   when 'sharing'
