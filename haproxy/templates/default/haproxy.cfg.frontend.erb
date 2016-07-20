@@ -17,6 +17,8 @@ frontend http-in
   <% end
   end -%>
   option log-separate-errors
+  http-request del-header Proxy
+
 
   tcp-request inspect-delay <%= haproxy_cfg.fetch('acl', {}).fetch('inspect_delay', '30s') %>
   <% if !haproxy_cfg.fetch('acls',{}).empty? -%>
