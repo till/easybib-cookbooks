@@ -37,6 +37,8 @@ else
                 'execute[certbot_setup]'
               end
 
+  Chef::Log.info("Subscribing to: #{ssl_event}")
+
   service 'haproxy' do
     action [:enable, :start]
     subscribes :reload, ssl_event
