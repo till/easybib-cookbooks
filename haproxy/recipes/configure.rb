@@ -31,10 +31,15 @@ else
   # cert is generated in easybib-deploy::ssl-certificates - we can not notify
   # there because during inital setup of lb haproxy is not there yet, so we
   # subscribe from here.
-  certificate = "#{node['ssl-deploy']['directory']}/cert.combined.pem"
+  ssl_event = if node['ies-letsencrypt']['domains'].empty?
+                "template[#{node['ssl-deploy']['directory']}/cert.combined.pem]"
+              else
+                'execute[certbot_setup]'
+              end
+
   service 'haproxy' do
     action [:enable, :start]
-    subscribes :reload, "template[#{certificate}]"
+    subscribes :reload, ssl_event
   end
 end
 
