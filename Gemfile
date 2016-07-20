@@ -8,4 +8,5 @@ gem 'fauxhai', '~>2.3.0'
 gem 'test-kitchen', '~>1.0.0.beta.3'
 gem 'rubocop', '~>0.37.0'
 gem 'aws-sdk', '~>1.0'
+gem 'berkshelf', '~>3.3'
 gem 'kitchen-vagrant', :group => :integration
