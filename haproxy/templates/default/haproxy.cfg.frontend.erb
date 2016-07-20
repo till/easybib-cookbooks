@@ -4,18 +4,11 @@ opsworks_layers = @node.fetch('opsworks', {}).fetch('layers', {})
 %>
 frontend http-in
   bind *:80
-  <% unless haproxy_cfg.fetch('ssl', 'off') == 'off'
-    certificate = "#{@node['ssl-deploy']['directory']}/cert.combined.pem"
-  -%>
-  bind *:443 ssl crt <%= certificate %>
-  reqadd X-Forwarded-Proto:\ https if { ssl_fc }
-  <% unless haproxy_cfg.fetch('hsts', nil).nil? -%>
-  rspadd Strict-Transport-Security:\ max-age=<%=haproxy_cfg['hsts']%> if { ssl_fc }
-  <% end
-     if haproxy_cfg.fetch('ssl', 'off') == 'only' -%>
-  redirect scheme https if !{ ssl_fc }
-  <% end
-  end -%>
+<%= render 'haproxy.cfg.ssl.erb', :variables => {
+  'certificate' => "#{@node['ssl-deploy']['directory']}/cert.combined.pem",
+  'hsts' => haproxy_cfg.fetch('hsts', nil),
+  'ssl_enabled' => haproxy_cfg.fetch('ssl', 'off')
+} -%>
   option log-separate-errors
   http-request del-header Proxy
 
