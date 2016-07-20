@@ -33,30 +33,43 @@ describe 'haproxy::configure' do
   let(:node) { runner.node }
   let(:haproxy_cfg) { '/etc/haproxy/haproxy.cfg' }
 
-  describe 'SSL is configured' do
+  describe 'SSL' do
     before do
       stub_command('pgrep haproxy').and_return(false)
     end
 
-    it 'configures SSL' do
-      expect(chef_run).to render_file(haproxy_cfg)
-        .with_content(
-          include('bind *:443 ssl crt /etc/nginx/ssl/cert.combined.pem')
-        )
-    end
-  end
-
-  describe 'redirect from http to https is configured' do
-    before do
-      stub_command('pgrep haproxy').and_return(false)
-      node.set[:haproxy][:ssl] = 'only'
+    describe 'enabled' do
+      it 'configures SSL' do
+        expect(chef_run).to render_file(haproxy_cfg)
+          .with_content(
+            include('bind *:443 ssl crt /etc/nginx/ssl/cert.combined.pem')
+          )
+      end
     end
 
-    it 'contains the redirect' do
-      expect(chef_run).to render_file(haproxy_cfg)
-        .with_content(
-          include('redirect scheme https if !{ ssl_fc }')
-        )
+    describe 'only' do
+      before do
+        node.set[:haproxy][:ssl] = 'only'
+      end
+
+      it 'redirects all http to https' do
+        expect(chef_run).to render_file(haproxy_cfg)
+          .with_content(
+            include('redirect scheme https if !{ ssl_fc }')
+          )
+      end
+    end
+
+    describe 'disabled' do
+      before do
+        node.set[:haproxy][:ssl] = 'off'
+      end
+
+      it 'does not bind to 443' do
+        expect(chef_run).to render_file(haproxy_cfg)
+        expect(chef_run).not_to render_file(haproxy_cfg)
+          .with_content(include('bind *:443'))
+      end
     end
   end
 end
