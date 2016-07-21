@@ -4,6 +4,7 @@ opsworks_layers = @node.fetch('opsworks', {}).fetch('layers', {})
 %>
 frontend http-in
   bind *:80
+  acl is_letsencrypt path_beg -i /.well-known/acme-challenge/
 <%= render 'haproxy.cfg.ssl.erb', :variables => {
   'certificate' => "#{@node['ssl-deploy']['directory']}/cert.combined.pem",
   'hsts' => haproxy_cfg.fetch('hsts', nil),
@@ -59,7 +60,7 @@ frontend http-in
   <% end -%>
 
   # Handle LE requests and forward them locally
-   use_backend letsencrypt if is_letsencrypt
+  use_backend letsencrypt if is_letsencrypt
 
   <% default_layer = haproxy_cfg.fetch('default_layer',{})
   if !opsworks_layers.fetch(default_layer, {}).fetch('instances', {}).empty? -%>
