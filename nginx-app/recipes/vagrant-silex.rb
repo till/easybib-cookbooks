@@ -42,6 +42,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
     stackname stackname
   end
 
+  next if app_name == 'edu'
   easybib_supervisor "#{app_name}_supervisor" do
     supervisor_file "#{app_dir}/deploy/supervisor.json"
     app_dir app_dir

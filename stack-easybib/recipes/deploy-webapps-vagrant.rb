@@ -11,4 +11,13 @@
     notifies :reload, 'service[nginx]', :delayed
     notifies :restart, 'service[php-fpm]', :delayed
   end
+
+  next unless app == 'www'
+  app_dir = node['vagrant']['applications'][app]['app_root_location']
+  easybib_supervisor "#{app}_supervisor" do
+    supervisor_file "#{app_dir}/deploy/supervisor.json"
+    app_dir app_dir
+    app app
+    user node['php-fpm']['user']
+  end
 end
