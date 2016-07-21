@@ -27,9 +27,9 @@ action :create do
     end
   end
 
-  ssl_dir    = node['ssl-deploy']['directory']
-  ssl_certificate     = deploy['ssl_certificate'].chomp
-  ssl_certificate_key = deploy['ssl_certificate_key'].chomp
+  ssl_dir             = node['ssl-deploy']['directory']
+  ssl_certificate     = get_actual(deploy['ssl_certificate'])
+  ssl_certificate_key = get_actual(deploy['ssl_certificate_key'])
   ssl_combined_key    = [ssl_certificate, ssl_certificate_key, ssl_certificate_ca].join("\n")
 
   d = directory ssl_dir do
@@ -74,4 +74,12 @@ action :create do
 
   new_resource.updated_by_last_action(d.updated_by_last_action? || t1.updated_by_last_action? || t2.updated_by_last_action? || t3.updated_by_last_action?)
 
+end
+
+def get_actual(str)
+  if str.include?('-----BEGIN')
+    return str.chomp
+  end
+
+  return ::File.read(str)
 end
