@@ -1,25 +1,23 @@
 action :create do
   deploy = new_resource.deploy
 
-  unless deploy.key?('ssl_certificate')
-    Chef::Log.info("No ssl_certificate 'key'")
-    next
+  missing = false
+
+  ['ssl_certificate', 'ssl_certificate_key'].each do |test_key|
+    unless deploy.key?(test_key)
+      Chef::Log.info("Missing key: #{test_key}")
+      missing = true
+      next
+    end
+
+    if deploy[test_key].empty?
+      Chef::Log.info("Data for '#{test_key}' is empty")
+      missing = true
+      next
+    end
   end
 
-  unless deploy.key?('ssl_certificate_key')
-    Chef::Log.info("No ssl_certificate_key 'key'")
-    next
-  end
-
-  if deploy['ssl_certificate'].empty?
-    Chef::Log.error('ssl_certificate is empty')
-    next
-  end
-
-  if deploy['ssl_certificate_key'].empty?
-    Chef::Log.error('ssl_certificate_key is empty')
-    next
-  end
+  next if missing == true
 
   ssl_certificate_ca = ''
 
