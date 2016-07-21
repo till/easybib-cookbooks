@@ -40,18 +40,9 @@ describe 'haproxy::configure' do
 
     describe 'enabled' do
       it 'configures SSL' do
-        File.stub(:exist?).and_return(true)
         expect(chef_run).to render_file(haproxy_cfg)
           .with_content(
             include('bind *:443 ssl crt /etc/nginx/ssl/cert.combined.pem')
-          )
-      end
-
-      it 'does not (yet) have the PEM' do
-        expect(chef_run).to render_file(haproxy_cfg)
-        expect(chef_run).not_to render_file(haproxy_cfg)
-          .with_content(
-            include('bind *:443')
           )
       end
     end
@@ -62,7 +53,6 @@ describe 'haproxy::configure' do
       end
 
       it 'redirects all http to https' do
-        File.stub(:exist?).and_return(true)
         expect(chef_run).to render_file(haproxy_cfg)
           .with_content(
             include('redirect scheme https if !{ ssl_fc }')
