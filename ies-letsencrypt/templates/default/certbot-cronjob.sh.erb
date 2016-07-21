@@ -5,16 +5,31 @@ config_file="$etc/cli.ini"
 limit=30
 
 DOMAIN=`grep "^\s*domains" $config_file | sed "s/^\s*domains\s*=\s*//" | sed 's/(\s*)\|,.*$//'`
-echo $DOMAIN
+if [ -z "$DOMAIN" ] ; then
+  echo "[ERROR] no domain found"
+  exit 1;
+fi
 
-COMBINED="/etc/nginx/ssl/cert.combined.pem"
+COMBINED="<%=@ssl_dir%>/cert.combined.pem"
 
 CERT_FILE="$etc/live/$DOMAIN/fullchain.pem"
 KEY_FILE="$etc/live/$DOMAIN/privkey.pem"
 
+function get_cert {
+  <%=@certbot_bin%> <%=@opts.join(' ')%>
+  if [ $? -ne 0 ] ; then
+    echo "[ERROR] certbot-auto failed."
+    exit 1;
+  fi
+
+  cat $CERT_FILE $KEY_FILE > $COMBINED
+  service haproxy reload
+}
+
 if [ ! -f $CERT_FILE ]; then
-  echo "[ERROR] certificate file not found for domain $domain."
-  exit 1;
+  echo "[INFO] certificate file not found for domain $DOMAIN."
+  get_cert
+  exit 0;
 fi
 
 EXP=$(date -d "`openssl x509 -in $CERT_FILE -text -noout|grep "Not After"|cut -c 25-`" +%s)
@@ -22,12 +37,10 @@ NOW=$(date -d "now" +%s)
 DAYS=$(echo \( $EXP - $NOW \) / 86400 |bc)
 
 if [ "$EXP" -gt "$limit" ] ; then
-  echo "The certificate is up to date, no need for renewal ($DAYS days left)."
+  echo "[DEBUG] The certificate is up to date, no need for renewal ($DAYS days left)."
   exit 0;
 fi
 
-<%=@certbot_bin%> <%=@opts.join(' ')%>
+echo "[INFO] $EXP left, we'll attempt to renew."
 
-# todo
-# 1. combine cert: sudo bash -c "cat $CERT_FILE $KEY_FILE > $COMBINED"
-# 2. reload haproxy: service haproxy reload
+get_cert
