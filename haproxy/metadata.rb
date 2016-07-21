@@ -7,5 +7,6 @@ depends 'rsyslogd'
 depends 'monit'
 depends 'easybib'
 depends 'ies-letsencrypt'
+depends 'ies-ssl'
 
-license           'BSD License'
+license 'BSD License'

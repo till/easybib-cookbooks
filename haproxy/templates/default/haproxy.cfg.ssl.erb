@@ -2,11 +2,6 @@
 if @ssl_enabled == 'off'
   return
 end
-
-# skip ssl if certicate does not (yet) exist
-unless File.exist?(@certificate)
-  return
-end
 -%>
   bind *:443 ssl crt <%= @certificate %>
   reqadd X-Forwarded-Proto:\ https if { ssl_fc }
