@@ -9,5 +9,8 @@ end
   rspadd Strict-Transport-Security:\ max-age=<%=@hsts%> if { ssl_fc }
 <% end
 if @ssl_enabled == 'only' -%>
-  redirect scheme https if !{ ssl_fc }
+
+  # is_letsencrpyt acl needs to come before this redirect
+  acl is_letsencrypt path_beg -i /.well-known/acme-challenge/
+  redirect scheme https if !{ ssl_fc } !is_letsencrypt
 <% end -%>
