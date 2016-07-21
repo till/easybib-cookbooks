@@ -3,18 +3,17 @@ action :create do
 
   missing = false
 
-  ['ssl_certificate', 'ssl_certificate_key'].each do |test_key|
+  %w(ssl_certificate ssl_certificate_key).each do |test_key|
     unless deploy.key?(test_key)
       Chef::Log.info("Missing key: #{test_key}")
       missing = true
       next
     end
 
-    if deploy[test_key].empty?
-      Chef::Log.info("Data for '#{test_key}' is empty")
-      missing = true
-      next
-    end
+    next unless deploy[test_key].empty?
+
+    Chef::Log.info("Data for '#{test_key}' is empty")
+    missing = true
   end
 
   next if missing == true
@@ -81,5 +80,5 @@ def get_actual(str)
     return str.chomp
   end
 
-  return ::File.read(str)
+  ::File.read(str)
 end
