@@ -1,4 +1,4 @@
-name 'fakesqs'
+name 'fake-s3'
 
 supports 'ubuntu'
 
