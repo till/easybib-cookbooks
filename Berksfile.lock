@@ -51,8 +51,8 @@ DEPENDENCIES
     path: ezproxy
   fail2ban
     path: fail2ban
-  fakesqs
-    path: fakesqs
+  fake-sqs
+    path: fake-sqs
   gearmand
     path: gearmand
   haproxy
@@ -69,6 +69,8 @@ DEPENDENCIES
     path: ies-rbenv
   ies-route53
     path: ies-route53
+  ies-ssl
+    path: ies-ssl
   ies-zsh
     path: ies-zsh
   java
@@ -242,7 +244,7 @@ GRAPH
     build-essential (>= 0.0.0)
   ezproxy (0.1.0)
   fail2ban (2.2.1)
-  fakesqs (0.0.0)
+  fake-sqs (0.0.0)
     easybib (>= 0.0.0)
     supervisor (>= 0.0.0)
   gearmand (0.1.0)
@@ -251,6 +253,7 @@ GRAPH
   haproxy (0.2.0)
     easybib (>= 0.0.0)
     ies-letsencrypt (>= 0.0.0)
+    ies-ssl (>= 0.0.0)
     monit (>= 0.0.0)
     rsyslogd (>= 0.0.0)
   ies (0.1.0)
@@ -281,6 +284,7 @@ GRAPH
   ies-rbenv (0.1.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
+  ies-ssl (0.1.0)
   ies-zsh (0.1.0)
   java (0.1.0)
   loggly (0.1.0)
@@ -419,7 +423,7 @@ GRAPH
     supervisor (>= 0.0.0)
   stack-easybib (0.1.0)
     easybib-deploy (>= 0.0.0)
-    fakesqs (>= 0.0.0)
+    fake-sqs (>= 0.0.0)
     haproxy (>= 0.0.0)
     ies (>= 0.0.0)
     ies-mysql (>= 0.0.0)
@@ -434,6 +438,7 @@ GRAPH
     postfix (>= 0.0.0)
     redis (>= 0.0.0)
     stack-service (>= 0.0.0)
+    supervisor (>= 0.0.0)
   stack-fruitkid (0.1.0)
     composer (>= 0.0.0)
     easybib-deploy (>= 0.0.0)

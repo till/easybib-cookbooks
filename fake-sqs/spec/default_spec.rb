@@ -1,6 +1,6 @@
 require 'chefspec'
 
-describe 'fakesqs::default' do
+describe 'fake-sqs::default' do
   let(:runner) do
     ChefSpec::Runner.new(:log_level => :error)
   end

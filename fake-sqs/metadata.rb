@@ -1,4 +1,4 @@
-name 'fakesqs'
+name 'fake-sqs'
 
 supports 'ubuntu'
 
