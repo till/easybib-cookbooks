@@ -22,11 +22,15 @@ describe 'easybib_sslcertificate' do
 
   let(:ssl_dir) { '/etc/nginx/ssl' }
 
+  let(:ssl_cert) { '-----BEGIN-CERT' }
+
+  let(:ssl_key) { '-----BEGIN-KEY' }
+
   describe 'OpsWorks: SSL app' do
     before do
       fake_deploy = {}
-      fake_deploy['ssl_certificate']     = '-----BEGIN-CERT'
-      fake_deploy['ssl_certificate_key'] = '-----BEGIN-KEY'
+      fake_deploy['ssl_certificate']     = ssl_cert
+      fake_deploy['ssl_certificate_key'] = ssl_key
 
       node.set['fake_deploy'] = fake_deploy
     end
@@ -43,17 +47,17 @@ describe 'easybib_sslcertificate' do
       expect(chef_run).to create_template("#{ssl_dir}/cert.key")
 
       expect(chef_run).to render_file("#{ssl_dir}/cert.key")
-        .with_content('-----BEGIN-KEY')
+        .with_content(ssl_key)
 
       expect(chef_run).to create_template("#{ssl_dir}/cert.pem")
 
       expect(chef_run).to render_file("#{ssl_dir}/cert.pem")
-        .with_content('-----BEGIN-CERT')
+        .with_content(ssl_cert)
     end
 
     it 'creates the combined file for haproxy' do
       expect(chef_run).to render_file("#{ssl_dir}/cert.combined.pem")
-        .with_content("-----BEGIN-CERT\n-----BEGIN-KEY\n")
+        .with_content("#{ssl_cert}\n#{ssl_key}\n")
     end
   end
 
