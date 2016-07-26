@@ -1,8 +1,8 @@
 rsyslog_service_provider = if node['platform_version'] == '16.04'
-                            Chef::Provider::Service::Systemd
-                          else
-                            Chef::Provider::Service::Upstart
-                          end
+                             Chef::Provider::Service::Systemd
+                           else
+                             Chef::Provider::Service::Upstart
+                           end
 
 service 'rsyslog' do
   provider rsyslog_service_provider
