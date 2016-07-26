@@ -1,5 +1,11 @@
+nginx_service_provider = if node['platform_version'] == '16.04'
+                            Chef::Provider::Service::Systemd
+                          else
+                            Chef::Provider::Service::Upstart
+                          end
+
 service 'nginx' do
-  provider Chef::Provider::Service::Upstart
+  provider nginx_service_provider
   supports :status => true, :restart => true, :reload => true
 end
 
