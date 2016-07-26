@@ -15,6 +15,16 @@ describe 'ies-mysql::dev' do
     end
   end
 
+  describe 'MySQL 5.7' do
+    before do
+      node.set['ies-mysql']['version'] = '5.7'
+    end
+
+    it 'renders new grants' do
+      expect(chef_run).to create_cookbook_file('/tmp/grant57.sql')
+    end
+  end
+
   describe 'AWS' do
     before do
       node.set['opsworks'] = {}
