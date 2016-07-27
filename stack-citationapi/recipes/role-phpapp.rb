@@ -9,6 +9,8 @@ include_recipe 'php::module-gearman'
 include_recipe 'php::module-zip'
 include_recipe 'php::module-zlib'
 include_recipe 'php::module-opcache'
+include_recipe 'php::module-tidy'
+
 include_recipe 'tideways'
 
 node.set['composer']['environment'] = get_deploy_user if is_aws
