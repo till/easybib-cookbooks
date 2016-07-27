@@ -1,3 +1,5 @@
+include_recipe 'supervisor'
+
 unless is_aws
   conf = node['fake-s3']
 
