@@ -10,7 +10,7 @@ describe 'ies-mysql::default' do
       :log_level => :error,
       :platform => 'ubuntu',
       :version => '14.04',
-      :step_into => ['mysql_service', 'mysql_client']
+      :step_into => %w(mysql_service mysql_client)
     )
   end
 
@@ -18,7 +18,7 @@ describe 'ies-mysql::default' do
 
   describe 'mysql 5.6 on Ubuntu 14.04' do
     before do
-      stub_command("/usr/bin/test -f /var/lib/mysql-vagrant/mysql/user.frm").and_return(false)
+      stub_command('/usr/bin/test -f /var/lib/mysql-vagrant/mysql/user.frm').and_return(false)
     end
 
     it 'installs version 5.6 of the mysql-server and -client package' do
