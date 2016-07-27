@@ -3,7 +3,7 @@ include_recipe 'supervisor'
 unless is_aws
   ::Chef::Log.info('SQS - installing fake_sqs...')
   gem_package 'fake_sqs' do
-    version '0.3.1'
+    version conf['version']
   end
   ::Chef::Log.info('SQS - configuring supervisor...')
   supervisor_service 'fake_sqs' do
