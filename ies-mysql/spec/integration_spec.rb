@@ -16,7 +16,7 @@ describe 'ies-mysql::default' do
 
   let(:chef_run) { runner.converge(described_recipe) }
 
-  describe 'mysql 5.6' do
+  describe 'mysql 5.6 on Ubuntu 14.04' do
     before do
       stub_command("/usr/bin/test -f /var/lib/mysql-vagrant/mysql/user.frm").and_return(false)
     end
@@ -24,6 +24,11 @@ describe 'ies-mysql::default' do
     it 'installs version 5.6 of the mysql-server and -client package' do
       expect(chef_run).to install_package('mysql-server-5.6')
       expect(chef_run).to install_package('mysql-client-5.6')
+    end
+
+    it 'uses upstart' do
+      service = chef_run.mysql_service('vagrant')
+      expect(service.provider).to eq(Chef::Provider::MysqlServiceUpstart)
     end
   end
 end
