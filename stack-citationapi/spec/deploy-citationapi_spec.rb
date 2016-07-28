@@ -53,4 +53,26 @@ describe 'stack-citationapi::deploy-citationapi' do
 
     it_behaves_like 'silex nginx template'
   end
+
+  describe 'pdf_autocite' do
+    let(:app_config_shortname) { 'pdf_autocite' }
+    let(:deploy_to) { '/srv/www/pdf_autocite' }
+
+    before do
+      node.set['deploy']['pdf_autocite'] = {
+        'deploy_to' => deploy_to,
+        'document_root' => 'web',
+        'domains' => ['pdf.example.org']
+      }
+      node.set['opsworks']['instance']['layers'] = ['pdf_autocite']
+    end
+
+    it 'calls all necessary LWRP' do
+      expect(chef_run).to deploy_easybib_deploy(app_config_shortname)
+      expect(chef_run).to setup_easybib_nginx(app_config_shortname)
+      expect(chef_run).to create_easybib_envconfig(app_config_shortname)
+      expect(chef_run).to create_easybib_supervisor("#{app_config_shortname}_supervisor")
+      expect(chef_run).to create_easybib_gearmanw("#{deploy_to}/current/")
+    end
+  end
 end
