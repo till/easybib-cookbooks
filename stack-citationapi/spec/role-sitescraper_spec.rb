@@ -36,15 +36,25 @@ describe 'stack-citationapi::role-sitescraper' do
 
   describe 'vagrant' do
     before do
-      node.set['vagrant']['applications'] = [
+      node.set['vagrant']['applications'] = {
         :sitescraper => {
-          
+          :default_router => 'index_tralala.php',
+          :deploy_dir => '/vagrant_autocite',
+          :doc_root_location => '/vagrant_autocite/www',
+          :domain_name => ['example.org']
         }
-      ]
+      }
     end
 
     it 'uses deploy-vagrant' do
       expect(chef_run).to include_recipe('stack-citationapi::deploy-vagrant')
+    end
+
+    it 'calls the LWRPs' do
+      expect(chef_run).to setup_easybib_nginx('sitescraper')
+      expect(chef_run).to create_easybib_envconfig('sitescraper')
+      expect(chef_run).to create_easybib_supervisor('sitescraper_supervisor')
+      expect(chef_run).to create_easybib_gearmanw('/vagrant_autocite/')
     end
   end
 
