@@ -26,6 +26,10 @@ describe 'php-fpm::default' do
   end
 
   describe 'php.ini refactoring' do
+    before do
+      node.set['php-fpm']['packages'] = 'php5-easybib-soap,php5-easybib-tidy'
+    end
+
     it 'includes module recipes for soap & tidy' do
       expect(chef_run).to include_recipe 'php::module-soap'
       expect(chef_run).to include_recipe 'php::module-tidy'
