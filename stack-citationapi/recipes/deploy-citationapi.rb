@@ -64,6 +64,7 @@ node['deploy'].each do |application, deploy|
     default_router default_router
     domain_name domain_name
     notifies :reload, 'service[nginx]', :delayed
+    notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 
   easybib_envconfig application
