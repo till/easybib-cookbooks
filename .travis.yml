@@ -7,6 +7,7 @@ cache: bundler
 script:
   - make cs
   - make test
+  - make berkshelf
 
 before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
