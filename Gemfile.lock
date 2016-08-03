@@ -222,6 +222,7 @@ DEPENDENCIES
   berkshelf (~> 3.3)
   chef (~> 11.10.0)
   chefspec (~> 3.4.0)
+  dep-selector-libgecode (~> 1.2.0)
   fauxhai (~> 2.3.0)
   foodcritic (~> 5.0.0)
   kitchen-vagrant
