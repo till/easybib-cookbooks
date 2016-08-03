@@ -5,7 +5,6 @@ easybib-solr/files/default/config.rb
 .vagrant
 *.box
 .project
-Gemfile.lock
 fc_sandbox
 .kitchen/
 .kitchen.local.yml
