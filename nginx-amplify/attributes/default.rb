@@ -3,7 +3,7 @@ default['nginx-amplify'] = {
   'version' => nil, # 0.23-1
   'hostname' => '',
   'apt' => {
-    'key' => 'http://nginx.org/keys/nginx_signing.key',
+    'key' => 'nginx_signing.key',
     'repository' => 'http://packages.amplify.nginx.com/'
   }
 }
