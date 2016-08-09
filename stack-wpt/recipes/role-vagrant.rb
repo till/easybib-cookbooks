@@ -18,3 +18,5 @@ include_recipe 'fake-s3'
 include_recipe 'stack-scholar::role-scholar'
 include_recipe 'php::module-pdo_sqlite'
 include_recipe 'nginx-app::vagrant-silex'
+
+package 'pandoc'
