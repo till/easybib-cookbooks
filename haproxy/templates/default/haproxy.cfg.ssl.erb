@@ -1,0 +1,13 @@
+<%
+if @ssl_enabled == 'off'
+  return
+end
+-%>
+  bind *:443 ssl crt <%= @certificate %>
+  reqadd X-Forwarded-Proto:\ https if { ssl_fc }
+<% unless @hsts.nil? -%>
+  rspadd Strict-Transport-Security:\ max-age=<%=@hsts%> if { ssl_fc }
+<% end
+if @ssl_enabled == 'only' -%>
+  redirect scheme https if !{ ssl_fc } !is_letsencrypt
+<% end -%>

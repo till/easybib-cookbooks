@@ -6,7 +6,7 @@ include_recipe 'ohai'
 include_recipe 'memcache'
 
 # fake sqs for local simulation of aws sqs
-include_recipe 'fakesqs'
+include_recipe 'fake-sqs'
 
 include_recipe 'stack-easybib::role-phpapp'
 include_recipe 'nginx-app::vagrant-silex'

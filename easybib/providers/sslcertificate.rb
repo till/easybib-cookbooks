@@ -1,25 +1,22 @@
 action :create do
   deploy = new_resource.deploy
 
-  unless deploy.key?('ssl_certificate')
-    Chef::Log.info("No ssl_certificate 'key'")
-    next
+  missing = false
+
+  %w(ssl_certificate ssl_certificate_key).each do |test_key|
+    unless deploy.key?(test_key)
+      Chef::Log.info("Missing key: #{test_key}")
+      missing = true
+      next
+    end
+
+    next unless deploy[test_key].empty?
+
+    Chef::Log.info("Data for '#{test_key}' is empty")
+    missing = true
   end
 
-  unless deploy.key?('ssl_certificate_key')
-    Chef::Log.info("No ssl_certificate_key 'key'")
-    next
-  end
-
-  if deploy['ssl_certificate'].empty?
-    Chef::Log.error('ssl_certificate is empty')
-    next
-  end
-
-  if deploy['ssl_certificate_key'].empty?
-    Chef::Log.error('ssl_certificate_key is empty')
-    next
-  end
+  next if missing == true
 
   ssl_certificate_ca = ''
 
@@ -29,9 +26,9 @@ action :create do
     end
   end
 
-  ssl_dir    = node['ssl-deploy']['directory']
-  ssl_certificate     = deploy['ssl_certificate'].chomp
-  ssl_certificate_key = deploy['ssl_certificate_key'].chomp
+  ssl_dir             = node['ssl-deploy']['directory']
+  ssl_certificate     = get_actual(deploy['ssl_certificate'])
+  ssl_certificate_key = get_actual(deploy['ssl_certificate_key'])
   ssl_combined_key    = [ssl_certificate, ssl_certificate_key, ssl_certificate_ca].join("\n")
 
   d = directory ssl_dir do
@@ -76,4 +73,12 @@ action :create do
 
   new_resource.updated_by_last_action(d.updated_by_last_action? || t1.updated_by_last_action? || t2.updated_by_last_action? || t3.updated_by_last_action?)
 
+end
+
+def get_actual(str)
+  if str.include?('-----BEGIN')
+    return str.chomp
+  end
+
+  ::File.read(str)
 end

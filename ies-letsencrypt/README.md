@@ -16,9 +16,15 @@ $ /usr/local/bin/certbot-auto certonly \
 
 Certificates end up in `/etc/letsencrypt/live/example.org`.
 
-Since we currently install certificates for haproxy via OpsWorks, you have to get the individual values, put them into an SSL app on OpsWorks and re-deploy it.
+## Features
 
-## Todo
+ * creates certificate for all domains specified
+ * combines/dumps all data into `/etc/nginx/ssl/cert.combined.pem`
+ * reloads HaProxy (but it's forgiving about that)
 
- * setup auto-renew
- * directly use created files
+## Limitations
+
+ * the first run may **fail**:
+   * missing DNS entries pointing to the instance
+   * manually run `ies-letsencrypt` via OpsWorks `execute_recipe`
+ * **adding** another domain to an existing setup is a manual process
