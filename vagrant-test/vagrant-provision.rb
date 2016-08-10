@@ -12,7 +12,9 @@ Vagrant.configure('2') do |config|
     vb.gui = vagrant_config['gui']
   end
 
-  config.vm.provision :shell, :inline => "sudo apt-spy2 fix --launchpad --country=#{get_country} --commit"
+  config.ssh.insert_key = false
+
+  #config.vm.provision :shell, :inline => "sudo apt-spy2 fix --launchpad --country=#{get_country} --commit"
   config.vm.provision :shell, :inline => 'sudo apt-get update -y'
 
   chef_json = ENV.fetch('chef_json')
@@ -20,6 +22,7 @@ Vagrant.configure('2') do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = './../../'
     chef.json = get_json(chef_json) unless chef_json.empty?
+    chef.version = vagrant_test_config['chef_version']
 
     ENV.fetch('recipe_runlist').split(',').each do |recipe|
       chef.add_recipe(recipe)
