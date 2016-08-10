@@ -6,7 +6,9 @@ def initialize(*args)
   @prefix_dir  = node['php-fpm']['prefix']
 end
 
-attribute :name, :kind_of => String, :named_attribute => true
+default_action :generate
+
+attribute :name, :kind_of => String, :name_attribute => true
 attribute :prefix_dir, :kind_of => String
 attribute :config_dir, :kind_of => String, :default => 'etc/php'
 attribute :suffix, :kind_of => String, :default => '-settings'
