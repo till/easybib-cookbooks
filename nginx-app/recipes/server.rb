@@ -2,7 +2,7 @@ include_recipe 'nginx-app::ppa'
 include_recipe 'nginx-app::service'
 
 # OHAI7 change
-reload_plugin = if Gem::Version.new(OHai::VERSION) >= Gem::Version.new('7.0.0')
+reload_plugin = if Gem::Version.new(::Ohai::VERSION) >= Gem::Version.new('7.0.0')
                   'etc'
                 else
                   'passwd'
