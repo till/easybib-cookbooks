@@ -11,6 +11,9 @@ module Php
       keep = {}
       l = @ext_name.length
 
+      return keep if @directives.nil?
+      return keep if @directives.empty?
+
       @directives.each do |k, v|
         if k[0, l] == @ext_name
           keep[k] = v
