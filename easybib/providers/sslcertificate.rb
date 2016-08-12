@@ -73,6 +73,11 @@ action :create do
 
   new_resource.updated_by_last_action(d.updated_by_last_action? || t1.updated_by_last_action? || t2.updated_by_last_action? || t3.updated_by_last_action?)
 
+
+  Chef::Log.info("******* NOTIFY HAPROXY FOR RELOAD ********")
+  Chef::Log.info("******* updated_by_last_action? : #{new_resource.updated_by_last_action?} ********")
+  notifies :reload, 'service[haproxy]', :delayed
+
 end
 
 def get_actual(str)
