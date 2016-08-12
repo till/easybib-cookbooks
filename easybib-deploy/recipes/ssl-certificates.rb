@@ -5,6 +5,6 @@ node['deploy'].each do |application, deploy|
 
   easybib_sslcertificate 'ssl' do
     deploy deploy
-    notifies :reload, 'service[haproxy]'
+    notifies :reload, 'service[haproxy]', immediate
   end
 end
