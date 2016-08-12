@@ -5,6 +5,7 @@ node['deploy'].each do |application, deploy|
 
   easybib_sslcertificate 'ssl' do
     deploy deploy
+    Chef::Log.info("******* NOTIFY HAPROXY FOR RELOAD ********")
     notifies :reload, 'service[haproxy]', :delayed
   end
 end
