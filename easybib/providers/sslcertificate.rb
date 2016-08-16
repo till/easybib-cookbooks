@@ -71,8 +71,10 @@ action :create do
     )
   end
 
-  new_resource.notifies :restart, run_context.resource_collection.find(runit_service: 'haproxy')
-  new_resource.updated_by_last_action(d.updated_by_last_action? || t1.updated_by_last_action? || t2.updated_by_last_action? || t3.updated_by_last_action?)
+  new_resource.updated_by_last_action(true) if d.updated_by_last_action?
+  new_resource.updated_by_last_action(true) if t1.updated_by_last_action?
+  new_resource.updated_by_last_action(true) if t2.updated_by_last_action?
+  new_resource.updated_by_last_action(true) if t3.updated_by_last_action?
 
 end
 
