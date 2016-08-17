@@ -33,6 +33,6 @@ node['deploy'].each do |application, deploy|
     htpasswd "#{deploy['deploy_to']}/current/htpasswd"
     listen_opts listen_opts
     notifies :reload, 'service[nginx]', :delayed
-    notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 end
