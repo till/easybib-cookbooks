@@ -13,6 +13,7 @@ before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
   - mkdir build
   - mv easybib-cookbooks.tar.gz build/
+  - mv */cookbooks-*.tar.gz build/
 
 deploy:
   - provider: s3
