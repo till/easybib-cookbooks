@@ -20,3 +20,4 @@ berkshelf:
 	cd stack-ops; $(berks) package
 	cd stack-research; $(berks) package
 	cd stack-service; $(berks) package
+	bash ./DeployToS3.sh
