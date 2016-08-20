@@ -23,47 +23,6 @@ action :install do
 
 end
 
-action :setup do
-  name = new_resource.name
-  ext_prefix = get_extension_dir
-  ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
-
-  files = get_extension_files(name)
-  if files.empty?
-    Chef::Log.debug('files list returned by pecl was empty, falling back to default')
-    files = [ext_prefix + name + '.so']
-  end
-
-  extensions = Hash[files.map do |filepath|
-    rel_file = filepath.clone
-    rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
-
-    zend = new_resource.zend_extensions.include?(rel_file)
-
-    [(zend ? filepath : rel_file), zend]
-  end]
-
-  config_directives = new_resource.config_directives
-
-  config = ::Php::Config.new(name, config_directives)
-  directives = config.get_directives
-
-  template "#{node['php-fpm']['prefix']}/etc/php/#{name}.ini" do
-    source 'extension.ini.erb'
-    cookbook 'php'
-    owner 'root'
-    group 'root'
-    mode '0644'
-    variables(
-      :extensions => extensions,
-      :directives => directives
-    )
-  end
-
-  new_resource.updated_by_last_action(true)
-
-end
-
 action :compile do
 
   if new_resource.source_dir.empty?

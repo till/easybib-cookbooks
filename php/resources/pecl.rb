@@ -1,4 +1,4 @@
-actions :install, :setup, :compile
+actions :install, :compile
 
 def initialize(*args)
   super
@@ -12,5 +12,3 @@ attribute :version, :kind_of => String, :default => nil
 attribute :config,  :kind_of => Hash
 attribute :source_dir, :kind_of => String, :default => ''
 attribute :cflags, :kind_of => String
-attribute :config_directives, :kind_of => Hash, :default => {}
-attribute :zend_extensions, :kind_of => Array, :default => []
