@@ -1,4 +1,5 @@
 require_relative 'spec_helper.rb'
+require_relative '../libraries/config'
 
 describe 'php::module-aws_elasticache_cluster_client' do
 
@@ -7,6 +8,10 @@ describe 'php::module-aws_elasticache_cluster_client' do
   let(:node) { runner.node }
 
   let(:ext) { 'amazon-elasticache-cluster-client.so' }
+
+  let(:ext_dir) { '/usr/lib/php/20151012' }
+
+  let(:my_config) { double(Php::Config) }
 
   before do
     node.set['php']['extensions']['config_dir'] = 'etc/php/7.0/mods-available'
@@ -25,10 +30,18 @@ describe 'php::module-aws_elasticache_cluster_client' do
       'pid' => '/var/run/php/php7.0-fpm.pid',
       'packages' => 'php7.0-fpm,php7.0-cli'
     }
+
+    Php::Config.stub(:new).and_return(my_config)
+    my_config.stub(:get_extension_dir).with('/usr').and_return(ext_dir)
+    my_config.stub(:get_directives).and_return({})
   end
 
-  it 'copies the file in place' do
-    expect(chef_run).to create_cookbook_file("/usr/lib/php/20151012/#{ext}")
+  it 'uses php_pecl to copy the file' do
+    expect(chef_run).to copy_php_pecl(ext)
+  end
+
+  it 'actually copies the file in place' do
+    expect(chef_run).to create_cookbook_file("#{ext_dir}/#{ext}")
   end
 
   it 'configures the extension' do
