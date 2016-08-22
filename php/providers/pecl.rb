@@ -22,6 +22,16 @@ action :install do
 
 end
 
+action :copy do
+  cbf = cookbook_file "#{get_extension_dir(new_resource.prefix)}/#{new_resource.name}" do
+    cookbook 'php'
+    source new_resource.ext_file.to_s
+    mode 0644
+  end
+
+  new_resource.updated_by_last_action(cbf.updated_by_last_action?)
+end
+
 action :compile do
 
   if new_resource.source_dir.empty?

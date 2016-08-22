@@ -3,7 +3,7 @@ require_relative '../libraries/config'
 
 describe 'php::module-aws_elasticache_cluster_client' do
 
-  let(:runner) { ChefSpec::Runner.new(:step_into => %w{php_pecl php_config}) }
+  let(:runner) { ChefSpec::Runner.new(:step_into => %w(php_pecl php_config)) }
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node) { runner.node }
 

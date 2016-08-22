@@ -4,9 +4,10 @@ ext = 'amazon-elasticache-cluster-client.so'
 
 source_version = node['amazon-elasticache-cluster-client']['php_version']
 
-cookbook_file "/usr/lib/php/20151012/#{ext}" do
-  source "#{source_version}-#{ext}"
-  mode 0644
+php_pecl ext do
+  prefix node['php-fpm']['exec_prefix']
+  ext_file "#{source_version}-#{ext}"
+  action :copy
 end
 
 php_config File.basename(ext, '.so') do
