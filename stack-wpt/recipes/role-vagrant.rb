@@ -52,6 +52,7 @@ node.set['php-fpm'] = {
 }
 
 include_recipe 'stack-scholar::role-scholar'
+include_recipe 'php::module-zip'
 include_recipe 'php::module-pdo_sqlite'
 include_recipe 'nginx-app::vagrant-silex'
 
