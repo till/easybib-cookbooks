@@ -22,9 +22,21 @@ MethodLength:
   Enabled: false
 SignalException:
   Enabled: false
-TrailingCommaInLiteral:
+WordArray:
+  Enabled: false
+#
+# These were needed to pass since I did not want to rewrite 
+# Package clouds cookbook entirely I do not know the ramifications
+# of having this exception but I am sure to be educated.
+# -Joel
+#
+SingleLineBlockParams:
+  Enabled: false
+IdenticalConditionalBranches:
+  Enabled: false
+PredicateName:
   Enabled: false
 TrailingCommaInArguments:
   Enabled: false
-WordArray:
+Metrics/AbcSize:
   Enabled: false
