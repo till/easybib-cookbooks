@@ -10,7 +10,7 @@ describe 'poppler' do
     end.converge(described_recipe)
   end
 
-  it 'updates apt with poppler' do
+  it 'updates apt' do
     expect(chef_run).to add_apt_repository('poppler').with(
       :uri => 'http://foo.bar/package',
       :key => 'http://foo.bar/key',
@@ -19,7 +19,7 @@ describe 'poppler' do
     )
   end
 
-  it 'installs poppler libraries' do
+  it 'installs libraries' do
     expect(chef_run).to install_package 'poppler'
     expect(chef_run).to install_package 'poppler-glib'
     expect(chef_run).to install_package 'php-poppler-pdf'

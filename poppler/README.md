@@ -1,3 +1,3 @@
 # poppler cookbook
 
- * `poppler::install` installs https://packagecloud.io/till/poppler-backport
+ * `poppler` installs poppler libraries from https://packagecloud.io/till/poppler-backport
