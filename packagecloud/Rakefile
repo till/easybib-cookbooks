@@ -16,8 +16,8 @@ namespace :style do
     desc 'Run Chef style checks'
     FoodCritic::Rake::LintTask.new(:chef) do |t|
       t.options = {
-        :fail_tags => ['any'],
-        :tags => ['~FC003']
+        fail_tags: ['any'],
+        tags: ['~FC003']
       }
     end
   rescue LoadError
@@ -26,7 +26,7 @@ namespace :style do
 end
 
 desc 'Run all style checks'
-task :style => ['style:chef', 'style:ruby']
+task style: ['style:chef', 'style:ruby']
 
 # Integration tests. Kitchen.ci
 namespace :integration do
@@ -41,7 +41,7 @@ namespace :integration do
 end
 
 desc 'Run all tests on Travis'
-task :travis => ['style']
+task travis: ['style']
 
 # Default
-task :default => ['style', 'integration:kitchen:all']
+task default: ['style', 'integration:kitchen:all']

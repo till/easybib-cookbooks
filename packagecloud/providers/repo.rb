@@ -20,7 +20,7 @@ end
 def gpg_url(base_url, repo, format, master_token)
   base_install_url = ::File.join(base_url, node['packagecloud']['base_repo_path'])
   ext = (format == :deb) ? 'list' : 'repo'
-  gpg_key_url_endpoint = construct_uri_with_options(:base_url => base_install_url, :repo => repo, :endpoint => "gpg_key_url.#{ext}")
+  gpg_key_url_endpoint = construct_uri_with_options(base_url: base_install_url, repo: repo, endpoint: "gpg_key_url.#{ext}")
   unless master_token.nil?
     gpg_key_url_endpoint.user = master_token
     gpg_key_url_endpoint.password = ''
@@ -31,7 +31,7 @@ end
 
 def install_deb
   base_url = new_resource.base_url
-  repo_url = construct_uri_with_options(:base_url => base_url, :repo => new_resource.repository, :endpoint => node['platform'])
+  repo_url = construct_uri_with_options(base_url: base_url, repo: new_resource.repository, endpoint: node['platform'])
 
   Chef::Log.debug("#{new_resource.name} deb repo url = #{repo_url}")
 
@@ -70,7 +70,7 @@ end
 def install_rpm
   given_base_url = new_resource.base_url
   base_repo_url = ::File.join(given_base_url, node['packagecloud']['base_repo_path'])
-  base_url_endpoint = construct_uri_with_options(:base_url => base_repo_url, :repo => new_resource.repository, :endpoint => 'rpm_base_url')
+  base_url_endpoint = construct_uri_with_options(base_url: base_repo_url, repo: new_resource.repository, endpoint: 'rpm_base_url')
 
   if new_resource.master_token
     base_url_endpoint.user     = new_resource.master_token
@@ -136,7 +136,7 @@ end
 def install_gem
   base_url = new_resource.base_url
 
-  repo_url = construct_uri_with_options(:base_url => base_url, :repo => new_resource.repository)
+  repo_url = construct_uri_with_options(base_url: base_url, repo: new_resource.repository)
   repo_url = read_token(repo_url, true).to_s
 
   execute "install packagecloud #{new_resource.name} repo as gem source" do
@@ -152,7 +152,7 @@ def read_token(repo_url, gems = false)
 
   base_repo_url = ::File.join(base_url, node['packagecloud']['base_repo_path'])
 
-  uri = construct_uri_with_options(:base_url => base_repo_url, :repo => new_resource.repository, :endpoint => 'tokens.text')
+  uri = construct_uri_with_options(base_url: base_repo_url, repo: new_resource.repository, endpoint: 'tokens.text')
   uri.user     = new_resource.master_token
   uri.password = ''
 
@@ -172,7 +172,7 @@ end
 def install_endpoint_params
   dist = new_resource.force_dist || value_for_platform_family(
     'debian' => node['lsb']['codename'],
-    %w(rhel fedora) => node['platform_version']
+    ['rhel', 'fedora'] => node['platform_version'],
   )
 
   hostname = node['packagecloud']['hostname_override'] ||
