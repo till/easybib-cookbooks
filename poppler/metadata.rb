@@ -6,5 +6,4 @@ version           '0.1'
 supports 'ubuntu'
 
 depends 'apt'
-
 license           'BSD License'

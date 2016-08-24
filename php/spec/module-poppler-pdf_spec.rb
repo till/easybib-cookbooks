@@ -5,12 +5,8 @@ describe 'php::module-poppler-pdf' do
     ChefSpec::Runner.new.converge(described_recipe)
   end
 
-  it 'adds ppa mirror configuration' do
-    expect(chef_run).to include_recipe('php::dependencies-ppa')
-  end
-
-  it 'installs and configures the extension' do
-    expect(chef_run).to install_php_ppa_package('poppler-pdf')
+  it 'runs poppler' do
+    expect(chef_run).to include_recipe('poppler')
   end
 
 end
