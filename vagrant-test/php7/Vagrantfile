@@ -1,0 +1,6 @@
+my_runlist = %w(stack-easybib::role-phpapp php::module-aws_elasticache_cluster_client)
+
+ENV['recipe_runlist'] = my_runlist.join(',')
+ENV['chef_json'] = "#{File.dirname(__FILE__)}/deploy.json"
+
+require_relative '../vagrant-provision'

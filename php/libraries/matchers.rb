@@ -42,8 +42,8 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:php_pecl, :install, resource_name)
   end
 
-  def setup_php_pecl(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:php_pecl, :setup, resource_name)
+  def copy_php_pecl(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:php_pecl, :copy, resource_name)
   end
 
   def compile_php_pecl(resource_name)
