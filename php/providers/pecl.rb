@@ -1,11 +1,10 @@
-require 'chef/mixin/shell_out'
 include Chef::Mixin::ShellOut
 
 action :install do
   extension = new_resource.name
   version = new_resource.version
 
-  ext_dir = get_extension_dir
+  ext_dir = get_extension_dir(new_resource.prefix)
   ext_dir << ::File::SEPARATOR if ext_dir[-1].chr != ::File::SEPARATOR
   so_file   = "#{ext_dir}/#{extension}.so"
 
@@ -23,45 +22,14 @@ action :install do
 
 end
 
-action :setup do
-  name = new_resource.name
-  ext_prefix = get_extension_dir
-  ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
-
-  files = get_extension_files(name)
-  if files.empty?
-    Chef::Log.debug('files list returned by pecl was empty, falling back to default')
-    files = [ext_prefix + name + '.so']
-  end
-
-  extensions = Hash[files.map do |filepath|
-    rel_file = filepath.clone
-    rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
-
-    zend = new_resource.zend_extensions.include?(rel_file)
-
-    [(zend ? filepath : rel_file), zend]
-  end]
-
-  config_directives = new_resource.config_directives
-
-  config = ::Php::Config.new(name, config_directives)
-  directives = config.get_directives
-
-  template "#{node['php-fpm']['prefix']}/etc/php/#{name}.ini" do
-    source 'extension.ini.erb'
+action :copy do
+  cbf = cookbook_file "#{get_extension_dir(new_resource.prefix)}/#{new_resource.name}" do
     cookbook 'php'
-    owner 'root'
-    group 'root'
-    mode '0644'
-    variables(
-      :extensions => extensions,
-      :directives => directives
-    )
+    source new_resource.ext_file.to_s
+    mode 0644
   end
 
-  new_resource.updated_by_last_action(true)
-
+  new_resource.updated_by_last_action(cbf.updated_by_last_action?)
 end
 
 action :compile do
@@ -88,7 +56,7 @@ action :compile do
     'phpize',
     configure,
     'make',
-    "cp modules/#{extension}.so #{get_extension_dir}"
+    "cp modules/#{extension}.so #{get_extension_dir(new_resource.prefix)}"
   ]
 
   commands.each do |command|
@@ -102,20 +70,12 @@ action :compile do
 
 end
 
-def get_extension_dir
-  @extension_dir ||= begin
-    p = shell_out("#{new_resource.prefix}/bin/php-config --extension-dir")
-    p.stdout.strip
-  end
+def get_extension_dir(prefix)
+  config = ::Php::Config.new('', {})
+  config.get_extension_dir(prefix)
 end
 
 def get_extension_files(name)
-  files = []
-
-  p = shell_out("pecl list-files #{name}")
-  p.stdout.each_line.grep(/^src\s+.*\.so$/i).each do |line|
-    files << line.split[1]
-  end
-
-  files
+  config = ::Php::Config.new(new_resource.name, {})
+  config.get_extension_files
 end

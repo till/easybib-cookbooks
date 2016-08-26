@@ -13,6 +13,7 @@ before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
   - mkdir build
   - mv easybib-cookbooks.tar.gz build/
+  - bash MoveBerkshelfArtifacts.sh
 
 deploy:
   - provider: s3

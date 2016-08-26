@@ -55,3 +55,7 @@ default['php-phar']['settings']  = {
   'require_hash' => 'Off'
 }
 default['php-phar']['load_priority'] = nil
+
+default['amazon-elasticache-cluster-client'] = {
+  'php_version' => '7.0'
+}
