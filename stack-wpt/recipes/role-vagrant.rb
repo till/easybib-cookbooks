@@ -4,6 +4,9 @@ include_recipe 'supervisor'
 include_recipe 'ies-mysql'
 include_recipe 'ies-mysql::dev'
 
+include_recipe 'stack-wpt::role-libreoffice'
+include_recipe 'stack-wpt::role-languagetool'
+
 include_recipe 'fake-sqs'
 
 node.set['fake-s3']['storage'] = '/vagrant_wpt/var/s3'
@@ -55,27 +58,3 @@ include_recipe 'stack-scholar::role-scholar'
 include_recipe 'php::module-zip'
 include_recipe 'php::module-pdo_sqlite'
 include_recipe 'nginx-app::vagrant-silex'
-
-apt_repository 'libreoffice-5.2' do
-  uri 'ppa:libreoffice/libreoffice-5-2'
-  key 'libreoffice-5.2.key'
-  distribution node['lsb']['codename']
-  components ['main']
-end
-
-apt_package 'libreoffice' do
-  action :install
-  options '--no-install-recommends --no-install-suggests'
-end
-
-include_recipe 'java'
-lt_conf = node['stack-wpt']['languagetool']
-
-ark 'languagetool' do
-  url  "https://languagetool.org/download/LanguageTool-#{lt_conf['version']}.zip"
-  version lt_conf['version']
-  home_dir lt_conf['path']
-  owner node['nginx-app']['user']
-  group node['nginx-app']['group']
-  checksum lt_conf['checksum']
-end
