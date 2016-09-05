@@ -30,7 +30,7 @@ module EasyBib
     end
 
     # returns env settings and information about the stack, application env, and rds
-    def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
+    def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')  # rubocop:disable Metrics/AbcSize
       settings = {}
       unless node.fetch(stackname, {})['env'].nil?
         Chef::Log.info("env settings for stack #{stackname} found")
@@ -49,6 +49,14 @@ module EasyBib
         dbconfig = append_database_url_to_dbconfig(dbconfig)
 
         settings.merge!(dbconfig)
+      end
+
+      if node.fetch('deploy', {}).fetch(appname, {}).fetch('puma', {}).fetch('rundir', nil).nil?
+        # add configuration from the stack's default attributes
+        Chef::Log.info('did not find puma rundir in stack settings, falling back to default attributes!')
+        puma_config = streamline_appenv('puma' => node.fetch('stack-cmbm', {}).fetch('puma', {}))
+
+        settings.merge!(puma_config)
       end
 
       data = {

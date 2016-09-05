@@ -33,6 +33,7 @@ applications.each do |app_name, app_config|
   app_dir            = app_data['app_dir']
   app_ruby           = node.fetch(app_name, {}).fetch('env', {}).fetch('ruby', {}).fetch('version', '')
   gem_home           = node.fetch(app_name, {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
+  rundir             = node.fetch(app_name, {}).fetch('puma', {}).fetch('rundir', app_dir)
 
   next if app_name == 'ssl'
 
@@ -59,6 +60,12 @@ applications.each do |app_name, app_config|
     domain_name domain_name
     app_dir app_dir
     notifies :reload, 'service[nginx]', :delayed
+  end
+
+  directory rundir do
+    owner user
+    group user
+    mode '0755'
   end
 
   supervisor_service "#{app_name}_supervisor" do
