@@ -12,11 +12,7 @@ include_recipe 'fake-sqs'
 node.set['fake-s3']['storage'] = '/vagrant_wpt/var/s3'
 include_recipe 'fake-s3'
 
-# frontend
-# include_recipe 'nodejs'
-# include_recipe 'nodejs::npm'
-# package 'build-essential'
-# package 'g++'
+include_recipe 'stack-wpt::role-nodejs'
 
 php_version = node['stack-wpt']['php_version']
 
