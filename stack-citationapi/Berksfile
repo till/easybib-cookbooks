@@ -1,7 +1,5 @@
 source "http://127.0.0.1"
 
-metadata
-
 cookbook 'apt', path: "../apt"
 cookbook 'ark', path: "../ark"
 cookbook 'aptly', path: "../aptly"
