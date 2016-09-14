@@ -83,6 +83,8 @@ DEPENDENCIES
     path: ../rsyslogd
   satis
     path: ../satis
+  stack-easybib
+    path: .
   stack-service
     path: ../stack-service
   statsd
@@ -226,6 +228,24 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
+  stack-easybib (0.1.0)
+    easybib-deploy (>= 0.0.0)
+    fake-sqs (>= 0.0.0)
+    haproxy (>= 0.0.0)
+    ies (>= 0.0.0)
+    ies-mysql (>= 0.0.0)
+    memcache (>= 0.0.0)
+    monit (>= 0.0.0)
+    nginx-app (>= 0.0.0)
+    nodejs (>= 0.0.0)
+    ohai (>= 0.0.0)
+    pecl-manager (>= 0.0.0)
+    php (>= 0.0.0)
+    php-fpm (>= 0.0.0)
+    postfix (>= 0.0.0)
+    redis (>= 0.0.0)
+    stack-service (>= 0.0.0)
+    supervisor (>= 0.0.0)
   stack-service (0.0.0)
     gearmand (>= 0.0.0)
     ies (>= 0.0.0)

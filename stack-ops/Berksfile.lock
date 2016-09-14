@@ -65,6 +65,8 @@ DEPENDENCIES
     path: ../satis
   smokeping
     path: ../smokeping
+  stack-ops
+    path: .
   supervisor
     path: ../supervisor
   tideways
@@ -183,6 +185,11 @@ GRAPH
   smokeping (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
+  stack-ops (0.1.0)
+    ies (>= 0.0.0)
+    php (>= 0.0.0)
+    phpmyadmin (>= 0.0.0)
+    smokeping (>= 0.0.0)
   supervisor (0.4.12)
     python (>= 0.0.0)
   tideways (0.0.0)
