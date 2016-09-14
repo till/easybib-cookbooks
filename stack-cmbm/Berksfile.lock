@@ -75,6 +75,8 @@ DEPENDENCIES
     path: ../rsyslogd
   satis
     path: ../satis
+  stack-cmbm
+    path: .
   supervisor
     path: ../supervisor
   tideways
@@ -203,6 +205,18 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
+  stack-cmbm (0.1.0)
+    easybib (>= 0.0.0)
+    easybib-deploy (>= 0.0.0)
+    haproxy (>= 0.0.0)
+    ies (>= 0.0.0)
+    ies-mysql (>= 0.0.0)
+    ies-rbenv (>= 0.0.0)
+    ies-zsh (>= 0.0.0)
+    nginx-app (>= 0.0.0)
+    nodejs (>= 0.0.0)
+    redis (>= 0.0.0)
+    supervisor (>= 0.0.0)
   supervisor (0.4.12)
     python (>= 0.0.0)
   tideways (0.0.0)

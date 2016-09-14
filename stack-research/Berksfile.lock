@@ -89,6 +89,8 @@ DEPENDENCIES
     path: ../satis
   stack-easybib
     path: ../stack-easybib
+  stack-research
+    path: .
   stack-service
     path: ../stack-service
   statsd
@@ -254,6 +256,18 @@ GRAPH
     redis (>= 0.0.0)
     stack-service (>= 0.0.0)
     supervisor (>= 0.0.0)
+  stack-research (0.1.0)
+    apache-solr (>= 0.0.0)
+    composer (>= 0.0.0)
+    easybib-deploy (>= 0.0.0)
+    ies (>= 0.0.0)
+    memcache (>= 0.0.0)
+    nginx-app (>= 0.0.0)
+    php (>= 0.0.0)
+    php-fpm (>= 0.0.0)
+    php-pear (>= 0.0.0)
+    stack-easybib (>= 0.0.0)
+    tideways (>= 0.0.0)
   stack-service (0.0.0)
     gearmand (>= 0.0.0)
     ies (>= 0.0.0)

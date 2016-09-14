@@ -77,6 +77,8 @@ DEPENDENCIES
     path: ../sinopia
   sinopia-github
     path: ../sinopia-github
+  stack-qa
+    path: .
   supervisor
     path: ../supervisor
   tideways
@@ -211,6 +213,22 @@ GRAPH
     nodejs (~> 2.0)
   sinopia-github (0.0.1)
     sinopia (>= 0.0.0)
+  stack-qa (0.1.0)
+    bash (>= 0.0.0)
+    composer (>= 0.0.0)
+    easybib-deploy (>= 0.0.0)
+    easybib_vagrant (>= 0.0.0)
+    ezproxy (>= 0.0.0)
+    ies (>= 0.0.0)
+    nginx-app (>= 0.0.0)
+    nodejs (>= 0.0.0)
+    php (>= 0.0.0)
+    php-fpm (>= 0.0.0)
+    sinopia (>= 0.0.0)
+    sinopia-github (>= 0.0.0)
+    supervisor (>= 0.0.0)
+    vagrant (>= 0.0.0)
+    virtualbox (>= 0.0.0)
   supervisor (0.4.12)
     python (>= 0.0.0)
   tideways (0.0.0)

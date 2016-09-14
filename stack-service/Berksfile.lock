@@ -73,6 +73,8 @@ DEPENDENCIES
     path: ../rsyslogd
   satis
     path: ../satis
+  stack-service
+    path: .
   statsd
     path: ../statsd
   supervisor
@@ -202,6 +204,13 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
+  stack-service (0.0.0)
+    gearmand (>= 0.0.0)
+    ies (>= 0.0.0)
+    logrotate (>= 0.0.0)
+    nodejs (>= 0.0.0)
+    rabbitmq (>= 0.0.0)
+    statsd (>= 0.0.0)
   statsd (0.2.0)
     easybib (>= 0.0.0)
     nodejs (>= 0.0.0)
