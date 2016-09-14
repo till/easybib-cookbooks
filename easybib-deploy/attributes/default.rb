@@ -1,8 +1,4 @@
-default['easybib-deploy'] = {
-  'php-fpm' => {
-    'restart-action' => :reload
-  }
-}
+default['easybib_deploy']['php-fpm']['restart-action'] = :reload
 
 default['ssl-deploy'] = {}
 default['ssl-deploy']['directory'] = '/etc/nginx/ssl'
