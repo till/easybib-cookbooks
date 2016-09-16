@@ -1,6 +1,6 @@
 global
   log /dev/log    local1
-  maxconn 4096
+  maxconn <%= @node['haproxy']['maxconn']['global'] %>
   #debug
   #quiet
   user haproxy
@@ -20,7 +20,7 @@ defaults
   option          httplog
   option          dontlognull
   retries         3
-  maxconn         2000
+  maxconn         <%= @node['haproxy']['maxconn']['default'] %>
   timeout connect 50000
   timeout client  50000
   timeout server  50000
