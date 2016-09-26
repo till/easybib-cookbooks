@@ -33,7 +33,7 @@ applications.each do |app_name, app_config|
   app_dir            = app_data['app_dir']
   app_ruby           = node.fetch(app_name, {}).fetch('env', {}).fetch('ruby', {}).fetch('version', '')
   gem_home           = node.fetch(app_name, {}).fetch('env', {}).fetch('gem', {}).fetch('home', '')
-  rundir             = node.fetch(app_name, {}).fetch('puma', {}).fetch('rundir', app_dir)
+  rundir             = node['stack-cmbm']['puma']['rundir']
 
   next if app_name == 'ssl'
 
