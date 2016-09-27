@@ -16,7 +16,7 @@ SSH onto the instance, create `~/.my.cnf'...
 [client]
 user = 
 password = 
-hostname = 
+host = 
 ```
 
 ... end fill out the blanks.

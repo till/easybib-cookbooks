@@ -1,7 +1,5 @@
 source "http://127.0.0.1"
 
-metadata
-
 cookbook 'aptly', path: "../aptly"
 cookbook 'apt', path: "../apt"
 cookbook 'ark', path: "../ark"
@@ -39,6 +37,7 @@ cookbook 'rabbitmq', path: "../rabbitmq"
 cookbook 'rsyslogd', path: "../rsyslogd"
 cookbook 'rsyslog', path: "../rsyslog"
 cookbook 'satis', path: "../satis"
+cookbook 'stack-service', path: "./"
 cookbook 'statsd', path: "../statsd"
 cookbook 'supervisor', path: "../supervisor"
 cookbook 'tideways', path: "../tideways"

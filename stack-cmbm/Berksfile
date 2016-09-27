@@ -1,7 +1,5 @@
 source "http://127.0.0.1"
 
-metadata
-
 cookbook 'aptly', path: "../aptly"
 cookbook 'apt', path: "../apt"
 cookbook 'ark', path: "../ark"
@@ -40,6 +38,7 @@ cookbook 'redis', path: "../redis"
 cookbook 'rsyslogd', path: "../rsyslogd"
 cookbook 'rsyslog', path: "../rsyslog"
 cookbook 'satis', path: "../satis"
+cookbook 'stack-cmbm', path: "./"
 cookbook 'supervisor', path: "../supervisor"
 cookbook 'tideways', path: "../tideways"
 cookbook 'xml', path: "../xml"

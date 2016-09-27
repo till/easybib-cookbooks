@@ -1,7 +1,5 @@
 source "http://127.0.0.1"
 
-metadata
-
 cookbook 'apache-solr', path: "../apache-solr"
 cookbook 'aptly', path: "../aptly"
 cookbook 'apt', path: "../apt"
@@ -47,6 +45,7 @@ cookbook 'rsyslogd', path: "../rsyslogd"
 cookbook 'rsyslog', path: "../rsyslog"
 cookbook 'satis', path: "../satis"
 cookbook 'stack-easybib', path: "../stack-easybib"
+cookbook 'stack-research', path: "./"
 cookbook 'stack-service', path: "../stack-service"
 cookbook 'statsd', path: "../statsd"
 cookbook 'supervisor', path: "../supervisor"

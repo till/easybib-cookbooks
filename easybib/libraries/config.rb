@@ -51,6 +51,9 @@ module EasyBib
         settings.merge!(dbconfig)
       end
 
+      puma_config = streamline_appenv('puma' => node.fetch('stack-cmbm', {}).fetch('puma', {}))
+      settings.merge!(puma_config)
+
       data = {
         'deployed_application' => get_appdata(node, appname),
         'deployed_stack' => get_stackdata(node),

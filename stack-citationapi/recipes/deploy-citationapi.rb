@@ -37,7 +37,7 @@ node['deploy'].each do |application, deploy|
       cookbook 'stack-citationapi'
       config_template 'default-web-nginx.conf.erb'
       notifies :reload, 'service[nginx]', :delayed
-      notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+      notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
     end
 
     next
@@ -64,7 +64,7 @@ node['deploy'].each do |application, deploy|
     default_router default_router
     domain_name domain_name
     notifies :reload, 'service[nginx]', :delayed
-    notifies node['easybib-deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 
   easybib_envconfig application

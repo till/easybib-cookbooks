@@ -46,7 +46,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
   supervisor_service "#{app_name}_supervisor" do
     action [:enable, :restart]
     autostart true
-    command "bash -l -c 'cd #{app_dir}; source .deploy_configuration.sh; #{gem_home}/bin/puma -C config/puma.rb config.ru'"
+    command "bash -l -c 'cd #{app_dir}; PUMA_APP=#{app_name} ./vagrant/puma-vagrant.sh'"
     numprocs 1
     numprocs_start 0
     priority 999
