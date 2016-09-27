@@ -71,13 +71,13 @@ applications.each do |app_name, app_config|
   supervisor_service "#{app_name}_supervisor" do
     action [:enable, :restart]
     autostart true
-    command "bash -l -c 'cd #{app_dir}; source .deploy_configuration.sh; #{gem_home}/bin/puma -C config/puma.rb config.ru'"
+    command "bash -l -c 'cd #{app_dir}; source .deploy_configuration.sh; exec #{gem_home}/bin/puma -C config/puma.rb config.ru'"
     numprocs 1
     numprocs_start 0
     priority 999
     autostart true
     autorestart true
-    startsecs 0
+    startsecs 1
     startretries 3
     stopsignal 'TERM'
     stopwaitsecs 10
