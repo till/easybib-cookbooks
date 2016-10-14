@@ -56,8 +56,24 @@ end
 
 if node['redirector'].attribute?('ssl')
   ssl_domains = []
-  node['redirector']['ssl'].each do |domain_name, target|
 
+  unless File.exist?("#{node['ies-letsencrypt']['ssl_dir']}/cert.combined.pem")
+    package 'openssl'
+
+    ies_ssl_selfsigned 'example.org'
+
+    # install self-signed cert so we can continue
+    fake_deploy = {}
+    fake_deploy['ssl_certificate_key'] = '/tmp/example.org.key'
+    fake_deploy['ssl_certificate'] = '/tmp/example.org.crt'
+
+    easybib_sslcertificate 'install_ssl' do
+      deploy fake_deploy
+      action :create
+    end
+  end
+
+  node['redirector']['ssl'].each do |domain_name, target|
     ssl_domains << domain_name
 
     template "#{vhost_dir}/ssl-#{domain_name}.conf" do
