@@ -53,3 +53,28 @@ if node['redirector'].attribute?('urls')
     end
   end
 end
+
+if node['redirector'].attribute?('ssl')
+  ssl_domains = []
+  node['redirector']['ssl'].each do |domain_name, target|
+
+    ssl_domains << domain_name
+
+    template "#{vhost_dir}/ssl-#{domain_name}.conf" do
+      source 'redirect-ssl.conf.erb'
+      mode '0644'
+      owner node['nginx-app']['user']
+      group node['nginx-app']['group']
+      variables(
+        :certbot_port => node['ies-letsencrypt']['certbot']['port'],
+        :domain_name => domain_name,
+        :new_domain_name => target,
+        :ssl_dir => node['ies-letsencrypt']['ssl_dir']
+      )
+      notifies :reload, 'service[nginx]', :delayed
+    end
+  end
+
+  node.set['ies-letsencrypt']['domains'] = ssl_domains
+  include_recipe 'ies-letsencrypt'
+end
