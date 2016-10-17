@@ -29,7 +29,7 @@ php_core_deps = %W(
   php#{php_version}-bcmath
   php#{php_version}-dom
   php#{php_version}-soap
-  php-memcached
+  php-memcache
 )
 
 node.normal['php-fpm'] = {
