@@ -19,6 +19,7 @@ node.normal['php']['ppa'] = {
 }
 
 node.normal['php-apc']['package_prefix'] = 'php'
+node.normal['php-gearman']['package_prefix'] = 'php'
 
 php_core_deps = %W(
   php#{php_version}-fpm

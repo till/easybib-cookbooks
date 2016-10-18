@@ -15,6 +15,9 @@ default['php-apc']['settings']['mmap_file_mask'] = '/dev/zero'
 default['php-apc']['settings']['shm_size'] = '70M'
 default['php-apc']['load_priority'] = nil
 
+default['php-gearman'] = {}
+default['php-gearman']['package_prefix'] = nil
+
 default['php-mysqli']['settings']['reconnect'] = 1
 default['php-mysqli']['load_priority'] = nil
 
