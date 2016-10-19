@@ -28,7 +28,6 @@ AllCops:
     - 'vagrant/**/*'
     - 'vendor/**/*'
     - 'vendor/**/*'
-    - 'virtualbox/**/*'
     - 'xml/**/*'
 
 Style/SpaceBeforeFirstArg:

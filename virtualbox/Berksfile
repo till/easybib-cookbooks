@@ -1,2 +1,0 @@
-site :opscode
-metadata
