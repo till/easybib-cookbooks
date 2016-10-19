@@ -14,6 +14,15 @@ COMBINED="<%=@ssl_dir%>/cert.combined.pem"
 
 CERT_FILE="$etc/live/$DOMAIN/fullchain.pem"
 KEY_FILE="$etc/live/$DOMAIN/privkey.pem"
+NGINX_INIT="/etc/init/nginx.conf"
+
+function restart_service {
+  if [ ! -f $NGINX_INIT ]; then
+    service haproxy reload
+  else
+    service nginx reload
+  fi
+}
 
 function get_cert {
   <%=@certbot_bin%> <%=@opts.join(' ')%>
@@ -23,12 +32,12 @@ function get_cert {
   fi
 
   cat $CERT_FILE $KEY_FILE > $COMBINED
-  service haproxy reload
 }
 
 if [ ! -f $CERT_FILE ]; then
   echo "[INFO] certificate file not found for domain $DOMAIN."
   get_cert
+  restart_service
   exit 0;
 fi
 
@@ -44,3 +53,4 @@ fi
 echo "[INFO] $EXP left, we'll attempt to renew."
 
 get_cert
+restart_service

@@ -1,5 +1,6 @@
 server {
-    listen 443;
+    listen 80;
+    listen 443 default_server ssl;
 
 <% unless @certbot_port.nil? -%>
     # proxy to certbot-auto (when it's running)
