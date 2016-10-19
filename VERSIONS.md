@@ -20,5 +20,4 @@ runit | [master](https://github.com/hw-cookbooks/runit/commit/1ebeffa0f907811302
 sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0) | removed dependency `user` cookbook, fix: use user resource
 supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3da5959ce9c2bc42287ad50b26) | ...
 vagrant | [0.4.2](https://github.com/jtimberman/vagrant-cookbook/releases/tag/v0.4.2) | disabled dependency on dmg and windows, removed tests and matcher, removed vagrant_plugin
-virtualbox | 1.0.3 | disabled dependency on yum, dmg, windows and apache2
 xml| [1.2.4](https://github.com/opscode-cookbooks/xml/tree/v1.2.4) |
