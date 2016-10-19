@@ -47,8 +47,6 @@ DEPENDENCIES
     path: ../ies-route53
   ies-ssl
     path: ../ies-ssl
-  loggly
-    path: ../loggly
   logrotate
     path: ../logrotate
   memcache
@@ -162,7 +160,6 @@ GRAPH
     easybib (>= 0.0.0)
     fail2ban (>= 0.0.0)
     ies-route53 (>= 0.0.0)
-    loggly (>= 0.0.0)
     monit (>= 0.0.0)
     nginx-app (>= 0.0.0)
     papertrail (>= 0.0.0)
@@ -183,9 +180,6 @@ GRAPH
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
   ies-ssl (0.1.0)
-  loggly (0.1.0)
-    easybib (>= 0.0.0)
-    rsyslogd (>= 0.0.0)
   logrotate (1.9.2)
   memcache (0.1.0)
   monit (0.1.0)
