@@ -43,8 +43,6 @@ DEPENDENCIES
     path: ../ies-ssl
   ies-zsh
     path: ../ies-zsh
-  loggly
-    path: ../loggly
   monit
     path: ../monit
   mysql
@@ -134,7 +132,6 @@ GRAPH
     easybib (>= 0.0.0)
     fail2ban (>= 0.0.0)
     ies-route53 (>= 0.0.0)
-    loggly (>= 0.0.0)
     monit (>= 0.0.0)
     nginx-app (>= 0.0.0)
     papertrail (>= 0.0.0)
@@ -157,9 +154,6 @@ GRAPH
     easybib (>= 0.0.0)
   ies-ssl (0.1.0)
   ies-zsh (0.1.0)
-  loggly (0.1.0)
-    easybib (>= 0.0.0)
-    rsyslogd (>= 0.0.0)
   monit (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
