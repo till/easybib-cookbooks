@@ -25,7 +25,6 @@ AllCops:
     - 'supervisor/**/*'
     - 'test/**/*'
     - 'vagrant-test/**/*'
-    - 'vagrant/**/*'
     - 'vendor/**/*'
     - 'vendor/**/*'
     - 'xml/**/*'
