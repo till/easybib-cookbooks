@@ -1,0 +1,43 @@
+Node Name: <%= node.name %>
+<% if node.attribute?('fqdn') -%>
+Hostname: <%= node.fqdn %>
+<% end -%>
+
+<% if node.attribute?('opsworks') -%>
+Stack Name: <%= node.opsworks.stack.name %>
+
+<% end -%>
+Chef Version: <%= Chef::VERSION %>
+Ohai Version: <%= Ohai::VERSION %>
+
+Chef Run List: <%= node.run_list.to_s %>
+Chef Environment: <%= node.chef_environment %>
+
+<% if node.attribute?('ec2') -%>
+<%   if node.ec2.attribute?('instance_id') -%>
+Instance Id: <%= node.ec2.instance_id %>
+<%   end -%>
+<%   if node.ec2.attribute?('public_hostname') -%>
+Instance Public Hostname: <%= node.ec2.public_hostname %>
+<%   end -%>
+<%   if node.ec2.attribute?('hostname') -%>
+Instance Hostname: <%= node.ec2.hostname %>
+<%   end -%>
+<%   if node.ec2.attribute?('public_ipv4') -%>
+Instance Public IPv4: <%= node.ec2.public_ipv4 %>
+<%   end -%>
+<%   if node.ec2.attribute?('local_ipv4') -%>
+Instance Local IPv4: <%= node.ec2.local_ipv4 %>
+<%   end -%>
+<% end -%>
+
+Chef Client Elapsed Time: <%= elapsed_time.to_s %>
+Chef Client Start Time: <%= start_time.to_s %>
+Chef Client Start Time: <%= end_time.to_s %>
+
+<% if exception -%>
+Exception: <%= run_status.formatted_exception %>
+Stacktrace:
+<%= Array(backtrace).join("\n") %>
+
+<% end -%>
