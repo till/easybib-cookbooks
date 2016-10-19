@@ -90,7 +90,7 @@ describe 'nginx-app::redirector' do
     end
 
     it 'sets the node attributes to the required domains' do
-      expect(chef_run.node['ies-letsencrypt']['domains']).to eq(%W(example.org foo.example.org))
+      expect(chef_run.node['ies-letsencrypt']['domains']).to eq(%w(example.org foo.example.org))
     end
   end
 end
