@@ -7,7 +7,8 @@ describe 'ies-gearmand::service' do
 
   describe 'standard flow' do
     it 'installs the config for systemd' do
-      expect(chef_run).to create_cookbook_file('/lib/systemd/system/gearman-job-server.service')
+      expect(chef_run).to create_directory('/etc/systemd/system/gearman-job-server.service.d')
+      expect(chef_run).to create_cookbook_file('/etc/systemd/system/gearman-job-server.service.d/override.conf')
     end
 
     it 'installs the config for upstart' do
@@ -15,7 +16,7 @@ describe 'ies-gearmand::service' do
     end
 
     it 'notifies systemd to daemon-reload' do
-      resource = chef_run.cookbook_file('/lib/systemd/system/gearman-job-server.service')
+      resource = chef_run.cookbook_file('/etc/systemd/system/gearman-job-server.service.d/override.conf')
       expect(resource).to notify('execute[systemctl daemon-reload]')
     end
   end

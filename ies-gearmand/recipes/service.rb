@@ -6,7 +6,9 @@ service_provider = if Chef::VersionConstraint.new('>= 15.04').include?(node['pla
                      service_provider = nil
                    end
 
-service 'gearman-job-server' do
+name = 'gearman-job-server'
+
+service name do
   action :nothing
   provider service_provider
 end
@@ -18,14 +20,22 @@ execute 'systemctl daemon-reload' do
   end
 end
 
-cookbook_file '/etc/init/gearman-job-server.conf' do
+cookbook_file "/etc/init/#{name}.conf" do
   source 'upstart.conf'
   owner 'root'
   group 'root'
   mode 00644
 end
 
-cookbook_file '/lib/systemd/system/gearman-job-server.service' do
+systemd_override = "/etc/systemd/system/#{name}.service.d"
+
+directory systemd_override do
+  owner 'root'
+  group 'root'
+  recursive true
+end
+
+cookbook_file "#{systemd_override}/override.conf" do
   source 'systemd.service'
   owner 'root'
   group 'root'
