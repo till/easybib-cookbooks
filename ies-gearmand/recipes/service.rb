@@ -20,7 +20,7 @@ execute 'systemctl daemon-reload' do
   end
 end
 
-cookbook_file "/etc/init/#{name}.conf" do
+cookbook_file "/etc/init/#{name}.override" do
   source 'upstart.conf'
   owner 'root'
   group 'root'

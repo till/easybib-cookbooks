@@ -12,7 +12,7 @@ describe 'ies-gearmand::service' do
     end
 
     it 'installs the config for upstart' do
-      expect(chef_run).to create_cookbook_file('/etc/init/gearman-job-server.conf')
+      expect(chef_run).to create_cookbook_file('/etc/init/gearman-job-server.override')
     end
 
     it 'notifies systemd to daemon-reload' do
