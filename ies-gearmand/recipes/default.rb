@@ -1,8 +1,3 @@
-node.normal['php']['ppa'] = {
-  'name' => 'ondrejphp',
-  'uri' => 'ppa:ondrej/php'
-}
-
 package_name = 'gearman-job-server'
 
 include_recipe 'php::dependencies-ppa'
