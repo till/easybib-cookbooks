@@ -9,11 +9,9 @@ describe 'ies-gearmand::default' do
 
   describe 'standard flow' do
     it 'discovers the ondreij repo' do
-      expect(chef_run.node['php']['ppa']).to eq({
-        'name' => 'ondrejphp',
-        'package_prefix' => 'php5.6',
-        'uri' => 'ppa:ondrej/php'
-      })
+      expect(chef_run.node['php']['ppa']).to eq('name' => 'ondrejphp',
+                                                'package_prefix' => 'php5.6',
+                                                'uri' => 'ppa:ondrej/php')
 
       expect(chef_run).to include_recipe('php::dependencies-ppa')
 
