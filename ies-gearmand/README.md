@@ -1,10 +1,10 @@
 # ies-gearmand-cookbook
 
-TODO: Enter the cookbook description here.
+A cookbook to install and configure gearmand from ondreij's PPA.
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+ - Ubuntu 14.04 and 16.04
 
 ## Attributes
 
@@ -16,10 +16,16 @@ TODO: List your supported platforms.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['ies-gearmand']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['ies-gearmand']['port']</tt></td>
+    <td>Int</td>
+    <td>The port to run gearman-job-server on</td>
+    <td><tt>31337</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['ies-gearmand']['log']</tt></td>
+    <td>String</td>
+    <td>Log arguments</td>
+    <td><tt>--syslog -l stderr</tt></td>
   </tr>
 </table>
 
@@ -39,4 +45,4 @@ Include `ies-gearmand` in your node's `run_list`:
 
 ## License and Authors
 
-Author:: YOUR_NAME (<YOUR_EMAIL>)
+Author:: Till Klampaeckel
