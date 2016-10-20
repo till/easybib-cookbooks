@@ -7,6 +7,7 @@ source_url        'https://github.com/till/easybib-cookbooks' if respond_to?(:so
 issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_to?(:issues_url)
 version           '0.1'
 depends 'gearmand'
+depends 'ies-gearmand'
 depends 'logrotate'
 depends 'rabbitmq'
 depends 'statsd'
