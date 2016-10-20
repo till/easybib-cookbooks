@@ -23,8 +23,31 @@ template '/etc/default/tideways-daemon' do
   notifies :restart, 'service[tideways-daemon]'
 end
 
+execute 'phpenmod -s ALL -v ALL tideways' do
+  not_if do
+    node['php']['ppa']['package_prefix'] == 'php5-easybib'
+  end
+end
+
+{
+  '/usr/lib/php/20121212/' => 5.5,
+  '/usr/lib/php/20131226/' => 5.6,
+  '/usr/lib/php/20151012/' => 7.0,
+  '/usr/lib/php/20160303/' => 7.1
+}.each do |php_api_path, php_version|
+  link "#{php_api_path}/tideways.so" do
+    to "/usr/lib/tideways/tideways-php-#{php_version}.so"
+    not_if do
+      node['php']['ppa']['package_prefix'] == 'php5-easybib'
+    end
+  end
+end
+
 template "#{node['php-fpm']['prefix']}/etc/php/tideways.ini" do
   source 'tideways.ini.erb'
   mode 0644
   notifies :reload, 'service[php-fpm]', :delayed
+  only_if do
+
+  end
 end

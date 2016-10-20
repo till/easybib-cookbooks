@@ -1,4 +1,4 @@
-ENV['recipe_runlist'] = 'stack-easybib::role-phpapp,php::module-gearman,ies-gearmand'
+ENV['recipe_runlist'] = 'stack-easybib::role-phpapp,php::module-gearman,ies-gearmand,tideways'
 ENV['chef_json'] = "#{File.dirname(__FILE__)}/deploy.json"
 
 require_relative '../vagrant-provision'
