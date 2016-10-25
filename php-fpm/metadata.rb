@@ -10,6 +10,8 @@ recipe            'php-fpm::prepare', 'Creates prequesites like user and directo
 recipe            'php-fpm::dependencies', 'Install dependencies'
 recipe            'php-fpm::ohai', 'php-fpm ohai plugin installer'
 recipe            'php-fpm::monit', 'php-fpm monit monitoring'
+source_url        'https://github.com/till/easybib-cookbooks' if respond_to?(:source_url)
+issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_to?(:issues_url)
 
 supports 'ubuntu'
 
