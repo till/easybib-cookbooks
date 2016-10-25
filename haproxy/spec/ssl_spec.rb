@@ -2,20 +2,20 @@ require_relative 'spec_helper.rb'
 
 describe 'haproxy::configure' do
   let(:runner) do
-    ChefSpec::Runner.new do |node|
-      node.set[:opsworks][:stack][:name] = 'chefspec'
-      node.set[:opsworks][:instance][:region][:id] = 'local'
-      node.set[:opsworks][:layers][:nginxphpapp][:instances] = {
+    ChefSpec::SoloRunner.new do |node|
+      node.override[:opsworks][:stack][:name] = 'chefspec'
+      node.override[:opsworks][:instance][:region][:id] = 'local'
+      node.override[:opsworks][:layers][:nginxphpapp][:instances] = {
         'php-app-server-1' => {
           'private_dns_name' => 'php.app.server.1.tld'
         }
       }
-      node.set[:opsworks][:layers][:nodeapp][:instances] = {
+      node.override[:opsworks][:layers][:nodeapp][:instances] = {
         'node-app-server-1' => {
           'private_dns_name' => 'node.app.server.1.tld'
         }
       }
-      node.set[:haproxy] = {
+      node.override[:haproxy] = {
         :ssl => 'on',
         :websocket_layers => {
           :nodeapp => {
@@ -49,7 +49,7 @@ describe 'haproxy::configure' do
 
     describe 'only' do
       before do
-        node.set[:haproxy][:ssl] = 'only'
+        node.override[:haproxy][:ssl] = 'only'
       end
 
       it 'redirects all http to https' do
@@ -62,7 +62,7 @@ describe 'haproxy::configure' do
 
     describe 'disabled' do
       before do
-        node.set[:haproxy][:ssl] = 'off'
+        node.override[:haproxy][:ssl] = 'off'
       end
 
       it 'does not bind to 443' do
