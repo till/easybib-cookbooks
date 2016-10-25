@@ -32,6 +32,8 @@ task :unittest, :cookbook do |t, args|
                        else
                          "#{args.cookbook}/**/tests/test_*.rb"
                        end
+    raketask.verbose = false
+    raketask.warning = false
   end
   task('testtask').execute
 end
