@@ -1,5 +1,5 @@
-default['php']['ppa']['name'] = 'easybib-ppa'
-default['php']['ppa']['uri'] = ::EasyBib::Ppa.ppa_mirror(node)
+default['php']['ppa']['name']           = 'easybib-ppa'
+default['php']['ppa']['uri']            = ::EasyBib::Ppa.ppa_mirror(node)
 default['php']['ppa']['package_prefix'] = 'php5-easybib'
 
 default['php']['extensions']['config_dir'] = 'etc/php'
@@ -9,22 +9,22 @@ default['php-aws-elasticache']['settings'] = {}
 
 default['php-apc'] = {}
 # custom prefix for package: php-apcu, instead of php5.6-apcu
-default['php-apc']['package_prefix'] = nil
-default['php-apc']['settings']['ttl'] = 0
+default['php-apc']['package_prefix']             = nil
+default['php-apc']['settings']['ttl']            = 0
 default['php-apc']['settings']['mmap_file_mask'] = '/dev/zero'
-default['php-apc']['settings']['shm_size'] = '70M'
-default['php-apc']['load_priority'] = nil
+default['php-apc']['settings']['shm_size']       = '70M'
+default['php-apc']['load_priority']              = nil
 
 default['php-mysqli']['settings']['reconnect'] = 1
-default['php-mysqli']['load_priority'] = nil
+default['php-mysqli']['load_priority']         = nil
 
 default['php-tidy']['settings']['clean_output'] = 0
-default['php-tidy']['load_priority'] = nil
+default['php-tidy']['load_priority']            = nil
 
 default['php-soap']['settings']['wsdl_cache_enabled'] = 1
-default['php-soap']['settings']['wsdl_cache_ttl'] = 86_400
-default['php-soap']['settings']['wsdl_cache_limit'] = 5
-default['php-soap']['load_priority'] = nil
+default['php-soap']['settings']['wsdl_cache_ttl']     = 86_400
+default['php-soap']['settings']['wsdl_cache_limit']   = 5
+default['php-soap']['load_priority']                  = nil
 
 default['php-opcache']['settings'] = {
   'memory_consumption' => 500,
@@ -51,7 +51,7 @@ default['php-xdebug']['settings'] = {
 }
 default['php-xdebug']['load_priority'] = nil
 
-default['php-phar']['settings']  = {
+default['php-phar']['settings'] = {
   'detect_unicode' => 'Off',
   'readonly' => 'Off',
   'require_hash' => 'Off'
@@ -64,9 +64,9 @@ default['amazon-elasticache-cluster-client'] = {
 
 default['php-poppler']['settings'] = {}
 
-default['poppler'] = {}
-default['poppler']['package_uri'] = 'https://packagecloud.io/till/poppler-backport/ubuntu/'
-default['poppler']['package_distro'] = 'trusty'
+default['poppler']                       = {}
+default['poppler']['package_uri']        = 'https://packagecloud.io/till/poppler-backport/ubuntu/'
+default['poppler']['package_distro']     = 'trusty'
 default['poppler']['package_components'] = ['main']
-default['poppler']['package_key_uri'] = 'packagecloud-poppler.gpg'
-default['poppler']['package_list'] = ['poppler', 'poppler-glib', 'php-poppler-pdf']
+default['poppler']['package_key_uri']    = 'packagecloud-poppler.gpg'
+default['poppler']['package_list']       = ['poppler', 'poppler-glib', 'php-poppler-pdf']

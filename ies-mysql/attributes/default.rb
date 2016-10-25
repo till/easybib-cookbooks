@@ -1,4 +1,4 @@
-default['ies-mysql'] = {}
+default['ies-mysql']            = {}
 default['ies-mysql']['version'] = '5.6'
 
 default['ies-mysql']['server-config'] = {

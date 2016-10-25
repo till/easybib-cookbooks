@@ -9,7 +9,7 @@ Ohai::Log.debug("Found PHP? Maybe: #{php_bin}")
 
 if !php_bin.empty?
 
-  languages[:php_fpm][:php_bin] = php_bin
+  languages[:php_fpm][:php_bin]       = php_bin
   languages[:php_fpm][:extension_dir] = `#{php_bin} -r 'echo ini_get("extension_dir");'`.strip
 
   pear_bin = `which pear`.strip
@@ -36,7 +36,7 @@ end
 
 unless languages[:php_fpm][:pear_bin].nil?
 
-  languages[:php_fpm][:pear] = {}
+  languages[:php_fpm][:pear]           = {}
   languages[:php_fpm][:pear][:bin_dir] = `#{languages[:php_fpm][:pear_bin]} config-get bin_dir`.strip
   languages[:php_fpm][:pear][:php_dir] = `#{languages[:php_fpm][:pear_bin]} config-get php_dir`.strip
 

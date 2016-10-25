@@ -12,10 +12,10 @@ describe 'php::module-apc' do
 
   before do
     # fake opsworks
-    node.default['opsworks']['stack']['name'] = 'chef-spec-run'
+    node.default['opsworks']['stack']['name']      = 'chef-spec-run'
     node.default['opsworks']['instance']['layers'] = []
-    node.default['php']['ppa']['package_prefix'] = 'php5-easybib'
-    node.default['php-fpm']['prefix'] = '/opt/easybib'
+    node.default['php']['ppa']['package_prefix']   = 'php5-easybib'
+    node.default['php-fpm']['prefix']              = '/opt/easybib'
   end
 
   it 'adds ppa mirror configuration' do

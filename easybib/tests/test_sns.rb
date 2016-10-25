@@ -20,7 +20,7 @@ class TestEasyBibSns < Test::Unit::TestCase
   end
 
   def test_does_send_sns
-    fake_node = get_fake_node
+    fake_node                                         = get_fake_node
     fake_node.override['easybib']['sns']['topic_arn'] = 'foobar'
 
     assert_equal(true, sns_notify_spinup(fake_node, FakeSNS.new))
@@ -29,10 +29,10 @@ class TestEasyBibSns < Test::Unit::TestCase
   private
 
   def get_fake_node
-    fake_node = Chef::Node.new
-    fake_node.override['opsworks']['stack']['name'] = 'unittest'
+    fake_node                                              = Chef::Node.new
+    fake_node.override['opsworks']['stack']['name']        = 'unittest'
     fake_node.override['opsworks']['instance']['hostname'] = 'localhost-test'
-    fake_node.override['easybib']['sns']['notify_spinup'] = '-test'
+    fake_node.override['easybib']['sns']['notify_spinup']  = '-test'
 
     fake_node
   end

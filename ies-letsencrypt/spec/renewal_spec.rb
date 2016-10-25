@@ -17,10 +17,10 @@ describe 'ies-letsencrypt::renewal' do
         'example.org',
         'secure.example.org'
       ]
-      node.set['ies-letsencrypt']['certbot']['bin'] = '/opt/le/certbot'
+      node.set['ies-letsencrypt']['certbot']['bin']  = '/opt/le/certbot'
       node.set['ies-letsencrypt']['certbot']['cron'] = '/opt/le/cron'
       node.set['ies-letsencrypt']['certbot']['port'] = 31_337
-      node.set['ies-letsencrypt']['ssl_dir'] = '/home/till/ssl'
+      node.set['ies-letsencrypt']['ssl_dir']         = '/home/till/ssl'
     end
 
     it 'has an initial setup command to get certificates' do
@@ -39,7 +39,7 @@ describe 'ies-letsencrypt::renewal' do
 
     it 'uses the correct command' do
       resource = chef_run.cron_d('certbot_renewal')
-      cmd = resource.command
+      cmd      = resource.command
 
       expect(cmd).to start_with('/opt/le/cron')
     end

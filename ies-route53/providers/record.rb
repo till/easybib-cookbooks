@@ -13,22 +13,22 @@ action :create do
   if access_key.nil? || secret_key.nil?
     route53_client = AWS::Route53.new
   else
-    route_53_credential_provider = AWS::Core::CredentialProviders::StaticProvider.new(
+    credential_provider = AWS::Core::CredentialProviders::StaticProvider.new(
       :access_key_id => access_key,
       :secret_access_key => secret_key
     )
 
     route53_client = AWS::Route53.new(
-      :credential_provider => route_53_credential_provider
+      :credential_provider => credential_provider
     )
   end
 
-  zone_id = new_resource.zone_id
+  zone_id   = new_resource.zone_id
   overwrite = new_resource.overwrite
-  @name = new_resource.name
-  @ttl = new_resource.ttl
-  @type = new_resource.type
-  @value = new_resource.value
+  @name     = new_resource.name
+  @ttl      = new_resource.ttl
+  @type     = new_resource.type
+  @value    = new_resource.value
 
   record_model = ::IesRoute53::Record.new(route53_client, zone_id, @type, @ttl)
 

@@ -17,7 +17,7 @@ end
 
 server_config = node['ies-mysql']['server-config']
 
-mysql_command = "mysql -u #{server_config['user']}"
+mysql_command  = "mysql -u #{server_config['user']}"
 mysql_command += " -p#{server_config['password']}" unless server_config['password'].empty?
 mysql_command += ' -h 127.0.0.1' if mysql_version == '5.6'
 mysql_command += " < /tmp/#{grant_file}"

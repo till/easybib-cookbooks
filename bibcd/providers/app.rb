@@ -9,7 +9,7 @@ action :add do
 
     template yml_file do
       cookbook 'bibcd'
-      mode   0644
+      mode 0644
       variables :content => to_php_yaml(new_resource.config.to_hash)
       source 'app.yml.erb'
     end

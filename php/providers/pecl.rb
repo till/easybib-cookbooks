@@ -2,11 +2,11 @@ include Chef::Mixin::ShellOut
 
 action :install do
   extension = new_resource.name
-  version = new_resource.version
+  version   = new_resource.version
 
   ext_dir = get_extension_dir(new_resource.prefix)
   ext_dir << ::File::SEPARATOR if ext_dir[-1].chr != ::File::SEPARATOR
-  so_file   = "#{ext_dir}/#{extension}.so"
+  so_file = "#{ext_dir}/#{extension}.so"
 
   unless version.nil?
     extension = "#{extension}-#{version}"

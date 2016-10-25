@@ -1,6 +1,6 @@
-home_dir = "/home/#{node['tsung']['user']}"
+home_dir  = "/home/#{node['tsung']['user']}"
 tsung_dir = "#{home_dir}/.tsung"
-log_dir = "#{tsung_dir}/log"
+log_dir   = "#{tsung_dir}/log"
 
 directory log_dir do
   owner node['tsung']['user']

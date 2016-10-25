@@ -49,7 +49,7 @@ include_recipe 'php::module-soap' if node['php-fpm']['packages'].include?('soap'
 include_recipe 'php::module-tidy' if node['php-fpm']['packages'].include?('tidy')
 
 expected_prefix = '/usr/local/bin'
-install_prefix = "#{node['php-fpm']['exec_prefix']}/bin"
+install_prefix  = "#{node['php-fpm']['exec_prefix']}/bin"
 
 phps = ['/usr/bin/php', "#{expected_prefix}/php"]
 

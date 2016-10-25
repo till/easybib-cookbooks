@@ -1,8 +1,8 @@
 include_recipe 'php-fpm::service'
 
 ENV['NR_INSTALL_SILENT'] = 'yes'
-ENV['NR_INSTALL_NOKSH'] = 'yes'
-ENV['NR_INSTALL_KEY'] = node['newrelic']['license']
+ENV['NR_INSTALL_NOKSH']  = 'yes'
+ENV['NR_INSTALL_KEY']    = node['newrelic']['license']
 
 package 'newrelic-php5' do
   action node['newrelic']['action']

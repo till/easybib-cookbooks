@@ -29,32 +29,14 @@ AllCops:
     - 'vendor/**/*'
     - 'xml/**/*'
 
-Style/SpaceBeforeFirstArg:
-  Enabled: false
+Metrics/AbcSize:
+  Max: 41
 
-Style/RegexpLiteral:
-  Enabled: false
+Metrics/BlockLength:
+  Max: 130
 
-Style/PredicateName:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/FileName:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/AccessorMethodName:
-  Enabled: false
+Style/NumericLiteralPrefix:
+  EnforcedOctalStyle: zero_only
 
 Metrics/PerceivedComplexity:
   Max: 8
@@ -71,27 +53,13 @@ Metrics/LineLength:
 Metrics/CyclomaticComplexity:
   Max: 8
 
-Lint/UnusedBlockArgument:
-  Enabled: false
-
-Lint/UnusedMethodArgument:
-  Enabled: false
-
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
-Style/EmptyLinesAroundBlockBody:
-  Enabled: false
+Style/SpaceBeforeFirstArg:
+  AllowForAlignment: true
 
 Style/ExtraSpacing:
-  Enabled: false
+  ForceEqualSignAlignment: true
 
-Metrics/ModuleLength:
-  Enabled: false
-
-Performance/StringReplacement:
-  Enabled: false
-
-Style/SpaceAroundOperators:
-  Enabled: false
 inherit_from: .rubocop_todo.yml

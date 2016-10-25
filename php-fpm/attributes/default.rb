@@ -1,32 +1,32 @@
 default['php-fpm'] = {}
 
-default['php-fpm']['prefix'] = '/opt/easybib'
+default['php-fpm']['prefix']      = '/opt/easybib'
 default['php-fpm']['exec_prefix'] = '/opt/easybib'
 
 default['php-fpm']['fpm_config'] = 'etc/php.ini'
 default['php-fpm']['cli_config'] = 'etc/php-cli.ini'
-default['php-fpm']['pool_dir'] = 'etc/php-fpm/pool.d'
+default['php-fpm']['pool_dir']   = 'etc/php-fpm/pool.d'
 
-default['php-fpm']['logfile'] = '/var/log/php/error.log'
-default['php-fpm']['slowlog'] = '/var/log/php/slow.log'
+default['php-fpm']['logfile']         = '/var/log/php/error.log'
+default['php-fpm']['slowlog']         = '/var/log/php/slow.log'
 default['php-fpm']['slowlog_timeout'] = 4
 
-default['php-fpm']['fpmlog'] = '/var/log/php/fpm.log'
+default['php-fpm']['fpmlog']       = '/var/log/php/fpm.log'
 default['php-fpm']['fpmlog_level'] = 'notice'
 
-default['php-fpm']['displayerrors'] = false
-default['php-fpm']['logerrors'] = true
+default['php-fpm']['displayerrors']    = false
+default['php-fpm']['logerrors']        = true
 default['php-fpm']['maxexecutiontime'] = 60
-default['php-fpm']['memorylimit'] = '512M'
-default['php-fpm']['user'] = 'www-data'
-default['php-fpm']['group'] = 'www-data'
-default['php-fpm']['tmpdir'] = '/tmp/php'
+default['php-fpm']['memorylimit']      = '512M'
+default['php-fpm']['user']             = 'www-data'
+default['php-fpm']['group']            = 'www-data'
+default['php-fpm']['tmpdir']           = '/tmp/php'
 
-default['php-fpm']['pid'] = '/opt/easybib/var/run/php-fpm.pid'
+default['php-fpm']['pid']       = '/opt/easybib/var/run/php-fpm.pid'
 default['php-fpm']['socketdir'] = '/var/run/php-fpm'
 
-default['php-fpm']['pools'] = ['www-data']
-default['php-fpm']['type'] = 'dynamic'
+default['php-fpm']['pools']        = ['www-data']
+default['php-fpm']['type']         = 'dynamic'
 default['php-fpm']['max_children'] = 100
 
 default['php-fpm']['cloudwatch'] = false

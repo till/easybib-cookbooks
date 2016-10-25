@@ -1,7 +1,7 @@
 include_recipe 'php::dependencies-ppa'
 
 module_config = node['php-mysqli']['settings']
-package_name = node['php']['ppa']['package_prefix']
+package_name  = node['php']['ppa']['package_prefix']
 
 package package_name do
   action :install

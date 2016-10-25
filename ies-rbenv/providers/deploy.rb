@@ -116,7 +116,7 @@ action :install do
 
   # Install Ruby version required by OpsWorks
   if is_aws
-    execute 'install opsworks mandatory ruby' do      # ~FC005
+    execute 'install opsworks mandatory ruby' do # ~FC005
       command "bash -l -c '#{install_to}/bin/rbenv install -s #{ruby_opsworks}'"
       user rbenv_owner
       group rbenv_group

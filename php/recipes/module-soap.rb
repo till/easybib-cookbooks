@@ -1,7 +1,7 @@
 include_recipe 'php::dependencies-ppa'
 
 node.override['php-soap']['settings']['wsdl_cache_dir'] = node['php-fpm']['tmpdir']
-module_config = node['php-soap']['settings']
+module_config                                           = node['php-soap']['settings']
 
 php_ppa_package 'soap' do
   not_if do

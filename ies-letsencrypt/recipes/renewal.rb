@@ -1,5 +1,5 @@
-le_conf = node['ies-letsencrypt']
-certbot_bin = le_conf['certbot']['bin']
+le_conf      = node['ies-letsencrypt']
+certbot_bin  = le_conf['certbot']['bin']
 certbot_cron = le_conf['certbot']['cron']
 
 Chef::Log.info('This may fail the first time due to missing DNS and we need to re-run it.')

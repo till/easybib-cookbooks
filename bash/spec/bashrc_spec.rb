@@ -7,10 +7,10 @@ describe 'bash::bashrc' do
       :log_level => :error
     ) do |node|
       # fake opsworks
-      node.default['opsworks'] = {}
-      node.default.opsworks['stack'] = {}
-      node.default.opsworks.stack['name'] = 'chef-spec-run'
-      node.default.opsworks['instance'] = {}
+      node.default['opsworks']                 = {}
+      node.default.opsworks['stack']           = {}
+      node.default.opsworks.stack['name']      = 'chef-spec-run'
+      node.default.opsworks['instance']        = {}
       node.default.opsworks.instance['layers'] = []
     end.converge(described_recipe)
   end

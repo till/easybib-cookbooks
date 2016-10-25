@@ -1,6 +1,6 @@
 default['stack-easybib']['static_extensions'] = %w(jpg jpeg gif png css js ico woff ttf eot map ico svg)
 
-default['nginx-app']['browser_caching']['enabled'] = false
+default['nginx-app']['browser_caching']['enabled']                = false
 default['nginx-app']['browser_caching']['config']['eot|ttf|woff'] = {
   'expires' => 'max',
   'headers' => [

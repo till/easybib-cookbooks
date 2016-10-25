@@ -27,7 +27,7 @@ class TestEasyBib < Test::Unit::TestCase
   end
 
   def test_normalized_cluster_name
-    fake_node = Chef::Node.new
+    fake_node                                       = Chef::Node.new
     fake_node.override['opsworks']['stack']['name'] = 'EasyBib Playgr$und-123'
 
     assert_equal(

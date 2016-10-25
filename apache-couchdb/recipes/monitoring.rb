@@ -3,7 +3,7 @@ bin_path = '/usr/local/bin/check_couchdb'
 unless node['apache-couchdb']['monitoring']['user'].empty?
   monitoring_user = node['apache-couchdb']['monitoring']['user']
   monitoring_pass = node['apache-couchdb']['monitoring']['pass']
-  credentials = "#{monitoring_user}:#{monitoring_pass}"
+  credentials     = "#{monitoring_user}:#{monitoring_pass}"
 
   template bin_path do
     source 'check_couchdb.erb'

@@ -4,7 +4,7 @@ package 'gearman-job-server' do
   action :purge
 end
 
-prefix = node['gearmand']['prefix']
+prefix  = node['gearmand']['prefix']
 version = node['gearmand']['source']['version']
 
 directory prefix do

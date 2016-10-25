@@ -22,7 +22,7 @@ describe 'php-fpm::configure' do
 
   describe 'pool configuration' do
     before do
-      node.set['php-fpm']['pools'] = %w(app1 app2 app3)
+      node.set['php-fpm']['pools']        = %w(app1 app2 app3)
       node.set['php-fpm']['max_children'] = 99
     end
 

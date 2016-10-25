@@ -19,10 +19,10 @@ describe 'stack-easybib::role-nginxphpapp' do
   describe 'deployment' do
     before do
       stub_command('rm -f /etc/nginx/sites-enabled/default').and_return(true)
-      node.set['deploy'] = {}
-      node.set['easybib']['cluster_name'] = stack
+      node.set['deploy']                    = {}
+      node.set['easybib']['cluster_name']   = stack
       node.set['opsworks']['stack']['name'] = stack
-      node.set['opsworks']['instance'] = {
+      node.set['opsworks']['instance']      = {
         'layers' => ['nginxphpapp'],
         'hostname' => 'hostname',
         'ip' => '127.0.0.1'

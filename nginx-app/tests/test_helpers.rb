@@ -8,7 +8,7 @@ class TestHelpers < Test::Unit::TestCase
       'debugger' => 'debugger',
       'notes'    => 'notebook'
     }
-    path = '/some/path'
+    path     = '/some/path'
     expected = {
       'js/debugger' => '/some/path/app/modules/debugger',
       'js/notes' => '/some/path/app/modules/notebook'
@@ -24,7 +24,7 @@ class TestHelpers < Test::Unit::TestCase
       'js/notes' => '/some/path/app/modules/notebook'
     }
     # note: ending slash is intentionally only here, to test if autodetect+add works
-    path = '/some/path/'
+    path     = '/some/path/'
     expected = {
       'js/debugger' => '/some/path/app/modules/debugger',
       'js/notes' => '/some/path/app/modules/notebook',
@@ -52,7 +52,7 @@ class TestHelpers < Test::Unit::TestCase
     assert_equal(%w(jpg jpeg gif png css js ico woff ttf eot), result)
 
     browser_cache_config['enabled'] = true
-    result = ::NginxApp::Helpers.uncached_static_extensions(browser_cache_config)
+    result                          = ::NginxApp::Helpers.uncached_static_extensions(browser_cache_config)
     assert_equal(%w(jpg jpeg gif png css ico), result)
 
     # test for devops-151: make sure we are able to deal with ImmutableMash input

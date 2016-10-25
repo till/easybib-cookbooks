@@ -17,9 +17,9 @@ describe 'easybib-deploy::ssl-certificates' do
   let(:dummy_cert) { '-----BEGIN CERTIFICATE-----[...]-----END CERTIFICATE-----' }
 
   before do
-    node.set['ssl-deploy']['ssl-role']  = ssl_role
-    node.set['ssl-deploy']['directory'] = ssl_dir
-    node.set['opsworks']['instance']['layers'] = ssl_role # for allow_deploy
+    node.set['ssl-deploy']['ssl-role']                  = ssl_role
+    node.set['ssl-deploy']['directory']                 = ssl_dir
+    node.set['opsworks']['instance']['layers']          = ssl_role # for allow_deploy
     node.set['deploy'][ssl_role]['ssl_certificate']     = dummy_cert
     node.set['deploy'][ssl_role]['ssl_certificate_key'] = dummy_key
     node.set['deploy'][ssl_role]['ssl_certificate_ca']  = dummy_cert
@@ -57,7 +57,7 @@ describe 'easybib-deploy::ssl-certificates' do
 
   describe 'another app is being deployed' do
     before do
-      node.set['ssl-deploy']['ssl-role']  = 'whatever'
+      node.set['ssl-deploy']['ssl-role'] = 'whatever'
     end
 
     it 'does not attempt to create ssl directoy' do

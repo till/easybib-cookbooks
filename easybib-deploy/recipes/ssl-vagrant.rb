@@ -4,14 +4,14 @@ ssl_dir       = node['ssl-deploy']['directory']
 int_ip        = '127.0.0.1'
 
 unless node.fetch('vagrant', {})['ssl'].nil?
-  deploy = node['vagrant']['ssl']
+  deploy              = node['vagrant']['ssl']
   ssl_certificate     = deploy['ssl_certificate'].chomp
   ssl_certificate_key = deploy['ssl_certificate_key'].chomp
 
   directory ssl_dir do
     mode      '0750'
     owner     'root'
-    group  node['nginx-app']['group']
+    group node['nginx-app']['group']
     recursive true
   end
 

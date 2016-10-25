@@ -126,7 +126,7 @@ template conf_cli do
 end
 
 etc_fpm_dir = File.dirname(conf_fpm)
-pool_dir = "#{config['prefix']}/#{config['pool_dir']}"
+pool_dir    = "#{config['prefix']}/#{config['pool_dir']}"
 
 template "#{etc_fpm_dir}/php-fpm.conf" do
   mode     '0755'

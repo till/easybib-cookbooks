@@ -12,7 +12,7 @@ describe 'php::module-soap' do
 
   before do
     node.set['php']['ppa']['package_prefix'] = 'php5.6'
-    node.set['php-fpm']['tmpdir'] = '/tmp/chefspec/php'
+    node.set['php-fpm']['tmpdir']            = '/tmp/chefspec/php'
   end
 
   it 'adds ppa mirror configuration' do

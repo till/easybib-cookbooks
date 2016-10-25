@@ -16,7 +16,7 @@ describe 'stack-cmbm::deploy-nginxapp' do
 
   before do
     node.set['opsworks']['instance']['layers'] = ['nginxapp_cm']
-    node.set[:deploy][:cm] = {
+    node.set[:deploy][:cm]                     = {
       :application => 'cm',
       :deploy_to => '/srv/cm',
       :deploy_dir => '/srv/cm',
@@ -27,7 +27,7 @@ describe 'stack-cmbm::deploy-nginxapp' do
         }
       }
     }
-    node.set[:etc][:passwd]['www-data'][:dir] = '/srv/www/cm'   # because OHAI is not around
+    node.set[:etc][:passwd]['www-data'][:dir] = '/srv/www/cm' # because OHAI is not around
   end
 
   it 'includes all required recipes' do

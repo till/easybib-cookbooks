@@ -1,5 +1,5 @@
 action :create do
-  app = new_resource.app
+  app          = new_resource.app
   crontab_file = new_resource.crontab_file
 
   updated = false
@@ -39,7 +39,7 @@ action :create do
     cron.parse!.to_enum.with_index(1).each do |crontab, cron_counter|
       Chef::Log.info("easybib_deploy - crontabline: #{crontab}")
 
-      updated = true
+      updated   = true
       cron_name = cron.get_name(cron_counter)
 
       Chef::Log.info("easybib_deploy - installing crontab file #{cron_name}")
@@ -68,7 +68,7 @@ action :create do
 end
 
 action :delete do
-  app = new_resource.app
+  app          = new_resource.app
   crontab_user = new_resource.crontab_user
 
   execute 'Clear old crontab' do

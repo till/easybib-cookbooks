@@ -1,8 +1,8 @@
 default['easybib_deploy']['php-fpm']['restart-action'] = :reload
 
-default['ssl-deploy'] = {}
+default['ssl-deploy']              = {}
 default['ssl-deploy']['directory'] = '/etc/nginx/ssl'
-default['ssl-deploy']['ssl-role'] = 'nginxphpapp'
+default['ssl-deploy']['ssl-role']  = 'nginxphpapp'
 
 default['bibcd']['apps'] = {}
 

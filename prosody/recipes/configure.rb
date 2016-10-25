@@ -6,7 +6,7 @@ prosody_dirs.push('/var/prosody')
 case node['platform']
 when 'debian', 'ubuntu'
   cfg_partial_dir = '/etc/prosody/conf.d'
-  cfg_dir = '/etc/prosody'
+  cfg_dir         = '/etc/prosody'
 
   prosody_dirs.push(cfg_partial_dir)
   prosody_dirs.push(cfg_dir)

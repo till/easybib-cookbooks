@@ -4,7 +4,7 @@ include Chef::Mixin::ShellOut
 module Php
   class Config
     def initialize(ext_name, directives)
-      @ext_name = ext_name.downcase
+      @ext_name   = ext_name.downcase
       @directives = directives
     end
 
@@ -12,7 +12,7 @@ module Php
     # this makes it a little more robust
     def get_directives
       keep = {}
-      l = @ext_name.length
+      l    = @ext_name.length
 
       return keep if @directives.nil?
       return keep if @directives.empty?
@@ -23,7 +23,7 @@ module Php
           next
         end
 
-        new_key = "#{@ext_name}.#{k}"
+        new_key       = "#{@ext_name}.#{k}"
         keep[new_key] = v
       end
 
@@ -32,7 +32,7 @@ module Php
 
     def get_extension_dir(prefix)
       @extension_dir ||= begin
-        p = shell_out("#{prefix}/bin/php-config --extension-dir")
+        p              = shell_out("#{prefix}/bin/php-config --extension-dir")
         p.stdout.strip
       end
     end

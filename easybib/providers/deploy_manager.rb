@@ -1,6 +1,6 @@
 action :deploy do
   applications = new_resource.apps
-  deployments = new_resource.deployments
+  deployments  = new_resource.deployments
 
   did_we_deploy = false
 

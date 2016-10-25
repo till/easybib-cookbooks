@@ -15,7 +15,7 @@ describe 'php::module-aws_elasticache_cluster_client' do
 
   before do
     node.set['php']['extensions']['config_dir'] = 'etc/php/7.0/mods-available'
-    node.set['php']['ppa'] = {
+    node.set['php']['ppa']                      = {
       'name' => 'ondrejphp',
       'uri' => 'ppa:ondrej/php',
       'package_prefix' => 'php7.0'

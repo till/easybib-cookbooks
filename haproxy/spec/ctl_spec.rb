@@ -12,7 +12,7 @@ describe 'haproxy::ctl' do
 
   describe 'standard settings' do
     before do
-      node.set['opsworks']['stack']['name'] = 'Amazing Stack'
+      node.set['opsworks']['stack']['name']        = 'Amazing Stack'
       node.set['haproxy']['ctl']['statsd']['host'] = 'foo.example.com'
       node.set['haproxy']['ctl']['statsd']['port'] = '23'
     end
