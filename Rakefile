@@ -60,7 +60,7 @@ task :foodcritic, [:cookbook] do |t, args|
 
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
     epic_fail = %w( )
-    ignore_rules = %w( )
+    ignore_rules = %w( FC059 )
 
     cb = if args.cookbook.nil?
            find_cookbooks('.').join(' ')
