@@ -83,7 +83,7 @@ describe 'easybib_supervisor - implicit attrs' do
     describe 'create' do
       before do
         stub_supervisor_with_two_services
-        node.set['opsworks']['instance']['layers'] = %w(role1 role2)
+        node.set['opsworks']['instance']['layers']    = %w(role1 role2)
         node.set['easybib_deploy']['supervisor_role'] = 'role1'
       end
 
@@ -136,7 +136,7 @@ describe 'easybib_supervisor - implicit attrs' do
     describe 'create' do
       before do
         stub_supervisor_does_not_exist
-        node.set['opsworks']['instance']['layers'] = %w(role1 role2)
+        node.set['opsworks']['instance']['layers']    = %w(role1 role2)
         node.set['easybib_deploy']['supervisor_role'] = 'role1'
       end
 

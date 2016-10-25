@@ -3,7 +3,7 @@ action :create do
   nginx_config_cookbook = new_resource.cookbook
   nginx_config_template = new_resource.template
 
-  nginx_user = new_resource.nginx_user || node['nginx-app']['user']
+  nginx_user  = new_resource.nginx_user || node['nginx-app']['user']
   nginx_group = new_resource.nginx_group || node['nginx-app']['group']
 
   error_log = new_resource.error_log || node['nginx-app']['error_log']

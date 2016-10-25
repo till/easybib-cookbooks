@@ -2,11 +2,11 @@ mysql_version = node['ies-mysql'].fetch('version', '5.6')
 
 server_config = node['ies-mysql']['server-config']
 
-mysql_service_provider =  if node['platform_version'] == '16.04'
-                            Chef::Provider::MysqlServiceSystemd
-                          else
-                            Chef::Provider::MysqlServiceUpstart
-                          end
+mysql_service_provider = if node['platform_version'] == '16.04'
+                           Chef::Provider::MysqlServiceSystemd
+                         else
+                           Chef::Provider::MysqlServiceUpstart
+                         end
 
 mysql_service server_config['instance-name'] do
   version mysql_version

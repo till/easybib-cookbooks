@@ -33,9 +33,9 @@ if node['haproxy']['ssl'] != 'off' && !File.exist?(certificate)
   ies_ssl_selfsigned 'example.org'
 
   # install self-signed cert so we can continue
-  fake_deploy = {}
+  fake_deploy                        = {}
   fake_deploy['ssl_certificate_key'] = '/tmp/example.org.key'
-  fake_deploy['ssl_certificate'] = '/tmp/example.org.crt'
+  fake_deploy['ssl_certificate']     = '/tmp/example.org.crt'
 
   easybib_sslcertificate 'install_ssl' do
     deploy fake_deploy

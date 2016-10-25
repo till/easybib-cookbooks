@@ -24,7 +24,7 @@ describe 'stack-scholar::deploy' do
       node.set['easybib']['cluster_name'] = stack
 
       node.set['opsworks']['instance']['layers'] = ['nginxphpapp']
-      node.set['opsworks']['stack']['name'] = stack
+      node.set['opsworks']['stack']['name']      = stack
 
       node.set['deploy']['scholar'] = {
         'deploy_to' => '/srv/www/scholar',

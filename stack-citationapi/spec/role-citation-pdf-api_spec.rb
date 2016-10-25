@@ -7,11 +7,11 @@ describe 'stack-citationapi::role-citation-pdf-api' do
 
   describe 'OpsWorks' do
     before do
-      node.set['opsworks']['stack']['name'] = 'Stack'
-      node.set['opsworks']['instance']['layers'] = ['pdf_autocite']
+      node.set['opsworks']['stack']['name']        = 'Stack'
+      node.set['opsworks']['instance']['layers']   = ['pdf_autocite']
       node.set['opsworks']['instance']['hostname'] = 'host'
-      node.set['opsworks']['instance']['ip'] = '127.0.0.1'
-      node.set['deploy']['pdf_autocite'] = {
+      node.set['opsworks']['instance']['ip']       = '127.0.0.1'
+      node.set['deploy']['pdf_autocite']           = {
         'deploy_to' => '/srv/www/pdf_autocite',
         'document_root' => 'public',
         'domains' => ['domain']

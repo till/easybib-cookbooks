@@ -1,11 +1,11 @@
 action :create do
-  app = new_resource.app
-  app_dir = new_resource.app_dir
+  app             = new_resource.app
+  app_dir         = new_resource.app_dir
   supervisor_file = new_resource.supervisor_file
   supervisor_role = new_resource.supervisor_role
-  instance_roles = new_resource.instance_roles
-  user = new_resource.user
-  instance_roles = get_instance_roles(node) if instance_roles.empty?
+  instance_roles  = new_resource.instance_roles
+  user            = new_resource.user
+  instance_roles  = get_instance_roles(node) if instance_roles.empty?
   supervisor_role = node['easybib_deploy']['supervisor_role'] if supervisor_role.nil?
 
   updated = false
@@ -30,7 +30,8 @@ action :create do
   end
 
   Chef::Log.info(
-    "easybib_supervisor - loading supervisor services from #{supervisor_file}")
+    "easybib_supervisor - loading supervisor services from #{supervisor_file}"
+  )
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 
@@ -103,7 +104,7 @@ action :create do
 end
 
 action :delete do
-  app = new_resource.app
+  app             = new_resource.app
   supervisor_file = new_resource.supervisor_file
 
   # unless supervisor_file exists

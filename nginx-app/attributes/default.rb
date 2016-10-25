@@ -1,27 +1,27 @@
-default['nginx-app']                       = {}
-default['nginx-app']['access_log']         = 'off'
-default['nginx-app']['user']               = 'www-data'
-default['nginx-app']['group']              = 'www-data'
-default['nginx-app']['config_dir']         = '/etc/nginx'
-default['nginx-app']['package-name'] = 'nginx'
-default['nginx-app']['ppa'] = 'ppa:nginx/stable'
-default['nginx-app']['key'] = 'C300EE8C.key'
+default['nginx-app']                         = {}
+default['nginx-app']['access_log']           = 'off'
+default['nginx-app']['user']                 = 'www-data'
+default['nginx-app']['group']                = 'www-data'
+default['nginx-app']['config_dir']           = '/etc/nginx'
+default['nginx-app']['package-name']         = 'nginx'
+default['nginx-app']['ppa']                  = 'ppa:nginx/stable'
+default['nginx-app']['key']                  = 'C300EE8C.key'
 default['nginx-app']['client_max_body_size'] = '5m'
 
-default['nginx-app']['error_log'] = 'syslog:server=unix:/dev/log,tag=nginx_error error'
+default['nginx-app']['error_log']       = 'syslog:server=unix:/dev/log,tag=nginx_error error'
 default['nginx-app']['error_echo_port'] = '23232'
 
-default['nginx-app']['access_log'] = 'syslog:server=unix:/dev/log,tag=nginx_access'
+default['nginx-app']['access_log']       = 'syslog:server=unix:/dev/log,tag=nginx_access'
 default['nginx-app']['access_echo_port'] = '23233'
 
 default['nginx-app']['extras'] = ''
 
 default['nginx-app']['default_router'] = 'index.php'
-default['nginx-app']['health_check'] = 'health_check.php'
+default['nginx-app']['health_check']   = 'health_check.php'
 
 default['nginx-app']['contact_url'] = 'http://easybib.com/company/contact'
 
-default['nginx-app']['vagrant'] = {}
+default['nginx-app']['vagrant']               = {}
 default['nginx-app']['vagrant']['deploy_dir'] = '/vagrant_data/web/'
 
 # module specific configuration for assets

@@ -23,7 +23,7 @@ action :generate do
     )
   end
 
-  config = ::Php::Config.new(new_resource.name, new_resource.config)
+  config    = ::Php::Config.new(new_resource.name, new_resource.config)
   extension = {}
 
   if new_resource.load_extension
@@ -41,7 +41,7 @@ action :generate do
   end
 
   if config_dir.include?('mods-available')
-    ini = ::File.basename(ini_file)
+    ini            = ::File.basename(ini_file)
     enabled_module = '%{prefix}/%{config_dir}/%{sapi}/conf.d/%{file}'
 
     root_dir = ::File.dirname(config_dir)

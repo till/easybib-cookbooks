@@ -8,6 +8,5 @@ end
 RSpec.configure do |config|
   config.cookbook_path = 'vendor/cookbooks'
   config.platform = 'ubuntu'
-  config.version = '12.04'
-  config.log_level = :info
+  config.version = '16.04'
 end

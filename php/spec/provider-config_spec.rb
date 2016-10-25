@@ -15,9 +15,9 @@ describe 'php_config' do
       :step_into => %w(php_config)
     ) do |node|
       node.override['php']['ppa']['package_prefix'] = 'php-ppa-prefix'
-      node.override['php-fpm']['prefix'] = '/prefix/dir'
-      node.default['config-spec']['name'] = 'modulename'
-      node.default['config-spec']['config'] = { 'key' => 'value', 'modulename.secondkey' => 'value2' }
+      node.override['php-fpm']['prefix']            = '/prefix/dir'
+      node.default['config-spec']['name']           = 'modulename'
+      node.default['config-spec']['config']         = { 'key' => 'value', 'modulename.secondkey' => 'value2' }
       # node['config-spec']['prefix_dir'] is fetched from ['php-fpm']['prefix'] which is set above
       node.default['config-spec']['extension_path'] = nil
       node.default['config-spec']['load_extension'] = false

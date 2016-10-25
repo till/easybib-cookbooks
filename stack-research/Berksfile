@@ -1,52 +1,52 @@
-source "http://127.0.0.1"
+source 'http://127.0.0.1'
 
-cookbook 'apache-solr', path: "../apache-solr"
-cookbook 'aptly', path: "../aptly"
-cookbook 'apt', path: "../apt"
-cookbook 'ark', path: "../ark"
-cookbook 'awscli', path: "../awscli"
-cookbook 'bibcd', path: "../bibcd"
-cookbook 'build-essential', path: "../build-essential"
-cookbook 'chef_handler', path: "../chef_handler"
-cookbook 'chef_handler_sns', path: "../chef_handler_sns"
-cookbook 'composer', path: "../composer"
-cookbook 'cron', path: "../cron"
-cookbook 'easybib-deploy', path: "../easybib-deploy"
-cookbook 'easybib', path: "../easybib"
-cookbook 'erlang', path: "../erlang"
-cookbook 'fail2ban', path: "../fail2ban"
-cookbook 'fake-sqs', path: "../fake-sqs"
-cookbook 'gearmand', path: "../gearmand"
-cookbook 'haproxy', path: "../haproxy"
-cookbook 'ies-apt', path: "../ies-apt"
-cookbook 'ies-letsencrypt', path: "../ies-letsencrypt"
-cookbook 'ies-mysql', path: "../ies-mysql"
-cookbook 'ies', path: "../ies"
-cookbook 'ies-route53', path: "../ies-route53"
-cookbook 'ies-ssl', path: "../ies-ssl"
-cookbook 'logrotate', path: "../logrotate"
-cookbook 'memcache', path: "../memcache"
-cookbook 'monit', path: "../monit"
-cookbook 'mysql', path: "../mysql"
-cookbook 'nginx-app', path: "../nginx-app"
-cookbook 'nodejs', path: "../nodejs"
-cookbook 'ohai', path: "../ohai"
-cookbook 'papertrail', path: "../papertrail"
-cookbook 'pecl-manager', path: "../pecl-manager"
-cookbook 'php-fpm', path: "../php-fpm"
-cookbook 'php', path: "../php"
-cookbook 'php-pear', path: "../php-pear"
-cookbook 'postfix', path: "../postfix"
-cookbook 'python', path: "../python"
-cookbook 'rabbitmq', path: "../rabbitmq"
-cookbook 'redis', path: "../redis"
-cookbook 'rsyslogd', path: "../rsyslogd"
-cookbook 'rsyslog', path: "../rsyslog"
-cookbook 'satis', path: "../satis"
-cookbook 'stack-easybib', path: "../stack-easybib"
-cookbook 'stack-research', path: "./"
-cookbook 'stack-service', path: "../stack-service"
-cookbook 'statsd', path: "../statsd"
-cookbook 'supervisor', path: "../supervisor"
-cookbook 'tideways', path: "../tideways"
-cookbook 'xml', path: "../xml"
+cookbook 'apache-solr', :path => '../apache-solr'
+cookbook 'aptly', :path => '../aptly'
+cookbook 'apt', :path => '../apt'
+cookbook 'ark', :path => '../ark'
+cookbook 'awscli', :path => '../awscli'
+cookbook 'bibcd', :path => '../bibcd'
+cookbook 'build-essential', :path => '../build-essential'
+cookbook 'chef_handler', :path => '../chef_handler'
+cookbook 'chef_handler_sns', :path => '../chef_handler_sns'
+cookbook 'composer', :path => '../composer'
+cookbook 'cron', :path => '../cron'
+cookbook 'easybib-deploy', :path => '../easybib-deploy'
+cookbook 'easybib', :path => '../easybib'
+cookbook 'erlang', :path => '../erlang'
+cookbook 'fail2ban', :path => '../fail2ban'
+cookbook 'fake-sqs', :path => '../fake-sqs'
+cookbook 'gearmand', :path => '../gearmand'
+cookbook 'haproxy', :path => '../haproxy'
+cookbook 'ies-apt', :path => '../ies-apt'
+cookbook 'ies-letsencrypt', :path => '../ies-letsencrypt'
+cookbook 'ies-mysql', :path => '../ies-mysql'
+cookbook 'ies', :path => '../ies'
+cookbook 'ies-route53', :path => '../ies-route53'
+cookbook 'ies-ssl', :path => '../ies-ssl'
+cookbook 'logrotate', :path => '../logrotate'
+cookbook 'memcache', :path => '../memcache'
+cookbook 'monit', :path => '../monit'
+cookbook 'mysql', :path => '../mysql'
+cookbook 'nginx-app', :path => '../nginx-app'
+cookbook 'nodejs', :path => '../nodejs'
+cookbook 'ohai', :path => '../ohai'
+cookbook 'papertrail', :path => '../papertrail'
+cookbook 'pecl-manager', :path => '../pecl-manager'
+cookbook 'php-fpm', :path => '../php-fpm'
+cookbook 'php', :path => '../php'
+cookbook 'php-pear', :path => '../php-pear'
+cookbook 'postfix', :path => '../postfix'
+cookbook 'python', :path => '../python'
+cookbook 'rabbitmq', :path => '../rabbitmq'
+cookbook 'redis', :path => '../redis'
+cookbook 'rsyslogd', :path => '../rsyslogd'
+cookbook 'rsyslog', :path => '../rsyslog'
+cookbook 'satis', :path => '../satis'
+cookbook 'stack-easybib', :path => '../stack-easybib'
+cookbook 'stack-research', :path => './'
+cookbook 'stack-service', :path => '../stack-service'
+cookbook 'statsd', :path => '../statsd'
+cookbook 'supervisor', :path => '../supervisor'
+cookbook 'tideways', :path => '../tideways'
+cookbook 'xml', :path => '../xml'

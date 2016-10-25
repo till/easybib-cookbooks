@@ -4,7 +4,7 @@ unless node['prosody']['users'].empty?
 
     Chef::Log.debug("Email: #{email}")
 
-    domain  = email.split('@')[1]
+    domain = email.split('@')[1]
 
     unless node['prosody']['domains'].include?(domain)
       Chef::Log.error("Domain for #{email} is not managed by this server.")

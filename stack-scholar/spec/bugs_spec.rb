@@ -22,13 +22,13 @@ describe 'fixtures::brokenapps' do
   let(:fixtures) { "#{File.dirname(__FILE__)}/fixtures" }
 
   before do
-    node.set['opsworks']['stack']['name'] = 'stack-chefspec'
+    node.set['opsworks']['stack']['name']      = 'stack-chefspec'
     node.set['opsworks']['instance']['layers'] = ['node-chefspec']
   end
 
   describe 'broken apps' do
     before do
-      node.set['deploy'] = JSON.parse(File.read("#{fixtures}/deploy.json"))
+      node.set['deploy']                         = JSON.parse(File.read("#{fixtures}/deploy.json"))
       node.set['stack-chefspec']['applications'] = JSON.parse(File.read("#{fixtures}/brokenapps.json"))
     end
 

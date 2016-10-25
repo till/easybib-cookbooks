@@ -58,7 +58,7 @@ describe 'easybib_supervisor-without-matching-role-implicit' do
     describe 'create' do
       before do
         stub_supervisor_with_two_services
-        node.set['opsworks']['instance']['layers'] = %w(role1 role2)
+        node.set['opsworks']['instance']['layers']    = %w(role1 role2)
         node.set['easybib_deploy']['supervisor_role'] = 'some-other-role'
       end
 

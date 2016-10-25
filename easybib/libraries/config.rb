@@ -88,7 +88,7 @@ module EasyBib
     # returns application metadata (name, domains, directories)
     # rubocop:disable Metrics/PerceivedComplexity
     def get_appdata(node, appname, attribute = nil)
-      data = {}
+      data            = {}
       data['appname'] = if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
                           appname
                         else
@@ -138,7 +138,7 @@ module EasyBib
       if ::EasyBib.is_aws(node)
         data['stackname'] = node['opsworks']['stack']['name']
       elsif node['vagrant']
-        data['stackname'] = 'vagrant'
+        data['stackname']   = 'vagrant'
         data['environment'] = 'vagrant'
       else
         data['stackname'] = 'undefined'
@@ -357,12 +357,12 @@ module EasyBib
     end
 
     def array_to_numbered_hash(key, arr)
-      i = 0
+      i   = 0
       ret = {}
       arr.each do |item|
-        subkey = sprintf('%s[%s]', key, i)
+        subkey      = sprintf('%s[%s]', key, i)
         ret[subkey] = item
-        i += 1
+        i          += 1
       end
       ret
     end

@@ -1,7 +1,7 @@
 module EasyBib
   class Cron
     def initialize(app, file)
-      @app = app
+      @app  = app
       @file = file
     end
 

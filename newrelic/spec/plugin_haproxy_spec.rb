@@ -29,7 +29,7 @@ describe 'haproxy::plugin_newrelic' do
       }
     }
 
-    chef_run.node.set['haproxy'] = haproxy_node
+    chef_run.node.set['haproxy']  = haproxy_node
     chef_run.node.set['newrelic'] = newrelic_node
 
     chef_run.converge 'newrelic::plugin_haproxy'

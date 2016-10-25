@@ -1,4 +1,4 @@
-default['php-pear'] = {}
+default['php-pear']             = {}
 default['php-pear']['packages'] = {
   'Crypt_HMAC2-beta'                            => 'pear.php.net',
   'Net_Gearman-alpha'                           => 'pear.php.net',

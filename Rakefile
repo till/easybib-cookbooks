@@ -49,7 +49,7 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
 
   t.verbose = false
   t.fail_on_error = true
-  t.rspec_opts = args.output_file.nil? ? '--format d' : "--format RspecJunitFormatter --out #{args.output_file}"
+  t.rspec_opts = '--format d --require ./global_spec_helper.rb'
   t.ruby_opts = '-W0' # it supports ruby options too
   t.pattern = file_list
 end
@@ -60,7 +60,7 @@ task :foodcritic, [:cookbook] do |t, args|
 
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
     epic_fail = %w( )
-    ignore_rules = %w( )
+    ignore_rules = %w( FC059 )
 
     cb = if args.cookbook.nil?
            find_cookbooks('.').join(' ')
@@ -68,7 +68,7 @@ task :foodcritic, [:cookbook] do |t, args|
            args.cookbook
          end
 
-    fc_command = 'bundle exec foodcritic -C --chef-version 11 -f any -P '
+    fc_command = 'bundle exec foodcritic -C --chef-version 12 -f any -P '
     fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
     fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
     fc_command << " #{cb}"

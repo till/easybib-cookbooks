@@ -12,13 +12,14 @@ describe 'easybib_deploy_manager' do
   let(:runner) do
     ChefSpec::Runner.new(
       :platform => 'ubuntu',
-      :version => '14.04',
+      :version => '16.04',
       :cookbook_path => cookbook_paths,
       :log_level => :error,
       :step_into => %w(
         easybib_deploy_manager
         easybib_deploy
-        easybib_nginx)
+        easybib_nginx
+      )
     )
   end
 
@@ -31,10 +32,10 @@ describe 'easybib_deploy_manager' do
     end
 
     it 'logs when no applications are configured' do
-      # @chef_run = runner.converge(fixture)
-      # expect(Chef::Log).to receive(:info).with('easybib_deploy_manager: No apps configured')
-      # expect(@chef_run).to deploy_easybib_deploy_manager('fixtures')
+      @chef_run = runner.converge(fixture)
       pending 'need to explore how to assert on Chef::Log in a LWRP'
+      expect(Chef::Log).to receive(:info).with('easybib_deploy_manager: No apps configured')
+      expect(@chef_run).to deploy_easybib_deploy_manager('fixtures')
     end
 
     context 'apps but no deploy' do
@@ -62,12 +63,12 @@ describe 'easybib_deploy_manager' do
         :app_number_one => {
           :deploy_to => '/var/www/app1',
           :document_root => 'www',
-          :domains => %w( example.org )
+          :domains => %w(example.org )
         },
         :app_number_two => {
           :deploy_to => '/var/www/app2',
           :document_root => 'htdocs',
-          :domains => %w( app2.example.org example2.org )
+          :domains => %w(app2.example.org example2.org)
         }
       }
 
@@ -100,7 +101,7 @@ describe 'easybib_deploy_manager' do
       deploy_manager = @chef_run.easybib_deploy_manager('fixtures')
       expect(deploy_manager).to notify('execute[foo]').to(:run).delayed
 
-      %w( app_number_one app_number_two).each do |application|
+      %w(app_number_one app_number_two).each do |application|
         expect(@chef_run).to deploy_easybib_deploy(application)
         expect(@chef_run).to setup_easybib_nginx(application)
           .with(

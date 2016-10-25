@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe 'stack-citationapi::role-phpapp' do
 
-  let(:chef_run) {  ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
   it 'our basic setup recipe' do
     expect(chef_run).to include_recipe('ies::role-generic')

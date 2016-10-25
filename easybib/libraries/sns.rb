@@ -7,7 +7,7 @@ module EasyBib
     # @return [nil]
     extend self
     def sns_notify_spinup(node, client = nil)
-      client = create_client if client.nil?
+      client  = create_client if client.nil?
       @client = client
 
       my_hostname = ::EasyBib.get_hostname(node, true)

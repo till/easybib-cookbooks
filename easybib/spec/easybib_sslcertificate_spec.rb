@@ -28,7 +28,7 @@ describe 'easybib_sslcertificate' do
 
   describe 'OpsWorks: SSL app' do
     before do
-      fake_deploy = {}
+      fake_deploy                        = {}
       fake_deploy['ssl_certificate']     = ssl_cert
       fake_deploy['ssl_certificate_key'] = ssl_key
 
@@ -65,7 +65,7 @@ describe 'easybib_sslcertificate' do
     before do
       stub_ssl_files
 
-      fake_deploy = {}
+      fake_deploy                        = {}
       fake_deploy['ssl_certificate']     = '/tmp/example.org.pem'
       fake_deploy['ssl_certificate_key'] = '/tmp/example.org.key'
 

@@ -1,4 +1,4 @@
-le_conf = node['ies-letsencrypt']
+le_conf     = node['ies-letsencrypt']
 certbot_bin = le_conf['certbot']['bin']
 
 cookbook_file certbot_bin do

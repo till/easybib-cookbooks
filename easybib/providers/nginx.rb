@@ -17,21 +17,21 @@ end
 
 action :setup do
   config_template = new_resource.config_template
-  access_log = new_resource.access_log
-  application = new_resource.app_name
-  listen_opts = new_resource.listen_opts
-  cookbook = new_resource.cookbook
+  access_log      = new_resource.access_log
+  application     = new_resource.app_name
+  listen_opts     = new_resource.listen_opts
+  cookbook        = new_resource.cookbook
 
-  domain_name = get_domain_name(new_resource, node)
-  deploy_dir = get_deploy_dir(new_resource, node)
-  app_dir = get_app_dir(new_resource, node)
-  config_name = get_config_name(new_resource)
-  nginx_extras = get_nginx_extras(new_resource, node)
+  domain_name   = get_domain_name(new_resource, node)
+  deploy_dir    = get_deploy_dir(new_resource, node)
+  app_dir       = get_app_dir(new_resource, node)
+  config_name   = get_config_name(new_resource)
+  nginx_extras  = get_nginx_extras(new_resource, node)
   nginx_caching = get_nginx_caching(new_resource, node)
 
   htpasswd = get_htpasswd(new_resource, application)
 
-  health_check = get_health_check(application, node)
+  health_check   = get_health_check(application, node)
   routes_enabled =  get_routes(application, node, 'routes_enabled')
   routes_denied  =  get_routes(application, node, 'routes_denied')
 
@@ -98,10 +98,10 @@ def get_htpasswd(new_resource, application)
 
   # we have user:password format, so lets encrypt & generate file
   config_name = get_config_name(new_resource)
-  filename = "/etc/nginx/#{config_name}.htpasswd"
+  filename    = "/etc/nginx/#{config_name}.htpasswd"
 
   user, pass = htpasswd.split(':')
-  pass = pass.to_s.crypt(user)
+  pass       = pass.to_s.crypt(user)
 
   template filename do
     cookbook 'easybib'

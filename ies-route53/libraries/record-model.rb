@@ -2,9 +2,9 @@ module IesRoute53
   class Record
     def initialize(route53_client, zone_id, record_type, record_ttl)
       @client = route53_client
-      @zone = zone_id
-      @type = record_type
-      @ttl = record_ttl
+      @zone   = zone_id
+      @type   = record_type
+      @ttl    = record_ttl
     end
 
     def add(server_name, ip_address)
@@ -35,7 +35,7 @@ module IesRoute53
     end
 
     def update(server_name, ip_address)
-      existing_record = route53_record(server_name)
+      existing_record                  = route53_record(server_name)
       existing_record.resource_records = [{ :value => ip_address }]
       existing_record.update
     end

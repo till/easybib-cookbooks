@@ -8,11 +8,11 @@ describe 'stack-citationapi::role-sitescraper' do
 
   describe 'OpsWorks' do
     before do
-      node.set['opsworks']['stack']['name'] = 'Stack'
-      node.set['opsworks']['instance']['layers'] = ['sitescraper']
+      node.set['opsworks']['stack']['name']        = 'Stack'
+      node.set['opsworks']['instance']['layers']   = ['sitescraper']
       node.set['opsworks']['instance']['hostname'] = 'host'
-      node.set['opsworks']['instance']['ip'] = '127.0.0.1'
-      node.set['deploy']['sitescraper'] = {
+      node.set['opsworks']['instance']['ip']       = '127.0.0.1'
+      node.set['deploy']['sitescraper']            = {
         'deploy_to' => '/srv/www/sitescraper',
         'document_root' => 'public'
       }

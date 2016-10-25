@@ -115,10 +115,10 @@ module EasyBib
 
   # constructs an almost FQDN (except for the actual zone name)
   def get_record_name(node = self.node)
-    instance = get_instance(node)
-    host_name = get_hostname(node, true)
+    instance   = get_instance(node)
+    host_name  = get_hostname(node, true)
     stack_name = get_normalized_cluster_name(node)
-    region_id = instance['region']
+    region_id  = instance['region']
 
     "#{host_name}.#{stack_name}.#{region_id}"
   end

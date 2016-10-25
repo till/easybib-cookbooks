@@ -7,7 +7,7 @@ describe 'php-fpm::cloudwatch' do
   let(:cronscript_name) { "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh" }
 
   before do
-    node.set['opsworks']['stack']['name'] = 'Stack'
+    node.set['opsworks']['stack']['name']        = 'Stack'
     node.set['opsworks']['instance']['hostname'] = 'host'
   end
 

@@ -3,7 +3,7 @@ require 'securerandom'
 action :create do
 
   file = "#{new_resource.path}/config.inc.php"
-  c = template file do
+  c    = template file do
     cookbook 'phpmyadmin'
     source 'config.inc.php.erb'
     mode '0750'
@@ -20,7 +20,7 @@ end
 action :delete do
 
   file = "#{new_resource.path}/config.inc.php"
-  f = file file do
+  f    = file file do
     action :delete
   end
 

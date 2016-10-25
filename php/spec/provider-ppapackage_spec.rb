@@ -14,11 +14,11 @@ describe 'php_ppa_package' do
       :cookbook_path => cookbook_paths,
       :step_into => %w(php_ppa_package)
     ) do |node|
-      node.override['php']['ppa']['package_prefix'] = 'php-ppa-prefix'
-      node.override['php-fpm']['prefix'] = '/prefix/dir'
-      node.default['ppa_package-spec']['name'] = 'modulename'
+      node.override['php']['ppa']['package_prefix']   = 'php-ppa-prefix'
+      node.override['php-fpm']['prefix']              = '/prefix/dir'
+      node.default['ppa_package-spec']['name']        = 'modulename'
       node.default['ppa_package-spec']['packagename'] = 'modulename'
-      node.default['ppa_package-spec']['config'] = nil
+      node.default['ppa_package-spec']['config']      = nil
     end
   end
   let(:chef_run) { runner.converge('fixtures::php-ppa_package') }
@@ -65,7 +65,7 @@ describe 'php_ppa_package' do
 
   describe 'with config, with separate name' do
     before do
-      node.set['ppa_package-spec']['config'] = { 'key' => 'value' }
+      node.set['ppa_package-spec']['config']      = { 'key' => 'value' }
       node.set['ppa_package-spec']['packagename'] = 'packagename'
     end
 

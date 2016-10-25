@@ -4,14 +4,14 @@ default['smokeping']['menu'] = {
   'title' => 'Network Latency Grapher'
 }
 
-default['smokeping']['pathnames']['sendmail'] = '/usr/sbin/sendmail'
-default['smokeping']['pathnames']['imgurl'] = '../smokeping/images'
+default['smokeping']['pathnames']['sendmail']  = '/usr/sbin/sendmail'
+default['smokeping']['pathnames']['imgurl']    = '../smokeping/images'
 default['smokeping']['pathnames']['smokemail'] = '/etc/smokeping/smokemail'
-default['smokeping']['pathnames']['tmail'] = '/etc/smokeping/tmail'
+default['smokeping']['pathnames']['tmail']     = '/etc/smokeping/tmail'
 
 default['smokeping']['directories']['imgcache'] = '/var/cache/smokeping/images'
-default['smokeping']['directories']['datadir'] = '/var/lib/smokeping'
-default['smokeping']['directories']['piddir'] = '/var/run/smokeping'
+default['smokeping']['directories']['datadir']  = '/var/lib/smokeping'
+default['smokeping']['directories']['piddir']   = '/var/run/smokeping'
 
 default['smokeping']['targets'] = {}
 

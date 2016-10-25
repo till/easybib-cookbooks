@@ -21,7 +21,7 @@ normal['nodejs'] = {
 php_version = '7.0'
 
 normal['php']['extensions']['config_dir'] = "etc/php/#{php_version}/mods-available"
-normal['php']['ppa'] = {
+normal['php']['ppa']                      = {
   'name' => 'ondrejphp',
   'uri' => 'ppa:ondrej/php',
   'package_prefix' => "php#{php_version}"

@@ -2,11 +2,11 @@ case node['platform']
 when 'debian', 'ubuntu'
   include_recipe 'prosody::apt'
 
-  if (node.fetch('lsb', {})['codename'] == 'precise')
-    packages = ['lua-event', 'liblua5.1-sec1', 'lua-zlib']
-  else
-    packages = ['lua-event', 'lua-sec', 'lua-zlib']
-  end
+  packages = if node.fetch('lsb', {})['codename'] == 'precise'
+               ['lua-event', 'liblua5.1-sec1', 'lua-zlib']
+             else
+               ['lua-event', 'lua-sec', 'lua-zlib']
+             end
 
   packages.each do |package_dep|
     package "installing #{package_dep} for prosody" do
