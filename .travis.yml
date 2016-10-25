@@ -1,7 +1,6 @@
 language: ruby
 
-sudo: required
-dist: trusty
+sudo: false
 
 cache: bundler
 
