@@ -70,7 +70,7 @@ task :foodcritic, [:cookbook] do |t, args|
            args.cookbook
          end
 
-    fc_command = 'bundle exec foodcritic -C --chef-version 11 -f any -P '
+    fc_command = 'bundle exec foodcritic -C --chef-version 12 -f any -P '
     fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
     fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
     fc_command << " #{cb}"
