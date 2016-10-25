@@ -39,6 +39,8 @@ DEPENDENCIES
     path: ../ies
   ies-apt
     path: ../ies-apt
+  ies-gearmand
+    path: ../ies-gearmand
   ies-letsencrypt
     path: ../ies-letsencrypt
   ies-mysql
@@ -172,6 +174,9 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
+  ies-gearmand (0.1.0)
+    gearmand (>= 0.0.0)
+    php (>= 0.0.0)
   ies-letsencrypt (0.1.0)
     cron (>= 0.0.0)
   ies-mysql (0.1.0)
@@ -225,6 +230,7 @@ GRAPH
     build-essential (>= 0.0.0)
   rabbitmq (3.4.0)
     erlang (>= 0.9.0)
+  rbac (1.0.3)
   redis (0.1.0)
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
@@ -234,7 +240,9 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
-  stack-easybib (0.1.0)
+  smf (2.2.7)
+    rbac (>= 1.0.1)
+  stack-easybib (0.2.0)
     easybib-deploy (>= 0.0.0)
     fake-sqs (>= 0.0.0)
     haproxy (>= 0.0.0)
@@ -264,9 +272,10 @@ GRAPH
     php-pear (>= 0.0.0)
     stack-easybib (>= 0.0.0)
     tideways (>= 0.0.0)
-  stack-service (0.1.0)
+  stack-service (0.2.0)
     gearmand (>= 0.0.0)
     ies (>= 0.0.0)
+    ies-gearmand (>= 0.0.0)
     logrotate (>= 0.0.0)
     nodejs (>= 0.0.0)
     rabbitmq (>= 0.0.0)
@@ -282,3 +291,6 @@ GRAPH
     php-fpm (>= 0.0.0)
   xml (1.2.3)
     build-essential (>= 0.0.0)
+  yum (3.8.2)
+  yum-mysql-community (0.1.19)
+    yum (>= 3.2)
