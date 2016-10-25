@@ -7,7 +7,7 @@ cs:
 
 test:
 	$(rake) unittest
-	$(rake) spec
+	$(rake) parallel_spec
 
 release:
 	bundle exec berks package --quiet
