@@ -3,7 +3,7 @@ require_relative 'spec_helper.rb'
 describe 'stack-easybib::role-nginxphpapp' do
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :step_into => ['easybib_nginx']
     )
   end

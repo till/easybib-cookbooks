@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'php-fpm::default' do
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :platform => 'ubuntu',
       :version => '16.04'
     )

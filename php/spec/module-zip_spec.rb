@@ -3,7 +3,7 @@ require_relative 'spec_helper.rb'
 describe 'php::module-zip' do
 
   let(:chef_run) do
-    ChefSpec::Runner.new.converge(described_recipe)
+    ChefSpec::SoloRunner.new.converge(described_recipe)
   end
 
   it 'adds ppa mirror configuration' do

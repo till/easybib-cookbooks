@@ -3,7 +3,7 @@ require 'chefspec'
 describe 'easybib-deploy::ssl-certificates' do
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :log_level => :fatal,
       :step_into => %w(nginx_app_config easybib_nginx easybib_sslcertificate)
     )

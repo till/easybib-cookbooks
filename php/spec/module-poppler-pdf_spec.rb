@@ -3,7 +3,7 @@ require_relative 'spec_helper.rb'
 describe 'php::module-poppler-pdf' do
 
   let(:chef_run) do
-    ChefSpec::Runner.new do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['poppler']['package_uri'] = 'http://foo.bar/package'
       node.override['poppler']['package_distro'] = 'trusty'
       node.override['poppler']['package_components'] = ['main']

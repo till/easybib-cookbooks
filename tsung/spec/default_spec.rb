@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'tsung::default' do
 
-  let(:runner)   { ChefSpec::Runner.new(:version => 12.04) }
+  let(:runner)   { ChefSpec::SoloRunner.new(:version => 12.04) }
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node)     { runner.node }
 

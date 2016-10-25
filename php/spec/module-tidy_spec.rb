@@ -1,7 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe 'php::module-tidy' do
-  let(:runner) { ChefSpec::Runner.new }
+  let(:runner) { ChefSpec::SoloRunner.new }
 
   let(:node) { runner.node }
   let(:chef_run) { runner.converge(described_recipe) }

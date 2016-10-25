@@ -1,6 +1,5 @@
 AllCops:
   Exclude:
-    - 'Rakefile'
     - 'apt/**/*'
     - 'ark/**/*'
     - 'build-essential/**/*'

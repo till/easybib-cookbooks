@@ -10,7 +10,7 @@ describe 'easybib_deploy_manager' do
   end
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :platform => 'ubuntu',
       :version => '16.04',
       :cookbook_path => cookbook_paths,

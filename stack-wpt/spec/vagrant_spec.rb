@@ -7,7 +7,7 @@ describe 'stack-wpt::role-vagrant' do
     ]
   end
 
-  let(:runner)    { ChefSpec::Runner.new(:cookbook_path => cookbook_paths) }
+  let(:runner)    { ChefSpec::SoloRunner.new(:cookbook_path => cookbook_paths) }
   let(:node)      { runner.node }
   let(:chef_run)  { runner.converge(described_recipe) }
 

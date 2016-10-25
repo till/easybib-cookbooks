@@ -9,7 +9,7 @@ describe 'silex-config-template' do
     ]
   end
 
-  let(:runner)   { ChefSpec::Runner.new(:cookbook_path => cookbook_paths) }
+  let(:runner)   { ChefSpec::SoloRunner.new(:cookbook_path => cookbook_paths) }
   let(:chef_run) { runner.converge('fixtures::silex-template') }
   let(:node)     { runner.node }
   let(:config_filename) { '/tmp/config.conf' }

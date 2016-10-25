@@ -6,7 +6,7 @@ require 'chefspec'
 
 describe 'ies-mysql::default' do
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :log_level => :error,
       :platform => 'ubuntu',
       :version => '14.04',

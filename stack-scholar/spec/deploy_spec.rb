@@ -3,7 +3,7 @@ require 'chefspec'
 describe 'stack-scholar::deploy' do
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :step_into => %w(easybib_deploy_manager)
     )
   end
