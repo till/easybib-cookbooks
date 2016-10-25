@@ -47,6 +47,7 @@ deploy:
 branches:
   only:
   - master
+  - master-chef-12
   - stable-chef-11.10
   - stable
 
