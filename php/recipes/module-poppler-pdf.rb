@@ -14,11 +14,11 @@ end
 
 poppler_install_dir = '/opt/easybib/lib/php/extensions/no-debug-non-zts-20131226'
 Chef::Log.debug("Copying #{poppler_install_dir}/poppler.so to PHP extension dir")
-execute "move-poppler-so" do
+execute 'move-poppler-so' do
   cwd poppler_install_dir
   command 'cp poppler.so `/usr/bin/php5.6 -r "echo ini_get(\"extension_dir\");"`/poppler.so'
   ignore_failure true
-  only_if do ::File.exists?("#{poppler_install_dir}/poppler.so") end
+  only_if { ::File.exist?("#{poppler_install_dir}/poppler.so") }
 end
 
 ext = 'poppler.so'
