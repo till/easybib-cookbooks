@@ -49,7 +49,7 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
 
   t.verbose = false
   t.fail_on_error = true
-  t.rspec_opts = args.output_file.nil? ? '--format d' : "--format RspecJunitFormatter --out #{args.output_file}"
+  t.rspec_opts = '--format d --require ./global_spec_helper.rb'
   t.ruby_opts = '-W0' # it supports ruby options too
   t.pattern = file_list
 end
