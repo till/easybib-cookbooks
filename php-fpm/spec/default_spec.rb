@@ -2,9 +2,9 @@ require 'chefspec'
 
 describe 'php-fpm::default' do
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :platform => 'ubuntu',
-      :version => '14.04'
+      :version => '16.04'
     )
   end
   let(:chef_run) { runner.converge(described_recipe) }

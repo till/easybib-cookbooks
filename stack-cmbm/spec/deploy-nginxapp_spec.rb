@@ -3,7 +3,7 @@ require 'set'
 
 describe 'stack-cmbm::deploy-nginxapp' do
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :step_into => %w(ies_rbenv_deploy easybib_nginx)
     )
   end

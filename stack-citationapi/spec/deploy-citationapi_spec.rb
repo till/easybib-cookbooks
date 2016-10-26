@@ -5,7 +5,7 @@ require 'set'
 describe 'stack-citationapi::deploy-citationapi' do
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :step_into => ['easybib_nginx']
     )
   end

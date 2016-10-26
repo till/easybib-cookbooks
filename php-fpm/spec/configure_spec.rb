@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'php-fpm::configure' do
 
-  let(:runner) { ChefSpec::Runner.new }
+  let(:runner) { ChefSpec::SoloRunner.new }
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node) { runner.node }
 

@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe 'haproxy::ctl' do
   let(:runner) do
-    ChefSpec::Runner.new do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override[:opsworks][:layers][:nginxphpapp][:instances] = {}
     end
   end

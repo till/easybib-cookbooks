@@ -87,8 +87,6 @@ DEPENDENCIES
     path: mysql
   newrelic
     path: newrelic
-  nginx-amplify
-    path: nginx-amplify
   nginx-app
     path: nginx-app
   nodejs
@@ -300,8 +298,6 @@ GRAPH
     easybib (>= 0.0.0)
     haproxy (>= 0.0.0)
     php-fpm (>= 0.0.0)
-  nginx-amplify (0.1.0)
-    apt (>= 0.0.0)
   nginx-app (0.1.0)
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
