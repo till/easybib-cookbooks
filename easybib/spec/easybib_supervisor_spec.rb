@@ -24,7 +24,7 @@ describe 'easybib_supervisor - explicit attrs' do
     describe 'create' do
       before do
         stub_supervisor_with_two_services
-        node.set['opsworks'] = {} # to have is_aws true
+        node.override['opsworks'] = {} # to have is_aws true
       end
 
       it 'enables the first service' do
@@ -83,8 +83,8 @@ describe 'easybib_supervisor - implicit attrs' do
     describe 'create' do
       before do
         stub_supervisor_with_two_services
-        node.set['opsworks']['instance']['layers'] = %w(role1 role2)
-        node.set['easybib_deploy']['supervisor_role'] = 'role1'
+        node.override['opsworks']['instance']['layers'] = %w(role1 role2)
+        node.override['easybib_deploy']['supervisor_role'] = 'role1'
       end
 
       it 'enables the first service' do
@@ -110,7 +110,7 @@ describe 'easybib_supervisor - implicit attrs' do
     describe 'create' do
       before do
         stub_supervisor_with_two_services
-        node.set['easybib_deploy']['supervisor_role'] = 'role1'
+        node.override['easybib_deploy']['supervisor_role'] = 'role1'
       end
 
       it 'enables the first service' do
@@ -136,8 +136,8 @@ describe 'easybib_supervisor - implicit attrs' do
     describe 'create' do
       before do
         stub_supervisor_does_not_exist
-        node.set['opsworks']['instance']['layers'] = %w(role1 role2)
-        node.set['easybib_deploy']['supervisor_role'] = 'role1'
+        node.override['opsworks']['instance']['layers'] = %w(role1 role2)
+        node.override['easybib_deploy']['supervisor_role'] = 'role1'
       end
 
       it 'does not proceed' do

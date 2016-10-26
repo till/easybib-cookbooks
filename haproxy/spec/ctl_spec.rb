@@ -3,7 +3,7 @@ require_relative 'spec_helper.rb'
 describe 'haproxy::ctl' do
   let(:runner) do
     ChefSpec::Runner.new do |node|
-      node.set[:opsworks][:layers][:nginxphpapp][:instances] = {}
+      node.override[:opsworks][:layers][:nginxphpapp][:instances] = {}
     end
   end
   let(:chef_run) { runner.converge(described_recipe) }
@@ -12,9 +12,9 @@ describe 'haproxy::ctl' do
 
   describe 'standard settings' do
     before do
-      node.set['opsworks']['stack']['name'] = 'Amazing Stack'
-      node.set['haproxy']['ctl']['statsd']['host'] = 'foo.example.com'
-      node.set['haproxy']['ctl']['statsd']['port'] = '23'
+      node.override['opsworks']['stack']['name'] = 'Amazing Stack'
+      node.override['haproxy']['ctl']['statsd']['host'] = 'foo.example.com'
+      node.override['haproxy']['ctl']['statsd']['port'] = '23'
     end
 
     it 'installs haproxyctl' do

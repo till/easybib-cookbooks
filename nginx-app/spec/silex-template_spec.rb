@@ -16,7 +16,7 @@ describe 'silex-config-template' do
 
   describe 'enabled access log' do
     before do
-      node.set['testdata']['access_log'] = '/tmp.log'
+      node.override['testdata']['access_log'] = '/tmp.log'
     end
 
     it 'sets correct access log path' do
@@ -26,8 +26,8 @@ describe 'silex-config-template' do
 
   describe 'no routes enabled or disabled' do
     before do
-      node.set['testdata']['routes_enabled'] = nil
-      node.set['testdata']['routes_denied']  = nil
+      node.override['testdata']['routes_enabled'] = nil
+      node.override['testdata']['routes_denied']  = nil
     end
 
     it 'does not deny any routes' do
@@ -60,9 +60,9 @@ describe 'silex-config-template' do
 
   describe 'some routes enabled' do
     before do
-      node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route']
-      node.set['testdata']['routes_denied']  = nil
-      node.set['opsworks']['stack']['name']  = 'rspec'
+      node.override['testdata']['routes_enabled'] = ['/some/route', '/other/route']
+      node.override['testdata']['routes_denied']  = nil
+      node.override['opsworks']['stack']['name']  = 'rspec'
     end
 
     it 'does set routes for enabled routes' do
@@ -88,9 +88,9 @@ describe 'silex-config-template' do
 
   describe 'some routes enabled including slash' do
     before do
-      node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route', '/']
-      node.set['testdata']['routes_denied']  = nil
-      node.set['opsworks']['stack']['name']  = 'rspec'
+      node.override['testdata']['routes_enabled'] = ['/some/route', '/other/route', '/']
+      node.override['testdata']['routes_denied']  = nil
+      node.override['opsworks']['stack']['name']  = 'rspec'
     end
 
     it 'does not redirect / to another location' do
@@ -101,8 +101,8 @@ describe 'silex-config-template' do
 
   describe 'some routes disabled' do
     before do
-      node.set['testdata']['routes_enabled'] = nil
-      node.set['testdata']['routes_denied']  = ['/some/route', '/other/route']
+      node.override['testdata']['routes_enabled'] = nil
+      node.override['testdata']['routes_denied']  = ['/some/route', '/other/route']
     end
 
     it 'does not deny any routes' do
@@ -123,9 +123,9 @@ describe 'silex-config-template' do
 
   describe 'some routes enabled, some disabled' do
     before do
-      node.set['testdata']['routes_enabled'] = ['/some/route', '/other/route']
-      node.set['testdata']['routes_denied']  = ['/some/droute', '/other/droute']
-      node.set['opsworks']['stack']['name']  = 'rspec'
+      node.override['testdata']['routes_enabled'] = ['/some/route', '/other/route']
+      node.override['testdata']['routes_denied']  = ['/some/droute', '/other/droute']
+      node.override['opsworks']['stack']['name']  = 'rspec'
     end
 
     it 'does set routes for enabled routes' do

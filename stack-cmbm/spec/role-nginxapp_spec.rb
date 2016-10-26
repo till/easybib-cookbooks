@@ -7,7 +7,7 @@ describe 'stack-cmbm::role-nginxapp' do
   let(:node)      { runner.node }
 
   before do
-    node.set[:vagrant][:applications] = {
+    node.override[:vagrant][:applications] = {
       :cmbm => {
         :app_root_location => '/vagrant_cmbm',
         :doc_root_location => '/vagrant_cmbm/public'

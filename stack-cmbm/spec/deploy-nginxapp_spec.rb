@@ -15,8 +15,8 @@ describe 'stack-cmbm::deploy-nginxapp' do
   let(:template_name) { "/etc/nginx/sites-enabled/#{app_config_shortname}.conf" }
 
   before do
-    node.set['opsworks']['instance']['layers'] = ['nginxapp_cm']
-    node.set[:deploy][:cm] = {
+    node.override['opsworks']['instance']['layers'] = ['nginxapp_cm']
+    node.override[:deploy][:cm] = {
       :application => 'cm',
       :deploy_to => '/srv/cm',
       :deploy_dir => '/srv/cm',
@@ -27,7 +27,7 @@ describe 'stack-cmbm::deploy-nginxapp' do
         }
       }
     }
-    node.set[:etc][:passwd]['www-data'][:dir] = '/srv/www/cm'   # because OHAI is not around
+    node.override[:etc][:passwd]['www-data'][:dir] = '/srv/www/cm'   # because OHAI is not around
   end
 
   it 'includes all required recipes' do

@@ -17,7 +17,7 @@ describe 'ies-mysql::dev' do
 
   describe 'MySQL 5.7' do
     before do
-      node.set['ies-mysql']['version'] = '5.7'
+      node.override['ies-mysql']['version'] = '5.7'
     end
 
     it 'renders new grants' do
@@ -27,7 +27,7 @@ describe 'ies-mysql::dev' do
 
   describe 'AWS' do
     before do
-      node.set['opsworks'] = {}
+      node.override['opsworks'] = {}
     end
 
     it 'it does not execute the recipe' do

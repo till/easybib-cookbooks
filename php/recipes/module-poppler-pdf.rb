@@ -14,7 +14,7 @@ end
 
 ext = 'poppler.so'
 php_config File.basename(ext, '.so') do
-  config {}
+  config node['php-poppler']['settings']
   config_dir node['php']['extensions']['config_dir']
   extension_path ext
   load_extension true

@@ -12,13 +12,13 @@ describe 'stack-scholar::deploy' do
   let(:deploy_data) { { 'deploy_to' => '/bla/dir', 'document_root' => 'www', 'domains' => ['foo.tld'] } }
 
   before do
-    node.set['opsworks']['stack']['name'] = 'chefspec'
+    node.override['opsworks']['stack']['name'] = 'chefspec'
   end
 
   describe 'scholar_admin deployment in correct layer' do
     before do
-      node.set['opsworks']['instance']['layers'] = ['nginxphpapp']
-      node.set['deploy']['scholar_admin'] = deploy_data
+      node.override['opsworks']['instance']['layers'] = ['nginxphpapp']
+      node.override['deploy']['scholar_admin'] = deploy_data
     end
 
     it 'includes the service definition recipes' do
@@ -46,8 +46,8 @@ describe 'stack-scholar::deploy' do
 
   describe 'scholar_admin deployment in wrong layer' do
     before do
-      node.set['opsworks']['instance']['layers'] = ['wronglayer']
-      node.set['deploy']['scholar_admin'] = deploy_data
+      node.override['opsworks']['instance']['layers'] = ['wronglayer']
+      node.override['deploy']['scholar_admin'] = deploy_data
     end
 
     it 'does not deploy the application' do
@@ -62,8 +62,8 @@ describe 'stack-scholar::deploy' do
   # scholar main app
   describe 'scholar deployment in nginxlayer' do
     before do
-      node.set['opsworks']['instance']['layers'] = ['nginxphpapp']
-      node.set['deploy']['scholar'] = deploy_data
+      node.override['opsworks']['instance']['layers'] = ['nginxphpapp']
+      node.override['deploy']['scholar'] = deploy_data
     end
 
     it 'includes the service definition recipes' do
@@ -91,9 +91,9 @@ describe 'stack-scholar::deploy' do
 
   describe 'scholar deployment in supervisor layer' do
     before do
-      node.set['opsworks']['instance']['layers'] = ['supervisor_role']
-      node.set['easybib_deploy']['supervisor_role'] = 'supervisor_role'
-      node.set['deploy']['scholar'] = deploy_data
+      node.override['opsworks']['instance']['layers'] = ['supervisor_role']
+      node.override['easybib_deploy']['supervisor_role'] = 'supervisor_role'
+      node.override['deploy']['scholar'] = deploy_data
     end
 
     # not testing for values or nginx here, since this is redundant to test above
@@ -104,8 +104,8 @@ describe 'stack-scholar::deploy' do
 
   describe 'scholar deployment in wrong layer' do
     before do
-      node.set['opsworks']['instance']['layers'] = ['wronglayer']
-      node.set['deploy']['scholar'] = deploy_data
+      node.override['opsworks']['instance']['layers'] = ['wronglayer']
+      node.override['deploy']['scholar'] = deploy_data
     end
 
     it 'does not deploy the application' do

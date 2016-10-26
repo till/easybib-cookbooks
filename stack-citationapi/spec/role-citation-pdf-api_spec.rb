@@ -7,11 +7,11 @@ describe 'stack-citationapi::role-citation-pdf-api' do
 
   describe 'OpsWorks' do
     before do
-      node.set['opsworks']['stack']['name'] = 'Stack'
-      node.set['opsworks']['instance']['layers'] = ['pdf_autocite']
-      node.set['opsworks']['instance']['hostname'] = 'host'
-      node.set['opsworks']['instance']['ip'] = '127.0.0.1'
-      node.set['deploy']['pdf_autocite'] = {
+      node.override['opsworks']['stack']['name'] = 'Stack'
+      node.override['opsworks']['instance']['layers'] = ['pdf_autocite']
+      node.override['opsworks']['instance']['hostname'] = 'host'
+      node.override['opsworks']['instance']['ip'] = '127.0.0.1'
+      node.override['deploy']['pdf_autocite'] = {
         'deploy_to' => '/srv/www/pdf_autocite',
         'document_root' => 'public',
         'domains' => ['domain']
@@ -28,7 +28,7 @@ describe 'stack-citationapi::role-citation-pdf-api' do
 
   describe 'Vagrant' do
     before do
-      node.set['vagrant']['applications'] = {}
+      node.override['vagrant']['applications'] = {}
     end
 
     it 'pulls in all required recipes' do

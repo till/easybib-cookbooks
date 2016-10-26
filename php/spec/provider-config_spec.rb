@@ -45,8 +45,8 @@ describe 'php_config' do
 
   describe 'load_extension standard path' do
     before do
-      node.set['config-spec']['extension_path'] = '/some/path.extension.so'
-      node.set['config-spec']['load_extension'] = true
+      node.override['config-spec']['extension_path'] = '/some/path.extension.so'
+      node.override['config-spec']['load_extension'] = true
     end
 
     it 'loads the extension without zend prefix' do
@@ -70,9 +70,9 @@ describe 'php_config' do
 
   describe 'load_extension zend extension' do
     before do
-      node.set['config-spec']['extension_path'] = '/some/path.extension.so'
-      node.set['config-spec']['load_extension'] = true
-      node.set['config-spec']['zend_extension'] = true
+      node.override['config-spec']['extension_path'] = '/some/path.extension.so'
+      node.override['config-spec']['load_extension'] = true
+      node.override['config-spec']['zend_extension'] = true
     end
 
     it 'loads the extension with zend prefix' do
@@ -96,9 +96,9 @@ describe 'php_config' do
 
   describe 'extension set but load false' do
     before do
-      node.set['config-spec']['extension_path'] = '/some/path.extension.so'
-      node.set['config-spec']['load_extension'] = false
-      node.set['config-spec']['zend_extension'] = true
+      node.override['config-spec']['extension_path'] = '/some/path.extension.so'
+      node.override['config-spec']['load_extension'] = false
+      node.override['config-spec']['zend_extension'] = true
     end
 
     it 'does not load the extension' do
@@ -113,8 +113,8 @@ describe 'php_config' do
 
   describe 'another path' do
     before do
-      node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
-      node.set['config-spec']['ini_suffix'] = ''
+      node.override['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
+      node.override['config-spec']['ini_suffix'] = ''
     end
 
     it 'creates a .ini file' do
@@ -125,12 +125,12 @@ describe 'php_config' do
   describe 'load priority' do
 
     before do
-      node.set['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
+      node.override['config-spec']['config_dir'] = 'etc/php/5.6/conf.d'
     end
 
     describe 'with load_priority set to string "5"' do
       before do
-        node.set['config-spec']['load_priority'] = '5'
+        node.override['config-spec']['load_priority'] = '5'
       end
       it 'raises chef validation failed exception' do
         expect { chef_run }.to raise_error(Chef::Exceptions::ValidationFailed)
@@ -139,7 +139,7 @@ describe 'php_config' do
 
     describe 'with load_priority set to 500' do
       before do
-        node.set['config-spec']['load_priority'] = 500
+        node.override['config-spec']['load_priority'] = 500
       end
       it 'raises RuntimeError exception' do
         expect { chef_run }.to raise_error(RuntimeError)
@@ -148,7 +148,7 @@ describe 'php_config' do
 
     describe 'with load_priority set to 50' do
       before do
-        node.set['config-spec']['load_priority'] = 50
+        node.override['config-spec']['load_priority'] = 50
       end
       it 'creates a .ini file with prefix of 50-' do
         expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/50-modulename-settings.ini')
@@ -157,7 +157,7 @@ describe 'php_config' do
 
     describe 'with load_priority set to 5' do
       before do
-        node.set['config-spec']['load_priority'] = 5
+        node.override['config-spec']['load_priority'] = 5
       end
       it 'creates a .ini file with prefix of 05-' do
         expect(chef_run).to render_file('/prefix/dir/etc/php/5.6/conf.d/05-modulename-settings.ini')

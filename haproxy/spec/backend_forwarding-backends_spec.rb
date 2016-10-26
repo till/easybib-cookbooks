@@ -3,12 +3,12 @@ require_relative 'spec_helper.rb'
 describe 'haproxy::configure' do
   let(:runner) do
     ChefSpec::Runner.new do |node|
-      node.set[:opsworks][:stack][:name] = 'chefspec'
-      node.set[:opsworks][:instance][:region][:id] = 'local'
-      node.set[:opsworks][:layers][:nginxphpapp][:instances] = {}
-      node.set[:opsworks][:layers][:app1][:instances] = {}
-      node.set[:opsworks][:layers][:app2][:instances] = {}
-      node.set[:haproxy] = {
+      node.override[:opsworks][:stack][:name] = 'chefspec'
+      node.override[:opsworks][:instance][:region][:id] = 'local'
+      node.override[:opsworks][:layers][:nginxphpapp][:instances] = {}
+      node.override[:opsworks][:layers][:app1][:instances] = {}
+      node.override[:opsworks][:layers][:app2][:instances] = {}
+      node.override[:haproxy] = {
         :acls => {},
         :forwarding_layers => {
           :app2 => {

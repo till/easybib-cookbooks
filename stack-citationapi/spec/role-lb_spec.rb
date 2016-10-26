@@ -7,11 +7,11 @@ describe 'stack-citationapi::role-lb' do
   let(:node)        { runner.node }
 
   before do
-    node.set['opsworks']['stack']['name'] = 'Stack'
-    node.set['opsworks']['instance']['layers'] = ['bibapi']
-    node.set['opsworks']['instance']['hostname'] = 'host'
-    node.set['opsworks']['instance']['ip'] = '127.0.0.1'
-    node.set['deploy']['easybib_api'] = {
+    node.override['opsworks']['stack']['name'] = 'Stack'
+    node.override['opsworks']['instance']['layers'] = ['bibapi']
+    node.override['opsworks']['instance']['hostname'] = 'host'
+    node.override['opsworks']['instance']['ip'] = '127.0.0.1'
+    node.override['deploy']['easybib_api'] = {
       :deploy_to => '/srv/www/bibapi',
       :document_root => 'public'
     }

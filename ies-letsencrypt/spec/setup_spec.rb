@@ -7,7 +7,7 @@ describe 'ies-letsencrypt::setup' do
 
   describe 'setup' do
     before do
-      node.set['sysop_email'] = 'bofh@example.org'
+      node.override['sysop_email'] = 'bofh@example.org'
     end
 
     it 'creates the ssl dir' do
