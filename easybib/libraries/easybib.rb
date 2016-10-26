@@ -83,6 +83,7 @@ module EasyBib
     if node['opsworks']
       return true
     end
+    return true if node['aws_opsworks_agent'] # chef 12
     false
   end
 
