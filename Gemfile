@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'chef', '~>12.9.0'
+gem 'chef', '~>12.8.0'
 gem 'rspec', '~>3.5.0'
 gem 'rake'
 gem 'foodcritic', '~>7.1.0'
