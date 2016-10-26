@@ -7,7 +7,7 @@ describe 'ies-letsencrypt::certbot' do
 
   describe 'standard settings' do
     before do
-      node.set['ies-letsencrypt']['certbot']['bin'] = '/foo/cb'
+      node.override['ies-letsencrypt']['certbot']['bin'] = '/foo/cb'
     end
 
     it 'installs certbot-auto' do

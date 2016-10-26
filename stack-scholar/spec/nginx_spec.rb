@@ -21,18 +21,18 @@ describe 'stack-scholar::deploy' do
 
       stub_command('rm -f /etc/nginx/sites-enabled/default').and_return(true)
 
-      node.set['easybib']['cluster_name'] = stack
+      node.override['easybib']['cluster_name'] = stack
 
-      node.set['opsworks']['instance']['layers'] = ['nginxphpapp']
-      node.set['opsworks']['stack']['name'] = stack
+      node.override['opsworks']['instance']['layers'] = ['nginxphpapp']
+      node.override['opsworks']['stack']['name'] = stack
 
-      node.set['deploy']['scholar'] = {
+      node.override['deploy']['scholar'] = {
         'deploy_to' => '/srv/www/scholar',
         'document_root' => 'docroot',
         'domains' => [domain]
       }
 
-      node.set['infolit']['domain'] = domain
+      node.override['infolit']['domain'] = domain
     end
 
     it 'creates the virtualhost from the correct erb' do

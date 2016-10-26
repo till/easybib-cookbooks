@@ -27,7 +27,7 @@ describe 'php-fpm::default' do
 
   describe 'php.ini refactoring' do
     before do
-      node.set['php-fpm']['packages'] = 'php5-easybib-soap,php5-easybib-tidy'
+      node.override['php-fpm']['packages'] = 'php5-easybib-soap,php5-easybib-tidy'
     end
 
     it 'includes module recipes for soap & tidy' do

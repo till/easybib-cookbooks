@@ -24,8 +24,8 @@ describe 'nginx-amplify::configure' do
 
   describe 'api_key' do
     before do
-      node.set['nginx-amplify']['api_key'] = 'super-secret'
-      node.set['nginx-amplify']['hostname'] = 'box.example.org'
+      node.override['nginx-amplify']['api_key'] = 'super-secret'
+      node.override['nginx-amplify']['hostname'] = 'box.example.org'
     end
 
     it 'installs the uuid helper' do

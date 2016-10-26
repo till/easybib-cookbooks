@@ -16,11 +16,11 @@ describe 'stack-citationapi::deploy-citationapi' do
     let(:app_config_shortname) { 'citation_apis' }
 
     before do
-      node.set['deploy']['citation_apis'] = {
+      node.override['deploy']['citation_apis'] = {
         'deploy_to' => '/srv/www/citation_apis',
         'document_root' => 'public'
       }
-      node.set['opsworks']['instance']['layers'] = ['citation-apis']
+      node.override['opsworks']['instance']['layers'] = ['citation-apis']
     end
 
     it_behaves_like 'silex nginx template'
@@ -30,11 +30,11 @@ describe 'stack-citationapi::deploy-citationapi' do
     let(:app_config_shortname) { 'easybib_api' }
 
     before do
-      node.set['deploy']['easybib_api'] = {
+      node.override['deploy']['easybib_api'] = {
         'deploy_to' => '/srv/www/easybib_api',
         'document_root' => 'public'
       }
-      node.set['opsworks']['instance']['layers'] = ['bibapi']
+      node.override['opsworks']['instance']['layers'] = ['bibapi']
     end
 
     it_behaves_like 'silex nginx template'
@@ -44,11 +44,11 @@ describe 'stack-citationapi::deploy-citationapi' do
     let(:app_config_shortname) { 'sitescraper' }
 
     before do
-      node.set['deploy']['sitescraper'] = {
+      node.override['deploy']['sitescraper'] = {
         'deploy_to' => '/srv/www/sitescraper',
         'document_root' => 'public'
       }
-      node.set['opsworks']['instance']['layers'] = ['sitescraper']
+      node.override['opsworks']['instance']['layers'] = ['sitescraper']
     end
 
     it_behaves_like 'silex nginx template'
@@ -59,12 +59,12 @@ describe 'stack-citationapi::deploy-citationapi' do
     let(:deploy_to) { '/srv/www/pdf_autocite' }
 
     before do
-      node.set['deploy']['pdf_autocite'] = {
+      node.override['deploy']['pdf_autocite'] = {
         'deploy_to' => deploy_to,
         'document_root' => 'web',
         'domains' => ['pdf.example.org']
       }
-      node.set['opsworks']['instance']['layers'] = ['pdf_autocite']
+      node.override['opsworks']['instance']['layers'] = ['pdf_autocite']
     end
 
     it 'calls all necessary LWRP' do

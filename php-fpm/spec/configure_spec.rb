@@ -22,8 +22,8 @@ describe 'php-fpm::configure' do
 
   describe 'pool configuration' do
     before do
-      node.set['php-fpm']['pools'] = %w(app1 app2 app3)
-      node.set['php-fpm']['max_children'] = 99
+      node.override['php-fpm']['pools'] = %w(app1 app2 app3)
+      node.override['php-fpm']['max_children'] = 99
     end
 
     it 'creates three pool configurations' do
@@ -55,7 +55,7 @@ describe 'php-fpm::configure' do
 
     describe 'update-alternatives' do
       before do
-        node.set['php']['ppa']['package_prefix'] = 'php8.5'
+        node.override['php']['ppa']['package_prefix'] = 'php8.5'
       end
 
       it 'runs update-alternatives' do

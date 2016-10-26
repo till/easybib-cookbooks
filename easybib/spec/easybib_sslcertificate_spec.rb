@@ -32,7 +32,7 @@ describe 'easybib_sslcertificate' do
       fake_deploy['ssl_certificate']     = ssl_cert
       fake_deploy['ssl_certificate_key'] = ssl_key
 
-      node.set['fake_deploy'] = fake_deploy
+      node.override['fake_deploy'] = fake_deploy
     end
 
     it 'invokes the provider' do
@@ -69,7 +69,7 @@ describe 'easybib_sslcertificate' do
       fake_deploy['ssl_certificate']     = '/tmp/example.org.pem'
       fake_deploy['ssl_certificate_key'] = '/tmp/example.org.key'
 
-      node.set['fake_deploy'] = fake_deploy
+      node.override['fake_deploy'] = fake_deploy
     end
 
     it 'creates the files with the correct content' do

@@ -24,7 +24,7 @@ describe 'apache-couchdb::configure' do
 
   describe 'setup monitoring' do
     before do
-      node.set['apache-couchdb']['monitoring'] = {
+      node.override['apache-couchdb']['monitoring'] = {
         'user' => 'monitoring',
         'pass' => 'test123'
       }

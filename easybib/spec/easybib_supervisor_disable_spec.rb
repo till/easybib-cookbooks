@@ -27,7 +27,7 @@ describe 'easybib_supervisor - disable' do
     describe 'delete' do
       before do
         stub_supervisor_with_one_service
-        node.set['opsworks'] = {} # to have is_aws true
+        node.override['opsworks'] = {} # to have is_aws true
       end
 
       it 'deletes all supervisors' do
