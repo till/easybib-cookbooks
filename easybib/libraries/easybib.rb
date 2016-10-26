@@ -81,9 +81,15 @@ module EasyBib
 
   def is_aws(node = self.node)
     if node['opsworks']
+      ::Chef::Log.info('Chef 11 is_aws returns true')
       return true
     end
-    return true if node['aws_opsworks_agent'] # chef 12
+    if node['aws_opsworks_agent']
+      ::Chef::Log.info('Chef 12 is_aws returns true')
+      return true
+    end
+    ::Chef::Log.info(JSON.pretty_generate(node).gsub(":", " =>"))
+    ::Chef::Log.info('Seems to be non-aws environment, is_aws returns false')
     false
   end
 
