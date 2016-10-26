@@ -6,11 +6,11 @@ describe 'stack-api::role-nginxphpapp' do
   let(:node)         { runner.node }
 
   before do
-    node.set['opsworks']['stack']['name'] = 'Stack'
-    node.set['opsworks']['instance']['layers'] = ['silex']
-    node.set['opsworks']['instance']['hostname'] = 'host'
-    node.set['opsworks']['instance']['ip'] = '127.0.0.1'
-    node.set['deploy']['sitescraper'] = {
+    node.override['opsworks']['stack']['name'] = 'Stack'
+    node.override['opsworks']['instance']['layers'] = ['silex']
+    node.override['opsworks']['instance']['hostname'] = 'host'
+    node.override['opsworks']['instance']['ip'] = '127.0.0.1'
+    node.override['deploy']['sitescraper'] = {
       :deploy_to => '/srv/www/silex',
       :document_root => 'public'
     }

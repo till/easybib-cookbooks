@@ -12,12 +12,12 @@ describe 'stack-service::role-rabbitmq' do
   let(:chef_run)  { runner.converge(described_recipe) }
 
   before do
-    node.set['rabbitmq']['erlang_cookie_path'] = File.dirname(__FILE__) << '/erlang_cookie'
+    node.override['rabbitmq']['erlang_cookie_path'] = File.dirname(__FILE__) << '/erlang_cookie'
   end
 
   describe 'stack-service::role-rabbitmq' do
     before do
-      node.set['logrotate']['global']['/mnt/logs/rabbitmq/*.log'] = {
+      node.override['logrotate']['global']['/mnt/logs/rabbitmq/*.log'] = {
         :missingok  => true,
         :monthly    => true,
         :create     => '0660 root adm',

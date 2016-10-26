@@ -52,7 +52,7 @@ describe 'php::module-apc' do
 
   describe 'with load_priority set' do
     before do
-      node.set['php-apc']['load_priority'] = 99
+      node.override['php-apc']['load_priority'] = 99
     end
     it 'does not create soap-settings.ini without load_priority' do
       expect(chef_run).to_not render_file('/opt/easybib/etc/php/apc-settings.ini')
@@ -64,7 +64,7 @@ describe 'php::module-apc' do
 
   describe 'custom prefix' do
     before do
-      node.set['php-apc']['package_prefix'] = 'php-special'
+      node.override['php-apc']['package_prefix'] = 'php-special'
     end
 
     it 'installs the php-special-apcu module' do

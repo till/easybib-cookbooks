@@ -24,7 +24,7 @@ describe 'easybib_supervisor-without-matching-role' do
     describe 'create' do
       before do
         stub_supervisor_with_two_services
-        node.set['opsworks'] = {} # to have is_aws true
+        node.override['opsworks'] = {} # to have is_aws true
       end
 
       it 'does not proceed' do
@@ -58,8 +58,8 @@ describe 'easybib_supervisor-without-matching-role-implicit' do
     describe 'create' do
       before do
         stub_supervisor_with_two_services
-        node.set['opsworks']['instance']['layers'] = %w(role1 role2)
-        node.set['easybib_deploy']['supervisor_role'] = 'some-other-role'
+        node.override['opsworks']['instance']['layers'] = %w(role1 role2)
+        node.override['easybib_deploy']['supervisor_role'] = 'some-other-role'
       end
 
       it 'does not proceed' do

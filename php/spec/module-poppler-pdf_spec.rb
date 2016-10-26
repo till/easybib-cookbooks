@@ -4,10 +4,10 @@ describe 'php::module-poppler-pdf' do
 
   let(:chef_run) do
     ChefSpec::Runner.new do |node|
-      node.set['poppler']['package_uri'] = 'http://foo.bar/package'
-      node.set['poppler']['package_distro'] = 'trusty'
-      node.set['poppler']['package_components'] = ['main']
-      node.set['poppler']['package_key_uri'] = 'keyfile.gpg'
+      node.override['poppler']['package_uri'] = 'http://foo.bar/package'
+      node.override['poppler']['package_distro'] = 'trusty'
+      node.override['poppler']['package_components'] = ['main']
+      node.override['poppler']['package_key_uri'] = 'keyfile.gpg'
     end.converge(described_recipe)
   end
 

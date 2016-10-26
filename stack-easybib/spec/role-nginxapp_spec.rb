@@ -19,10 +19,10 @@ describe 'stack-easybib::role-nginxphpapp' do
   describe 'deployment' do
     before do
       stub_command('rm -f /etc/nginx/sites-enabled/default').and_return(true)
-      node.set['deploy'] = {}
-      node.set['easybib']['cluster_name'] = stack
-      node.set['opsworks']['stack']['name'] = stack
-      node.set['opsworks']['instance'] = {
+      node.override['deploy'] = {}
+      node.override['easybib']['cluster_name'] = stack
+      node.override['opsworks']['stack']['name'] = stack
+      node.override['opsworks']['instance'] = {
         'layers' => ['nginxphpapp'],
         'hostname' => 'hostname',
         'ip' => '127.0.0.1'
@@ -31,11 +31,11 @@ describe 'stack-easybib::role-nginxphpapp' do
 
     describe 'virtualhost' do
       before do
-        node.set['deploy']['easybib'] = {
+        node.override['deploy']['easybib'] = {
           'deploy_to' => '/srv/www/easybib',
           'document_root' => 'public'
         }
-        node.set['nginx-app']['access_log'] = access_log
+        node.override['nginx-app']['access_log'] = access_log
       end
 
       it "writes virtualhost for app 'easybib'" do
@@ -91,7 +91,7 @@ describe 'stack-easybib::role-nginxphpapp' do
 
       describe 'pools' do
         before do
-          node.set['php-fpm']['pools'] = %w(www1 www2 www3)
+          node.override['php-fpm']['pools'] = %w(www1 www2 www3)
         end
 
         it 'creates three upstreams' do

@@ -24,7 +24,7 @@ describe 'easybib_supervisor - create new service with orphan service' do
     describe 'create' do
       before do
         stub_supervisor_with_one_service_and_one_orphan
-        node.set['opsworks'] = {} # to have is_aws true
+        node.override['opsworks'] = {} # to have is_aws true
 
       end
 

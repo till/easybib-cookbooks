@@ -17,7 +17,7 @@ describe 'nginx-app::redirector' do
 
   describe 'setup domain redirect' do
     before do
-      node.set['redirector']['domains'] = {
+      node.override['redirector']['domains'] = {
         'example.org' => 'example.com'
       }
     end
@@ -39,7 +39,7 @@ describe 'nginx-app::redirector' do
 
   describe 'setup single url redirect' do
     before do
-      node.set['redirector']['urls'] = {
+      node.override['redirector']['urls'] = {
         'john-doe.example.org' => {
           '/' => 'example.com'
         }
@@ -65,7 +65,7 @@ describe 'nginx-app::redirector' do
 
   describe "ssl with let's encrypt" do
     before do
-      node.set['redirector']['ssl'] = {
+      node.override['redirector']['ssl'] = {
         'example.org' => 'http://www.something.de',
         'foo.example.org' => 'http://else.com'
       }

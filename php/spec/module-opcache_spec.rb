@@ -11,7 +11,7 @@ describe 'php::module-opcache' do
     let(:error_log) { '/some/path/file.log' }
 
     before do
-      node.set['php-opcache']['settings']['error_log'] = 'BLA'
+      node.override['php-opcache']['settings']['error_log'] = 'BLA'
     end
 
     it 'adds ppa mirror configuration' do

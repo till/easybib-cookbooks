@@ -27,7 +27,7 @@ describe 'easybib_deploy_manager' do
 
   context 'no deployments' do
     before do
-      node.set['deploy'] = {}
+      node.override['deploy'] = {}
     end
 
     it 'logs when no applications are configured' do
@@ -39,7 +39,7 @@ describe 'easybib_deploy_manager' do
 
     context 'apps but no deploy' do
       before do
-        node.set['fixtures']['applications'] = {
+        node.override['fixtures']['applications'] = {
           :app_number_one => {},
           :app_number_two => {}
         }
@@ -58,7 +58,7 @@ describe 'easybib_deploy_manager' do
 
   context 'deployments' do
     before do
-      node.set['deploy'] = {
+      node.override['deploy'] = {
         :app_number_one => {
           :deploy_to => '/var/www/app1',
           :document_root => 'www',
@@ -71,7 +71,7 @@ describe 'easybib_deploy_manager' do
         }
       }
 
-      node.set['fixtures']['applications'] = {
+      node.override['fixtures']['applications'] = {
         :app_number_one => {
           :layer => 'app-server',
           :nginx => 'silex.erb.conf'
@@ -82,7 +82,7 @@ describe 'easybib_deploy_manager' do
         }
       }
 
-      node.set['opsworks'] = {
+      node.override['opsworks'] = {
         :instance => {
           :layers => ['app-server']
         },
@@ -111,7 +111,7 @@ describe 'easybib_deploy_manager' do
 
     context 'deploys an app with extended cookbook/nginx conf' do
       before do
-        node.set['fixtures']['applications'] = {
+        node.override['fixtures']['applications'] = {
           :app_number_one => {
             :layer => 'app-server',
             :nginx => {

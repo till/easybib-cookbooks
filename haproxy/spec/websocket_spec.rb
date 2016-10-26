@@ -3,14 +3,14 @@ require_relative 'spec_helper.rb'
 describe 'haproxy::configure' do
   let(:runner) do
     ChefSpec::Runner.new do |node|
-      node.set[:opsworks][:stack][:name] = 'chefspec'
-      node.set[:opsworks][:instance][:region][:id] = 'local'
-      node.set[:opsworks][:layers][:nginxphpapp][:instances] = {
+      node.override[:opsworks][:stack][:name] = 'chefspec'
+      node.override[:opsworks][:instance][:region][:id] = 'local'
+      node.override[:opsworks][:layers][:nginxphpapp][:instances] = {
         'php-app-server-1' => {
           'private_dns_name' => 'php.app.server.1.tld'
         }
       }
-      node.set[:opsworks][:layers][:nodeapp][:instances] = {
+      node.override[:opsworks][:layers][:nodeapp][:instances] = {
         'node-app-server-1' => {
           'private_dns_name' => 'node.app.server.1.tld'
         },
@@ -18,7 +18,7 @@ describe 'haproxy::configure' do
           'private_dns_name' => 'node.app.server.2.tld'
         }
       }
-      node.set[:haproxy] = {
+      node.override[:haproxy] = {
         :websocket_layers => {
           :nodeapp => {
             :port => 8123,

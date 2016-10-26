@@ -7,13 +7,13 @@ describe 'php-fpm::cloudwatch' do
   let(:cronscript_name) { "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh" }
 
   before do
-    node.set['opsworks']['stack']['name'] = 'Stack'
-    node.set['opsworks']['instance']['hostname'] = 'host'
+    node.override['opsworks']['stack']['name'] = 'Stack'
+    node.override['opsworks']['instance']['hostname'] = 'host'
   end
 
   describe 'cloudwatch enabled' do
     before do
-      node.set['php-fpm']['cloudwatch'] = true
+      node.override['php-fpm']['cloudwatch'] = true
     end
 
     it 'creates cronjob script' do
@@ -33,7 +33,7 @@ describe 'php-fpm::cloudwatch' do
 
   describe 'cloudwatch disabled' do
     before do
-      node.set['php-fpm']['cloudwatch'] = false
+      node.override['php-fpm']['cloudwatch'] = false
     end
 
     it 'does not create cronjob script' do

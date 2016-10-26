@@ -29,8 +29,8 @@ describe 'haproxy::plugin_newrelic' do
       }
     }
 
-    chef_run.node.set['haproxy'] = haproxy_node
-    chef_run.node.set['newrelic'] = newrelic_node
+    chef_run.node.override['haproxy'] = haproxy_node
+    chef_run.node.override['newrelic'] = newrelic_node
 
     chef_run.converge 'newrelic::plugin_haproxy'
     expect(chef_run).to install_gem_package 'bundler'

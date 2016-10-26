@@ -21,18 +21,18 @@ describe 'stack-academy::deploy' do
 
       stub_command('rm -f /etc/nginx/sites-enabled/default').and_return(true)
 
-      node.set['easybib']['cluster_name'] = stack
+      node.override['easybib']['cluster_name'] = stack
 
-      node.set['opsworks']['instance']['layers'] = ['nginxphpapp']
-      node.set['opsworks']['stack']['name'] = stack
+      node.override['opsworks']['instance']['layers'] = ['nginxphpapp']
+      node.override['opsworks']['stack']['name'] = stack
 
-      node.set['deploy']['infolit'] = {
+      node.override['deploy']['infolit'] = {
         'deploy_to' => '/srv/www/infolit',
         'document_root' => 'www',
         'domains' => ['foo.tld']
       }
 
-      node.set['infolit']['domain'] = 'infolit.tld'
+      node.override['infolit']['domain'] = 'infolit.tld'
     end
 
     it 'creates the virtualhost from the correct erb' do

@@ -14,13 +14,13 @@ describe 'php::module-aws_elasticache_cluster_client' do
   let(:my_config) { double(Php::Config) }
 
   before do
-    node.set['php']['extensions']['config_dir'] = 'etc/php/7.0/mods-available'
-    node.set['php']['ppa'] = {
+    node.override['php']['extensions']['config_dir'] = 'etc/php/7.0/mods-available'
+    node.override['php']['ppa'] = {
       'name' => 'ondrejphp',
       'uri' => 'ppa:ondrej/php',
       'package_prefix' => 'php7.0'
     }
-    node.set['php-fpm'] = {
+    node.override['php-fpm'] = {
       'prefix' => '',
       'exec_prefix' => '/usr',
       'fpm_config' => 'etc/php/7.0/fpm/php.ini',

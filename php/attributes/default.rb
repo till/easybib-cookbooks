@@ -5,6 +5,8 @@ default['php']['ppa']['package_prefix'] = 'php5-easybib'
 default['php']['extensions']['config_dir'] = 'etc/php'
 default['php']['extensions']['ini_suffix'] = '-settings'
 
+default['php-aws-elasticache']['settings'] = {}
+
 default['php-apc'] = {}
 # custom prefix for package: php-apcu, instead of php5.6-apcu
 default['php-apc']['package_prefix'] = nil
@@ -59,6 +61,8 @@ default['php-phar']['load_priority'] = nil
 default['amazon-elasticache-cluster-client'] = {
   'php_version' => '7.0'
 }
+
+default['php-poppler']['settings'] = {}
 
 default['poppler'] = {}
 default['poppler']['package_uri'] = 'https://packagecloud.io/till/poppler-backport/ubuntu/'

@@ -7,6 +7,8 @@ version           '0.0.1'
 recipe            'ies-apt::proxy', 'Set up an APT proxy'
 recipe            'ies-apt::ppa', 'Setup the tools needed to initialize PPAs'
 recipe            'ies-apt::repair', 'Install apt-repair-sources'
+source_url        'https://github.com/till/easybib-cookbooks' if respond_to?(:source_url)
+issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_to?(:issues_url)
 
 %w(ubuntu).each do |os|
   supports os

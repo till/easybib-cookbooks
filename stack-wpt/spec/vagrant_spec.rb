@@ -14,7 +14,7 @@ describe 'stack-wpt::role-vagrant' do
   let(:php_version) { '7.0' }
 
   before do
-    node.set['vagrant']['applications'] = {}
+    node.override['vagrant']['applications'] = {}
   end
 
   describe 'nodejs/npm setup' do

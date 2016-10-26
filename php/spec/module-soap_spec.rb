@@ -11,8 +11,8 @@ describe 'php::module-soap' do
   let(:chef_run) { runner.converge(described_recipe) }
 
   before do
-    node.set['php']['ppa']['package_prefix'] = 'php5.6'
-    node.set['php-fpm']['tmpdir'] = '/tmp/chefspec/php'
+    node.override['php']['ppa']['package_prefix'] = 'php5.6'
+    node.override['php-fpm']['tmpdir'] = '/tmp/chefspec/php'
   end
 
   it 'adds ppa mirror configuration' do
@@ -42,7 +42,7 @@ describe 'php::module-soap' do
 
   describe 'with load_priority set' do
     before do
-      node.set['php-soap']['load_priority'] = 99
+      node.override['php-soap']['load_priority'] = 99
     end
     it 'does not create soap-settings.ini without load_priority' do
       expect(chef_run).to_not render_file('/opt/easybib/etc/php/soap-settings.ini')

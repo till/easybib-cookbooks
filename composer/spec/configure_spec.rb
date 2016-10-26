@@ -28,7 +28,7 @@ describe 'composer::configure' do
 
   describe 'configure/empty OAuth2 token' do
     before do
-      node.set['composer']['environment'] = {
+      node.override['composer']['environment'] = {
         'user' => 'root',
         'group' => 'root'
       }
@@ -44,12 +44,12 @@ describe 'composer::configure' do
 
   describe 'configure' do
     before do
-      node.set['composer']['environment'] = {
+      node.override['composer']['environment'] = {
         'user' => 'www-data',
         'group' => 'www-data'
       }
 
-      node.set['composer']['oauth_key'] = oauth
+      node.override['composer']['oauth_key'] = oauth
 
       Dir.stub(:home) { '/var/www' }
     end

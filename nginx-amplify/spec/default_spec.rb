@@ -24,7 +24,7 @@ describe 'nginx-amplify::default' do
     end
 
     it 'installs a specific version of the agent' do
-      node.set['nginx-amplify']['version'] = '0.23-1'
+      node.override['nginx-amplify']['version'] = '0.23-1'
       expect(chef_run).to install_package('nginx-amplify-agent').with(:version => '0.23-1')
     end
 
