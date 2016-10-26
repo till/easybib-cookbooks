@@ -10,8 +10,6 @@ require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
 require 'yaml'
-require 'parallel_tests'
-require 'parallel_tests/cli'
 
 Bundler.setup
 
@@ -56,19 +54,6 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
   t.rspec_opts = '--format d --require ./global_spec_helper.rb'
   t.ruby_opts = '-W0' # it supports ruby options too
   t.pattern = file_list
-end
-
-task :parallel_spec do
-  file_list = FileList['*/spec/*_spec.rb']
-
-  find_all_ignored.each do |ignored|
-    file_list = file_list.exclude("#{ignored}/spec/**")
-  end
-
-  cli_args = ['-o "--require ./global_spec_helper.rb"', '-o "-fd"', '-t', 'rspec']
-  cli_args.concat(file_list)
-
-  ParallelTests::CLI.new.run(cli_args)
 end
 
 desc 'Runs foodcritic linter'

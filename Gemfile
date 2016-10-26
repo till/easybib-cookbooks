@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'chef', '~>12.13.37'
+gem 'chef', '~>12.10.0'
 gem 'rspec', '~>3.5.0'
 gem 'rake'
 gem 'foodcritic', '~>7.1.0'
@@ -10,5 +10,4 @@ gem 'rubocop', '~>0.44.1'
 gem 'aws-sdk', '~>1.0'
 gem 'dep-selector-libgecode', '~>1.2.0'
 gem 'berkshelf', '~>3.3'
-gem 'parallel_tests'
 gem 'kitchen-vagrant', :group => :integration
