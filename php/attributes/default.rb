@@ -1,6 +1,6 @@
-default['php']['ppa']['name'] = 'easybib-ppa'
-default['php']['ppa']['uri'] = ::EasyBib::Ppa.ppa_mirror(node)
-default['php']['ppa']['package_prefix'] = 'php5-easybib'
+default['php']['ppa']['name'] = 'ondrejphp'
+default['php']['ppa']['uri'] = 'ppa:ondrej/php'
+default['php']['ppa']['package_prefix'] = 'php5.6'
 
 default['php']['extensions']['config_dir'] = 'etc/php'
 default['php']['extensions']['ini_suffix'] = '-settings'
