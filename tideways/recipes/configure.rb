@@ -41,6 +41,13 @@ end
       node['php']['ppa']['package_prefix'] == 'php5-easybib'
     end
   end
+
+  link "#{php_api_path}/Tideways.php" do
+    to '/usr/lib/tideways/Tideways.php'
+    not_if do
+      node['php']['ppa']['package_prefix'] == 'php5-easybib'
+    end
+  end
 end
 
 template "#{node['php-fpm']['prefix']}/etc/php/tideways.ini" do
