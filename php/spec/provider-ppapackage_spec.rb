@@ -10,7 +10,7 @@ describe 'php_ppa_package' do
   end
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :cookbook_path => cookbook_paths,
       :step_into => %w(php_ppa_package)
     ) do |node|

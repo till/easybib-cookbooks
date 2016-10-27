@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 describe 'ies-chef-handler-sns::default' do
   let(:topic_arn) { 'arn:aws:sns:us-east-1:12341234:MyTopicName' }
   let(:chef_run) do
-    ChefSpec::Runner.new(:step_into => ['chef_sns_handler']) do |node|
+    ChefSpec::SoloRunner.new(:step_into => ['chef_sns_handler']) do |node|
       node.override['chef_handler_sns']['topic_arn'] = topic_arn
     end.converge(described_recipe)
   end

@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe 'php::module-soap' do
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :step_into => %w(php_config)
     )
   end

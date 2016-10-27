@@ -3,7 +3,7 @@ require 'chefspec'
 describe 'apache-couchdb::configure' do
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :log_level => :error
     )
   end

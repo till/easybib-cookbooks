@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 describe 'stack-citationapi::role-lb' do
 
-  let(:runner)      { ChefSpec::Runner.new }
+  let(:runner)      { ChefSpec::SoloRunner.new }
   let(:chef_run)    { runner.converge(described_recipe) }
   let(:node)        { runner.node }
 

@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe 'php::module-apc' do
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :step_into => %w(php_ppa_package php_config)
     )
   end

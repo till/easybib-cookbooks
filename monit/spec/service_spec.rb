@@ -3,7 +3,7 @@ require 'chefspec'
 describe 'monit::service' do
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :log_level => :error
     )
   end

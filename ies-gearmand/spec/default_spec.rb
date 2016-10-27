@@ -1,7 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe 'ies-gearmand::default' do
-  let(:runner) { ChefSpec::Runner.new }
+  let(:runner) { ChefSpec::SoloRunner.new }
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node) { runner.node }
 

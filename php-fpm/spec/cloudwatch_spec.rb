@@ -1,7 +1,7 @@
 require 'chefspec'
 
 describe 'php-fpm::cloudwatch' do
-  let(:runner) { ChefSpec::Runner.new }
+  let(:runner) { ChefSpec::SoloRunner.new }
   let(:chef_run) { runner.converge(described_recipe) }
   let(:node) { runner.node }
   let(:cronscript_name) { "#{node['php-fpm']['prefix']}/bin/phpfpm-cloudwatch.sh" }

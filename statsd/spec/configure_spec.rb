@@ -5,7 +5,7 @@ describe 'statsd::configure' do
   let(:stack_name) { 'chef spec run' }
 
   let(:chef_run) do
-    ChefSpec::Runner.new do |node|
+    ChefSpec::SoloRunner.new do |node|
       # fake opsworks
       node.default['opsworks'] = {}
       node.default.opsworks['stack'] = {}

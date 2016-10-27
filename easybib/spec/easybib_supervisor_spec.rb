@@ -10,7 +10,7 @@ describe 'easybib_supervisor - explicit attrs' do
   end
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :cookbook_path => cookbook_paths,
       :step_into => ['easybib_supervisor']
     )
@@ -69,7 +69,7 @@ describe 'easybib_supervisor - implicit attrs' do
   end
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :cookbook_path => cookbook_paths,
       :step_into => ['easybib_supervisor']
     )

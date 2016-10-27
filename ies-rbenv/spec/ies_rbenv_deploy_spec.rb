@@ -9,7 +9,7 @@ describe 'ies_rbenv_deploy' do
   end
 
   let(:runner) do
-    ChefSpec::Runner.new(
+    ChefSpec::SoloRunner.new(
       :cookbook_path => cookbook_paths,
       :step_into => ['ies_rbenv_deploy']
     )

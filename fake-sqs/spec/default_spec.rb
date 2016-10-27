@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'fake-sqs::default' do
   let(:runner) do
-    ChefSpec::Runner.new(:log_level => :error)
+    ChefSpec::SoloRunner.new(:log_level => :error)
   end
 
   let(:chef_run) { runner.converge(described_recipe) }

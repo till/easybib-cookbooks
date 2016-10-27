@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe 'haproxy::configure' do
   let(:runner) do
-    ChefSpec::Runner.new do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override[:opsworks][:stack][:name] = 'chefspec'
       node.override[:opsworks][:instance][:region][:id] = 'local'
       node.override[:opsworks][:layers][:nginxphpapp][:instances] = {
