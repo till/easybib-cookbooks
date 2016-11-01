@@ -40,22 +40,6 @@ node['deploy'].each do |application, deploy|
   end
 
   case application
-  when 'bibcd'
-
-    template "#{deploy['deploy_to']}/current/config/deployconfig.yml" do
-      source 'empty.erb'
-      mode   0644
-      variables :content => to_php_yaml(node['bibcd']['default'])
-    end
-
-    node['bibcd']['apps'].each do |appname, config|
-      bibcd_app "adding bibcd app #{appname}" do
-        action :add
-        path "#{deploy['deploy_to']}/current/"
-        app_name appname
-        config config
-      end
-    end
   when 'aptly'
 
     include_recipe 'aptly::setup'
