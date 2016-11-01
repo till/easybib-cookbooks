@@ -129,6 +129,8 @@ module EasyBib
     end
     # rubocop:enable Metrics/PerceivedComplexity
 
+    protected
+
     # returns stack metadata (name, environment-type)
     def get_stackdata(node, attribute = nil)
       data = {}
@@ -150,8 +152,6 @@ module EasyBib
 
       data
     end
-
-    protected
 
     # converts hash in a string, formatted as envvars, php, ini
     def to_configformat(format, data)
