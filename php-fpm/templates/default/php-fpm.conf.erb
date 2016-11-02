@@ -1,5 +1,5 @@
 [global]
-pid = <%= node["php-fpm"]["prefix"] %>/var/run/php-fpm.pid
+pid = <%= node["php-fpm"]["pid"] %>
 error_log = <%= node["php-fpm"]["fpmlog"] %>
 log_level = <%= node["php-fpm"]["fpmlog_level"] %>
 

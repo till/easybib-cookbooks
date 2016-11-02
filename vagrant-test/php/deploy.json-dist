@@ -1,6 +1,34 @@
 {
-    "papertrail": {
-        "remote_host": "logs-host-please-change.papertrailapp.com",
-        "remote_port": "private-port-here"
+  "papertrail": {
+    "remote_host": "logs-host-please-change.papertrailapp.com",
+    "remote_port": "private-port-here"
+  },
+  "php": {
+    "extensions": {
+      "config_dir": "etc/php/5.6/mods-available"
+    },
+    "ppa": {
+      "name": "ondrejphp",
+      "uri": "ppa:ondrej/php",
+      "package_prefix": "php5.6"
     }
+  },
+  "php-apc": {
+    "package_prefix": "php"
+  },
+  "php-gearman": {
+    "package_prefix": "php"
+  },
+  "php-fpm": {
+    "prefix": "",
+    "exec_prefix": "/usr",
+    "fpm_config": "etc/php/5.6/fpm/php.ini",
+    "cli_config": "etc/php/5.6/cli/php.ini",
+    "pool_dir": "etc/php/5.6/fpm/pool.d",
+    "socketdir": "/var/run/php",
+    "pid": "/var/run/php/php5.6-fpm.pid",
+    "packages": "php5.6-fpm,php5.6-cli,php5.6-mbstring,php5.6-mysql,php5.6-curl,php5.6-bcmath,php5.6-dom,php5.6-soap,php-memcache",
+    "user": "vagrant",
+    "group": "vagrant"
+  }
 }

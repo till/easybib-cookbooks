@@ -35,6 +35,8 @@ DEPENDENCIES
     path: ../ies
   ies-apt
     path: ../ies-apt
+  ies-gearmand
+    path: ../ies-gearmand
   ies-letsencrypt
     path: ../ies-letsencrypt
   ies-route53
@@ -150,6 +152,9 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
+  ies-gearmand (0.1.0)
+    gearmand (>= 0.0.0)
+    php (>= 0.0.0)
   ies-letsencrypt (0.1.0)
     cron (>= 0.0.0)
   ies-route53 (0.1.0)
@@ -200,9 +205,10 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
-  stack-service (0.1.0)
+  stack-service (0.2.0)
     gearmand (>= 0.0.0)
     ies (>= 0.0.0)
+    ies-gearmand (>= 0.0.0)
     logrotate (>= 0.0.0)
     nodejs (>= 0.0.0)
     rabbitmq (>= 0.0.0)
