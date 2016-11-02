@@ -17,7 +17,6 @@ berkshelf:
 	cd stack-citationapi; $(berks) package
 	cd stack-cmbm; $(berks) package
 	cd stack-easybib; $(berks) package
-	cd stack-ops; $(berks) package
 	cd stack-qa; $(berks) package
 	cd stack-research; $(berks) package
 	cd stack-service; $(berks) package
