@@ -24,6 +24,7 @@ AllCops:
     - 'sinopia/**/*'
     - 'supervisor/**/*'
     - 'test/**/*'
+    - 'unused/**/*'
     - 'vagrant-test/**/*'
     - 'vendor/**/*'
     - 'vendor/**/*'
