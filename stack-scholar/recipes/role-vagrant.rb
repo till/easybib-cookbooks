@@ -25,6 +25,6 @@ include_recipe 'memcache'
 include_recipe 'redis::default'
 
 # ssl
-include_recipe 'easybib-deploy::ssl-vagrant'
+include_recipe 'stack-scholar::deploy-ssl-vagrant'
 
 include_recipe 'stack-service::role-rabbitmq'
