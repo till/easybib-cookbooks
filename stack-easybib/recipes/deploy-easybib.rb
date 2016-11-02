@@ -35,6 +35,6 @@ node['deploy'].each do |application, deploy|
     config_template 'easybib.com.conf.erb'
     nginx_extras nginx_extras
     notifies :reload, 'service[nginx]', :delayed
-    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 end
