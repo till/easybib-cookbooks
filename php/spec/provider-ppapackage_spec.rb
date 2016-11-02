@@ -41,7 +41,7 @@ describe 'php_ppa_package' do
 
   describe 'with config, no separate name' do
     before do
-      node.set['ppa_package-spec']['config'] = { 'key' => 'value' }
+      node.override['ppa_package-spec']['config'] = { 'key' => 'value' }
     end
 
     it 'installs the module' do
@@ -65,8 +65,8 @@ describe 'php_ppa_package' do
 
   describe 'with config, with separate name' do
     before do
-      node.set['ppa_package-spec']['config'] = { 'key' => 'value' }
-      node.set['ppa_package-spec']['packagename'] = 'packagename'
+      node.override['ppa_package-spec']['config'] = { 'key' => 'value' }
+      node.override['ppa_package-spec']['packagename'] = 'packagename'
     end
 
     it 'installs the module' do

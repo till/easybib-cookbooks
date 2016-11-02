@@ -39,6 +39,8 @@ DEPENDENCIES
     path: ../ies
   ies-apt
     path: ../ies-apt
+  ies-gearmand
+    path: ../ies-gearmand
   ies-letsencrypt
     path: ../ies-letsencrypt
   ies-mysql
@@ -47,8 +49,6 @@ DEPENDENCIES
     path: ../ies-route53
   ies-ssl
     path: ../ies-ssl
-  loggly
-    path: ../loggly
   logrotate
     path: ../logrotate
   memcache
@@ -143,7 +143,7 @@ GRAPH
     apt (>= 1.7.0)
     build-essential (>= 0.0.0)
   fail2ban (2.2.1)
-  fake-sqs (0.0.0)
+  fake-sqs (0.1.0)
     easybib (>= 0.0.0)
     supervisor (>= 0.0.0)
   gearmand (0.1.0)
@@ -162,7 +162,6 @@ GRAPH
     easybib (>= 0.0.0)
     fail2ban (>= 0.0.0)
     ies-route53 (>= 0.0.0)
-    loggly (>= 0.0.0)
     monit (>= 0.0.0)
     nginx-app (>= 0.0.0)
     papertrail (>= 0.0.0)
@@ -175,17 +174,17 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
+  ies-gearmand (0.1.0)
+    gearmand (>= 0.0.0)
+    php (>= 0.0.0)
   ies-letsencrypt (0.1.0)
     cron (>= 0.0.0)
-  ies-mysql (0.0.0)
+  ies-mysql (0.1.0)
     easybib (>= 0.0.0)
     mysql (>= 0.0.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
   ies-ssl (0.1.0)
-  loggly (0.1.0)
-    easybib (>= 0.0.0)
-    rsyslogd (>= 0.0.0)
   logrotate (1.9.2)
   memcache (0.1.0)
   monit (0.1.0)
@@ -196,6 +195,8 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
+    ies-letsencrypt (>= 0.0.0)
+    ies-ssl (>= 0.0.0)
     php-fpm (>= 0.0.0)
     rsyslogd (>= 0.0.0)
     supervisor (>= 0.0.0)
@@ -238,7 +239,7 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
-  stack-easybib (0.1.0)
+  stack-easybib (0.2.0)
     easybib-deploy (>= 0.0.0)
     fake-sqs (>= 0.0.0)
     haproxy (>= 0.0.0)
@@ -268,9 +269,10 @@ GRAPH
     php-pear (>= 0.0.0)
     stack-easybib (>= 0.0.0)
     tideways (>= 0.0.0)
-  stack-service (0.0.0)
+  stack-service (0.2.0)
     gearmand (>= 0.0.0)
     ies (>= 0.0.0)
+    ies-gearmand (>= 0.0.0)
     logrotate (>= 0.0.0)
     nodejs (>= 0.0.0)
     rabbitmq (>= 0.0.0)
@@ -280,8 +282,9 @@ GRAPH
     nodejs (>= 0.0.0)
   supervisor (0.4.12)
     python (>= 0.0.0)
-  tideways (0.0.0)
+  tideways (0.1.0)
     apt (>= 0.0.0)
+    php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   xml (1.2.3)
     build-essential (>= 0.0.0)

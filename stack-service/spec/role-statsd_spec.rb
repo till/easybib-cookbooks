@@ -20,7 +20,7 @@ describe 'stack-service::role-statsd' do
 
   describe 'stack-service::role-statsd' do
     before do
-      node.set['easybib'] = {
+      node.override['easybib'] = {
         'cluster_name' => 'vagrant-test'
       }
     end

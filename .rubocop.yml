@@ -24,11 +24,10 @@ AllCops:
     - 'sinopia/**/*'
     - 'supervisor/**/*'
     - 'test/**/*'
+    - 'unused/**/*'
     - 'vagrant-test/**/*'
-    - 'vagrant/**/*'
     - 'vendor/**/*'
     - 'vendor/**/*'
-    - 'virtualbox/**/*'
     - 'xml/**/*'
 
 Style/SpaceBeforeFirstArg:

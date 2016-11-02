@@ -7,8 +7,8 @@ describe 'php::module-tidy' do
   let(:chef_run) { runner.converge(described_recipe) }
 
   before do
-    node.set['php']['ppa']['package_prefix'] = 'php5.6'
-    node.set['php-fpm']['tmpdir'] = '/tmp/chefspec/php'
+    node.override['php']['ppa']['package_prefix'] = 'php5.6'
+    node.override['php-fpm']['tmpdir'] = '/tmp/chefspec/php'
   end
 
   it 'adds ppa mirror configuration' do

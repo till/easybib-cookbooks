@@ -32,6 +32,8 @@ task :unittest, :cookbook do |t, args|
                        else
                          "#{args.cookbook}/**/tests/test_*.rb"
                        end
+    raketask.verbose = false
+    raketask.warning = false
   end
   task('testtask').execute
 end
@@ -59,8 +61,8 @@ task :foodcritic, [:cookbook] do |t, args|
   args.with_defaults(:cookbook => nil)
 
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
-    epic_fail = %w( )
-    ignore_rules = %w( )
+    epic_fail = %w()
+    ignore_rules = %w(FC059)
 
     cb = if args.cookbook.nil?
            find_cookbooks('.').join(' ')

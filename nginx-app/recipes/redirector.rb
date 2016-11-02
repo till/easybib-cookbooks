@@ -53,3 +53,44 @@ if node['redirector'].attribute?('urls')
     end
   end
 end
+
+if node['redirector'].attribute?('ssl')
+  ssl_domains = []
+
+  unless File.exist?("#{node['ies-letsencrypt']['ssl_dir']}/cert.combined.pem")
+    package 'openssl'
+
+    ies_ssl_selfsigned 'example.org'
+
+    # install self-signed cert so we can continue
+    fake_deploy = {}
+    fake_deploy['ssl_certificate_key'] = '/tmp/example.org.key'
+    fake_deploy['ssl_certificate'] = '/tmp/example.org.crt'
+
+    easybib_sslcertificate 'install_ssl' do
+      deploy fake_deploy
+      action :create
+    end
+  end
+
+  node['redirector']['ssl'].each do |domain_name, target|
+    ssl_domains << domain_name
+
+    template "#{vhost_dir}/ssl-#{domain_name}.conf" do
+      source 'redirect-ssl.conf.erb'
+      mode '0644'
+      owner node['nginx-app']['user']
+      group node['nginx-app']['group']
+      variables(
+        :certbot_port => node['ies-letsencrypt']['certbot']['port'],
+        :domain_name => domain_name,
+        :new_domain_name => target,
+        :ssl_dir => node['ies-letsencrypt']['ssl_dir']
+      )
+      notifies :reload, 'service[nginx]', :delayed
+    end
+  end
+
+  node.set['ies-letsencrypt']['domains'] = ssl_domains
+  include_recipe 'ies-letsencrypt'
+end

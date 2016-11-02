@@ -13,14 +13,14 @@ describe 'ies-letsencrypt::renewal' do
 
   describe 'domains configured' do
     before do
-      node.set['ies-letsencrypt']['domains'] = [
+      node.override['ies-letsencrypt']['domains'] = [
         'example.org',
         'secure.example.org'
       ]
-      node.set['ies-letsencrypt']['certbot']['bin'] = '/opt/le/certbot'
-      node.set['ies-letsencrypt']['certbot']['cron'] = '/opt/le/cron'
-      node.set['ies-letsencrypt']['certbot']['port'] = 31_337
-      node.set['ies-letsencrypt']['ssl_dir'] = '/home/till/ssl'
+      node.override['ies-letsencrypt']['certbot']['bin'] = '/opt/le/certbot'
+      node.override['ies-letsencrypt']['certbot']['cron'] = '/opt/le/cron'
+      node.override['ies-letsencrypt']['certbot']['port'] = 31_337
+      node.override['ies-letsencrypt']['ssl_dir'] = '/home/till/ssl'
     end
 
     it 'has an initial setup command to get certificates' do

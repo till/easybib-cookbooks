@@ -7,7 +7,7 @@ describe 'stack-easybib::role-vagrant' do
   let(:node)     { runner.node }
 
   before do
-    node.set['vagrant']['applications']['www'] = {}
+    node.override['vagrant']['applications']['www'] = {}
   end
 
   it 'should set up a basic vagrantbox with php and mysql' do

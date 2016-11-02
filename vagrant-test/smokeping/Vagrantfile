@@ -1,4 +1,0 @@
-ENV['recipe_runlist'] = 'smokeping'
-ENV['chef_json'] = "#{File.dirname(__FILE__)}/web-dna.json"
-
-require_relative '../vagrant-provision'

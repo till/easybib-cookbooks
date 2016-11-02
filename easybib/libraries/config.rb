@@ -2,20 +2,6 @@ module EasyBib
   module Config
     extend self
 
-    def node(node, app, *args)
-      if args.last.is_a?(Array)
-        # comes from EasyBib::Helpers template
-        args = args.pop
-      end
-      default = recursive_fetch(node, args)
-      args.unshift(app)
-
-      appspecific = recursive_fetch(node, args)
-
-      return appspecific unless appspecific.nil?
-      default
-    end
-
     # returns only the environment settings in the json
     def get_env(format, app, node = self.node)
       return '' unless node.attribute?(app)
@@ -129,6 +115,8 @@ module EasyBib
     end
     # rubocop:enable Metrics/PerceivedComplexity
 
+    protected
+
     # returns stack metadata (name, environment-type)
     def get_stackdata(node, attribute = nil)
       data = {}
@@ -150,8 +138,6 @@ module EasyBib
 
       data
     end
-
-    protected
 
     # converts hash in a string, formatted as envvars, php, ini
     def to_configformat(format, data)

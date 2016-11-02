@@ -13,7 +13,7 @@ describe 'ies-route53::add' do
   describe 'AWS' do
     before do
       # mock OpsWorks
-      node.set['opsworks'] = {
+      node.override['opsworks'] = {
         'instance' => {
           'hostname' => 'spec',
           'region' => 'local',
@@ -33,7 +33,7 @@ describe 'ies-route53::add' do
 
     describe 'add' do
       before do
-        node.set['ies-route53']['zone'] = {
+        node.override['ies-route53']['zone'] = {
           'ttl' => 1,
           'id' => 'foo',
           'custom_access_key' => 'access-key',
@@ -57,7 +57,7 @@ describe 'ies-route53::add' do
 
     describe 'credential auto discovery' do
       before do
-        node.set['ies-route53']['zone'] = {
+        node.override['ies-route53']['zone'] = {
           'ttl' => 2,
           'id' => 'bar'
         }

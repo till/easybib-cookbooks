@@ -1,11 +1,4 @@
 module EasyBib
-  def amd64?(node = self.node)
-    if node['kernel']['machine'] == 'x86_64'
-      return true
-    end
-    false
-  end
-
   def has_role?(instance_roles, role)
     if role.nil?
       return true

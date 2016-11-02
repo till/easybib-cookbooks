@@ -24,7 +24,7 @@ describe 'stack-citationapi::role-phpapp' do
   end
   it 'sets up composer' do
     # todo
-    # node.set['composer']['environment'] = get_deploy_user if is_aws
+    # node.override['composer']['environment'] = get_deploy_user if is_aws
     expect(chef_run).to include_recipe('composer::configure')
   end
 end

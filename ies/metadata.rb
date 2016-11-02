@@ -6,6 +6,8 @@ description       'Our generic setup and install scripts across all stacks'
 version           '0.1'
 recipe            'ies::role-generic', 'Generic setup for all our instances'
 recipe            'ies::setup-sns', 'Set up SNS notifications for our instances'
+source_url        'https://github.com/till/easybib-cookbooks' if respond_to?(:source_url)
+issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_to?(:issues_url)
 
 supports 'ubuntu'
 
@@ -15,7 +17,6 @@ depends 'composer'
 depends 'easybib'
 depends 'fail2ban'
 depends 'ies-route53'
-depends 'loggly'
 depends 'monit'
 depends 'nginx-app'
 depends 'papertrail'

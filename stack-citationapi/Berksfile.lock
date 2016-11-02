@@ -39,8 +39,6 @@ DEPENDENCIES
     path: ../ies-route53
   ies-ssl
     path: ../ies-ssl
-  loggly
-    path: ../loggly
   memcache
     path: ../memcache
   monit
@@ -135,7 +133,6 @@ GRAPH
     easybib (>= 0.0.0)
     fail2ban (>= 0.0.0)
     ies-route53 (>= 0.0.0)
-    loggly (>= 0.0.0)
     monit (>= 0.0.0)
     nginx-app (>= 0.0.0)
     papertrail (>= 0.0.0)
@@ -153,9 +150,6 @@ GRAPH
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
   ies-ssl (0.1.0)
-  loggly (0.1.0)
-    easybib (>= 0.0.0)
-    rsyslogd (>= 0.0.0)
   memcache (0.1.0)
   monit (0.1.0)
     easybib (>= 0.0.0)
@@ -164,6 +158,8 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
+    ies-letsencrypt (>= 0.0.0)
+    ies-ssl (>= 0.0.0)
     php-fpm (>= 0.0.0)
     rsyslogd (>= 0.0.0)
     supervisor (>= 0.0.0)
@@ -221,8 +217,9 @@ GRAPH
     tideways (>= 0.0.0)
   supervisor (0.4.12)
     python (>= 0.0.0)
-  tideways (0.0.0)
+  tideways (0.1.0)
     apt (>= 0.0.0)
+    php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   xml (1.2.3)
     build-essential (>= 0.0.0)

@@ -1,2 +1,7 @@
 include_recipe 'ies::role-generic'
-include_recipe 'gearmand'
+
+if is_aws
+  include_recipe 'gearmand'
+else
+  include_recipe 'ies-gearmand'
+end

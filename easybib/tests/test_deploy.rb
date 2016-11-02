@@ -19,9 +19,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
   def test_allow_deploy_wrong_environment_rejections
     # "allow_deploy should never deploy if [easybib][cluster_name] does not match the stack name"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['some-layer']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-other-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['some-layer']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-other-name'
 
     assert_equal(
       false,
@@ -30,9 +30,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
 
     # "allow_deploy should never deploy requested_role is not a layer in the stack"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['some-layer']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['some-layer']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_equal(
       false,
@@ -43,9 +43,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
   def test_allow_deploy_valid_singleapp_deploys
     # "allow_deploy should use app name as default layer name"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['app']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['app']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_equal(
       true,
@@ -54,9 +54,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
 
     # "allow_deploy with custom layer name"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['some-layer']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['some-layer']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_equal(
       true,
@@ -67,9 +67,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
   def test_allow_deploy_with_multiple_apps
     # "allow_deploy with multiple app names, all wrong"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['app']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['app']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_equal(
       false,
@@ -78,9 +78,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
 
     # "allow_deploy with multiple app names, one correct"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['app']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['app']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_equal(
       true,
@@ -89,9 +89,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
 
     # "allow_deploy should raise an error with wrong vartype for requested app"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['app']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['app']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_raise RuntimeError do
       allow_deploy('app', { 'app' => 'bar-app' }, nil, fake_node)
@@ -101,9 +101,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
   def test_allow_deploy_multilayer
     # "allow_deploy with multiple app names, one correct, and multiple layers"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['some-layer']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['some-layer']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_equal(
       true,
@@ -112,9 +112,9 @@ class TestEasyBibDeploy < Test::Unit::TestCase
 
     # "allow_deploy with multiple app names, one correct, and multiple layers"
     fake_node = Chef::Node.new
-    fake_node.set['opsworks']['instance']['layers'] = ['no-such-layer']
-    fake_node.set['opsworks']['stack']['name'] = 'some-name'
-    fake_node.set['easybib']['cluster_name'] = 'some-name'
+    fake_node.override['opsworks']['instance']['layers'] = ['no-such-layer']
+    fake_node.override['opsworks']['stack']['name'] = 'some-name'
+    fake_node.override['easybib']['cluster_name'] = 'some-name'
 
     assert_equal(
       false,
