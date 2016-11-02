@@ -1,7 +1,5 @@
 default['easybib_deploy']['php-fpm']['restart-action'] = :reload
 
-default['bibcd']['apps'] = {}
-
 default['travis-asset-browser']['config'] = {
   'theme' => 'plain',
   'page-header' => 'My Amazon S3 files',
