@@ -10,7 +10,6 @@ issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_
 supports 'ubuntu'
 
 depends 'nginx-app'
-depends 'easybib-deploy'
 depends 'ies-mysql'
 depends 'redis'
 depends 'memcache'

@@ -11,7 +11,6 @@ supports 'ubuntu'
 
 depends 'apache-solr'
 depends 'composer'
-depends 'easybib-deploy'
 depends 'ies'
 depends 'memcache'
 depends 'nginx-app'
