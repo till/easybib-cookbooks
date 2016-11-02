@@ -1,4 +1,0 @@
-ENV['recipe_runlist'] = 'easybib::setup,ies-mysql,prosody'
-ENV['chef_json'] = "#{File.dirname(__FILE__)}/prosody.json"
-
-require_relative '../vagrant-provision'
