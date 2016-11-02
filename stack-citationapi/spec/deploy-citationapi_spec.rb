@@ -70,9 +70,6 @@ describe 'stack-citationapi::deploy-citationapi' do
     it 'calls all necessary LWRP' do
       expect(chef_run).to deploy_easybib_deploy(app_config_shortname)
       expect(chef_run).to setup_easybib_nginx(app_config_shortname)
-      expect(chef_run).to create_easybib_envconfig(app_config_shortname)
-      expect(chef_run).to create_easybib_supervisor("#{app_config_shortname}_supervisor")
-      expect(chef_run).to create_easybib_gearmanw("#{deploy_to}/current/")
     end
   end
 end
