@@ -1,4 +1,4 @@
-node['deploy'].each do |application, deploy|
+get_apps_to_deploy.each do |application, deploy|
   case application
   when 'easybib'
     unless allow_deploy(application, 'easybib', %w(nginxphpapp))

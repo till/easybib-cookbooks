@@ -1,7 +1,7 @@
 include_recipe 'nginx-app::service'
 include_recipe 'php-fpm::service'
 
-node['deploy'].each do |application, deploy|
+get_apps_to_deploy.each do |application, deploy|
 
   case application
   when 'citation_apis'
