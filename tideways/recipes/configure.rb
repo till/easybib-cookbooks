@@ -2,14 +2,14 @@ include_recipe 'tideways::service'
 include_recipe 'php-fpm::service'
 
 if is_aws
-  hostname = "#{node['opsworks']['instance']['hostname']}.#{get_normalized_cluster_name}"
+  hostname = "#{get_hostname}.#{get_normalized_cluster_name}"
   environment = if hostname.index('playground')
                   'staging'
                 else
                   'production'
                 end
 else
-  hostname = node['fqdn']
+  hostname = get_hostname
   environment = 'development'
 end
 

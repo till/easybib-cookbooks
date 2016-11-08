@@ -18,7 +18,7 @@ template cronscript do
   variables(
     'instancename' => get_record_name.gsub(/\.|\W/, '_'),
     'stackname' => get_normalized_cluster_name.gsub(/\.|\W/, '_'),
-    'region' => node['opsworks']['instance']['region']
+    'region' => get_awsregion
   )
   notifies :create, 'cron_d[phpfpm-cloudwatch]', :immediately
   only_if { node['php-fpm']['cloudwatch'] }

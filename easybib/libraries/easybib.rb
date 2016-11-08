@@ -106,6 +106,14 @@ module EasyBib
     my_hostname
   end
 
+  def get_awsregion(node = self.node)
+    node['opsworks']['instance']['region']
+  end
+
+  def get_opsworks_activity(node = self.node)
+    node['opsworks']['activity']
+  end
+
   # constructs an almost FQDN (except for the actual zone name)
   def get_record_name(node = self.node)
     instance = get_instance(node)
