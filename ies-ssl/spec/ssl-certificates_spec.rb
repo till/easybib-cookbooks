@@ -1,6 +1,6 @@
 require 'chefspec'
 
-describe 'easybib-deploy::ssl-certificates' do
+describe 'ies-ssl::deploy-ssl-certificates' do
 
   let(:runner) do
     ChefSpec::Runner.new(

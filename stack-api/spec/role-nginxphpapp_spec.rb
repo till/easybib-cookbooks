@@ -21,6 +21,6 @@ describe 'stack-api::role-nginxphpapp' do
   end
 
   it 'deploys silex' do
-    expect(chef_run).to include_recipe('easybib-deploy::silex')
+    expect(chef_run).to include_recipe('stack-api::deploy-silex')
   end
 end

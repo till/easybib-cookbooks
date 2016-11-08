@@ -9,4 +9,4 @@ include_recipe 'haproxy::logs'
 
 package 'ngrep'
 
-include_recipe 'easybib-deploy::ssl-certificates'
+include_recipe 'ies-ssl::deploy-ssl-certificates'

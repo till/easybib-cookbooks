@@ -1,8 +1,6 @@
 include_recipe 'php-fpm::service'
 include_recipe 'nginx-app::service'
 
-cluster_name   = get_cluster_name
-
 node['deploy'].each do |application, deploy|
 
   case application
@@ -17,7 +15,7 @@ node['deploy'].each do |application, deploy|
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'housekeeping')
   else
-    Chef::Log.info("deploy::housekeeping - #{application} (in #{cluster_name}) skipped")
+    Chef::Log.info("deploy::housekeeping - #{application} skipped")
     next
   end
 

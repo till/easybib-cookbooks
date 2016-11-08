@@ -1,11 +1,8 @@
 include_recipe 'php-fpm::service'
 
-instance_roles = get_instance_roles
-cluster_name   = get_cluster_name
-
 node['deploy'].each do |application, deploy|
 
-  Chef::Log.info("deploy::easybib - app: #{application}, role: #{instance_roles}")
+  Chef::Log.info("deploy::easybib - app: #{application}")
 
   case application
   when 'easybib'
@@ -19,7 +16,7 @@ node['deploy'].each do |application, deploy|
     next unless allow_deploy(application, 'easybib_api', 'bibapi')
 
   else
-    Chef::Log.info("deploy::easybib - #{application} (in #{cluster_name}) skipped")
+    Chef::Log.info("deploy::easybib - #{application} skipped")
     next
   end
 
