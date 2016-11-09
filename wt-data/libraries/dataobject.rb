@@ -34,9 +34,9 @@ module WT
     class AppObject < NodeObject
       def cleanup(resource)
         if resource.is_a?(Chef::Node::ImmutableMash)
-          return cleanup_chef11(resource)
+          cleanup_chef11(resource)
         elsif resource.is_a?(Chef::DataBagItem)
-          return cleanup_chef12(resource)
+          cleanup_chef12(resource)
         else
           raise 'Unknown resource'
         end
@@ -55,9 +55,7 @@ module WT
 
         cleaned = {}
         map.each do |source, target|
-          cleaned[target] = if resource[source]
-                              resource[source]
-                            end
+          cleaned[target] = (resource[source] if resource[source])
         end
 
         # XXX TODO user, group
@@ -92,9 +90,7 @@ module WT
 
         cleaned = {}
         map.each do |source, target|
-          cleaned[target] = if resource[source]
-                              resource[source]
-                            end
+          cleaned[target] = (resource[source] if resource[source])
         end
         cleaned
       end

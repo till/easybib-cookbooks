@@ -1,5 +1,4 @@
 node['deploy'].each do |application, deploy|
-
   case application
   when 'research_app'
     next unless allow_deploy(application, 'research_app', 'research_app')
@@ -28,5 +27,4 @@ node['deploy'].each do |application, deploy|
     notifies :reload, 'service[nginx]', :delayed
     notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
-
 end

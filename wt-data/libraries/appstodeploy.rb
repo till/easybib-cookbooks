@@ -11,9 +11,9 @@ module WT
       def get_apps_to_deploy(node)
         if node['deploy'].nil?
           # chef 12 or empty deploy
-          return get_apps_to_deploy_chef12
+          get_apps_to_deploy_chef12
         else
-          return get_apps_to_deploy_chef11(node)
+          get_apps_to_deploy_chef11(node)
         end
       end
 

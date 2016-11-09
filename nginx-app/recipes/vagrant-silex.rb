@@ -1,6 +1,4 @@
-if is_aws
-  Chef::Application.fatal!('This recipe is vagrant only')
-end
+Chef::Application.fatal!('This recipe is vagrant only') if is_aws
 
 include_recipe 'nginx-app::service'
 
@@ -33,9 +31,7 @@ node['vagrant']['applications'].each do |app_name, app_config|
 
   stackname = 'easybib'
 
-  if %w(scholar feature_flags).include?(app_name)
-    stackname = 'scholar'
-  end
+  stackname = 'scholar' if %w(scholar feature_flags).include?(app_name)
 
   easybib_envconfig app_name do
     # we are using stackname easybib since both is served from www-vagrant

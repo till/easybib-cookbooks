@@ -17,7 +17,7 @@ task :default => [
   :test
 ]
 
-task :test, :cookbook do |t, args|
+task :test, :cookbook do |_t, args|
   task(:unittest).invoke(args.cookbook)
   task(:spec).invoke(args.cookbook)
   task(:rubocop).invoke(args.cookbook)
@@ -25,7 +25,7 @@ task :test, :cookbook do |t, args|
 end
 desc 'Run tests'
 
-task :unittest, :cookbook do |t, args|
+task :unittest, :cookbook do |_t, args|
   Rake::TestTask.new('testtask') do |raketask|
     raketask.pattern = if args.cookbook.nil?
                          '**/**/tests/test_*.rb'
@@ -40,7 +40,6 @@ end
 
 desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
-
   args.with_defaults(:cookbook => '*', :recipe => '*', :output_file => nil)
 
   file_list = FileList["#{args.cookbook}/spec/#{args.recipe}_spec.rb"]
@@ -57,7 +56,7 @@ RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
 end
 
 desc 'Runs foodcritic linter'
-task :foodcritic, [:cookbook] do |t, args|
+task :foodcritic, [:cookbook] do |_t, args|
   args.with_defaults(:cookbook => nil)
 
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
@@ -101,7 +100,6 @@ def find_cookbooks(all_your_base)
     next if skip.include?(entry)
 
     cookbooks.push(entry)
-
   end
 
   cookbooks
@@ -133,7 +131,7 @@ if !ENV['TRAVIS'] && File.exist?(current_dir + '/.kitchen.yml')
 end
 
 require 'rubocop/rake_task'
-RuboCop::RakeTask.new(:rubocop, :cookbook)  do |task, args|
+RuboCop::RakeTask.new(:rubocop, :cookbook) do |task, args|
   unless ENV['TRAVIS']
     # no autocorrect in travis
     task.options = ['--auto-correct']

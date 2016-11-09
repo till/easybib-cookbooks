@@ -1,6 +1,4 @@
-if is_aws
-  Chef::Application.fatal!('This recipe is vagrant only')
-end
+Chef::Application.fatal!('This recipe is vagrant only') if is_aws
 
 include_recipe 'ohai'
 include_recipe 'memcache'

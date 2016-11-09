@@ -104,9 +104,7 @@ module EasyBib
         data[name] << '/' unless data[name].end_with?('/')
       end
 
-      if attribute.nil?
-        return data
-      end
+      return data if attribute.nil?
 
       value = data[attribute]
       raise "Could not get #{attribute} for #{appname}!" if value.nil? || value.empty?
@@ -132,9 +130,7 @@ module EasyBib
         data['stackname'] = 'undefined'
       end
 
-      unless attribute.nil?
-        return data[attribute]
-      end
+      return data[attribute] unless attribute.nil?
 
       data
     end
@@ -242,9 +238,7 @@ module EasyBib
     end
 
     def get_returnparam_identifier(section, prefix)
-      if prefix != ''
-        return sprintf('%s_%s', prefix, section.upcase)
-      end
+      return sprintf('%s_%s', prefix, section.upcase) if prefix != ''
       section.upcase
     end
 

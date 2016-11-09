@@ -4,16 +4,12 @@ module EasyBib
 
     def ppa_mirror(node = self.node, standard_repo = 'easybib-php-ppa')
       if standard_repo == 'easybib-php-ppa'
-        if use_aptly_mirror?(node)
-          return php_mirror_repo_url(node)
-        end
+        return php_mirror_repo_url(node) if use_aptly_mirror?(node)
 
         return php_launchpad_repo_url(node)
       end
 
-      unless use_aptly_mirror?(node)
-        return standard_repo
-      end
+      return standard_repo unless use_aptly_mirror?(node)
 
       'http://ppa.ezbib.com/mirrors/remote-mirrors'
     end
