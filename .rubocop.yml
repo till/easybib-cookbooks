@@ -1,6 +1,5 @@
 AllCops:
   Exclude:
-    - 'Rakefile'
     - 'apt/**/*'
     - 'ark/**/*'
     - 'build-essential/**/*'
@@ -30,69 +29,28 @@ AllCops:
     - 'vendor/**/*'
     - 'xml/**/*'
 
-Style/SpaceBeforeFirstArg:
-  Enabled: false
+inherit_from: .rubocop_todo.yml
 
-Style/RegexpLiteral:
-  Enabled: false
+Metrics/AbcSize:
+  Max: 41
 
-Style/PredicateName:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/FileName:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/AccessorMethodName:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Max: 8
-
-Metrics/ParameterLists:
-  Max: 6
-
-Metrics/MethodLength:
-  Max: 30
-
-Metrics/LineLength:
-  Max: 160
+Metrics/BlockLength:
+  Max: 130
 
 Metrics/CyclomaticComplexity:
   Max: 8
 
-Lint/UnusedBlockArgument:
-  Enabled: false
+Metrics/LineLength:
+  Max: 160
 
-Lint/UnusedMethodArgument:
-  Enabled: false
-
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
-
-Style/EmptyLinesAroundBlockBody:
-  Enabled: false
-
-Style/ExtraSpacing:
-  Enabled: false
+Metrics/MethodLength:
+  Max: 30
 
 Metrics/ModuleLength:
-  Enabled: false
+  Max: 306
 
-Performance/StringReplacement:
-  Enabled: false
+Metrics/ParameterLists:
+  Max: 6
 
-Style/SpaceAroundOperators:
-  Enabled: false
-inherit_from: .rubocop_todo.yml
+Metrics/PerceivedComplexity:
+  Max: 8
