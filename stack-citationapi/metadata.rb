@@ -11,7 +11,6 @@ supports 'ubuntu'
 
 depends 'composer'
 depends 'gearmand'
-depends 'easybib-deploy'
 depends 'ies'
 depends 'ies-ssl'
 depends 'haproxy'

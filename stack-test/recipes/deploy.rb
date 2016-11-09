@@ -26,7 +26,7 @@ node['deploy'].each do |application, deploy|
     doc_root deploy['document_root']
     listen_opts nil
     notifies :reload, 'service[nginx]', :delayed
-    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 
 end

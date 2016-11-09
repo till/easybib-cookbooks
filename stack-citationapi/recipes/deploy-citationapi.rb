@@ -30,6 +30,6 @@ get_apps_to_deploy.each do |application, deploy|
     cookbook 'stack-citationapi'
     config_template 'default-web-nginx.conf.erb'
     notifies :reload, 'service[nginx]', :delayed
-    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 end
