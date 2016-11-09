@@ -6,7 +6,7 @@ package 'freetds-bin' do
   end
 end
 
-package 'php5-sybase' do
+package "#{node['php']['ppa']['package_prefix']}-sybase" do
   not_if do
     node['php']['ppa']['package_prefix'] == 'php5-easybib' || config['server_name'].nil?
   end

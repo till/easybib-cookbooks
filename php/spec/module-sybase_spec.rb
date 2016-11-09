@@ -24,7 +24,6 @@ describe 'php::module-sybase' do
       node.override['freetds'] = {
         'server_name' => 'my_mssql_server',
         'host' => 'some.host.lan'
-
       }
 
       node.override['php']['ppa'] = {
@@ -33,9 +32,9 @@ describe 'php::module-sybase' do
         'package_prefix' => 'php7.0'
       }
     end
-    it 'installs freetds and php5-sybase' do
+    it 'installs freetds and phpXXX-sybase' do
       expect(chef_run).to install_package('freetds-bin')
-      expect(chef_run).to install_package('php5-sybase')
+      expect(chef_run).to install_package('php7.0-sybase')
     end
 
     it 'configures freetds' do
