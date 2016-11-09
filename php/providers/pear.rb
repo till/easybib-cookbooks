@@ -50,9 +50,7 @@ def pear_cmd(pear, action, package, force, channel, version)
   # get the alias - BUT Y U NEED ALIAS?! - because when the channel is 'foo.example.org/pear' it screws up pear install
   command_alias = "#{pear} channel-info #{channel}|grep -a Alias|awk '{print $2}'"
   channel_alias = pear_run(command_alias)
-  if channel_alias.empty?
-    raise "Could not find alias for #{channel}"
-  end
+  raise "Could not find alias for #{channel}" if channel_alias.empty?
   Chef::Log.debug("Channel: #{channel}, Alias: #{channel_alias}")
 
   # avoid roundtrip to channel if it's installed
@@ -67,15 +65,11 @@ def pear_cmd(pear, action, package, force, channel, version)
 
   # force whatever comes next (probably a good idea)
   f_param = ''
-  if force == true
-    f_param = ' -f'
-  end
+  f_param = ' -f' if force == true
 
   # version string
   version_str = ''
-  if version && !version.empty?
-    version_str = "-#{version}"
-  end
+  version_str = "-#{version}" if version && !version.empty?
 
   complete_command = "#{pear} #{action}#{f_param} #{channel_alias}/#{package}#{version_str}"
   execute "PEAR: run #{action}: #{complete_command}" do

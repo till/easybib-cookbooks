@@ -10,4 +10,4 @@ gem 'rubocop', '~>0.45.0'
 gem 'aws-sdk', '~>1.0'
 gem 'dep-selector-libgecode', '~>1.2.0'
 gem 'berkshelf', '~>3.3'
-gem 'kitchen-vagrant', group: :integration
+gem 'kitchen-vagrant', :group => :integration

@@ -15,13 +15,9 @@ module IesRoute53
 
       # custom_access_key & custom_secret_key are optional
       %w(id).each do |attrib|
-        unless zone_config.key?(attrib)
-          return false
-        end
+        return false unless zone_config.key?(attrib)
 
-        if zone_config[attrib].empty? || zone_config[attrib].nil?
-          return false
-        end
+        return false if zone_config[attrib].empty? || zone_config[attrib].nil?
       end
 
       true

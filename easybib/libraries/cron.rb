@@ -14,9 +14,7 @@ module EasyBib
 
       collection = []
 
-      unless ::File.exist?(@file)
-        return collection
-      end
+      return collection unless ::File.exist?(@file)
 
       crontabs = ::File.open(@file)
 

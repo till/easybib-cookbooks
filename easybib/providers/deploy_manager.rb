@@ -97,9 +97,7 @@ end
 def get_cookbook(data)
   default_cookbook = 'nginx-app'
 
-  if data.is_a?(String)
-    return default_cookbook
-  end
+  return default_cookbook if data.is_a?(String)
 
   data.fetch('cookbook', default_cookbook)
 end
@@ -108,9 +106,7 @@ end
 #
 # Returns a string or nil
 def get_template(data)
-  if data.is_a?(String)
-    return data
-  end
+  return data if data.is_a?(String)
 
   data.fetch('conf', nil)
 end

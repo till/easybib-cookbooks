@@ -13,7 +13,7 @@ require 'yaml'
 
 Bundler.setup
 
-task default: [
+task :default => [
   :test
 ]
 
@@ -40,7 +40,7 @@ end
 
 desc 'Runs specs with chefspec.'
 RSpec::Core::RakeTask.new :spec, [:cookbook, :recipe, :output_file] do |t, args|
-  args.with_defaults(cookbook: '*', recipe: '*', output_file: nil)
+  args.with_defaults(:cookbook => '*', :recipe => '*', :output_file => nil)
 
   file_list = FileList["#{args.cookbook}/spec/#{args.recipe}_spec.rb"]
 
@@ -57,7 +57,7 @@ end
 
 desc 'Runs foodcritic linter'
 task :foodcritic, [:cookbook] do |_t, args|
-  args.with_defaults(cookbook: nil)
+  args.with_defaults(:cookbook => nil)
 
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
     epic_fail = %w()

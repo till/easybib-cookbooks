@@ -29,7 +29,7 @@ describe 'statsd::configure' do
     conf << "  librato: {\n"
     conf << "    email: 'foo@example.org',\n"
     conf << "    token: '123',\n"
-    conf << "    source: '#{stack_name.gsub!(' ', '-')}',\n"
+    conf << "    source: '#{stack_name.tr!(' ', '-')}',\n"
     conf << "    batchSize: 200\n"
     conf << "  }\n"
     conf << "}\n"

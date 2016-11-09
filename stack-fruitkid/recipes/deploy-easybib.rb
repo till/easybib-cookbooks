@@ -8,9 +8,7 @@ node['deploy'].each do |application, deploy|
   when 'easybib'
     nginxphpapp_allowed = allow_deploy(application, 'easybib', 'nginxphpapp')
     testapp_allowed     = allow_deploy(application, 'easybib', 'testapp')
-    if !nginxphpapp_allowed && !testapp_allowed
-      next
-    end
+    next if !nginxphpapp_allowed && !testapp_allowed
 
   when 'easybib_api'
     next unless allow_deploy(application, 'easybib_api', 'bibapi')

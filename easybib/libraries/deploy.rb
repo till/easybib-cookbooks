@@ -1,13 +1,9 @@
 module EasyBib
   module Deploy
     def deploy_crontab?(instance_roles, cronjob_role)
-      if cronjob_role.nil?
-        return true
-      end
+      return true if cronjob_role.nil?
 
-      if instance_roles.include?(cronjob_role)
-        return true
-      end
+      return true if instance_roles.include?(cronjob_role)
 
       debug_log('Instance is not in a cronjob role, skippings cronjob installs')
 
@@ -51,9 +47,7 @@ module EasyBib
       debug_log(
         "deploy #{requested_application} - requested app: #{application}, role: #{instance_roles}"
       )
-      if requested_role.nil?
-        requested_role = requested_application
-      end
+      requested_role = requested_application if requested_role.nil?
 
       if requested_application.is_a?(String)
         return is_app_configured_for_stack(application, requested_application, requested_role, instance_roles)

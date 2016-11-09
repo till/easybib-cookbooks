@@ -8,9 +8,7 @@ action :install do
   ext_dir << ::File::SEPARATOR if ext_dir[-1].chr != ::File::SEPARATOR
   so_file   = "#{ext_dir}/#{extension}.so"
 
-  unless version.nil?
-    extension = "#{extension}-#{version}"
-  end
+  extension = "#{extension}-#{version}" unless version.nil?
 
   execute "pecl install #{extension}" do
     not_if do
@@ -34,9 +32,7 @@ end
 
 action :compile do
 
-  if new_resource.source_dir.empty?
-    raise "Missing 'source_dir'."
-  end
+  raise "Missing 'source_dir'." if new_resource.source_dir.empty?
 
   source_dir = new_resource.source_dir
   unless ::File.exist?(source_dir)
