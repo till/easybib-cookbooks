@@ -53,13 +53,6 @@ class TestEasyBibConfig < Test::Unit::TestCase
       'whatever.local thing.local',
       ::EasyBib::Config.get_domains(fake_node, 'app')
     )
-
-    fake_node = Chef::Node.new
-    fake_node.override['foo']['domain']['app'] = 'bla.local'
-    assert_equal(
-      'bla.local',
-      ::EasyBib::Config.get_domains(fake_node, 'app', 'foo')
-    )
   end
 
   def test_ini_config

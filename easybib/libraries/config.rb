@@ -49,7 +49,7 @@ module EasyBib
     end
 
     # returns domains for appname
-    def get_domains(node, appname, env = 'getcourse')
+    def get_domains(node, appname)
       unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
         return node['deploy'][appname]['domains'].join(' ')
       end
@@ -61,11 +61,6 @@ module EasyBib
         else
           return domains.join(' ')
         end
-      end
-
-      unless node.fetch(env, {}).fetch('domain', {})[appname].nil?
-        Chef::Log.warn("Using old node[#{env}]['domain'][appname] domain config")
-        return node[env]['domain'][appname]
       end
 
       ''
