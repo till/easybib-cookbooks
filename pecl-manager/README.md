@@ -89,7 +89,7 @@ License & Authors
 
 - Authors:
  - Till Klampaeckel (till@php.net)
- - Florian Holzhauer (fh-easybib@fholzhauer.de)
+ - Florian Holzhauer (florian@chegg.com)
 
 ```text
 Copyright (c) 2014 Till Klampaeckel, Florian Holzhauer, ImagineEasy Solutions LLC
