@@ -9,7 +9,7 @@ describe 'easybib_supervisor - create new service with orphan service' do
     ]
   end
 
-  let(:runner) do
+  cached(:runner) do
     ChefSpec::Runner.new(
       :cookbook_path => cookbook_paths,
       :step_into => ['easybib_supervisor']
