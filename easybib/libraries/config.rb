@@ -50,20 +50,9 @@ module EasyBib
 
     # returns domains for appname
     def get_domains(node, appname)
-      unless node.fetch('deploy', {}).fetch(appname, {})['domains'].nil?
-        return node['deploy'][appname]['domains'].join(' ')
-      end
-
-      unless node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['domain_name'].nil?
-        domains = node['vagrant']['applications'][appname]['domain_name']
-        if domains.is_a?(String)
-          return domains
-        else
-          return domains.join(' ')
-        end
-      end
-
-      ''
+      domains = ::WT::Data::Injector.get_apps_to_deploy(node).fetch(appname, {})['domains']
+      return domains.join(' ') if domains.respond_to?('join')
+      domains
     end
 
     # returns application metadata (name, domains, directories)

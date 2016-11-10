@@ -1,11 +1,17 @@
 module WT
   module Data
-    class NodeObject
+    class AppObject
       attr_reader :resource_data
 
-      def initialize(resource)
+      def initialize(name, resource)
+        @original_name = name
         @original_resource = resource
         @resource_data = Hash[cleanup(resource)]
+      end
+
+      def attribute?(name)
+        return true if @resource_data.key?(name)
+        @original_resource.key?(name)
       end
 
       def [](attrib)
@@ -20,18 +26,13 @@ module WT
 
       protected
 
-      def cleanup(resource)
-      end
-
       # this is something we should eventually remove - but lets keep it here for now so that we dont break chef runs
       # with this new class, and instead get a log warning that we need to add something to the map:
       def fallback(key)
         Chef::Log.warn("WT::Data::NodeObject: There is #{key} nil in the generated obj, falling back to old data")
         @original_resource[key]
       end
-    end
 
-    class AppObject < NodeObject
       def cleanup(resource)
         if resource.is_a?(Chef::Node::ImmutableMash)
           cleanup_chef11(resource)
@@ -111,6 +112,29 @@ module WT
           }
         end
         db_cleaned
+      end
+    end
+
+    class VagrantAppObject < AppObject
+      def cleanup(resource)
+        # only those we actually use
+        {
+          'application' => @name,
+          'database' => nil,
+          'deploy_to' => resource['app_root_location'],
+          'document_root' => resource['doc_root_location'],
+          'domains' => resource['domain_name'],
+          'environment' => [],
+          'scm' => false,
+          'ssl_certificate' => nil,
+          'ssl_certificate_ca' => nil,
+          'ssl_certificate_key' => nil,
+          'ssl_support' => nil,
+          'user' => 'vagrant',
+          'group' => 'vagrant',
+          'home' => '/home/vagrant',
+          'shell' => '/bin/bash'
+        }
       end
     end
   end

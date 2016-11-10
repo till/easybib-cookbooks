@@ -1,4 +1,4 @@
-node['vagrant']['applications'].each do |app_name, app_config|
+get_apps_to_deploy.each do |app_name, app_config|
   next unless %w(sitescraper pdf-autocite formatting-api citation-apis).include?(app_name)
 
   default_router = if app_config.attribute?('default_router')
