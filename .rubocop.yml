@@ -8,6 +8,7 @@ AllCops:
     - 'cron/**/*'
     - 'erlang/**/*'
     - 'fc_sandbox/**/*'
+    - 'gemfiles/**/*'
     - 'logrotate/**/*'
     - 'mysql/**/*'
     - 'nodejs/**/*'

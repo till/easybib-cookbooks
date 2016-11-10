@@ -5,9 +5,12 @@ sudo: false
 cache: bundler
 
 script:
-  - make cs
-  - make test
+  - bundle exec rake
   - make berkshelf
+
+gemfile:
+  - gemfiles/chef_11.10.gemfile
+  - gemfiles/chef_12.13.gemfile
 
 before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
@@ -50,7 +53,6 @@ branches:
   - stable
 
 notifications:
-  webhooks: http://cd.deploy.ezbib.com/travis/update-cookbooks
   email:
     on_success: never
     on_failure: always
