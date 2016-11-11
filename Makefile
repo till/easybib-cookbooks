@@ -10,7 +10,7 @@ test:
 	$(rake) spec
 
 release:
-	bundle exec berks package --quiet
+	$(berks) package --quiet
 
 berkshelf:
 	cd stack-api; $(berks) package
@@ -20,3 +20,7 @@ berkshelf:
 	cd stack-qa; $(berks) package
 	cd stack-research; $(berks) package
 	cd stack-service; $(berks) package
+
+install:
+	bundle install
+	bundle exec appraisal install

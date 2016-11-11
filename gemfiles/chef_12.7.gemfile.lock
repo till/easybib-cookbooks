@@ -242,7 +242,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  appraisal
+  appraisal (~> 2.1.0)
   aws-sdk (~> 1.0)
   berkshelf (~> 3.3)
   chef (~> 12.7.0)
