@@ -31,10 +31,15 @@ describe 'easybib_deploy_manager' do
     end
 
     it 'logs when no applications are configured' do
-      # @chef_run = runner.converge(fixture)
-      # expect(Chef::Log).to receive(:info).with('easybib_deploy_manager: No apps configured')
-      # expect(@chef_run).to deploy_easybib_deploy_manager('fixtures')
-      pending 'need to explore how to assert on Chef::Log in a LWRP'
+      rspec_version = Gem::Version.new(::RSpec::Core::Version::STRING)
+      if rspec_version >= Gem::Version.new('3.0.0')
+        @chef_run = runner.converge(fixture)
+        pending 'need to explore how to assert on Chef::Log in a LWRP'
+        expect(Chef::Log).to receive(:info).with('easybib_deploy_manager: No apps configured')
+        expect(@chef_run).to deploy_easybib_deploy_manager('fixtures')
+      else
+        pending 'need to explore how to assert on Chef::Log in a LWRP'
+      end
     end
 
     context 'apps but no deploy' do
