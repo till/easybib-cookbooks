@@ -6,6 +6,8 @@ ppa_config = node['php']['ppa']
 
 apt_repository ppa_config['name'] do
   uri           ppa_config['uri']
+  key           '66E3A9B7.gpg'
+  cookbook      'aptly'
   distribution  node['lsb']['codename']
   components    ['main']
 end
