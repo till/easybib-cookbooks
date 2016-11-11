@@ -7,7 +7,7 @@ You will need Ruby installed, for version see: `.ruby_version` in the root.
 You will need bundler (`gem install bundler`):
 
 ```
-$ cd cookbooks-clone && bundle install && appraisal install
+$ cd cookbooks-clone && bundle install && bundle exec appraisal install
 ```
 
 ## Run tests
@@ -25,17 +25,17 @@ To speed up development, below are some examples how to run only a part of the t
 
 Run only chef 12.7 specs:
 ```
-$ appraisal chef-12.7 rake spec
+$ bundle exec appraisal chef-12.7 rake spec
 ```
 
 Run only specs for one cookbook with chef 11.10:
 ```
-$ appraisal chef-11.10 rake spec[cookbookname]
+$ bundle exec appraisal chef-11.10 rake spec[cookbookname]
 ```
 
 Run only one spec for a cookbook with both versions:
 ```
-$ appraisal rake spec[cookbookname,specname]
+$ bundle exec appraisal rake spec[cookbookname,specname]
 ```
 
 ## Add tests
