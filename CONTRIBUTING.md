@@ -7,16 +7,36 @@ You will need Ruby installed, for version see: `.ruby_version` in the root.
 You will need bundler (`gem install bundler`):
 
 ```
-$ cd cookbooks-clone && bundle install
+$ cd cookbooks-clone && bundle install && appraisal install
 ```
 
 ## Run tests
 
+Run all:
+
 ```
-$ bundle exec rake spec[cookbook]
+$ make test
 ```
 
-... to only tests of the cookbook `cookbook`.
+### Running individual tests
+We use [Appraisal](https://github.com/thoughtbot/appraisal) to test against both Chef11.10 and Chef12.7. The Makefile-triggered commands always test against both versions.
+
+To speed up development, below are some examples how to run only a part of the testsuite or only against one chef version:
+
+Run only chef 12.7 specs:
+```
+$ appraisal chef-12.7 rake spec
+```
+
+Run only specs for one cookbook with chef 11.10:
+```
+$ appraisal chef-11.10 rake spec[cookbookname]
+```
+
+Run only one spec for a cookbook with both versions:
+```
+$ appraisal rake spec[cookbookname,specname]
+```
 
 ## Add tests
 
