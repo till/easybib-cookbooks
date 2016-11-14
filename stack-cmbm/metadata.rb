@@ -10,7 +10,6 @@ issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_
 supports 'ubuntu'
 
 depends 'easybib'
-depends 'easybib-deploy'
 depends 'haproxy'
 depends 'ies'
 depends 'ies-mysql'
@@ -20,3 +19,4 @@ depends 'nginx-app'
 depends 'nodejs'
 depends 'redis'
 depends 'supervisor'
+depends 'ies-ssl'

@@ -10,17 +10,20 @@ describe 'ies-gearmand::default' do
   describe 'standard flow' do
     it 'discovers the ondreij repo' do
       pending 're-enable later'
+      rspec_version = Gem::Version.new(::RSpec::Core::Version::STRING)
+      if rspec_version >= Gem::Version.new('3.0.0')
 
-      # expect(chef_run.node['php']['ppa']).to eq('name' => 'ondrejphp',
-      #                                          'package_prefix' => 'php5.6',
-      #                                          'uri' => 'ppa:ondrej/php')
+        expect(chef_run.node['php']['ppa']).to eq('name' => 'ondrejphp',
+                                                  'package_prefix' => 'php5.6',
+                                                  'uri' => 'ppa:ondrej/php')
 
-      # expect(chef_run).to include_recipe('php::dependencies-ppa')
+        expect(chef_run).to include_recipe('php::dependencies-ppa')
 
-      # expect(chef_run).to add_apt_repository('ondrejphp')
-      #  .with(
-      #    :uri => 'ppa:ondrej/php'
-      #  )
+        expect(chef_run).to add_apt_repository('ondrejphp')
+          .with(
+            :uri => 'ppa:ondrej/php'
+          )
+      end
     end
 
     it 'installs gearman-job-server' do

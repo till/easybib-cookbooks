@@ -1,6 +1,4 @@
-unless is_aws
-  return
-end
+return unless is_aws
 
 node['deploy'].each do |application, deploy|
 

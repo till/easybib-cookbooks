@@ -1,5 +1,4 @@
 node['deploy'].each do |application, deploy|
-
   case application
   when 'research_app'
     next unless allow_deploy(application, 'research_app', 'research_app')
@@ -14,7 +13,6 @@ node['deploy'].each do |application, deploy|
   easybib_deploy application do
     deploy_data deploy
     app application
-    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]'
   end
 
   # clean up old config before migration
@@ -27,7 +25,6 @@ node['deploy'].each do |application, deploy|
     cookbook 'stack-research'
     config_template 'research-app.conf.erb'
     notifies :reload, 'service[nginx]', :delayed
-    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
-
 end

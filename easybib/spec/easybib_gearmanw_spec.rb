@@ -45,11 +45,23 @@ describe 'easybib_gearmanw' do
 end
 
 def stub_gearmanw_file_existing
-  ::File.stub(:exist?).with(anything).and_call_original
-  ::File.stub(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return true
+  rspec_version = Gem::Version.new(::RSpec::Core::Version::STRING)
+  if rspec_version >= Gem::Version.new('3.0.0')
+    allow(File).to receive(:exist?).with(anything).and_call_original
+    allow(File).to receive(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return true
+  else
+    ::File.stub(:exist?).with(anything).and_call_original
+    ::File.stub(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return true
+  end
 end
 
 def stub_gearmanw_file_not_existing
-  ::File.stub(:exist?).with(anything).and_call_original
-  ::File.stub(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return false
+  rspec_version = Gem::Version.new(::RSpec::Core::Version::STRING)
+  if rspec_version >= Gem::Version.new('3.0.0')
+    allow(File).to receive(:exist?).with(anything).and_call_original
+    allow(File).to receive(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return false
+  else
+    ::File.stub(:exist?).with(anything).and_call_original
+    ::File.stub(:exist?).with('/some_dir/deploy/pecl_manager_env').and_return false
+  end
 end

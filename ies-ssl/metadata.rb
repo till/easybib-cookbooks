@@ -8,3 +8,5 @@ source_url        'https://github.com/till/easybib-cookbooks' if respond_to?(:so
 issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_to?(:issues_url)
 
 supports 'ubuntu'
+
+depends 'haproxy'

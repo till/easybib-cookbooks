@@ -7,8 +7,6 @@ DEPENDENCIES
     path: ../ark
   awscli
     path: ../awscli
-  bibcd
-    path: ../bibcd
   build-essential
     path: ../build-essential
   chef_handler
@@ -21,8 +19,6 @@ DEPENDENCIES
     path: ../cron
   easybib
     path: ../easybib
-  easybib-deploy
-    path: ../easybib-deploy
   erlang
     path: ../erlang
   fail2ban
@@ -81,8 +77,6 @@ DEPENDENCIES
     path: ../rsyslog
   rsyslogd
     path: ../rsyslogd
-  satis
-    path: ../satis
   stack-easybib
     path: .
   stack-service
@@ -93,6 +87,8 @@ DEPENDENCIES
     path: ../supervisor
   tideways
     path: ../tideways
+  wt-data
+    path: ../wt-data
   xml
     path: ../xml
 
@@ -102,12 +98,9 @@ GRAPH
     apt (>= 0.0.0)
     cron (>= 0.0.0)
     easybib (>= 0.0.0)
-    easybib-deploy (>= 0.0.0)
   ark (0.9.0)
   awscli (0.1.0)
     python (>= 0.0.0)
-  bibcd (0.1.0)
-    easybib (>= 0.0.0)
   build-essential (2.0.3)
   chef_handler (1.1.7)
   chef_handler_sns (0.2.0)
@@ -118,20 +111,12 @@ GRAPH
   easybib (0.1.0)
     apt (>= 0.0.0)
     chef_handler (>= 0.0.0)
-    easybib-deploy (>= 0.0.0)
     ies (>= 0.0.0)
-    nginx-app (>= 0.0.0)
-    php (>= 0.0.0)
-  easybib-deploy (0.1.0)
-    aptly (>= 0.0.0)
-    bibcd (>= 0.0.0)
-    easybib (>= 0.0.0)
-    haproxy (>= 0.0.0)
-    monit (>= 0.0.0)
+    ies-ssl (>= 0.0.0)
     nginx-app (>= 0.0.0)
     pecl-manager (>= 0.0.0)
+    php (>= 0.0.0)
     php-fpm (>= 0.0.0)
-    satis (>= 0.0.0)
   erlang (1.5.6)
     apt (>= 1.7.0)
     build-essential (>= 0.0.0)
@@ -178,6 +163,7 @@ GRAPH
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
   ies-ssl (0.1.0)
+    haproxy (>= 0.0.0)
   logrotate (1.9.2)
   memcache (0.1.0)
   monit (0.1.0)
@@ -226,15 +212,12 @@ GRAPH
     easybib (>= 0.0.0)
   rsyslog (2.2.0)
   rsyslogd (0.1.0)
-  satis (0.1.0)
-    easybib (>= 0.0.0)
-    nginx-app (>= 0.0.0)
   stack-easybib (0.2.0)
-    easybib-deploy (>= 0.0.0)
     fake-sqs (>= 0.0.0)
     haproxy (>= 0.0.0)
     ies (>= 0.0.0)
     ies-mysql (>= 0.0.0)
+    ies-ssl (>= 0.0.0)
     memcache (>= 0.0.0)
     monit (>= 0.0.0)
     nginx-app (>= 0.0.0)
@@ -247,6 +230,7 @@ GRAPH
     redis (>= 0.0.0)
     stack-service (>= 0.0.0)
     supervisor (>= 0.0.0)
+    wt-data (>= 0.0.0)
   stack-service (0.2.0)
     gearmand (>= 0.0.0)
     ies (>= 0.0.0)
@@ -264,5 +248,6 @@ GRAPH
     apt (>= 0.0.0)
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
+  wt-data (0.1.0)
   xml (1.2.3)
     build-essential (>= 0.0.0)

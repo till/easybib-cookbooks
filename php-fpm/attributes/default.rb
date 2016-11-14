@@ -1,5 +1,7 @@
 default['php-fpm'] = {}
 
+default['php-fpm']['restart-action'] = :reload
+
 default['php-fpm']['prefix'] = '/opt/easybib'
 default['php-fpm']['exec_prefix'] = '/opt/easybib'
 

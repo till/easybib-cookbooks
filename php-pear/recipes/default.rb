@@ -37,6 +37,4 @@ pears.each do |pear|
   end
 end
 
-unless node['php-pear']['packages'].empty?
-  include_recipe 'php-pear::packages'
-end
+include_recipe 'php-pear::packages' unless node['php-pear']['packages'].empty?

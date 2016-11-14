@@ -20,6 +20,6 @@ node['deploy'].each do |application, deploy|
     cookbook 'stack-easybib'
     config_template 'silex.conf.erb'
     notifies :reload, 'service[nginx]', :delayed
-    notifies node['easybib_deploy']['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
+    notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 end

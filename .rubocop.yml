@@ -1,6 +1,5 @@
 AllCops:
   Exclude:
-    - 'Rakefile'
     - 'apt/**/*'
     - 'ark/**/*'
     - 'build-essential/**/*'
@@ -9,6 +8,7 @@ AllCops:
     - 'cron/**/*'
     - 'erlang/**/*'
     - 'fc_sandbox/**/*'
+    - 'gemfiles/**/*'
     - 'logrotate/**/*'
     - 'mysql/**/*'
     - 'nodejs/**/*'
@@ -30,69 +30,38 @@ AllCops:
     - 'vendor/**/*'
     - 'xml/**/*'
 
-Style/SpaceBeforeFirstArg:
-  Enabled: false
+inherit_from: .rubocop_todo.yml
 
-Style/RegexpLiteral:
-  Enabled: false
+Metrics/AbcSize:
+  Max: 41
 
-Style/PredicateName:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/FileName:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/AccessorMethodName:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Max: 8
-
-Metrics/ParameterLists:
-  Max: 6
-
-Metrics/MethodLength:
-  Max: 30
-
-Metrics/LineLength:
-  Max: 160
+Metrics/BlockLength:
+  Max: 130
 
 Metrics/CyclomaticComplexity:
   Max: 8
 
-Lint/UnusedBlockArgument:
+Metrics/LineLength:
+  Max: 160
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/ModuleLength:
+  Max: 306
+
+Metrics/ParameterLists:
+  Max: 6
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Style/Documentation:
   Enabled: false
 
-Lint/UnusedMethodArgument:
-  Enabled: false
-
+# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
-Style/EmptyLinesAroundBlockBody:
-  Enabled: false
-
-Style/ExtraSpacing:
-  Enabled: false
-
-Metrics/ModuleLength:
-  Enabled: false
-
-Performance/StringReplacement:
-  Enabled: false
-
-Style/SpaceAroundOperators:
-  Enabled: false
-inherit_from: .rubocop_todo.yml
+Style/NumericLiteralPrefix:
+  EnforcedOctalStyle: zero_only

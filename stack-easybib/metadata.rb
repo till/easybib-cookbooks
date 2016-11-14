@@ -9,7 +9,6 @@ issues_url        'https://github.com/till/easybib-cookbooks/issues' if respond_
 
 supports 'ubuntu'
 
-depends 'easybib-deploy'
 depends 'haproxy'
 depends 'ies'
 depends 'ies-mysql'
@@ -26,3 +25,5 @@ depends 'redis'
 depends 'stack-service'
 depends 'fake-sqs'
 depends 'supervisor'
+depends 'ies-ssl'
+depends 'wt-data'

@@ -31,10 +31,15 @@ describe 'easybib_deploy_manager' do
     end
 
     it 'logs when no applications are configured' do
-      # @chef_run = runner.converge(fixture)
-      # expect(Chef::Log).to receive(:info).with('easybib_deploy_manager: No apps configured')
-      # expect(@chef_run).to deploy_easybib_deploy_manager('fixtures')
-      pending 'need to explore how to assert on Chef::Log in a LWRP'
+      rspec_version = Gem::Version.new(::RSpec::Core::Version::STRING)
+      if rspec_version >= Gem::Version.new('3.0.0')
+        @chef_run = runner.converge(fixture)
+        pending 'need to explore how to assert on Chef::Log in a LWRP'
+        expect(Chef::Log).to receive(:info).with('easybib_deploy_manager: No apps configured')
+        expect(@chef_run).to deploy_easybib_deploy_manager('fixtures')
+      else
+        pending 'need to explore how to assert on Chef::Log in a LWRP'
+      end
     end
 
     context 'apps but no deploy' do
@@ -62,12 +67,12 @@ describe 'easybib_deploy_manager' do
         :app_number_one => {
           :deploy_to => '/var/www/app1',
           :document_root => 'www',
-          :domains => %w( example.org )
+          :domains => %w(example.org )
         },
         :app_number_two => {
           :deploy_to => '/var/www/app2',
           :document_root => 'htdocs',
-          :domains => %w( app2.example.org example2.org )
+          :domains => %w(app2.example.org example2.org)
         }
       }
 
@@ -100,7 +105,7 @@ describe 'easybib_deploy_manager' do
       deploy_manager = @chef_run.easybib_deploy_manager('fixtures')
       expect(deploy_manager).to notify('execute[foo]').to(:run).delayed
 
-      %w( app_number_one app_number_two).each do |application|
+      %w(app_number_one app_number_two).each do |application|
         expect(@chef_run).to deploy_easybib_deploy(application)
         expect(@chef_run).to setup_easybib_nginx(application)
           .with(

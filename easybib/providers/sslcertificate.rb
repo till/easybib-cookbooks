@@ -81,9 +81,7 @@ action :create do
 end
 
 def get_actual(str)
-  if str.include?('-----BEGIN')
-    return str.chomp
-  end
+  return str.chomp if str.include?('-----BEGIN')
 
   ::File.read(str)
 end

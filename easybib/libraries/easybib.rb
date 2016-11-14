@@ -1,24 +1,16 @@
 module EasyBib
   def has_role?(instance_roles, role)
-    if role.nil?
-      return true
-    end
+    return true if role.nil?
 
-    if instance_roles.include?(role)
-      return true
-    end
+    return true if instance_roles.include?(role)
 
     false
   end
 
   def has_env?(app, node = self.node)
-    unless node.attribute?(app)
-      return false
-    end
+    return false unless node.attribute?(app)
 
-    if node[app]['env']
-      return true
-    end
+    return true if node[app]['env']
 
     false
   end
@@ -44,9 +36,7 @@ module EasyBib
   end
 
   def get_deploy_user(node = self.node)
-    if node['opsworks']
-      return node['opsworks']['deploy_user']
-    end
+    return node['opsworks']['deploy_user'] if node['opsworks']
 
     ::Chef::Log.info('Unknown environment. (get_deploy_user)')
 
@@ -58,9 +48,7 @@ module EasyBib
   end
 
   def get_instance_roles(node = self.node)
-    if node['opsworks']
-      return node['opsworks']['instance']['layers']
-    end
+    return node['opsworks']['instance']['layers'] if node['opsworks']
     ::Chef::Log.debug('Unknown environment. (get_instance_roles)')
   end
 
@@ -73,9 +61,7 @@ module EasyBib
   end
 
   def is_aws(node = self.node)
-    if node['opsworks']
-      return true
-    end
+    return true if node['opsworks']
     false
   end
 
@@ -87,9 +73,7 @@ module EasyBib
   # @return [String]
   def get_hostname(node = self.node, fail_if_nil = false)
     opsworks_hostname = false
-    if get_instance(node)
-      opsworks_hostname = get_instance(node)['hostname']
-    end
+    opsworks_hostname = get_instance(node)['hostname'] if get_instance(node)
     my_hostname = if opsworks_hostname
                     opsworks_hostname
                   elsif node['server_name']
@@ -104,6 +88,14 @@ module EasyBib
     end
 
     my_hostname
+  end
+
+  def get_awsregion(node = self.node)
+    node['opsworks']['instance']['region']
+  end
+
+  def get_opsworks_activity(node = self.node)
+    node['opsworks']['activity']
   end
 
   # constructs an almost FQDN (except for the actual zone name)

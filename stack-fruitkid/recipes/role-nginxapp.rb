@@ -2,7 +2,7 @@ include_recipe 'stack-fruitkid::role-phpapp'
 
 include_recipe 'php::module-gearman'
 
-include_recipe 'easybib-deploy::easybib'
+include_recipe 'stack-fruitkid::deploy-easybib'
 
 if is_aws
   include_recipe 'nginx-app::configure'
