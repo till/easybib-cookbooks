@@ -63,6 +63,8 @@ DEPENDENCIES
     path: ../python
   redis
     path: ../redis
+  rsyslog
+    path: ../rsyslog
   rsyslogd
     path: ../rsyslogd
   stack-cmbm
@@ -178,6 +180,7 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
+  rsyslog (2.2.0)
   rsyslogd (0.1.0)
   stack-cmbm (0.1.0)
     easybib (>= 0.0.0)
@@ -195,6 +198,7 @@ GRAPH
     python (>= 0.0.0)
   tideways (0.1.0)
     apt (>= 0.0.0)
+    easybib (>= 0.0.0)
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   xml (1.2.3)

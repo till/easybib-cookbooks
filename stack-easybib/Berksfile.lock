@@ -39,6 +39,8 @@ DEPENDENCIES
     path: ../ies-letsencrypt
   ies-mysql
     path: ../ies-mysql
+  ies-nodejs
+    path: ../ies-nodejs
   ies-route53
     path: ../ies-route53
   ies-ssl
@@ -160,6 +162,8 @@ GRAPH
   ies-mysql (0.1.0)
     easybib (>= 0.0.0)
     mysql (>= 0.0.0)
+  ies-nodejs (0.1.0)
+    nodejs (>= 0.0.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
   ies-ssl (0.1.0)
@@ -217,6 +221,7 @@ GRAPH
     haproxy (>= 0.0.0)
     ies (>= 0.0.0)
     ies-mysql (>= 0.0.0)
+    ies-nodejs (>= 0.0.0)
     ies-ssl (>= 0.0.0)
     memcache (>= 0.0.0)
     monit (>= 0.0.0)
@@ -246,6 +251,7 @@ GRAPH
     python (>= 0.0.0)
   tideways (0.1.0)
     apt (>= 0.0.0)
+    easybib (>= 0.0.0)
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   wt-data (0.1.0)
