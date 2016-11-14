@@ -5,7 +5,8 @@ module WT
 
       def initialize(resource)
         @original_resource = resource
-        @resource_data = Hash[cleanup(resource)]
+        cleaned = cleanup(resource)
+        @resource_data = Hash[cleaned]
       end
 
       def [](attrib)
@@ -64,8 +65,9 @@ module WT
         cleaned['ssl_certificate_key'] = resource['ssl_configuration']['private_key']
         cleaned['document_root'] = resource['attributes']['document_root']
         cleaned['deploy_to'] = 'TODO'
-        raise 'Warning: You were trying to use the data wrapper function with chef 12. This is not supported/tested/finished yet.'
-        # cleaned
+        Chef::Log.info(cleaned.inspect)
+        # raise 'Warning: You were trying to use the data wrapper function with chef 12. This is not supported/tested/finished yet.'
+        cleaned
       end
 
       def cleanup_chef11(resource)
