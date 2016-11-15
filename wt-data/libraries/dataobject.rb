@@ -126,7 +126,6 @@ module WT
           'application' => @name,
           'database' => nil,
           'deploy_to' => resource['app_root_location'],
-          # doc_root_location is full path, unlike the relative path in AWS, lets normalize:
           'document_root' => resource['doc_root_location'],
           'domains' => resource['domain_name'],
           'environment' => [],
