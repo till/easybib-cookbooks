@@ -23,13 +23,6 @@ class TestEasyBibConfig < Test::Unit::TestCase
       '/app/root/dir/',
       ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
     )
-
-    fake_node = Chef::Node.new
-    fake_node.override['vagrant']['applications']['app']['doc_root_location'] = '/doc/root/dir/'
-    assert_equal(
-      '/doc/root/',
-      ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
-    )
   end
 
   def test_get_domains
@@ -189,15 +182,17 @@ fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";\n",
 
   def test_config_vagrantenv
     fake_node = Chef::Node.new
-    fake_node.override['deploy'] = {
-      'some_app' => {
-        'application' => 'some_app',
-        'domains' => ['foo.tld', 'bar.tld']
+
+    fake_node.override['vagrant'] = {
+      'applications' => {
+        'some_app' => {
+          'app_root_location' => '/some_path',
+          'doc_root_location' => '/some_path/foo',
+          'domain_name' => ['foo.tld', 'bar.tld']
+        }
       }
     }
-
-    fake_node.override['vagrant'] =  { 'applications' => { 'some_app' => { 'app_root_location' => '/some_path', 'doc_root_location' => '/some_path/foo' } } }
-    fake_node.override['easybib_deploy'] =  { 'envtype' => 'playground' }
+    fake_node.override['easybib_deploy'] = { 'envtype' => 'playground' }
 
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
 fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";

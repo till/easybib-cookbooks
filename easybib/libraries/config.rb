@@ -56,32 +56,19 @@ module EasyBib
     end
 
     # returns application metadata (name, domains, directories)
-    # rubocop:disable Metrics/PerceivedComplexity
     def get_appdata(node, appname, attribute = nil)
+      application_info = ::WT::Data::Injector.get_apps_to_deploy(node)[appname]
       data = {}
-      data['appname'] = if node.fetch('deploy', {}).fetch(appname, {})['application'].nil?
-                          appname
-                        else
-                          node['deploy'][appname]['application']
-                        end
-
+      data['appname'] = application_info['application'].nil? ? appname : application_info['application']
       data['domains'] = get_domains(node, appname)
 
       if ::EasyBib.is_aws(node)
-        data['deploy_dir'] = node['deploy'][appname]['deploy_to']
-
-        data['app_dir'] = get_app_dir(data['deploy_dir'])
-
-        data['doc_root_dir'] = "#{data['app_dir']}#{node['deploy'][appname]['document_root']}"
+        data['deploy_dir'] = application_info['deploy_to']
+        data['app_dir'] = "#{application_info['deploy_to']}/current/"
       else
-        data['deploy_dir'] = data['app_dir'] = get_vagrant_appdir(node, appname)
-
-        if node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
-          raise "node[vagrant][applications][#{appname}][doc_root_location] is not set - fix web_dna.json!"
-        end
-
-        data['doc_root_dir'] = node['vagrant']['applications'][appname]['doc_root_location']
+        data['deploy_dir'] = data['app_dir'] = application_info['deploy_to']
       end
+      data['doc_root_dir'] = "#{data['app_dir']}#{application_info['document_root']}"
 
       # ensure all dirs end with a slash:
       %w(deploy_dir app_dir doc_root_dir).each do |name|
@@ -95,7 +82,6 @@ module EasyBib
 
       value
     end
-    # rubocop:enable Metrics/PerceivedComplexity
 
     protected
 
@@ -130,29 +116,6 @@ module EasyBib
         config << generate_section_end(format, main_section)
       end
       config << generate_end(format)
-    end
-
-    # returns app_root_location for vagrant
-    def get_vagrant_appdir(node, appname)
-      if ::EasyBib.is_aws(node)
-        Chef::Log.warn('get_vagrant_appdir called from AWS env. There is something broken.')
-        # trying to return a somewhat sane default
-        return node['deploy'][appname]['deploy_to']
-      end
-
-      has_docroot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['doc_root_location'].nil?
-      has_approot_location = !node.fetch('vagrant', {}).fetch('applications', {}).fetch(appname, {})['app_root_location'].nil?
-
-      if has_approot_location
-        return node['vagrant']['applications'][appname]['app_root_location']
-      elsif !has_docroot_location
-        Chef::Log.info('neither app_root_location nor doc_root_location set. Locations set to vagrant default')
-        return '/vagrant_data/'
-      end
-
-      Chef::Log.info('app_root_location is not set in web_dna.json, trying to guess')
-      path = node['vagrant']['applications'][appname]['doc_root_location']
-      '/' + path.split('/')[1..-2].join('/') + '/'
     end
 
     # generate top of file
@@ -338,11 +301,6 @@ module EasyBib
         retval = nil
       end
       retval
-    end
-
-    # extracts the path where an application is deployed
-    def get_app_dir(deploy_to)
-      "#{deploy_to}/current/"
     end
 
     def append_database_url_to_dbconfig(dbconfig)

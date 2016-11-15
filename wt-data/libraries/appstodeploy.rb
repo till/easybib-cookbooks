@@ -9,8 +9,8 @@ module WT
       # and therefore remove the need for the allow_deploy calls in the recipes,
       # but for the sake of a easier migration, we should do this in a later step
       def get_apps_to_deploy(node)
-        return get_apps_to_deploy_chef11(node) unless node['deploy'].nil?
         return get_apps_to_deploy_vagrant(node) unless node['vagrant'].nil?
+        return get_apps_to_deploy_chef11(node) unless node['deploy'].nil?
         # chef 12 or empty deploy
         get_apps_to_deploy_chef12
       end

@@ -64,9 +64,8 @@ module WT
         cleaned['ssl_certificate_ca'] = resource['ssl_configuration']['chain']
         cleaned['ssl_certificate_key'] = resource['ssl_configuration']['private_key']
         cleaned['document_root'] = resource['attributes']['document_root']
-
-        # XXX TODO user, group, paths
-        cleaned['deploy_to'] = 'TODO'
+        # XXX TODO user, group
+        cleaned['deploy_to'] = "/srv/www/#{resource['shortname']}"
         raise 'Warning: You were trying to use the data wrapper function with chef 12. This is not supported/tested/finished yet.'
         # cleaned
       end
@@ -119,11 +118,15 @@ module WT
       def cleanup(resource)
         Chef::Log.fatal('Chef12 & Vagrant is not supported yet') if resource.is_a?(Chef::DataBagItem)
 
+        # doc_root_location is full path, unlike the relative path in AWS, lets normalize
+        resource['doc_root_location'].gsub!(resource['app_root_location'], '') unless resource['doc_root_location'].nil?
+
         # only those we actually use
         {
           'application' => @name,
           'database' => nil,
           'deploy_to' => resource['app_root_location'],
+          # doc_root_location is full path, unlike the relative path in AWS, lets normalize:
           'document_root' => resource['doc_root_location'],
           'domains' => resource['domain_name'],
           'environment' => [],
