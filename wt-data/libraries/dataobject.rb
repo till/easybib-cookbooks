@@ -58,11 +58,13 @@ module WT
           cleaned[target] = (resource[source] if resource[source])
         end
 
-        # XXX TODO user, group
+        cleaned['database'] = dbdata_chef12(resource)
         cleaned['ssl_certificate'] = resource['ssl_configuration']['certificate']
         cleaned['ssl_certificate_ca'] = resource['ssl_configuration']['chain']
         cleaned['ssl_certificate_key'] = resource['ssl_configuration']['private_key']
         cleaned['document_root'] = resource['attributes']['document_root']
+
+        # XXX TODO user, group, paths
         cleaned['deploy_to'] = 'TODO'
         raise 'Warning: You were trying to use the data wrapper function with chef 12. This is not supported/tested/finished yet.'
         # cleaned
@@ -93,6 +95,22 @@ module WT
           cleaned[target] = (resource[source] if resource[source])
         end
         cleaned
+      end
+
+      def dbdata_chef12(resource)
+        db_cleaned = {}
+        unless resource['data_sources'].empty?
+          query = Chef::Search::Query.new
+          db = query.search(:aws_opsworks_rds_db_instance).first.first
+          db_cleaned = {
+            'user' => db['db_user'],
+            'password' => db['db_password'],
+            'host' => db['address'],
+            'port' => db['port'],
+            'db' => resource['data_sources']['database_name']
+          }
+        end
+        db_cleaned
       end
     end
   end
