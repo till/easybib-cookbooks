@@ -35,6 +35,8 @@ DEPENDENCIES
     path: ../ies-apt
   ies-letsencrypt
     path: ../ies-letsencrypt
+  ies-nodejs
+    path: ../ies-nodejs
   ies-route53
     path: ../ies-route53
   ies-ssl
@@ -138,6 +140,8 @@ GRAPH
     easybib (>= 0.0.0)
   ies-letsencrypt (0.1.0)
     cron (>= 0.0.0)
+  ies-nodejs (0.1.0)
+    nodejs (>= 0.0.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
   ies-ssl (0.1.0)
@@ -197,6 +201,7 @@ GRAPH
     composer (>= 0.0.0)
     ezproxy (>= 0.0.0)
     ies (>= 0.0.0)
+    ies-nodejs (>= 0.0.0)
     nginx-app (>= 0.0.0)
     nodejs (>= 0.0.0)
     php (>= 0.0.0)
@@ -208,6 +213,7 @@ GRAPH
     python (>= 0.0.0)
   tideways (0.1.0)
     apt (>= 0.0.0)
+    easybib (>= 0.0.0)
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   xml (1.2.3)
