@@ -37,4 +37,5 @@ cookbook 'rsyslogd', path: "../rsyslogd"
 cookbook 'stack-cmbm', path: "./"
 cookbook 'supervisor', path: "../supervisor"
 cookbook 'tideways', path: "../tideways"
+cookbook 'wt-data', :path => '../wt-data'
 cookbook 'xml', path: "../xml"

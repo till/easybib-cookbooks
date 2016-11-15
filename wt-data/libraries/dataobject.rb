@@ -117,6 +117,8 @@ module WT
 
     class VagrantAppObject < AppObject
       def cleanup(resource)
+        Chef::Log.fatal('Chef12 & Vagrant is not supported yet') if resource.is_a?(Chef::DataBagItem)
+
         # only those we actually use
         {
           'application' => @name,
