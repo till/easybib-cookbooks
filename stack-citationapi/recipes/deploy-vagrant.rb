@@ -9,9 +9,9 @@ get_apps_to_deploy.each do |app_name, app_config|
 
   template = 'default-web-nginx.conf.erb'
 
-  domain_name        = ::EasyBib::Config.get_appdata(node, app_name, 'domains')
-  doc_root_location  = ::EasyBib::Config.get_appdata(node, app_name, 'doc_root_dir')
-  app_dir            = ::EasyBib::Config.get_appdata(node, app_name, 'app_dir')
+  domain_name        = ::EasyBib::Config.get_appdata(node, app_name)['domains']
+  doc_root_location  = ::EasyBib::Config.get_appdata(node, app_name)['doc_root_dir']
+  app_dir            = ::EasyBib::Config.get_appdata(node, app_name)['app_dir']
 
   easybib_nginx app_name do
     cookbook 'stack-citationapi'

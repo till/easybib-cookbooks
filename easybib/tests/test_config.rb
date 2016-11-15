@@ -21,7 +21,7 @@ class TestEasyBibConfig < Test::Unit::TestCase
     fake_node.override['vagrant']['applications']['app']['doc_root_location'] = '/foo/bla/dir/www/'
     assert_equal(
       '/app/root/dir/',
-      ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
+      ::EasyBib::Config.get_appdata(fake_node, 'app')['app_dir']
     )
   end
 
@@ -196,8 +196,8 @@ fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";\n",
 
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
 fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
-fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/some_path/\";
+fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/some_path/foo/\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"vagrant\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"vagrant\";\n",

@@ -56,31 +56,20 @@ module EasyBib
     end
 
     # returns application metadata (name, domains, directories)
-    def get_appdata(node, appname, attribute = nil)
+    def get_appdata(node, appname)
       application_info = ::WT::Data::Injector.get_apps_to_deploy(node)[appname]
       data = {}
       data['appname'] = application_info['application'].nil? ? appname : application_info['application']
       data['domains'] = get_domains(node, appname)
-
-      if ::EasyBib.is_aws(node)
-        data['deploy_dir'] = application_info['deploy_to']
-        data['app_dir'] = "#{application_info['deploy_to']}/current/"
-      else
-        data['deploy_dir'] = data['app_dir'] = application_info['deploy_to']
-      end
+      data['deploy_dir'] = application_info['deploy_to']
+      data['app_dir'] = ::EasyBib.is_aws(node) ? "#{application_info['deploy_to']}/current/" : application_info['deploy_to']
       data['doc_root_dir'] = "#{data['app_dir']}#{application_info['document_root']}"
 
       # ensure all dirs end with a slash:
       %w(deploy_dir app_dir doc_root_dir).each do |name|
         data[name] << '/' unless data[name].end_with?('/')
       end
-
-      return data if attribute.nil?
-
-      value = data[attribute]
-      raise "Could not get #{attribute} for #{appname}!" if value.nil? || value.empty?
-
-      value
+      data
     end
 
     protected

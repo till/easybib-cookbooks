@@ -134,12 +134,12 @@ end
 
 def get_app_dir(new_resource, node)
   return new_resource.app_dir unless new_resource.app_dir.nil?
-  ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'app_dir')
+  ::EasyBib::Config.get_appdata(node, new_resource.app_name)['app_dir']
 end
 
 def get_deploy_dir(new_resource, node)
   return new_resource.deploy_dir unless new_resource.deploy_dir.nil?
-  ::EasyBib::Config.get_appdata(node, new_resource.app_name, 'doc_root_dir')
+  ::EasyBib::Config.get_appdata(node, new_resource.app_name)['doc_root_dir']
 end
 
 def get_health_check(application, node)
