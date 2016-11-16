@@ -28,8 +28,7 @@ describe 'easybib_gearmanw' do
         expect(chef_run).to create_pecl_manager_script('Setting up Pecl Manager')
           .with(
             :dir => '/some_dir',
-            :envvar_file => '/some_dir/deploy/pecl_manager_env',
-            :envvar_json_source => 'some-source'
+            :envvar_file => '/some_dir/deploy/pecl_manager_env'
           )
       end
     end

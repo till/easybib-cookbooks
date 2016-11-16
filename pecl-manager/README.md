@@ -17,7 +17,7 @@ It has been tested in Vagrant (with chef-solo provisioner) and AWS OpsWorks.
 
 ### Platform
 
-- Ubuntu 12.04
+- Ubuntu 14.04
 
 May work with or without modification on other Debian derivatives.
 
@@ -29,10 +29,8 @@ Resources/Providers
 -------------------
 ### `script`
 
-This LWRP provides an easy way to create a `/etc/init.d/pecl-manager` init script. It includes configuration from two different locations, and exports them in the script as environment variables:
+This LWRP provides an easy way to create a `/etc/init.d/pecl-manager` init script. It includes configuration from a file and exports them in the script as environment variables:
 
-- From the node configuration: If you supply the parameter `envvar_json_source`, all key/value-pairs under
-`node[envvar_json_source]` will be exported. See `easybib/libraries/config.rb` for implementation details
 - From a file in the source: The file supplied with the parameter `envvar_file`.
 
 #### Easybib-Deploy
@@ -42,8 +40,8 @@ This LWRP is included in `easybib_deploy` and executed when the `envvar_file` ex
 #### Environment Variables
 
 There are several environment variables used to configure the init script. All of them are provided with a default
-setting - then first the JSON variables, then the variables from `envvar_file` are set. You can therefore
-override all default variables with your custom settings.
+setting, then the variables from `envvar_file` are set. You can therefore override all default variables with your
+custom settings.
 
 Default Variables:
 
@@ -72,7 +70,6 @@ PARAMS="-w /dev/null -vvv"
 
 - `dir` (required): The root directory for the script
 - `envvar_file` (required): The file to include for environment variables (see above)
-- `envvar_json`: The json key to import environment variables from (see above)
 
 #### Examples
 
@@ -80,7 +77,6 @@ PARAMS="-w /dev/null -vvv"
 pecl_manager_script "Setting up Pecl Manager" do
   dir                  "/var/www"
   envvar_file         "/var/www/deploy/pecl_manager_env"
-  envvar_json_source "defaultsettings"
 end
 ```
 
