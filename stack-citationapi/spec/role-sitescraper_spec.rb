@@ -39,8 +39,8 @@ describe 'stack-citationapi::role-sitescraper' do
       node.override['vagrant']['applications'] = {
         :sitescraper => {
           :default_router => 'index_tralala.php',
-          :deploy_dir => '/vagrant_autocite',
           :doc_root_location => '/vagrant_autocite/www',
+          :app_root_location => '/vagrant_autocite',
           :domain_name => ['example.org']
         }
       }

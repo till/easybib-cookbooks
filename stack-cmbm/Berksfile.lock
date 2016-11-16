@@ -73,6 +73,8 @@ DEPENDENCIES
     path: ../supervisor
   tideways
     path: ../tideways
+  wt-data
+    path: ../wt-data
   xml
     path: ../xml
 
@@ -101,6 +103,7 @@ GRAPH
     pecl-manager (>= 0.0.0)
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
+    wt-data (>= 0.0.0)
   fail2ban (2.2.1)
   haproxy (0.2.0)
     easybib (>= 0.0.0)
@@ -201,5 +204,6 @@ GRAPH
     easybib (>= 0.0.0)
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
+  wt-data (0.1.0)
   xml (1.2.3)
     build-essential (>= 0.0.0)

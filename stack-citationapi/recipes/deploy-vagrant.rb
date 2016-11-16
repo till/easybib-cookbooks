@@ -1,4 +1,4 @@
-node['vagrant']['applications'].each do |app_name, app_config|
+get_apps_to_deploy.each do |app_name, app_config|
   next unless %w(sitescraper pdf-autocite formatting-api citation-apis).include?(app_name)
 
   default_router = if app_config.attribute?('default_router')
@@ -9,9 +9,9 @@ node['vagrant']['applications'].each do |app_name, app_config|
 
   template = 'default-web-nginx.conf.erb'
 
-  domain_name        = ::EasyBib::Config.get_appdata(node, app_name, 'domains')
-  doc_root_location  = ::EasyBib::Config.get_appdata(node, app_name, 'doc_root_dir')
-  app_dir            = ::EasyBib::Config.get_appdata(node, app_name, 'app_dir')
+  domain_name        = ::EasyBib::Config.get_appdata(node, app_name)['domains']
+  doc_root_location  = ::EasyBib::Config.get_appdata(node, app_name)['doc_root_dir']
+  app_dir            = ::EasyBib::Config.get_appdata(node, app_name)['app_dir']
 
   easybib_nginx app_name do
     cookbook 'stack-citationapi'

@@ -32,7 +32,7 @@ node['deploy'].each do |application, deploy|
     end
   end
 
-  doc_root = ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir')
+  doc_root = ::EasyBib::Config.get_appdata(node, application)['doc_root_dir']
 
   template "/etc/nginx/sites-enabled/#{application}.conf" do
     cookbook 'stack-qa'
