@@ -48,9 +48,7 @@ action :deploy do
     instance_roles instance_roles
   end
 
-  easybib_gearmanw application_root_dir do
-    envvar_json_source new_resource.envvar_json_source
-  end
+  easybib_gearmanw application_root_dir
 
   cookbook_file "#{document_root_dir}/robots.txt" do
     mode   '0644'
