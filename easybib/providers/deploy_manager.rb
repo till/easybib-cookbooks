@@ -52,7 +52,6 @@ def run_deploys(deployments, app_name, app_data)
 
     easybib_deploy application do
       deploy_data deploy
-      app application
     end
 
     did_we_deploy = true
