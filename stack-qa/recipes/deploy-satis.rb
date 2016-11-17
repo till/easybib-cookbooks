@@ -19,7 +19,6 @@ node['deploy'].each do |application, deploy|
 
   easybib_deploy application do
     deploy_data deploy
-    app application
   end
 
   %w(/mnt/satis-output/ /mnt/composer-tmp/).each do |dir|

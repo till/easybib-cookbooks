@@ -47,7 +47,6 @@ applications.each do |app_name, app_config|
   if is_aws
     easybib_deploy app_name do
       deploy_data app_config
-      app app_name
     end
   else
     easybib_envconfig app_name

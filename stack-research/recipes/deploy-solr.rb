@@ -9,7 +9,6 @@ node['deploy'].each do |application, deploy|
 
   easybib_deploy application do
     deploy_data deploy
-    app application
   end
 
   execute "copy config from git to solr basedir - #{application}" do
