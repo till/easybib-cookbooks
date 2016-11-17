@@ -11,6 +11,7 @@ smokeping_dir = '/usr/share/smokeping/www'
 smokeping_etc = '/etc/smokeping/config.d'
 
 easybib_nginx 'smokeping' do
+  cookbook 'smokeping'
   config_template 'smokeping.conf.erb'
   app_dir smokeping_dir
   deploy_dir smokeping_dir
