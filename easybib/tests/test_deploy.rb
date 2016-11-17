@@ -2,8 +2,6 @@ require 'test/unit'
 require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'easybib.rb')
 require File.join(File.dirname(__FILE__), '../libraries', 'deploy.rb')
-
-# rubocop:disable ClassLength
 class TestEasyBibDeploy < Test::Unit::TestCase
   include EasyBib::Deploy
 
@@ -119,27 +117,6 @@ class TestEasyBibDeploy < Test::Unit::TestCase
     assert_equal(
       false,
       allow_deploy('app', 'app', %w(some-layer some-different-layer), fake_node)
-    )
-  end
-
-  def test_deploy_crontab
-    assert_equal(
-      deploy_crontab?([], nil),
-      true
-    )
-  end
-
-  def test_deploy_crontab_wrong_role
-    assert_equal(
-      deploy_crontab?(%w(role1 role2), 'housekeeping'),
-      false
-    )
-  end
-
-  def test_deploy_crontab_all_roles
-    assert_equal(
-      deploy_crontab?(%w(role1 housekeeping), 'housekeeping'),
-      true
     )
   end
 end
