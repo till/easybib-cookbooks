@@ -1,15 +1,5 @@
 module EasyBib
   module Deploy
-    def deploy_crontab?(instance_roles, cronjob_role)
-      return true if cronjob_role.nil?
-
-      return true if instance_roles.include?(cronjob_role)
-
-      debug_log('Instance is not in a cronjob role, skippings cronjob installs')
-
-      false
-    end
-
     # Checks if an application is allowed to be deployed - if the currently to be deployed
     # app matches the one we expect, and if the role of the instances is in an appropriate
     # role for the app.
