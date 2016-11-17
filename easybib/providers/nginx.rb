@@ -27,7 +27,6 @@ action :setup do
   app_dir = get_app_dir(new_resource, node)
   config_name = get_config_name(new_resource)
   nginx_extras = get_nginx_extras(new_resource, node)
-  nginx_caching = get_nginx_caching(new_resource, node)
 
   htpasswd = get_htpasswd(new_resource, application)
 
@@ -68,7 +67,7 @@ action :setup do
       :routes_denied => routes_denied,
       :htpasswd => htpasswd,
       :listen_opts => listen_opts,
-      :nginx_caching => nginx_caching,
+      :nginx_caching => node['nginx-app']['cache'],
       :gzip => node['nginx-app']['gzip']
     )
     notifies :run, "execute[#{execute_name}]", :immediately
@@ -119,12 +118,6 @@ end
 def get_domain_name(new_resource, node)
   return new_resource.domain_name unless new_resource.domain_name.nil?
   ::EasyBib::Config.get_domains(node, new_resource.app_name)
-end
-
-# nginx caching - this does not deal with browser cache headers
-def get_nginx_caching(new_resource, node)
-  return new_resource.nginx_caching unless new_resource.nginx_caching.nil?
-  node['nginx-app']['cache']
 end
 
 def get_nginx_extras(new_resource, node)
