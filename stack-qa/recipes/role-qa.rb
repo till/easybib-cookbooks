@@ -4,5 +4,5 @@ include_recipe 'php::module-posix'
 if is_aws
   include_recipe 'stack-qa::deploy-qa'
 else
-  include_recipe 'nginx-app::qa'
+  include_recipe 'stack-qa::deploy-qa-vagrant'
 end
