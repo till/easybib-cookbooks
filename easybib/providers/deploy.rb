@@ -1,10 +1,8 @@
 action :deploy do
   app = new_resource.app
   deploy_data = new_resource.deploy_data
-  instance_roles = new_resource.instance_roles
-  supervisor_role = new_resource.supervisor_role
-  instance_roles = ::EasyBib.get_instance_roles(node) if instance_roles.empty?
 
+  instance_roles = ::EasyBib.get_instance_roles(node)
   application_root_dir = "#{deploy_data['deploy_to']}/current"
   document_root_dir = "#{application_root_dir}/#{deploy_data['document_root']}/"
 
