@@ -15,7 +15,6 @@ depends 'apt'
 depends 'aptly'
 depends 'easybib'
 depends 'ies-ssl'
-depends 'ies-letsencrypt'
 depends 'supervisor'
 
 supports 'ubuntu'
