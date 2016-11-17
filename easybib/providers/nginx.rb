@@ -1,15 +1,14 @@
 action :remove do
-  config_name = get_config_name(new_resource)
-  file "/etc/nginx/sites-enabled/#{config_name}.conf" do
+  file "/etc/nginx/sites-enabled/#{new_resource.app_name}.conf" do
     action :delete
     only_if do
-      File.exist?("/etc/nginx/sites-enabled/#{config_name}.conf")
+      File.exist?("/etc/nginx/sites-enabled/#{new_resource.app_name}.conf")
     end
   end
-  file "/etc/nginx/#{config_name}.htpasswd" do
+  file "/etc/nginx/#{new_resource.app_name}.htpasswd" do
     action :delete
     only_if do
-      File.exist?("/etc/nginx/#{config_name}.htpasswd")
+      File.exist?("/etc/nginx/#{new_resource.app_name}.htpasswd")
     end
   end
   new_resource.updated_by_last_action(true)
@@ -25,7 +24,6 @@ action :setup do
   domain_name = get_domain_name(new_resource, node)
   deploy_dir = get_deploy_dir(new_resource, node)
   app_dir = get_app_dir(new_resource, node)
-  config_name = get_config_name(new_resource)
   nginx_extras = get_nginx_extras(new_resource, node)
 
   htpasswd = get_htpasswd(new_resource, application)
@@ -38,13 +36,13 @@ action :setup do
 
   nginx_local_conf = get_local_conf("#{app_dir}/deploy/nginx.conf")
 
-  execute_name = "nginx_configtest_#{config_name}"
+  execute_name = "nginx_configtest_#{application}"
   execute execute_name do
     command '/usr/sbin/nginx -t'
     action :nothing
   end
 
-  template "/etc/nginx/sites-enabled/#{config_name}.conf" do
+  template "/etc/nginx/sites-enabled/#{application}.conf" do
     cookbook cookbook
     source config_template
     mode '0755'
@@ -60,7 +58,7 @@ action :setup do
       :nginx_extra => nginx_extras,
       :nginx_local_conf => nginx_local_conf,
       :default_router => default_router,
-      :upstream_name => config_name,
+      :upstream_name => application,
       :php_upstream => get_upstream_from_pools(node['php-fpm']['pools'], node['php-fpm']['socketdir']),
       :health_check => health_check,
       :routes_enabled => routes_enabled,
@@ -96,8 +94,7 @@ def get_htpasswd(new_resource, application)
   return htpasswd unless htpasswd.include? ':'
 
   # we have user:password format, so lets encrypt & generate file
-  config_name = get_config_name(new_resource)
-  filename = "/etc/nginx/#{config_name}.htpasswd"
+  filename = "/etc/nginx/#{new_resource.app_name}.htpasswd"
 
   user, pass = htpasswd.split(':')
   pass = pass.to_s.crypt(user)
@@ -138,15 +135,6 @@ end
 def get_health_check(application, node)
   return node['nginx-app']['health_check'] if node.fetch('nginx-app', {}).fetch(application, {})['health_check'].nil?
   node['nginx-app'][application]['health_check']
-end
-
-def get_config_name(resource)
-  config_name = resource.app_name
-
-  config_name = resource.config_name unless resource.config_name.empty?
-
-  Chef::Log.debug("CONFIG NAME: #{config_name} - #{resource.app_name} - #{resource.config_name}")
-  config_name
 end
 
 def get_default_router(stackdefault, resourcedefault, deploy_dir)
