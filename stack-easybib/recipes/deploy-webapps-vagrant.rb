@@ -14,10 +14,9 @@
 
   next unless app == 'www'
   app_dir = node['vagrant']['applications'][app]['app_root_location']
-  easybib_supervisor "#{app}_supervisor" do
+  easybib_supervisor app do
     supervisor_file "#{app_dir}/deploy/supervisor.json"
     app_dir app_dir
-    app app
     user node['php-fpm']['user']
   end
 end

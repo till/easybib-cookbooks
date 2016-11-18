@@ -33,10 +33,9 @@ node['vagrant']['applications'].each do |app_name, app_config|
   end
 
   next if app_name == 'edu'
-  easybib_supervisor "#{app_name}_supervisor" do
+  easybib_supervisor app_name do
     supervisor_file "#{app_dir}/deploy/supervisor.json"
     app_dir app_dir
-    app app_name
     user node['php-fpm']['user']
   end
 end
