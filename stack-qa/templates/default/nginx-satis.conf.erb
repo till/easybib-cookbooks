@@ -14,10 +14,6 @@ server {
     auth_basic_user_file  <%= @htpasswd%>;
 <% end -%>
 
-<% if @nginx_extra && !@nginx_extra.empty? -%>
-    <%=@nginx_extra%>
-<% end -%>
-
 <% if !@domain_name.empty? -%>
     server_name <%=@domain_name%>;
 <% end -%>

@@ -43,8 +43,7 @@ node['deploy'].each do |application, deploy|
       :doc_root       => doc_root,
       :domain_name    => deploy['domains'].join(' '),
       :htpasswd       => "#{deploy['deploy_to']}/current/htpasswd",
-      :access_log     => 'off',
-      :nginx_extra    => node['nginx-app']['extras']
+      :access_log     => 'off'
     )
     notifies :reload, 'service[nginx]', :delayed
   end
