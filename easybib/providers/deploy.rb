@@ -29,7 +29,6 @@ action :deploy do
 
   easybib_crontab app do
     crontab_file "#{application_root_dir}/deploy/crontab"
-    app app
     instance_roles instance_roles
   end
 
