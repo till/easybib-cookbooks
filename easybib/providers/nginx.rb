@@ -24,7 +24,6 @@ action :setup do
   domain_name = get_domain_name(new_resource, node)
   deploy_dir = get_deploy_dir(new_resource, node)
   app_dir = get_app_dir(new_resource, node)
-  nginx_extras = get_nginx_extras(new_resource, node)
 
   htpasswd = get_htpasswd(new_resource, application)
 
@@ -55,7 +54,6 @@ action :setup do
       :app_dir => app_dir,
       :app_name => application,
       :access_log => access_log,
-      :nginx_extra => nginx_extras,
       :nginx_local_conf => nginx_local_conf,
       :default_router => default_router,
       :upstream_name => application,
@@ -115,11 +113,6 @@ end
 def get_domain_name(new_resource, node)
   return new_resource.domain_name unless new_resource.domain_name.nil?
   ::EasyBib::Config.get_domains(node, new_resource.app_name)
-end
-
-def get_nginx_extras(new_resource, node)
-  return new_resource.nginx_extras unless new_resource.nginx_extras.nil?
-  node['nginx-app']['extras']
 end
 
 def get_app_dir(new_resource, node)

@@ -14,8 +14,6 @@ default['nginx-app']['error_echo_port'] = '23232'
 default['nginx-app']['access_log'] = 'syslog:server=unix:/dev/log,tag=nginx_access'
 default['nginx-app']['access_echo_port'] = '23233'
 
-default['nginx-app']['extras'] = ''
-
 default['nginx-app']['default_router'] = 'index.php'
 default['nginx-app']['health_check'] = 'health_check.php'
 

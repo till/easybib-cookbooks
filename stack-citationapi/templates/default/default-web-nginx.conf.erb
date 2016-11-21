@@ -15,10 +15,6 @@ server {
     server_name <%=@domain_name%>;
 <% end -%>
 
-<% if @nginx_extra -%>
-    <%= @nginx_extra -%>
-<% end -%>
-
 <% if @htpasswd && !@htpasswd.empty? && File.exist?(@htpasswd) -%>
     auth_basic            "Restricted";
     auth_basic_user_file  <%= @htpasswd%>;

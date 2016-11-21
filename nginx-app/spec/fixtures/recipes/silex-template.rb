@@ -9,7 +9,6 @@ template '/tmp/config.conf' do
     :domain_name => node['testdata']['domain_name'],
     :doc_root => node['testdata']['doc_root'],
     :access_log => node['testdata']['access_log'],
-    :nginx_extra => node['testdata']['nginx_extra'],
     :default_router => node['testdata']['default_router'],
     :php_upstream => node['testdata']['pools'],
     :upstream_name => 'foo',
