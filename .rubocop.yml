@@ -63,3 +63,7 @@ Style/HashSyntax:
 
 Style/NumericLiteralPrefix:
   EnforcedOctalStyle: zero_only
+
+Style/PredicateName:
+  Exclude:
+    - 'easybib/libraries/*'
