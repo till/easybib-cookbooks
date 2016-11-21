@@ -1,9 +1,3 @@
-# Offense count: 2
-# Cop supports --auto-correct.
-Performance/RedundantMatch:
-  Exclude:
-    - 'easybib/libraries/config.rb'
-
 # Offense count: 8
 Style/AccessorMethodName:
   Exclude:
