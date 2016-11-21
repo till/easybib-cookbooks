@@ -1,0 +1,39 @@
+engines:
+  rubocop:
+    enabled: true
+  fixme:
+    enabled: true
+  reek:
+    enabled: true
+  markdownlint:
+    enabled: true
+
+exclude_paths:
+  - 'apt/**/*'
+  - 'ark/**/*'
+  - 'build-essential/**/*'
+  - 'chef_handler/**/*'
+  - 'chef_handler_sns/**/*'
+  - 'cron/**/*'
+  - 'erlang/**/*'
+  - 'fc_sandbox/**/*'
+  - 'gemfiles/**/*'
+  - 'logrotate/**/*'
+  - 'mysql/**/*'
+  - 'nodejs/**/*'
+  - 'ohai/**/*'
+  - 'opsworks_nodejs/**/*'
+  - 'papertrail/**/*'
+  - 'python/**/*'
+  - 'rabbitmq/**/*'
+  - 'rails/**/*'
+  - 'rsyslog/**/*'
+  - 'runit/**/*'
+  - 'rvm/**/*'
+  - 'sinopia/**/*'
+  - 'supervisor/**/*'
+  - 'test/**/*'
+  - 'unused/**/*'
+  - 'vagrant-test/**/*'
+  - 'vendor/**/*'
+  - 'xml/**/*'
