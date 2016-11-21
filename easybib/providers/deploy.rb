@@ -44,7 +44,7 @@ action :deploy do
   easybib_gearmanw application_root_dir
 
   cookbook_file "#{document_root_dir}/robots.txt" do
-    mode   '0644'
+    mode '0644'
     cookbook 'easybib'
     source 'robots.txt'
     not_if { node['easybib_deploy']['envtype'] == 'production' }

@@ -21,7 +21,7 @@ describe 'statsd::configure' do
 
   it 'it contains the correct settings' do
     # before you think twice - this is javascript, not JSON
-    conf  = "{\n"
+    conf = "{\n"
     conf << "  port: 8125,\n"
     conf << "  mgmt_address: '127.0.0.1',\n"
     conf << "  backends: ['statsd-librato-backend'],\n"

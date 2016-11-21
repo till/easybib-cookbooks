@@ -26,7 +26,7 @@ node['deploy'].each do |application, deploy|
       recursive true
       owner  node['nginx-app']['user']
       group  node['nginx-app']['group']
-      mode  0755
+      mode   0755
       action :create
     end
   end

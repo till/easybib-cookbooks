@@ -11,7 +11,7 @@ unless node.fetch('vagrant', {})['ssl'].nil?
   directory ssl_dir do
     mode      '0750'
     owner     'root'
-    group  node['nginx-app']['group']
+    group     node['nginx-app']['group']
     recursive true
   end
 

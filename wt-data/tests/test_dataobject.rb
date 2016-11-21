@@ -2,7 +2,7 @@ require 'test/unit'
 require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'dataobject.rb')
 
-class TestWtDataObjects< Test::Unit::TestCase
+class TestWtDataObjects < Test::Unit::TestCase
   def test_config_remove_unused_params
     fake_node = get_fakenode_chef11_scholarfixture
     cleaned_node = ::WT::Data::AppObject.new('the_app', fake_node['deploy']['the_app'])
