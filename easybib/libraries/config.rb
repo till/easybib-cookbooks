@@ -18,27 +18,12 @@ module EasyBib
     # returns env settings and information about the stack, application env, and rds
     def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
       settings = {}
-      unless node.fetch(stackname, {})['env'].nil?
-        Chef::Log.info("env settings for stack #{stackname} found")
-        settings = streamline_appenv(node[stackname]['env'])
-      end
-      if node.attribute?(appname) && node[appname].attribute?('env')
-        Chef::Log.info("env settings for app #{appname} found")
-        settings.merge!(streamline_appenv(node[appname]['env']))
-      end
+      settings.merge!(envsettings_from_stack(stackname, node))
+      settings.merge!(envsettings_from_app(appname, node))
       Chef::Log.info("no env settings found - appname was #{appname}, stack #{stackname}") if settings.empty?
 
-      unless node.fetch('deploy', {}).fetch(appname, {}).fetch('database', {})['host'].nil?
-        # add configuration from the RDS resource management in opsworks
-        Chef::Log.info('found configured rds resource, adding to envvars')
-        dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
-        dbconfig = append_database_url_to_dbconfig(dbconfig)
-
-        settings.merge!(dbconfig)
-      end
-
-      puma_config = streamline_appenv('puma' => node.fetch('stack-cmbm', {}).fetch('puma', {}))
-      settings.merge!(puma_config)
+      settings.merge!(envsettings_from_dbconfig(appname, node))
+      settings.merge!(envsettings_puma_for_cmbm(node))
 
       data = {
         'deployed_application' => get_appdata(node, appname),
@@ -73,6 +58,32 @@ module EasyBib
     end
 
     protected
+
+    def envsettings_from_stack(stackname, node)
+      return {} if node.fetch(stackname, {})['env'].nil?
+      Chef::Log.info("env settings for stack #{stackname} found")
+      streamline_appenv(node[stackname]['env'])
+    end
+
+    def envsettings_from_app(appname, node)
+      return {} unless node.attribute?(appname) && node[appname].attribute?('env')
+      Chef::Log.info("env settings for app #{appname} found")
+      streamline_appenv(node[appname]['env'])
+    end
+
+    def envsettings_from_dbconfig(appname, node)
+      return {} if node.fetch('deploy', {}).fetch(appname, {}).fetch('database', {})['host'].nil?
+      # add configuration from the RDS resource management in opsworks
+      Chef::Log.info('found configured rds resource, adding to envvars')
+      dbconfig = streamline_appenv('db' => node['deploy'][appname]['database'])
+      dbconfig = append_database_url_to_dbconfig(dbconfig)
+
+      dbconfig
+    end
+
+    def envsettings_puma_for_cmbm(node)
+      streamline_appenv('puma' => node.fetch('stack-cmbm', {}).fetch('puma', {}))
+    end
 
     # returns stack metadata (name, environment-type)
     def get_stackdata(node, attribute = nil)
