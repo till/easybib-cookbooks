@@ -22,12 +22,11 @@ module EasyBib
     if node['easybib'] && node['easybib']['cluster_name']
       return node['easybib']['cluster_name']
     end
-    if is_aws(node)
-      ::Chef::Log.error('Unknown environment. (get_cluster_name) - returning unknown')
-      return ''
-    else
-      return 'vagrant'
-    end
+
+    return 'vagrant' unless is_aws(node)
+
+    ::Chef::Log.error('Unknown environment. (get_cluster_name) - returning unknown')
+    ''
   end
 
   def get_normalized_cluster_name(node = self.node)

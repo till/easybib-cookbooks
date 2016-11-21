@@ -70,15 +70,6 @@ Style/FormatString:
   Exclude:
     - 'easybib/libraries/config.rb'
 
-# Offense count: 7
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'easybib/libraries/config.rb'
-    - 'easybib/libraries/easybib.rb'
-    - 'easybib/libraries/sns.rb'
-    - 'php/providers/pear.rb'
-
 # Offense count: 5
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: module_function, extend_self
