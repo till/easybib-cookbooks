@@ -20,7 +20,7 @@ describe 'silex-config-template' do
     end
 
     it 'sets correct access log path' do
-      expect(chef_run).to render_file(config_filename).with_content(/access_log \/tmp.log;/)
+      expect(chef_run).to render_file(config_filename).with_content('access_log /tmp.log;')
     end
   end
 
