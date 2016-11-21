@@ -77,6 +77,12 @@ Style/ExtraSpacing:
 Style/FileName:
   Enabled: false
 
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
 Style/FormatString:
   Exclude:
     - 'easybib/libraries/config.rb'
