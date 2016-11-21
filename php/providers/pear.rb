@@ -34,11 +34,9 @@ def discovered?(pear, channel)
 
   cmd.run_command
 
-  if cmd.exitstatus > 0
-    return false
-  else
-    return true
-  end
+  return false if cmd.exitstatus > 0
+
+  true
 end
 
 def pear_cmd(pear, action, package, force, channel, version)

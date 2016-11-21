@@ -178,6 +178,7 @@ module EasyBib
       section.upcase
     end
 
+    # rubocop:disable Style/GuardClause
     def get_returnparam(section, part_data)
       if part_data.is_a?(Hash)
         return streamline_appenv(part_data, section)
@@ -188,6 +189,7 @@ module EasyBib
       elsif part_data.respond_to?('to_s')
         return { section => part_data.to_s }
       end
+      # rubocop:enable Style/GuardClause
 
       raise "I have no idea how to deal with config item #{section}."
     end
@@ -211,12 +213,14 @@ module EasyBib
       end
     end
 
+    # rubocop:disable Style/GuardClause
     def validate_value(value)
       if value.is_a?(String)
-        raise 'The character " is not supported as a value in the config' if value.match('"')
-        raise "The character \' is not supported as a value in the config" if value.match("'")
+        raise 'The character " is not supported as a value in the config' if  value =~ /"/
+        raise "The character ' is not supported as a value in the config" if value =~ /'/
       end
     end
+    # rubocop:enable Style/GuardClause
 
     def get_output(data, format)
       config = ''

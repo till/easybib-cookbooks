@@ -27,7 +27,6 @@ AllCops:
     - 'unused/**/*'
     - 'vagrant-test/**/*'
     - 'vendor/**/*'
-    - 'vendor/**/*'
     - 'xml/**/*'
 
 inherit_from: .rubocop_todo.yml
@@ -59,9 +58,31 @@ Metrics/PerceivedComplexity:
 Style/Documentation:
   Enabled: false
 
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
 Style/NumericLiteralPrefix:
   EnforcedOctalStyle: zero_only
+
+Style/PredicateName:
+  Exclude:
+    - 'easybib/libraries/*'
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/ExtraSpacing:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Style/FormatString:
+  Exclude:
+    - 'easybib/libraries/config.rb'

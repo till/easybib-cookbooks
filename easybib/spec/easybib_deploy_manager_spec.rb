@@ -18,7 +18,8 @@ describe 'easybib_deploy_manager' do
       :step_into => %w(
         easybib_deploy_manager
         easybib_deploy
-        easybib_nginx)
+        easybib_nginx
+      )
     )
   end
 
