@@ -9,7 +9,6 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_supervisor application do
-    app application
     supervisor_file "#{application_root_dir}/deploy/supervisor.json"
     action :delete
   end

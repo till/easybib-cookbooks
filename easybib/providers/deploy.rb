@@ -32,9 +32,8 @@ action :deploy do
     instance_roles instance_roles
   end
 
-  easybib_supervisor "#{app}_supervisor" do
+  easybib_supervisor app do
     supervisor_file "#{application_root_dir}/deploy/supervisor.json"
-    app app
     app_dir application_root_dir
     user deploy_data['user']
     supervisor_role supervisor_role

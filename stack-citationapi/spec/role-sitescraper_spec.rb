@@ -53,7 +53,7 @@ describe 'stack-citationapi::role-sitescraper' do
     it 'calls the LWRPs' do
       expect(chef_run).to setup_easybib_nginx('sitescraper')
       expect(chef_run).to create_easybib_envconfig('sitescraper')
-      expect(chef_run).to create_easybib_supervisor('sitescraper_supervisor')
+      expect(chef_run).to create_easybib_supervisor('sitescraper')
       expect(chef_run).to create_easybib_gearmanw('/vagrant_autocite/')
     end
   end

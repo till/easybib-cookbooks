@@ -24,10 +24,9 @@ get_apps_to_deploy.each do |app_name, app_config|
 
   easybib_envconfig app_name
 
-  easybib_supervisor "#{app_name}_supervisor" do
+  easybib_supervisor app_name do
     supervisor_file "#{app_dir}/deploy/supervisor.json"
     app_dir app_dir
-    app app_name
     user node['php-fpm']['user']
   end
 
