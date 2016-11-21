@@ -67,3 +67,16 @@ Style/NumericLiteralPrefix:
 Style/PredicateName:
   Exclude:
     - 'easybib/libraries/*'
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/ExtraSpacing:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Style/FormatString:
+  Exclude:
+    - 'easybib/libraries/config.rb'
