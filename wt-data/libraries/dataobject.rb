@@ -127,7 +127,7 @@ module WT
           'database' => nil,
           'deploy_to' => resource['app_root_location'],
           'document_root' => resource['doc_root_location'],
-          'domains' => resource['domain_name'],
+          'domains' => resource.fetch('domain_name', ''),
           'environment' => [],
           'scm' => false,
           'ssl_certificate' => nil,
