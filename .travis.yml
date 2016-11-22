@@ -10,7 +10,7 @@ script:
 
 gemfile:
   - gemfiles/chef_11.10.gemfile
-  - gemfiles/chef_12.7.gemfile
+  - gemfiles/chef_12.13.gemfile
 
 before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
