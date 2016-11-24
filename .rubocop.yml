@@ -32,13 +32,10 @@ AllCops:
 inherit_from: .rubocop_todo.yml
 
 Metrics/AbcSize:
-  Max: 41
+  Max: 36
 
 Metrics/BlockLength:
   Max: 130
-
-Metrics/CyclomaticComplexity:
-  Max: 8
 
 Metrics/LineLength:
   Max: 160
@@ -46,17 +43,11 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 30
 
-Metrics/ModuleLength:
-  Max: 300
-
 Metrics/ClassLength:
   Max: 150
 
-Metrics/ParameterLists:
-  Max: 6
-
-Metrics/PerceivedComplexity:
-  Max: 8
+Metrics/ModuleLength:
+  Max: 110
 
 Style/Documentation:
   Enabled: false
