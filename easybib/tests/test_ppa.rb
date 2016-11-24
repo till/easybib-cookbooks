@@ -1,5 +1,4 @@
 # rubocop:disable Metrics/MethodLength
-# rubocop:disable Metrics/ClassLength
 require 'test/unit'
 require 'chef'
 require File.join(File.dirname(__FILE__), '../libraries', 'ppa.rb')

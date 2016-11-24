@@ -10,8 +10,10 @@ class TestEasyBibConfig < Test::Unit::TestCase
   def test_config_no_doublequote
     fake_node = Chef::Node.new
     fake_node.override['fakeapp']['env']['database']['something'] = 'foo"bar'
+    fake_node.override['deploy']['fakeapp'] = {}
+    fake_node.override['easybib_deploy']['envtype'] = 'none'
     assert_raises RuntimeError do
-      ::EasyBib::Config.get_env('nginx', 'fakeapp', fake_node)
+      ::EasyBib::Config.get_configcontent('nginx', 'fakeapp', fake_node)
     end
   end
 
@@ -54,9 +56,12 @@ class TestEasyBibConfig < Test::Unit::TestCase
       'something' => 'foobar',
       'whatever' => 'bar'
     }
-    assert_equal(
-      ::EasyBib::Config.get_env('ini', 'fakeapp', fake_node),
-      "DATABASE_SOMETHING = \"foobar\"\nDATABASE_WHATEVER = \"bar\"\n"
+    fake_node.override['deploy']['fakeapp'] = {}
+    fake_node.override['easybib_deploy']['envtype'] = 'none'
+    config = ::EasyBib::Config.get_configcontent('ini', 'fakeapp', fake_node)
+    assert_match(
+      "DATABASE_SOMETHING = \"foobar\"\nDATABASE_WHATEVER = \"bar\"\n",
+      config
     )
   end
 

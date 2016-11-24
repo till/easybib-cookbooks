@@ -4,7 +4,6 @@
 module WT
   module Data
     module Injector
-      # rubocop:disable Style/ModuleFunction
       extend self
       def get_apps_to_deploy(node = self.node)
         ::WT::Data::AppsToDeploy.get_apps_to_deploy(node)
