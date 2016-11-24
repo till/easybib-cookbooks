@@ -14,14 +14,12 @@ node['vagrant']['applications'].each do |app_name, app_config|
 
   template = 'silex.conf.erb'
 
-  domain_name        = app_config['domain_name']
-  doc_root_location  = app_config['doc_root_location']
+  domain_name = app_config['domain_name']
 
   app_dir = app_config['app_root_location']
 
   easybib_nginx app_name do
     config_template template
-    deploy_dir doc_root_location
     default_router default_router
     domain_name domain_name
     notifies :reload, 'service[nginx]', :delayed
