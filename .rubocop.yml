@@ -32,7 +32,11 @@ AllCops:
 inherit_from: .rubocop_todo.yml
 
 Metrics/AbcSize:
-  Max: 36
+  Max: 21
+  Exclude:
+    - 'easybib/providers/deploy_manager.rb'
+    - '**/spec/*'
+    - '**/tests/*'
 
 Metrics/BlockLength:
   Max: 130
@@ -42,6 +46,8 @@ Metrics/LineLength:
 
 Metrics/MethodLength:
   Max: 30
+  Exclude:
+    - 'easybib/providers/deploy_manager.rb'
 
 Metrics/ClassLength:
   Max: 150

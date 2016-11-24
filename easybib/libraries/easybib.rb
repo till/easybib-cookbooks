@@ -68,7 +68,7 @@ module EasyBib
   #
   # @return [String]
   def get_hostname(node = self.node)
-    return get_instance(node)['hostname'] if get_instance(node).fetch('hostname', false)
+    return get_instance(node)['hostname'] if get_instance(node) && get_instance(node)['hostname']
     return node['server_name'] if node['server_name']
     node['hostname']
   end

@@ -130,7 +130,7 @@ module EasyBib
 
     def append_database_url_to_dbconfig(dbconfig)
       return unless dbconfig
-      return dbconfig unless %w(DB_DATABASE DB_HOST DB_PORT DB_USERNAME DB_PASSWORD).all? { |k| hash.key? k }
+      return dbconfig unless %w(DB_DATABASE DB_HOST DB_PORT DB_USERNAME DB_PASSWORD).all? { |k| dbconfig.key? k }
 
       db_type = dbconfig['DB_TYPE'] == 'mysql' ? 'mysql2' : dbconfig['DB_TYPE']
 
@@ -139,6 +139,7 @@ module EasyBib
                "#{dbconfig['DB_DATABASE']}?reconnect=#{dbconfig['DB_RECONNECT']}"
 
       dbconfig['DATABASE_URL'] = db_url
+      dbconfig
     end
   end
 end

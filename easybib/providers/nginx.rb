@@ -92,9 +92,13 @@ def get_htpasswd(new_resource, application)
   return htpasswd unless htpasswd.include? ':'
 
   # we have user:password format, so lets encrypt & generate file
-  filename = "/etc/nginx/#{new_resource.app_name}.htpasswd"
+  generate_htpasswd(application, htpasswd)
+end
 
-  user, pass = htpasswd.split(':')
+def generate_htpasswd(app, credentials)
+  filename = "/etc/nginx/#{app}.htpasswd"
+
+  user, pass = credentials.split(':')
   pass = pass.to_s.crypt(user)
 
   template filename do
