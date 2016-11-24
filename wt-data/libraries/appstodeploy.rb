@@ -1,7 +1,6 @@
 module WT
   module Data
     module AppsToDeploy
-      # rubocop:disable Style/ModuleFunction
       extend self
       # returns all apps configured to be deploy in the current chef run, so
       # basically what opsworks&chef11 have in node['deploy']

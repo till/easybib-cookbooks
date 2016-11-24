@@ -47,7 +47,10 @@ Metrics/MethodLength:
   Max: 30
 
 Metrics/ModuleLength:
-  Max: 306
+  Max: 300
+
+Metrics/ClassLength:
+  Max: 150
 
 Metrics/ParameterLists:
   Max: 6
@@ -56,6 +59,9 @@ Metrics/PerceivedComplexity:
   Max: 8
 
 Style/Documentation:
+  Enabled: false
+
+Style/ModuleFunction:
   Enabled: false
 
 Style/HashSyntax:
@@ -82,7 +88,3 @@ Lint/UnusedBlockArgument:
 
 Lint/UnusedMethodArgument:
   Enabled: false
-
-Style/FormatString:
-  Exclude:
-    - 'easybib/libraries/config.rb'
