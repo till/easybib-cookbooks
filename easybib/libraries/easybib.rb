@@ -66,27 +66,11 @@ module EasyBib
 
   # Determines the hostname of the current node
   #
-  # fail_if_nil - if true, will raise fatal if hostname cannot be
-  #               determined
-  #
   # @return [String]
-  def get_hostname(node = self.node, fail_if_nil = false)
-    opsworks_hostname = false
-    opsworks_hostname = get_instance(node)['hostname'] if get_instance(node)
-    my_hostname = if opsworks_hostname
-                    opsworks_hostname
-                  elsif node['server_name']
-                    node['server_name']
-                  # from 'ohai'
-                  else
-                    node['hostname']
-                  end
-
-    if fail_if_nil == true && my_hostname.nil?
-      Chef::Application.fatal!('Can not determine the hostname of this node!')
-    end
-
-    my_hostname
+  def get_hostname(node = self.node)
+    return get_instance(node)['hostname'] if get_instance(node) && get_instance(node)['hostname']
+    return node['server_name'] if node['server_name']
+    node['hostname']
   end
 
   def get_awsregion(node = self.node)
@@ -100,7 +84,9 @@ module EasyBib
   # constructs an almost FQDN (except for the actual zone name)
   def get_record_name(node = self.node)
     instance = get_instance(node)
-    host_name = get_hostname(node, true)
+    host_name = get_hostname(node)
+    Chef::Application.fatal!('Can not determine the hostname of this node!') if host_name.nil?
+
     stack_name = get_normalized_cluster_name(node)
     region_id = instance['region']
 

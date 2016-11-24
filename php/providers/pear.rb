@@ -39,6 +39,8 @@ def discovered?(pear, channel)
   true
 end
 
+# rubocop:disable all
+# we pretty much dont use pear anymore, doesnt make sense to refactor
 def pear_cmd(pear, action, package, force, channel, version)
   unless discovered?(pear, channel)
     discover = Mixlib::ShellOut.new("#{pear} channel-discover #{channel}")
@@ -74,6 +76,7 @@ def pear_cmd(pear, action, package, force, channel, version)
     command complete_command
   end
 end
+# rubocop:enable all
 
 action :install do
   pear_cmd(@pear_cmd, 'install', new_resource.name, new_resource.force, new_resource.channel, new_resource.version)

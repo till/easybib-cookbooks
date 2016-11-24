@@ -10,7 +10,8 @@ module EasyBib
       client = create_client if client.nil?
       @client = client
 
-      my_hostname = ::EasyBib.get_hostname(node, true)
+      my_hostname = ::EasyBib.get_hostname(node)
+      return if my_hostname.nil?
 
       return unless my_hostname.include?(node['easybib']['sns']['notify_spinup'])
 
