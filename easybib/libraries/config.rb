@@ -2,19 +2,6 @@ module EasyBib
   module Config
     extend self
 
-    # returns only the environment settings in the json
-    def get_env(format, app, node = self.node)
-      return '' unless node.attribute?(app)
-
-      if node[app]['env'].nil?
-        Chef::Log.info("Attribute 'env' for application '#{app}' is not defined!")
-        return ''
-      end
-
-      appenv = streamline_appenv(node[app]['env'])
-      generate_config_part(format, 'settings', appenv)
-    end
-
     # returns env settings and information about the stack, application env, and rds
     def get_configcontent(format, appname, node = self.node, stackname = 'getcourse')
       settings = {}
@@ -52,6 +39,7 @@ module EasyBib
 
       # ensure all dirs end with a slash:
       %w(deploy_dir app_dir doc_root_dir).each do |name|
+        next if data[name].nil?
         data[name] << '/' unless data[name].end_with?('/')
       end
       data
@@ -163,6 +151,7 @@ module EasyBib
     def generate_config_part(format, section, section_data)
       config = ''
       section_data.each_pair do |config_key, config_value|
+        config_value = '' if config_value.nil?
         unless config_value.is_a?(String) || config_value.is_a?(Array)
           raise "section_data for #{config_key} is not a string or an array!"
         end
