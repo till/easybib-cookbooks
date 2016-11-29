@@ -22,4 +22,11 @@ get_apps_to_deploy.each do |application, deploy|
     notifies :reload, 'service[nginx]', :delayed
     notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
+
+  cookbook_file '/usr/local/bin/rds-test' do
+    source 'rds-test.sh'
+    user 'root'
+    group 'root'
+    mode '0770'
+  end
 end

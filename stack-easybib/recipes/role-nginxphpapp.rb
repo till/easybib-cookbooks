@@ -4,7 +4,6 @@ include_recipe 'php::module-gearman'
 
 if is_aws
   include_recipe 'stack-easybib::deploy-easybib'
-  include_recipe 'stack-easybib::deploy-rdstest'
   include_recipe 'stack-easybib::deploy-silexapps'
   include_recipe 'postfix::relay'
 else
