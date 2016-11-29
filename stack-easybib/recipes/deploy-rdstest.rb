@@ -16,10 +16,10 @@ get_apps_to_deploy.each do |application, deploy|
     deploy_data deploy
   end
 
-  cron_d 'rds_test' do
-    command 'cd /srv/www/rds_test/current; php rds-test.php 2>&1 | logger -t rds_test'
-    hour '*'
-    minute '*'
-    path '/usr/local/bin:/usr/bin'
+  easybib_nginx application do
+    cookbook 'stack-easybib'
+    config_template 'silex.conf.erb'
+    notifies :reload, 'service[nginx]', :delayed
+    notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end
 end
