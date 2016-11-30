@@ -61,7 +61,7 @@ task :foodcritic, [:cookbook] do |_t, args|
 
   if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
     epic_fail = %w()
-    ignore_rules = %w(FC059)
+    ignore_rules = %w(FC059 WT003)
 
     cb = if args.cookbook.nil?
            find_cookbooks('.').join(' ')
@@ -72,6 +72,7 @@ task :foodcritic, [:cookbook] do |_t, args|
     fc_command = 'bundle exec foodcritic -C -f any -P '
     fc_command << " -f #{epic_fail.join(' -f ')}" unless epic_fail.empty?
     fc_command << " -t ~#{ignore_rules.join(' -t ~')}" unless ignore_rules.empty?
+    fc_command << ' -I ./foodcritic-rules.rb'
     fc_command << " #{cb}"
     verbose(false)
     sh fc_command do |ok, res|
