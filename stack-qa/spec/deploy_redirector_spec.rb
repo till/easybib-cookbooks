@@ -70,6 +70,8 @@ describe 'stack-qa::deploy-redirector' do
         'foo.example.org' => 'http://else.com'
       }
 
+      node.override['ies-letsencrypt']['certbot']['port'] = 54_321
+
       # new instance setup
       ::File.stub(:exist?).with(anything).and_call_original
       ::File.stub(:exist?).with('/etc/nginx/ssl/cert.combined.pem').and_return false
@@ -81,8 +83,13 @@ describe 'stack-qa::deploy-redirector' do
     end
 
     it 'creates nginx virtualhosts' do
-      expect(chef_run).to create_template('/etc/nginx/sites-enabled/ssl-example.org.conf')
-      expect(chef_run).to create_template('/etc/nginx/sites-enabled/ssl-foo.example.org.conf')
+      expect(chef_run).to render_file('/etc/nginx/sites-enabled/ssl-letsencrypt-rewrites.conf')
+        .with_content('if ($host = "example.org") { rewrite ^ http://www.something.de last; }')
+        .with_content('if ($host = "foo.example.org") { rewrite ^ http://else.com last; }')
+
+      expect(chef_run).to render_file('/etc/nginx/sites-enabled/ssl-letsencrypt-certbot.conf')
+        .with_content('location /.well-known/acme-challenge')
+        .with_content('proxy_pass http://127.0.0.1:54321;')
     end
 
     it "includes our cookbook for let's encrypt" do
