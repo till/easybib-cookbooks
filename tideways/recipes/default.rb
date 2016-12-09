@@ -7,12 +7,18 @@ apt_repository 'tideways' do
   keyserver    node['tideways']['keyserver']
 end
 
-packages = ['tideways-php', 'tideways-daemon', 'tideways-cli']
+packages = {'tideways-php' => node['tideways']['version'], 'tideways-daemon' => nil, 'tideways-cli' => nil}
 
-packages.each do |package_name|
+packages.each do |package_name, package_version|
+
+  package_action = :upgrade
+  unless package_version.nil?
+    package_action = :install
+  end
+
   package package_name do
-    version node['tideways']['version']
-    action :install
+    version package_version
+    action package_action
   end
 end
 
