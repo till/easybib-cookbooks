@@ -7,7 +7,11 @@ apt_repository 'tideways' do
   keyserver    node['tideways']['keyserver']
 end
 
-packages = {'tideways-php' => node['tideways']['version'], 'tideways-daemon' => nil, 'tideways-cli' => nil}
+packages = {
+  'tideways-php' => node['tideways']['php_version'],
+  'tideways-daemon' => node['tideways']['daemon_version'],
+  'tideways-cli' => nil
+}
 
 packages.each do |package_name, package_version|
 
