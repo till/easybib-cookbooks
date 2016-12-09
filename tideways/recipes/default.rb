@@ -15,10 +15,8 @@ packages = {
 
 packages.each do |package_name, package_version|
 
-  package_action = :upgrade
-  unless package_version.nil?
-    package_action = :install
-  end
+  package_action = :install
+  package_action = :upgrade if package_version.nil?
 
   package package_name do
     version package_version
