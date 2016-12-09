@@ -11,7 +11,8 @@ packages = ['tideways-php', 'tideways-daemon', 'tideways-cli']
 
 packages.each do |package_name|
   package package_name do
-    action :upgrade # install the latest
+    version node['tideways']['version']
+    action :install
   end
 end
 
