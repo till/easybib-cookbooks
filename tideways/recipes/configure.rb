@@ -54,7 +54,4 @@ template "#{node['php-fpm']['prefix']}/etc/php/tideways.ini" do
   source 'tideways.ini.erb'
   mode 0644
   notifies :reload, 'service[php-fpm]', :delayed
-  only_if do
-
-  end
 end
