@@ -31,7 +31,7 @@ action :create do
 
   create_crontab = deploy_crontab?(
     new_resource.instance_roles,
-    new_resource.cronjob_role
+    node['easybib_deploy']['cronjob_role']
   )
   if create_crontab
     cron = ::EasyBib::Cron.new(app, crontab_file)
@@ -69,13 +69,12 @@ end
 
 action :delete do
   app = new_resource.app
-  crontab_user = new_resource.crontab_user
 
   execute 'Clear old crontab' do
-    user crontab_user
+    user node['nginx-app']['user']
     # crontab will exit with 130 if crontab has already been cleared
     # adding a "; true" to remove the loooong warning in chef logs everyone stumbles upon
-    command "crontab -u #{crontab_user} -r; true"
+    command "crontab -u #{node['nginx-app']['user']} -r; true"
     ignore_failure true
   end
 
@@ -88,4 +87,11 @@ action :delete do
 
   new_resource.updated_by_last_action(true)
 
+end
+
+def deploy_crontab?(instance_roles, cronjob_role)
+  return true if cronjob_role.nil?
+  return true if instance_roles.include?(cronjob_role)
+  Chef::Log.info('Instance is not in a cronjob role, skippings cronjob installs')
+  false
 end

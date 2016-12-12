@@ -6,7 +6,6 @@ default['testdata']['group'] = 'thegroup'
 default['testdata']['domain_name'] = 'example.org'
 default['testdata']['doc_root'] = '/var/www'
 default['testdata']['access_log'] = 'off'
-default['testdata']['nginx_extra'] = nil
 default['testdata']['default_router'] = 'app_router'
 default['testdata']['upstream'] = 'app_upstream'
 default['testdata']['routes_enabled'] = nil

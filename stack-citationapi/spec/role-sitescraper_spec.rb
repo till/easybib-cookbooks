@@ -39,8 +39,8 @@ describe 'stack-citationapi::role-sitescraper' do
       node.override['vagrant']['applications'] = {
         :sitescraper => {
           :default_router => 'index_tralala.php',
-          :deploy_dir => '/vagrant_autocite',
           :doc_root_location => '/vagrant_autocite/www',
+          :app_root_location => '/vagrant_autocite',
           :domain_name => ['example.org']
         }
       }
@@ -53,7 +53,7 @@ describe 'stack-citationapi::role-sitescraper' do
     it 'calls the LWRPs' do
       expect(chef_run).to setup_easybib_nginx('sitescraper')
       expect(chef_run).to create_easybib_envconfig('sitescraper')
-      expect(chef_run).to create_easybib_supervisor('sitescraper_supervisor')
+      expect(chef_run).to create_easybib_supervisor('sitescraper')
       expect(chef_run).to create_easybib_gearmanw('/vagrant_autocite/')
     end
   end

@@ -10,19 +10,20 @@ module EasyBib
       client = create_client if client.nil?
       @client = client
 
-      my_hostname = ::EasyBib.get_hostname(node, true)
+      my_hostname = ::EasyBib.get_hostname(node)
+      return if my_hostname.nil?
 
-      if my_hostname.include?(node['easybib']['sns']['notify_spinup'])
-        sns_message = "SPIN-UP notification for #{my_hostname}
+      return unless my_hostname.include?(node['easybib']['sns']['notify_spinup'])
 
-        The instance #{my_hostname} has just been deployed and will now be booted.
+      sns_message = "SPIN-UP notification for #{my_hostname}
 
-        Sincerely yours,
-        EasyBib SNS Library
-        "
+      The instance #{my_hostname} has just been deployed and will now be booted.
 
-        sns_notify(node, sns_message)
-      end
+      Sincerely yours,
+      EasyBib SNS Library
+      "
+
+      sns_notify(node, sns_message)
     end
 
     private

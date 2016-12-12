@@ -54,7 +54,7 @@ default['php-xdebug']['settings'] = {
 }
 default['php-xdebug']['load_priority'] = nil
 
-default['php-phar']['settings']  = {
+default['php-phar']['settings'] = {
   'detect_unicode' => 'Off',
   'readonly' => 'Off',
   'require_hash' => 'Off'

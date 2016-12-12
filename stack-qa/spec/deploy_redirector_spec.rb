@@ -1,11 +1,11 @@
 require_relative 'spec_helper'
 
-describe 'nginx-app::redirector' do
+describe 'stack-qa::deploy-redirector' do
 
   let(:runner) do
     ChefSpec::Runner.new(
       :step_into => ['nginx_app_config'],
-      :version => 12.04
+      :version => 14.04
     )
   end
   let(:chef_run) { runner.converge(described_recipe) }

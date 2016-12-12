@@ -3,7 +3,7 @@ apt_repository 'aptly' do
   distribution 'squeeze'
   components   ['main']
   keyserver    'keys.gnupg.net'
-  key          '2A194991'
+  key          '9C7DE460'
 end
 
 package 'aptly' do

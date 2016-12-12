@@ -57,7 +57,7 @@ describe 'ies-ssl::deploy-ssl-certificates' do
 
   describe 'another app is being deployed' do
     before do
-      node.override['ssl-deploy']['ssl-role']  = 'whatever'
+      node.override['ssl-deploy']['ssl-role'] = 'whatever'
     end
 
     it 'does not attempt to create ssl directoy' do

@@ -10,8 +10,10 @@ class TestEasyBibConfig < Test::Unit::TestCase
   def test_config_no_doublequote
     fake_node = Chef::Node.new
     fake_node.override['fakeapp']['env']['database']['something'] = 'foo"bar'
+    fake_node.override['deploy']['fakeapp'] = {}
+    fake_node.override['easybib_deploy']['envtype'] = 'none'
     assert_raises RuntimeError do
-      ::EasyBib::Config.get_env('nginx', 'fakeapp', fake_node)
+      ::EasyBib::Config.get_configcontent('nginx', 'fakeapp', fake_node)
     end
   end
 
@@ -21,14 +23,7 @@ class TestEasyBibConfig < Test::Unit::TestCase
     fake_node.override['vagrant']['applications']['app']['doc_root_location'] = '/foo/bla/dir/www/'
     assert_equal(
       '/app/root/dir/',
-      ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
-    )
-
-    fake_node = Chef::Node.new
-    fake_node.override['vagrant']['applications']['app']['doc_root_location'] = '/doc/root/dir/'
-    assert_equal(
-      '/doc/root/',
-      ::EasyBib::Config.get_appdata(fake_node, 'app', 'app_dir')
+      ::EasyBib::Config.get_appdata(fake_node, 'app')['app_dir']
     )
   end
 
@@ -53,13 +48,6 @@ class TestEasyBibConfig < Test::Unit::TestCase
       'whatever.local thing.local',
       ::EasyBib::Config.get_domains(fake_node, 'app')
     )
-
-    fake_node = Chef::Node.new
-    fake_node.override['foo']['domain']['app'] = 'bla.local'
-    assert_equal(
-      'bla.local',
-      ::EasyBib::Config.get_domains(fake_node, 'app', 'foo')
-    )
   end
 
   def test_ini_config
@@ -68,9 +56,12 @@ class TestEasyBibConfig < Test::Unit::TestCase
       'something' => 'foobar',
       'whatever' => 'bar'
     }
-    assert_equal(
-      ::EasyBib::Config.get_env('ini', 'fakeapp', fake_node),
-      "DATABASE_SOMETHING = \"foobar\"\nDATABASE_WHATEVER = \"bar\"\n"
+    fake_node.override['deploy']['fakeapp'] = {}
+    fake_node.override['easybib_deploy']['envtype'] = 'none'
+    config = ::EasyBib::Config.get_configcontent('ini', 'fakeapp', fake_node)
+    assert_match(
+      "DATABASE_SOMETHING = \"foobar\"\nDATABASE_WHATEVER = \"bar\"\n",
+      config
     )
   end
 
@@ -149,8 +140,7 @@ export BLA_SOMEKEY=\"somevalue\"
 export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"
 export BLA_SOMEARRAY[0]=\"server1\"
 export BLA_SOMEARRAY[1]=\"server2\"\n",
-                 ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_config)
-                )
+                 ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_config))
   end
 
   def test_config_to_nginx
@@ -165,8 +155,7 @@ fastcgi_param BLA_SOMEKEY \"somevalue\";
 fastcgi_param BLA_SOMEGROUP_SOMEOTHERKEY \"someothervalue\";
 fastcgi_param BLA_SOMEARRAY[0] \"server1\";
 fastcgi_param BLA_SOMEARRAY[1] \"server2\";\n",
-                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', get_fakenode_config)
-                )
+                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', get_fakenode_config))
   end
 
   def test_config_to_nginx_empty_settings
@@ -190,31 +179,31 @@ fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/tmp/bla/current/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/tmp/bla/current/www/\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"playground\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"opsworks-stack\";\n",
-                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
-                )
+                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node))
   end
 
   def test_config_vagrantenv
     fake_node = Chef::Node.new
-    fake_node.override['deploy'] = {
-      'some_app' => {
-        'application' => 'some_app',
-        'domains' => ['foo.tld', 'bar.tld']
+
+    fake_node.override['vagrant'] = {
+      'applications' => {
+        'some_app' => {
+          'app_root_location' => '/some_path',
+          'doc_root_location' => '/some_path/foo',
+          'domain_name' => ['foo.tld', 'bar.tld']
+        }
       }
     }
-
-    fake_node.override['vagrant'] =  { 'applications' => { 'some_app' => { 'app_root_location' => '/some_path', 'doc_root_location' => '/some_path/foo' } } }
-    fake_node.override['easybib_deploy'] =  { 'envtype' => 'playground' }
+    fake_node.override['easybib_deploy'] = { 'envtype' => 'playground' }
 
     assert_equal("fastcgi_param DEPLOYED_APPLICATION_APPNAME \"some_app\";
 fastcgi_param DEPLOYED_APPLICATION_DOMAINS \"foo.tld bar.tld\";
-fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DEPLOY_DIR \"/some_path/\";
+fastcgi_param DEPLOYED_APPLICATION_APP_DIR \"/some_path/\";
 fastcgi_param DEPLOYED_APPLICATION_DOC_ROOT_DIR \"/some_path/foo/\";
 fastcgi_param DEPLOYED_STACK_ENVIRONMENT \"vagrant\";
 fastcgi_param DEPLOYED_STACK_STACKNAME \"vagrant\";\n",
-                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node)
-                )
+                 ::EasyBib::Config.get_configcontent('nginx', 'some_app', fake_node))
   end
 
   def test_config_to_php
@@ -237,8 +226,7 @@ return [
     'BLA_SOMEARRAY'=> ['server1', 'server2'],
   ],
 ];",
-                 ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config)
-                )
+                 ::EasyBib::Config.get_configcontent('php', 'some_app', get_fakenode_config))
   end
 
   def test_merged_config_to_shell
@@ -254,8 +242,7 @@ export BLA_SOMEKEY=\"somevalue\"
 export BLA_SOMEGROUP_SOMEOTHERKEY=\"someothervalue\"
 export BLA_SOMEARRAY[0]=\"server1\"
 export BLA_SOMEARRAY[1]=\"server2\"\n",
-                 ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_redundant_config, 'some_stack')
-                )
+                 ::EasyBib::Config.get_configcontent('shell', 'some_app', get_fakenode_redundant_config, 'some_stack'))
   end
 
   protected

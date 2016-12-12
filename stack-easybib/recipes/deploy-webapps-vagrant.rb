@@ -1,7 +1,7 @@
 %w(edu www webeval).each do |app|
 
   next if node['vagrant']['applications'].fetch(app, nil).nil?
-  template = (app == 'www') ? 'easybib.com.conf.erb' : 'silex.conf.erb'
+  template = app == 'www' ? 'easybib.com.conf.erb' : 'silex.conf.erb'
 
   easybib_envconfig app
 
@@ -14,10 +14,9 @@
 
   next unless app == 'www'
   app_dir = node['vagrant']['applications'][app]['app_root_location']
-  easybib_supervisor "#{app}_supervisor" do
+  easybib_supervisor app do
     supervisor_file "#{app_dir}/deploy/supervisor.json"
     app_dir app_dir
-    app app
     user node['php-fpm']['user']
   end
 end

@@ -16,7 +16,7 @@ package 'g++'
 include_recipe 'stack-scholar::role-scholar'
 include_recipe 'stack-scholar::role-consumer'
 include_recipe 'php::module-pdo_sqlite'
-include_recipe 'nginx-app::vagrant-silex'
+include_recipe 'stack-scholar::deploy-silex-vagrant'
 
 # easybib-api + id
 include_recipe 'memcache'

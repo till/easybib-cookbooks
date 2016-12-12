@@ -1,13 +1,8 @@
 action :deploy do
   app = new_resource.app
   deploy_data = new_resource.deploy_data
-  cronjob_role = new_resource.cronjob_role
-  instance_roles = new_resource.instance_roles
-  supervisor_role = new_resource.supervisor_role
 
-  cronjob_role = node['easybib_deploy']['cronjob_role'] if cronjob_role.nil?
-  instance_roles = ::EasyBib.get_instance_roles(node) if instance_roles.empty?
-
+  instance_roles = ::EasyBib.get_instance_roles(node)
   application_root_dir = "#{deploy_data['deploy_to']}/current"
   document_root_dir = "#{application_root_dir}/#{deploy_data['document_root']}/"
 
@@ -32,28 +27,23 @@ action :deploy do
   # will fail otherwise.
   easybib_envconfig app
 
-  easybib_crontab "#{app}_#{new_resource.cronjob_role}" do
+  easybib_crontab app do
     crontab_file "#{application_root_dir}/deploy/crontab"
-    app app
-    cronjob_role cronjob_role
     instance_roles instance_roles
   end
 
-  easybib_supervisor "#{app}_supervisor" do
+  easybib_supervisor app do
     supervisor_file "#{application_root_dir}/deploy/supervisor.json"
-    app app
     app_dir application_root_dir
     user deploy_data['user']
     supervisor_role supervisor_role
     instance_roles instance_roles
   end
 
-  easybib_gearmanw application_root_dir do
-    envvar_json_source new_resource.envvar_json_source
-  end
+  easybib_gearmanw application_root_dir
 
   cookbook_file "#{document_root_dir}/robots.txt" do
-    mode   '0644'
+    mode '0644'
     cookbook 'easybib'
     source 'robots.txt'
     not_if { node['easybib_deploy']['envtype'] == 'production' }

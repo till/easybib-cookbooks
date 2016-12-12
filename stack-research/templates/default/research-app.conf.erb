@@ -5,10 +5,6 @@ server {
 
     access_log <%= @access_log %>;
 
-<% if @nginx_extra -%>
-    <%= @nginx_extra -%>
-<% end -%>
-
 <% if @domain_name -%>
     server_name <%=@domain_name%>;
 <% end -%>

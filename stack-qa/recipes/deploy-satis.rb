@@ -19,7 +19,6 @@ node['deploy'].each do |application, deploy|
 
   easybib_deploy application do
     deploy_data deploy
-    app application
   end
 
   %w(/mnt/satis-output/ /mnt/composer-tmp/).each do |dir|
@@ -27,12 +26,12 @@ node['deploy'].each do |application, deploy|
       recursive true
       owner  node['nginx-app']['user']
       group  node['nginx-app']['group']
-      mode  0755
+      mode   0755
       action :create
     end
   end
 
-  doc_root = ::EasyBib::Config.get_appdata(node, application, 'doc_root_dir')
+  doc_root = ::EasyBib::Config.get_appdata(node, application)['doc_root_dir']
 
   template "/etc/nginx/sites-enabled/#{application}.conf" do
     cookbook 'stack-qa'
@@ -44,8 +43,7 @@ node['deploy'].each do |application, deploy|
       :doc_root       => doc_root,
       :domain_name    => deploy['domains'].join(' '),
       :htpasswd       => "#{deploy['deploy_to']}/current/htpasswd",
-      :access_log     => 'off',
-      :nginx_extra    => node['nginx-app']['extras']
+      :access_log     => 'off'
     )
     notifies :reload, 'service[nginx]', :delayed
   end

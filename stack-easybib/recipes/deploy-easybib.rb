@@ -15,7 +15,6 @@ get_apps_to_deploy.each do |application, deploy|
 
   easybib_deploy application do
     deploy_data deploy
-    app application
   end
 
   # clean up old config before migration
@@ -24,16 +23,9 @@ get_apps_to_deploy.each do |application, deploy|
     ignore_failure true
   end
 
-  nginx_extras = if node.fetch('easybib', {}).fetch('nginx-app', {}).fetch('disable-404', {})
-                   'log_not_found off;'
-                 else
-                   ''
-                 end
-
   easybib_nginx application do
     cookbook 'stack-easybib'
     config_template 'easybib.com.conf.erb'
-    nginx_extras nginx_extras
     notifies :reload, 'service[nginx]', :delayed
     notifies node['php-fpm']['restart-action'], 'service[php-fpm]', :delayed
   end

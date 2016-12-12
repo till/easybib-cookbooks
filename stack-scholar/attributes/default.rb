@@ -6,7 +6,8 @@ default['stack-scholar']['applications'] = {
     :layer => nil,
     :nginx => 'scholar.conf.erb',
     :nginx_config => {
-      :listen_opts => 'default_server'
+      :listen_opts => 'default_server',
+      :cookbook => 'stack-scholar'
     }
   },
   :scholar_admin => {

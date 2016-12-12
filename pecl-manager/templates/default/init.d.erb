@@ -23,9 +23,6 @@ LOGFILE=/var/log/gearman-manager.log
 GEARMANUSER="<%= @gearman_user %>"
 PARAMS="-w /dev/null -vvv"
 
-####ENVVARS FROM JSON#####
-<%= @envvar_json %>
-
 ####ENVVARS FROM EXTERNAL FILE#####
 <%= render @envvar_file, :local => true %>
 

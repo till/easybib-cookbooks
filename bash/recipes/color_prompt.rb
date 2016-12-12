@@ -18,7 +18,7 @@ unless node['ssh_users'].nil?
         :prompt_mono => prompt_mono
       )
       user user['name']
-      mode   '0644'
+      mode '0644'
     end
   end
 end

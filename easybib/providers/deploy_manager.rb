@@ -33,7 +33,6 @@ end
 # deployments - Hash, from OpsWorks
 # app_name - String
 # app_data - Hash
-# rubocop:disable Metrics/MethodLength
 def run_deploys(deployments, app_name, app_data)
   did_we_deploy = false
 
@@ -52,7 +51,6 @@ def run_deploys(deployments, app_name, app_data)
 
     easybib_deploy application do
       deploy_data deploy
-      app application
     end
 
     did_we_deploy = true

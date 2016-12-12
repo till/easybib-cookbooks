@@ -30,7 +30,8 @@ action :create do
   end
 
   Chef::Log.info(
-    "easybib_supervisor - loading supervisor services from #{supervisor_file}")
+    "easybib_supervisor - loading supervisor services from #{supervisor_file}"
+  )
 
   supervisor_config = JSON.parse(::File.read(supervisor_file))
 

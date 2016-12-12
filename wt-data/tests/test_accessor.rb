@@ -4,7 +4,7 @@ require File.join(File.dirname(__FILE__), '../libraries', 'dataobject.rb')
 require File.join(File.dirname(__FILE__), '../libraries', 'appstodeploy.rb')
 require File.join(File.dirname(__FILE__), '../libraries', 'injector.rb')
 
-class TestWtDataAccessor< Test::Unit::TestCase
+class TestWtDataAccessor < Test::Unit::TestCase
   def test_config_cleanup
     fake_node = get_fakenode_chef11_multipleapps
     result = ::WT::Data::Injector.get_apps_to_deploy(fake_node)

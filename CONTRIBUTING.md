@@ -7,7 +7,7 @@ You will need Ruby installed, for version see: `.ruby_version` in the root.
 You will need bundler (`gem install bundler`):
 
 ```
-$ cd cookbooks-clone && bundle install && bundle exec appraisal install
+$ cd cookbooks-clone && make install
 ```
 
 ## Run tests

@@ -127,7 +127,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  appraisal
+  appraisal (~> 2.1.0)
   aws-sdk (~> 1.0)
   berkshelf (~> 3.3)
   rubocop (~> 0.45.0)

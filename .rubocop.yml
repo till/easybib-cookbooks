@@ -27,41 +27,61 @@ AllCops:
     - 'unused/**/*'
     - 'vagrant-test/**/*'
     - 'vendor/**/*'
-    - 'vendor/**/*'
     - 'xml/**/*'
 
 inherit_from: .rubocop_todo.yml
 
 Metrics/AbcSize:
-  Max: 41
+  Max: 21
+  Exclude:
+    - 'easybib/providers/deploy_manager.rb'
+    - '**/spec/*'
+    - '**/tests/*'
 
 Metrics/BlockLength:
   Max: 130
-
-Metrics/CyclomaticComplexity:
-  Max: 8
 
 Metrics/LineLength:
   Max: 160
 
 Metrics/MethodLength:
   Max: 30
+  Exclude:
+    - 'easybib/providers/deploy_manager.rb'
+
+Metrics/ClassLength:
+  Max: 150
 
 Metrics/ModuleLength:
-  Max: 306
-
-Metrics/ParameterLists:
-  Max: 6
-
-Metrics/PerceivedComplexity:
-  Max: 8
+  Max: 110
 
 Style/Documentation:
   Enabled: false
 
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
+Style/ModuleFunction:
+  Enabled: false
+
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
 Style/NumericLiteralPrefix:
   EnforcedOctalStyle: zero_only
+
+Style/PredicateName:
+  Exclude:
+    - 'easybib/libraries/*'
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/ExtraSpacing:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false

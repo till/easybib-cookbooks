@@ -80,6 +80,3 @@ For example, this stack json:
  }
  ```
 
- ## attributes
-
-  * `crontab_user`: the user to clear the crontab for
