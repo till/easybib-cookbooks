@@ -55,6 +55,9 @@ include_recipe 'stack-easybib::role-gearmanw'
 include_recipe 'ies-nodejs::repo'
 include_recipe 'nodejs::npm'
 
+# mssql server
+include_recipe 'php::module-sybase'
+
 # dev dependencies last
 include_recipe 'php::module-pdo_sqlite'
 include_recipe 'php::module-xdebug'
