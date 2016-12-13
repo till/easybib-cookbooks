@@ -1,3 +1,6 @@
+include_recipe 'php-fpm::service'
+include_recipe 'nginx-app::service'
+
 get_apps_to_deploy.each do |application, deploy|
   case application
   when 'rds_test'
