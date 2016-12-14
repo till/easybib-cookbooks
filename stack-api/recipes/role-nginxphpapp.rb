@@ -37,6 +37,10 @@ if node['easybib']['cluster_name'] == 'API Staging'
   }
 end
 
+link '/usr/local/bin/php' do
+  to '/usr/bin/php'
+end
+
 include_recipe 'ies::role-phpapp'
 include_recipe 'php::module-soap'
 include_recipe 'php::module-tidy'
