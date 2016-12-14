@@ -104,7 +104,7 @@ template conf_fpm do
   group    config['group']
   notifies :reload, 'service[php-fpm]', :delayed
   notifies :run, 'execute[update-alternatives]', :immediately
-  notifies :run, 'execute[update-cli-alternatives]', :delayed
+  notifies :run, 'execute[update-cli-alternatives]', :immediately
 end
 
 template conf_cli do
