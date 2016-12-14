@@ -55,8 +55,6 @@ if node['redirector'].attribute?('urls')
 end
 
 if node['redirector'].attribute?('ssl')
-  ssl_domains = []
-
   unless File.exist?("#{node['ies-letsencrypt']['ssl_dir']}/cert.combined.pem")
     package 'openssl'
 
@@ -73,24 +71,32 @@ if node['redirector'].attribute?('ssl')
     end
   end
 
-  node['redirector']['ssl'].each do |domain_name, target|
-    ssl_domains << domain_name
+  ssl_domains = node.fetch('redirector', {}).fetch('ssl', {})
 
-    template "#{vhost_dir}/ssl-#{domain_name}.conf" do
-      source 'redirect-ssl.conf.erb'
-      mode '0644'
-      owner node['nginx-app']['user']
-      group node['nginx-app']['group']
-      variables(
-        :certbot_port => node['ies-letsencrypt']['certbot']['port'],
-        :domain_name => domain_name,
-        :new_domain_name => target,
-        :ssl_dir => node['ies-letsencrypt']['ssl_dir']
-      )
-      notifies :reload, 'service[nginx]', :delayed
-    end
+  template "#{vhost_dir}/ssl-letsencrypt-certbot.conf" do
+    source 'redirect-certbot.conf.erb'
+    mode '0644'
+    owner node['nginx-app']['user']
+    group node['nginx-app']['group']
+    variables(
+      :certbot_port => node['ies-letsencrypt']['certbot']['port'],
+      :domains => ssl_domains
+    )
+    notifies :reload, 'service[nginx]', :delayed
   end
 
-  node.set['ies-letsencrypt']['domains'] = ssl_domains
+  template "#{vhost_dir}/ssl-letsencrypt-rewrites.conf" do
+    source 'redirect-ssl.conf.erb'
+    mode '0644'
+    owner node['nginx-app']['user']
+    group node['nginx-app']['group']
+    variables(
+      :ssl_dir => node['ies-letsencrypt']['ssl_dir'],
+      :domains => ssl_domains
+    )
+    notifies :reload, 'service[nginx]', :delayed
+  end
+
+  node.set['ies-letsencrypt']['domains'] = ssl_domains.keys
   include_recipe 'ies-letsencrypt'
 end

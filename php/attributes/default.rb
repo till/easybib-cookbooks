@@ -73,3 +73,11 @@ default['poppler']['package_distro'] = 'trusty'
 default['poppler']['package_components'] = ['main']
 default['poppler']['package_key_uri'] = 'packagecloud-poppler.gpg'
 default['poppler']['package_list'] = ['poppler', 'poppler-glib', 'php-poppler-pdf']
+
+default['freetds'] = {
+  'server_name' => nil,
+  'host' => nil,
+  'port' => 1433,
+  'tds_version' => 8.0,
+  'charset' => 'UTF-8'
+}
