@@ -20,6 +20,7 @@ if node['easybib']['cluster_name'] == 'API Staging'
     php#{php_version}-bcmath
     php#{php_version}-dom
     php#{php_version}-soap
+    php#{php_version}-zip
     php-memcache
   )
 
