@@ -60,6 +60,8 @@ include_recipe 'php::module-soap'
 include_recipe 'php::module-tidy'
 include_recipe 'php::module-sybase'
 
+include_recipe 'php::module-sybase' if node['easybib']['cluster_name'] == 'API Staging'
+
 if is_aws
   include_recipe 'stack-api::deploy-silex'
 else
