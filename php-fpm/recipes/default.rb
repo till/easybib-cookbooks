@@ -79,3 +79,10 @@ bins.each do |php_bin|
 end
 
 include_recipe 'php-fpm::cloudwatch' if is_aws
+
+# PHP by default installs a sessioncleanup cron-job, which
+# a) we do not need, since all our session are stored in memcache
+# b) causes a PHP warning on all instances to be sent out to sysops@ due to currently missing tideways.so for php-7.1
+file '/etc/cron.d/php' do
+  action :delete
+end
