@@ -46,6 +46,10 @@ describe 'php-fpm::default' do
     end
   end
 
+  it 'removes the php session-cleanup cron-job' do
+    expect(chef_run).to delete_file('/etc/cron.d/php')
+  end
+
   # it "creates symlinks to all the binaries" do
   #  Mixlib::ShellOut.stub(:new).and_return(@shellout)
   #  ["pear", "peardev", "pecl", "phar", "phar.phar", "php-config", "phpize"].each do |bin|
