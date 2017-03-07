@@ -18,6 +18,7 @@ php_core_deps = %W(
   php#{php_version}-dom
   php#{php_version}-fileinfo
   php#{php_version}-fpm
+  php#{php_version}-gearman
   php#{php_version}-iconv
   php#{php_version}-intl
   php#{php_version}-json
