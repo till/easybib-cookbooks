@@ -1,17 +1,62 @@
-include_recipe 'ies::role-generic'
-include_recipe 'nginx-app::server'
-include_recipe 'php-fpm'
-include_recipe 'php-fpm::ohai'
-include_recipe 'php::module-phar'
-include_recipe 'php::module-zlib'
-include_recipe 'php::module-intl'
-include_recipe 'php::module-gearman'
-include_recipe 'php::module-zip'
-include_recipe 'php::module-zlib'
-include_recipe 'php::module-opcache'
-include_recipe 'php::module-tidy'
+php_version = node['stack_citationapi']['php_version']
 
-include_recipe 'tideways'
+node.normal['php']['extensions']['config_dir'] = "etc/php/#{php_version}/mods-available"
+node.normal['php']['ppa'] = {
+  'name' => 'ondrejphp',
+  'uri' => 'ppa:ondrej/php',
+  'package_prefix' => "php#{php_version}"
+}
+
+node.normal['php-apc']['package_prefix'] = 'php'
+
+php_core_deps = %W(
+  php#{php_version}-apcu
+  php#{php_version}-bcmath
+  php#{php_version}-cli
+  php#{php_version}-ctype
+  php#{php_version}-curl
+  php#{php_version}-dom
+  php#{php_version}-fileinfo
+  php#{php_version}-fpm
+  php#{php_version}-gearman
+  php#{php_version}-iconv
+  php#{php_version}-intl
+  php#{php_version}-json
+  php#{php_version}-mbstring
+  php#{php_version}-memcache
+  php#{php_version}-pdo-mysql
+  php#{php_version}-pdo-pgsql
+  php#{php_version}-phar
+  php#{php_version}-simplexml
+  php#{php_version}-soap
+  php#{php_version}-sockets
+  php#{php_version}-tidy
+  php#{php_version}-tokenizer
+  php#{php_version}-xml
+  php#{php_version}-xmlreader
+  php#{php_version}-xmlwriter
+  php#{php_version}-opcache
+  php#{php_version}-zip
+)
+
+node.normal['php-fpm'] = {
+  'prefix' => '',
+  'exec_prefix' => '/usr',
+  'fpm_config' => "etc/php/#{php_version}/fpm/php.ini",
+  'cli_config' => "etc/php/#{php_version}/cli/php.ini",
+  'pool_dir' => "etc/php/#{php_version}/fpm/pool.d",
+  'socketdir' => '/var/run/php',
+  'pid' => "/var/run/php/php#{php_version}-fpm.pid",
+  'packages' => php_core_deps.join(','),
+  'user' => 'www-data',
+  'group' => 'www-data'
+}
+
+link '/usr/local/bin/php' do
+  to '/usr/bin/php'
+end
+
+include_recipe 'ies::role-phpapp'
 
 node.set['composer']['environment'] = get_deploy_user if is_aws
 include_recipe 'composer::configure'
