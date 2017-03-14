@@ -26,5 +26,5 @@ default['nginx-app']['browser_caching']['config']['css|svg|map|js'] = {
 }
 
 default['stack-easybib'] = {
-    'php_version' => '5.6'
+  'php_version' => '5.6'
 }
