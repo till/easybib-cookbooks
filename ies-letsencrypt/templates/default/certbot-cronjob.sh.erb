@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 etc='<%=@etc_dir%>'
 config_file="$etc/cli.ini"
 limit=30
@@ -45,7 +46,7 @@ EXP=$(date -d "`openssl x509 -in $CERT_FILE -text -noout|grep "Not After"|cut -c
 NOW=$(date -d "now" +%s)
 DAYS=$(echo \( $EXP - $NOW \) / 86400 |bc)
 
-if [ "$EXP" -gt "$limit" ] ; then
+if [ "$DAYS" -gt "$limit" ] ; then
   echo "[DEBUG] The certificate is up to date, no need for renewal ($DAYS days left)."
   exit 0;
 fi
