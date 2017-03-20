@@ -1,5 +1,7 @@
 include_recipe 'stack-easybib::role-phpapp'
 
+include_recipe 'php::module-poppler-pdf'
+
 if is_aws
   include_recipe 'stack-easybib::deploy-gearman-worker'
 else

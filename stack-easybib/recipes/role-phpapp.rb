@@ -19,7 +19,6 @@ php_core_deps = %W(
   php#{php_version}-pdo-mysql
   php#{php_version}-pdo-pgsql
   php#{php_version}-phar
-  php#{php_version}-poppler-pdf
   php#{php_version}-posix
   php#{php_version}-simplexml
   php#{php_version}-soap
