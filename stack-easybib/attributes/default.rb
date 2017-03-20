@@ -43,3 +43,5 @@ default['php-fpm']['socketdir'] = '/var/run/php'
 default['php-fpm']['pid'] = "/var/run/php/php#{node['stack-easybib']['php_version']}-fpm.pid"
 default['php-fpm']['user'] = 'www-data'
 default['php-fpm']['group'] = 'www-data'
+
+default['gearmand']['name'] = 'php-gearman'
