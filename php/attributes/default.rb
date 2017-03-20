@@ -1,15 +1,16 @@
-default['php']['ppa']['name'] = 'easybib-ppa'
-default['php']['ppa']['uri'] = ::EasyBib::Ppa.ppa_mirror(node)
-default['php']['ppa']['package_prefix'] = 'php5-easybib'
+default['php']['version'] = '5.6'
+default['php']['ppa']['name'] = 'ondrejphp'
+default['php']['ppa']['uri'] = 'ppa:ondrej/php'
+default['php']['ppa']['package_prefix'] = "php#{node['php']['version']}"
 
-default['php']['extensions']['config_dir'] = 'etc/php'
+default['php']['extensions']['config_dir'] = "etc/php/#{node['php']['version']}/mods-available"
 default['php']['extensions']['ini_suffix'] = '-settings'
 
 default['php-aws-elasticache']['settings'] = {}
 
 default['php-apc'] = {}
 # custom prefix for package: php-apcu, instead of php5.6-apcu
-default['php-apc']['package_prefix'] = nil
+default['php-apc']['package_prefix'] = 'php'
 default['php-apc']['settings']['ttl'] = 0
 default['php-apc']['settings']['mmap_file_mask'] = '/dev/zero'
 default['php-apc']['settings']['shm_size'] = '70M'
