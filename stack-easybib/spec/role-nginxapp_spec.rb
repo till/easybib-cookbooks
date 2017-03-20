@@ -88,21 +88,6 @@ describe 'stack-easybib::role-nginxphpapp' do
             include("access_log #{access_log};")
           )
       end
-
-      describe 'pools' do
-        before do
-          node.override['php-fpm']['pools'] = %w(www1 www2 www3)
-        end
-
-        it 'creates three upstreams' do
-          node['php-fpm']['pools'].each do |pool_name|
-            expect(chef_run).to render_file(vhost)
-              .with_content(
-                include("unix:/var/run/php-fpm/#{pool_name}")
-              )
-          end
-        end
-      end
     end
   end
 end
