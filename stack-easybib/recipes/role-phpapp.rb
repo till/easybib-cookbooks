@@ -1,7 +1,6 @@
 php_version = node['stack-easybib']['php_version']
 
 php_core_deps = %W(
-  php#{php_version}-apcu
   php#{php_version}-bcmath
   php#{php_version}-cli
   php#{php_version}-ctype
@@ -9,21 +8,14 @@ php_core_deps = %W(
   php#{php_version}-dom
   php#{php_version}-fileinfo
   php#{php_version}-fpm
-  php#{php_version}-gearman
   php#{php_version}-iconv
   php#{php_version}-intl
   php#{php_version}-json
   php#{php_version}-mbstring
   php#{php_version}-memcache
-  php#{php_version}-mysqli
   php#{php_version}-pdo-mysql
-  php#{php_version}-pdo-pgsql
-  php#{php_version}-phar
-  php#{php_version}-posix
   php#{php_version}-simplexml
-  php#{php_version}-soap
   php#{php_version}-sockets
-  php#{php_version}-tidy
   php#{php_version}-tokenizer
   php#{php_version}-xml
   php#{php_version}-xmlreader
@@ -39,7 +31,14 @@ link '/usr/local/bin/php' do
 end
 
 include_recipe 'ies::role-phpapp'
-include_recipe 'supervisor'
-
+include_recipe 'php::module-apc'
+include_recipe 'php::module-gearman'
+include_recipe 'php::module-mysqli'
+include_recipe 'php::module-posix'
+include_recipe 'php::module-phar'
 include_recipe 'php::module-soap'
 include_recipe 'php::module-tidy'
+include_recipe 'php::module-soap'
+include_recipe 'php::module-tidy'
+
+include_recipe 'supervisor'

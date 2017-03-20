@@ -33,8 +33,13 @@ default['php']['ppa'] = {
   'package_prefix' => "php#{node['stack-easybib']['php_version']}"
 }
 default['php-apc']['package_prefix'] = 'php'
+default['php-gearman']['package_prefix'] = 'php'
+default['php-mysqli']['package_prefix'] = 'php'
+default['php-posix']['package_prefix'] = 'php'
+default['php-phar']['package_prefix'] = 'php'
+default['php-soap']['package_prefix'] = 'php'
+default['php-tidy']['package_prefix'] = 'php'
 default['gearmand']['package_prefix'] = 'php'
-default['gearmand']['name'] = 'php-gearman'
 
 default['php-fpm']['prefix'] = ''
 default['php-fpm']['exec_prefix'] = '/usr'
