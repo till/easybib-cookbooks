@@ -27,6 +27,8 @@ DEPENDENCIES
     path: ../ezproxy
   fail2ban
     path: ../fail2ban
+  gearmand
+    path: ../gearmand
   haproxy
     path: ../haproxy
   ies
@@ -116,6 +118,9 @@ GRAPH
     wt-data (>= 0.0.0)
   ezproxy (0.1.0)
   fail2ban (2.2.1)
+  gearmand (0.1.0)
+    ies-apt (>= 0.0.0)
+    monit (>= 0.0.0)
   haproxy (0.2.0)
     easybib (>= 0.0.0)
     ies-letsencrypt (>= 0.0.0)
@@ -152,12 +157,12 @@ GRAPH
   logrotate (1.9.2)
   monit (0.1.0)
     easybib (>= 0.0.0)
+    gearmand (>= 0.0.0)
     nginx-app (>= 0.0.0)
   nginx-app (0.1.0)
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
-    ies-letsencrypt (>= 0.0.0)
     ies-ssl (>= 0.0.0)
     php-fpm (>= 0.0.0)
     rsyslogd (>= 0.0.0)
@@ -204,6 +209,7 @@ GRAPH
     composer (>= 0.0.0)
     ezproxy (>= 0.0.0)
     ies (>= 0.0.0)
+    ies-letsencrypt (>= 0.0.0)
     ies-nodejs (>= 0.0.0)
     nginx-app (>= 0.0.0)
     nodejs (>= 0.0.0)
