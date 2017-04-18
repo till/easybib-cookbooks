@@ -9,6 +9,7 @@ package package_name do
 end
 
 php_config 'mysqli' do
+  load_priority 30
   config module_config
   load_priority node['php-mysqli']['load_priority']
   config_dir node['php']['extensions']['config_dir']

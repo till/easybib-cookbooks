@@ -31,7 +31,7 @@ describe 'php::module-apc' do
   end
 
   it 'creates apc-settings.ini' do
-    expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini')
+    expect(chef_run).to render_file('/opt/easybib/etc/php/20-apc-settings.ini')
   end
 
   # while we could test this using the php_ppa_package matcher, I opted to step into
@@ -47,7 +47,7 @@ describe 'php::module-apc' do
     conf << "apc.mmap_file_mask=\"/dev/zero\"\n"
     conf << "apc.shm_size=\"70M\"\n"
 
-    expect(chef_run).to render_file('/opt/easybib/etc/php/apc-settings.ini').with_content(conf)
+    expect(chef_run).to render_file('/opt/easybib/etc/php/20-apc-settings.ini').with_content(conf)
   end
 
   describe 'with load_priority set' do

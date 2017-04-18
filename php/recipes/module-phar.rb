@@ -9,6 +9,7 @@ php_ppa_package 'phar' do
 end
 
 php_config 'phar' do
+  load_priority 20
   config module_config
   load_priority node['php-phar']['load_priority']
   config_dir node['php']['extensions']['config_dir']

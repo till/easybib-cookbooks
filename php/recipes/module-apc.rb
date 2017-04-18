@@ -14,6 +14,7 @@ php_ppa_package 'apc' do
 end
 
 php_config 'apc' do
+  load_priority 20
   config apc_attributes
   load_priority node['php-apc']['load_priority']
   config_dir node['php']['extensions']['config_dir']
