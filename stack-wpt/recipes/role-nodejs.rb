@@ -1,5 +1,5 @@
 node.set['nodejs'] = {
-  'version' => '4.2.6',
+  'version' => '6.5.0',
   'install_method' => 'binary',
   'npm' => {
     'install_method' => 'from_latest',
