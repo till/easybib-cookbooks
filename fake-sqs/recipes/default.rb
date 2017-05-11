@@ -5,8 +5,17 @@ unless is_aws
 
   sqs_bin = '/usr/local/bin/fake_sqs'
 
+  sqs_deps = { 'builder' => '3.2.2', 'sinatra' => '1.4.8' }
+  sqs_deps.each do |sqs_dep, sqs_dep_version|
+    gem_package sqs_dep do
+      version sqs_dep_version
+      options '--conservative'
+    end
+  end
+
   gem_package 'fake_sqs' do
     version conf['version']
+    options '--ignore-dependencies'
   end
 
   # installed chef inside vagrant box demands this
