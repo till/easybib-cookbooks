@@ -15,7 +15,7 @@ unless is_aws
 
   gem_package 'fake_sqs' do
     version conf['version']
-    options '--conservative'
+    options '--ignore-dependencies'
   end
 
   # installed chef inside vagrant box demands this
