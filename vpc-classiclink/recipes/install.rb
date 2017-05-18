@@ -2,16 +2,10 @@
 # Cookbook Name:: vpc-classiclink
 # Recipe:: install
 #
+include_recipe 'python::pip'
 
-remote_file "/tmp/awscli-bundle.zip" do
-  source "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
-  owner "root"
-  group "root"
-  mode "0644"
-end
-
-bash "install-aws-cli" do
-  code "cd /tmp && rm -rf /tmp/awscli-bundle && unzip -o /tmp/awscli-bundle.zip && rm -rf /usr/local/aws && /tmp/awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws && rm /tmp/awscli-bundle.zip"
+python_pip "awscli" do
+ action :install
 end
 
 directory "/root/.aws/" do
