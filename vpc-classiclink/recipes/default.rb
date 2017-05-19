@@ -3,5 +3,5 @@
 # Recipe:: default
 #
 
-include_recipe "awscli"
-include_recipe "vpc-classiclink::classiclink"
+include_recipe 'awscli'
+include_recipe 'vpc-classiclink::classiclink'
