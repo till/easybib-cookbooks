@@ -3,9 +3,9 @@
 # Recipe:: classiclink
 #
 
-instance = get_instance
+this_instance = get_instance
 
-instance_id = instance['aws_instance_id']
+instance_id = this_instance['aws_instance_id'] unless this_instance == false
 vpc_id = node.fetch('vpc-classiclink', {}).fetch('classiclink_vpc_id', '')
 sg = node.fetch('vpc-classiclink', {}).fetch('classiclink_security_group_id', '')
 
