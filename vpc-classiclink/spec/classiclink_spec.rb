@@ -25,11 +25,12 @@ describe 'vpc-classiclink::default' do
       node.override['opsworks']['instance'] = { :aws_instance_id => 'SUPER_INSTANCE' }
       node.override['vpc-classiclink']['classiclink_vpc_id'] = 'SOME_VPC'
       node.override['vpc-classiclink']['classiclink_security_group_id'] = 'SOME_SG'
+      node.override['vpc-classiclink']['region'] = 'us-east-2'
     end
 
     it 'calls the registration' do
       expect(chef_run).to run_execute('attach-classiclink-to').with(
-        :command => /--instance-id SUPER_INSTANCE --vpc-id SOME_VPC --groups SOME_SG/
+        :command => /--instance-id SUPER_INSTANCE --vpc-id SOME_VPC --groups SOME_SG --region us-east-2/
       )
     end
   end
