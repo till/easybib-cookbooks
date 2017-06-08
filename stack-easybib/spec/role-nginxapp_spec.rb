@@ -98,7 +98,7 @@ describe 'stack-easybib::role-nginxphpapp' do
           node['php-fpm']['pools'].each do |pool_name|
             expect(chef_run).to render_file(vhost)
               .with_content(
-                include("unix:/var/run/php-fpm/#{pool_name}")
+                include("unix:/var/run/php/#{pool_name}")
               )
           end
         end

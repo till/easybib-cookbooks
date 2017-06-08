@@ -24,3 +24,29 @@ default['nginx-app']['browser_caching']['config']['css|svg|map|js'] = {
     'Vary "Accept-Encoding"'
   ]
 }
+default['stack-easybib']['php_version'] = '5.6'
+default['php']['extensions'] = {}
+default['php']['extensions']['config_dir'] = "etc/php/#{node['stack-easybib']['php_version']}/mods-available"
+default['php']['ppa'] = {
+  'name' => 'ondrejphp',
+  'uri' => 'ppa:ondrej/php',
+  'package_prefix' => "php#{node['stack-easybib']['php_version']}"
+}
+default['php-apc']['package_prefix'] = 'php'
+default['php-gearman']['package_prefix'] = 'php'
+default['php-mysqli']['package_prefix'] = 'php'
+default['php-posix']['package_prefix'] = 'php'
+default['php-phar']['package_prefix'] = 'php'
+default['php-soap']['package_prefix'] = 'php'
+default['php-tidy']['package_prefix'] = 'php'
+default['gearmand']['package_prefix'] = 'php'
+
+default['php-fpm']['prefix'] = ''
+default['php-fpm']['exec_prefix'] = '/usr'
+default['php-fpm']['fpm_config'] = "etc/php/#{node['stack-easybib']['php_version']}/fpm/php.ini"
+default['php-fpm']['cli_config'] = "etc/php/#{node['stack-easybib']['php_version']}/cli/php.ini"
+default['php-fpm']['pool_dir'] = "etc/php/#{node['stack-easybib']['php_version']}/fpm/pool.d"
+default['php-fpm']['socketdir'] = '/var/run/php'
+default['php-fpm']['pid'] = "/var/run/php/php#{node['stack-easybib']['php_version']}-fpm.pid"
+default['php-fpm']['user'] = 'www-data'
+default['php-fpm']['group'] = 'www-data'

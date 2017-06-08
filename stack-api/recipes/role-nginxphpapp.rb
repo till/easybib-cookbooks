@@ -59,6 +59,7 @@ include_recipe 'ies::role-phpapp'
 include_recipe 'php::module-soap'
 include_recipe 'php::module-tidy'
 include_recipe 'php::module-sybase'
+include_recipe 'vpc-classiclink::default'
 
 include_recipe 'php::module-sybase' if node['easybib']['cluster_name'] == 'API Staging'
 
