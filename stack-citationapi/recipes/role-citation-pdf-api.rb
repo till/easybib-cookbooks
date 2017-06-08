@@ -6,6 +6,6 @@ if is_aws
   include_recipe 'stack-citationapi::deploy-citationapi'
 else
   include_recipe 'redis'
-  include_recipe 'gearmand'
+  include_recipe 'ies-gearmand'
   include_recipe 'stack-citationapi::role-vagrant'
 end
