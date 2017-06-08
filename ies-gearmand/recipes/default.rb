@@ -7,7 +7,6 @@ package package_name
 
 template "/etc/default/#{package_name}" do
   mode   '0644'
-  cookbook 'gearmand'
   source 'gearmand.default.erb'
   variables(
     :port => node['ies-gearmand']['port'],
