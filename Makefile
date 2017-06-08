@@ -15,7 +15,6 @@ release:
 berkshelf:
 	cd stack-api; $(berks) package
 	cd stack-citationapi; $(berks) package
-	cd stack-cmbm; $(berks) package
 	cd stack-easybib; $(berks) package
 	cd stack-qa; $(berks) package
 	cd stack-research; $(berks) package
