@@ -1,1 +1,0 @@
-default['ops']['phpmyadmin']['servers'] = []
