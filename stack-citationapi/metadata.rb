@@ -11,6 +11,7 @@ supports 'ubuntu'
 
 depends 'composer'
 depends 'ies'
+depends 'ies-gearmand'
 depends 'ies-ssl'
 depends 'haproxy'
 depends 'memcache'
