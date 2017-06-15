@@ -32,7 +32,7 @@ describe 'stack-citationapi::role-citation-pdf-api' do
     end
 
     it 'pulls in all required recipes' do
-      expect(chef_run).to include_recipe('gearmand')
+      expect(chef_run).to include_recipe('ies-gearmand')
     end
   end
 end

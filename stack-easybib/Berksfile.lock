@@ -25,8 +25,6 @@ DEPENDENCIES
     path: ../fail2ban
   fake-sqs
     path: ../fake-sqs
-  gearmand
-    path: ../gearmand
   haproxy
     path: ../haproxy
   ies
@@ -127,9 +125,6 @@ GRAPH
   fake-sqs (0.1.0)
     easybib (>= 0.0.0)
     supervisor (>= 0.0.0)
-  gearmand (0.1.0)
-    ies-apt (>= 0.0.0)
-    monit (>= 0.0.0)
   haproxy (0.2.0)
     easybib (>= 0.0.0)
     ies-letsencrypt (>= 0.0.0)
@@ -155,8 +150,7 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
-  ies-gearmand (0.1.0)
-    gearmand (>= 0.0.0)
+  ies-gearmand (0.2.0)
     php (>= 0.0.0)
   ies-letsencrypt (0.1.0)
     cron (>= 0.0.0)
@@ -171,9 +165,9 @@ GRAPH
     haproxy (>= 0.0.0)
   logrotate (1.9.2)
   memcache (0.1.0)
-  monit (0.1.0)
+  monit (0.2.0)
     easybib (>= 0.0.0)
-    gearmand (>= 0.0.0)
+    ies-gearmand (>= 0.0.0)
     nginx-app (>= 0.0.0)
   mysql (6.1.2)
   nginx-app (0.1.0)
@@ -217,7 +211,7 @@ GRAPH
     easybib (>= 0.0.0)
   rsyslog (2.2.0)
   rsyslogd (0.1.0)
-  stack-easybib (0.2.0)
+  stack-easybib (0.3.0)
     fake-sqs (>= 0.0.0)
     haproxy (>= 0.0.0)
     ies (>= 0.0.0)
@@ -237,8 +231,7 @@ GRAPH
     stack-service (>= 0.0.0)
     supervisor (>= 0.0.0)
     wt-data (>= 0.0.0)
-  stack-service (0.2.0)
-    gearmand (>= 0.0.0)
+  stack-service (0.3.0)
     ies (>= 0.0.0)
     ies-gearmand (>= 0.0.0)
     logrotate (>= 0.0.0)

@@ -27,14 +27,14 @@ DEPENDENCIES
     path: ../ezproxy
   fail2ban
     path: ../fail2ban
-  gearmand
-    path: ../gearmand
   haproxy
     path: ../haproxy
   ies
     path: ../ies
   ies-apt
     path: ../ies-apt
+  ies-gearmand
+    path: ../ies-gearmand
   ies-letsencrypt
     path: ../ies-letsencrypt
   ies-nodejs
@@ -118,9 +118,6 @@ GRAPH
     wt-data (>= 0.0.0)
   ezproxy (0.1.0)
   fail2ban (2.2.1)
-  gearmand (0.1.0)
-    ies-apt (>= 0.0.0)
-    monit (>= 0.0.0)
   haproxy (0.2.0)
     easybib (>= 0.0.0)
     ies-letsencrypt (>= 0.0.0)
@@ -146,6 +143,8 @@ GRAPH
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
     easybib (>= 0.0.0)
+  ies-gearmand (0.2.0)
+    php (>= 0.0.0)
   ies-letsencrypt (0.1.0)
     cron (>= 0.0.0)
   ies-nodejs (0.1.0)
@@ -155,9 +154,9 @@ GRAPH
   ies-ssl (0.1.0)
     haproxy (>= 0.0.0)
   logrotate (1.9.2)
-  monit (0.1.0)
+  monit (0.2.0)
     easybib (>= 0.0.0)
-    gearmand (>= 0.0.0)
+    ies-gearmand (>= 0.0.0)
     nginx-app (>= 0.0.0)
   nginx-app (0.1.0)
     apt (>= 0.0.0)
@@ -203,12 +202,13 @@ GRAPH
     nodejs (~> 2.0)
   sinopia-github (0.0.1)
     sinopia (>= 0.0.0)
-  stack-qa (0.1.0)
+  stack-qa (0.2.0)
     aptly (>= 0.0.0)
     bash (>= 0.0.0)
     composer (>= 0.0.0)
     ezproxy (>= 0.0.0)
     ies (>= 0.0.0)
+    ies-gearmand (>= 0.0.0)
     ies-letsencrypt (>= 0.0.0)
     ies-nodejs (>= 0.0.0)
     nginx-app (>= 0.0.0)

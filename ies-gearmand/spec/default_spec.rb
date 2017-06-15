@@ -37,7 +37,6 @@ describe 'ies-gearmand::default' do
     it 'installs defaults' do
       expect(chef_run).to create_template(default_file)
         .with(
-          :cookbook => 'gearmand',
           :variables => {
             :port => 31_337,
             :log => '--syslog -l stderr'
