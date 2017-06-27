@@ -1,0 +1,10 @@
+check process solr
+   matching "solr"
+   start program = "/usr/sbin/service apache-solr start"
+   stop program = "/usr/sbin/service apache-solr stop"
+   restart program = "/usr/sbin/service apache-solr restart"
+   if failed
+        port 80
+        protocol http
+        request "/research/index/search?sort_by=&last_search=&search=chegg&Search=Search"
+   for 3 cycles then restart
