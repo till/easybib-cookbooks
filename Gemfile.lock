@@ -2,10 +2,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
-    appraisal (2.1.0)
-      bundler
-      rake
-      thor (>= 0.14.0)
     ast (2.3.0)
     aws-sdk (1.66.0)
       aws-sdk-v1 (= 1.66.0)
@@ -81,7 +77,6 @@ GEM
       ast (~> 2.2)
     powerpack (0.1.1)
     rainbow (2.1.0)
-    rake (11.3.0)
     retryable (2.0.4)
     ridley (4.4.2)
       addressable
@@ -127,10 +122,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  appraisal (~> 2.1.0)
   aws-sdk (~> 1.0)
   berkshelf (~> 3.3)
   rubocop (~> 0.45.0)
 
 BUNDLED WITH
-   1.13.6
+   1.13.7
