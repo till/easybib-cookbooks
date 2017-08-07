@@ -11,7 +11,7 @@ default['nginx-app']['client_max_body_size'] = '5m'
 default['nginx-app']['error_log'] = 'syslog:server=unix:/dev/log,tag=nginx_error error'
 default['nginx-app']['error_echo_port'] = '23232'
 
-default['nginx-app']['access_log'] = 'syslog:server=unix:/dev/log,tag=nginx_access'
+default['nginx-app']['access_echo_log'] = 'syslog:server=unix:/dev/log,tag=nginx_access'
 default['nginx-app']['access_echo_port'] = '23233'
 
 default['nginx-app']['default_router'] = 'index.php'
