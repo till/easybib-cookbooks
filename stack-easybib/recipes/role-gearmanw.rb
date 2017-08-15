@@ -16,7 +16,7 @@ if is_aws
     month '*'
     weekday '*'
     user 'www-data'
-    command "find /tmp/ -daystart -maxdepth 1 -mmin +240 -type f -name 'pdf-autocite*' -execdir rm -- {} \;"
+    command "find /tmp/ -daystart -maxdepth 1 -mmin +240 -type f -name 'pdf-autocite*' -execdir rm -- {} \\;"
   end
 
 else

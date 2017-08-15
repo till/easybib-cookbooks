@@ -23,7 +23,7 @@ describe 'stack-easybib::role-gearmanw' do
     it 'sets up the cronjob' do
       expect(chef_run).to create_cron_d('pdf_autocite_cleanup')
         .with(
-          :command => "find /tmp/ -daystart -maxdepth 1 -mmin +240 -type f -name 'pdf-autocite*' -execdir rm -- {} \;"
+          :command => "find /tmp/ -daystart -maxdepth 1 -mmin +240 -type f -name 'pdf-autocite*' -execdir rm -- {} \\;"
         )
     end
   end
