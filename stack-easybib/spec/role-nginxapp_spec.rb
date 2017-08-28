@@ -82,8 +82,8 @@ describe 'stack-easybib::role-nginxphpapp' do
           )
       end
 
-      it 'not not configure access-logging' do
-        expect(chef_run).to_not render_file(vhost)
+      it 'configures access_log\'ing' do
+        expect(chef_run).to render_file(vhost)
           .with_content(
             include("access_log #{access_log};")
           )

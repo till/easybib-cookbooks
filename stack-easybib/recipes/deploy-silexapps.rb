@@ -16,6 +16,7 @@ node['deploy'].each do |application, deploy|
   end
 
   easybib_nginx application do
+    access_log node['nginx-app']['access_log']
     cookbook 'stack-easybib'
     config_template 'silex.conf.erb'
     notifies :reload, 'service[nginx]', :delayed

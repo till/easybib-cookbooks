@@ -7,7 +7,7 @@ server {
 
     index <%=@default_router%> index.php;
 
-    access_log <%= @access_log %>;
+    access_log <%=@access_log %>;
 
     location ~* (\.deploy_configuration) {
         deny all;
