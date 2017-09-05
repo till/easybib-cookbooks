@@ -16,4 +16,4 @@ depends "apt"
 
 # needed for redhat, centos, fedora
 # available @ https://supermarket.chef.io/cookbooks/yum
-depends "yum"
+#depends "yum"
