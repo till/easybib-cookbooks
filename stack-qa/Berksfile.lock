@@ -71,6 +71,8 @@ DEPENDENCIES
     path: ../rsyslogd
   satis
     path: ../satis
+  scout
+    path: ../scout
   sinopia
     path: ../sinopia
   sinopia-github
@@ -196,6 +198,8 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
+  scout (0.4.0)
+    apt (>= 0.0.0)
   sinopia (0.3.0)
     apt (>= 0.0.0)
     logrotate (>= 0.0.0)

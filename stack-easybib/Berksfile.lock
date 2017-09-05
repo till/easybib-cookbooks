@@ -77,6 +77,8 @@ DEPENDENCIES
     path: ../rsyslog
   rsyslogd
     path: ../rsyslogd
+  scout
+    path: ../scout
   stack-easybib
     path: .
   stack-service
@@ -211,7 +213,10 @@ GRAPH
     easybib (>= 0.0.0)
   rsyslog (2.2.0)
   rsyslogd (0.1.0)
-  stack-easybib (0.3.0)
+  scout (0.4.0)
+    apt (>= 0.0.0)
+  stack-easybib (0.4.0)
+    cron (>= 0.0.0)
     fake-sqs (>= 0.0.0)
     haproxy (>= 0.0.0)
     ies (>= 0.0.0)
@@ -228,6 +233,7 @@ GRAPH
     php-fpm (>= 0.0.0)
     postfix (>= 0.0.0)
     redis (>= 0.0.0)
+    scout (>= 0.0.0)
     stack-service (>= 0.0.0)
     supervisor (>= 0.0.0)
     wt-data (>= 0.0.0)

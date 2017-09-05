@@ -17,6 +17,7 @@ python | [master](https://github.com/poise/python/commit/56424ab64b06f584c13dba2
 rabbitmq | [3.4.0](https://github.com/jjasghar/rabbitmq/commit/b71c0a068419ad10324e8d13b517fafbf373c0c3) | removed yum, ignored in our cs/test setup
 rsyslog | [2.2.0](https://github.com/chef-cookbooks/rsyslog/releases/tag/v2.2.0) | 2.2.0 because 3.0.0+ is Chef 12+ only
 runit | [master](https://github.com/hw-cookbooks/runit/commit/1ebeffa0f907811302a22b137015012ed6f11193) | dependency on packagecloud disabled
+scout | [scoutd](https://github.com/pingdomserver/scout_cookbooks/commit/c7f07ece69d361f2d9932dc01990290253ceb920) | For Pingdom Server
 sinopia | [0.3.0](https://github.com/BarthV/sinopia-cookbook/releases/tag/0.3.0) | removed dependency `user` cookbook, fix: use user resource
 supervisor | [master](https://github.com/poise/supervisor/commit/0806cb6fccfdaf3da5959ce9c2bc42287ad50b26) | ...
 xml| [1.2.4](https://github.com/opscode-cookbooks/xml/tree/v1.2.4) |
