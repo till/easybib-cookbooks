@@ -1,5 +1,5 @@
 {
-  "box_file": "kaorimatz/ubuntu-16.04-amd64",
+  "box_file": "ubuntu/trusty64",
   "box_version": "",
   "box_ip": "10.10.10.108",
   "chef_version": "11.10",

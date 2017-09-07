@@ -4,28 +4,28 @@
 
 Chef::Log.info "Loading: #{cookbook_name}::#{recipe_name}"
 
-case node[:platform]
-when 'ubuntu'
-  apt_repository "scout" do
-    key "https://archive.scoutapp.com/scout-archive.key"
-    uri "http://archive.scoutapp.com"
-    components ["ubuntu", "main"]
-  end
-when 'redhat', 'centos'
-  yum_repository "scout" do
-    description "Scout server monitoring - scoutapp.com"
-    baseurl "http://archive.scoutapp.com/rhel/$releasever/main/$basearch/"
-    gpgkey "https://archive.scoutapp.com/RPM-GPG-KEY-scout"
-    action :create
-  end
-when 'fedora'
-  yum_repository "scout" do
-    description "Scout server monitoring - scoutapp.com"
-    baseurl "http://archive.scoutapp.com/fedora/$releasever/main/$basearch/"
-    gpgkey "https://archive.scoutapp.com/RPM-GPG-KEY-scout"
-    action :create
-  end
-end
+#case node[:platform]
+#when 'ubuntu'
+#  apt_repository "scout" do
+#    key "https://archive.scoutapp.com/scout-archive.key"
+#    uri "http://archive.scoutapp.com"
+#    components ["ubuntu", "main"]
+#  end
+#when 'redhat', 'centos'
+#  yum_repository "scout" do
+#    description "Scout server monitoring - scoutapp.com"
+#    baseurl "http://archive.scoutapp.com/rhel/$releasever/main/$basearch/"
+#    gpgkey "https://archive.scoutapp.com/RPM-GPG-KEY-scout"
+#    action :create
+#  end
+#when 'fedora'
+#  yum_repository "scout" do
+#    description "Scout server monitoring - scoutapp.com"
+#    baseurl "http://archive.scoutapp.com/fedora/$releasever/main/$basearch/"
+#    gpgkey "https://archive.scoutapp.com/RPM-GPG-KEY-scout"
+#    action :create
+#  end
+#end
 
 if node[:scout][:account_key]
   ENV['SCOUT_KEY'] = node[:scout][:account_key]
