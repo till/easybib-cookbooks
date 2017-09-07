@@ -8,7 +8,7 @@ include_recipe 'haproxy::logs'
 # recipe list, no need to have them here
 
 node.normal['scout']['environment'] = get_cluster_name
-node.normal['scout']['roles'] = [:loadbalancer]
+node.normal['scout']['roles'] = 'loadbalancer'
 include_recipe 'ies-scout::default'
 
 package 'ngrep'
