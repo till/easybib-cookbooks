@@ -7,9 +7,7 @@ include_recipe 'haproxy::logs'
 # haproxy::default and haproxy::configure are being executed/specified in the opsworks
 # recipe list, no need to have them here
 
-node.normal['scout']['hostname'] = get_hostname(node)
-
-include_recipe 'scout'
+include_recipe 'ies-scout::default'
 
 package 'ngrep'
 
