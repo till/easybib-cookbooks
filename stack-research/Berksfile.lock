@@ -45,6 +45,8 @@ DEPENDENCIES
     path: ../ies-nodejs
   ies-route53
     path: ../ies-route53
+  ies-scout
+    path: ../ies-scout
   ies-ssl
     path: ../ies-ssl
   logrotate
@@ -176,6 +178,8 @@ GRAPH
     nodejs (>= 0.0.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
+  ies-scout (0.1.0)
+    scout (>= 0.0.0)
   ies-ssl (0.1.0)
     haproxy (>= 0.0.0)
   logrotate (1.9.2)
@@ -241,6 +245,7 @@ GRAPH
     ies (>= 0.0.0)
     ies-mysql (>= 0.0.0)
     ies-nodejs (>= 0.0.0)
+    ies-scout (>= 0.0.0)
     ies-ssl (>= 0.0.0)
     memcache (>= 0.0.0)
     monit (>= 0.0.0)
@@ -252,7 +257,6 @@ GRAPH
     php-fpm (>= 0.0.0)
     postfix (>= 0.0.0)
     redis (>= 0.0.0)
-    scout (>= 0.0.0)
     stack-service (>= 0.0.0)
     supervisor (>= 0.0.0)
     wt-data (>= 0.0.0)
