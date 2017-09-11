@@ -40,6 +40,7 @@ end
     not_if do
       node['php']['ppa']['package_prefix'] == 'php5-easybib'
     end
+    ignore_failure true
   end
 
   link "#{php_api_path}/Tideways.php" do
