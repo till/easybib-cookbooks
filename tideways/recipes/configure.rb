@@ -30,16 +30,17 @@ execute 'phpenmod -s ALL -v ALL tideways' do
 end
 
 {
-  '/usr/lib/php/20121212/' => 5.5,
   '/usr/lib/php/20131226/' => 5.6,
   '/usr/lib/php/20151012/' => 7.0,
-  '/usr/lib/php/20160303/' => 7.1
+  '/usr/lib/php/20160303/' => 7.1,
+  '/usr/lib/php/20170718/' => 7.2
 }.each do |php_api_path, php_version|
   link "#{php_api_path}/tideways.so" do
     to "/usr/lib/tideways/tideways-php-#{php_version}.so"
     not_if do
       node['php']['ppa']['package_prefix'] == 'php5-easybib'
     end
+    ignore_failure true
   end
 
   link "#{php_api_path}/Tideways.php" do

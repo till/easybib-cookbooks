@@ -1,4 +1,5 @@
 {
+  "deploy": [],
   "haproxy" : {
     "acls": {},
     "ssl": "on",
@@ -8,6 +9,9 @@
     "domains": [
       "local.horst"
     ]
+  },
+  "scout": {
+    "account_key": "--REPLACE-ME--"
   },
   "sysop_email": "till@chegg.com"
 }

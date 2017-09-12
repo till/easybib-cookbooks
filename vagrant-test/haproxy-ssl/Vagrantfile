@@ -1,4 +1,4 @@
-ENV['recipe_runlist'] = 'haproxy'
+ENV['recipe_runlist'] = 'stack-easybib::role-lb'
 ENV['chef_json'] = "#{File.dirname(__FILE__)}/web-dna.json"
 
 require_relative '../vagrant-provision'
