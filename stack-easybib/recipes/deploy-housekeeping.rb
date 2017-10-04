@@ -4,12 +4,8 @@ include_recipe 'nginx-app::service'
 node['deploy'].each do |application, deploy|
 
   case application
-  when 'account_expiration'
-    next unless allow_deploy(application, 'account_expiration', 'housekeeping')
   when 'easybib'
     next unless allow_deploy(application, 'easybib', 'housekeeping')
-  when 'schoolanalytics'
-    next unless allow_deploy(application, 'schoolanalytics', 'housekeeping')
   when 'sharing'
     next unless allow_deploy(application, 'sharing', 'housekeeping')
   when 'easybib_api'
