@@ -4,10 +4,10 @@ apt_repository 'scout' do
   components %w(ubuntu main)
 end
 
-user "Add a user for scout" do
-  home "/var/lib/scoutd"
-  shell "/bin/sh"
-  username "scoutd"
+user 'Add a user for scout' do
+  home '/var/lib/scoutd'
+  shell '/bin/sh'
+  username 'scoutd'
 end
 
 node.normal['scout']['hostname'] = get_hostname(node)
