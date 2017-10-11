@@ -12,4 +12,9 @@ end
 
 node.normal['scout']['hostname'] = get_hostname(node)
 
+gem_package 'nokogiri' do
+  options('--minimal-deps --conservative --no-rdoc --no-ri')
+  version '1.6.8.1'
+end
+
 include_recipe 'scout::default'
