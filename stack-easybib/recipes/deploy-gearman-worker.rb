@@ -15,7 +15,7 @@ node['deploy'].each do |application, deploy|
 
   easybib_deploy application do
     deploy_data deploy
-    notifies :restart, "service[pecl-manager]"
+    notifies :restart, 'service[pecl-manager]'
   end
 
   include_recipe 'monit::pecl-manager'
