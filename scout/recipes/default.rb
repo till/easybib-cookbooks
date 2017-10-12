@@ -84,7 +84,7 @@ end
 
 if node[:scout][:delete_on_shutdown]
   gem_package 'scout_api' do
-    options('--minimal-deps --conservative --no-rdoc --no-ri')
+    options('--conservative --no-rdoc --no-ri')
     version '1.1.3'
   end
   template "/etc/rc0.d/scout_shutdown" do
