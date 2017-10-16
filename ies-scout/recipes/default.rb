@@ -10,6 +10,14 @@ user 'Add a user for scout' do
   username 'scoutd'
 end
 
+Chef::Log.error('delete_on_shutdown is broken') if node['scout']['delete_on_shutdown'] == true
+
 node.normal['scout']['hostname'] = get_hostname(node)
+
+gem_package 'nokogiri' do
+  options('--conservative --no-rdoc --no-ri')
+  version '1.6.8.1'
+  only_if node['scout']['delete_on_shutdown'] == true
+end
 
 include_recipe 'scout::default'
