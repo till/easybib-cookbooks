@@ -1,4 +1,4 @@
-rake=bundle exec appraisal rake
+rake=bundle exec rake
 berks=bundle exec berks
 
 cs:

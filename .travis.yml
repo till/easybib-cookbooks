@@ -8,10 +8,6 @@ script:
   - bundle exec rake
   - make berkshelf
 
-gemfile:
-  - gemfiles/chef_11.10.gemfile
-  - gemfiles/chef_12.7.gemfile
-
 before_deploy:
   - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
   - mkdir build
