@@ -17,6 +17,8 @@ default['php-apc']['load_priority'] = nil
 
 default['php-gearman'] = {}
 default['php-gearman']['package_prefix'] = nil
+default['php-gearman']['package_uri'] = 'ppa:ondrej/pkg-gearman'
+default['php-gearman']['package_distro'] = 'trusty'
 
 default['php-mysqli']['settings']['reconnect'] = 1
 default['php-mysqli']['load_priority'] = nil
