@@ -20,6 +20,14 @@ execute 'systemctl daemon-reload' do
   end
 end
 
+cookbook_file "/etc/init/#{name}.conf" do
+  action :create_if_missing
+  source 'upstart.conf'
+  owner 'root'
+  group 'root'
+  mode 00644
+end
+
 cookbook_file "/etc/init/#{name}.override" do
   source 'upstart.conf'
   owner 'root'
