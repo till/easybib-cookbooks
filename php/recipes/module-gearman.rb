@@ -11,5 +11,5 @@ apt_repository 'pkg-gearman' do
 end
 
 php_ppa_package 'gearman' do
-  package_prefix node['php-gearman']['package_prefix']
+  package_prefix node['php']['ppa']['package_prefix']
 end

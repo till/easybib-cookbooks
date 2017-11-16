@@ -16,12 +16,10 @@ default['php-apc']['settings']['shm_size'] = '70M'
 default['php-apc']['load_priority'] = nil
 
 default['php-gearman'] = {}
-default['php-gearman']['package_prefix'] = nil
 default['php-gearman']['package_uri'] = 'ppa:ondrej/php'
 default['php-gearman']['package_distro'] = 'trusty'
 # needed for above for dependency
 default['pkg-gearman'] = {}
-default['pkg-gearman']['package_prefix'] = nil
 default['pkg-gearman']['package_uri'] = 'ppa:ondrej/pkg-gearman'
 default['pkg-gearman']['package_distro'] = 'trusty'
 
