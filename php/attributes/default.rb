@@ -16,8 +16,8 @@ default['php-apc']['settings']['shm_size'] = '70M'
 default['php-apc']['load_priority'] = nil
 
 default['php-gearman'] = {}
-default['php-gearman']['package_prefix'] = nil
-default['php-gearman']['package_uri'] = 'ppa:ondrej/pkg-gearman'
+default['php-gearman']['package_prefix'] = 'php5.6'
+default['php-gearman']['package_uri'] = 'ppa:ondrej/php'
 default['php-gearman']['package_distro'] = 'trusty'
 
 default['php-mysqli']['settings']['reconnect'] = 1
