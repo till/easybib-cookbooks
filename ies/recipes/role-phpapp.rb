@@ -6,6 +6,7 @@ include_recipe 'php::module-phar'
 include_recipe 'php::module-zlib'
 include_recipe 'php::module-intl'
 include_recipe 'php::module-opcache'
+include_recipe 'php::module-gearman'
 
 node.set['composer']['environment'] = get_deploy_user if is_aws
 include_recipe 'composer::configure'
