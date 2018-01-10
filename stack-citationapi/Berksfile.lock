@@ -75,6 +75,8 @@ DEPENDENCIES
     path: ../wt-data
   xml
     path: ../xml
+  php-redis
+    path: ../php-redis
 
 GRAPH
   apt (2.6.1)
@@ -196,6 +198,7 @@ GRAPH
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
     php-pear (>= 0.0.0)
+    php-redis (>= 0.0.0)
     redis (>= 0.0.0)
     tideways (>= 0.0.0)
     wt-data (>= 0.0.0)
@@ -207,5 +210,6 @@ GRAPH
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   wt-data (0.1.0)
+  php-redis (>= 0.1.1)
   xml (1.2.3)
     build-essential (>= 0.0.0)
