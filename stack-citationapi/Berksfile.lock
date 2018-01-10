@@ -210,6 +210,6 @@ GRAPH
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   wt-data (0.1.0)
-  php-redis (>= 0.1.1)
+  php-redis (0.1.1)
   xml (1.2.3)
     build-essential (>= 0.0.0)
