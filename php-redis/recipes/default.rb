@@ -1,5 +1,5 @@
 remote_file "#{Chef::Config[:file_cache_path]}/phpredis.tar.gz" do
-  source "#{node['php_redis']['url']}"
+  source node['php_redis']['url']
   not_if 'php -m | grep redis'
 end
 
