@@ -5,6 +5,9 @@ describe 'stack-citationapi::role-citation-pdf-api' do
   let(:chef_run)    { runner.converge(described_recipe) }
   let(:node)        { runner.node }
 
+  before do
+    stub_command('php -m | grep redis').and_return(true)
+  end
   describe 'OpsWorks' do
     before do
       node.override['opsworks']['stack']['name'] = 'Stack'
