@@ -23,3 +23,11 @@ file "#{node['php']['extensions']['config_dir']}/redis.ini" do
   content 'extension=redis.so'
   not_if 'php -m | grep redis'
 end
+
+link "#{node['php-redis']['cli_dir']}/redis.ini" do
+  to "#{node['php']['extensions']['config_dir']}/redis.ini"
+end
+
+link "#{node['php-redis']['fpm_dir']}/redis.ini" do
+  to "#{node['php']['extensions']['config_dir']}/redis.ini"
+end
