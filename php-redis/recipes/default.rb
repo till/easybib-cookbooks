@@ -6,7 +6,7 @@ end
 bash 'make & install phpredis' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
-  apt-get install "php#{node['php-redis']['php']['dev']}-dev" -y
+  apt-get install php5.6-dev php7.2-dev -y
   tar zxf phpredis.tar.gz
   cd phpredis-master
   phpize
