@@ -38,6 +38,9 @@ describe 'stack-citationapi::role-phpapp' do
   end
 
   before do
+    stub_command('php -m | grep redis').and_return(true)
+  end
+  before do
     node.override['opsworks']['stack']['name'] = 'Stack'
     node.override['opsworks']['instance']['layers'] = ['silex']
     node.override['opsworks']['instance']['hostname'] = 'host'

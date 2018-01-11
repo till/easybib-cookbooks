@@ -7,6 +7,9 @@ describe 'stack-citationapi::role-publicapi' do
   let(:node)     { runner.node }
 
   before do
+    stub_command('php -m | grep redis').and_return(true)
+  end
+  before do
     node.override['opsworks']['stack']['name'] = 'Stack'
     node.override['opsworks']['instance']['layers'] = ['bibapi']
     node.override['opsworks']['instance']['hostname'] = 'host'

@@ -1,0 +1,30 @@
+{
+  "name": "php-redis",
+  "version": "0.1.1",
+  "description": "Installs/Configures php-redis",
+  "long_description": "Installs/Configures php-redis",
+  "maintainer": "Robert Coleman",
+  "maintainer_email": "github@robert.net.nz",
+  "license": "MIT",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+    "php": ">= 0.0.0"
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}

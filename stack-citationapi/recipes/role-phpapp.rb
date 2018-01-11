@@ -56,6 +56,7 @@ link '/usr/local/bin/php' do
 end
 
 include_recipe 'ies::role-phpapp'
+include_recipe 'php-redis::default'
 
 node.set['composer']['environment'] = get_deploy_user if is_aws
 include_recipe 'composer::configure'
