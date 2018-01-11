@@ -6,6 +6,7 @@ end
 bash 'make & install phpredis' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
+  apt-get install php#{node['php-redis']['php']['dev']}-dev -y
   tar zxf phpredis.tar.gz
   cd phpredis-master
   phpize
@@ -15,7 +16,7 @@ bash 'make & install phpredis' do
   not_if 'php -m | grep redis'
 end
 
-file "#{node['php']['ext_conf_dir']}/redis.ini" do
+file "#{node['php']['extensions']['config_dir']}/redis.ini" do
   owner 'root'
   group 'root'
   mode '0644'
