@@ -4,6 +4,8 @@ default['php']['ppa']['package_prefix'] = 'php5-easybib'
 
 default['php']['extensions']['config_dir'] = 'etc/php'
 default['php']['extensions']['ini_suffix'] = '-settings'
+default['php']['cli_dir'] = '/etc/php/5.6/cli/conf.d'
+default['php']['fpm_dir'] = '/etc/php/5.6/fpm/conf.d'
 
 default['php-aws-elasticache']['settings'] = {}
 
