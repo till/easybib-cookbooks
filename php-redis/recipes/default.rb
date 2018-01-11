@@ -24,7 +24,7 @@ file "#{node['php']['extensions']['config_dir']}/redis.ini" do
   not_if 'php -m | grep redis'
 end
 
-file "#{node['php-redis']['cli_dir']}/redis.ini" do
+file "#{node['php']['cli_dir']}/redis.ini" do
   owner 'root'
   group 'root'
   mode '0644'
@@ -32,7 +32,7 @@ file "#{node['php-redis']['cli_dir']}/redis.ini" do
   not_if 'php -m | grep redis'
 end
 
-file "#{node['php-redis']['fpm_dir']}/redis.ini" do
+file "#{node['php']['fpm_dir']}/redis.ini" do
   owner 'root'
   group 'root'
   mode '0644'
