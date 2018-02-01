@@ -19,6 +19,7 @@ describe 'haproxy::configure' do
               :url => '/url',
               :host => 'app2.tld'
             },
+            :http_set_path => '/some-random-path/here.html',
             :servers => {
               'second-app-www1' => 'second.app1.tld',
               'second-app-www2' => 'second.app2.tld'
@@ -33,12 +34,12 @@ describe 'haproxy::configure' do
   let(:chef_run) { runner.converge('haproxy::configure') }
   let(:node) { runner.node }
 
-  describe 'forward servers set - check settings' do
+  describe 'forward servers with set path - check settings' do
     before do
       stub_command('pgrep haproxy').and_return(false)
     end
 
-    it 'Configures haproxy' do
+    it 'Configures haproxy with http-request set-path when defined' do
 
       expect(chef_run).to create_template('/etc/haproxy/haproxy.cfg').with(
         :user => 'root',
@@ -47,30 +48,9 @@ describe 'haproxy::configure' do
       )
 
       expect(chef_run).to render_file('/etc/haproxy/haproxy.cfg').with_content(
-        'backend app2_forward'
+        'http-request set-path /some-random-path/here.html'
       )
 
-      expect(chef_run).to render_file('/etc/haproxy/haproxy.cfg').with_content(
-        'server second-app-www1 second.app1.tld:80'
-      )
-
-      expect(chef_run).to render_file('/etc/haproxy/haproxy.cfg').with_content(
-        'server second-app-www2 second.app2.tld:80'
-      )
-
-    end
-
-    it 'Configures haproxy without http-request set-path when not defined' do
-
-      expect(chef_run).to create_template('/etc/haproxy/haproxy.cfg').with(
-        :user => 'root',
-        :group => 'root',
-        :mode => 0644
-      )
-
-      expect(chef_run).not_to render_file('/etc/haproxy/haproxy.cfg').with_content(
-        'http-request set-path'
-      )
     end
   end
 end
