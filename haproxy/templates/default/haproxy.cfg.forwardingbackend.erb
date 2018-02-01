@@ -22,7 +22,9 @@ end
 backend <%= @layername %>_forward
   balance roundrobin
   <%if !@http_set_path.nil? -%>
-  http-request set-path <%= @http_set_path %>
+  # this is for 1.5
+  reqirep  ^([^\ :]*)\ /(.*) \1\ <%= @http_set_path %>\2
+  # this is for 1.6 and above: http-request set-path <%= @http_set_path %>
   <% end -%>
   option httpchk <%= health_check_string %>
   <% @servers.each do |name,host| -%>
