@@ -22,11 +22,14 @@ end
 backend <%= @layername %>_forward
   balance roundrobin
   <%if !@http_set_path.nil? -%>
+  http-request set-header Host <%= host %>
+  http-request del-header Authorization
   # this is for 1.5
-  reqirep  ^([^\ :]*)\ /(.*) \1\ <%= @http_set_path %>\2
+  reqirep ^([^\ ]*)\ <%= @http_match_path %>\ (.*)$ \1\ <%= @http_set_path %>\ \2
   # this is for 1.6 and above: http-request set-path <%= @http_set_path %>
   <% end -%>
   option httpchk <%= health_check_string %>
   <% @servers.each do |name,host| -%>
   server <%= name %> <%= host %>:80 weight 10 maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
 <% end -%>
+
