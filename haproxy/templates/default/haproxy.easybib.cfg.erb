@@ -37,8 +37,9 @@ if !node['haproxy']['forwarding_layers'].nil?
   <%= render "haproxy.cfg.forwardingbackend.erb", :variables => {
       'layername' => layername,
       'health_check' => layerconfig['health_check'],
-      'http_set_path' => layerconfig['http_set_path'],
       'http_set_host' => layerconfig['http_set_host'],
+      'http_set_path' => layerconfig['http_set_path'],
+      'http_match_path' => layerconfig['http_match_path'],
       'haproxy_check_interval' => layerconfig['haproxy_check_interval'],
       'servers' => layerconfig['servers'],
       'node' => @node

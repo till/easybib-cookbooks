@@ -6,7 +6,10 @@ haproxy_rise = 2
 haproxy_fall = 3
 
 # in milliseconds - 10 seconds is too slow
-haproxy_check_interval_set = haproxy_check_interval || 3000
+haproxy_check_interval_set = 3000
+if !@haproxy_check_interval.nil?
+  haproxy_check_interval_set = @haproxy_check_interval
+end
 
 # max connections
 haproxy_maxconn = 255
@@ -22,16 +25,16 @@ end
 backend <%= @layername %>_forward
   balance roundrobin
   <%if !@http_set_host.nil? -%>
-  http-request set-header Host <%= http_set_host %>
+  http-request set-header Host <%= @http_set_host %>
   http-request del-header Authorization
   <% end -%>
-  <%if !@http_set_path.nil? -%>
+  <%if !@http_set_path.nil? && !@http_match_path.nil? -%>
   # this is for 1.5
   reqirep ^([^\ ]*)\ <%= @http_match_path %>\ (.*)$ \1\ <%= @http_set_path %>\ \2
   # this is for 1.6 and above: http-request set-path <%= @http_set_path %>
   <% end -%>
   option httpchk <%= health_check_string %>
   <% @servers.each do |name,host| -%>
-  server <%= name %> <%= host %>:80 weight 10 maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
+  server <%= name %> <%= host %>:80 weight 10 maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval_set %>
 <% end -%>
 
