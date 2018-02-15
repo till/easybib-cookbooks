@@ -20,6 +20,7 @@ describe 'haproxy::configure' do
               :host => 'app2.tld'
             },
             :http_set_path => '/some-random-path/here.html',
+            :http_set_host => 'second.host.tld',
             :servers => {
               'second-app-www1' => 'second.app1.tld',
               'second-app-www2' => 'second.app2.tld'
@@ -49,6 +50,13 @@ describe 'haproxy::configure' do
 
       expect(chef_run).to render_file('/etc/haproxy/haproxy.cfg').with_content(
         'http-request set-path /some-random-path/here.html'
+      )
+
+    end
+    it 'Configures haproxy with http-request set-header Host' do
+
+      expect(chef_run).to render_file('/etc/haproxy/haproxy.cfg').with_content(
+        'http-request set-header second.host.tld'
       )
 
     end
