@@ -6,7 +6,7 @@ haproxy_rise = 2
 haproxy_fall = 3
 
 # in milliseconds - 10 seconds is too slow
-haproxy_check_interval = 3000
+haproxy_check_interval_set = haproxy_check_interval || 3000
 
 # max connections
 haproxy_maxconn = 255
