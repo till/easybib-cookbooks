@@ -1,5 +1,5 @@
 # This cookbook enables VPC ClassicLink
-
+# For CodePipeline test
 Please create proper VPC, security group and if necessary peering connection between VPCs.
 
 ## Configuration
