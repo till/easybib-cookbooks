@@ -24,9 +24,13 @@ describe 'ies-gearmand::default' do
 
         expect(chef_run).to include_recipe('php::dependencies-ppa')
 
-        expect(chef_run).to add_apt_repository('ondrejphp')
+        #expect(chef_run).to add_apt_repository('ondrejphp')
+        #  .with(
+        #    :uri => 'ppa:ondrej/php'
+        #  )
+        expect(chef_run).to add_apt_repository('easybib-ppa')
           .with(
-            :uri => 'ppa:ondrej/php'
+            :uri => 'ppa:easybib/php55'
           )
       end
     end
