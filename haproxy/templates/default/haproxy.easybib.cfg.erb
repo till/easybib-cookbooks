@@ -41,6 +41,8 @@ if !node['haproxy']['forwarding_layers'].nil?
       'http_set_path' => layerconfig['http_set_path'],
       'http_match_path' => layerconfig['http_match_path'],
       'haproxy_check_interval' => layerconfig['haproxy_check_interval'],
+      'haproxy_rise' => layerconfig['haproxy_rise'],
+      'haproxy_fall' => layerconfig['haproxy_fall'],
       'servers' => layerconfig['servers'],
       'node' => @node
   } %>

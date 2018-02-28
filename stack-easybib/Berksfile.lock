@@ -165,7 +165,7 @@ GRAPH
     nodejs (>= 0.0.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
-  ies-scout (0.1.0)
+  ies-scout (0.1.1)
     scout (>= 0.0.0)
   ies-ssl (0.1.0)
     haproxy (>= 0.0.0)
