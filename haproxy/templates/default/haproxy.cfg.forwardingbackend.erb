@@ -1,14 +1,22 @@
 <%
 # rise - number of successful checks to determine if the backend is 'up'
-haproxy_rise = 2
+if !@haproxy_rise.nil?
+  haproxy_rise = @haproxy_rise
+else
+  haproxy_rise = 2
+end
 
 # fall - number of failed checks to determine if the backend is down
-haproxy_fall = 3
+if !@haproxy_fall.nil?
+  haproxy_fall = @haproxy_fall
+else
+  haproxy_fall = 3
+end
 
 # in milliseconds - 10 seconds is too slow
-haproxy_check_interval_set = 3000
+haproxy_check_interval = 3000
 if !@haproxy_check_interval.nil?
-  haproxy_check_interval_set = @haproxy_check_interval
+  haproxy_check_interval = @haproxy_check_interval
 end
 
 # max connections
@@ -35,6 +43,6 @@ backend <%= @layername %>_forward
   <% end -%>
   option httpchk <%= health_check_string %>
   <% @servers.each do |name,host| -%>
-  server <%= name %> <%= host %>:80 weight 10 maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval_set %>
+  server <%= name %> <%= host %>:80 weight 10 maxconn <%= haproxy_maxconn %> rise <%= haproxy_rise %> fall <%= haproxy_fall %> check inter <%= haproxy_check_interval %>
 <% end -%>
 

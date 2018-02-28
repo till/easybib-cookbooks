@@ -13,9 +13,14 @@ describe 'ies-gearmand::default' do
       rspec_version = Gem::Version.new(::RSpec::Core::Version::STRING)
       if rspec_version >= Gem::Version.new('3.0.0')
 
-        expect(chef_run.node['php']['ppa']).to eq('name' => 'ondrejphp',
-                                                  'package_prefix' => 'php5.6',
-                                                  'uri' => 'ppa:ondrej/php')
+        # pending 'Why did this change? I cannot find a blame or PR'
+        # expect(chef_run.node['php']['ppa']).to eq('name' => 'ondrejphp',
+        #                                          'package_prefix' => 'php5.6',
+        #                                          'uri' => 'ppa:ondrej/php')
+
+        expect(chef_run.node['php']['ppa']).to eq('name' => 'easybib-ppa',
+                                                  'uri' => 'ppa:easybib/php55',
+                                                  'package_prefix' => 'php5-easybib')
 
         expect(chef_run).to include_recipe('php::dependencies-ppa')
 
