@@ -34,7 +34,6 @@ node['deploy'].each do |application, deploy|
 
   case application
   when 'aptly'
-
     include_recipe 'aptly::setup'
     aptly_cronjob 'easybib-s3' do
       path "#{deploy['deploy_to']}/current/"
