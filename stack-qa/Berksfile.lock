@@ -37,6 +37,8 @@ DEPENDENCIES
     path: ../ies-gearmand
   ies-letsencrypt
     path: ../ies-letsencrypt
+  ies-mysql
+    path: ../ies-mysql
   ies-nodejs
     path: ../ies-nodejs
   ies-route53
@@ -49,6 +51,8 @@ DEPENDENCIES
     path: ../logrotate
   monit
     path: ../monit
+  mysql
+    path: ../mysql
   nginx-app
     path: ../nginx-app
   nodejs
@@ -151,11 +155,14 @@ GRAPH
     php (>= 0.0.0)
   ies-letsencrypt (0.1.0)
     cron (>= 0.0.0)
+  ies-mysql (0.1.0)
+    easybib (>= 0.0.0)
+    mysql (>= 0.0.0)
   ies-nodejs (0.1.0)
     nodejs (>= 0.0.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
-  ies-scout (0.1.0)
+  ies-scout (0.1.1)
     scout (>= 0.0.0)
   ies-ssl (0.1.0)
     haproxy (>= 0.0.0)
@@ -164,6 +171,7 @@ GRAPH
     easybib (>= 0.0.0)
     ies-gearmand (>= 0.0.0)
     nginx-app (>= 0.0.0)
+  mysql (6.1.2)
   nginx-app (0.1.0)
     apt (>= 0.0.0)
     aptly (>= 0.0.0)
@@ -218,6 +226,7 @@ GRAPH
     ies (>= 0.0.0)
     ies-gearmand (>= 0.0.0)
     ies-letsencrypt (>= 0.0.0)
+    ies-mysql (>= 0.0.0)
     ies-nodejs (>= 0.0.0)
     nginx-app (>= 0.0.0)
     nodejs (>= 0.0.0)

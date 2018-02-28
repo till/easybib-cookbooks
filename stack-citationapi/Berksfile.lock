@@ -55,6 +55,8 @@ DEPENDENCIES
     path: ../php-fpm
   php-pear
     path: ../php-pear
+  php-redis
+    path: ../php-redis
   postfix
     path: ../postfix
   python
@@ -75,8 +77,6 @@ DEPENDENCIES
     path: ../wt-data
   xml
     path: ../xml
-  php-redis
-    path: ../php-redis
 
 GRAPH
   apt (2.6.1)
@@ -175,6 +175,8 @@ GRAPH
   php-pear (0.1.0)
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
+  php-redis (0.1.1)
+    php (>= 0.0.0)
   postfix (0.1.0)
     easybib (>= 0.0.0)
   python (1.4.7)
@@ -185,7 +187,7 @@ GRAPH
     easybib (>= 0.0.0)
   rsyslog (2.2.0)
   rsyslogd (0.1.0)
-  stack-citationapi (0.2.0)
+  stack-citationapi (0.3.0)
     composer (>= 0.0.0)
     haproxy (>= 0.0.0)
     ies (>= 0.0.0)
@@ -210,6 +212,5 @@ GRAPH
     php (>= 0.0.0)
     php-fpm (>= 0.0.0)
   wt-data (0.1.0)
-  php-redis (0.1.1)
   xml (1.2.3)
     build-essential (>= 0.0.0)
