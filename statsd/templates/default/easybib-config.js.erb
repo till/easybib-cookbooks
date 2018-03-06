@@ -8,5 +8,8 @@
     token: '<%= @metrics["api_key"] -%>',
     source: '<%= @cluster_name -%>',
     batchSize: <%= @metrics["batch"] %>
+  },
+  log: {
+    backend: 'syslog'
   }
 }
