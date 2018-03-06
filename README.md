@@ -2,7 +2,7 @@
 
 # Do you like what you see?
 
-If you want to work with us, please get in touch: [till@imagineeasy.com](mailto:till@imagineeasy.com)!
+If you want to work with us, please get in touch: [wt-ops@chegg.com](mailto:wt-ops@chegg.com)!
 
 # Cookbooks!
 
@@ -14,7 +14,7 @@ Please note that some recipes rely on a AWS Opsworks setup/environment so you be
 
 Questions, comments? Feel free to [get in touch][touch]!
 
-[touch]: http://twitter.com/klimpong
+[touch]: https://twitter.com/chegg
 
 # Contributing
 
