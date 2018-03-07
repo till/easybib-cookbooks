@@ -1,7 +1,7 @@
 init_config:
 
 instances:
-  - url: http://localhost/<%= @haproxy_stats_uri %>
+  - url: http://localhost<%= @haproxy_stats_uri %>
     username: <%= @haproxy_stats_username %>
     password: <%= @haproxy_stats_password %>
     status_check: true
