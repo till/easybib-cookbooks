@@ -24,9 +24,9 @@ deploy:
       secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
       secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
-    bucket:
-      secure: A8xm71I3Aq7hMrBTFFwKMPkAeq+K26gDhAYBYNxWpidfig2kbRRzZJIMXqtWh4NKxFnUaJBx7uhWkeL656qzhRObbPsbIrIwEUPWnfYAOnL0FCP4yNteIToIBYc1RqE4DYE6NCIRWO0SVIgSeCv+qAPml2/LWa298hOy1W4LPMc=
+    bucket: "cookbooks.deploy.ezbib.com"
     skip-cleanup: true
+    region: us-east-1
     local-dir: build
     upload-dir: stable-11-10
     detect_encoding: true
@@ -37,9 +37,9 @@ deploy:
       secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
       secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
-    bucket:
-      secure: A8xm71I3Aq7hMrBTFFwKMPkAeq+K26gDhAYBYNxWpidfig2kbRRzZJIMXqtWh4NKxFnUaJBx7uhWkeL656qzhRObbPsbIrIwEUPWnfYAOnL0FCP4yNteIToIBYc1RqE4DYE6NCIRWO0SVIgSeCv+qAPml2/LWa298hOy1W4LPMc=
+    bucket: "cookbooks.deploy.ezbib.com"
     skip-cleanup: true
+    region: us-east-1
     local-dir: build
     upload-dir: master
     detect_encoding: true
