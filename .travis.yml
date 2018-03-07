@@ -20,11 +20,9 @@ before_deploy:
 
 deploy:
   - provider: s3
-    access_key_id:
-      secure: eBI7rBdqays3ahHPsiy0oM6d98tkgvYoKr0ImSWIOFHZYXHHLcSBQhevebNF1PCNrGgvLYkqDn7JWK+f6aqGULxOA4xS4ZhG8O66DA/nAd/vT4eMR7BELohe1QVKNLXj0yr3AJW3K+k8KrAMhhVmU4N1wzvud3/nC+xHZTCveZY=
-    secret_access_key:
-      secure: MBMxohhv1x9KxZVQCfg3b8kd8T3JmleEAgF/uMWeixt9rfdcggYp/ZHv2jG1V+GIM+kUCGwM4/m82pRxqBqAQ6EUxTmxuR95OhS/vVk2TtUt/UM4edNkzeShMzcswtn4dFemcGi7vPuHUAkf5NwfE2713Iu5o8K1gT9aBxw1tv0=
-    bucket: cookbooks.deploy.ezbib.com
+    access_key_id: $ACCESS_KEY_ID
+    secret_access_key: $SECRET_ACCESS_KEY
+    bucket: $BUCKET
     skip-cleanup: true
     local-dir: build
     upload-dir: stable-11-10
@@ -32,11 +30,9 @@ deploy:
     on:
       branch: stable-chef-11.10
   - provider: s3
-    access_key_id:
-      secure: eBI7rBdqays3ahHPsiy0oM6d98tkgvYoKr0ImSWIOFHZYXHHLcSBQhevebNF1PCNrGgvLYkqDn7JWK+f6aqGULxOA4xS4ZhG8O66DA/nAd/vT4eMR7BELohe1QVKNLXj0yr3AJW3K+k8KrAMhhVmU4N1wzvud3/nC+xHZTCveZY=
-    secret_access_key:
-      secure: MBMxohhv1x9KxZVQCfg3b8kd8T3JmleEAgF/uMWeixt9rfdcggYp/ZHv2jG1V+GIM+kUCGwM4/m82pRxqBqAQ6EUxTmxuR95OhS/vVk2TtUt/UM4edNkzeShMzcswtn4dFemcGi7vPuHUAkf5NwfE2713Iu5o8K1gT9aBxw1tv0=
-    bucket: cookbooks.deploy.ezbib.com
+    access_key_id: $ACCESS_KEY_ID
+    secret_access_key: $SECRET_ACCESS_KEY
+    bucket: $BUCKET
     skip-cleanup: true
     local-dir: build
     upload-dir: master
