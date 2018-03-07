@@ -1,5 +1,10 @@
 include_recipe 'ies::role-generic'
 
+# This is a duplicate of role-lb.rb with only haproxy::default and haproxy::configure
+# added because these are automatically executed by opsworks.
+include_recipe 'haproxy::default'
+include_recipe 'haproxy::configure'
+
 include_recipe 'haproxy::ctl'
 include_recipe 'haproxy::hatop'
 include_recipe 'haproxy::logs'
