@@ -20,11 +20,11 @@ before_deploy:
 
 deploy:
   - provider: s3
-    secret_access_key:
-      secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
-      secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
-    bucket: "cookbooks.deploy.ezbib.com"
+      secure: eBI7rBdqays3ahHPsiy0oM6d98tkgvYoKr0ImSWIOFHZYXHHLcSBQhevebNF1PCNrGgvLYkqDn7JWK+f6aqGULxOA4xS4ZhG8O66DA/nAd/vT4eMR7BELohe1QVKNLXj0yr3AJW3K+k8KrAMhhVmU4N1wzvud3/nC+xHZTCveZY=
+    secret_access_key:
+      secure: MBMxohhv1x9KxZVQCfg3b8kd8T3JmleEAgF/uMWeixt9rfdcggYp/ZHv2jG1V+GIM+kUCGwM4/m82pRxqBqAQ6EUxTmxuR95OhS/vVk2TtUt/UM4edNkzeShMzcswtn4dFemcGi7vPuHUAkf5NwfE2713Iu5o8K1gT9aBxw1tv0=
+    bucket: cookbooks.deploy.ezbib.com
     skip-cleanup: true
     region: us-east-1
     local-dir: build
@@ -33,11 +33,11 @@ deploy:
     on:
       branch: stable-chef-11.10
   - provider: s3
-    secret_access_key:
-      secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
-      secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
-    bucket: "cookbooks.deploy.ezbib.com"
+      secure: eBI7rBdqays3ahHPsiy0oM6d98tkgvYoKr0ImSWIOFHZYXHHLcSBQhevebNF1PCNrGgvLYkqDn7JWK+f6aqGULxOA4xS4ZhG8O66DA/nAd/vT4eMR7BELohe1QVKNLXj0yr3AJW3K+k8KrAMhhVmU4N1wzvud3/nC+xHZTCveZY=
+    secret_access_key:
+      secure: MBMxohhv1x9KxZVQCfg3b8kd8T3JmleEAgF/uMWeixt9rfdcggYp/ZHv2jG1V+GIM+kUCGwM4/m82pRxqBqAQ6EUxTmxuR95OhS/vVk2TtUt/UM4edNkzeShMzcswtn4dFemcGi7vPuHUAkf5NwfE2713Iu5o8K1gT9aBxw1tv0=
+    bucket: cookbooks.deploy.ezbib.com
     skip-cleanup: true
     region: us-east-1
     local-dir: build
@@ -51,7 +51,6 @@ branches:
   - master
   - stable-chef-11.10
   - stable
-
 notifications:
   email:
     on_success: never
