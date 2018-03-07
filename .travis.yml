@@ -26,7 +26,6 @@ deploy:
       secure: MBMxohhv1x9KxZVQCfg3b8kd8T3JmleEAgF/uMWeixt9rfdcggYp/ZHv2jG1V+GIM+kUCGwM4/m82pRxqBqAQ6EUxTmxuR95OhS/vVk2TtUt/UM4edNkzeShMzcswtn4dFemcGi7vPuHUAkf5NwfE2713Iu5o8K1gT9aBxw1tv0=
     bucket: cookbooks.deploy.ezbib.com
     skip-cleanup: true
-    region: us-east-1
     local-dir: build
     upload-dir: stable-11-10
     detect_encoding: true
@@ -39,7 +38,6 @@ deploy:
       secure: MBMxohhv1x9KxZVQCfg3b8kd8T3JmleEAgF/uMWeixt9rfdcggYp/ZHv2jG1V+GIM+kUCGwM4/m82pRxqBqAQ6EUxTmxuR95OhS/vVk2TtUt/UM4edNkzeShMzcswtn4dFemcGi7vPuHUAkf5NwfE2713Iu5o8K1gT9aBxw1tv0=
     bucket: cookbooks.deploy.ezbib.com
     skip-cleanup: true
-    region: us-east-1
     local-dir: build
     upload-dir: master
     detect_encoding: true
