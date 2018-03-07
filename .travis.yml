@@ -5,28 +5,28 @@ sudo: false
 cache: bundler
 
 script:
-  - bundle exec rake
-  - make berkshelf
+- bundle exec rake
+- make berkshelf
 
 gemfile:
-  - gemfiles/chef_11.10.gemfile
-  - gemfiles/chef_12.7.gemfile
+- gemfiles/chef_11.10.gemfile
+- gemfiles/chef_12.7.gemfile
 
 before_deploy:
-  - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
-  - mkdir build
-  - mv easybib-cookbooks.tar.gz build/
-  - bash MoveBerkshelfArtifacts.sh
+- tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
+- mkdir build
+- mv easybib-cookbooks.tar.gz build/
+- bash MoveBerkshelfArtifacts.sh
 
 deploy:
   - provider: s3
     secret_access_key:
-      secure: ZybmeOZYJpKFWdtXCB8fdbm87uZTl2e8deQwf+6Uol031rPQ+yaZ9QPWEoC1FLEyizgLHfEztVD4RuEua7Oi3zSKIL4qPaV/qqvPO3c0yspQxBXjgA8E4ZxkHbINo29HsacpUYfZb5237mw8l4QK5xL9Eo0qo67lT6TdoR/ohkI=
+      secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
-      secure: iNjBJ+OhYHCWURg830hRVOvNsZ2YhiGHRXx4/EZQeqkRDxYyO0H89GNWqxqxvazC/zniEE4FNji1Z4QIdoIx6CIrhcnQKMTumAhqvAqE5jvyxSpx1SRHr+nk6UGjiPvI7bKdOJsjGfYvxOuAD+BV146W0aEJxKCZ+25QaQzBBDA=
-    bucket:
-      secure: HkvsGXQNcWDdmVADr8SIp5V0DZjnl4yhaAGxfvlcb4ZYITdR2p4RAVL3EhR02CJ+wmY5z4DzN5em73cIgwGFChABsWD0xLdB4374FSm96pkU4yqwQjWUkuxr6aQkcyaHmEBI6GowvUTiLOcohEUL0NZVZkPhqcQLwt2Vz2bezoY=
+      secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
+    bucket: "cookbooks.deploy.ezbib.com"
     skip-cleanup: true
+    region: us-east-1
     local-dir: build
     upload-dir: stable-11-10
     detect_encoding: true
@@ -34,12 +34,12 @@ deploy:
       branch: stable-chef-11.10
   - provider: s3
     secret_access_key:
-      secure: ZybmeOZYJpKFWdtXCB8fdbm87uZTl2e8deQwf+6Uol031rPQ+yaZ9QPWEoC1FLEyizgLHfEztVD4RuEua7Oi3zSKIL4qPaV/qqvPO3c0yspQxBXjgA8E4ZxkHbINo29HsacpUYfZb5237mw8l4QK5xL9Eo0qo67lT6TdoR/ohkI=
+      secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
-      secure: iNjBJ+OhYHCWURg830hRVOvNsZ2YhiGHRXx4/EZQeqkRDxYyO0H89GNWqxqxvazC/zniEE4FNji1Z4QIdoIx6CIrhcnQKMTumAhqvAqE5jvyxSpx1SRHr+nk6UGjiPvI7bKdOJsjGfYvxOuAD+BV146W0aEJxKCZ+25QaQzBBDA=
-    bucket:
-      secure: HkvsGXQNcWDdmVADr8SIp5V0DZjnl4yhaAGxfvlcb4ZYITdR2p4RAVL3EhR02CJ+wmY5z4DzN5em73cIgwGFChABsWD0xLdB4374FSm96pkU4yqwQjWUkuxr6aQkcyaHmEBI6GowvUTiLOcohEUL0NZVZkPhqcQLwt2Vz2bezoY=
+      secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
+    bucket: "cookbooks.deploy.ezbib.com"
     skip-cleanup: true
+    region: us-east-1
     local-dir: build
     upload-dir: master
     detect_encoding: true

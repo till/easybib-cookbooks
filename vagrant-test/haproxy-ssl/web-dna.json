@@ -1,17 +1,53 @@
 {
   "deploy": [],
   "haproxy" : {
-    "acls": {},
+    "acls": {
+      "block-spammer": "http-request deny if { hdr(user-agent) -i -m sub www.wesee.com/bot } "
+    },
+    "additional_layers": {
+      "app": {
+        "acl": {
+          "app": "hdr_dom(host) -i edu"
+        },
+        "health_check": {
+          "host": "app.com",
+          "url": "/"
+        }
+      }
+    },
+    "forwarding_layers": {
+      "testfwd":{
+        "acl":{
+          "acl-test":"path_beg /somefile.txt"
+        },
+        "http_match_path":"somefile.txt",
+        "http_set_path":"/somepath/domain.com/otherfile.txt",
+        "http_set_host":"s3.amazonaws.com",
+        "haproxy_check_interval":"10m",
+        "health_check":"GET /somepath/domain.com/otherfile.txt HTTP/1.1\\r\\nHost:\\ s3.amazonaws.com",
+        "servers":{
+           "s3_adteam":"s3.amazonaws.com"
+        }
+      }
+    },
     "ssl": "on",
-    "type": "1.5"
+    "logging": {
+      "address": "logs6.papertrailapp.com",
+      "port": "31454"
+    },
+    "type": "1.5",
+    "enable_stats": "on",
+    "stats_url": "/haproxy-stats",
+    "stats_user": "statsuser",
+    "stats_password": "statspass"
   },
   "ies-letsencrypt": {
     "domains": [
       "local.horst"
     ]
   },
-  "scout": {
-    "account_key": "--REPLACE-ME--"
+  "datadog": {
+    "api_key": "40404040404040404040404040404040"
   },
   "sysop_email": "till@chegg.com"
 }
