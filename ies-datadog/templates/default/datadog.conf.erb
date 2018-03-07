@@ -1,7 +1,7 @@
 [Main]
 dd_url: https://app.datadoghq.com
 api_key: <%= @datadog_api_key %>
-hostname: <%= @stack_name %>.<%= @host_name %>
+hostname: <%= @stack_name %>-<%= @host_name %>
 gce_updated_hostname: yes
 non_local_traffic: no
 use_dogstatsd: no

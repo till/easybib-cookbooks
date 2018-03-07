@@ -28,7 +28,7 @@ describe 'ies-datadog::default' do
 
       expected = [
         'api_key: 40404040404040404040404040404040',
-        'hostname: playground.chefspec_lb'
+        'hostname: playground-chefspec_lb'
       ]
 
       expected.each do |content|
