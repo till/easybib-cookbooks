@@ -21,11 +21,11 @@ before_deploy:
 deploy:
   - provider: s3
     secret_access_key:
-      secure: oIPsgHHsPLjEpM00ne2GNtmaTwBuxgBtNLYVyUWwr4E1Bvu717mccREmVgqK4bvNUcaNQmtoXHEik1X9zO8y53081y5ANwonlI48EpRhk8UdhuURpVUqJOxYkUYk/KMnRE3nKZ17BmauoRdY2onR/j5CXrgXVkMBRBv4GXJyc1M=
+      secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
-      secure: LQwVNX5gZkfOhVlvc+NPUUOlHGVhP1PtNKTA9MqmOAkxyqCU1E7BsuECzDJquLM2fj6sgGJb7rzYOaAWSgnD4932qxr2l54qx+mlrkHGai0ThMS4Nt5+hcppN1/KWSTbxcbViNcz3bsnyPSqh3Gp7r3IskqgLFJhK3vaEIYAq5w=
+      secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
     bucket:
-      secure: iixlbTzCeMLngkQsqRpoWm9N259x/7HUOvZtQvrw3ETtf+yGG2fZR6LttyqEGr3lNVGJMLclbb84OXcrnDGSvDuR8MTRPciLz6BOfFMg6D0uyINLQPGw6dbxXHVZ9azNSCySjXcAJqHdT+Q6DEsR9NkrMgTk6fjooyWabgQXHc8=
+      secure: A8xm71I3Aq7hMrBTFFwKMPkAeq+K26gDhAYBYNxWpidfig2kbRRzZJIMXqtWh4NKxFnUaJBx7uhWkeL656qzhRObbPsbIrIwEUPWnfYAOnL0FCP4yNteIToIBYc1RqE4DYE6NCIRWO0SVIgSeCv+qAPml2/LWa298hOy1W4LPMc=
     skip-cleanup: true
     local-dir: build
     upload-dir: stable-11-10
@@ -34,11 +34,11 @@ deploy:
       branch: stable-chef-11.10
   - provider: s3
     secret_access_key:
-      secure: oIPsgHHsPLjEpM00ne2GNtmaTwBuxgBtNLYVyUWwr4E1Bvu717mccREmVgqK4bvNUcaNQmtoXHEik1X9zO8y53081y5ANwonlI48EpRhk8UdhuURpVUqJOxYkUYk/KMnRE3nKZ17BmauoRdY2onR/j5CXrgXVkMBRBv4GXJyc1M=
+      secure: ZVOoyvwrNy3Koeb7w6D9+UyjHhwZTfFY8lJSkJ+4So9I9R+z5zNJPAJsUSF/16jpMAMg05zjvhuT1mQgNq68UIoE0kgUuB+gKthJ+mTHMX+La7wNt+THGXw7BjyI+raEH+DhcLWsS2KZkJrn+7pdREZxPmBanBRnPVIq9L0obFs=
     access_key_id:
-      secure: LQwVNX5gZkfOhVlvc+NPUUOlHGVhP1PtNKTA9MqmOAkxyqCU1E7BsuECzDJquLM2fj6sgGJb7rzYOaAWSgnD4932qxr2l54qx+mlrkHGai0ThMS4Nt5+hcppN1/KWSTbxcbViNcz3bsnyPSqh3Gp7r3IskqgLFJhK3vaEIYAq5w=
+      secure: nA68RWdYbgRuS6Edzgewt5Z3wPuJcg+QP9nV8T5U730B2eons8+xDGOkFimB5KuWPu9/xV7RznZOP7BcJyFdjYLzJiRWQ+MgMcz+pnlx6yKGV33t1NQ72dof+1JXO2gW644sMC1qkU+RXVmIC1MvXOiv6BWLQehFWTRpgAvASSM=
     bucket:
-      secure: iixlbTzCeMLngkQsqRpoWm9N259x/7HUOvZtQvrw3ETtf+yGG2fZR6LttyqEGr3lNVGJMLclbb84OXcrnDGSvDuR8MTRPciLz6BOfFMg6D0uyINLQPGw6dbxXHVZ9azNSCySjXcAJqHdT+Q6DEsR9NkrMgTk6fjooyWabgQXHc8=
+      secure: A8xm71I3Aq7hMrBTFFwKMPkAeq+K26gDhAYBYNxWpidfig2kbRRzZJIMXqtWh4NKxFnUaJBx7uhWkeL656qzhRObbPsbIrIwEUPWnfYAOnL0FCP4yNteIToIBYc1RqE4DYE6NCIRWO0SVIgSeCv+qAPml2/LWa298hOy1W4LPMc=
     skip-cleanup: true
     local-dir: build
     upload-dir: master
