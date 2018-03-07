@@ -5,27 +5,27 @@ sudo: false
 cache: bundler
 
 script:
-  - bundle exec rake
-  - make berkshelf
+- bundle exec rake
+- make berkshelf
 
 gemfile:
-  - gemfiles/chef_11.10.gemfile
-  - gemfiles/chef_12.7.gemfile
+- gemfiles/chef_11.10.gemfile
+- gemfiles/chef_12.7.gemfile
 
 before_deploy:
-  - tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
-  - mkdir build
-  - mv easybib-cookbooks.tar.gz build/
-  - bash MoveBerkshelfArtifacts.sh
+- tar cfz easybib-cookbooks.tar.gz * --exclude=easybib-cookbooks.tar.gz --exclude=vendor/
+- mkdir build
+- mv easybib-cookbooks.tar.gz build/
+- bash MoveBerkshelfArtifacts.sh
 
 deploy:
   - provider: s3
-    secret_access_key:
-      secure: ZybmeOZYJpKFWdtXCB8fdbm87uZTl2e8deQwf+6Uol031rPQ+yaZ9QPWEoC1FLEyizgLHfEztVD4RuEua7Oi3zSKIL4qPaV/qqvPO3c0yspQxBXjgA8E4ZxkHbINo29HsacpUYfZb5237mw8l4QK5xL9Eo0qo67lT6TdoR/ohkI=
-    access_key_id:
-      secure: iNjBJ+OhYHCWURg830hRVOvNsZ2YhiGHRXx4/EZQeqkRDxYyO0H89GNWqxqxvazC/zniEE4FNji1Z4QIdoIx6CIrhcnQKMTumAhqvAqE5jvyxSpx1SRHr+nk6UGjiPvI7bKdOJsjGfYvxOuAD+BV146W0aEJxKCZ+25QaQzBBDA=
-    bucket:
-      secure: HkvsGXQNcWDdmVADr8SIp5V0DZjnl4yhaAGxfvlcb4ZYITdR2p4RAVL3EhR02CJ+wmY5z4DzN5em73cIgwGFChABsWD0xLdB4374FSm96pkU4yqwQjWUkuxr6aQkcyaHmEBI6GowvUTiLOcohEUL0NZVZkPhqcQLwt2Vz2bezoY=
+  secret_access_key:
+    secure: oIPsgHHsPLjEpM00ne2GNtmaTwBuxgBtNLYVyUWwr4E1Bvu717mccREmVgqK4bvNUcaNQmtoXHEik1X9zO8y53081y5ANwonlI48EpRhk8UdhuURpVUqJOxYkUYk/KMnRE3nKZ17BmauoRdY2onR/j5CXrgXVkMBRBv4GXJyc1M=
+  access_key_id:
+    secure: LQwVNX5gZkfOhVlvc+NPUUOlHGVhP1PtNKTA9MqmOAkxyqCU1E7BsuECzDJquLM2fj6sgGJb7rzYOaAWSgnD4932qxr2l54qx+mlrkHGai0ThMS4Nt5+hcppN1/KWSTbxcbViNcz3bsnyPSqh3Gp7r3IskqgLFJhK3vaEIYAq5w=
+  bucket:
+    secure: iixlbTzCeMLngkQsqRpoWm9N259x/7HUOvZtQvrw3ETtf+yGG2fZR6LttyqEGr3lNVGJMLclbb84OXcrnDGSvDuR8MTRPciLz6BOfFMg6D0uyINLQPGw6dbxXHVZ9azNSCySjXcAJqHdT+Q6DEsR9NkrMgTk6fjooyWabgQXHc8=
     skip-cleanup: true
     local-dir: build
     upload-dir: stable-11-10
@@ -33,12 +33,12 @@ deploy:
     on:
       branch: stable-chef-11.10
   - provider: s3
-    secret_access_key:
-      secure: ZybmeOZYJpKFWdtXCB8fdbm87uZTl2e8deQwf+6Uol031rPQ+yaZ9QPWEoC1FLEyizgLHfEztVD4RuEua7Oi3zSKIL4qPaV/qqvPO3c0yspQxBXjgA8E4ZxkHbINo29HsacpUYfZb5237mw8l4QK5xL9Eo0qo67lT6TdoR/ohkI=
-    access_key_id:
-      secure: iNjBJ+OhYHCWURg830hRVOvNsZ2YhiGHRXx4/EZQeqkRDxYyO0H89GNWqxqxvazC/zniEE4FNji1Z4QIdoIx6CIrhcnQKMTumAhqvAqE5jvyxSpx1SRHr+nk6UGjiPvI7bKdOJsjGfYvxOuAD+BV146W0aEJxKCZ+25QaQzBBDA=
-    bucket:
-      secure: HkvsGXQNcWDdmVADr8SIp5V0DZjnl4yhaAGxfvlcb4ZYITdR2p4RAVL3EhR02CJ+wmY5z4DzN5em73cIgwGFChABsWD0xLdB4374FSm96pkU4yqwQjWUkuxr6aQkcyaHmEBI6GowvUTiLOcohEUL0NZVZkPhqcQLwt2Vz2bezoY=
+  secret_access_key:
+    secure: oIPsgHHsPLjEpM00ne2GNtmaTwBuxgBtNLYVyUWwr4E1Bvu717mccREmVgqK4bvNUcaNQmtoXHEik1X9zO8y53081y5ANwonlI48EpRhk8UdhuURpVUqJOxYkUYk/KMnRE3nKZ17BmauoRdY2onR/j5CXrgXVkMBRBv4GXJyc1M=
+  access_key_id:
+    secure: LQwVNX5gZkfOhVlvc+NPUUOlHGVhP1PtNKTA9MqmOAkxyqCU1E7BsuECzDJquLM2fj6sgGJb7rzYOaAWSgnD4932qxr2l54qx+mlrkHGai0ThMS4Nt5+hcppN1/KWSTbxcbViNcz3bsnyPSqh3Gp7r3IskqgLFJhK3vaEIYAq5w=
+  bucket:
+    secure: iixlbTzCeMLngkQsqRpoWm9N259x/7HUOvZtQvrw3ETtf+yGG2fZR6LttyqEGr3lNVGJMLclbb84OXcrnDGSvDuR8MTRPciLz6BOfFMg6D0uyINLQPGw6dbxXHVZ9azNSCySjXcAJqHdT+Q6DEsR9NkrMgTk6fjooyWabgQXHc8=
     skip-cleanup: true
     local-dir: build
     upload-dir: master
