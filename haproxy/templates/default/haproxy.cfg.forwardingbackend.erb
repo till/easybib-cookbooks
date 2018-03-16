@@ -38,7 +38,7 @@ backend <%= @layername %>_forward
   <% end -%>
   <%if !@http_set_path.nil? && !@http_match_path.nil? -%>
   # this is for 1.5
-  reqirep ^([^\ ]*)\ <%= @http_match_path %>\ (.*)$ \1\ <%= @http_set_path %>\ \2
+  reqirep ^([^\ ]*)\ <%= @http_match_path %>(.*)$ \1\ <%= @http_set_path %>\2
   # this is for 1.6 and above: http-request set-path <%= @http_set_path %>
   <% end -%>
   option httpchk <%= health_check_string %>

@@ -1,0 +1,14 @@
+<%
+# normalize the hostname
+hostname = @stack_name + '-' + @host_name
+hostname = hostname.gsub(/[^a-z0-9\-]/i, '-')
+-%>
+
+[Main]
+dd_url: https://app.datadoghq.com
+api_key: <%= @datadog_api_key %>
+hostname: <%= hostname %>
+gce_updated_hostname: yes
+non_local_traffic: no
+use_dogstatsd: no
+apm_enabled: false

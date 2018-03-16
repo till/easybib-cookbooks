@@ -21,7 +21,6 @@ AllCops:
     - 'rsyslog/**/*'
     - 'runit/**/*'
     - 'rvm/**/*'
-    - 'scout/**/*'
     - 'sinopia/**/*'
     - 'supervisor/**/*'
     - 'test/**/*'

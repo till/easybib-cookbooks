@@ -1,0 +1,9 @@
+init_config:
+
+instances:
+  - url: http://localhost<%= @haproxy_stats_uri %>
+    username: <%= @haproxy_stats_username %>
+    password: <%= @haproxy_stats_password %>
+    status_check: true
+    tag_service_check_by_host: true
+    services_include: []

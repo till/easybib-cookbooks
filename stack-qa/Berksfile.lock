@@ -43,8 +43,6 @@ DEPENDENCIES
     path: ../ies-nodejs
   ies-route53
     path: ../ies-route53
-  ies-scout
-    path: ../ies-scout
   ies-ssl
     path: ../ies-ssl
   logrotate
@@ -77,8 +75,6 @@ DEPENDENCIES
     path: ../rsyslogd
   satis
     path: ../satis
-  scout
-    path: ../scout
   sinopia
     path: ../sinopia
   sinopia-github
@@ -162,8 +158,6 @@ GRAPH
     nodejs (>= 0.0.0)
   ies-route53 (0.1.0)
     easybib (>= 0.0.0)
-  ies-scout (0.1.1)
-    scout (>= 0.0.0)
   ies-ssl (0.1.0)
     haproxy (>= 0.0.0)
   logrotate (1.9.2)
@@ -210,8 +204,6 @@ GRAPH
   satis (0.1.0)
     easybib (>= 0.0.0)
     nginx-app (>= 0.0.0)
-  scout (0.4.0)
-    apt (>= 0.0.0)
   sinopia (0.3.0)
     apt (>= 0.0.0)
     logrotate (>= 0.0.0)
